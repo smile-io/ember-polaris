@@ -1,0 +1,125 @@
+$navigation-elements-height: rem(36px);
+$title-height: line-height(display-large, large-screen);
+$actions-vertical-spacing: rem(4px);
+$action-horizontal-padding: 1.5 * spacing(tight);
+
+$stacking-order: (
+  title: 10,
+  breadcrumbs: 20,
+);
+
+.Polaris-Page {
+  margin: 0 auto;
+  padding: 0;
+  max-width: layout-width(primary, max) + layout-width(secondary, max) + layout-width(inner-spacing);
+
+  @include page-content-when-not-fully-condensed {
+    padding: 0 spacing(loose);
+  }
+
+  @include page-content-when-not-partially-condensed {
+    padding: 0 spacing(extra-loose);
+  }
+}
+
+.Polaris-Page--fullWidth {
+  max-width: none;
+}
+
+.Polaris-Page__Content {
+  margin: spacing(loose) 0;
+}
+
+.Polaris-Page__Header {
+  margin: spacing(loose) 0;
+  padding: 0 spacing(loose);
+
+  @include page-content-when-not-fully-condensed {
+    padding: 0;
+  }
+}
+
+@include page-content-when-not-partially-condensed {
+  .Polaris-Page__Header--hasBreadcrumbs .Polaris-Page__PrimaryAction {
+    margin-top: -1 * ($navigation-elements-height + $title-height + $actions-vertical-spacing);
+  }
+
+  .Polaris-Page__Header--hasPagination .Polaris-Page__PrimaryAction {
+    margin-top: -1 * ($title-height + $actions-vertical-spacing);
+  }
+}
+
+.Polaris-Page__Navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Polaris-Page__Pagination {
+  margin-left: auto;
+}
+
+.Polaris-Page__Actions {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 2 * $actions-vertical-spacing;
+
+  @include page-content-when-not-fully-condensed {
+    margin-top: $actions-vertical-spacing;
+  }
+}
+
+.Polaris-Page__SecondaryActions {
+  margin-right: auto;
+}
+
+.Polaris-Page__PrimaryAction {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.Polaris-Page__Action {
+  @include unstyled-button;
+  @include text-style-body;
+  min-height: control-height();
+  padding: 0 $action-horizontal-padding;
+  border-radius: border-radius();
+  color: color(ink, lighter);
+  will-change: background, color;
+  transition-property: background;
+  transition-duration: duration();
+  transition-timing-function: easing();
+
+  &:hover,
+  &:active {
+    color: color(ink);
+
+    .Polaris-Page__ActionIcon {
+      @include recolor-icon(color(ink));
+    }
+  }
+
+  &:focus,
+  &:active {
+    background: plain-button-background();
+  }
+
+  &:first-child {
+    margin-left: -1 * $action-horizontal-padding;
+  }
+
+  &:last-child {
+    margin-right: -1 * $action-horizontal-padding;
+  }
+}
+
+.Polaris-Page__ActionContent {
+  display: flex;
+  align-items: center;
+  min-height: control-height();
+}
+
+.Polaris-Page__ActionIcon {
+  @include recolor-icon(color(ink, lighter));
+  margin-right: spacing(extra-tight);
+}

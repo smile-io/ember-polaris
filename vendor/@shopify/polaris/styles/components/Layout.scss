@@ -1,0 +1,69 @@
+$secondary-basis: layout-width(secondary, min);
+$primary-basis: layout-width(primary, min);
+$relative-size: $primary-basis / $secondary-basis;
+
+.Polaris-Layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -1 * spacing(loose);
+  margin-left: -1 * spacing(loose);
+}
+
+.Polaris-Layout__Section {
+  @include layout-flex-fix;
+  flex: $relative-size $relative-size $primary-basis;
+  margin-top: spacing(loose);
+  margin-left: spacing(loose);
+  min-width: 51%;
+}
+
+.Polaris-Layout__Section--secondary {
+  flex: 1 1 $secondary-basis;
+  min-width: 0;
+}
+
+.Polaris-Layout__Item {
+  flex: 1 1 100%;
+}
+
+.Polaris-Layout__AnnotatedSection {
+  flex: 1 1 100%;
+  margin-top: spacing(loose);
+  margin-left: spacing(loose);
+}
+
+.Polaris-Layout__Section,
+.Polaris-Layout__AnnotatedSection {
+  + .Polaris-Layout__AnnotatedSection {
+    @include page-content-when-not-fully-condensed {
+      padding-top: spacing(loose);
+      border-top: border();
+    }
+  }
+}
+
+.Polaris-Layout__AnnotationWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: -1 * spacing(loose);
+  margin-left: -1 * spacing(loose);
+}
+
+.Polaris-Layout__AnnotationContent {
+  flex: $relative-size $relative-size $primary-basis;
+  margin-top: spacing(loose);
+  margin-left: spacing(loose);
+}
+
+.Polaris-Layout__Annotation {
+  flex: 1 1 $secondary-basis;
+  margin-top: spacing(loose);
+  margin-left: spacing(loose);
+  padding: spacing(loose) spacing(loose) 0;
+
+  @include page-content-when-layout-not-stacked {
+    padding: spacing(loose) spacing(loose) spacing(loose) 0;
+  }
+}
