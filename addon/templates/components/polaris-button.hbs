@@ -1,5 +1,9 @@
 <span class="Polaris-Button__Content">
   <span>
-    {{yield}}
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{{children}}}
+    {{/if}}
   </span>
 </span>
