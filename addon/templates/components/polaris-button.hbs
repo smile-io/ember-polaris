@@ -1,9 +1,13 @@
-<span class="Polaris-Button__Content">
-  <span>
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{{children}}}
-    {{/if}}
+{{#component buttonComponentName
+  url=url
+}}
+  <span class="Polaris-Button__Content">
+    <span>
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{{children}}}
+      {{/if}}
+    </span>
   </span>
-</span>
+{{/component}}

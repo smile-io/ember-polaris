@@ -3,6 +3,8 @@ import layout from '../templates/components/polaris-button';
 
 const {
   Component,
+  computed,
+  isNone,
   RSVP: {
     resolve
   }
@@ -13,18 +15,17 @@ const {
  * See https://polaris.shopify.com/components/actions/button
  */
 export default Component.extend({
-  tagName: 'button',
-  attributeBindings: ['type'],
-  classNames: ['Polaris-Button'],
+  // Polaris react behaviour is to render an anchor element if a URL is provided,
+  // or a button element otherwise. Ember components can't support dynamic tagNames,
+  // so we reproduce this behaviour using a dynamic component in block form in our template.
+  tagName: '',
 
   layout,
-
-  type: 'button',
 
   /**
    * children
    * string
-   * The content to display inside the button.
+   * The content to display inside the button
    */
   children: null,
 
@@ -139,4 +140,8 @@ export default Component.extend({
    * Callback when focus leaves button
    */
   onBlur: resolve,
+
+  buttonComponentName: computed('url', function() {
+    return `polaris-button/${isNone(this.get('url')) ? 'button' : 'link'}`;
+  }).readOnly()
 });
