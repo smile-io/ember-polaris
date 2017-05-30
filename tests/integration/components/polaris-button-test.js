@@ -8,7 +8,8 @@ moduleForComponent('polaris-button', 'Integration | Component | polaris button',
 test('renders the correct HTML', function(assert) {
   // Basic button, using children attribute.
   this.render(hbs`{{polaris-button children="Look at my children"}}`);
-  let $button = this.$(' > button.Polaris-Button');
+  let $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'basic button with children attribute - renders');
 
   let buttonText = $button.find(' > span.Polaris-Button__Content > span').text().trim();
   assert.equal(buttonText, 'Look at my children', 'basic button with children attribute - text');
@@ -16,7 +17,8 @@ test('renders the correct HTML', function(assert) {
 
   // Basic button, block form.
   this.render(hbs`{{#polaris-button}}Does this look blocky to you?{{/polaris-button}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'basic button in block form - renders');
 
   buttonText = $button.find(' > span.Polaris-Button__Content > span').text().trim();
   assert.equal(buttonText, 'Does this look blocky to you?', 'basic button in block form - text');
@@ -25,6 +27,7 @@ test('renders the correct HTML', function(assert) {
   // With a URL.
   this.render(hbs`{{#polaris-button url="http://www.somewhere.com/lets-go/"}}Links zwei drei vier{{/polaris-button}}`);
   $button = this.$(' > a.Polaris-Button');
+  assert.equal($button.length, 1, 'link button - renders');
 
   buttonText = $button.find(' > span.Polaris-Button__Content > span').text().trim();
   assert.equal(buttonText, 'Links zwei drei vier', 'link button - text');
@@ -45,6 +48,7 @@ test('renders the correct HTML', function(assert) {
   // With a URL and external flag set.
   this.render(hbs`{{#polaris-button url="http://www.somewhere.com/lets-go/" external=true}}Links zwei drei vier{{/polaris-button}}`);
   $button = this.$(' > a.Polaris-Button');
+  assert.equal($button.length, 1, 'external link button - renders');
 
   buttonText = $button.find(' > span.Polaris-Button__Content > span').text().trim();
   assert.equal(buttonText, 'Links zwei drei vier', 'external link button - text');
@@ -64,21 +68,24 @@ test('renders the correct HTML', function(assert) {
 
   // Button with primary flag set.
   this.render(hbs`{{polaris-button primary=true}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'primary button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--primary'), 'primary button - primary class');
 
 
   // Button with destructive flag set.
   this.render(hbs`{{polaris-button destructive=true}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'destructive button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--destructive'), 'destructive button - destructive class');
 
 
   // Button with disabled flag set.
   this.render(hbs`{{polaris-button disabled=true}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'disabled button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--disabled'), 'disabled button - disabled class');
   assert.ok($button.attr('disabled'), 'disabled button - disabled attribute');
@@ -87,6 +94,7 @@ test('renders the correct HTML', function(assert) {
   // Link button with disabled flag set.
   this.render(hbs`{{polaris-button url="http://www.somewhere.com/lets-go/" disabled=true}}`);
   $button = this.$(' > a.Polaris-Button');
+  assert.equal($button.length, 1, 'disabled link button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--disabled'), 'disabled link button - disabled class');
   assert.ok($button.attr('disabled'), 'disabled link button - disabled attribute');
@@ -94,7 +102,8 @@ test('renders the correct HTML', function(assert) {
 
   // Slim button.
   this.render(hbs`{{polaris-button size="slim"}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'slim button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--sizeSlim'), 'slim button - slim class');
   assert.notOk($button.hasClass('Polaris-Button--sizeLarge'), 'slim button - no large class');
@@ -102,7 +111,8 @@ test('renders the correct HTML', function(assert) {
 
   // Large button.
   this.render(hbs`{{polaris-button size="large"}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'large button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--sizeLarge'), 'large button - large class');
   assert.notOk($button.hasClass('Polaris-Button--sizeSlim'), 'large button - no slim class');
@@ -110,14 +120,49 @@ test('renders the correct HTML', function(assert) {
 
   // Button with outline flag set.
   this.render(hbs`{{polaris-button outline=true}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'outline button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--outline'), 'outline button - outline class');
 
 
   // Button with fullWidth flag set.
   this.render(hbs`{{polaris-button fullWidth=true}}`);
-  $button = this.$(' > button.Polaris-Button');
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'fullWidth button - renders');
 
   assert.ok($button.hasClass('Polaris-Button--fullWidth'), 'fullWidth button - fullWidth class');
+
+
+  // Button with disclosure flag set.
+  // TODO: needs polaris-icon component.
+  // this.render(hbs`{{polaris-button disclosure=true}}`);
+  // $button = this.$(' > button[type="button"].Polaris-Button');
+  //
+  // assert.ok( what to check here? );
+
+
+  // Button with submit flag set.
+  this.render(hbs`{{polaris-button submit=true}}`);
+  $button = this.$(' > button[type="submit"].Polaris-Button');
+  assert.equal($button.length, 1, 'submit button - renders');
+
+
+  // Button with plain flag set.
+  this.render(hbs`{{polaris-button plain=true}}`);
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'plain button - renders');
+
+  assert.ok($button.hasClass('Polaris-Button--plain'), 'plain button - plain class');
+
+
+  // TODO: icon
+
+
+  // Button with accessibility label.
+  this.render(hbs`{{polaris-button accessibilityLabel="You can't see me!"}}`);
+  $button = this.$(' > button[type="button"].Polaris-Button');
+  assert.equal($button.length, 1, 'accessible button - renders');
+
+  assert.equal($button.attr('aria-label'), 'You can\'t see me!', 'accessible button - aria-label');
 });

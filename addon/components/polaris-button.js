@@ -83,6 +83,7 @@ export default Component.extend({
    * boolean
    * Display button with a disclosure icon
    */
+  //  TODO: needs polaris-icon component.
   disclosure: null,
 
   /**
@@ -111,6 +112,7 @@ export default Component.extend({
    * SVG
    * Icon to display in the banner
    */
+  //  TODO: implement this.
   icon: null,
 
   /**

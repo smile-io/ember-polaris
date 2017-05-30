@@ -14,7 +14,7 @@ export default Component.extend({
     'fullWidth:Polaris-Button--fullWidth',
     'plain:Polaris-Button--plain'
   ],
-  attributeBindings: ['disabled'],
+  attributeBindings: ['disabled', 'accessibilityLabel:aria-label'],
 
   sizeClass: computed('size', function() {
     switch (this.get('size')) {

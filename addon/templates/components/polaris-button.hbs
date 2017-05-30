@@ -7,7 +7,9 @@
   size=size
   outline=outline
   fullWidth=fullWidth
+  submit=submit
   plain=plain
+  accessibilityLabel=accessibilityLabel
 }}
   <span class="Polaris-Button__Content">
     <span>
@@ -17,5 +19,18 @@
         {{children}}
       {{/if}}
     </span>
+
+    {{!-- TODO: needs polaris-icon component. --}}
+    {{!--
+      {{#if disclosure}}
+        <span class="Polaris-Button__Icon">
+          <span class="Polaris-Icon">
+            <svg class="Polaris-Icon__Svg" viewBox="0 0 20 20">
+              <path d="M5 8l5 5 5-5z" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+        </span>
+      {{/if}}
+    --}}
   </span>
 {{/component}}
