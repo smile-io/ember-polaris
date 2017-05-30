@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  typeOf
+  typeOf,
  } = Ember;
 
 export default Component.extend({
@@ -12,12 +12,15 @@ export default Component.extend({
     'primary:Polaris-Button--primary',
     'destructive:Polaris-Button--destructive',
     'disabled:Polaris-Button--disabled',
-    'sizeClass',
     'outline:Polaris-Button--outline',
     'fullWidth:Polaris-Button--fullWidth',
-    'plain:Polaris-Button--plain'
+    'plain:Polaris-Button--plain',
+    'sizeClass',
   ],
-  attributeBindings: ['disabled', 'accessibilityLabel:aria-label'],
+  attributeBindings: [
+    'disabled',
+    'accessibilityLabel:aria-label',
+  ],
 
   /*
    * Computed properties.

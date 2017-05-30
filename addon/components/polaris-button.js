@@ -26,6 +26,9 @@ export default Component.extend({
    * children
    * string
    * The content to display inside the button
+   * NOTE: this component can be used in block form,
+   * in which case the block content will be used
+   * instead of `children`
    */
   children: null,
 

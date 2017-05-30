@@ -2,7 +2,7 @@ import BaseComponent from './base';
 import Ember from 'ember';
 
 const {
-  computed
+  computed,
 } = Ember;
 
 export default BaseComponent.extend({
@@ -11,7 +11,7 @@ export default BaseComponent.extend({
     'url:href',
     'dataPolarisUnstyled:data-polaris-unstyled',
     'target',
-    'rel'
+    'rel',
   ],
 
   dataPolarisUnstyled: 'true',
@@ -22,5 +22,5 @@ export default BaseComponent.extend({
 
   rel: computed('external', function() {
     return this.get('external') ? 'noopener noreferrer' : null;
-  }).readOnly()
+  }).readOnly(),
 });
