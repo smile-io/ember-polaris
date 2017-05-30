@@ -5,9 +5,6 @@ const {
   Component,
   computed,
   isNone,
-  RSVP: {
-    resolve
-  }
 } = Ember;
 
 /**
@@ -22,6 +19,9 @@ export default Component.extend({
 
   layout,
 
+  /*
+   * Public attributes.
+   */
   /**
    * children
    * string
@@ -127,23 +127,26 @@ export default Component.extend({
    * function
    * Callback when clicked
    */
-  onClick: resolve,
+  onClick: null,
 
   /**
    * onFocus
    * function
    * Callback when button becomes focussed
    */
-  onFocus: resolve,
+  onFocus: null,
 
   /**
    * onBlur
    * function
    * Callback when focus leaves button
    */
-  onBlur: resolve,
+  onBlur: null,
 
+  /**
+   * Computed properties.
+   */
   buttonComponentName: computed('url', function() {
     return `polaris-button/${isNone(this.get('url')) ? 'button' : 'link'}`;
-  }).readOnly()
+  }).readOnly(),
 });
