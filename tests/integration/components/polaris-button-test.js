@@ -168,7 +168,7 @@ test('renders the correct HTML', function(assert) {
   assert.equal($button.attr('aria-label'), 'You can\'t see me!', 'accessible button - aria-label');
 });
 
-test('Handles events correctly', function(assert) {
+test('handles events correctly', function(assert) {
   let clickHandlerCallCount = 0;
   this.set('clickHandler', () => {
     clickHandlerCallCount++;
@@ -226,5 +226,21 @@ test('Handles events correctly', function(assert) {
     assert.equal(clickHandlerCallCount, 1, 'after first click, click handler fired 1 time');
     assert.equal(focusHandlerCallCount, 2, 'after first click, focus handler fired 2 times');
     assert.equal(blurHandlerCallCount, 1, 'after first click, blur handler fired 1 time');
+
+    $button.click();
+    return wait();
+  })
+  .then(() => {
+    assert.equal(clickHandlerCallCount, 2, 'after second click, click handler fired 2 times');
+    assert.equal(focusHandlerCallCount, 2, 'after second click, focus handler fired 2 times');
+    assert.equal(blurHandlerCallCount, 1, 'after second click, blur handler fired 1 time');
+
+    $button.blur();
+    return wait();
+  })
+  .then(() => {
+    assert.equal(clickHandlerCallCount, 2, 'after second blur, click handler fired 2 times');
+    assert.equal(focusHandlerCallCount, 2, 'after second blur, focus handler fired 2 times');
+    assert.equal(blurHandlerCallCount, 2, 'after second blur, blur handler fired 2 times');
   });
 });
