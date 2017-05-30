@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
+import { click, focus, blur } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-button', 'Integration | Component | polaris button', {
   integration: true
@@ -169,78 +169,49 @@ test('renders the correct HTML', function(assert) {
 });
 
 test('handles events correctly', function(assert) {
-  let clickHandlerCallCount = 0;
-  this.set('clickHandler', () => {
-    clickHandlerCallCount++;
+  let clickHandlerCalled = false;
+  this.on('click', () => {
+    clickHandlerCalled = true;
   });
 
-  let focusHandlerCallCount = 0;
-  this.set('focusHandler', () => {
-    focusHandlerCallCount++;
+  let focusHandlerCalled = false;
+  this.on('focus', () => {
+    focusHandlerCalled = true;
   });
 
-  let blurHandlerCallCount = 0;
-  this.set('blurHandler', () => {
-    blurHandlerCallCount++;
+  let blurHandlerCalled = false;
+  this.on('blur', () => {
+    blurHandlerCalled = true;
   });
 
   this.render(hbs`{{polaris-button
-    onClick=(action clickHandler)
-    onFocus=(action focusHandler)
-    onBlur=(action blurHandler)
+    onClick=(action "click")
+    onFocus=(action "focus")
+    onBlur=(action "blur")
   }}`);
 
-  const $button = this.$(' > button[type="button"].Polaris-Button');
+  const buttonSelector = 'button[type="button"].Polaris-Button';
+  const $button = this.$(` > ${buttonSelector}`);
   assert.equal($button.length, 1, 'button renders');
-  assert.equal(clickHandlerCallCount, 0, 'after render, click handler fired 0 times');
-  assert.equal(focusHandlerCallCount, 0, 'after render, focus handler fired 0 times');
-  assert.equal(blurHandlerCallCount, 0, 'after render, blur handler fired 0 times');
+  assert.notOk(clickHandlerCalled, 'after render, click handler not fired');
+  assert.notOk(focusHandlerCalled, 'after render, focus handler not fired');
+  assert.notOk(blurHandlerCalled, 'after render, blur handler not fired');
 
-  $button.focus();
-  return wait()
+  return focus(buttonSelector)
   .then(() => {
-    assert.equal(clickHandlerCallCount, 0, 'after first focus, click handler fired 0 times');
-    assert.equal(focusHandlerCallCount, 1, 'after first focus, focus handler fired 1 time');
-    assert.equal(blurHandlerCallCount, 0, 'after first focus, blur handler fired 0 times');
+    assert.notOk(clickHandlerCalled, 'after focus, click handler not fired');
+    assert.ok(focusHandlerCalled, 'after focus, focus handler fired');
+    assert.notOk(blurHandlerCalled, 'after focus, blur handler not fired');
 
-    $button.blur();
-    return wait();
+    return blur(buttonSelector);
   })
   .then(() => {
-    assert.equal(clickHandlerCallCount, 0, 'after first blur, click handler fired 0 times');
-    assert.equal(focusHandlerCallCount, 1, 'after first blur, focus handler fired 1 time');
-    assert.equal(blurHandlerCallCount, 1, 'after first blur, blur handler fired 1 time');
+    assert.notOk(clickHandlerCalled, 'after blur, click handler not fired');
+    assert.ok(blurHandlerCalled, 'after blur, blur handler fired');
 
-    $button.focus();
-    return wait();
+    return click(buttonSelector);
   })
   .then(() => {
-    assert.equal(clickHandlerCallCount, 0, 'after second focus, click handler fired 0 times');
-    assert.equal(focusHandlerCallCount, 2, 'after second focus, focus handler fired 2 times');
-    assert.equal(blurHandlerCallCount, 1, 'after second focus, blur handler fired 1 time');
-
-    $button.click();
-    return wait();
-  })
-  .then(() => {
-    assert.equal(clickHandlerCallCount, 1, 'after first click, click handler fired 1 time');
-    assert.equal(focusHandlerCallCount, 2, 'after first click, focus handler fired 2 times');
-    assert.equal(blurHandlerCallCount, 1, 'after first click, blur handler fired 1 time');
-
-    $button.click();
-    return wait();
-  })
-  .then(() => {
-    assert.equal(clickHandlerCallCount, 2, 'after second click, click handler fired 2 times');
-    assert.equal(focusHandlerCallCount, 2, 'after second click, focus handler fired 2 times');
-    assert.equal(blurHandlerCallCount, 1, 'after second click, blur handler fired 1 time');
-
-    $button.blur();
-    return wait();
-  })
-  .then(() => {
-    assert.equal(clickHandlerCallCount, 2, 'after second blur, click handler fired 2 times');
-    assert.equal(focusHandlerCallCount, 2, 'after second blur, focus handler fired 2 times');
-    assert.equal(blurHandlerCallCount, 2, 'after second blur, blur handler fired 2 times');
+    assert.ok(clickHandlerCalled, 'after click, click handler fired');
   });
 });
