@@ -60,4 +60,64 @@ test('renders the correct HTML', function(assert) {
 
   linkRel = $button.attr('rel');
   assert.equal(linkRel, 'noopener noreferrer', 'external link button - rel');
+
+
+  // Button with primary flag set.
+  this.render(hbs`{{polaris-button primary=true}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--primary'), 'primary button - primary class');
+
+
+  // Button with destructive flag set.
+  this.render(hbs`{{polaris-button destructive=true}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--destructive'), 'destructive button - destructive class');
+
+
+  // Button with disabled flag set.
+  this.render(hbs`{{polaris-button disabled=true}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--disabled'), 'disabled button - disabled class');
+  assert.ok($button.attr('disabled'), 'disabled button - disabled attribute');
+
+
+  // Link button with disabled flag set.
+  this.render(hbs`{{polaris-button url="http://www.somewhere.com/lets-go/" disabled=true}}`);
+  $button = this.$(' > a.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--disabled'), 'disabled link button - disabled class');
+  assert.ok($button.attr('disabled'), 'disabled link button - disabled attribute');
+
+
+  // Slim button.
+  this.render(hbs`{{polaris-button size="slim"}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--sizeSlim'), 'slim button - slim class');
+  assert.notOk($button.hasClass('Polaris-Button--sizeLarge'), 'slim button - no large class');
+
+
+  // Large button.
+  this.render(hbs`{{polaris-button size="large"}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--sizeLarge'), 'large button - large class');
+  assert.notOk($button.hasClass('Polaris-Button--sizeSlim'), 'large button - no slim class');
+
+
+  // Button with outline flag set.
+  this.render(hbs`{{polaris-button outline=true}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--outline'), 'outline button - outline class');
+
+
+  // Button with fullWidth flag set.
+  this.render(hbs`{{polaris-button fullWidth=true}}`);
+  $button = this.$(' > button.Polaris-Button');
+
+  assert.ok($button.hasClass('Polaris-Button--fullWidth'), 'fullWidth button - fullWidth class');
 });
