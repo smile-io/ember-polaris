@@ -1,12 +1,13 @@
 {{#component buttonComponentName
   url=url
+  external=external
 }}
   <span class="Polaris-Button__Content">
     <span>
       {{#if hasBlock}}
         {{yield}}
       {{else}}
-        {{{children}}}
+        {{children}}
       {{/if}}
     </span>
   </span>
