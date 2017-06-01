@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { click } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true
@@ -31,4 +32,46 @@ test('it renders title and content correctly', function(assert) {
 
   const contentText = $contents.text().trim();
   assert.equal(contentText, 'This is some test content', 'renders correct content');
+});
+
+test('it handles primary action correctly when a primary action is supplied', function(assert) {
+  let primaryActionFired = false;
+  this.on('primaryActionFired', () => {
+    primaryActionFired = true;
+  });
+  this.set('primaryActionDisabled', true);
+
+  this.render(hbs`
+    {{polaris-page
+      title="This is the title"
+      primaryAction=(hash
+        text="Take action!"
+        action=(action "primaryActionFired")
+        disabled=primaryActionDisabled
+      )
+    }}
+  `);
+
+  const primaryButtonSelector = [
+    'div.Polaris-Page',
+    'div.Polaris-Page__Header',
+    'div.Polaris-Page__Actions',
+    'div.Polaris-Page__PrimaryAction',
+    'button.Polaris-Button.Polaris-Button--primary'
+  ].join('>');
+
+  const $primaryButtons = this.$(` > ${primaryButtonSelector}`);
+  assert.equal($primaryButtons.length, 1, 'renders one primary button');
+  const primaryButtonText = $primaryButtons.text().trim();
+  assert.equal(primaryButtonText, 'Take action!', 'uses correct text on primary button');
+
+  assert.ok($primaryButtons.attr('disabled'), 'primary action button is initially disabled');
+  this.set('primaryActionDisabled', false);
+  assert.notOk($primaryButtons.attr('disabled'), 'primary action button becomes enabled');
+
+  assert.notOk(primaryActionFired, 'hasn\'t fired primary action before clicking button');
+  return click(primaryButtonSelector)
+  .then(() => {
+    assert.ok(primaryActionFired, 'fires primary action on click');
+  });
 });

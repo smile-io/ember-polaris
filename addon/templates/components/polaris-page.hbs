@@ -2,6 +2,22 @@
   {{#polaris-display-text tagName="h1" size="large"}}
     {{title}}
   {{/polaris-display-text}}
+
+  {{#if hasActions}}
+    <div class="Polaris-Page__Actions">
+      {{#if primaryAction}}
+        <div class="Polaris-Page__PrimaryAction">
+          {{#polaris-button
+            primary=true
+            disabled=primaryAction.disabled
+            onClick=primaryAction.action
+          }}
+            {{primaryAction.text}}
+          {{/polaris-button}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
 </div>
 
 <div class="Polaris-Page__Content">
