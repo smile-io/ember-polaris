@@ -15,6 +15,14 @@ test('it renders title and content correctly', function(assert) {
   const $pages = this.$(' > div.Polaris-Page');
   assert.equal($pages.length, 1, 'renders one page div');
 
+  const $headers = $pages.find(' > div.Polaris-Page__Header');
+  assert.equal($headers.length, 1, 'renders one page header div');
+
+  const $displayTexts = $headers.find(' > h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge');
+  assert.equal($displayTexts.length, 1, 'renders one page header display text');
+  const titleText = $displayTexts.text().trim();
+  assert.equal(titleText, 'This is the title');
+
   const $contentWrappers = $pages.find(' > div.Polaris-Page__Content');
   assert.equal($contentWrappers.length, 1, 'renders one page content wrapper div');
 
