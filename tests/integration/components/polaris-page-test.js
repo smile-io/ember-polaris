@@ -6,15 +6,20 @@ moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true
 });
 
-test('it renders title and content correctly', function(assert) {
+test('it renders the page correctly', function(assert) {
+  this.set('fullWidth', false);
   this.render(hbs`
-    {{#polaris-page title="This is the title"}}
+    {{#polaris-page
+      title="This is the title"
+      fullWidth=fullWidth
+    }}
       <div class="test-page-content">This is some test content</div>
     {{/polaris-page}}`
   );
 
   const $pages = this.$(' > div.Polaris-Page');
   assert.equal($pages.length, 1, 'renders one page div');
+  assert.notOk($pages.hasClass('Polaris-Page--fullWidth'), 'renders normal-width page');
 
   const $headers = $pages.find(' > div.Polaris-Page__Header');
   assert.equal($headers.length, 1, 'renders one page header div');
@@ -32,6 +37,9 @@ test('it renders title and content correctly', function(assert) {
 
   const contentText = $contents.text().trim();
   assert.equal(contentText, 'This is some test content', 'renders correct content');
+
+  this.set('fullWidth', true);
+  assert.ok($pages.hasClass('Polaris-Page--fullWidth'), 'honours fullWidth flag');
 });
 
 test('it handles primary action correctly when a primary action is supplied', function(assert) {
