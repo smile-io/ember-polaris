@@ -3,6 +3,7 @@ import layout from '../templates/components/polaris-subheading';
 
 const {
   Component,
+  computed,
 } = Ember;
 
 /**
@@ -22,6 +23,7 @@ const {
 export default Component.extend({
   tagName: 'h3',
   classNames: ['Polaris-Subheading'],
+  attributeBindings: ['ariaLabel:aria-label'],
 
   layout,
 
@@ -34,7 +36,7 @@ export default Component.extend({
    * The element name to use for the subheading
    * NOTE: use tagName instead to avoid "Cannot read property 'getElement' of undefined" error
    */
-  // element: 'h2',
+  // element: 'h3',
 
   /**
    * children
@@ -45,4 +47,9 @@ export default Component.extend({
    * instead of `children`
    */
   children: null,
+
+  /**
+   * Computed properties.
+   */
+  ariaLabel: computed.readOnly('children'),
 });
