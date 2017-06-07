@@ -1,26 +1,33 @@
 # ember-polaris
 
-This README outlines the details of collaborating on this Ember addon.
+`ember-polaris` is an `ember-cli` addon to make [Shopify's Polaris design system](https://polaris.shopify.com/) accessible to Ember developers.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
+Install `ember-polaris` using `ember-cli`:
+
+    ember install ember-polaris
+
+## Contributing
+### Installation
+
+* `git clone` this repository
 * `cd ember-polaris`
 * `npm install`
 * `bower install`
 
-## Running
+### Running
 
 * `ember serve`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
-## Running Tests
+### Running Tests
 
 * `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
 * `ember test`
 * `ember test --server`
 
-## Building
+### Building
 
 * `ember build`
 
