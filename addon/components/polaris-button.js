@@ -56,7 +56,7 @@ export default Component.extend({
   /**
    * disabled
    * boolean
-   * Display as destructive button
+   * Disable button
    */
   disabled: null,
 
