@@ -1,0 +1,63 @@
+$image-offset: 40%;
+$image-overflow-width: calc(100% + #{$image-offset} * 2);
+
+.Polaris-EmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: spacing(loose);
+  padding: spacing(loose);
+  padding-left: spacing(extra-loose);
+  text-align: center;
+
+  @include page-content-when-not-partially-condensed {
+    flex-direction: row-reverse;
+    padding-left: spacing(loose);
+    text-align: left;
+  }
+}
+
+.Polaris-EmptyState--imageContained {
+  .Polaris-EmptyState__Image {
+    @include page-content-when-not-partially-condensed {
+      position: initial;
+      width: 100%;
+    }
+  }
+}
+
+.Polaris-EmptyState__ImageContainer,
+.Polaris-EmptyState__Details {
+  @include page-content-when-not-partially-condensed {
+    flex-basis: 50%;
+  }
+}
+
+.Polaris-EmptyState__Image {
+  z-index: -1;
+  width: 60vw;
+
+  @include page-content-when-not-partially-condensed {
+    position: relative;
+    left: $image-offset * -1;
+    width: $image-overflow-width;
+  }
+}
+
+.Polaris-EmptyState__Details {
+  margin-top: spacing();
+
+  @include page-content-when-not-partially-condensed {
+    padding-right: spacing();
+  }
+}
+
+.Polaris-EmptyState__Actions {
+  margin-top: spacing();
+
+  @include page-content-when-partially-condensed {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -6,7 +6,16 @@
 
 Install `ember-polaris` using `ember-cli`:
 
-    ember install ember-polaris
+```
+> ember install ember-polaris
+```
+
+This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) to be installed in the host app, and you will need to import the Polaris styles in your `app.scss`:
+
+```css
+/* app.scss */
+@import "polaris/styles.scss";
+```
 
 ## Usage
 
@@ -21,7 +30,7 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 ##### `children` property
 A large number of the Polaris React components have a `children` property documented. In these cases, the corresponding `ember-polaris` component can be used in block form, with the block taking the place of the `children` property.
 
-##### `element` property
+##### `element` property
 Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted.
 
 ### Components
