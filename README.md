@@ -52,7 +52,7 @@ In the future we intend to extend this component to be more Ember-friendly by ad
 ###### Slim external link:
 ```
 {{#polaris-button url="www.example.com" external="true" size="slim"}}
-  Push me!
+  I'm a link
 {{/polaris-button}}
 ```
 
