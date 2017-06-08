@@ -6,7 +6,16 @@
 
 Install `ember-polaris` using `ember-cli`:
 
-    ember install ember-polaris
+```
+> ember install ember-polaris
+```
+
+This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) to be installed in the host app, and you will need to import the Polaris styles in your `app.scss`:
+
+```css
+/* app.scss */
+@import "polaris/styles.scss";
+```
 
 ## Usage
 
