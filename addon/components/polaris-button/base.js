@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { invokeAction } from 'ember-invoke-action';
+import mapEventToAction from '../../utils/map-event-to-action';
 
 const {
   Component,
@@ -41,15 +41,7 @@ export default Component.extend({
   /**
    * Action handlers.
    */
-  click() {
-    invokeAction(this, 'onClick');
-  },
-
-  focusIn() {
-    invokeAction(this, 'onFocus');
-  },
-
-  focusOut() {
-    invokeAction(this, 'onBlur');
-  },
+  click: mapEventToAction('onClick'),
+  focusIn: mapEventToAction('onFocus'),
+  focusOut: mapEventToAction('onBlur'),
 });
