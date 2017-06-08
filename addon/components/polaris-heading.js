@@ -28,21 +28,16 @@ export default Component.extend({
   /*
    * Public attributes.
    */
-  /*
-   * element
-   * string
-   * The element name to use for the heading
-   * NOTE: use tagName instead to avoid "Cannot read property 'getElement' of undefined" error
-   */
-  // element: 'h2',
-
   /**
-   * children
-   * string
    * The content to display inside the heading
-   * NOTE: this component can be used in block form,
+   *
+   * This component can be used in block form,
    * in which case the block content will be used
    * instead of `children`
+   *
+   * @property children
+   * @type {String}
+   * @default null
    */
   children: null,
 });

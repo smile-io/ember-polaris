@@ -6,6 +6,10 @@ const {
   computed,
 } = Ember;
 
+const {
+  reads,
+} = computed;
+
 /**
  * Polaris subheading component.
  * See https://polaris.shopify.com/components/titles-and-text/subheading
@@ -30,26 +34,21 @@ export default Component.extend({
   /*
    * Public attributes.
    */
-  /*
-   * element
-   * string
-   * The element name to use for the subheading
-   * NOTE: use tagName instead to avoid "Cannot read property 'getElement' of undefined" error
-   */
-  // element: 'h3',
-
   /**
-   * children
-   * string
-   * The content to display inside the subheading
-   * NOTE: this component can be used in block form,
+   * The content to display inside the heading
+   *
+   * This component can be used in block form,
    * in which case the block content will be used
    * instead of `children`
+   *
+   * @property children
+   * @type {String}
+   * @default null
    */
   children: null,
 
   /**
    * Computed properties.
    */
-  ariaLabel: computed.readOnly('children'),
+  ariaLabel: reads('children'),
 });
