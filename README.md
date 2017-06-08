@@ -31,7 +31,17 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 A large number of the Polaris React components have a `children` property documented. In these cases, the corresponding `ember-polaris` component can be used in block form, with the block taking the place of the `children` property.
 
 ##### `element` property
-Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted.
+Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted. This attribute cannot be dynamic - the following code would cause an error:
+
+```
+{{#polaris-display-text tagName=displayTextTagName}}
+  Displays fine to start with...
+{{/polaris-display-text}}
+
+{{#polaris-button onClick=(action (mut displayTextTagName) "h5")}}
+  ... but clicking this button will cause an error
+{{/polaris-button}}
+```
 
 ### Components
 

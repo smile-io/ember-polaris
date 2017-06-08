@@ -4,10 +4,12 @@ import layout from '../templates/components/polaris-display-text';
 const {
   Component,
   computed,
-  String: {
-    classify,
-  }
+  String: EmberString,
 } = Ember;
+
+const {
+  classify,
+} = EmberString;
 
 /**
  * Polaris display text component.
@@ -30,31 +32,28 @@ export default Component.extend({
 
   layout,
 
-  /*
+  /**
    * Public attributes.
    */
-  /*
-   * element
-   * string
-   * Name of element to use for text
-   * NOTE: use tagName instead to avoid "Cannot read property 'getElement' of undefined" error
-   */
-  // element: 'p',
-
-  /*
-   * size
-   * string
+  /**
    * Size of the text
+   *
+   * @property size
+   * @type {String}
+   * @default medium
    */
   size: 'medium',
 
   /**
-   * children
-   * string
    * Content to display
-   * NOTE: this component can be used in block form,
+   *
+   * This component can be used in block form,
    * in which case the block content will be used
    * instead of `children`
+   *
+   * @property children
+   * @type {String}
+   * @default null
    */
   children: null,
 
