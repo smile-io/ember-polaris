@@ -1,9 +1,9 @@
 import Ember from 'ember';
+import { invokeAction } from 'ember-invoke-action';
 
 const {
   Component,
   computed,
-  typeOf,
  } = Ember;
 
 export default Component.extend({
@@ -42,23 +42,14 @@ export default Component.extend({
    * Action handlers.
    */
   click() {
-    const handler = this.get('onClick');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
+    invokeAction(this, 'onClick');
   },
 
   focusIn() {
-    const handler = this.get('onFocus');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
+    invokeAction(this, 'onFocus');
   },
 
   focusOut() {
-    const handler = this.get('onBlur');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
+    invokeAction(this, 'onBlur');
   },
 });
