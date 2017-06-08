@@ -4,9 +4,9 @@
 
 `ember-polaris` is an `ember-cli` addon to make [Shopify's Polaris design system](https://polaris.shopify.com/) accessible to Ember developers.
 
-**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
-
 ## Status
+
+**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
 
 ### Implemented components
 None right now, check back soon!
