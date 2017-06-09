@@ -31,29 +31,69 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 A large number of the Polaris React components have a `children` property documented. In these cases, the corresponding `ember-polaris` component can be used in block form, with the block taking the place of the `children` property.
 
 ##### `element` property
-Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted.
+Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted. This attribute cannot be dynamic - the following code would cause an error:
+
+```
+{{#polaris-display-text tagName=displayTextTagName}}
+  Displays fine to start with...
+{{/polaris-display-text}}
+
+{{#polaris-button onClick=(action (mut displayTextTagName) "h5")}}
+  ... but clicking this button will cause an error
+{{/polaris-button}}
+```
 
 ### Components
 
-#### Button
+#### Actions
+
+##### Button
 `polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
 
 In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented.
 
-##### Examples
+###### Examples
 
-###### Basic button:
+Basic button:
 ```
 {{#polaris-button onClick=(action "doSomething")}}
   Push me!
 {{/polaris-button}}
 ```
 
-###### Slim external link:
+Slim external link:
 ```
-{{#polaris-button url="www.example.com" external="true" size="slim"}}
+{{#polaris-button
+  url="www.example.com"
+  external="true"
+  size="slim"
+}}
   I'm a link
 {{/polaris-button}}
+```
+
+#### Titles and Text
+
+##### Display text
+`polaris-display-text` implements the [Polaris Display text component](https://polaris.shopify.com/components/titles-and-text/display-text).
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-display-text}}
+  This is some basic display text
+{{/polaris-display-text}}
+```
+
+Extra-large heading:
+```
+{{#polaris-display-text
+  tagName="h1"
+  size="extraLarge"
+}}
+  This is a LARGE heading
+{{/polaris-display-text}}
 ```
 
 ## Contributing
