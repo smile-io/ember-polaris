@@ -33,6 +33,29 @@ A large number of the Polaris React components have a `children` property docume
 ##### `element` property
 Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted.
 
+### Components
+
+#### Button
+`polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
+
+In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented.
+
+##### Examples
+
+###### Basic button:
+```
+{{#polaris-button onClick=(action "doSomething")}}
+  Push me!
+{{/polaris-button}}
+```
+
+###### Slim external link:
+```
+{{#polaris-button url="www.example.com" external="true" size="slim"}}
+  I'm a link
+{{/polaris-button}}
+```
+
 ## Contributing
 ### Installation
 
