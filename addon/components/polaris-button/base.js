@@ -1,9 +1,9 @@
 import Ember from 'ember';
+import mapEventToAction from '../../utils/map-event-to-action';
 
 const {
   Component,
   computed,
-  typeOf,
  } = Ember;
 
 export default Component.extend({
@@ -41,24 +41,7 @@ export default Component.extend({
   /**
    * Action handlers.
    */
-  click() {
-    const handler = this.get('onClick');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
-  },
-
-  focusIn() {
-    const handler = this.get('onFocus');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
-  },
-
-  focusOut() {
-    const handler = this.get('onBlur');
-    if (typeOf(handler) === 'function') {
-      return handler();
-    }
-  },
+  click: mapEventToAction('onClick'),
+  focusIn: mapEventToAction('onFocus'),
+  focusOut: mapEventToAction('onBlur'),
 });
