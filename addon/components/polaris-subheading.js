@@ -3,12 +3,7 @@ import layout from '../templates/components/polaris-subheading';
 
 const {
   Component,
-  computed,
 } = Ember;
-
-const {
-  reads,
-} = computed;
 
 /**
  * Polaris subheading component.
@@ -48,7 +43,17 @@ export default Component.extend({
   children: null,
 
   /**
-   * Computed properties.
+   * Internal properties.
    */
-  ariaLabel: reads('children'),
+  ariaLabel: null,
+
+  /**
+   * Lifecycle hooks.
+   */
+  didRender() {
+    this._super(...arguments);
+
+    // Update ariaLabel with the new content.
+    this.set('ariaLabel', this.$().text().trim());
+  },
 });
