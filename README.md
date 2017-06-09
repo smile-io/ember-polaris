@@ -96,6 +96,48 @@ Extra-large heading:
 {{/polaris-display-text}}
 ```
 
+##### Heading
+`polaris-heading` implements the [Polaris Heading component](https://polaris.shopify.com/components/titles-and-text/heading).
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-heading}}
+  This is a basic heading
+{{/polaris-heading}}
+```
+
+Emphasised heading:
+```
+{{#polaris-heading
+  tagName="em"
+}}
+  This is an emphasised heading
+{{/polaris-heading}}
+```
+
+##### Subheading
+`polaris-subheading` implements the [Polaris Subheading component](https://polaris.shopify.com/components/titles-and-text/subheading).
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-subheading}}
+  This is a basic subheading
+{{/polaris-subheading}}
+```
+
+Underlined subheading:
+```
+{{#polaris-subheading
+  tagName="u"
+}}
+  This is an underlined subheading
+{{/polaris-subheading}}
+```
+
 ## Contributing
 ### Installation
 
