@@ -1,13 +1,32 @@
 # ember-polaris
 
+![image](https://user-images.githubusercontent.com/5737342/26935493-c8c81c76-4c74-11e7-90dd-ff8b0fdc434e.png)
+
 `ember-polaris` is an `ember-cli` addon to make [Shopify's Polaris design system](https://polaris.shopify.com/) accessible to Ember developers.
+
+## Status
+
+**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
+
+### Implemented components
+None right now, check back soon!
+
+### Up next
+
+#### Actions
+- Button
+
+#### Titles and text
+- Display text
+- Heading
+- Subheading
 
 ## Installation
 
 Install `ember-polaris` using `ember-cli`:
 
 ```
-> ember install ember-polaris
+ember install ember-polaris
 ```
 
 This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) to be installed in the host app, and you will need to import the Polaris styles in your `app.scss`:
