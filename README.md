@@ -9,9 +9,6 @@
 **NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
 
 ### Implemented components
-None right now, check back soon!
-
-### Up next
 
 #### Actions
 - Button
@@ -20,6 +17,11 @@ None right now, check back soon!
 - Display text
 - Heading
 - Subheading
+
+### In development
+
+#### Structure
+ - Page
 
 ## Installation
 
