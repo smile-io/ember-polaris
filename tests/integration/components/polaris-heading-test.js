@@ -8,7 +8,7 @@ moduleForComponent('polaris-heading', 'Integration | Component | polaris heading
 
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
-  this.render(hbs`{{polaris-heading children="This is a heading"}}`);
+  this.render(hbs`{{polaris-heading text="This is a heading"}}`);
 
   let headingSelector = 'h2.Polaris-Heading';
   assert.equal(findAll(headingSelector).length, 1, 'inline with defaults - renders one h2 heading');

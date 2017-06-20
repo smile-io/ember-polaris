@@ -27,13 +27,13 @@ export default Component.extend({
    *
    * This component can be used in block form,
    * in which case the block content will be used
-   * instead of `children`
+   * instead of `text`
    *
-   * @property children
+   * @property text
    * @type {String}
    * @default null
    */
-  children: null,
+  text: null,
 
   /**
    * URL to link to

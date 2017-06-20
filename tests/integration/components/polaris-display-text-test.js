@@ -8,7 +8,7 @@ moduleForComponent('polaris-display-text', 'Integration | Component | polaris di
 
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
-  this.render(hbs`{{polaris-display-text children="This is some text"}}`);
+  this.render(hbs`{{polaris-display-text text="This is some text"}}`);
 
   let displayTextSelector = 'p.Polaris-DisplayText.Polaris-DisplayText--sizeMedium';
   assert.equal(findAll(displayTextSelector).length, 1, 'inline with defaults - renders one display text paragraph');

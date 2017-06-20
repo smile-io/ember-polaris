@@ -7,15 +7,15 @@ moduleForComponent('polaris-button', 'Integration | Component | polaris button',
 });
 
 test('renders the correct HTML', function(assert) {
-  // Basic button, using children attribute.
-  this.render(hbs`{{polaris-button children="Look at my children"}}`);
+  // Basic button, using text attribute.
+  this.render(hbs`{{polaris-button text="Look at my text"}}`);
 
   let buttons = findAll('button[type="button"].Polaris-Button');
-  assert.equal(buttons.length, 1, 'basic button with children attribute - renders');
+  assert.equal(buttons.length, 1, 'basic button with text attribute - renders');
 
   let button = buttons[0];
   let buttonText = find('span.Polaris-Button__Content > span', button).innerText;
-  assert.equal(buttonText, 'Look at my children', 'basic button with children attribute - text');
+  assert.equal(buttonText, 'Look at my text', 'basic button with text attribute - text');
 
 
   // Basic button, block form.

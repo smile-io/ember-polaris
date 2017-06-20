@@ -49,7 +49,22 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 #### General Differences
 
 ##### `children` property
-A large number of the Polaris React components have a `children` property documented. In these cases, the corresponding `ember-polaris` component can be used in block form, with the block taking the place of the `children` property.
+A large number of the Polaris React components have a `children` property listed in their documentation. In these cases, the corresponding `ember-polaris` component can be given a `text` attribute which will take the place of the `children` property and specify the text to be rendered by the component. Alternatively these components can be used in block form to achieve the same result. Note that the block content will take precedence over the `text` attribute (if one is supplied):
+
+```
+{{polaris-button text="Attribute text"}}
+ => renders a button with the content "Attribute text"
+
+{{#polaris-button}}
+  Block text
+{{/polaris-button}}
+ => renders a button with the content "Block text"
+
+{{#polaris-button text="Attribute text"}}
+  Block text
+{{/polaris-button}}
+ => renders a button with the content "Block text"
+```
 
 ##### `element` property
 Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted. This attribute cannot be dynamic - the following code would cause an error:

@@ -8,7 +8,7 @@ moduleForComponent('polaris-subheading', 'Integration | Component | polaris subh
 
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
-  this.render(hbs`{{polaris-subheading children="This is a subheading"}}`);
+  this.render(hbs`{{polaris-subheading text="This is a subheading"}}`);
 
   let subheadings = findAll('h3.Polaris-Subheading');
   assert.equal(subheadings.length, 1, 'inline with defaults - renders one h3 subheading');
