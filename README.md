@@ -21,9 +21,6 @@
 - Heading
 - Subheading
 
-### In development
- Nothing right now, please check back soon or submit a PR :smile:
-
 ## Installation
 
 Install `ember-polaris` using `ember-cli`:
@@ -114,6 +111,8 @@ Slim external link:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
+**NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
+
 ###### Examples
 
 Basic usage:
@@ -123,6 +122,19 @@ Basic usage:
 }}
   Your page content goes here
 {{/polaris-page}}
+```
+
+Full-width page with disableable primary action:
+```
+{{polaris-page
+  title="This is the title"
+  fullWidth=true
+  primaryAction=(hash
+    text="Take action!"
+    action=(action "primaryActionFired")
+    disabled=primaryActionDisabled
+  )
+}}
 ```
 
 #### Titles and Text
