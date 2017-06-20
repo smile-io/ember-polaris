@@ -11,6 +11,9 @@ const {
  */
 export default Component.extend({
   classNames: ['Polaris-Card'],
+  classNameBindings: [
+    'subdued:Polaris-Card--subdued',
+  ],
 
   layout,
 
@@ -45,7 +48,6 @@ export default Component.extend({
    * @property subdued
    * @type {boolean}
    * @default: false
-   * TODO: not implemented
    */
   subdued: false,
 
@@ -55,7 +57,6 @@ export default Component.extend({
    * @property sectioned
    * @type {boolean}
    * @default: true
-   * TODO: not implemented
    */
   sectioned: true,
 
@@ -65,9 +66,9 @@ export default Component.extend({
    * @property actions
    * @type {Action[]}
    * @default: null
-   * TODO: not implemented
+   * TODO: not implemented, need to rename this to avoid collisions with actions hash
    */
-  actions: null,
+  // actions: null,
 
   /**
    * Primary action in the card footer

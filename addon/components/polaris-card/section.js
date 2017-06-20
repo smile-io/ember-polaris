@@ -9,6 +9,4 @@ export default Component.extend({
   classNames: ['Polaris-Card__Section'],
 
   layout,
-
-  wrapParagraph: true,
 });

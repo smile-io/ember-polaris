@@ -6,12 +6,24 @@
   </div>
 {{/if}}
 
-{{#if sectioned}}
-  {{#polaris-card/section}}
+{{#with (component "polaris-card/section") as |section|}}
+  {{#if sectioned}}
+    {{#component section}}
+      {{#if hasBlock}}
+        {{yield (hash
+          section=section
+        )}}
+      {{else}}
+        {{text}}
+      {{/if}}
+    {{/component}}
+  {{else}}
     {{#if hasBlock}}
-      {{yield}}
+      {{yield (hash
+        section=section
+      )}}
     {{else}}
       {{text}}
     {{/if}}
-  {{/polaris-card/section}}
-{{/if}}
+  {{/if}}
+{{/with}}
