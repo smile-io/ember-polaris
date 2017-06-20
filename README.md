@@ -49,7 +49,7 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 #### General Differences
 
 ##### `children` property
-A large number of the Polaris React components have a `children` property documented. In these cases, the corresponding `ember-polaris` component can be used in block form, with the block taking the place of the `children` property.
+A large number of the Polaris React components have a `children` property listed in their documentation. In these cases, the corresponding `ember-polaris` component can either be given a `text` attribute, or be used in block form, with the block taking the place of the `children` property.
 
 ##### `element` property
 Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted. This attribute cannot be dynamic - the following code would cause an error:
