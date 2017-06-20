@@ -1,19 +1,16 @@
 /* eslint-env node */
 module.exports = {
-  description: ''
+  description: '',
 
-  // locals: function(options) {
-  //   // Return custom template variables here.
-  //   return {
-  //     foo: options.entity.options.foo
-  //   };
-  // }
+  normalizeEntityName: function() {
+    // this prevents an error when the entityName is
+    // not specified when running `ember g ember-polaris`
+    // (since that doesn't actually matter to us
+  },
 
-  afterInstall: function(options) {
-    var _this = this;
+  afterInstall: function(/* options */) {
     return this.addPackagesToProject([
       { name: 'ember-cli-sass', target: 'latest' }
     ]);
-  }
   }
 };
