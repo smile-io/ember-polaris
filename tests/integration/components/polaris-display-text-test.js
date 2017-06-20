@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { findAll, find } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-display-text', 'Integration | Component | polaris display text', {
   integration: true
@@ -8,9 +9,10 @@ moduleForComponent('polaris-display-text', 'Integration | Component | polaris di
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
   this.render(hbs`{{polaris-display-text children="This is some text"}}`);
-  let $displayTexts = this.$(' > p.Polaris-DisplayText.Polaris-DisplayText--sizeMedium');
-  assert.equal($displayTexts.length, 1, 'inline with defaults - renders one display text paragraph');
-  assert.equal($displayTexts.text().trim(), 'This is some text', 'inline with defaults - renders correct text');
+
+  let displayTextSelector = 'p.Polaris-DisplayText.Polaris-DisplayText--sizeMedium';
+  assert.equal(findAll(displayTextSelector).length, 1, 'inline with defaults - renders one display text paragraph');
+  assert.equal(find(displayTextSelector).innerText, 'This is some text', 'inline with defaults - renders correct text');
 
   // Block form with element and size specified.
   this.render(hbs`
@@ -18,7 +20,8 @@ test('it renders the correct HTML', function(assert) {
       This is some BIG text
     {{/polaris-display-text}}
   `);
-  $displayTexts = this.$(' > h3.Polaris-DisplayText.Polaris-DisplayText--sizeExtraLarge');
-  assert.equal($displayTexts.length, 1, 'block with customisation - renders one display text paragraph');
-  assert.equal($displayTexts.text().trim(), 'This is some BIG text', 'block with customisation - renders correct text');
+
+  displayTextSelector = 'h3.Polaris-DisplayText.Polaris-DisplayText--sizeExtraLarge';
+  assert.equal(findAll(displayTextSelector).length, 1, 'block with customisation - renders one display text paragraph');
+  assert.equal(find(displayTextSelector).innerText, 'This is some BIG text', 'block with customisation - renders correct text');
 });

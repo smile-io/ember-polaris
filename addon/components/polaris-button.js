@@ -23,126 +23,161 @@ export default Component.extend({
    * Public attributes.
    */
   /**
-   * children
-   * string
    * The content to display inside the button
-   * NOTE: this component can be used in block form,
+   *
+   * This component can be used in block form,
    * in which case the block content will be used
    * instead of `children`
+   *
+   * @property children
+   * @type {String}
+   * @default null
    */
   children: null,
 
   /**
-   * url
-   * string
    * URL to link to
+   *
+   * @property url
+   * @type {string}
+   * @default null
    */
   url: null,
 
   /**
-   * primary
-   * boolean
    * Display as primary button
+   *
+   * @property primary
+   * @type {boolean}
+   * @default false
    */
-  primary: null,
+  primary: false,
 
   /**
-   * destructive
-   * boolean
    * Display as destructive button
+   *
+   * @property destructive
+   * @type {boolean}
+   * @default false
    */
-  destructive: null,
+  destructive: false,
 
   /**
-   * disabled
-   * boolean
-   * Display as destructive button
+   * Disable button
+   *
+   * @property disabled
+   * @type {boolean}
+   * @default false
    */
-  disabled: null,
+  disabled: false,
 
   /**
-   * size
-   * enum
    * Change the size of the button
+   *
+   * @property size
+   * @type {enum}
+   * @default null
    */
   size: null,
 
   /**
-   * outline
-   * boolean
    * Display an outlined button
+   *
+   * @property outline
+   * @type {boolean}
+   * @default false
    */
-  outline: null,
+  outline: false,
 
   /**
-   * fullWidth
-   * boolean
    * Display full width button
+   *
+   * @property fullWidth
+   * @type {boolean}
+   * @default false
    */
-  fullWidth: null,
+  fullWidth: false,
 
   /**
-   * disclosure
-   * boolean
    * Display button with a disclosure icon
+   *
+   * @property disclosure
+   * @type {boolean}
+   * @default false
    */
   //  TODO: needs polaris-icon component.
-  disclosure: null,
+  disclosure: false,
 
   /**
-   * submit
-   * boolean
    * Button will submit a form
+   *
+   * @property submit
+   * @type {boolean}
+   * @default false
    */
-  submit: null,
+  submit: false,
 
   /**
-   * plain
-   * boolean
    * Use plain button style
+   *
+   * @property plain
+   * @type {boolean}
+   * @default false
    */
-  plain: null,
+  plain: false,
 
   /**
-   * external
-   * boolean
    * Force url to open in a new tab
+   *
+   * @property external
+   * @type {boolean}
+   * @default false
    */
-  external: null,
+  external: false,
 
   /**
-   * icon
-   * SVG
    * Icon to display in the banner
+   *
+   * @property icon
+   * @type {SVG}
+   * @default null
    */
   //  TODO: implement this.
   icon: null,
 
   /**
-   * accessibilityLabel
-   * string
    * Visually hidden text for screen readers
+   *
+   * @property accessibilityLabel
+   * @type {string}
+   * @default null
    */
   accessibilityLabel: null,
 
   /**
-   * onClick
-   * function
    * Callback when clicked
+   *
+   * @property onClick
+   * @type {function}
+   * @default null
    */
   onClick: null,
 
   /**
-   * onFocus
-   * function
    * Callback when button becomes focussed
+   *
+   * @property onFocus
+   * @type {function}
+   * @default null
    */
   onFocus: null,
 
   /**
-   * onBlur
-   * function
    * Callback when focus leaves button
+   *
+   * @property onBlur
+   * @type {function}
+   * @default null
    */
   onBlur: null,
 
@@ -150,6 +185,7 @@ export default Component.extend({
    * Computed properties.
    */
   buttonComponentName: computed('url', function() {
-    return `polaris-button/${isNone(this.get('url')) ? 'button' : 'link'}`;
+    const buttonType = isNone(this.get('url')) ? 'button' : 'link';
+    return `polaris-button/${buttonType}`;
   }).readOnly(),
 });
