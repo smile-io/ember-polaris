@@ -35,7 +35,7 @@ This addon requires [ember-cli-sass](https://github.com/aexmachina/ember-cli-sas
 
 ```css
 /* app.scss */
-@import "polaris/styles.scss";
+@import "ember-polaris";
 ```
 
 ## Usage
