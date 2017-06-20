@@ -1,0 +1,17 @@
+{{#if title}}
+  <div class="Polaris-Card__Header">
+    {{#polaris-heading}}
+      {{title}}
+    {{/polaris-heading}}
+  </div>
+{{/if}}
+
+{{#if sectioned}}
+  {{#polaris-card/section}}
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  {{/polaris-card/section}}
+{{/if}}

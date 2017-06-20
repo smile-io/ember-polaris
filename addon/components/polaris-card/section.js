@@ -1,0 +1,14 @@
+import Ember from 'ember';
+import layout from '../../templates/components/polaris-card/section';
+
+const {
+  Component,
+} = Ember;
+
+export default Component.extend({
+  classNames: ['Polaris-Card__Section'],
+
+  layout,
+
+  wrapParagraph: true,
+});
