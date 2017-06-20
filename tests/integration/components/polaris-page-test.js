@@ -1,10 +1,14 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { click } from 'ember-native-dom-helpers';
+import { findAll, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true
 });
+
+function buildNestedSelector(...selectors) {
+  return selectors.join(' > ');
+}
 
 test('it renders the page correctly', function(assert) {
   this.set('fullWidth', false);
@@ -17,29 +21,36 @@ test('it renders the page correctly', function(assert) {
     {{/polaris-page}}`
   );
 
-  const $pages = this.$(' > div.Polaris-Page');
-  assert.equal($pages.length, 1, 'renders one page div');
-  assert.notOk($pages.hasClass('Polaris-Page--fullWidth'), 'renders normal-width page');
+  const pageSelector = 'div.Polaris-Page';
+  const pages = findAll(pageSelector);
+  assert.equal(pages.length, 1, 'renders one page div');
 
-  const $headers = $pages.find(' > div.Polaris-Page__Header');
-  assert.equal($headers.length, 1, 'renders one page header div');
+  const page = pages[0];
+  assert.notOk(page.classList.contains('Polaris-Page--fullWidth'), 'renders normal-width page');
 
-  const $displayTexts = $headers.find(' > h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge');
-  assert.equal($displayTexts.length, 1, 'renders one page header display text');
-  const titleText = $displayTexts.text().trim();
-  assert.equal(titleText, 'This is the title');
+  const headerSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Header');
+  const headers = findAll(headerSelector);
+  assert.equal(headers.length, 1, 'renders one page header div');
 
-  const $contentWrappers = $pages.find(' > div.Polaris-Page__Content');
-  assert.equal($contentWrappers.length, 1, 'renders one page content wrapper div');
+  const displayTextSelector = buildNestedSelector(headerSelector, 'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge');
+  const displayTexts = findAll(displayTextSelector);
+  assert.equal(displayTexts.length, 1, 'renders one page header display text');
+  const titleText = displayTexts[0].textContent.trim();
+  assert.equal(titleText, 'This is the title', 'renders correct page header display text content');
 
-  const $contents = $contentWrappers.find(' > div.test-page-content');
-  assert.equal($contents.length, 1, 'renders one content div');
+  const contentWrapperSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Content');
+  const contentWrappers = findAll(contentWrapperSelector);
+  assert.equal(contentWrappers.length, 1, 'renders one page content wrapper div');
 
-  const contentText = $contents.text().trim();
+  const contentSelector = buildNestedSelector(contentWrapperSelector, 'div.test-page-content');
+  const contents = findAll(contentSelector);
+  assert.equal(contents.length, 1, 'renders one content div');
+
+  const contentText = contents[0].textContent.trim();
   assert.equal(contentText, 'This is some test content', 'renders correct content');
 
   this.set('fullWidth', true);
-  assert.ok($pages.hasClass('Polaris-Page--fullWidth'), 'honours fullWidth flag');
+  assert.ok(page.classList.contains('Polaris-Page--fullWidth'), 'honours fullWidth flag');
 });
 
 test('it handles primary action correctly when a primary action is supplied', function(assert) {
