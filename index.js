@@ -1,27 +1,28 @@
 /* eslint-env node */
 'use strict';
 
-var fs = require('fs');
 var path = require('path');
-
-var path_join = function() {
-  // fix path with windows back slash with path_join
-  return path.join.apply(this, arguments).replace(/\\/g, '/');
-};
+var resolve = require('resolve');
+var Funnel = require('broccoli-funnel');
+var mergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
   name: 'ember-polaris',
 
-  included: function included(app) {
-    this._super.included.apply(this, arguments);
+  treeForStyles(tree) {
+    var packageRoot = path.dirname(resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }));
+    var polarisScssFiles = new Funnel(packageRoot, {
+      include: ['styles.scss', 'styles/**/*'],
+      srcDir: './',
+      destDir: 'ember-polaris',
+      annotation: 'PolarisScssFunnel'
+    });
 
-    var modulePath      = path.relative(app.project.root, __dirname);
-    var shopifySassPath = 'vendor/@shopify';
+    return this._super.treeForStyles(mergeTrees([polarisScssFiles, tree], { overwrite: true }));
+  },
 
-    // Non-destructively add paths to SASS.
-    app.options.sassOptions = app.options.sassOptions || {};
-    app.options.sassOptions.includePaths = app.options.sassOptions.includePaths || [];
-
-    app.options.sassOptions.includePaths.push(path_join(modulePath, shopifySassPath));
+  // TODO remove this once shipping to prod
+  isDevelopingAddon() {
+    return true;
   }
 };
