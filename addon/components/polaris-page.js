@@ -19,64 +19,82 @@ export default Component.extend({
   /*
    * Public attributes.
    */
-  /*
-   * title
-   * string
+  /**
    * Page title, in large type
+   *
+   * @property title
+   * @type {string}
+   * @default null
    */
   title: null,
 
-  /*
-   * icon
-   * string
+  /**
    * App icon, for pages that are part of Shopify apps
+   *
+   * @property icon
+   * @type {string}
+   * @default null
    * TODO: needs polaris-icon component.
    */
   icon: null,
 
-  /*
-   * breadcrumbs
-   * BreadcrumbProps["breadcrumbs"]
+  /**
    * Collection of breadcrumbs
+   *
+   * @property breadcrumbs
+   * @type {BreadcrumbProps["breadcrumbs"]}
+   * @default null
    * TODO: not implemented yet
    */
   breadcrumbs: null,
 
-  /*
-   * children
-   * React.ReactNode
+  /**
    * The contents of the page
-   * NOTE: this component can ONLY be used in block form,
-   * so `children` will be ignored if supplied.
+   *
+   * This component can be used in block form,
+   * in which case the block content will be used
+   * instead of `text`
+   *
+   * @property text
+   * @type {String}
+   * @default null
    */
-  // children: null,
+  text: null,
 
-  /*
-   * fullWidth
-   * boolean
+  /**
    * Remove the normal max-width on the page
+   *
+   * @property fullWidth
+   * @type {boolean}
+   * @default false
    */
-  fullWidth: null,
+  fullWidth: false,
 
-  /*
-   * secondaryActions
-   * ComplexAction[]
+  /**
    * Collection of secondary page-level actions
+   *
+   * @property secondaryActions
+   * @type {ComplexAction[]}
+   * @default null
    * TODO: not implemented yet
    */
   secondaryActions: null,
 
-  /*
-   * primaryAction
-   * DisableableAction
+  /**
    * Primary page-level action
+   *
+   * @property primaryAction
+   * @type {DisableableAction}
+   * @default null
    */
   primaryAction: null,
 
-  /*
-   * pagination
-   * PaginationDescriptor
+  /**
    * Page-level pagination
+   *
+   * @property pagination
+   * @type {PaginationDescriptor}
+   * @default null
    * TODO: not implemented yet
    */
   pagination: null,

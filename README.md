@@ -13,15 +13,16 @@
 #### Actions
 - Button
 
+#### Structure
+- Page
+
 #### Titles and text
 - Display text
 - Heading
 - Subheading
 
 ### In development
-
-#### Structure
- - Page
+ Nothing right now, please check back soon or submit a PR :smile:
 
 ## Installation
 
@@ -106,6 +107,22 @@ Slim external link:
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+#### Structure
+
+##### Page
+`polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-page
+  title="Welcome to Polaris!"
+}}
+  Your page content goes here
+{{/polaris-page}}
 ```
 
 #### Titles and Text

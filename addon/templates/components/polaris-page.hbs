@@ -21,5 +21,9 @@
 </div>
 
 <div class="Polaris-Page__Content">
-  {{yield}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
 </div>
