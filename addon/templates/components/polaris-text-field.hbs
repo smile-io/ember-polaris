@@ -1,4 +1,14 @@
-<div class="Polaris-TextField">
-  {{one-way-input class="Polaris-TextField__Input"}}
+<div class="
+  Polaris-TextField
+  {{if disabled 'Polaris-TextField--disabled'}}
+  {{if readOnly 'Polaris-TextField--readOnly'}}
+">
+  {{one-way-input
+    class="Polaris-TextField__Input"
+    value=value
+    placeholder=placeholder
+    disabled=disabled
+    readOnly=readOnly
+  }}
   <div class="Polaris-TextField__Backdrop"></div>
 </div>
