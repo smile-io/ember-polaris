@@ -9,7 +9,7 @@ moduleForComponent('polaris-text-field', 'Integration | Component | polaris text
 
 test('it renders the correct HTML', function(assert) {
   // Basic usage.
-  this.set('value', 'Some initial text');
+  this.set('value', '');
   this.render(hbs`
     {{polaris-text-field
       placeholder="Write something here!"
@@ -21,13 +21,21 @@ test('it renders the correct HTML', function(assert) {
   let textFields = findAll(textFieldSelector);
   assert.equal(textFields.length, 1, 'basic usage - renders one text field');
 
+  let textField = textFields[0];
+  assert.notOk(textField.classList.contains('Polaris-TextField--hasValue'), 'basic usage - does not apply hasValue class to text field when value is empty');
+
+
   const inputSelector = buildNestedSelector(textFieldSelector, 'input.Polaris-TextField__Input');
   let inputs = findAll(inputSelector);
   assert.equal(inputs.length, 1, 'basic usage - renders one input');
 
   let input = inputs[0];
-  assert.equal(input.value, 'Some initial text', 'basic usage - sets initial text');
+  assert.equal(input.value, '', 'basic usage - input starts with empty value');
   assert.equal(input.placeholder, 'Write something here!', 'basic usage - sets placeholder');
+
+  this.set('value', 'Some value or other');
+  assert.ok(textField.classList.contains('Polaris-TextField--hasValue'), 'basic usage - applies hasValue class to text field after setting value');
+  assert.equal(input.value, 'Some value or other', 'basic usage - input value updates after setting value');
 
   const backdropSelector = buildNestedSelector(textFieldSelector, 'div.Polaris-TextField__Backdrop');
   let backdrops = findAll(backdropSelector);
@@ -42,7 +50,7 @@ test('it renders the correct HTML', function(assert) {
     }}
   `);
 
-  let textField = find(textFieldSelector);
+  textField = find(textFieldSelector);
   input = find(inputSelector);
 
   assert.notOk(textField.classList.contains('Polaris-TextField--disabled'), 'disabled=false - does not apply disabled class to text field');

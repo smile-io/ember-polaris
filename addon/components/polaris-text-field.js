@@ -3,7 +3,12 @@ import layout from '../templates/components/polaris-text-field';
 
 const {
   Component,
+  computed,
 } = Ember;
+
+const {
+  notEmpty,
+} = computed;
 
 export default Component.extend({
   layout,
@@ -296,4 +301,9 @@ export default Component.extend({
    * TODO: not implemented
    */
   onBlur: null,
+
+  /*
+   * Internal properties.
+   */
+  hasValue: notEmpty('value'),
 });
