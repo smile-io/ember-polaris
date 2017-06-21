@@ -89,24 +89,32 @@ test('it renders the correct HTML', function(assert) {
 
 
   // With a label.
-  // this.render(hbs`{{polaris-text-field label="This is my label"}}`);
-  //
-  // const labelSelector = buildNestedSelector(
-  //   'div',
-  //   'div.Polaris-Labelled__LabelWrapper',
-  //   'div.Polaris-Label',
-  //   'label.Polaris-Label__Text'
-  // );
-  // const labels = findAll(labelSelector);
-  // assert.equal(textFields.length, 1, 'basic usage with label - renders one label');
-  // assert.equal(textFields[0].textContent.trim(), 'This is my label', 'basic usage with label - renders correct label text');
-  //
-  // textFields = findAll(textFieldSelector);
-  // assert.equal(textFields.length, 1, 'basic usage with label - renders one text field');
-  //
-  // inputs = findAll(inputSelector);
-  // assert.equal(inputs.length, 1, 'basic usage with label - renders one input');
-  //
-  // backdrops = findAll(backdropSelector);
-  // assert.equal(backdrops.length, 1, 'basic usage with label - renders one backdrop');
+  this.render(hbs`
+    {{polaris-text-field
+      inputId="labelledTextField"
+      name="myNameIsJim"
+      label="This is my label"
+    }}
+  `);
+
+  const labelSelector = buildNestedSelector(
+    'div',
+    'div.Polaris-Labelled__LabelWrapper',
+    'div.Polaris-Label',
+    'label.Polaris-Label__Text'
+  );
+
+// test text field renders and has:
+// aria-labelledby="labelledTextFieldLabel"
+
+  const labels = findAll(labelSelector);
+  assert.equal(labels.length, 1, 'with label - renders one label');
+
+  const label = labels[0];
+  assert.equal(label.textContent.trim(), 'This is my label', 'with label - renders correct label text');
+  assert.equal(label.id, 'labelledTextFieldLabel', 'with label - gives label correct ID');
+  assert.equal(label.attributes['for'].value, 'labelledTextField', 'with label - specifies label is for input');
+
+  input = find(inputSelector);
+  assert.equal(input.attributes['aria-labelledby'].value, 'labelledTextFieldLabel', 'with label - gives input correct aria-labelledby attribute');
 });

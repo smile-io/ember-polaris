@@ -70,7 +70,6 @@ export default Component.extend({
    * @property label
    * @type string
    * @default null
-   * TODO: not implemented
    */
   label: null,
 
@@ -306,4 +305,7 @@ export default Component.extend({
    * Internal properties.
    */
   hasValue: notEmpty('value'),
+  labelId: computed('inputId', function() {
+    return `${this.get('inputId')}Label`;
+  }).readOnly(),
 });
