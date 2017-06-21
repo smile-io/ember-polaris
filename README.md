@@ -154,6 +154,8 @@ Three sections - first section with a title, third section subdued:
 **NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
 
 ###### Examples
+
+Basic usage:
 ```
 {{#polaris-page
   title="Welcome to Polaris!"
