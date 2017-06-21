@@ -1,0 +1,28 @@
+<div class="Polaris-Page__Header">
+  {{#polaris-display-text tagName="h1" size="large"}}
+    {{title}}
+  {{/polaris-display-text}}
+
+  {{#if hasActions}}
+    <div class="Polaris-Page__Actions">
+      {{#if primaryAction}}
+        <div class="Polaris-Page__PrimaryAction">
+          {{polaris-button
+            primary=true
+            text=primaryAction.text
+            disabled=primaryAction.disabled
+            onClick=(action primaryAction.action)
+          }}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
+
+<div class="Polaris-Page__Content">
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</div>

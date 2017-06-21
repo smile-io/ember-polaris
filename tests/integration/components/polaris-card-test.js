@@ -1,14 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll } from 'ember-native-dom-helpers';
+import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-card', 'Integration | Component | polaris card', {
   integration: true
 });
-
-function buildNestedSelector(...selectors) {
-  return selectors.join(' > ');
-}
 
 test('it renders the correct HTML', function(assert) {
   // Basic usage.

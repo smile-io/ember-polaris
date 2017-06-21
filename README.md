@@ -15,6 +15,7 @@
 
 #### Structure
 - Card
+- Page
 
 #### Titles and text
 - Display text
@@ -145,6 +146,33 @@ Three sections - first section with a title, third section subdued:
     <p>This is the third section's subdued content</p>
   {{/card.section}}
 {{/polaris-card}}
+```
+
+##### Page
+`polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
+
+**NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
+
+###### Examples
+```
+{{#polaris-page
+  title="Welcome to Polaris!"
+}}
+  Your page content goes here
+{{/polaris-page}}
+```
+
+Full-width page with disableable primary action:
+```
+{{polaris-page
+  title="This is the title"
+  fullWidth=true
+  primaryAction=(hash
+    text="Take action!"
+    action=(action "primaryActionFired")
+    disabled=primaryActionDisabled
+  )
+}}
 ```
 
 #### Titles and Text
