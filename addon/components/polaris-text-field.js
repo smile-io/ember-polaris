@@ -178,19 +178,19 @@ export default Component.extend({
    * @property name
    * @type string
    * @default null
-   * TODO: not implemented
    */
   name: null,
 
   /**
    * ID for the input
    *
+   * Note that this is renamed from the React component to avoid Ember issues.
+   *
    * @property id
    * @type string
    * @default null
-   * TODO: not implemented
    */
-  id: null,
+  inputId: null,
 
   /**
    * Limit increment value for numeric and date-time inputs

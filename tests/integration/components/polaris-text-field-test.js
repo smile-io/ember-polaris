@@ -80,6 +80,14 @@ test('it renders the correct HTML', function(assert) {
   assert.ok(input.readOnly, 'readOnly=true - adds read-only attribute to input');
 
 
+  // With an ID and name.
+  this.render(hbs`{{polaris-text-field inputId="testTextFieldId" name="myNameIsBob"}}`);
+
+  input = find(inputSelector);
+  assert.equal(input.id, 'testTextFieldId', 'with ID and name - sets ID on input');
+  assert.equal(input.name, 'myNameIsBob', 'with ID and name - sets name on input');
+
+
   // With a label.
   // this.render(hbs`{{polaris-text-field label="This is my label"}}`);
   //
