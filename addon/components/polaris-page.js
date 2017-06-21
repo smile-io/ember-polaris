@@ -6,13 +6,17 @@ const {
   computed,
 } = Ember;
 
+const {
+  or,
+} = computed;
+
 /**
  * Polaris page component.
  * See https://polaris.shopify.com/components/structure/page
  */
 export default Component.extend({
   classNames: ['Polaris-Page'],
-  classNameBindings: ['fullWidthClassName'],
+  classNameBindings: ['fullWidth:Polaris-Page--fullWidth'],
 
   layout,
 
@@ -102,10 +106,5 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasActions: computed.or('primaryAction', 'secondaryActions'),
-
-  fullWidthClassName: computed('fullWidth', function() {
-    const fullWidth = this.get('fullWidth');
-    return fullWidth ? 'Polaris-Page--fullWidth' : null;
-  }).readOnly(),
+  hasActions: or('primaryAction', 'secondaryActions'),
 });

@@ -7,13 +7,12 @@
     <div class="Polaris-Page__Actions">
       {{#if primaryAction}}
         <div class="Polaris-Page__PrimaryAction">
-          {{#polaris-button
+          {{polaris-button
             primary=true
+            text=primaryAction.text
             disabled=primaryAction.disabled
-            onClick=primaryAction.action
+            onClick=(action primaryAction.action)
           }}
-            {{primaryAction.text}}
-          {{/polaris-button}}
         </div>
       {{/if}}
     </div>

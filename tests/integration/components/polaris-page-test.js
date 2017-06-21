@@ -90,7 +90,7 @@ test('it handles primary action correctly when a primary action is supplied', fu
   assert.notOk(primaryButton.disabled, 'primary action button becomes enabled');
 
   assert.notOk(primaryActionFired, 'hasn\'t fired primary action before clicking button');
-  return click(primaryButtonSelector)
+  click(primaryButtonSelector)
   .then(() => {
     assert.ok(primaryActionFired, 'fires primary action on click');
   });
