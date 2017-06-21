@@ -1,14 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, click } from 'ember-native-dom-helpers';
+import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true
 });
-
-function buildNestedSelector(...selectors) {
-  return selectors.join(' > ');
-}
 
 test('it renders the page correctly', function(assert) {
   this.set('fullWidth', false);
