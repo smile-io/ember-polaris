@@ -13,15 +13,13 @@
 #### Actions
 - Button
 
+#### Structure
+- Page
+
 #### Titles and text
 - Display text
 - Heading
 - Subheading
-
-### In development
-
-#### Structure
- - Page
 
 ## Installation
 
@@ -107,6 +105,37 @@ Slim external link:
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+#### Structure
+
+##### Page
+`polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
+
+**NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-page
+  title="Welcome to Polaris!"
+}}
+  Your page content goes here
+{{/polaris-page}}
+```
+
+Full-width page with disableable primary action:
+```
+{{polaris-page
+  title="This is the title"
+  fullWidth=true
+  primaryAction=(hash
+    text="Take action!"
+    action=(action "primaryActionFired")
+    disabled=primaryActionDisabled
+  )
+}}
 ```
 
 #### Titles and Text
