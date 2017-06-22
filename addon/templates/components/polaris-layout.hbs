@@ -1,21 +1,21 @@
-{{#with (component "polaris-layout/section") as |section|}}
-  {{#if sectioned}}
-    {{#component section}}
-      {{#if hasBlock}}
-        {{yield (hash
-          section=section
-        )}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    {{/component}}
-  {{else}}
+{{#if sectioned}}
+  {{#polaris-layout/section}}
     {{#if hasBlock}}
       {{yield (hash
-        section=section
+        section=(component "polaris-layout/section")
+        annotatedSection=(component "polaris-layout/annotated-section")
       )}}
     {{else}}
       {{text}}
     {{/if}}
+  {{/polaris-layout/section}}
+{{else}}
+  {{#if hasBlock}}
+    {{yield (hash
+      section=(component "polaris-layout/section")
+      annotatedSection=(component "polaris-layout/annotated-section")
+    )}}
+  {{else}}
+    {{text}}
   {{/if}}
-{{/with}}
+{{/if}}
