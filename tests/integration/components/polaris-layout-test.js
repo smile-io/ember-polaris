@@ -8,6 +8,7 @@ moduleForComponent('polaris-layout', 'Integration | Component | polaris layout',
 });
 
 const layoutSelector = 'div.Polaris-Layout';
+const layoutSectionSelector = buildNestedSelector(layoutSelector, 'div.Polaris-Layout__Section');
 
 test('it renders the correct HTML in basic usage', function(assert) {
   // Test inline form.
@@ -37,7 +38,6 @@ test('it renders the correct HTML in basic usage', function(assert) {
   assert.equal(layouts.length, 1, 'inline with sectioned flag - renders one layout');
   assert.equal(layouts[0].children.length, 1, 'inline with sectioned flag - layout has one child');
 
-  const layoutSectionSelector = buildNestedSelector(layoutSelector, 'div.Polaris-Layout__Section');
   let layoutSections = findAll(layoutSectionSelector);
   assert.equal(layoutSections.length, 1, 'inline with sectioned flag - renders layout section');
   assert.equal(layoutSections[0].textContent.trim(), 'This is a sectioned inline layout', 'inline with sectioned flag - renders text content');
@@ -52,4 +52,36 @@ test('it renders the correct HTML in basic usage', function(assert) {
   layoutSections = findAll(layoutSectionSelector);
   assert.equal(layoutSections.length, 1, 'inline with sectioned flag - renders layout section');
   assert.equal(layoutSections[0].textContent.trim(), 'This is a sectioned block layout', 'block with sectioned flag - renders text content');
+});
+
+test('it renders the correct HTML when using sections', function(assert) {
+  this.render(hbs`
+    {{#polaris-layout sectioned=false as |layout|}}
+      {{layout.section text="This is an inline section"}}
+
+      {{#layout.section}}
+        This is a block section
+      {{/layout.section}}
+
+      {{layout.section text="This is a secondary section" secondary=true}}
+    {{/polaris-layout}}
+  `);
+
+  const layoutSections = findAll(layoutSectionSelector);
+  assert.equal(layoutSections.length, 3, 'renders three layout sections');
+
+  // Check the first section.
+  let layoutSection = layoutSections[0];
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'first section - does not have secondary class');
+  assert.equal(layoutSection.textContent.trim(), 'This is an inline section', 'first section - renders text content');
+
+  // Check the second section.
+  layoutSection = layoutSections[1];
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'second section - does not have secondary class');
+  assert.equal(layoutSection.textContent.trim(), 'This is a block section', 'second section - renders text content');
+
+  // Check the third section.
+  layoutSection = layoutSections[2];
+  assert.ok(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'third section - has secondary class');
+  assert.equal(layoutSection.textContent.trim(), 'This is a secondary section', 'third section - renders text content');
 });

@@ -1,15 +1,21 @@
-{{#if sectioned}}
-  <div class="Polaris-Layout__Section">
+{{#with (component "polaris-layout/section") as |section|}}
+  {{#if sectioned}}
+    {{#component section}}
+      {{#if hasBlock}}
+        {{yield (hash
+          section=section
+        )}}
+      {{else}}
+        {{text}}
+      {{/if}}
+    {{/component}}
+  {{else}}
     {{#if hasBlock}}
-      {{yield}}
+      {{yield (hash
+        section=section
+      )}}
     {{else}}
       {{text}}
     {{/if}}
-  </div>
-{{else}}
-  {{#if hasBlock}}
-    {{yield}}
-  {{else}}
-    {{text}}
   {{/if}}
-{{/if}}
+{{/with}}
