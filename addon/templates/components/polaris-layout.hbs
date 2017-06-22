@@ -1,0 +1,15 @@
+{{#if sectioned}}
+  <div class="Polaris-Layout__Section">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </div>
+{{else}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+{{/if}}
