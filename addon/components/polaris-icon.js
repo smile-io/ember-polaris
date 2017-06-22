@@ -76,4 +76,17 @@ export default Component.extend({
 
     return `Polaris-Icon--color${classify(color)}`;
   }).readOnly(),
+
+  /*
+   * Lifecycle hooks.
+   */
+  didInsertElement() {
+    this._super(...arguments);
+
+    // The SVG path rendered seems to have a greyish fill applied by default
+    // which prevents the color attribute working. This works around that...
+    this.$('path').css({
+      fill: 'inherit'
+    });
+  }
 });
