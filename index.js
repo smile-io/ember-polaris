@@ -33,10 +33,11 @@ module.exports = {
     const trees = [polarisSvgFiles];
 
     // tree can be undefined, which breaks the build.
-    if (tree) {
-      trees.push(tree);
-    }
-    return this._super.treeForPublic(mergeTrees(trees, { overwrite: true }));
+    return polarisSvgFiles;
+    // if (tree) {
+    //   trees.push(tree);
+    // }
+    // return this._super.treeForPublic(mergeTrees(trees, { overwrite: true }));
   },
 
   // TODO remove this once shipping to prod
