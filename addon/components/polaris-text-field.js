@@ -279,7 +279,6 @@ export default Component.extend({
    * @property onChange
    * @type function(value: string)
    * @default null
-   * TODO: not implemented
    */
   onChange: null,
 
@@ -289,7 +288,6 @@ export default Component.extend({
    * @property onFocus
    * @type function()
    * @default null
-   * TODO: not implemented
    */
   onFocus: null,
 
@@ -299,7 +297,6 @@ export default Component.extend({
    * @property onBlur
    * @type function()
    * @default null
-   * TODO: not implemented
    */
   onBlur: null,
 
