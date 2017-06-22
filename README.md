@@ -116,6 +116,7 @@ Slim external link:
 **NOTE:** _the `actions`, `primaryFooterAction` and `secondaryFooterAction` properties are currently unimplemented._
 
 ###### Examples
+Each of `{{polaris-card}}` and `{{polaris-card/section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
 Basic usage:
 ```

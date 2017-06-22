@@ -15,4 +15,5 @@ export default Component.extend({
 
   title: null,
   subdued: false,
+  text: null,
 });
