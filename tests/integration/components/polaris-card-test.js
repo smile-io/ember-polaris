@@ -25,23 +25,23 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(headings.length, 1 ,'one section, basic usage - renders one heading');
   assert.equal(headings[0].textContent.trim(), 'This is the card title', 'one section, basic usage - renders correct heading text');
 
-  const sectionedParagraphSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Section', 'p');
-  let sectionedParagraphs = findAll(sectionedParagraphSelector);
-  assert.equal(sectionedParagraphs.length, 1 ,'one section, basic usage - renders one section');
-  assert.equal(sectionedParagraphs[0].textContent.trim(), 'This is the card content', 'one section, basic usage - renders correct section text');
+  const unsectionedParagraphSelector = buildNestedSelector(cardSelector, 'p');
+  const unsectionedParagraphs = findAll(unsectionedParagraphSelector);
+  assert.equal(unsectionedParagraphs.length, 1 ,'one section, basic usage - renders one unsectioned paragraph');
+  assert.equal(unsectionedParagraphs[0].textContent.trim(), 'This is the card content', 'one section, basic usage - renders correct unsectioned paragraph text');
 
 
   // Sectioned attribute.
   this.render(hbs`
-    {{#polaris-card title="This is the card title" sectioned=false}}
+    {{#polaris-card title="This is the card title" sectioned=true}}
       <p>This is the card content</p>
     {{/polaris-card}}
   `);
 
-  const unsectionedParagraphSelector = buildNestedSelector(cardSelector, 'p');
-  const unsectionedParagraphs = findAll(unsectionedParagraphSelector);
-  assert.equal(unsectionedParagraphs.length, 1 ,'one section, basic usage - renders one section');
-  assert.equal(unsectionedParagraphs[0].textContent.trim(), 'This is the card content', 'one section, basic usage - renders correct section text');
+  const sectionedParagraphSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Section', 'p');
+  const sectionedParagraphs = findAll(sectionedParagraphSelector);
+  assert.equal(sectionedParagraphs.length, 1 ,'one section, basic usage - renders one sectioned paragraph');
+  assert.equal(sectionedParagraphs[0].textContent.trim(), 'This is the card content', 'one section, basic usage - renders correct sectioned paragraph text');
 
 
   // Subdued attribute.
@@ -58,7 +58,7 @@ test('it renders the correct HTML', function(assert) {
 
   // Multiple sections.
   this.render(hbs`
-    {{#polaris-card title="This is the card title" sectioned=false as |card|}}
+    {{#polaris-card title="This is the card title" as |card|}}
       {{#card.section title="Section 1"}}
         <p>This is the first section's content</p>
       {{/card.section}}

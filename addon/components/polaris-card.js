@@ -56,9 +56,9 @@ export default Component.extend({
    *
    * @property sectioned
    * @type {boolean}
-   * @default: true
+   * @default: false
    */
-  sectioned: true,
+  sectioned: false,
 
   /**
    * Card header actions
