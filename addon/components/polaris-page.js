@@ -7,6 +7,7 @@ const {
 } = Ember;
 
 const {
+  notEmpty,
   or,
 } = computed;
 
@@ -48,7 +49,7 @@ export default Component.extend({
    * @property breadcrumbs
    * @type {BreadcrumbProps["breadcrumbs"]}
    * @default null
-   * TODO: not implemented yet
+   * TODO: find out why the React example only shows the last breadcrumb...
    */
   breadcrumbs: null,
 
@@ -106,5 +107,18 @@ export default Component.extend({
   /**
    * Computed properties.
    */
+  hasBreadcrumbs: notEmpty('breadcrumbs'),
+  headerClass: computed('hasBreadcrumbs', function() {
+    const classNames = [
+      'Polaris-Page__Header',
+    ];
+
+    if (this.get('hasBreadcrumbs')) {
+      classNames.push('Polaris-Page__Header--hasBreadcrumbs');
+    }
+
+    return classNames.join(' ');
+  }).readOnly(),
+
   hasActions: or('primaryAction', 'secondaryActions'),
 });

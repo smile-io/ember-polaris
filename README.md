@@ -172,7 +172,7 @@ Three sections - first section with a title, third section subdued:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon`, `secondaryActions` and `pagination` properties are currently unimplemented._
 
 ###### Examples
 
@@ -196,6 +196,31 @@ Full-width page with disableable primary action:
     disabled=primaryActionDisabled
   )
 }}
+```
+
+Title with breadcrumbs:
+
+_Controller_
+```javascript
+  breadcrumbs: [
+    {
+      content: 'Settings'
+    },
+    {
+      content: 'Advanced'
+    }
+  ]
+```
+
+_Template_
+```
+{{#polaris-page
+  title="Welcome to Polaris!"
+  breadcrumbs=breadcrumbs
+}}
+  Your page content goes here
+{{/polaris-page}}
+
 ```
 
 #### Titles and Text
