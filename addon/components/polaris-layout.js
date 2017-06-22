@@ -30,7 +30,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {React.ReactNode}
+   * @type {string}
    * @default null
    */
   text: null,
