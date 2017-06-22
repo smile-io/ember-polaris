@@ -1,9 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import Ember from 'ember';
 
-moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
+const {
+  String: EmberString,
+} = Ember;
+
+const {
+  classify,
+} = EmberString;
+
+moduleForComponent('polaris-icon', 'Integration,  Component,  polaris icon', {
   integration: true
 });
 
@@ -22,8 +31,62 @@ test('it renders the specified icon correctly', function(assert) {
   assert.equal(svgs.length, 1, 'renders one SVG element');
 });
 
-/*
-<span class="Polaris-Icon Polaris-Icon--colorTealDark" aria-label="blargh">
-  <svg class="Polaris-Icon__Svg" viewBox="0 0 20 20"><path d="M6 11h8V9H6v2zm0 4h8v-2H6v2zm0-8h4V5H6v2zm9.707-1.707l-3-3A.996.996 0 0 0 12 2H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6a.997.997 0 0 0-.293-.707z" fill-rule="evenodd"></path></svg>
-</span>
-*/
+test('it applies colors correctly', function(assert) {
+  // Colors lifted from shopify source.
+  const colors = [
+    'white',
+    'black',
+    'skyLighter', 'skyLight', 'sky', 'skyDark',
+    'inkLightest', 'inkLighter', 'inkLight', 'ink',
+    'blueLighter', 'blueLight', 'blue', 'blueDark', 'blueDarker',
+    'indigoLighter', 'indigoLight', 'indigo', 'indigoDark', 'indigoDarker',
+    'tealLighter', 'tealLight', 'teal', 'tealDark', 'tealDarker',
+    'greenLighter', 'green', 'greenDark',
+    'yellowLighter', 'yellow', 'yellowDark',
+    'orange',
+    'redLighter', 'red', 'redDark',
+    'purple'
+  ];
+
+  this.render(hbs`{{polaris-icon source="add" color=color}}`);
+
+  // Check without any color set first.
+  const icon = find(iconSelector);
+  assert.equal(icon.classList.length, 2, 'icon without color does not add color class');
+
+  // Check all the available colors.
+  for (const color of colors) {
+    this.set('color', color);
+
+    const colorClass = `Polaris-Icon--color${classify(color)}`;
+    assert.ok(icon.classList.contains(colorClass), `icon with ${color} color applies ${colorClass} class`);
+    assert.equal(icon.classList.length, 3, `icon with ${color} color does not add other color classes`);
+  }
+});
+
+test('it handles backdrop correctly', function(assert) {
+  this.render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
+
+  // Check default setting.
+  const icon = find(iconSelector);
+  const backdropClass = 'Polaris-Icon--hasBackdrop';
+  assert.notOk(icon.classList.contains(backdropClass), 'icon without backdrop set does not apply backdrop class');
+
+  this.set('backdrop', true);
+  assert.ok(icon.classList.contains(backdropClass), `icon with backdrop=true applies backdrop class`);
+
+  this.set('backdrop', false);
+  assert.notOk(icon.classList.contains(backdropClass), `icon with backdrop=false does not apply backdrop class`);
+});
+
+test('it handles accessibilityLabel correctly', function(assert) {
+  this.render(hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`);
+
+  // Check default setting.
+  const icon = find(iconSelector);
+  assert.notOk(icon.attributes['aria-label'], 'no accessibilityLabel set - does not add aria-label attribute');
+
+  this.set('accessibilityLabel', 'This is the accessibility label');
+  assert.ok(icon.attributes['aria-label'], 'accessibilityLabel set - adds aria-label attribute');
+  assert.equal(icon.attributes['aria-label'].value, 'This is the accessibility label', 'accessibilityLabel set - adds correct aria-label value');
+});

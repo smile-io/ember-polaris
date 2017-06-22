@@ -3,11 +3,25 @@ import layout from '../templates/components/polaris-icon';
 
 const {
   Component,
+  computed,
+  isEmpty,
+  String: EmberString,
 } = Ember;
+
+const {
+  classify,
+} = EmberString;
 
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Icon'],
+  classNameBindings: [
+    'colorClass',
+    'backdrop:Polaris-Icon--hasBackdrop'
+  ],
+  attributeBindings: [
+    'accessibilityLabel:aria-label',
+  ],
 
   layout,
 
@@ -18,7 +32,7 @@ export default Component.extend({
    * The SVG contents to display in the icon
    *
    * @property source
-   * @type SVGSource
+   * @type {string}
    * @default null
    */
   source: null,
@@ -27,9 +41,8 @@ export default Component.extend({
    * Sets the color for the SVG fill
    *
    * @property color
-   * @type Color
+   * @type {string}
    * @default null
-   * TODO: not implemented
    */
   color: null,
 
@@ -37,19 +50,30 @@ export default Component.extend({
    * Show a backdrop behind the icon
    *
    * @property backdrop
-   * @type boolean
-   * @default null
-   * TODO: not implemented
+   * @type {boolean}
+   * @default false
    */
-  backdrop: null,
+  backdrop: false,
 
   /**
    * Descriptive text to be read to screenreaders
    *
    * @property accessibilityLabel
-   * @type string
+   * @type {string}
    * @default null
-   * TODO: not implemented
    */
   accessibilityLabel: null,
+
+  /*
+   * Internal properties.
+   */
+  colorClass: computed('color', function() {
+    const color = this.get('color');
+
+    if (isEmpty(color)) {
+      return null;
+    }
+
+    return `Polaris-Icon--color${classify(color)}`;
+  }).readOnly(),
 });
