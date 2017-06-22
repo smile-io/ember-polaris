@@ -13,6 +13,9 @@
 #### Actions
 - Button
 
+#### Images and icons
+- Icon
+
 #### Structure
 - Card
 - Page
@@ -106,6 +109,23 @@ Slim external link:
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+#### Images and icons
+
+##### Icon
+`polaris-icon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
+
+###### Examples
+
+Basic usage:
+```
+{{polaris-icon source="notes"}}
+```
+
+Customising with color and backdrop:
+```
+{{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
 
 #### Structure
