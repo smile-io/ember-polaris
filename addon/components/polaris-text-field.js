@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import layout from '../templates/components/polaris-text-field';
+import mapEventToAction from '../utils/map-event-to-action';
+import { invokeAction } from 'ember-invoke-action';
 
 const {
   Component,
@@ -308,4 +310,16 @@ export default Component.extend({
   labelId: computed('inputId', function() {
     return `${this.get('inputId')}Label`;
   }).readOnly(),
+
+  /**
+   * Action handlers.
+   */
+  focusIn: mapEventToAction('onFocus'),
+  focusOut: mapEventToAction('onBlur'),
+
+  actions: {
+    onUpdate(value) {
+      return invokeAction(this, 'onChange', value);
+    }
+  }
 });
