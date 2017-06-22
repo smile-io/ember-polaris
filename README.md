@@ -14,6 +14,7 @@
 - Button
 
 #### Structure
+- Card
 - Page
 
 #### Titles and text
@@ -108,6 +109,44 @@ Slim external link:
 ```
 
 #### Structure
+
+##### Card
+`polaris-card` implements the [Polaris Card component](https://polaris.shopify.com/components/structure/card).
+
+**NOTE:** _the `actions`, `primaryFooterAction` and `secondaryFooterAction` properties are currently unimplemented._
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-card title="This is the card title"}}
+  <p>This is the card content</p>
+{{/polaris-card}}
+```
+
+Subdued card with no title:
+```
+{{#polaris-card subdued=true}}
+  <p>This is the subdued card content</p>
+{{/polaris-card}}
+```
+
+Three sections - first section with a title, third section subdued:
+```
+{{#polaris-card title="This is the card title" sectioned=false as |card|}}
+  {{#card.section title="Section 1"}}
+    <p>This is the first section's content</p>
+  {{/card.section}}
+
+  {{#card.section}}
+    <p>This is the second section's content</p>
+  {{/card.section}}
+
+  {{#card.section subdued=true}}
+    <p>This is the third section's subdued content</p>
+  {{/card.section}}
+{{/polaris-card}}
+```
 
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
