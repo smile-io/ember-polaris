@@ -6,4 +6,8 @@
   </div>
 {{/if}}
 
-{{yield}}
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{text}}
+{{/if}}
