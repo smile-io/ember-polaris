@@ -152,7 +152,6 @@ Three sections - first section with a title, third section subdued:
 ##### Layout
 `polaris-layout` implements the [Polaris Layout component](https://polaris.shopify.com/components/structure/layout).
 
-
 ###### Examples
 Each of `{{polaris-layout}}`, `{{polaris-layout/section}}` and `{{polaris-layout/annotated-section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
