@@ -1,0 +1,29 @@
+{{#if label}}
+  <div class="Polaris-Labelled__LabelWrapper">
+    <div class="Polaris-Label">
+      <label class="Polaris-Label__Text" id={{labelId}} for={{inputId}}>
+        {{label}}
+      </label>
+    </div>
+  </div>
+{{/if}}
+
+<div class="
+  Polaris-TextField
+  {{if disabled 'Polaris-TextField--disabled'}}
+  {{if readOnly 'Polaris-TextField--readOnly'}}
+  {{if hasValue 'Polaris-TextField--hasValue'}}
+">
+  {{one-way-input
+    class="Polaris-TextField__Input"
+    id=inputId
+    name=name
+    value=value
+    placeholder=placeholder
+    disabled=disabled
+    readOnly=readOnly
+    aria-labelledby=labelId
+    update=(action "onUpdate")
+  }}
+  <div class="Polaris-TextField__Backdrop"></div>
+</div>

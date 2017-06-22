@@ -17,6 +17,9 @@
 - Card
 - Page
 
+#### Forms
+- Text field
+
 #### Titles and text
 - Display text
 - Heading
@@ -86,7 +89,7 @@ Some Polaris React components accept an `element` property which changes the tag
 ##### Button
 `polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
 
-In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented.
+In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented. A possible workaround would be to use [ember-transition-helper](https://github.com/peec/ember-transition-helper) to trigger a transition via an action.
 
 ###### Examples
 
@@ -175,6 +178,38 @@ Full-width page with disableable primary action:
     action=(action "primaryActionFired")
     disabled=primaryActionDisabled
   )
+}}
+```
+
+#### Forms
+
+##### Text field
+`polaris-text-field` implements the [Polaris Text field component](https://polaris.shopify.com/components/forms/text-field).
+
+The `id` property specified in the documentation has been renamed to `inputId` in the `polaris-text-field` component attributes.
+
+**NOTE:** _the `prefix`, `suffix`, `helpText`, `labelAction`, `labelHidden`, `autoFocus`, `multiline`, `error`, `connectedRight`, `connectedLeft`, `type`, `step`, `autoComplete`, `max`, `maxLength`, `min`, `minLength`, `pattern` and `spellCheck` properties are currently unimplemented._
+
+###### Examples
+
+Basic usage with some input attributes:
+```
+{{polaris-text-field
+  placeholder="Enter some text here"
+  disabled=isFormActive
+  value=myInputValue
+  onChange=(action (mut myInputValue))
+}}
+```
+
+Labelled text field:
+```
+{{polaris-text-field
+  inputId="email"
+  name="email"
+  label="Email address"
+  value=emailAddress
+  onChange=(action (mut emailAddress))
 }}
 ```
 
