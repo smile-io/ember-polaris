@@ -6,7 +6,7 @@ module.exports = function(defaults) {
     svg: {
       optimize: false,
       paths: [
-        'ember-polaris/icons'
+        'node_modules/@shopify/polaris/src/icons'
       ]
     }
   });

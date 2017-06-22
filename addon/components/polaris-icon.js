@@ -3,7 +3,6 @@ import layout from '../templates/components/polaris-icon';
 
 const {
   Component,
-  computed,
 } = Ember;
 
 export default Component.extend({
@@ -53,11 +52,4 @@ export default Component.extend({
    * TODO: not implemented
    */
   accessibilityLabel: null,
-
-  /*
-   * Internal properties.
-   */
-  iconSource: computed('source', function() {
-    return `ember-polaris/icons/${this.get('source')}.svg`;
-  }),
 });
