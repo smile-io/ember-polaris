@@ -12,6 +12,7 @@ const {
   classify,
 } = EmberString;
 
+// TODO: look into importing icons properly.
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Icon'],

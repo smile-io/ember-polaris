@@ -41,6 +41,24 @@ If your app does not already have a `app/styles/app.scss` it will create one wit
 @import "ember-polaris";
 ```
 
+In addition, for icons to work you will need to add the following `svg` options to your `ember-cli-build.js`:
+
+```javascript
+// ember-cli-build.js
+var app = new EmberApp(defaults, {
+  ...
+
+  svg: {
+    optimize: false,
+    paths: [
+      'node_modules/@shopify/polaris/src/icons'
+    ]
+  },
+
+  ...
+});
+```
+
 ## Usage
 
 `ember-polaris` provides a set of Ember components intended to implement the same behavior and functionality as the [Shopify Polaris React components](https://github.com/Shopify/polaris). In general the usage can be inferred from the [Polaris component documentation](https://polaris.shopify.com/components/get-started), with some exceptions as described below.
