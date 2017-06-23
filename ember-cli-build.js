@@ -3,7 +3,15 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
-    // Add options here
+    // This only affects the dummy app, not a real host app.
+    // The latter will need to duplicate these options
+    // in their `ember-cli-build.js` for icons to work.
+    svg: {
+      optimize: false,
+      paths: [
+        'node_modules/@shopify/polaris/src/icons'
+      ]
+    }
   });
 
   /*

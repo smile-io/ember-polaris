@@ -13,6 +13,9 @@
 #### Actions
 - Button
 
+#### Images and icons
+- Icon
+
 #### Structure
 - Card
 - Page
@@ -36,6 +39,24 @@ If your app does not already have a `app/styles/app.scss` it will create one wit
 ```css
 /* app/styles/app.scss */
 @import "ember-polaris";
+```
+
+In addition, for icons to work you will need to add the following `svg` options to your `ember-cli-build.js`:
+
+```javascript
+// ember-cli-build.js
+var app = new EmberApp(defaults, {
+  ...
+
+  svg: {
+    optimize: false,
+    paths: [
+      'node_modules/@shopify/polaris/src/icons'
+    ]
+  },
+
+  ...
+});
 ```
 
 ## Usage
@@ -106,6 +127,23 @@ Slim external link:
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+#### Images and icons
+
+##### Icon
+`polaris-icon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
+
+###### Examples
+
+Basic usage:
+```
+{{polaris-icon source="notes"}}
+```
+
+Customising with color and backdrop:
+```
+{{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
 
 #### Structure
