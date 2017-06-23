@@ -1,15 +1,12 @@
 import Ember from 'ember';
-import layout from '../../templates/components/polaris-card/section';
+import layout from '../../templates/components/polaris-layout/annotated-section';
 
 const {
   Component,
 } = Ember;
 
 export default Component.extend({
-  classNames: ['Polaris-Card__Section'],
-  classNameBindings: [
-    'subdued:Polaris-Card__Section--subdued',
-  ],
+  classNames: ['Polaris-Layout__AnnotatedSection'],
 
   layout,
 
@@ -26,13 +23,13 @@ export default Component.extend({
   title: null,
 
   /**
-   * A less prominent section
+   * Description for the section
    *
-   * @property subdued
-   * @type {boolean}
-   * @default: false
+   * @property description
+   * @type {string}
+   * @default: null
    */
-  subdued: false,
+  description: null,
 
   /**
    * Inner content of the section

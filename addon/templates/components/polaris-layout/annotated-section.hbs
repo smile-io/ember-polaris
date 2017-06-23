@@ -1,0 +1,21 @@
+<div class="Polaris-Layout__AnnotationWrapper">
+  <div class="Polaris-Layout__Annotation">
+    <div class="Polaris-TextContainer">
+      {{polaris-heading text=title}}
+
+      {{#if description}}
+        <p>
+          {{description}}
+        </p>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="Polaris-Layout__AnnotationContent">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </div>
+</div>
