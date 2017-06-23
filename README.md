@@ -198,25 +198,20 @@ Full-width page with disableable primary action:
 }}
 ```
 
-Title with breadcrumbs:
-
-_Controller_
-```javascript
-  breadcrumbs: [
-    {
-      content: 'Settings'
-    },
-    {
-      content: 'Advanced'
-    }
-  ]
-```
-
-_Template_
+Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
 ```
 {{#polaris-page
   title="Welcome to Polaris!"
-  breadcrumbs=breadcrumbs
+  breadcrumbs=(array
+    (hash
+      content="Settings"
+      route="settings"
+    )
+    (
+      content="Advanced"
+      route="settings.advanced"
+    )
+  )
 }}
   Your page content goes here
 {{/polaris-page}}

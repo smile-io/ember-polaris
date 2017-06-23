@@ -3,12 +3,7 @@
     <div class="Polaris-Page__Navigation">
       <nav role="navigation">
         {{#each breadcrumbs as |breadcrumb|}}
-          <a class="Polaris-Breadcrumbs__Breadcrumb" data-polaris-unstyled="true">
-            <span class="Polaris-Breadcrumbs__Icon">
-              {{polaris-icon source="chevron-left"}}
-            </span>
-            {{breadcrumb.content}}
-          </a>
+          {{polaris-breadcrumbs/breadcrumb breadcrumb=breadcrumb}}
         {{/each}}
       </nav>
     </div>

@@ -110,10 +110,12 @@ test('it handles breadcrumbs correctly', function(assert) {
   // Add the breadcrumbs.
   this.set('breadcrumbs', [
     {
-      content: 'Go back'
+      content: 'Go back',
+      route: 'home'
     },
     {
-      content: 'No, really!'
+      content: 'No, really!',
+      route: 'home.the-beginning'
     }
   ]);
 
@@ -144,4 +146,7 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
+
+  // TODO: test the hrefs of the links.
+  // https://github.com/emberjs/ember-qunit/issues/52 might be of use...
 });
