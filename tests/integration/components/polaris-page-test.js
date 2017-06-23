@@ -1,11 +1,23 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, click } from 'ember-native-dom-helpers';
+import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import stubRouting from '../../helpers/stub-routing';
+
+const availableRoutes = [
+  'home',
+  'home.the-beginning',
+];
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
-  integration: true
+  integration: true,
+  setup() {
+    stubRouting(this.registry, availableRoutes);
+  }
 });
+
+const pageSelector = 'div.Polaris-Page';
+const headerSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Header');
 
 test('it renders the page correctly', function(assert) {
   this.set('fullWidth', false);
@@ -18,14 +30,12 @@ test('it renders the page correctly', function(assert) {
     {{/polaris-page}}`
   );
 
-  const pageSelector = 'div.Polaris-Page';
   const pages = findAll(pageSelector);
   assert.equal(pages.length, 1, 'renders one page div');
 
   const page = pages[0];
   assert.notOk(page.classList.contains('Polaris-Page--fullWidth'), 'renders normal-width page');
 
-  const headerSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Header');
   const headers = findAll(headerSelector);
   assert.equal(headers.length, 1, 'renders one page header div');
 
@@ -91,4 +101,60 @@ test('it handles primary action correctly when a primary action is supplied', fu
   .then(() => {
     assert.ok(primaryActionFired, 'fires primary action on click');
   });
+});
+
+test('it handles breadcrumbs correctly', function(assert) {
+  this.render(hbs`{{polaris-page breadcrumbs=breadcrumbs}}`);
+
+  // Test before setting breadcrumbs.
+  const header = find(headerSelector);
+  const headerWithBreadcrumbsClass = 'Polaris-Page__Header--hasBreadcrumbs';
+  assert.ok(header, 'without breadcrumbs - renders header');
+  assert.notOk(header.classList.contains(headerWithBreadcrumbsClass), 'without breadcrumbs - does not apply hasBreadcrumbs class');
+
+  const navigationSelector = buildNestedSelector(headerSelector, 'div.Polaris-Page__Navigation');
+  const navigations = findAll(navigationSelector);
+  assert.equal(navigations.length, 0, 'without breadcrumbs - does not render navigation div');
+
+  // Add the breadcrumbs.
+  this.set('breadcrumbs', [
+    {
+      content: 'Go back',
+      route: 'home'
+    },
+    {
+      content: 'No, really!',
+      route: 'home.the-beginning'
+    }
+  ]);
+
+  assert.ok(header.classList.contains(headerWithBreadcrumbsClass), 'with breadcrumbs - applies hasBreadcrumbs class');
+
+  // Check the breadcrumbs rendered.
+  const breadcrumbLinkSelector = buildNestedSelector(
+    navigationSelector,
+    'nav[role="navigation"]',
+    'a.Polaris-Breadcrumbs__Breadcrumb'
+  );
+  const breadcrumbLinks = findAll(breadcrumbLinkSelector)
+  assert.equal(breadcrumbLinks.length, 2, 'with breadcrumbs - renders 2 breadcrumbs');
+
+  // Check the first breadcrumb.
+  const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
+  let breadcrumbLink = breadcrumbLinks[0];
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home`, 'first breadcrumb - has correct href');
+  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'first breadcrumb - has data-polaris-unstyled attribute');
+  assert.equal(breadcrumbLink.textContent.trim(), 'Go back', 'first breadcrumb - renders correct text');
+
+  let icons = findAll(iconSelector, breadcrumbLink);
+  assert.equal(icons.length, 1, 'first breadcrumb - renders icon');
+
+  // Check the second breadcrumb.
+  breadcrumbLink = breadcrumbLinks[1];
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning`, 'second breadcrumb - has correct href');
+  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'second breadcrumb - has data-polaris-unstyled attribute');
+  assert.equal(breadcrumbLink.textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
+
+  icons = findAll(iconSelector, breadcrumbLink);
+  assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
 });

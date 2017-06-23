@@ -237,7 +237,7 @@ Annotated layout:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon`, `breadcrumbs`, `secondaryActions` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon`, `secondaryActions` and `pagination` properties are currently unimplemented._
 
 ###### Examples
 
@@ -261,6 +261,26 @@ Full-width page with disableable primary action:
     disabled=primaryActionDisabled
   )
 }}
+```
+
+Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+```
+{{#polaris-page
+  title="Welcome to Polaris!"
+  breadcrumbs=(array
+    (hash
+      content="Settings"
+      route="settings"
+    )
+    (
+      content="Advanced"
+      route="settings.advanced"
+    )
+  )
+}}
+  Your page content goes here
+{{/polaris-page}}
+
 ```
 
 #### Titles and Text

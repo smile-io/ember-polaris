@@ -1,4 +1,14 @@
-<div class="Polaris-Page__Header">
+<div class={{headerClass}}>
+  {{#if hasBreadcrumbs}}
+    <div class="Polaris-Page__Navigation">
+      <nav role="navigation">
+        {{#each breadcrumbs as |breadcrumb|}}
+          {{polaris-breadcrumbs/breadcrumb breadcrumb=breadcrumb}}
+        {{/each}}
+      </nav>
+    </div>
+  {{/if}}
+
   {{#polaris-display-text tagName="h1" size="large"}}
     {{title}}
   {{/polaris-display-text}}
