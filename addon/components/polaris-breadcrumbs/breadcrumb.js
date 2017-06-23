@@ -6,6 +6,10 @@ const {
   LinkComponent,
 } = Ember;
 
+const {
+  collect,
+} = computed;
+
 export default LinkComponent.extend({
   classNames: ['Polaris-Breadcrumbs__Breadcrumb'],
   attributeBindings: ['dataPolarisUnstyled:data-polaris-unstyled'],
@@ -16,9 +20,5 @@ export default LinkComponent.extend({
 
   breadcrumb: null,
 
-  params: computed('breadcrumb.route', function() {
-    return [
-      this.get('breadcrumb.route'),
-    ];
-  }).readOnly(),
+  params: collect('breadcrumb.route'),
 });
