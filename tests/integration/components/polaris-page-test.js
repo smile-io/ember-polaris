@@ -13,7 +13,6 @@ moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true,
   setup() {
     stubRouting(this.registry, availableRoutes);
-
   }
 });
 
