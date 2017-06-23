@@ -1,0 +1,15 @@
+{{#polaris-page
+  title="This is the test route"
+  breadcrumbs=(array
+    (hash
+      content="Application"
+      route="index"
+    )
+  )
+}}
+  <div>
+    {{#link-to "test.child"}}
+      Go to child route
+    {{/link-to}}
+  </div>
+{{/polaris-page}}

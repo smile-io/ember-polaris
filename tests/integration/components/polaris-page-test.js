@@ -2,9 +2,19 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import stubRouting from '../../helpers/stub-routing';
+
+const availableRoutes = [
+  'home',
+  'home.the-beginning',
+];
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
-  integration: true
+  integration: true,
+  setup() {
+    stubRouting(this.registry, availableRoutes);
+
+  }
 });
 
 const pageSelector = 'div.Polaris-Page';
@@ -133,6 +143,7 @@ test('it handles breadcrumbs correctly', function(assert) {
   // Check the first breadcrumb.
   const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
   let breadcrumbLink = breadcrumbLinks[0];
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home`, 'first breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'first breadcrumb - has data-polaris-unstyled attribute');
   assert.equal(breadcrumbLink.textContent.trim(), 'Go back', 'first breadcrumb - renders correct text');
 
@@ -141,12 +152,10 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   // Check the second breadcrumb.
   breadcrumbLink = breadcrumbLinks[1];
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning`, 'second breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'second breadcrumb - has data-polaris-unstyled attribute');
   assert.equal(breadcrumbLink.textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
 
   icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
-
-  // TODO: test the hrefs of the links.
-  // https://github.com/emberjs/ember-qunit/issues/52 might be of use...
 });

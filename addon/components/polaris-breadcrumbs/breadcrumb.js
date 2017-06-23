@@ -20,5 +20,10 @@ export default LinkComponent.extend({
 
   breadcrumb: null,
 
-  params: collect('breadcrumb.route'),
+  params: collect(
+    // Because we extend LinkComponent and don't yield, hasBlock is false
+    // so LinkComponent expects the link title as the first parameter.
+    'breadcrumb.content',
+    'breadcrumb.route'
+  ),
 });
