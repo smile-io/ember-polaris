@@ -13,7 +13,7 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
 
   const visuallyHiddens = findAll(visuallyHiddenSelector);
   assert.equal(visuallyHiddens.length, 1, 'renders one visually hidden component');
-  assert.equal(visuallyHiddens[0].textContent.trim(), 'Inline visually hidden content')
+  assert.equal(visuallyHiddens[0].textContent.trim(), 'Inline visually hidden content', 'renders correct visually hidden content');
 });
 
 test('it renders the correct HTML in basic block usage', function(assert) {
@@ -25,5 +25,5 @@ test('it renders the correct HTML in basic block usage', function(assert) {
 
   const visuallyHiddens = findAll(visuallyHiddenSelector);
   assert.equal(visuallyHiddens.length, 1, 'renders one visually hidden component');
-  assert.equal(visuallyHiddens[0].textContent.trim(), 'Block visually hidden content')
+  assert.equal(visuallyHiddens[0].textContent.trim(), 'Block visually hidden content', 'renders correct visually hidden content');
 });

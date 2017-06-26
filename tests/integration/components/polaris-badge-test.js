@@ -14,7 +14,7 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
 
   const badges = findAll(badgeSelector);
   assert.equal(badges.length, 1, 'renders one badge');
-  assert.equal(badges[0].textContent.trim(), 'Inline badge')
+  assert.equal(badges[0].textContent.trim(), 'Inline badge', 'renders the correct badge content');
 });
 
 test('it renders the correct HTML in basic block usage', function(assert) {
@@ -26,7 +26,7 @@ test('it renders the correct HTML in basic block usage', function(assert) {
 
   const badges = findAll(badgeSelector);
   assert.equal(badges.length, 1, 'renders one badge');
-  assert.equal(badges[0].textContent.trim(), 'Block badge')
+  assert.equal(badges[0].textContent.trim(), 'Block badge', 'renders the correct badge content');
 });
 
 test('it renders the correct HTML when status is set', function(assert) {
