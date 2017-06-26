@@ -3,7 +3,18 @@ import layout from '../templates/components/polaris-badge';
 
 const {
   Component,
+  computed,
+  isBlank,
+  String: EmberString,
 } = Ember;
+
+const {
+  notEmpty,
+} = computed;
+
+const {
+  classify,
+} = EmberString;
 
 /**
  * Polaris badge component.
@@ -12,6 +23,7 @@ const {
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Badge'],
+  classNameBindings: ['statusClass'],
 
   layout,
 
@@ -39,4 +51,27 @@ export default Component.extend({
    * @default: null
    */
   status: null,
+
+  /*
+   * Internal properties.
+   */
+  statusSet: notEmpty('status'),
+
+  statusText: computed('status', function() {
+    const status = this.get('status');
+    if (isBlank(status) || status === 'default') {
+      return null;
+    }
+
+    return classify(status);
+  }).readOnly(),
+
+  statusClass: computed('statusText', function() {
+    const statusText = this.get('statusText');
+    if (isBlank(statusText)) {
+      return null;
+    }
+
+    return `Polaris-Badge--status${statusText}`;
+  }).readOnly(),
 });

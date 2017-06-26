@@ -1,3 +1,9 @@
+{{#if statusSet}}
+  {{#polaris-visually-hidden}}
+    {{statusText}}
+  {{/polaris-visually-hidden}}
+{{/if}}
+
 {{#if hasBlock}}
   {{yield}}
 {{else}}
