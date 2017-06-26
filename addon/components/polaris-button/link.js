@@ -1,5 +1,6 @@
 import BaseComponent from './base';
 import Ember from 'ember';
+import mapEventToAction from '../../utils/map-event-to-action';
 
 const {
   computed,
@@ -23,4 +24,10 @@ export default BaseComponent.extend({
   rel: computed('external', function() {
     return this.get('external') ? 'noopener noreferrer' : null;
   }).readOnly(),
+
+  /**
+   * Action handlers.
+   */
+  //  Allow click to perform its default action.
+  click: mapEventToAction('onClick', { preventDefault: false }),
 });
