@@ -14,6 +14,7 @@
 - Button
 
 #### Images and icons
+- Badge
 - Icon
 
 #### Structure
@@ -25,6 +26,7 @@
 - Display text
 - Heading
 - Subheading
+- VisuallyHidden
 
 ## Installation
 
@@ -131,6 +133,21 @@ Slim external link:
 ```
 
 #### Images and icons
+
+##### Badge
+`polaris-badge` implements the [Polaris Badge component](https://polaris.shopify.com/components/images-and-icons/badge).
+
+###### Examples
+
+Basic usage:
+```
+{{polaris-badge text="Fulfilled"}}
+```
+
+With a success status set:
+```
+{{polaris-badge status="success" text="Complete"}}
+```
 
 ##### Icon
 `polaris-icon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
@@ -347,6 +364,23 @@ Underlined subheading:
 }}
   This is an underlined subheading
 {{/polaris-subheading}}
+```
+
+##### VisuallyHidden
+`polaris-visually-hidden` implements the [Polaris VisuallyHidden component](https://polaris.shopify.com/components/titles-and-text/visuallyhidden).
+
+###### Examples
+
+Inline form:
+```
+{{polaris-visually-hidden text="something descriptive"}}
+```
+
+Block form:
+```
+{{#polaris-visually-hidden}}
+  another description
+{{/polaris-visually-hidden}}
 ```
 
 ## Contributing
