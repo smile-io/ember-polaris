@@ -57,7 +57,7 @@ export default Component.extend({
    */
   statusSet: notEmpty('status'),
 
-  statusText: computed('status', function() {
+  statusDescription: computed('status', function() {
     const status = this.get('status');
     if (isBlank(status) || status === 'default') {
       return null;
@@ -66,12 +66,12 @@ export default Component.extend({
     return classify(status);
   }).readOnly(),
 
-  statusClass: computed('statusText', function() {
-    const statusText = this.get('statusText');
-    if (isBlank(statusText)) {
+  statusClass: computed('statusDescription', function() {
+    const statusDescription = this.get('statusDescription');
+    if (isBlank(statusDescription)) {
       return null;
     }
 
-    return `Polaris-Badge--status${statusText}`;
+    return `Polaris-Badge--status${statusDescription}`;
   }).readOnly(),
 });
