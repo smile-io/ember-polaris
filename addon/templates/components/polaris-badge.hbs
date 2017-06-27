@@ -1,0 +1,11 @@
+{{#if hasStatus}}
+  {{#polaris-visually-hidden}}
+    {{statusDescription}}
+  {{/polaris-visually-hidden}}
+{{/if}}
+
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{text}}
+{{/if}}

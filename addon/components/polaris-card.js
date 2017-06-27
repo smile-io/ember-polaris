@@ -6,7 +6,7 @@ const {
 } = Ember;
 
 /**
- * Polaris page component.
+ * Polaris card component.
  * See https://polaris.shopify.com/components/structure/card
  */
 export default Component.extend({
