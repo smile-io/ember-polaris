@@ -55,7 +55,7 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-  statusSet: notEmpty('status'),
+  hasStatus: notEmpty('status'),
 
   statusDescription: computed('status', function() {
     const status = this.get('status');
