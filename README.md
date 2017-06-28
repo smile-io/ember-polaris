@@ -383,6 +383,34 @@ Block form:
 {{/polaris-visually-hidden}}
 ```
 
+#### Navigation
+
+##### Pagination
+`polaris-pagination` implements the [Polaris Pagination
+component](https://polaris.shopify.com/components/navigation/pagination#navigation).
+
+**NOTE:** Following properties are not currently implemented: `nextUrl` and `previousUrl`.
+
+Basic usage:
+```hbs
+{{polaris-pagination
+  hasPrevious=true
+  hasNext=true
+  onPrevious=(action "handlePreviousButton")
+  onNext=(action "handleNextButton")
+}}
+```
+
+Plain mode pagination:
+```hbs
+{{polaris-pagination
+  plain=true
+  hasPrevious=true
+  hasNext=true
+  onPrevious=(action "handlePreviousButton")
+  onNext=(action "handleNextButton")
+}}
+```
 ## Contributing
 ### Installation
 
