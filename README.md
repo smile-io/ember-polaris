@@ -21,6 +21,7 @@
 - Card
 - Layout
 - Page
+- Stack
 
 #### Titles and text
 - Display text
@@ -297,7 +298,27 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 }}
   Your page content goes here
 {{/polaris-page}}
+```
 
+##### Stack
+`polaris-stack` implements the [Polaris Stack component](https://polaris.shopify.com/components/structure/stack).
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-stack}}
+  <div>Stack item 1</div>
+  <div>Stack item 2</div>
+{{/polaris-stack}}
+```
+
+Vertical stack with tight spacing:
+```
+{{#polaris-stack vertical=true spacing="tight"}}
+  <div>Stack item 1</div>
+  <div>Stack item 2</div>
+{{/polaris-stack}}
 ```
 
 #### Titles and Text
