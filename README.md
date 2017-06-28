@@ -28,12 +28,15 @@
 - Subheading
 - VisuallyHidden
 
+#### Navigation
+- Pagination
+
 ## Installation
 
 Install `ember-polaris` using `ember-cli`:
 
-```
-ember install ember-polaris
+```sh
+$ ember install ember-polaris
 ```
 
 This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app.
@@ -75,7 +78,7 @@ We have tried to keep the components provided by `ember-polaris` as similar to t
 ##### `children` property
 A large number of the Polaris React components have a `children` property listed in their documentation. In these cases, the corresponding `ember-polaris` component can be given a `text` attribute which will take the place of the `children` property and specify the text to be rendered by the component. Alternatively these components can be used in block form to achieve the same result. Note that the block content will take precedence over the `text` attribute (if one is supplied):
 
-```
+```hbs
 {{polaris-button text="Attribute text"}}
  => renders a button with the content "Attribute text"
 
@@ -93,7 +96,7 @@ A large number of the Polaris React components have a `children` property listed
 ##### `element` property
 Some Polaris React components accept an `element` property which changes the tag rendered by the component. In `ember-polaris`, this is replaced by the `tagName` attribute unless otherwise noted. This attribute cannot be dynamic - the following code would cause an error:
 
-```
+```hbs
 {{#polaris-display-text tagName=displayTextTagName}}
   Displays fine to start with...
 {{/polaris-display-text}}
@@ -115,14 +118,14 @@ In the future we intend to extend this component to be more Ember-friendly by ad
 ###### Examples
 
 Basic button:
-```
+```hbs
 {{#polaris-button onClick=(action "doSomething")}}
   Push me!
 {{/polaris-button}}
 ```
 
 Slim external link:
-```
+```hbs
 {{#polaris-button
   url="www.example.com"
   external="true"
@@ -140,12 +143,12 @@ Slim external link:
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{polaris-badge text="Fulfilled"}}
 ```
 
 With a success status set:
-```
+```hbs
 {{polaris-badge status="success" text="Complete"}}
 ```
 
@@ -155,12 +158,12 @@ With a success status set:
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{polaris-icon source="notes"}}
 ```
 
 Customising with color and backdrop:
-```
+```hbs
 {{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
 
@@ -175,21 +178,21 @@ Customising with color and backdrop:
 Each of `{{polaris-card}}` and `{{polaris-card/section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
 Basic usage:
-```
+```hbs
 {{#polaris-card title="This is the card title"}}
   <p>This is the card content</p>
 {{/polaris-card}}
 ```
 
 Subdued card with no title:
-```
+```hbs
 {{#polaris-card subdued=true}}
   <p>This is the subdued card content</p>
 {{/polaris-card}}
 ```
 
 Three sections - first section with a title, third section subdued:
-```
+```hbs
 {{#polaris-card title="This is the card title" sectioned=false as |card|}}
   {{#card.section title="Section 1"}}
     <p>This is the first section's content</p>
@@ -212,7 +215,7 @@ Three sections - first section with a title, third section subdued:
 Each of `{{polaris-layout}}`, `{{polaris-layout/section}}` and `{{polaris-layout/annotated-section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
 One-column layout:
-```
+```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.section}}
     <p>Section content goes here</p>
@@ -221,7 +224,7 @@ One-column layout:
 ```
 
 Two-column layout:
-```
+```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.section}}
     <p>Column 1</p>
@@ -234,7 +237,7 @@ Two-column layout:
 ```
 
 Annotated layout:
-```
+```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.annotatedSection
     title="First Section"
@@ -259,7 +262,7 @@ Annotated layout:
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
 }}
@@ -268,7 +271,7 @@ Basic usage:
 ```
 
 Full-width page with disableable primary action:
-```
+```hbs
 {{polaris-page
   title="This is the title"
   fullWidth=true
@@ -281,7 +284,7 @@ Full-width page with disableable primary action:
 ```
 
 Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
-```
+```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
   breadcrumbs=(array
@@ -308,14 +311,14 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{#polaris-display-text}}
   This is some basic display text
 {{/polaris-display-text}}
 ```
 
 Extra-large heading:
-```
+```hbs
 {{#polaris-display-text
   tagName="h1"
   size="extraLarge"
@@ -330,14 +333,14 @@ Extra-large heading:
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{#polaris-heading}}
   This is a basic heading
 {{/polaris-heading}}
 ```
 
 Emphasised heading:
-```
+```hbs
 {{#polaris-heading
   tagName="em"
 }}
@@ -351,14 +354,14 @@ Emphasised heading:
 ###### Examples
 
 Basic usage:
-```
+```hbs
 {{#polaris-subheading}}
   This is a basic subheading
 {{/polaris-subheading}}
 ```
 
 Underlined subheading:
-```
+```hbs
 {{#polaris-subheading
   tagName="u"
 }}
@@ -372,12 +375,12 @@ Underlined subheading:
 ###### Examples
 
 Inline form:
-```
+```hbs
 {{polaris-visually-hidden text="something descriptive"}}
 ```
 
 Block form:
-```
+```hbs
 {{#polaris-visually-hidden}}
   another description
 {{/polaris-visually-hidden}}
@@ -411,6 +414,7 @@ Plain mode pagination:
   onNext=(action "handleNextButton")
 }}
 ```
+
 ## Contributing
 ### Installation
 
