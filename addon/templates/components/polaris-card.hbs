@@ -5,6 +5,16 @@
         {{#stack.item fill=true}}
           {{polaris-heading text=title}}
         {{/stack.item}}
+
+        {{#polaris-button-group}}
+          {{#each headerActions as |headerAction|}}
+            {{polaris-button
+              plain=true
+              text=headerAction.content
+              action=headerAction.action
+            }}
+          {{/each}}
+        {{/polaris-button-group}}
       {{/polaris-stack}}
     </div>
   {{else}}
