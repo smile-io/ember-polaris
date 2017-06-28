@@ -121,12 +121,9 @@ test('it renders the correct HTML', function(assert) {
 
 test('it handles header actions correctly', function(assert) {
   let action1HandlerCalled = false;
-  let action2HandlerCalled = false;
+  this.set('action2HandlerCalled', false);
   this.on('action1Handler', () => {
     action1HandlerCalled = true;
-  });
-  this.on('action2Handler', () => {
-    action2HandlerCalled = true;
   });
 
   this.render(hbs`
@@ -139,7 +136,7 @@ test('it handles header actions correctly', function(assert) {
         )
         (hash
           content="Action 2"
-          action=(action "action2Handler")
+          action=(action (mut action2HandlerCalled) true)
         )
       )
     }}
@@ -172,8 +169,8 @@ test('it handles header actions correctly', function(assert) {
   // Check clicking the buttons.
   click(actionButtons[0]);
   assert.equal(action1HandlerCalled, true, 'clicking first action button - invokes first action handler correctly');
-  assert.equal(action2HandlerCalled, false, 'clicking first action button - does not invoke second action handler');
+  assert.equal(this.get('action2HandlerCalled'), false, 'clicking first action button - does not invoke second action handler');
 
   click(actionButtons[1]);
-  assert.equal(action2HandlerCalled, true, 'clicking second action button - invokes second action handler correctly');
+  assert.equal(this.get('action2HandlerCalled'), true, 'clicking second action button - invokes second action handler correctly');
 });

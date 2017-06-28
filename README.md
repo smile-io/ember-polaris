@@ -12,6 +12,7 @@
 
 #### Actions
 - Button
+- Button group
 
 #### Images and icons
 - Badge
@@ -104,6 +105,9 @@ Some Polaris React components accept an `element` property which changes the tag
 {{/polaris-button}}
 ```
 
+##### `actions` property
+Some Polaris React components accept an `actions` property as a list of actions which can be performed. In `ember-polaris`, this is renamed to avoid collisions with the Ember `actions` hash. The new name will be different based on the component - check the documentation for the specific component to find out what attribute to pass the actions list as.
+
 ### Components
 
 #### Actions
@@ -111,7 +115,7 @@ Some Polaris React components accept an `element` property which changes the tag
 ##### Button
 `polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
 
-In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented.
+In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented. In the meantime we suggest using something like [`ember-transition-helper`](https://github.com/peec/ember-transition-helper) to achieve the same result.
 
 ###### Examples
 
@@ -131,6 +135,41 @@ Slim external link:
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+`polaris-button-group` implements the [Polaris Button group component](https://polaris.shopify.com/components/actions/button-group).
+
+Any child elements inside a `polaris-button-group` block will be auto-wrapped as group items as per the React component. We also make a `polaris-button-group/item` component available inside the block to allow more control over the items if desired.
+
+###### Examples
+
+Basic usage:
+```
+{{#polaris-button-group}}
+  {{polaris-button text="Button 1" onClick=(action "doSomething")}}
+  {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+{{/polaris-button-group}}
+```
+
+Buttons joined as segmented group:
+```
+{{#polaris-button-group segmented=true}}
+  {{polaris-button text="Button 1" onClick=(action "doSomething")}}
+  {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+{{/polaris-button-group}}
+```
+
+Plain buttons:
+```
+{{#polaris-button-group as |buttonGroup|}}
+  {{#buttonGroup.item plain=true}}
+    {{polaris-button text="Button 1" onClick=(action "doSomething")}}
+  {{/buttonGroup.item}}
+
+  {{#buttonGroup.item plain=true}}
+    {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+  {{/buttonGroup.item}}
+{{/polaris-stack}}
 ```
 
 #### Images and icons
@@ -168,9 +207,9 @@ Customising with color and backdrop:
 #### Structure
 
 ##### Card
-`polaris-card` implements the [Polaris Card component](https://polaris.shopify.com/components/structure/card).
+`polaris-card` implements the [Polaris Card component](https://polaris.shopify.com/components/structure/card), with the `actions` property renamed to `headerActions`.
 
-**NOTE:** _the `actions`, `primaryFooterAction` and `secondaryFooterAction` properties are currently unimplemented._
+**NOTE:** _the `primaryFooterAction` and `secondaryFooterAction` properties are currently unimplemented._
 
 ###### Examples
 Each of `{{polaris-card}}` and `{{polaris-card/section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
@@ -186,6 +225,25 @@ Subdued card with no title:
 ```
 {{#polaris-card subdued=true}}
   <p>This is the subdued card content</p>
+{{/polaris-card}}
+```
+
+With actions in the header (needs a non-empty title):
+```
+{{#polaris-card
+  title="This is a card with actions"
+  headerActions=(array
+    (hash
+      content="Action 1"
+      action=(action "doSomething")
+    )
+    (hash
+      content="Action 2"
+      action=(action (mut action2Clicked) true)
+    )
+  )
+}}
+  <p>This is the card content</p>
 {{/polaris-card}}
 ```
 
@@ -303,7 +361,7 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 ##### Stack
 `polaris-stack` implements the [Polaris Stack component](https://polaris.shopify.com/components/structure/stack).
 
-Any child elements inside a `polaris-stack` block will be auto-wrapped as stack items as per the React components. We also make a `polaris-stack/item` component available inside the block to allow more control over the items if desired.
+Any child elements inside a `polaris-stack` block will be auto-wrapped as stack items as per the React component. We also make a `polaris-stack/item` component available inside the block to allow more control over the items if desired.
 
 ###### Examples
 
