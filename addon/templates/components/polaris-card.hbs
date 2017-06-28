@@ -6,13 +6,15 @@
           {{polaris-heading text=title}}
         {{/stack.item}}
 
-        {{#polaris-button-group}}
+        {{#polaris-button-group as |buttonGroup|}}
           {{#each headerActions as |headerAction|}}
-            {{polaris-button
-              plain=true
-              text=headerAction.content
-              action=headerAction.action
-            }}
+            {{#buttonGroup.item plain=true}}
+              {{polaris-button
+                plain=true
+                text=headerAction.content
+                action=headerAction.action
+              }}
+            {{/buttonGroup.item}}
           {{/each}}
         {{/polaris-button-group}}
       {{/polaris-stack}}

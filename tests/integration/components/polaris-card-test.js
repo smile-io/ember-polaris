@@ -155,13 +155,11 @@ test('it handles header actions correctly', function(assert) {
     headerStackSelector,
     'div.Polaris-Stack__Item',
     'div.Polaris-ButtonGroup',
-    'div.Polaris-Stack__Item',
-    'div.Polaris-ButtonGroup',
     'div.Polaris-ButtonGroup__Item.Polaris-ButtonGroup__Item--plain',
     'button.Polaris-Button.Polaris-Button--plain'
   );
   const actionButtons = findAll(actionButtonSelector);
-  assert.equal(actionButtons.length, 1, 'renders two action buttons');
+  assert.equal(actionButtons.length, 2, 'renders the correct number of action buttons');
   assert.equal(actionButtons[0].textContent.trim(), 'Action 1', 'first action button - renders correct content');
   assert.equal(actionButtons[1].textContent.trim(), 'Action 2', 'second action button - renders correct content');
 });

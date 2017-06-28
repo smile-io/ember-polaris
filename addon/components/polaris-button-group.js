@@ -48,7 +48,7 @@ export default Component.extend({
 
     // Wrap each child element that isn't already a group item.
     this.$().children()
-      .not('button.Polaris-ButtonGroup__Item')
+      .not('div.Polaris-ButtonGroup__Item')
       .wrap('<div class="Polaris-ButtonGroup__Item"></div>');
   },
 });
