@@ -111,13 +111,9 @@ const {
   didRender() {
     this._super(...arguments);
 
-    // Wrap each child element in a stack item.
-    // TODO: look into replacing this with an explicitly-yielded wrapper component, e.g.
-    // {{#polaris-stack as |stack|}}
-    //   {{#stack.item}}
-    //     ... whatever...
-    //   {{/stack.item}}
-    // {{/polaris-stack}}
-    this.$().children().wrap('<div class="Polaris-Stack__Item"></div>');
+    // Wrap each child element that isn't already a stack item.
+    this.$().children()
+      .not('div.Polaris-Stack__Item')
+      .wrap('<div class="Polaris-Stack__Item"></div>');
   },
 });

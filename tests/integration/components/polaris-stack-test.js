@@ -115,3 +115,37 @@ test('it renders the correct HTML with distribution attribute', function(assert)
   this.set('distribution', 'fillEvenly');
   assert.ok(stack.classList.contains('Polaris-Stack--distributionFillEvenly'), 'distribution=fillEvenly - adds the correct distribution class');
 });
+
+test('it renders the correct HTML in block usage', function(assert) {
+  this.render(hbs`
+    {{#polaris-stack as |stack|}}
+      {{#stack.item fill=true}}
+        Block item with fill
+      {{/stack.item}}
+
+      {{stack.item text="Inline item"}}
+
+      <div>
+        <p>Paragraph inside a magically wrapped item</p>
+      </div>
+    {{/polaris-stack}}
+  `);
+
+  const stackItems = findAll(stackItemSelector);
+  assert.equal(stackItems.length, 3, 'renders the correct number of stack items');
+
+  // Check the first stack item.
+  let stackItem = stackItems[0];
+  assert.ok(stackItem.classList.contains('Polaris-Stack__Item--fill'), 'first stack item - has fill class');
+  assert.equal(stackItem.textContent.trim(), 'Block item with fill', 'first stack item - renders the correct content');
+
+  // Check the second stack item.
+  stackItem = stackItems[1];
+  assert.notOk(stackItem.classList.contains('Polaris-Stack__Item--fill'), 'second stack item - does not have fill class');
+  assert.equal(stackItem.textContent.trim(), 'Inline item', 'second stack item - renders the correct content');
+
+  // Check the third stack item.
+  stackItem = stackItems[2];
+  assert.notOk(stackItem.classList.contains('Polaris-Stack__Item--fill'), 'third stack item - does not have fill class');
+  assert.equal(stackItem.textContent.trim(), 'Paragraph inside a magically wrapped item', 'third stack item - renders the correct content');
+});
