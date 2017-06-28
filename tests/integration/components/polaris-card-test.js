@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-card', 'Integration | Component | polaris card', {
@@ -120,8 +120,14 @@ test('it renders the correct HTML', function(assert) {
 });
 
 test('it handles header actions correctly', function(assert) {
-  this.set('action1HandlerCalled', false);
-  this.set('action2HandlerCalled', false);
+  let action1HandlerCalled = false;
+  let action2HandlerCalled = false;
+  this.on('action1Handler', () => {
+    action1HandlerCalled = true;
+  });
+  this.on('action2Handler', () => {
+    action2HandlerCalled = true;
+  });
 
   this.render(hbs`
     {{polaris-card
@@ -129,11 +135,11 @@ test('it handles header actions correctly', function(assert) {
       headerActions=(array
         (hash
           content="Action 1"
-          action=(action (mut action1HandlerCalled true))
+          action=(action "action1Handler")
         )
         (hash
           content="Action 2"
-          action=(action (mut action2HandlerCalled true))
+          action=(action "action2Handler")
         )
       )
     }}
@@ -162,4 +168,12 @@ test('it handles header actions correctly', function(assert) {
   assert.equal(actionButtons.length, 2, 'renders the correct number of action buttons');
   assert.equal(actionButtons[0].textContent.trim(), 'Action 1', 'first action button - renders correct content');
   assert.equal(actionButtons[1].textContent.trim(), 'Action 2', 'second action button - renders correct content');
+
+  // Check clicking the buttons.
+  click(actionButtons[0]);
+  assert.equal(action1HandlerCalled, true, 'clicking first action button - invokes first action handler correctly');
+  assert.equal(action2HandlerCalled, false, 'clicking first action button - does not invoke second action handler');
+
+  click(actionButtons[1]);
+  assert.equal(action2HandlerCalled, true, 'clicking second action button - invokes second action handler correctly');
 });
