@@ -63,12 +63,11 @@ export default Component.extend({
   /**
    * Card header actions
    *
-   * @property actions
+   * @property headerActions
    * @type {Action[]}
    * @default: null
-   * TODO: not implemented, need to rename this to avoid collisions with actions hash
    */
-  // actions: null,
+  headerActions: null,
 
   /**
    * Primary action in the card footer
