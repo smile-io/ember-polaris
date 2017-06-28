@@ -7,6 +7,9 @@ moduleForComponent('polaris-card', 'Integration | Component | polaris card', {
   integration: true
 });
 
+const cardSelector = 'div.Polaris-Card';
+const headerSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Header');
+
 test('it renders the correct HTML', function(assert) {
   // Basic usage.
   this.render(hbs`
@@ -15,12 +18,11 @@ test('it renders the correct HTML', function(assert) {
     {{/polaris-card}}
   `);
 
-  const cardSelector = 'div.Polaris-Card';
   const cards = findAll(cardSelector);
   assert.equal(cards.length, 1, 'one section, basic usage - renders one card');
   assert.notOk(cards[0].classList.contains('Polaris-Card--subdued'), 'one section, basic usage - does not apply subdued class');
 
-  const headingSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Header', 'h2.Polaris-Heading');
+  const headingSelector = buildNestedSelector(headerSelector, 'h2.Polaris-Heading');
   const headings = findAll(headingSelector);
   assert.equal(headings.length, 1 ,'one section, basic usage - renders one heading');
   assert.equal(headings[0].textContent.trim(), 'This is the card title', 'one section, basic usage - renders correct heading text');
@@ -115,4 +117,51 @@ test('it renders the correct HTML', function(assert) {
   sectionContents = findAll('p', section);
   assert.equal(sectionContents.length, 1, 'mutiple sections, third section - renders content');
   assert.equal(sectionContents[0].textContent.trim(), 'This is the third section\'s subdued content', 'mutiple sections, third section - renders correct content text');
+});
+
+test('it handles header actions correctly', function(assert) {
+  this.set('action1HandlerCalled', false);
+  this.set('action2HandlerCalled', false);
+
+  this.render(hbs`
+    {{polaris-card
+      title="This is a card with actions"
+      headerActions=(array
+        (hash
+          content="Action 1"
+          action=(action (mut action1HandlerCalled true))
+        )
+        (hash
+          content="Action 2"
+          action=(action (mut action2HandlerCalled true))
+        )
+      )
+    }}
+  `);
+
+  // Check the title rendered.
+  const headerStackSelector = buildNestedSelector(headerSelector, 'div.Polaris-Stack.Polaris-Stack--alignmentBaseline');
+  const headingSelector = buildNestedSelector(
+    headerStackSelector,
+    'div.Polaris-Stack__Item.Polaris-Stack__Item--fill',
+    'h2.Polaris-Heading'
+  );
+  const headings = findAll(headingSelector);
+  assert.equal(headings.length, 1, 'renders one heading');
+  assert.equal(headings[0].textContent.trim, 'This is a card with actions', 'renders correct heading content');
+
+  // Check the actions rendered.
+  const actionButtonSelector = buildNestedSelector(
+    headerStackSelector,
+    'div.Polaris-Stack__Item',
+    'div.Polaris-ButtonGroup',
+    'div.Polaris-Stack__Item',
+    'div.Polaris-ButtonGroup',
+    'div.Polaris-ButtonGroup__Item.Polaris-ButtonGroup__Item--plain',
+    'button.Polaris-Button.Polaris-Button--plain'
+  );
+  const actionButtons = findAll(actionButtonSelector);
+  assert.equal(actionButtons.length, 1, 'renders two action buttons');
+  assert.equal(actionButtons[0].textContent.trim, 'Action 1', 'first action button - renders correct content');
+  assert.equal(actionButtons[1].textContent.trim, 'Action 2', 'second action button - renders correct content');
 });
