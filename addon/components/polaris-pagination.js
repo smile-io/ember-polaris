@@ -7,7 +7,7 @@ const {
 } = Ember;
 
 const {
-  not
+  not,
 } = computed;
 
 export default Component.extend({

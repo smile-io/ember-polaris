@@ -44,6 +44,7 @@ test('it renders correctly', function(assert) {
 test('it fires events correctly', function(assert) {
   assert.expect(2);
 
+  // TODO should we test explicitly these actions
   this.on('clickPrevious', () => {
     assert.ok(true, 'clicking previous button fires `onPrevious` callback');
   });
