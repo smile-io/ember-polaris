@@ -245,3 +245,33 @@ test('handles events correctly', function(assert) {
     assert.ok(clickHandlerCalled, 'after click, click handler fired');
   });
 });
+
+test('it applies passed-in classes to the rendered element when rendering a button', function(assert) {
+  this.set('class', 'my-button press-me');
+  this.render(hbs`{{polaris-button class=class}}`);
+
+  let button = find('button.Polaris-Button.my-button.press-me');
+  assert.ok(button, 'renders button with input classes');
+
+  // Try updating the classes.
+  this.set('class', 'press-me-to-make-something-happen');
+
+  button = find('button.Polaris-Button.press-me-to-make-something-happen');
+  assert.ok(button, 'renders button with updated classes');
+  assert.notOk(button.classList.contains('my-button'));
+});
+
+test('it applies passed-in classes to the rendered element when rendering a link', function(assert) {
+  this.set('class', 'my-link click-me');
+  this.render(hbs`{{polaris-button class=class url="http://www.somewhere.com/lets-go/"}}`);
+
+  let linkButton = find('a.Polaris-Button.my-link.click-me');
+  assert.ok(linkButton, 'renders button with input classes');
+
+  // Try updating the classes.
+  this.set('class', 'click-me-to-go-somewhere');
+
+  linkButton = find('a.Polaris-Button.click-me-to-go-somewhere');
+  assert.ok(linkButton, 'renders button with updated classes');
+  assert.notOk(linkButton.classList.contains('my-button'));
+});
