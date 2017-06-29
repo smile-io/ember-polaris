@@ -84,8 +84,9 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    // The SVG path rendered seems to have a greyish fill applied by default
-    // which prevents the color attribute working. This works around that...
+    // Some of the Polaris SVG files have a greyish fill applied by default which
+    // prevents the color attribute working. These steps work around the known issues...
+    this.$('g').removeAttr('fill');
     this.$('path').css({
       fill: 'inherit'
     });
