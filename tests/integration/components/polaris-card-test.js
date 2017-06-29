@@ -1,11 +1,14 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-card', 'Integration | Component | polaris card', {
   integration: true
 });
+
+const cardSelector = 'div.Polaris-Card';
+const headerSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Header');
 
 test('it renders the correct HTML', function(assert) {
   // Basic usage.
@@ -15,12 +18,11 @@ test('it renders the correct HTML', function(assert) {
     {{/polaris-card}}
   `);
 
-  const cardSelector = 'div.Polaris-Card';
   const cards = findAll(cardSelector);
   assert.equal(cards.length, 1, 'one section, basic usage - renders one card');
   assert.notOk(cards[0].classList.contains('Polaris-Card--subdued'), 'one section, basic usage - does not apply subdued class');
 
-  const headingSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Header', 'h2.Polaris-Heading');
+  const headingSelector = buildNestedSelector(headerSelector, 'h2.Polaris-Heading');
   const headings = findAll(headingSelector);
   assert.equal(headings.length, 1 ,'one section, basic usage - renders one heading');
   assert.equal(headings[0].textContent.trim(), 'This is the card title', 'one section, basic usage - renders correct heading text');
@@ -115,4 +117,60 @@ test('it renders the correct HTML', function(assert) {
   sectionContents = findAll('p', section);
   assert.equal(sectionContents.length, 1, 'mutiple sections, third section - renders content');
   assert.equal(sectionContents[0].textContent.trim(), 'This is the third section\'s subdued content', 'mutiple sections, third section - renders correct content text');
+});
+
+test('it handles header actions correctly', function(assert) {
+  let action1HandlerCalled = false;
+  this.set('action2HandlerCalled', false);
+  this.on('action1Handler', () => {
+    action1HandlerCalled = true;
+  });
+
+  this.render(hbs`
+    {{polaris-card
+      title="This is a card with actions"
+      headerActions=(array
+        (hash
+          content="Action 1"
+          action=(action "action1Handler")
+        )
+        (hash
+          content="Action 2"
+          action=(action (mut action2HandlerCalled) true)
+        )
+      )
+    }}
+  `);
+
+  // Check the title rendered.
+  const headerStackSelector = buildNestedSelector(headerSelector, 'div.Polaris-Stack.Polaris-Stack--alignmentBaseline');
+  const headingSelector = buildNestedSelector(
+    headerStackSelector,
+    'div.Polaris-Stack__Item.Polaris-Stack__Item--fill',
+    'h2.Polaris-Heading'
+  );
+  const headings = findAll(headingSelector);
+  assert.equal(headings.length, 1, 'renders one heading');
+  assert.equal(headings[0].textContent.trim(), 'This is a card with actions', 'renders correct heading content');
+
+  // Check the actions rendered.
+  const actionButtonSelector = buildNestedSelector(
+    headerStackSelector,
+    'div.Polaris-Stack__Item',
+    'div.Polaris-ButtonGroup',
+    'div.Polaris-ButtonGroup__Item.Polaris-ButtonGroup__Item--plain',
+    'button.Polaris-Button.Polaris-Button--plain'
+  );
+  const actionButtons = findAll(actionButtonSelector);
+  assert.equal(actionButtons.length, 2, 'renders the correct number of action buttons');
+  assert.equal(actionButtons[0].textContent.trim(), 'Action 1', 'first action button - renders correct content');
+  assert.equal(actionButtons[1].textContent.trim(), 'Action 2', 'second action button - renders correct content');
+
+  // Check clicking the buttons.
+  click(actionButtons[0]);
+  assert.equal(action1HandlerCalled, true, 'clicking first action button - invokes first action handler correctly');
+  assert.equal(this.get('action2HandlerCalled'), false, 'clicking first action button - does not invoke second action handler');
+
+  click(actionButtons[1]);
+  assert.equal(this.get('action2HandlerCalled'), true, 'clicking second action button - invokes second action handler correctly');
 });
