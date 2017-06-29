@@ -266,12 +266,12 @@ test('it applies passed-in classes to the rendered element when rendering a link
   this.render(hbs`{{polaris-button class=class url="http://www.somewhere.com/lets-go/"}}`);
 
   let linkButton = find('a.Polaris-Button.my-link.click-me');
-  assert.ok(linkButton, 'renders button with input classes');
+  assert.ok(linkButton, 'renders link button with input classes');
 
   // Try updating the classes.
   this.set('class', 'click-me-to-go-somewhere');
 
   linkButton = find('a.Polaris-Button.click-me-to-go-somewhere');
-  assert.ok(linkButton, 'renders button with updated classes');
-  assert.notOk(linkButton.classList.contains('my-button'));
+  assert.ok(linkButton, 'renders link button with updated classes');
+  assert.notOk(linkButton.classList.contains('my-link'));
 });
