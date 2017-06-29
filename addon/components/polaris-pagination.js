@@ -3,8 +3,12 @@ import layout from '../templates/components/polaris-pagination';
 
 const {
   Component,
-  computed: { not },
+  computed,
 } = Ember;
+
+const {
+  not
+} = computed;
 
 export default Component.extend({
   layout,
@@ -14,7 +18,7 @@ export default Component.extend({
   classNameBindings: ['plain:Polaris-Pagination--plain'],
 
   /**
-   * A more subdued control for use in headers.
+   * A more subdued control for use in headers
    *
    * @property plain
    * @type {Boolean}
@@ -43,7 +47,7 @@ export default Component.extend({
   previousUrl: null,
 
   /**
-   * Whether there is a next page to show.
+   * Whether there is a next page to show
    *
    * @property hasNext
    * @type {Boolean}
@@ -52,7 +56,7 @@ export default Component.extend({
   hasNext: false,
 
   /**
-   * Whether there is a previous page to show.
+   * Whether there is a previous page to show
    *
    * @property hasPrevious
    * @type {Boolean}
@@ -61,7 +65,7 @@ export default Component.extend({
   hasPrevious: false,
 
   /**
-   * Callback when next button is clicked.
+   * Callback when next button is clicked
    *
    * @property onNext
    * @type {function}
@@ -70,7 +74,7 @@ export default Component.extend({
   onNext() {},
 
   /**
-   * Callback when previous button is clicked.
+   * Callback when previous button is clicked
    *
    * @property onPrevious
    * @type {function}
