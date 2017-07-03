@@ -1,0 +1,9 @@
+{{#if title}}
+  {{polaris-subheading text=title}}
+{{/if}}
+
+{{#if hasBlock}}
+  {{yield}}
+{{else}}
+  {{text}}
+{{/if}}
