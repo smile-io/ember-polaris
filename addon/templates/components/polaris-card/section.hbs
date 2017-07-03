@@ -1,13 +1,13 @@
-{{#if title}}
-  <div class="Polaris-Card__SectionHeader">
-    {{#polaris-subheading}}
-      {{title}}
-    {{/polaris-subheading}}
-  </div>
-{{/if}}
+{{#with "polaris-card/section-header" as |header|}}
+  {{#if title}}
+    {{component header title=title}}
+  {{/if}}
 
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+  {{#if hasBlock}}
+    {{yield (hash
+      header=header
+    )}}
+  {{else}}
+    {{text}}
+  {{/if}}
+{{/with}}
