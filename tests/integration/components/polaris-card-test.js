@@ -9,6 +9,7 @@ moduleForComponent('polaris-card', 'Integration | Component | polaris card', {
 
 const cardSelector = 'div.Polaris-Card';
 const headerSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Header');
+const sectionSelector = buildNestedSelector('div.Polaris-Card', 'div.Polaris-Card__Section');
 
 test('it renders the correct HTML', function(assert) {
   // Basic usage.
@@ -40,7 +41,7 @@ test('it renders the correct HTML', function(assert) {
     {{/polaris-card}}
   `);
 
-  const sectionedParagraphSelector = buildNestedSelector(cardSelector, 'div.Polaris-Card__Section', 'p');
+  const sectionedParagraphSelector = buildNestedSelector(sectionSelector, 'p');
   const sectionedParagraphs = findAll(sectionedParagraphSelector);
   assert.equal(sectionedParagraphs.length, 1 ,'one section, basic usage - renders one sectioned paragraph');
   assert.equal(sectionedParagraphs[0].textContent.trim(), 'This is the card content', 'one section, basic usage - renders correct sectioned paragraph text');
@@ -75,7 +76,6 @@ test('it renders the correct HTML', function(assert) {
     {{/polaris-card}}
   `);
 
-  const sectionSelector = buildNestedSelector('div.Polaris-Card', 'div.Polaris-Card__Section');
   const sections = findAll(sectionSelector);
   assert.equal(sections.length, 3, 'multiple sections - renders all sections');
 
@@ -173,4 +173,34 @@ test('it handles header actions correctly', function(assert) {
 
   click(actionButtons[1]);
   assert.equal(this.get('action2HandlerCalled'), true, 'clicking second action button - invokes second action handler correctly');
+});
+
+test('it allows section header customisation', function(assert) {
+  this.render(hbs`
+    {{#polaris-card as |card|}}
+      {{#card.section as |cardSection|}}
+        {{#cardSection.header title="Custom section title"}}
+          <p>Custom section content</p>
+        {{/cardSection.header}}
+      {{/card.section}}
+    {{/polaris-card}}
+  `);
+
+  const sectionHeaderSelector = buildNestedSelector(
+    sectionSelector,
+    'div.Polaris-Card__SectionHeader'
+  );
+
+  const sectionHeaders = findAll(sectionHeaderSelector);
+  assert.equal(sectionHeaders.length, 1, 'renders one section header');
+
+  const sectionHeaderTitleSelector = buildNestedSelector(sectionHeaderSelector, 'h3.Polaris-Subheading');
+  const sectionHeaderTitles = findAll(sectionHeaderTitleSelector)
+  assert.equal(sectionHeaderTitles.length, 1, 'renders one section header title');
+  assert.equal(sectionHeaderTitles[0].textContent.trim(), 'Custom section title', 'renders the correct section header title');
+
+  const sectionHeaderContentSelector = buildNestedSelector(sectionHeaderSelector, 'p');
+  const sectionHeaderContents = findAll(sectionHeaderContentSelector)
+  assert.equal(sectionHeaderContents.length, 1, 'renders custom section header content');
+  assert.equal(sectionHeaderContents[0].textContent.trim(), 'Custom section content', 'renders the correct custom section header content');
 });
