@@ -6,11 +6,12 @@ module.exports = function(defaults) {
     // This only affects the dummy app, not a real host app.
     // The latter will need to duplicate these options
     // in their `ember-cli-build.js` for icons to work.
-    svg: {
-      optimize: false,
-      paths: [
-        'node_modules/@shopify/polaris/src/icons'
-      ]
+    svgJar: {
+      strategy: 'inline',
+      sourceDirs: [
+        'tests/dummy/public/assets/images/svg'
+      ],
+      stripPath: false
     }
   });
 

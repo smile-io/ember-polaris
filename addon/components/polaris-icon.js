@@ -65,6 +65,11 @@ export default Component.extend({
    */
   accessibilityLabel: null,
 
+  /**
+   * Path under which `ember-svg-jar` serves the Polaris SVG icons
+   */
+  sourcePath: 'polaris',
+
   /*
    * Internal properties.
    */
@@ -76,6 +81,12 @@ export default Component.extend({
     }
 
     return `Polaris-Icon--color${classify(color)}`;
+  }).readOnly(),
+
+  iconSource: computed(function() {
+    let sourcePath = this.get('sourcePath');
+    sourcePath = isEmpty(sourcePath) ? '' : `${ sourcePath }/`;
+    return `${ sourcePath }${ this.get('source') }`;
   }).readOnly(),
 
   /*

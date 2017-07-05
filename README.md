@@ -52,18 +52,26 @@ If your app does not already have a `app/styles/app.scss` it will create one wit
 @import "ember-polaris";
 ```
 
-In addition, for icons to work you will need to add the following `svg` options to your `ember-cli-build.js`:
+In addition, for icons to work you will need to:
+* copy Polaris SVG's into a folder in `public`, ex: `public/assets/images/svg/polaris`
+* add the following `ember-svg-jar` options to your `ember-cli-build.js`:
 
 ```javascript
 // ember-cli-build.js
 var app = new EmberApp(defaults, {
   ...
 
-  svg: {
-    optimize: false,
-    paths: [
-      'node_modules/@shopify/polaris/src/icons'
-    ]
+  svgJar: {
+    strategy: 'inline',
+    inline: {
+      stripPath: false,
+      optimizer: {
+        removeDimensions: true,
+      },
+      sourceDirs: [
+        'public/assets/images/svg',
+      ],
+    }
   },
 
   ...
@@ -209,6 +217,11 @@ Customising with color and backdrop:
 ```hbs
 {{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
+
+**NOTE:** The icon component uses [`ember-svg-jar`](https://github.com/ivanvotti/ember-svg-jar/)
+to render the SVG icons.
+You will have to make sure that you copy the icons into your public folder and
+configure `ember-svg-jar` to serve them from `polaris` namespace.
 
 #### Structure
 
