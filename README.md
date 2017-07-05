@@ -210,18 +210,18 @@ With a success status set:
 
 Basic usage:
 ```hbs
-{{polaris-icon source="polaris/notes"}}
+{{polaris-icon source="notes"}}
 ```
 
 Customising with color and backdrop:
 ```hbs
-{{polaris-icon source="polaris/add" color="darkTeal" backdrop=true}}
+{{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
 
 **NOTE:** The icon component uses [`ember-svg-jar`](https://github.com/ivanvotti/ember-svg-jar/)
 to render the SVG icons.
 You will have to make sure that you copy the icons into your public folder and
-configure it to see the polaris icons + any others you need.
+configure `ember-svg-jar` to serve them from `polaris` namespace.
 
 #### Structure
 
