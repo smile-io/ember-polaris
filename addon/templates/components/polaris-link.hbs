@@ -1,5 +1,17 @@
-{{#if hasBlock}}
-  {{yield}}
+{{#if url}}
+  <a href={{url}} class={{linkClass}} target={{target}} rel={{rel}} data-polaris-unstyled="true">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </a>
 {{else}}
-  {{text}}
+  <button class={{linkClass}} {{action (action onClick)}}>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </button>
 {{/if}}

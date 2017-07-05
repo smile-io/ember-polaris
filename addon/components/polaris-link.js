@@ -7,24 +7,8 @@ const {
 } = Ember;
 
 export default Component.extend({
-  tagName: 'a',
-  classNames: ['Polaris-Link'],
-  attributeBindings: [
-    'url:href',
-    'dataPolarisUnstyled:data-polaris-unstyled',
-    'target',
-    'rel',
-  ],
-
-  dataPolarisUnstyled: 'true',
-
-  target: computed('external', function() {
-    return this.get('external') ? '_blank' : null;
-  }),
-
-  rel: computed('external', function() {
-    return this.get('external') ? 'noopener noreferrer' : null;
-  }).readOnly(),
+  // No tag since we dynamically render either an anchor or a button element.
+  tagName: '',
 
   layout,
 
@@ -63,7 +47,29 @@ export default Component.extend({
    *
    * @property onClick
    * @type {function}
-   * @default null
+   * @default noop
    */
-  onClick: null,
+  onClick() {},
+
+  /*
+   * Internal properties.
+   */
+  linkClass: computed('class', function() {
+    let linkClass = 'Polaris-Link';
+    const externalClasses = this.get('class');
+
+    if (externalClasses) {
+      linkClass += ' ' + externalClasses;
+    }
+
+    return linkClass;
+  }).readOnly(),
+
+  target: computed('external', function() {
+    return this.get('external') ? '_blank' : null;
+  }),
+
+  rel: computed('external', function() {
+    return this.get('external') ? 'noopener noreferrer' : null;
+  }).readOnly(),
 });
