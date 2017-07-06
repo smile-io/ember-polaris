@@ -38,9 +38,9 @@ export default Component.extend({
    *
    * @property external
    * @type {boolean}
-   * @default null
+   * @default false
    */
-  external: null,
+  external: false,
 
   /**
    * Callback when a link is clicked
@@ -59,7 +59,7 @@ export default Component.extend({
     const externalClasses = this.get('class');
 
     if (externalClasses) {
-      linkClass += ' ' + externalClasses;
+      linkClass += ` ${externalClasses}`;
     }
 
     return linkClass;
@@ -67,7 +67,7 @@ export default Component.extend({
 
   target: computed('external', function() {
     return this.get('external') ? '_blank' : null;
-  }),
+  }).readOnly(),
 
   rel: computed('external', function() {
     return this.get('external') ? 'noopener noreferrer' : null;
