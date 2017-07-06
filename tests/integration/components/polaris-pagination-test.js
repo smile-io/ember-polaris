@@ -1,4 +1,4 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { find, click } from 'ember-native-dom-helpers';
 
@@ -8,7 +8,7 @@ moduleForComponent('polaris-pagination', 'Integration | Component | polaris pagi
   integration: true
 });
 
-test('it renders correctly', function(assert) {
+skip('it renders correctly', function(assert) {
   assert.expect(9);
 
   this.render(hbs`{{polaris-pagination}}`);
@@ -41,7 +41,7 @@ test('it renders correctly', function(assert) {
   assert.ok(find('button.Polaris-Pagination__Button[aria-label="Next"]:not([disabled])'), 'inline-mode - has next button enabled');
  });
 
-test('it fires events correctly', function(assert) {
+skip('it fires events correctly', function(assert) {
   assert.expect(2);
 
   // TODO should we test explicitly these actions

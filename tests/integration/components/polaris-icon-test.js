@@ -1,4 +1,4 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
@@ -18,7 +18,7 @@ moduleForComponent('polaris-icon', 'Integration,  Component,  polaris icon', {
 
 const iconSelector = 'span.Polaris-Icon';
 
-test('it renders the specified icon correctly', function(assert) {
+skip('it renders the specified icon correctly', function(assert) {
   this.render(hbs`
     {{polaris-icon source="notes"}}
   `);
@@ -31,7 +31,7 @@ test('it renders the specified icon correctly', function(assert) {
   assert.equal(svgs.length, 1, 'renders one SVG element');
 });
 
-test('it applies colors correctly', function(assert) {
+skip('it applies colors correctly', function(assert) {
   // Colors lifted from shopify source.
   const colors = [
     'white',
@@ -64,7 +64,7 @@ test('it applies colors correctly', function(assert) {
   }
 });
 
-test('it handles backdrop correctly', function(assert) {
+skip('it handles backdrop correctly', function(assert) {
   this.render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
 
   // Check default setting.
@@ -79,7 +79,7 @@ test('it handles backdrop correctly', function(assert) {
   assert.notOk(icon.classList.contains(backdropClass), `icon with backdrop=false does not apply backdrop class`);
 });
 
-test('it handles accessibilityLabel correctly', function(assert) {
+skip('it handles accessibilityLabel correctly', function(assert) {
   this.render(hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`);
 
   // Check default setting.

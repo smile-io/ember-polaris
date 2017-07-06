@@ -1,13 +1,17 @@
 {{#if url}}
-  <a href={{url}} class={{linkClass}} target={{target}} rel={{rel}} data-polaris-unstyled="true">
+  {{#polaris-unstyled-link
+    url=url
+    class=linkClass
+    external=external
+  }}
     {{#if hasBlock}}
       {{yield}}
     {{else}}
       {{text}}
     {{/if}}
-  </a>
+  {{/polaris-unstyled-link}}
 {{else}}
-  <button class={{linkClass}} {{action (action onClick)}}>
+  <button class={{linkClass}} {{action (action onClick) bubbles=false}}>
     {{#if hasBlock}}
       {{yield}}
     {{else}}
