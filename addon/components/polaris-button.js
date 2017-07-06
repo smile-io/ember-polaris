@@ -185,6 +185,7 @@ export default Component.extend({
    * Computed properties.
    */
   buttonComponentName: computed('url', function() {
+    // TODO: refactor to use polaris-unstyled-link here
     const buttonType = isNone(this.get('url')) ? 'button' : 'link';
     return `polaris-button/${buttonType}`;
   }).readOnly(),
