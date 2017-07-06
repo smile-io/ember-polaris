@@ -34,6 +34,7 @@
 - Form layout
 
 #### Navigation
+- Link
 - Pagination
 
 ## Installation
@@ -527,6 +528,36 @@ Form layout with two groups, the second of which is condensed:
 ```
 
 #### Navigation
+
+##### Link
+`polaris-link` implements the [Polaris Link
+component](https://polaris.shopify.com/components/navigation/link).
+
+Basic inline link usage:
+```hbs
+{{polaris-link
+  text="This is an inline link"
+  url="http://www.somewhere.com/"
+}}
+```
+
+External link in block form:
+```hbs
+{{#polaris-link
+  url="http://www.somewhere.com/"
+  external=true
+}}
+  This is a block link
+{{/polaris-link}}
+```
+
+Button usage:
+```hbs
+{{polaris-link
+  text="Click me"
+  onClick=(action "linkButtonClicked")
+}}
+```
 
 ##### Pagination
 `polaris-pagination` implements the [Polaris Pagination
