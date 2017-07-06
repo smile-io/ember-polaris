@@ -1,6 +1,6 @@
 {
   "name": "ember-polaris",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ember wrappers for Shopify's product component library.",
   "keywords": [
     "ember-addon",
