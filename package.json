@@ -32,7 +32,6 @@
     "broccoli-merge-trees": "^2.0.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.1.1",
-    "ember-svg-jar": "^0.10.3",
     "ember-invoke-action": "^1.4.0"
   },
   "devDependencies": {

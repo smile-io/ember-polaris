@@ -54,6 +54,7 @@ If your app does not already have a `app/styles/app.scss` it will create one wit
 
 In addition, for icons to work you will need to:
 * copy Polaris SVG's into a folder in `public`, ex: `public/assets/images/svg/polaris`
+* install `ember-svg-jar`
 * add the following `ember-svg-jar` options to your `ember-cli-build.js`:
 
 ```javascript
@@ -77,6 +78,8 @@ var app = new EmberApp(defaults, {
   ...
 });
 ```
+
+**NOTE:** This will be handled by `ember-polaris` in the near future.
 
 ## Usage
 
