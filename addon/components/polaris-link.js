@@ -6,6 +6,10 @@ const {
   computed,
 } = Ember;
 
+/**
+ * Polaris link component.
+ * See https://polaris.shopify.com/components/navigation/link
+ */
 export default Component.extend({
   // No tag since we dynamically render either an anchor or a button element.
   tagName: '',
@@ -63,13 +67,5 @@ export default Component.extend({
     }
 
     return linkClass;
-  }).readOnly(),
-
-  target: computed('external', function() {
-    return this.get('external') ? '_blank' : null;
-  }).readOnly(),
-
-  rel: computed('external', function() {
-    return this.get('external') ? 'noopener noreferrer' : null;
   }).readOnly(),
 });

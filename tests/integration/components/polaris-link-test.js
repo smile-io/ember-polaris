@@ -97,6 +97,50 @@ test('it handles click events correctly', function(assert) {
   assert.ok(clickHandlerCalled, 'click handler fired');
 });
 
+test('clicking a link navigates but does not bubble to the parent', function(assert) {
+  let parentHandlerCalled = false;
+  this.on('parentClicked', () => {
+    parentHandlerCalled = true;
+  });
+
+  this.render(hbs`
+    <div {{action (action "parentClicked")}}>
+      {{polaris-link url="#linkClicked"}}
+    </div>
+  `);
+
+  const links = findAll(linkSelector);
+  assert.equal(links.length, 1, 'renders one link');
+
+  click(linkSelector);
+  assert.equal(location.hash, '#linkClicked', 'app navigates to specified URL');
+  assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
+});
+
+test('clicking a link button performs the button action but does not bubble to the parent', function(assert) {
+  let parentHandlerCalled = false;
+  this.on('parentClicked', () => {
+    parentHandlerCalled = true;
+  });
+  let buttonHandlerCalled = false;
+  this.on('buttonClicked', () => {
+    buttonHandlerCalled = true;
+  });
+
+  this.render(hbs`
+    <div {{action (action "parentClicked")}}>
+      {{polaris-link onClick=(action "buttonClicked")}}
+    </div>
+  `);
+
+  const linkButtons = findAll(linkButtonSelector);
+  assert.equal(linkButtons.length, 1, 'renders one link button');
+
+  click(linkButtonSelector);
+  assert.ok(buttonHandlerCalled, 'button click handler is fired');
+  assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
+});
+
 test('it applies passed-in classes to the rendered element when rendering a link', function(assert) {
   this.set('class', 'my-link click-me');
   this.render(hbs`{{polaris-link class=class url="http://www.somewhere.com/"}}`);
