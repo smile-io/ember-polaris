@@ -108,7 +108,7 @@ const {
   /**
    * Lifecycle hooks.
    */
-  didRender() {
+  didInsertElement() {
     this._super(...arguments);
 
     // Wrap each child element that isn't already a stack item.

@@ -40,7 +40,7 @@ export default Component.extend({
    /**
     * Lifecycle hooks.
     */
-   didRender() {
+   didInsertElement() {
      this._super(...arguments);
 
      // Wrap each element that isn't already an item.
