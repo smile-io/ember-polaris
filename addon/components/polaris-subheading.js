@@ -50,7 +50,7 @@ export default Component.extend({
   /**
    * Lifecycle hooks.
    */
-  didRender() {
+  didInsertElement() {
     this._super(...arguments);
 
     // Update ariaLabel with the new content.
