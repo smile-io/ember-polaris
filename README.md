@@ -37,6 +37,9 @@
 - Link
 - Pagination
 
+#### Overlays
+- Popover
+
 ## Installation
 
 Install `ember-polaris` using `ember-cli`:
@@ -533,6 +536,8 @@ Form layout with two groups, the second of which is condensed:
 `polaris-link` implements the [Polaris Link
 component](https://polaris.shopify.com/components/navigation/link).
 
+###### Examples
+
 Basic inline link usage:
 ```hbs
 {{polaris-link
@@ -563,7 +568,9 @@ Button usage:
 `polaris-pagination` implements the [Polaris Pagination
 component](https://polaris.shopify.com/components/navigation/pagination#navigation).
 
-**NOTE:** Following properties are not currently implemented: `nextUrl` and `previousUrl`.
+**NOTE:** _the following properties are not currently implemented: `nextUrl` and `previousUrl`._
+
+###### Examples
 
 Basic usage:
 ```hbs
@@ -584,6 +591,43 @@ Plain mode pagination:
   onPrevious=(action "handlePreviousButton")
   onNext=(action "handleNextButton")
 }}
+```
+
+#### Overlays
+
+##### Popover
+`polaris-popover` implements the [Polaris Popover
+component](https://polaris.shopify.com/components/overlays/popover). This component uses [`ember-basic-dropdown`](https://github.com/cibernox/ember-basic-dropdown) to implement popover functionality. Note that the usage is slightly different from the React implementation so please pay attention to the examples below.
+
+
+**NOTE:** _the `preferredPosition`, `active`, `activatorWrapper`, `preventAutofocus` and `onClose` properties are currently unimplemented._
+
+###### Examples
+
+Basic usage:
+```hbs
+{{#polaris-popover as |popover|}}
+  {{#popover.activator}}
+    {{polaris-button text="Toggle popover"}}
+  {{/popover.activator}}
+
+  {{#popover.content}}
+    This is the popover content
+  {{/popover.content}}
+{{/polaris-popover}}
+```
+
+Sectioned popover:
+```hbs
+{{#polaris-popover sectioned=true as |popover|}}
+  {{#popover.activator}}
+    {{polaris-button text="Toggle popover"}}
+  {{/popover.activator}}
+
+  {{#popover.content}}
+    This is the popover content
+  {{/popover.content}}
+{{/polaris-popover}}
 ```
 
 ## Contributing
