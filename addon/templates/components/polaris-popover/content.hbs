@@ -9,10 +9,20 @@
             class="Polaris-Popover__Pane Polaris-Scrollable Polaris-Scrollable--vertical"
             data-polaris-scrollable="true"
           >
-            {{#if hasBlock}}
-              {{yield}}
+            {{#if sectioned}}
+              <div class="Polaris-Popover__Section">
+                {{#if hasBlock}}
+                  {{yield}}
+                {{else}}
+                  {{text}}
+                {{/if}}
+              </div>
             {{else}}
-              {{text}}
+              {{#if hasBlock}}
+                {{yield}}
+              {{else}}
+                {{text}}
+              {{/if}}
             {{/if}}
           </div>
         </div>

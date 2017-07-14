@@ -7,6 +7,16 @@ moduleForComponent('polaris-popover', 'Integration | Component | polaris popover
   integration: true
 });
 
+const activatorSelector = 'button.Polaris-Button';
+const overlaySelector = 'div.Polaris-PositionedOverlay';
+const popoverSelector = buildNestedSelector(overlaySelector, 'div.Polaris-Popover');
+const popoverChildSelector = buildNestedSelector(popoverSelector, 'div');
+const popoverContentSelector = buildNestedSelector(popoverChildSelector, 'div.Polaris-Popover__Content');
+const popoverPaneSelector = buildNestedSelector(
+  popoverContentSelector,
+  'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
+);
+
 test('it renders the correct HTML with default attributes', function(assert) {
   this.render(hbs`
     {{#polaris-popover as |popover|}}
@@ -20,12 +30,10 @@ test('it renders the correct HTML with default attributes', function(assert) {
     {{/polaris-popover}}
   `);
 
-  const activatorSelector = 'button.Polaris-Button';
   const activator = find(activatorSelector);
   assert.ok(activator, 'renders activator');
 
   // Check that the popover content isn't rendered.
-  const overlaySelector = 'div.Polaris-PositionedOverlay';
   let overlays = findAll(overlaySelector);
   assert.equal(overlays.length, 0, 'before clicking activator - does not render any content');
 
@@ -33,13 +41,11 @@ test('it renders the correct HTML with default attributes', function(assert) {
   click(activatorSelector);
 
   // Check that the content is now rendered.
-  const popoverSelector = buildNestedSelector(overlaySelector, 'div.Polaris-Popover');
   const popovers = findAll(popoverSelector);
   assert.equal(popovers.length, 1, 'renders one popover after clicking activator');
   assert.equal(popovers[0].dataset.polarisOverlay, 'true', 'popover has data-polaris-overlay attribute');
 
   // Check the popover renders the correct HTML.
-  const popoverChildSelector = buildNestedSelector(popoverSelector, 'div');
   const popoverChildren = findAll(popoverChildSelector);
   assert.equal(popoverChildren.length, 4, 'popover has the correct number of children');
 
@@ -57,14 +63,9 @@ test('it renders the correct HTML with default attributes', function(assert) {
   assert.ok(child.classList.contains('Polaris-Popover__FocusTracker'), 'fourth popover child is focus tracker');
 
   // Check the content was rendered correctly.
-  const popoverContentSelector = buildNestedSelector(popoverChildSelector, 'div.Polaris-Popover__Content');
   const popoverContents = findAll(popoverContentSelector);
   assert.equal(popoverContents.length, 1, 'renders one popover content div');
 
-  const popoverPaneSelector = buildNestedSelector(
-    popoverContentSelector,
-    'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
-  );
   const popoverPanes = findAll(popoverPaneSelector);
   assert.equal(popoverPanes.length, 1, 'renders one popover pane');
 
@@ -78,4 +79,25 @@ test('it renders the correct HTML with default attributes', function(assert) {
   // Check that the popover content is removed.
   overlays = findAll(overlaySelector);
   assert.equal(overlays.length, 0, 'after clicking activator twice - does not render any content');
+});
+
+test('it renders the correct HTML with sectioned attribute', function(assert) {
+  this.render(hbs`
+    {{#polaris-popover sectioned=true as |popover|}}
+      {{#popover.activator}}
+        {{polaris-button text="Toggle popover"}}
+      {{/popover.activator}}
+
+      {{#popover.content}}
+        This is some sectioned popover content
+      {{/popover.content}}
+    {{/polaris-popover}}
+  `);
+
+  click(activatorSelector);
+
+  const popoverSectionSelector = buildNestedSelector(popoverPaneSelector, 'div.Polaris-Popover__Section');
+  const popoverSections = findAll(popoverSectionSelector);
+  assert.equal(popoverSections.length, 1, 'renders one popover section');
+  assert.equal(popoverSections[0].textContent.trim(), 'This is some sectioned popover content', 'popover section contains the correct content');
 });

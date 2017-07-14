@@ -14,6 +14,15 @@ export default Component.extend({
    * Public attributes.
    */
   /**
+   * Automatically add wrap content in a section
+   *
+   * @property sectioned
+   * @type {boolean}
+   * @default false
+   */
+  sectioned: false,
+
+  /**
    * Content wrapper component.
    *
    * @property contentComponent

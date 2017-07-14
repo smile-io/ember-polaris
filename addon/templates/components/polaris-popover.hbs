@@ -4,6 +4,9 @@
 }}
   {{yield (hash
     activator=dd.trigger
-    content=(component "polaris-popover/content" contentComponent=dd.content)
+    content=(component "polaris-popover/content"
+      contentComponent=dd.content
+      sectioned=sectioned
+    )
   )}}
 {{/basic-dropdown}}
