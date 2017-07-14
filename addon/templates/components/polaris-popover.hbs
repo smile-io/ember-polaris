@@ -1,0 +1,9 @@
+{{#basic-dropdown
+  renderInPlace=true
+  as |dd|
+}}
+  {{yield (hash
+    activator=dd.trigger
+    content=(component "polaris-popover/content" contentComponent=dd.content)
+  )}}
+{{/basic-dropdown}}
