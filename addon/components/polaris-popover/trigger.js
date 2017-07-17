@@ -3,7 +3,13 @@ import layout from '../../templates/components/polaris-popover/trigger';
 
 const {
   Component,
+  computed,
+  String: EmberString,
 } = Ember;
+
+const {
+  htmlSafe,
+} = EmberString;
 
 export default Component.extend({
   tagName: '',
@@ -21,4 +27,15 @@ export default Component.extend({
    * @default: null
    */
   triggerComponent: null,
+
+  /*
+   * Internal properties.
+   */
+  triggerStyle: computed(function() {
+    return htmlSafe(`
+      display: inline-block;
+      overflow: inherit;
+      border: none;
+    `);
+  }).readOnly(),
 });

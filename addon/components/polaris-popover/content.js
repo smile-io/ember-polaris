@@ -2,7 +2,9 @@ import Ember from 'ember';
 import layout from '../../templates/components/polaris-popover/content';
 
 const {
+  $,
   Component,
+  isNone,
 } = Ember;
 
 export default Component.extend({
@@ -44,14 +46,35 @@ export default Component.extend({
    */
   text: null,
 
+  /**
+   * `ember-basic-dropdown`'s generated ID, used to look up
+   *
+   * @property uniqueId
+   * @type {string}
+   * @default: null
+   */
+  uniqueId: null,
+
+  /*
+   * Lifecycle hooks.
+   */
   didRender() {
     this._super(...arguments);
 
     // Position the tip div correctly.
-    // TODO: make this less hacky!
-    const trigger = Ember.$('div.ember-basic-dropdown-trigger')[0];
-    const content = Ember.$('div#ember-basic-dropdown-wormhole')[0];
-    const left = (trigger.getBoundingClientRect().width / 2) - content.getBoundingClientRect().left;
-    Ember.$('div.Polaris-Popover__Tip').css({ left });
+    const uniqueId = this.get('uniqueId');
+    if (isNone(uniqueId)) {
+      return;
+    }
+
+    const trigger = $(`div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`)[0];
+    const content = $(`div#ember-basic-dropdown-content-${uniqueId}`)[0];
+
+    if (isNone(trigger) || isNone(content)) {
+      return;
+    }
+
+    const left = (trigger.getBoundingClientRect().width / 2) - content.parentNode.getBoundingClientRect().left;
+    $('div.Polaris-Popover__Tip').css({ left });
   },
 });
