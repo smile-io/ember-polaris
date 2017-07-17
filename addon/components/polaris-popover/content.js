@@ -75,6 +75,6 @@ export default Component.extend({
     }
 
     const left = (trigger.getBoundingClientRect().width / 2) - content.parentNode.getBoundingClientRect().left;
-    $('div.Polaris-Popover__Tip').css({ left });
+    $('div.Polaris-Popover__Tip', content).css({ left });
   },
 });
