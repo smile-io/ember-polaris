@@ -43,4 +43,15 @@ export default Component.extend({
    * @default: null
    */
   text: null,
+
+  didRender() {
+    this._super(...arguments);
+
+    // Position the tip div correctly.
+    // TODO: make this less hacky!
+    const trigger = Ember.$('div.ember-basic-dropdown-trigger')[0];
+    const content = Ember.$('div#ember-basic-dropdown-wormhole')[0];
+    const left = (trigger.getBoundingClientRect().width / 2) - content.getBoundingClientRect().left;
+    Ember.$('div.Polaris-Popover__Tip').css({ left });
+  },
 });
