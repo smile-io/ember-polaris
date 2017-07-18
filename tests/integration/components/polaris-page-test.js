@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
-import MockPolarisIconComponent from '../../mocks/components/polaris-icon';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const availableRoutes = [
   'home',
@@ -14,7 +14,7 @@ moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true,
 
   beforeEach() {
-    this.register('component:polaris-icon', MockPolarisIconComponent);
+    this.register('component:svg-jar', MockSvgJarComponent);
     stubRouting(this.registry, availableRoutes);
   }
 });

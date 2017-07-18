@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { find, click } from 'ember-native-dom-helpers';
-import MockPolarisIconComponent from '../../mocks/components/polaris-icon';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const paginationSelector = 'span.Polaris-Pagination';
 
@@ -9,7 +9,7 @@ moduleForComponent('polaris-pagination', 'Integration | Component | polaris pagi
   integration: true,
 
   beforeEach() {
-    this.register('component:polaris-icon', MockPolarisIconComponent);
+    this.register('component:svg-jar', MockSvgJarComponent);
   },
 });
 

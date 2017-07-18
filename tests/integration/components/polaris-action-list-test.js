@@ -2,13 +2,13 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockPolarisIconComponent from '../../mocks/components/polaris-icon';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 moduleForComponent('polaris-action-list', 'Integration | Component | polaris action list', {
   integration: true,
 
   beforeEach() {
-    this.register('component:polaris-icon', MockPolarisIconComponent);
+    this.register('component:svg-jar', MockSvgJarComponent);
   },
 });
 
@@ -30,7 +30,8 @@ const actionListItemContentImageSelector = buildNestedSelector(
 );
 const actionListItemContentImageIconSelector = buildNestedSelector(
   actionListItemContentImageSelector,
-  'span.Polaris-Icon'
+  'span.Polaris-Icon',
+  'svg'
 );
 const actionListItemContentTextSelector = buildNestedSelector(
   actionListItemContentSelector,
@@ -87,8 +88,8 @@ test('it renders the correct HTML when using icons', function(assert) {
 
   const actionListItemContentImageIcons = findAll(actionListItemContentImageIconSelector);
   assert.equal(actionListItemContentImageIcons.length, 2, 'renders two action list item image icons');
-  assert.equal(actionListItemContentImageIcons[0].dataset.iconSource, 'import', 'first item image icon - renders the correct icon');
-  assert.equal(actionListItemContentImageIcons[1].dataset.iconSource, 'export', 'second item image icon - renders the correct icon');
+  assert.equal(actionListItemContentImageIcons[0].dataset.iconSource, 'polaris/import', 'first item image icon - renders the correct icon');
+  assert.equal(actionListItemContentImageIcons[1].dataset.iconSource, 'polaris/export', 'second item image icon - renders the correct icon');
 
   const actionListItemContentTexts = findAll(actionListItemContentTextSelector);
   assert.equal(actionListItemContentTexts.length, 2, 'renders two action list item texts');
