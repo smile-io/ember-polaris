@@ -11,6 +11,7 @@
 ### Implemented components
 
 #### Actions
+- Action list
 - Button
 - Button group
 
@@ -129,6 +130,45 @@ Some Polaris React components accept an `actions` property as a list of actions 
 ### Components
 
 #### Actions
+
+##### Action list
+`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list). Note that `sections` are not yet supported.
+
+###### Examples
+
+Basic usage:
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      content="This is the first item"
+      action=(action "firstItemClicked")
+    )
+    (hash
+      content="This is item number two"
+      action=(action (mut secondItemClicked) true)
+    )
+  )
+}}
+```
+
+With icons:
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      content="Add an item..."
+      icon="add"
+      action=(action "addItem")
+    )
+    (hash
+      content="Delete this item"
+      icon="delete"
+      action=(action "deleteItem")
+    )
+  )
+}}
+```
 
 ##### Button
 `polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
