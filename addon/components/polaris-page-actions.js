@@ -5,6 +5,7 @@ const {
   Component,
   computed,
   isArray,
+  typeOf,
 } = Ember;
 
 /**
@@ -43,4 +44,12 @@ export default Component.extend({
   showSecondaryActions: computed('secondaryActions.length', function() {
     return isArray(this.get('secondaryActions'));
   }).readOnly(),
+
+  actions: {
+    fireAction(action) {
+      if (typeOf(action.action) === 'function') {
+        return action.action();
+      }
+    }
+  }
 });

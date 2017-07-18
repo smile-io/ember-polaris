@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
+import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-page-actions', 'Integration | Component | polaris page actions', {
@@ -154,4 +154,50 @@ test('it renders the correct HTML when the primary action is disabled', function
   const primaryButton = find(primaryButtonSelector);
   assert.ok(primaryButton, 'renders primary button');
   assert.ok(primaryButton.disabled, 'primary button is disabled');
+});
+
+test('it handles item actions correctly', function(assert) {
+  let primaryActionFired = false;
+  this.on('primaryAction', () => {
+    primaryActionFired = true;
+  });
+  this.set('secondaryAction1Fired', false);
+  this.set('secondaryAction2Fired', false);
+
+  this.render(hbs`
+    {{polaris-page-actions
+      primaryAction=(hash
+        content="Primary"
+        action=(action "primaryAction")
+      )
+      secondaryActions=(array
+        (hash
+          content="Secondary 1"
+          action=(action (mut secondaryAction1Fired) true)
+        )
+        (hash
+          content="Secondary 2"
+          action=(action (mut secondaryAction2Fired) true)
+        )
+      )
+    }}
+  `);
+
+  const secondaryButtonGroupItems = findAll('div.Polaris-ButtonGroup__Item');
+  assert.equal(secondaryButtonGroupItems.length, 2, 'renders both secondary buttons');
+
+  // Click the first secondary button.
+  click('button', secondaryButtonGroupItems[0]);
+  assert.notOk(primaryActionFired, 'after clicking first secondary button - primary action not fired');
+  assert.ok(this.get('secondaryAction1Fired'), 'after clicking first secondary button - first secondary action fired');
+  assert.notOk(this.get('secondaryAction2Fired'), 'after clicking first secondary button - second secondary action not fired');
+
+  // Click the primary button.
+  click('button.Polaris-Button--primary');
+  assert.ok(primaryActionFired, 'after clicking primary button - primary action fired');
+  assert.notOk(this.get('secondaryAction2Fired'), 'after clicking first secondary button - second secondary action not fired');
+
+  // Click the remaining secondary button.
+  click('button', secondaryButtonGroupItems[1]);
+  assert.ok(this.get('secondaryAction2Fired'), 'after clicking second secondary button - second secondary action fired');
 });
