@@ -2,7 +2,7 @@
   <ul class="Polaris-ActionList__Actions">
     {{#each items as |item|}}
       <li>
-        <button class="Polaris-ActionList__Item">
+        <button class="Polaris-ActionList__Item" {{action (action "fireItemAction" item) bubbles=false}}>
           {{#if item.icon}}
             <div class="Polaris-ActionList__Content">
               <div class="Polaris-ActionList__Image">

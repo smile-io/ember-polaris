@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockPolarisIconComponent from '../../mocks/components/polaris-icon';
 
@@ -94,4 +94,38 @@ test('it renders the correct HTML when using icons', function(assert) {
   assert.equal(actionListItemContentTexts.length, 2, 'renders two action list item texts');
   assert.equal(actionListItemContentTexts[0].textContent.trim(), 'Import some things', 'first item text - renders the correct content');
   assert.equal(actionListItemContentTexts[1].textContent.trim(), 'Export stuff', 'second item text - renders the correct content');
+});
+
+test('it handles item actions correctly', function(assert) {
+  let action1Fired = false;
+  this.on('action1', () => {
+    action1Fired = true;
+  });
+  this.set('action2Fired', false);
+
+  this.render(hbs`
+    {{polaris-action-list
+      items=(array
+        (hash
+          content="Item 1"
+          action=(action "action1")
+        )
+        (hash
+          content="Item 2"
+          action=(action (mut action2Fired) true)
+        )
+      )
+    }}
+  `);
+
+  const actionLists = findAll(actionListSelector);
+  assert.equal(actionLists.length, 1, 'renders one action list');
+
+  const listItems = findAll('li');
+  click('button', listItems[0]);
+  assert.ok(action1Fired, 'after pressing first button - first action fired');
+  assert.notOk(this.get('action2Fired'), 'after pressing first button - second action not fired');
+
+  click('button', listItems[1]);
+  assert.ok(this.get('action2Fired'), 'after pressing second button - second action fired');
 });

@@ -3,6 +3,7 @@ import layout from '../templates/components/polaris-action-list';
 
 const {
   Component,
+  typeOf,
 } = Ember;
 
 /**
@@ -35,4 +36,17 @@ export default Component.extend({
    * TODO: not implemented
    */
   sections: null,
+
+  /*
+   * Internal properties.
+   */
+  actions: {
+    fireItemAction(item) {
+      if (typeOf(item.action) === 'function') {
+        return item.action();
+      }
+
+      return null;
+    }
+  }
 });
