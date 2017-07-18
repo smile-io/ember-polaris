@@ -1,8 +1,9 @@
-import { moduleForComponent, test, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
+import MockPolarisIconComponent from '../../mocks/components/polaris-icon';
 
 const availableRoutes = [
   'home',
@@ -11,7 +12,9 @@ const availableRoutes = [
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
   integration: true,
-  setup() {
+
+  beforeEach() {
+    this.register('component:polaris-icon', MockPolarisIconComponent);
     stubRouting(this.registry, availableRoutes);
   }
 });
@@ -103,7 +106,7 @@ test('it handles primary action correctly when a primary action is supplied', fu
   });
 });
 
-skip('it handles breadcrumbs correctly', function(assert) {
+test('it handles breadcrumbs correctly', function(assert) {
   this.render(hbs`{{polaris-page breadcrumbs=breadcrumbs}}`);
 
   // Test before setting breadcrumbs.

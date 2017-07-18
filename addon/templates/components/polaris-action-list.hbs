@@ -1,0 +1,22 @@
+<div>
+  <ul class="Polaris-ActionList__Actions">
+    {{#each items as |item|}}
+      <li>
+        <button class="Polaris-ActionList__Item">
+          {{#if item.icon}}
+            <div class="Polaris-ActionList__Content">
+              <div class="Polaris-ActionList__Image">
+                {{polaris-icon source=item.icon}}
+              </div>
+              <div class="Polaris-ActionList__Text">
+                {{item.content}}
+              </div>
+            </div>
+          {{else}}
+            {{item.content}}
+          {{/if}}
+        </button>
+      </li>
+    {{/each}}
+  </ul>
+</div>

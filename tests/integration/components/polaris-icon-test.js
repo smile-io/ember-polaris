@@ -12,7 +12,7 @@ const {
   classify,
 } = EmberString;
 
-moduleForComponent('polaris-icon', 'Integration,  Component,  polaris icon', {
+moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
   integration: true
 });
 
