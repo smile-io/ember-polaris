@@ -130,3 +130,38 @@ test('it handles item actions correctly', function(assert) {
   click('button', listItems[1]);
   assert.ok(this.get('action2Fired'), 'after pressing second button - second action fired');
 });
+
+test('it does not bubble item actions', function(assert) {
+  this.setProperties({
+    parentActionFired: false,
+    action1Fired: false,
+    action2Fired: false,
+  });
+
+  this.render(hbs`
+    <div {{action (action (mut parentActionFired) true)}}>
+      {{polaris-action-list
+        items=(array
+          (hash
+            content="Item 1"
+            action=(action (mut action2Fired) true)
+          )
+          (hash
+            content="Item 2"
+            action=(action (mut action2Fired) true)
+          )
+        )
+      }}
+    </div>
+  `);
+
+  const actionLists = findAll(actionListSelector);
+  assert.equal(actionLists.length, 1, 'renders one action list');
+
+  const listItems = findAll('li');
+  click('button', listItems[0]);
+  assert.notOk(this.get('parentActionFired'), 'after pressing first button - parent action not fired');
+
+  click('button', listItems[1]);
+  assert.notOk(this.get('parentActionFired'), 'after pressing second button - parent action not fired');
+});

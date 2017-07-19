@@ -22,7 +22,7 @@ export default Component.extend({
    * Collection of actions for list
    *
    * @property items
-   * @type {Action[]}
+   * @type {Array}
    * @default null
    */
   items: null,
@@ -31,7 +31,7 @@ export default Component.extend({
    * Collection of sectioned action items
    *
    * @property sections
-   * @type {Section[]}
+   * @type {Array}
    * @default null
    * TODO: not implemented
    */
@@ -41,7 +41,9 @@ export default Component.extend({
    * Internal properties.
    */
   actions: {
-    fireItemAction(item) {
+    fireItemAction(item, event) {
+      event.stopPropagation();
+
       if (typeOf(item.action) === 'function') {
         return item.action();
       }
