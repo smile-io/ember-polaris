@@ -3,7 +3,13 @@ import layout from '../templates/components/polaris-popover';
 
 const {
   Component,
+  computed,
+  String: EmberString,
 } = Ember;
+
+const {
+  htmlSafe,
+} = EmberString;
 
 /**
  * Polaris popover component.
@@ -56,6 +62,7 @@ export default Component.extend({
    * @property activatorWrapper
    * @type {string}
    * @default null
+   * TODO: not implemented
    */
   activatorWrapper: null,
 
@@ -87,4 +94,15 @@ export default Component.extend({
    * TODO: not implemented
    */
   onClose: null,
+
+  /*
+   * Internal properties.
+   */
+  triggerStyle: computed(function() {
+    return htmlSafe(`
+      display: inline-block;
+      overflow: inherit;
+      border: none;
+    `);
+  }).readOnly(),
 });

@@ -2,9 +2,7 @@
   as |dd|
 }}
   {{yield (hash
-    activator=(component "polaris-popover/trigger"
-      triggerComponent=dd.trigger
-    )
+    activator=(component dd.trigger style=triggerStyle)
     content=(component "polaris-popover/content"
       contentComponent=dd.content
       uniqueId=dd.uniqueId
