@@ -24,7 +24,7 @@ export default Component.extend({
    * The primary action for the page
    *
    * @property primaryAction
-   * @type {DisableableAction}
+   * @type {Object}
    * @default null
    */
   primaryAction: null,
@@ -33,7 +33,7 @@ export default Component.extend({
    * The secondary actions for the page
    *
    * @property secondaryActions
-   * @type {ComplexAction[]}
+   * @type {Array}
    * @default null
   */
   secondaryActions: null,
