@@ -23,6 +23,7 @@
 - Card
 - Layout
 - Page
+- Page actions
 - Stack
 
 #### Titles and text
@@ -227,7 +228,7 @@ Plain buttons:
   {{#buttonGroup.item plain=true}}
     {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
   {{/buttonGroup.item}}
-{{/polaris-stack}}
+{{/polaris-button-group}}
 ```
 
 #### Images and icons
@@ -419,6 +420,41 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 }}
   Your page content goes here
 {{/polaris-page}}
+```
+
+##### Page actions
+`polaris-page-actions` implements the [Polaris Page actions component](https://polaris.shopify.com/components/structure/page-actions).
+
+###### Examples
+
+Primary action only:
+```hbs
+{{polaris-page-actions
+  primaryAction=(hash
+    content="Save"
+    action=(action "save")
+  )
+}}
+```
+
+Primary action with two secondary actions (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+```hbs
+{{polaris-page-actions
+  primaryAction=(hash
+    content="Save"
+    action=(action "save")
+  )
+  secondaryActions=(array
+    (hash
+      content="Delete"
+      action=(action "delete")
+    )
+    (hash
+      content="Cancel"
+      action=(action "cancel")
+    )
+  )
+}}
 ```
 
 ##### Stack
