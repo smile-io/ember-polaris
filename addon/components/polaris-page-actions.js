@@ -41,7 +41,7 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-  showSecondaryActions: computed('secondaryActions.length', function() {
+  showSecondaryActions: computed('secondaryActions', function() {
     return isArray(this.get('secondaryActions'));
   }).readOnly(),
 
