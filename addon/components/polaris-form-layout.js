@@ -34,7 +34,8 @@ const {
 
     // Wrap each child element that isn't already a group or an item.
     this.$().children()
-      .not('div[role="group"]', 'div.Polaris-FormLayout__Item')
+      .not('div[role="group"]')
+      .not('div.Polaris-FormLayout__Item')
       .wrap('<div class="Polaris-FormLayout__Item"></div>');
   },
 });

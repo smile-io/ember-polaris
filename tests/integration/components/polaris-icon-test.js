@@ -1,7 +1,8 @@
-import { moduleForComponent, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import Ember from 'ember';
 
 const {
@@ -12,13 +13,17 @@ const {
   classify,
 } = EmberString;
 
-moduleForComponent('polaris-icon', 'Integration,  Component,  polaris icon', {
-  integration: true
+moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
+  integration: true,
+
+  beforeEach() {
+    this.register('component:svg-jar', MockSvgJarComponent);
+  },
 });
 
 const iconSelector = 'span.Polaris-Icon';
 
-skip('it renders the specified icon correctly', function(assert) {
+test('it renders the specified icon correctly', function(assert) {
   this.render(hbs`
     {{polaris-icon source="notes"}}
   `);
@@ -29,9 +34,10 @@ skip('it renders the specified icon correctly', function(assert) {
   const svgSelector = buildNestedSelector(iconSelector, 'svg.Polaris-Icon__Svg');
   const svgs = findAll(svgSelector);
   assert.equal(svgs.length, 1, 'renders one SVG element');
+  assert.equal(svgs[0].dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
 });
 
-skip('it applies colors correctly', function(assert) {
+test('it applies colors correctly', function(assert) {
   // Colors lifted from shopify source.
   const colors = [
     'white',
@@ -64,7 +70,7 @@ skip('it applies colors correctly', function(assert) {
   }
 });
 
-skip('it handles backdrop correctly', function(assert) {
+test('it handles backdrop correctly', function(assert) {
   this.render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
 
   // Check default setting.
@@ -79,7 +85,7 @@ skip('it handles backdrop correctly', function(assert) {
   assert.notOk(icon.classList.contains(backdropClass), `icon with backdrop=false does not apply backdrop class`);
 });
 
-skip('it handles accessibilityLabel correctly', function(assert) {
+test('it handles accessibilityLabel correctly', function(assert) {
   this.render(hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`);
 
   // Check default setting.

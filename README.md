@@ -11,6 +11,7 @@
 ### Implemented components
 
 #### Actions
+- Action list
 - Button
 - Button group
 
@@ -22,6 +23,7 @@
 - Card
 - Layout
 - Page
+- Page actions
 - Stack
 
 #### Titles and text
@@ -133,6 +135,45 @@ Some Polaris React components accept an `actions` property as a list of actions 
 
 #### Actions
 
+##### Action list
+`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list). Note that `sections` are not yet supported.
+
+###### Examples
+
+Basic usage:
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      content="This is the first item"
+      action=(action "firstItemClicked")
+    )
+    (hash
+      content="This is item number two"
+      action=(action (mut secondItemClicked) true)
+    )
+  )
+}}
+```
+
+With icons:
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      content="Add an item..."
+      icon="add"
+      action=(action "addItem")
+    )
+    (hash
+      content="Delete this item"
+      icon="delete"
+      action=(action "deleteItem")
+    )
+  )
+}}
+```
+
 ##### Button
 `polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
 
@@ -190,7 +231,7 @@ Plain buttons:
   {{#buttonGroup.item plain=true}}
     {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
   {{/buttonGroup.item}}
-{{/polaris-stack}}
+{{/polaris-button-group}}
 ```
 
 #### Images and icons
@@ -382,6 +423,41 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 }}
   Your page content goes here
 {{/polaris-page}}
+```
+
+##### Page actions
+`polaris-page-actions` implements the [Polaris Page actions component](https://polaris.shopify.com/components/structure/page-actions).
+
+###### Examples
+
+Primary action only:
+```hbs
+{{polaris-page-actions
+  primaryAction=(hash
+    content="Save"
+    action=(action "save")
+  )
+}}
+```
+
+Primary action with two secondary actions (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+```hbs
+{{polaris-page-actions
+  primaryAction=(hash
+    content="Save"
+    action=(action "save")
+  )
+  secondaryActions=(array
+    (hash
+      content="Delete"
+      action=(action "delete")
+    )
+    (hash
+      content="Cancel"
+      action=(action "cancel")
+    )
+  )
+}}
 ```
 
 ##### Stack
