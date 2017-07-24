@@ -15,6 +15,7 @@ export default Component.extend({
     'outline:Polaris-Button--outline',
     'fullWidth:Polaris-Button--fullWidth',
     'plain:Polaris-Button--plain',
+    'iconOnly:Polaris-Button--iconOnly',
     'sizeClass',
   ],
   attributeBindings: [
@@ -37,6 +38,16 @@ export default Component.extend({
         return null;
     }
   }).readOnly(),
+
+  /*
+   * When we have an icon and no text.
+   *
+   * @private
+   * @property iconOnly
+   * @type {Boolean}
+   * @default false
+   */
+  iconOnly: false,
 
   /**
    * Action handlers.

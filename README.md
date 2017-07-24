@@ -175,7 +175,7 @@ With icons:
 ```
 
 ##### Button
-`polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
+`polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button).
 
 In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented. In the meantime we suggest using something like [`ember-transition-helper`](https://github.com/peec/ember-transition-helper) to achieve the same result.
 

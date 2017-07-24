@@ -1,9 +1,14 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { find, findAll, click, focus, blur } from 'ember-native-dom-helpers';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 moduleForComponent('polaris-button', 'Integration | Component | polaris button', {
-  integration: true
+  integration: true,
+
+  beforeEach() {
+    this.register('component:svg-jar', MockSvgJarComponent);
+  },
 });
 
 test('renders the correct HTML', function(assert) {
@@ -159,13 +164,15 @@ test('renders the correct HTML', function(assert) {
   assert.ok(button.classList.contains('Polaris-Button--fullWidth'), 'fullWidth button - fullWidth class');
 
 
-  // Button with disclosure flag set.
-  // TODO: needs polaris-icon component.
-  // this.render(hbs`{{polaris-button disclosure=true}}`);
-  //
-  // buttons = findAll('button[type="button"].Polaris-Button');
-  //
-  // assert.ok( what to check here? );
+  // Button with `disclosure` flag set
+  this.render(hbs`{{polaris-button disclosure=true}}`);
+
+  buttons = findAll('button[type="button"].Polaris-Button');
+  assert.equal(buttons.length, 1, 'fullWidth button - renders');
+
+  button = buttons[0];
+  let buttonDisclosureIcon = find('span.Polaris-Button__Content > span.Polaris-Icon', button);
+  assert.ok(buttonDisclosureIcon, 'disclosure button - has icon after text')
 
 
   // Button with submit flag set.
@@ -185,9 +192,6 @@ test('renders the correct HTML', function(assert) {
   assert.ok(button.classList.contains('Polaris-Button--plain'), 'plain button - plain class');
 
 
-  // TODO: icon
-
-
   // Button with accessibility label.
   this.render(hbs`{{polaris-button accessibilityLabel="You can't see me!"}}`);
 
@@ -196,6 +200,25 @@ test('renders the correct HTML', function(assert) {
 
   button = buttons[0];
   assert.equal(button.attributes['aria-label'].value, 'You can\'t see me!', 'accessible button - aria-label');
+});
+
+test('it supports icons', function(assert) {
+  this.render(hbs`{{polaris-button icon=icon text=text}}`);
+
+  let button = find('button.Polaris-Button');
+  let icon = find('span.Polaris-Button__Content > span.Polaris-Button__Icon', button);
+  assert.notOk(icon, 'button without icon - no icon rendered');
+
+  this.set('icon', 'cancel');
+
+  icon = find('span.Polaris-Button__Content > span.Polaris-Button__Icon', button);
+  let iconSvg = find('span.Polaris-Icon > svg.Polaris-Icon__Svg', icon);
+  assert.ok(icon, 'button with icon - renders icon');
+  assert.equal(iconSvg.dataset.iconSource, 'polaris/cancel', 'button with icon - renders correct icon SVG');
+  assert.ok(button.classList.contains('Polaris-Button--iconOnly'), 'button with icon - without text, has icon-only class');
+
+  this.set('text', 'Some text');
+  assert.notOk(button.classList.contains('Polaris-Button--iconOnly'), 'button with icon - with text, does not have icon-only class');
 });
 
 test('handles events correctly', function(assert) {

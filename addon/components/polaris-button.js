@@ -5,6 +5,8 @@ const {
   Component,
   computed,
   isNone,
+  isBlank,
+  isPresent,
 } = Ember;
 
 /**
@@ -99,13 +101,12 @@ export default Component.extend({
   fullWidth: false,
 
   /**
-   * Display button with a disclosure icon
+   * Display button with a disclosure icon (`caret-down`)
    *
    * @property disclosure
    * @type {boolean}
    * @default false
    */
-  //  TODO: needs polaris-icon component.
   disclosure: false,
 
   /**
@@ -142,7 +143,6 @@ export default Component.extend({
    * @type {SVG}
    * @default null
    */
-  //  TODO: implement this.
   icon: null,
 
   /**
@@ -188,5 +188,9 @@ export default Component.extend({
     // TODO: refactor to use polaris-unstyled-link here
     const buttonType = isNone(this.get('url')) ? 'button' : 'link';
     return `polaris-button/${buttonType}`;
+  }).readOnly(),
+
+  iconOnly: computed('icon', 'text', function() {
+    return isBlank(this.get('text')) && isPresent(this.get('icon'));
   }).readOnly(),
 });
