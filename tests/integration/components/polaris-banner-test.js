@@ -20,10 +20,6 @@ const dismissSelector = 'div.Polaris-Banner__Dismiss';
 const actionsSelector = 'div.Polaris-Banner__Actions';
 
 test('it renders', function(assert) {
-
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
-
   this.render(hbs`{{polaris-banner}}`);
 
   let banner = find(bannerSelector);
