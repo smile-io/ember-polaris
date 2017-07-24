@@ -306,7 +306,7 @@ With a success status set, custom icon, content, dismiss button and actions:
   icon="confetti"
   action=(hash content="Track" action=(action "trackPackage")
   secondaryAction=(hash content="View" action=(action "viewOrder")
-  onDismiss=(action "handleDismiss"
+  onDismiss=(action "handleDismiss")
 }}
     <p>This order has been shipped.</p>
 {{/polaris-banner}}
