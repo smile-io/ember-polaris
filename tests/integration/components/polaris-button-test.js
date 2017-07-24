@@ -164,17 +164,6 @@ test('renders the correct HTML', function(assert) {
   assert.ok(button.classList.contains('Polaris-Button--fullWidth'), 'fullWidth button - fullWidth class');
 
 
-  // Button with `disclosure` flag set
-  this.render(hbs`{{polaris-button disclosure=true}}`);
-
-  buttons = findAll('button[type="button"].Polaris-Button');
-  assert.equal(buttons.length, 1, 'fullWidth button - renders');
-
-  button = buttons[0];
-  let buttonDisclosureIcon = find('span.Polaris-Button__Content > span.Polaris-Icon', button);
-  assert.ok(buttonDisclosureIcon, 'disclosure button - has icon after text')
-
-
   // Button with submit flag set.
   this.render(hbs`{{polaris-button submit=true}}`);
 
@@ -202,7 +191,7 @@ test('renders the correct HTML', function(assert) {
   assert.equal(button.attributes['aria-label'].value, 'You can\'t see me!', 'accessible button - aria-label');
 });
 
-test('it supports icons', function(assert) {
+test('it supports `icon`', function(assert) {
   this.render(hbs`{{polaris-button icon=icon text=text}}`);
 
   let button = find('button.Polaris-Button');
@@ -219,6 +208,24 @@ test('it supports icons', function(assert) {
 
   this.set('text', 'Some text');
   assert.notOk(button.classList.contains('Polaris-Button--iconOnly'), 'button with icon - with text, does not have icon-only class');
+});
+
+test('it supports `disclosure`', function(assert) {
+  this.render(hbs`{{polaris-button text="Click me" disclosure=disclosure}}`);
+
+  let button = find('button.Polaris-Button');
+  let disclosureIcon = find('span.Polaris-Button__Content > span.Polaris-Button__Icon', button);
+  assert.notOk(disclosureIcon, 'button without disclosure - no disclosure icon rendered');
+
+  this.set('disclosure', true);
+
+  let contentSpans = findAll('span.Polaris-Button__Content > span', button);
+  assert.equal(contentSpans.length, 2, 'button with disclosure - renders both text and disclosure icon');
+
+  disclosureIcon = contentSpans[1];
+  assert.ok(disclosureIcon.classList.contains('Polaris-Button__Icon'), 'button with disclosure - has disclosure icon after text');
+  let iconSvg = find('span.Polaris-Icon > svg', disclosureIcon);
+  assert.equal(iconSvg.dataset.iconSource, 'polaris/caret-down', 'button with disclosure - uses `caret-down` as the SVG');
 });
 
 test('handles events correctly', function(assert) {

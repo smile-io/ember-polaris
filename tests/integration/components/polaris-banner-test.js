@@ -198,9 +198,9 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   banner = find(bannerSelector);
   content = find(contentSelector, banner);
   actions = find(actionsSelector, content);
-  let buttonGroup = find('div.Polaris-ButtonGroup', actions);
-  let actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline');
-  let secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction');
+  let btnGroup = find('div.Polaris-ButtonGroup', actions);
+  let actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline', btnGroup);
+  let secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction', btnGroup);
   assert.ok(actions, 'banner with actions - renders actions container');
   assert.ok(actionBtn, 'banner with actions - renders `action` button');
   assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
