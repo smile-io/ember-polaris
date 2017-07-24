@@ -83,7 +83,7 @@ export default Component.extend({
     return `Polaris-Icon--color${classify(color)}`;
   }).readOnly(),
 
-  iconSource: computed(function() {
+  iconSource: computed('sourcePath', 'source', function() {
     let sourcePath = this.get('sourcePath');
     sourcePath = isEmpty(sourcePath) ? '' : `${ sourcePath }/`;
     return `${ sourcePath }${ this.get('source') }`;
