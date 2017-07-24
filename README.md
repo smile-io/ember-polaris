@@ -214,7 +214,7 @@ Any child elements inside a `polaris-button-group` block will be auto-wrapped as
 
 Basic usage:
 
-```
+```hbs
 {{#polaris-button-group}}
   {{polaris-button text="Button 1" onClick=(action "doSomething")}}
   {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
@@ -223,7 +223,7 @@ Basic usage:
 
 Buttons joined as segmented group:
 
-```
+```hbs
 {{#polaris-button-group segmented=true}}
   {{polaris-button text="Button 1" onClick=(action "doSomething")}}
   {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
@@ -232,7 +232,7 @@ Buttons joined as segmented group:
 
 Plain buttons:
 
-```
+```hbs
 {{#polaris-button-group as |buttonGroup|}}
   {{#buttonGroup.item plain=true}}
     {{polaris-button text="Button 1" onClick=(action "doSomething")}}
@@ -521,7 +521,8 @@ Any child elements inside a `polaris-stack` block will be auto-wrapped as stack 
 ###### Examples
 
 Basic usage:
-```
+
+```hbs
 {{#polaris-stack}}
   <div>Stack item 1</div>
   <div>Stack item 2</div>
@@ -529,7 +530,8 @@ Basic usage:
 ```
 
 Vertical stack with tight spacing:
-```
+
+```hbs
 {{#polaris-stack vertical=true spacing="tight"}}
   <div>Stack item 1</div>
   <div>Stack item 2</div>
@@ -537,7 +539,8 @@ Vertical stack with tight spacing:
 ```
 
 Stack with one item on the left and one pushed to the right:
-```
+
+```hbs
 {{#polaris-stack as |stack|}}
   {{#stack.item fill=true}}
     <div>Stack item 1</div>
