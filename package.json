@@ -30,6 +30,7 @@
     "@shopify/polaris": "^1.1.1",
     "broccoli-funnel": "^1.2.0",
     "broccoli-merge-trees": "^2.0.0",
+    "ember-basic-dropdown": "^0.33.0",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-htmlbars": "^1.1.1",
     "ember-invoke-action": "^1.4.0"
