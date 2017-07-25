@@ -11,11 +11,18 @@
   submit=submit
   plain=plain
   accessibilityLabel=accessibilityLabel
+  iconOnly=iconOnly
   onClick=onClick
   onFocus=onFocus
   onBlur=onBlur
 }}
   <span class="Polaris-Button__Content">
+    {{#if icon}}
+      <span class="Polaris-Button__Icon">
+        {{polaris-icon source=icon}}
+      </span>
+    {{/if}}
+
     <span>
       {{#if hasBlock}}
         {{yield}}
@@ -24,17 +31,10 @@
       {{/if}}
     </span>
 
-    {{!-- TODO: needs polaris-icon component. --}}
-    {{!--
-      {{#if disclosure}}
-        <span class="Polaris-Button__Icon">
-          <span class="Polaris-Icon">
-            <svg class="Polaris-Icon__Svg" viewBox="0 0 20 20">
-              <path d="M5 8l5 5 5-5z" fill-rule="evenodd"></path>
-            </svg>
-          </span>
-        </span>
-      {{/if}}
-    --}}
+    {{#if disclosure}}
+      <span class="Polaris-Button__Icon">
+        {{polaris-icon source="caret-down"}}
+      </span>
+    {{/if}}
   </span>
 {{/component}}

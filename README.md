@@ -19,6 +19,9 @@
 - Badge
 - Icon
 
+#### Feedback and indicators
+- Banner
+
 #### Structure
 - Card
 - Layout
@@ -141,6 +144,7 @@ Some Polaris React components accept an `actions` property as a list of actions 
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{polaris-action-list
   items=(array
@@ -157,6 +161,7 @@ Basic usage:
 ```
 
 With icons:
+
 ```hbs
 {{polaris-action-list
   items=(array
@@ -175,13 +180,14 @@ With icons:
 ```
 
 ##### Button
-`polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button). Currently all properties are supported except for `disclosure` and `icon`; these will be made available once the Icon component has been implemented.
+`polaris-button` implements the [Polaris Button component](https://polaris.shopify.com/components/actions/button).
 
 In the future we intend to extend this component to be more Ember-friendly by adding support for `link-to` behavior; however, this is not yet implemented. In the meantime we suggest using something like [`ember-transition-helper`](https://github.com/peec/ember-transition-helper) to achieve the same result.
 
 ###### Examples
 
 Basic button:
+
 ```hbs
 {{#polaris-button onClick=(action "doSomething")}}
   Push me!
@@ -189,6 +195,7 @@ Basic button:
 ```
 
 Slim external link:
+
 ```hbs
 {{#polaris-button
   url="www.example.com"
@@ -206,7 +213,8 @@ Any child elements inside a `polaris-button-group` block will be auto-wrapped as
 ###### Examples
 
 Basic usage:
-```
+
+```hbs
 {{#polaris-button-group}}
   {{polaris-button text="Button 1" onClick=(action "doSomething")}}
   {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
@@ -214,7 +222,8 @@ Basic usage:
 ```
 
 Buttons joined as segmented group:
-```
+
+```hbs
 {{#polaris-button-group segmented=true}}
   {{polaris-button text="Button 1" onClick=(action "doSomething")}}
   {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
@@ -222,7 +231,8 @@ Buttons joined as segmented group:
 ```
 
 Plain buttons:
-```
+
+```hbs
 {{#polaris-button-group as |buttonGroup|}}
   {{#buttonGroup.item plain=true}}
     {{polaris-button text="Button 1" onClick=(action "doSomething")}}
@@ -242,11 +252,13 @@ Plain buttons:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{polaris-badge text="Fulfilled"}}
 ```
 
 With a success status set:
+
 ```hbs
 {{polaris-badge status="success" text="Complete"}}
 ```
@@ -257,11 +269,13 @@ With a success status set:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{polaris-icon source="notes"}}
 ```
 
 Customising with color and backdrop:
+
 ```hbs
 {{polaris-icon source="add" color="darkTeal" backdrop=true}}
 ```
@@ -270,6 +284,33 @@ Customising with color and backdrop:
 to render the SVG icons.
 You will have to make sure that you copy the icons into your public folder and
 configure `ember-svg-jar` to serve them from `polaris` namespace.
+
+#### Feedback and indicators
+
+##### Banner
+`polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner#navigation).
+
+###### Examples
+
+Basic usage:
+
+```hbs
+{{polaris-banner text="This order has been shipped."}}
+```
+
+With a success status set, custom icon, content, dismiss button and actions:
+
+```hbs
+{{#polaris-banner
+  status="success"
+  icon="confetti"
+  action=(hash content="Track" action=(action "trackPackage")
+  secondaryAction=(hash content="View" action=(action "viewOrder")
+  onDismiss=(action "handleDismiss")
+}}
+    <p>This order has been shipped.</p>
+{{/polaris-banner}}
+```
 
 #### Structure
 
@@ -282,6 +323,7 @@ configure `ember-svg-jar` to serve them from `polaris` namespace.
 Each of `{{polaris-card}}` and `{{polaris-card/section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
 Basic usage:
+
 ```hbs
 {{#polaris-card title="This is the card title"}}
   <p>This is the card content</p>
@@ -289,6 +331,7 @@ Basic usage:
 ```
 
 Subdued card with no title:
+
 ```hbs
 {{#polaris-card subdued=true}}
   <p>This is the subdued card content</p>
@@ -296,7 +339,8 @@ Subdued card with no title:
 ```
 
 With actions in the header (needs a non-empty title):
-```
+
+```hbs
 {{#polaris-card
   title="This is a card with actions"
   headerActions=(array
@@ -315,6 +359,7 @@ With actions in the header (needs a non-empty title):
 ```
 
 Three sections - first section with a title, third section subdued:
+
 ```hbs
 {{#polaris-card title="This is the card title" sectioned=false as |card|}}
   {{#card.section title="Section 1"}}
@@ -338,6 +383,7 @@ Three sections - first section with a title, third section subdued:
 Each of `{{polaris-layout}}`, `{{polaris-layout/section}}` and `{{polaris-layout/annotated-section}}` can be used in both inline or block form as described above, with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
 
 One-column layout:
+
 ```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.section}}
@@ -347,6 +393,7 @@ One-column layout:
 ```
 
 Two-column layout:
+
 ```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.section}}
@@ -360,6 +407,7 @@ Two-column layout:
 ```
 
 Annotated layout:
+
 ```hbs
 {{#polaris-layout as |layout|}}
   {{#layout.annotatedSection
@@ -385,6 +433,7 @@ Annotated layout:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
@@ -394,6 +443,7 @@ Basic usage:
 ```
 
 Full-width page with disableable primary action:
+
 ```hbs
 {{polaris-page
   title="This is the title"
@@ -407,6 +457,7 @@ Full-width page with disableable primary action:
 ```
 
 Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
@@ -431,6 +482,7 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
 ###### Examples
 
 Primary action only:
+
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
@@ -441,6 +493,7 @@ Primary action only:
 ```
 
 Primary action with two secondary actions (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
@@ -468,7 +521,8 @@ Any child elements inside a `polaris-stack` block will be auto-wrapped as stack 
 ###### Examples
 
 Basic usage:
-```
+
+```hbs
 {{#polaris-stack}}
   <div>Stack item 1</div>
   <div>Stack item 2</div>
@@ -476,7 +530,8 @@ Basic usage:
 ```
 
 Vertical stack with tight spacing:
-```
+
+```hbs
 {{#polaris-stack vertical=true spacing="tight"}}
   <div>Stack item 1</div>
   <div>Stack item 2</div>
@@ -484,7 +539,8 @@ Vertical stack with tight spacing:
 ```
 
 Stack with one item on the left and one pushed to the right:
-```
+
+```hbs
 {{#polaris-stack as |stack|}}
   {{#stack.item fill=true}}
     <div>Stack item 1</div>
@@ -502,6 +558,7 @@ Stack with one item on the left and one pushed to the right:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{#polaris-display-text}}
   This is some basic display text
@@ -509,6 +566,7 @@ Basic usage:
 ```
 
 Extra-large heading:
+
 ```hbs
 {{#polaris-display-text
   tagName="h1"
@@ -524,6 +582,7 @@ Extra-large heading:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{#polaris-heading}}
   This is a basic heading
@@ -531,6 +590,7 @@ Basic usage:
 ```
 
 Emphasised heading:
+
 ```hbs
 {{#polaris-heading
   tagName="em"
@@ -545,6 +605,7 @@ Emphasised heading:
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{#polaris-subheading}}
   This is a basic subheading
@@ -552,6 +613,7 @@ Basic usage:
 ```
 
 Underlined subheading:
+
 ```hbs
 {{#polaris-subheading
   tagName="u"
@@ -566,11 +628,13 @@ Underlined subheading:
 ###### Examples
 
 Inline form:
+
 ```hbs
 {{polaris-visually-hidden text="something descriptive"}}
 ```
 
 Block form:
+
 ```hbs
 {{#polaris-visually-hidden}}
   another description
@@ -587,6 +651,7 @@ Any child elements inside a `polaris-form-layout` or `polaris-form-layout/group`
 ###### Examples
 
 Default form layout:
+
 ```hbs
 {{#polaris-form-layout}}
   ... items...
@@ -594,6 +659,7 @@ Default form layout:
 ```
 
 Form layout with two groups, the second of which is condensed:
+
 ```hbs
 {{#polaris-form-layout as |formLayout|}}
   {{#formLayout.group}}
@@ -615,6 +681,7 @@ component](https://polaris.shopify.com/components/navigation/link).
 ###### Examples
 
 Basic inline link usage:
+
 ```hbs
 {{polaris-link
   text="This is an inline link"
@@ -623,6 +690,7 @@ Basic inline link usage:
 ```
 
 External link in block form:
+
 ```hbs
 {{#polaris-link
   url="http://www.somewhere.com/"
@@ -633,6 +701,7 @@ External link in block form:
 ```
 
 Button usage:
+
 ```hbs
 {{polaris-link
   text="Click me"
@@ -649,6 +718,7 @@ component](https://polaris.shopify.com/components/navigation/pagination#navigati
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{polaris-pagination
   hasPrevious=true
@@ -659,6 +729,7 @@ Basic usage:
 ```
 
 Plain mode pagination:
+
 ```hbs
 {{polaris-pagination
   plain=true
@@ -681,6 +752,7 @@ component](https://polaris.shopify.com/components/overlays/popover). This compon
 ###### Examples
 
 Basic usage:
+
 ```hbs
 {{#polaris-popover as |popover|}}
   {{#popover.activator}}
@@ -694,6 +766,7 @@ Basic usage:
 ```
 
 Sectioned popover:
+
 ```hbs
 {{#polaris-popover sectioned=true as |popover|}}
   {{#popover.activator}}
