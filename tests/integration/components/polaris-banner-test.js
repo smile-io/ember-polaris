@@ -19,7 +19,7 @@ const contentSelector = 'div.Polaris-Banner__Content';
 const dismissSelector = 'div.Polaris-Banner__Dismiss';
 const actionsSelector = 'div.Polaris-Banner__Actions';
 
-test('it renders', function(assert) {
+test('it renders correctly in basic usage', function(assert) {
   this.render(hbs`{{polaris-banner}}`);
 
   let banner = find(bannerSelector);
@@ -90,7 +90,7 @@ test('it handles banner content correctly', function(assert) {
   assert.equal(
     banner.getAttribute('aria-describedby'),
     content.getAttribute('id'),
-    'banner with content - has the banner\s aria-describedby as the content Id'
+    'banner with content - has the banner\'s aria-describedby as the content Id'
   );
 
   // Block-mode
@@ -108,7 +108,7 @@ test('it handles banner content correctly', function(assert) {
   assert.equal(
     banner.getAttribute('aria-describedby'),
     content.getAttribute('id'),
-    'banner with content (block) - has the banner\s aria-describedby as the content Id'
+    'banner with content (block) - has the banner\'s aria-describedby as the content Id'
   );
 });
 
@@ -150,20 +150,20 @@ test('it handles dismissable banner correctly', function(assert) {
   this.render(hbs`{{polaris-banner}}`);
 
   let banner = find(bannerSelector);
-  let dismiss = find(dismissSelector, banner);
+  let dismissWrapper = find(dismissSelector, banner);
   assert.notOk(banner.classList.contains('Polaris-Banner__hasDismiss'), 'banner non-dismissable - does not have dismissable class');
-  assert.notOk(dismiss, 'banner non-dismissable - does not render the dismiss element');
+  assert.notOk(dismissWrapper , 'banner non-dismissable - does not render the dismiss element');
 
   let dismissed = false;
-  this.on('dismissAction', () => dismissed = true);
+  this.on('dismiss', () => dismissed = true);
 
-  this.render(hbs`{{polaris-banner onDismiss=(action "dismissAction")}}`);
+  this.render(hbs`{{polaris-banner onDismiss=(action "dismiss")}}`);
 
   banner = find(bannerSelector);
-  dismiss = find(dismissSelector, banner);
-  let dismissBtn = find('button.Polaris-Button.Polaris-Button--plain.Polaris-Button--iconOnly', dismiss);
+  dismissWrapper  = find(dismissSelector, banner);
+  let dismissBtn = find('button.Polaris-Button.Polaris-Button--plain.Polaris-Button--iconOnly', dismissWrapper);
   assert.ok(banner.classList.contains('Polaris-Banner__hasDismiss'), 'banner dismissable - has dismissable class');
-  assert.ok(dismiss, 'banner dismissable - does render the dismiss element');
+  assert.ok(dismissWrapper, 'banner dismissable - does render the dismiss element');
   assert.ok(dismissBtn, 'banner dismissable - has correct dismiss button');
   assert.equal(dismissBtn.getAttribute('aria-label'), 'Dismiss notification', 'banner dismissable - dismiss button has correct aria-label');
 
@@ -187,8 +187,16 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   this.on('secAction', () => secActionFired  = true);
 
   this.render(hbs`{{polaris-banner
-    action=(hash content="Edit" action=(action "mainAction"))
     secondaryAction=(hash content="View" action=(action "secAction"))
+  }}`);
+
+  banner = find(bannerSelector);
+  content = find(contentSelector, banner);
+  actions = find(actionsSelector, content);
+  assert.notOk(actions, 'banner with `secondaryAction` only - does not render the actions container');
+
+  this.render(hbs`{{polaris-banner
+    action=(hash content="Edit" action=(action "mainAction"))
   }}`);
 
   banner = find(bannerSelector);
@@ -197,7 +205,21 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   let btnGroup = find('div.Polaris-ButtonGroup', actions);
   let actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline', btnGroup);
   let secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction', btnGroup);
-  assert.ok(actions, 'banner with actions - renders actions container');
+  assert.ok(actions, 'banner with `action` only - renders actions container');
+  assert.ok(actionBtn, 'banner with `action` only - renders `action` button');
+  assert.notOk(secondaryActionBtn, 'banner with `action` only - does not render `secondaryAction` button');
+
+  this.render(hbs`{{polaris-banner
+    action=(hash content="Edit" action=(action "mainAction"))
+    secondaryAction=(hash content="View" action=(action "secAction"))
+  }}`);
+
+  banner = find(bannerSelector);
+  content = find(contentSelector, banner);
+  actions = find(actionsSelector, content);
+  btnGroup = find('div.Polaris-ButtonGroup', actions);
+  actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline', btnGroup);
+  secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction', btnGroup);
   assert.ok(actionBtn, 'banner with actions - renders `action` button');
   assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
 
