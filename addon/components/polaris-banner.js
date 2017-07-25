@@ -7,10 +7,11 @@ const {
   isPresent,
   isBlank,
   guidFor,
-  String,
+  String: EmberString,
+  Component,
 } = Ember;
 
-const { capitalize } = String;
+const { capitalize } = EmberString;
 const { bool } = computed;
 
 const bannerIcons = {
@@ -38,7 +39,7 @@ const bannerIcons = {
 
 const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
   classNames: ['Polaris-Banner'],
 
@@ -85,7 +86,7 @@ export default Ember.Component.extend({
    * Action for banner.
    *
    * @property action
-   * @type {Hash}
+   * @type {Object}
    * @default null
    */
   action: null,
@@ -94,7 +95,7 @@ export default Ember.Component.extend({
    * Displays a secondary action.
    *
    * @property secondaryAction
-   * @type {Hash}
+   * @type {Object}
    * @default null
    */
   secondaryAction: null,
@@ -128,12 +129,20 @@ export default Ember.Component.extend({
       return icon;
     }
 
-    let status = this.get('status') || `default`;
+    let status = this.get('status');
+    if (isBlank(status) || !supportedStatuses.includes(status)) {
+      status = 'default';
+    }
+
     return bannerIcons[status].iconName;
   }).readOnly(),
 
   iconColor: computed('status', function() {
-    let status = this.get('status') || `default`;
+    let status = this.get('status');
+    if (isBlank(status) || !supportedStatuses.includes(status)) {
+      status = 'default';
+    }
+
     return bannerIcons[status].color;
   }).readOnly(),
 
@@ -147,7 +156,7 @@ export default Ember.Component.extend({
 
   statusClass: computed('status', function() {
     let status = this.get('status');
-    if (isBlank(status)) {
+    if (isBlank(status) || !supportedStatuses.includes(status)) {
       return;
     }
 
