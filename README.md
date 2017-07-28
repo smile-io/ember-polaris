@@ -428,7 +428,7 @@ Annotated layout:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon`, `secondaryActions` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon` and `pagination` properties are currently unimplemented._
 
 ###### Examples
 
@@ -442,7 +442,7 @@ Basic usage:
 {{/polaris-page}}
 ```
 
-Full-width page with disableable primary action:
+Full-width page with disableable primary action and secondary actions (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
 
 ```hbs
 {{polaris-page
@@ -452,6 +452,16 @@ Full-width page with disableable primary action:
     text="Take action!"
     action=(action "primaryActionFired")
     disabled=primaryActionDisabled
+  )
+  secondaryActions=(array
+    (hash
+      text="Do something"
+      action=(action "secondaryAction1Fired")
+    )
+    (hash
+      text="Do something else"
+      action=(action (mut secondaryAction2Fired) true)
+    )
   )
 }}
 ```
