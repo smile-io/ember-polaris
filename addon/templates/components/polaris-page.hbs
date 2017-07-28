@@ -29,9 +29,7 @@
       {{#if secondaryActions}}
         <div class="Polaris-Page__SecondaryActions">
           {{#each secondaryActions as |secondaryAction|}}
-            <button class="Polaris-Page__Action" {{action secondaryAction.action bubbles=false}}>
-              {{secondaryAction.text}}
-            </button>
+            {{polaris-page/action action=secondaryAction}}
           {{/each}}
         </div>
       {{/if}}

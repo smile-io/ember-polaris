@@ -160,6 +160,46 @@ test('it handles secondary actions correctly when supplied', function(assert) {
   assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
 });
 
+test('it renders action icons correctly', function(assert) {
+  this.render(hbs`
+    {{polaris-page
+      title="This is the title"
+      secondaryActions=(array
+        (hash
+          text="First secondary action"
+          icon="add"
+        )
+        (hash
+          text="Second secondary action"
+          icon="cancel"
+        )
+      )
+    }}
+  `);
+
+  const secondaryActionsSelector = buildNestedSelector(
+    'div.Polaris-Page',
+    'div.Polaris-Page__Header',
+    'div.Polaris-Page__Actions',
+    'div.Polaris-Page__SecondaryActions',
+    'button.Polaris-Page__Action',
+    'span.Polaris-Page__ActionContent'
+  );
+  const secondaryActions = findAll(secondaryActionsSelector);
+  assert.equal(secondaryActions.length, 2, 'renders two secondary actions');
+
+  const secondaryActionIconSelector = buildNestedSelector(
+    secondaryActionsSelector,
+    'span.Polaris-Page__ActionIcon',
+    'span.Polaris-Icon',
+    'svg'
+  );
+  const secondaryActionIcons = findAll(secondaryActionIconSelector);
+  assert.equal(secondaryActionIcons.length, 2, 'renders two secondary action icons');
+  assert.equal(secondaryActionIcons[0].dataset.iconSource, 'polaris/add', 'first secondary action icon - renders the correct icon');
+  assert.equal(secondaryActionIcons[1].dataset.iconSource, 'polaris/cancel', 'second secondary action icon - renders the correct icon');
+});
+
 test('it handles breadcrumbs correctly', function(assert) {
   this.render(hbs`{{polaris-page breadcrumbs=breadcrumbs}}`);
 
