@@ -20,7 +20,7 @@ export default Component.extend({
   /**
    * Item data; each item is rendered using the itemComponent below
    *
-   * @property items*
+   * @property items
    * @type {Array}
    * @default null
    */
