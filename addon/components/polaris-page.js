@@ -79,9 +79,8 @@ export default Component.extend({
    * Collection of secondary page-level actions
    *
    * @property secondaryActions
-   * @type {ComplexAction[]}
+   * @type {Array}
    * @default null
-   * TODO: not implemented yet
    */
   secondaryActions: null,
 
@@ -89,7 +88,7 @@ export default Component.extend({
    * Primary page-level action
    *
    * @property primaryAction
-   * @type {DisableableAction}
+   * @type {Object}
    * @default null
    */
   primaryAction: null,

@@ -1,0 +1,10 @@
+{{#if action.icon}}
+  <span class="Polaris-Page__ActionContent">
+    <span class="Polaris-Page__ActionIcon">
+      {{polaris-icon source=action.icon}}
+    </span>
+    {{action.text}}
+  </span>
+{{else}}
+  {{action.text}}
+{{/if}}

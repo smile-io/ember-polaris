@@ -63,7 +63,7 @@ test('it renders the page correctly', function(assert) {
   assert.ok(page.classList.contains('Polaris-Page--fullWidth'), 'honours fullWidth flag');
 });
 
-test('it handles primary action correctly when a primary action is supplied', function(assert) {
+test('it handles primary action correctly when supplied', function(assert) {
   let primaryActionFired = false;
   this.on('primaryActionFired', () => {
     primaryActionFired = true;
@@ -104,6 +104,100 @@ test('it handles primary action correctly when a primary action is supplied', fu
   .then(() => {
     assert.ok(primaryActionFired, 'fires primary action on click');
   });
+});
+
+test('it handles secondary actions correctly when supplied', function(assert) {
+  let secondaryAction1Fired = false;
+  this.on('secondaryAction1', () => {
+    secondaryAction1Fired = true;
+  });
+  let secondaryAction2Fired = false;
+  this.on('secondaryAction2', () => {
+    secondaryAction2Fired = true;
+  });
+
+  this.render(hbs`
+    {{polaris-page
+      title="This is the title"
+      secondaryActions=(array
+        (hash
+          text="First secondary action"
+          action=(action "secondaryAction1")
+        )
+        (hash
+          text="Second secondary action"
+          action=(action "secondaryAction2")
+        )
+      )
+    }}
+  `);
+
+  const secondaryActionsWrapperSelector = buildNestedSelector(
+    'div.Polaris-Page',
+    'div.Polaris-Page__Header',
+    'div.Polaris-Page__Actions',
+    'div.Polaris-Page__SecondaryActions'
+  );
+  const secondaryActionsButtonSelector = buildNestedSelector(
+    secondaryActionsWrapperSelector,
+    'button.Polaris-Page__Action'
+  );
+
+  const secondaryButtons = findAll(secondaryActionsButtonSelector);
+  assert.equal(secondaryButtons.length, 2, 'renders two secondary buttons');
+
+  assert.equal(secondaryButtons[0].textContent.trim(), 'First secondary action', 'first secondary action - uses correct text on button');
+  assert.equal(secondaryButtons[1].textContent.trim(), 'Second secondary action', 'second secondary action - uses correct text on button');
+
+  assert.notOk(secondaryAction1Fired, 'first secondary action - not fired before clicking button');
+  assert.notOk(secondaryAction2Fired, 'second secondary action - not fired before clicking button');
+
+  click('button:first-child', secondaryActionsWrapperSelector);
+  assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
+  assert.notOk(secondaryAction2Fired, 'second secondary action - not fired after clicking first button');
+
+  click('button:last-child', secondaryActionsWrapperSelector);
+  assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
+});
+
+test('it renders action icons correctly', function(assert) {
+  this.render(hbs`
+    {{polaris-page
+      title="This is the title"
+      secondaryActions=(array
+        (hash
+          text="First secondary action"
+          icon="add"
+        )
+        (hash
+          text="Second secondary action"
+          icon="cancel"
+        )
+      )
+    }}
+  `);
+
+  const secondaryActionsSelector = buildNestedSelector(
+    'div.Polaris-Page',
+    'div.Polaris-Page__Header',
+    'div.Polaris-Page__Actions',
+    'div.Polaris-Page__SecondaryActions',
+    'button.Polaris-Page__Action',
+    'span.Polaris-Page__ActionContent'
+  );
+  const secondaryActions = findAll(secondaryActionsSelector);
+  assert.equal(secondaryActions.length, 2, 'renders two secondary actions');
+
+  const secondaryActionIconSelector = buildNestedSelector(
+    secondaryActionsSelector,
+    'span.Polaris-Page__ActionIcon',
+    'span.Polaris-Icon',
+    'svg'
+  );
+  const secondaryActionIcons = findAll(secondaryActionIconSelector);
+  assert.equal(secondaryActionIcons.length, 2, 'renders two secondary action icons');
+  assert.equal(secondaryActionIcons[0].dataset.iconSource, 'polaris/add', 'first secondary action icon - renders the correct icon');
+  assert.equal(secondaryActionIcons[1].dataset.iconSource, 'polaris/cancel', 'second secondary action icon - renders the correct icon');
 });
 
 test('it handles breadcrumbs correctly', function(assert) {
