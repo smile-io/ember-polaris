@@ -1,0 +1,13 @@
+<div class="Polaris-FooterHelp__Content">
+  <div class="Polaris-FooterHelp__Icon">
+    {{polaris-icon source="help" color="teal" backdrop=true}}
+  </div>
+
+  <div class="Polaris-FooterHelp__Text">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </div>
+</div>
