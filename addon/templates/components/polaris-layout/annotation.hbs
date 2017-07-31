@@ -1,0 +1,13 @@
+<div class="Polaris-TextContainer">
+  {{polaris-heading text=title}}
+
+  {{#if (or hasBlock description)}}
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      <p>
+        {{description}}
+      </p>
+    {{/if}}
+  {{/if}}
+</div>
