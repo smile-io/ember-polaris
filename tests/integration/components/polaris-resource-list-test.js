@@ -2,6 +2,16 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import Ember from 'ember';
+
+const {
+  Component,
+  computed,
+} = Ember;
+
+const {
+  readOnly,
+} = computed;
 
 moduleForComponent('polaris-resource-list', 'Integration | Component | polaris resource list', {
   integration: true
@@ -109,4 +119,49 @@ test('it renders the correct HTML when using the default item rendering', functi
   attributeThree = find(attributeThreeSelector, itemAttributes);
   assert.ok(attributeThree, 'item four - renders attribute three');
   assert.equal(attributeThree.textContent.trim(), 'Item 4 attribute three', 'item four - renders the correct content for attribute three');
+});
+
+test('it renders the correct HTML when using itemComponent', function(assert) {
+  // Register a custom item renderer component.
+  const CustomItemRendererComponent = Component.extend({
+    tagName: 'a',
+    classNames: ['custom-item-renderer'],
+    attributeBindings: ['href'],
+
+    layout: hbs`This is item {{index}}`,
+
+    item: null,
+    index: null,
+
+    href: readOnly('item.url'),
+  });
+  this.register('component:custom-item-renderer', CustomItemRendererComponent);
+
+  this.render(hbs`
+    {{polaris-resource-list
+      items=(array
+        (hash
+          url="http://www.somewhere.com/item-1"
+        )
+        (hash
+          url="http://www.somewhere-else.com/item-2"
+        )
+      )
+      itemComponent="custom-item-renderer"
+    }}
+  `);
+
+  const itemsSelector = buildNestedSelector(resourceListItemSelector, 'a.custom-item-renderer');
+  const items = findAll(itemsSelector);
+  assert.equal(items.length, 2, 'renders two items');
+
+  // Check the first item.
+  let item = items[0];
+  assert.equal(item.href, 'http://www.somewhere.com/item-1', 'first item - has the correct href');
+  assert.equal(item.textContent.trim(), 'This is item 0', 'first item - renders the correct content');
+
+  // Check the second item.
+  item = items[1];
+  assert.equal(item.href, 'http://www.somewhere-else.com/item-2', 'second item - has the correct href');
+  assert.equal(item.textContent.trim(), 'This is item 1', 'second item - renders the correct content');
 });
