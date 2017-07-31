@@ -6,7 +6,7 @@ const {
 
 /**
  * Polaris resource list component.
- * See https://polaris.shopify.com/components/tables-and-lists/resource-list
+ * See https://polaris.shopify.com/components/lists/resource-list
  */
 export default Component.extend({
   tagName: 'ul',
