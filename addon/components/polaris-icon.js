@@ -5,6 +5,7 @@ const {
   Component,
   computed,
   isEmpty,
+  isPresent,
   String: EmberString,
 } = Ember;
 
@@ -97,9 +98,11 @@ export default Component.extend({
 
     // Some of the Polaris SVG files have a greyish fill applied by default which
     // prevents the color attribute working. These steps work around the known issues...
-    this.$('g').removeAttr('fill');
-    this.$('path').css({
-      fill: 'inherit'
-    });
+    if (isPresent(this.get('color'))) {
+      this.$('g').removeAttr('fill');
+      this.$('path').css({
+        fill: 'inherit'
+      });
+    }
   }
 });
