@@ -8,3 +8,7 @@
 </div>
 
 {{polaris-color-picker/hue-picker hue=color.hue}}
+
+{{#if allowAlpha}}
+  {{polaris-color-picker/alpha-picker color=color alpha=color.alpha}}
+{{/if}}
