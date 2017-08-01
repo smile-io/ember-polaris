@@ -12,6 +12,32 @@ const {
   htmlSafe,
 } = EmberString;
 
+function startDrag(event) {
+  this.set('isDragging', true);
+  this.handleMove(event);
+}
+
+function handleMove(event) {
+  if (!this.get('isDragging')) {
+    return;
+  }
+
+  event.stopImmediatePropagation();
+  event.stopPropagation();
+  event.preventDefault();
+
+  if (event.touches && event.touches.length) {
+    this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
+    return;
+  }
+
+  this.handleDraggerMove(event.clientX, event.clientY);
+}
+
+function handleDragEnd() {
+  this.set('isDragging', false);
+}
+
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
 export default Component.extend({
   classNames: ['Polaris-ColorPicker__Slidable'],
@@ -51,21 +77,42 @@ export default Component.extend({
   /*
    * Internal properties.
    */
+  isDragging: false,
+
   draggerStyle: computed('draggerX', 'draggerY', function() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
     const transform = `translate3d(${ draggerX }px, ${ draggerY }px, 0)`;
     return htmlSafe(`transform: ${ transform };`);
   }).readOnly(),
 
-  click(event) {
+  /*
+   * Internal methods.
+   */
+  handleMove,
+
+  handleDraggerMove(clientX, clientY) {
     const moveHandler = this.get('onChange');
     if (typeof(moveHandler) !== 'function') {
       return;
     }
 
-    const { clientX: x, clientY: y } = event;
-    moveHandler({x, y});
+    moveHandler({
+      x: clientX,
+      y: clientY,
+    });
   },
+
+  /*
+   * Action handlers.
+   */
+  mouseDown: startDrag,
+  mouseMove: handleMove,
+  mouseUp: handleDragEnd,
+
+  touchStart: startDrag,
+  touchMove: handleMove,
+  touchEnd: handleDragEnd,
+  touchCancel: handleDragEnd,
 
   /*
    * Lifecycle hooks.

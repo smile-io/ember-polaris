@@ -1,27 +1,9 @@
-{{#polaris-page
-  title="This is the application route"
+{{polaris-color-picker
+  color=color
+  allowAlpha=true
+  onChange=(action (mut color))
 }}
-  {{polaris-color-picker
-    color=color
-    allowAlpha=true
-    onChange=(action (mut color))
-  }}
-
-  <div>
-    {{#link-to "test"}}
-      Go to test route
-    {{/link-to}}
-  </div>
-
-  <div>
-    {{#link-to "test.child"}}
-      Go to child route
-    {{/link-to}}
-  </div>
-
-  {{polaris-link
-    url="https://github.com/smile-io/ember-polaris"
-    external=true
-    text="Ember Polaris on GitHub"
-  }}
-{{/polaris-page}}
+<div>Hue: {{color.hue}}</div>
+<div>Saturation: {{color.saturation}}</div>
+<div>Brightness: {{color.brightness}}</div>
+<div>Alpha: {{color.alpha}}</div>
