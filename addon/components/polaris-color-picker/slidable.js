@@ -96,9 +96,10 @@ export default Component.extend({
       return;
     }
 
+    const rect = this.get('element').getBoundingClientRect();
     moveHandler({
-      x: clientX,
-      y: clientY,
+      x: clientX - rect.left,
+      y: clientY - rect.top,
     });
   },
 
