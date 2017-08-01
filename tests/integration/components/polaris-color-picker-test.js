@@ -16,6 +16,10 @@ const mainColorControlColorLayerSelector = buildNestedSelector(
   mainColorControlSelector,
   'div.Polaris-ColorPicker__ColorLayer'
 );
+const huePickerSelector = buildNestedSelector(
+  colorPickerSelector,
+  'div.Polaris-ColorPicker__HuePicker'
+);
 const draggerSelector = buildNestedSelector(
   'div.Polaris-ColorPicker__Slidable',
   'div.Polaris-ColorPicker__Dragger'
@@ -50,7 +54,14 @@ test('it renders the correct HTML with default attributes', function(assert) {
   // Check the main color control's dragger.
   const colorDraggers = findAll(draggerSelector, mainColorControls[0]);
   assert.equal(colorDraggers.length, 1, 'renders one dragger for the main color control');
+  assert.equal(colorDraggers[0].style.transform, 'translate3d(80px, 32px, 0px)', 'renders color dragger in the correct position');
 
-  const colorDragger = colorDraggers[0];
-  assert.equal(colorDragger.style.transform, 'translate3d(80px, 32px, 0px)', 'renders color dragger in the correct position');
+  // Check the hue picker.
+  const huePickers = findAll(huePickerSelector);
+  assert.equal(huePickers.length, 1, 'renders one hue picker');
+
+  // Check the hue picker's dragger.
+  const hueDraggers = findAll(draggerSelector, huePickers[0]);
+  assert.equal(hueDraggers.length, 1, 'renders one dragger for the hue picker');
+  assert.equal(hueDraggers[0].style.transform, 'translate3d(0px, 28px, 0px)', 'renders hue dragger in the correct position');
 });

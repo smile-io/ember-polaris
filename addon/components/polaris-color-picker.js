@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/polaris-color-picker';
+import { clamp } from '../utils/math';
 
 const {
   Component,
@@ -71,10 +72,6 @@ function hsbaToRgba(color) {
   };
 }
 
-function clamp(num, min, max) {
-  return Math.max(min, Math.min(max, num));
-}
-
 /**
  * Polaris color picker component.
  * See https://polaris.shopify.com/components/forms/color-picker
@@ -120,7 +117,7 @@ export default Component.extend({
   pickerSize: null,
 
   colorLayerStyle: computed('color.{hue,alpha}', function() {
-    const { color: { hue, alpha = 1 }, allowAlpha } = this.getProperties('color', 'allowAlpha');
+    const { hue, alpha = 1 } = this.get('color');
     const { red, green, blue } = hsbaToRgba({
       hue,
       saturation: 1,
@@ -147,7 +144,7 @@ export default Component.extend({
   didRender() {
     this._super(...arguments);
 
-    // Grab the size of the picker for position the draggable markers.
+    // Grab the size of the picker for positioning the draggable markers.
     const mainColorElement = this.$('div.Polaris-ColorPicker__MainColor')[0];
     this.set('pickerSize', mainColorElement.clientWidth);
   },
