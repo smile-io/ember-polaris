@@ -5,6 +5,7 @@ import { clamp } from '../../utils/math';
 const {
   Component,
   computed,
+  typeOf,
 } = Ember;
 
 const VERTICAL_PADDING = 13;
@@ -12,6 +13,12 @@ const VERTICAL_PADDING = 13;
 function offsetForHue(hue, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
   return clamp((hue / 360 * slidableArea) + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+}
+
+function hueForOffset(offset, sliderHeight) {
+  const selectionHeight = (offset - VERTICAL_PADDING);
+  const slidableArea = sliderHeight - (2 * VERTICAL_PADDING);
+  return clamp((selectionHeight / slidableArea) * 360, 0, 360);
 }
 
 export default Component.extend({
@@ -30,6 +37,15 @@ export default Component.extend({
    * @default 0
    */
   hue: 0,
+
+  /**
+   * Callback when hue is changed
+   *
+   * @property onChange
+   * @type {function}
+   * @default null
+   */
+  onChange: null,
 
   /*
    * Internal properties.
@@ -53,4 +69,18 @@ export default Component.extend({
     const huePickerElement = this.$()[0];
     this.set('sliderHeight', huePickerElement.clientHeight);
   },
+
+  actions: {
+    handleChange({y}) {
+      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+      if (typeOf(onChange) !== 'function') {
+        return;
+      }
+
+      const offsetY = clamp(y, 0, sliderHeight);
+      const hue = hueForOffset(offsetY, sliderHeight);
+
+      onChange(hue);
+    },
+  }
 });

@@ -7,8 +7,15 @@
   }}
 </div>
 
-{{polaris-color-picker/hue-picker hue=color.hue}}
+{{polaris-color-picker/hue-picker
+  hue=color.hue
+  onChange=(action "handleHueChange")
+}}
 
 {{#if allowAlpha}}
-  {{polaris-color-picker/alpha-picker color=color alpha=color.alpha}}
+  {{polaris-color-picker/alpha-picker
+    color=color
+    alpha=color.alpha
+    onChange=(action "handleAlphaChange")
+  }}
 {{/if}}

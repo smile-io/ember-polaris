@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
+import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-color-picker', 'Integration | Component | polaris color picker', {
@@ -122,4 +122,69 @@ test('it renders the correct HTML with allowAlpha set', function(assert) {
   const alphaDraggers = findAll(draggerSelector, alphaPickers[0]);
   assert.equal(alphaDraggers.length, 1, 'renders one dragger for the alpha picker');
   assert.equal(alphaDraggers[0].style.transform, 'translate3d(0px, 33.25px, 0px)', 'renders alpha dragger in the correct position');
+});
+
+test('it updates correctly when draggers are moved', function(assert) {
+  this.set('color', {
+    hue: 120,
+    saturation: 0.2,
+    brightness: 0.65,
+    alpha: 0.4,
+  });
+  this.render(hbs`
+    {{polaris-color-picker
+      color=color
+      allowAlpha=true
+      onChange=(action (mut color))
+    }}
+  `);
+
+  // Helpers.
+  const assertDraggerPosition = function(dragger, expectedX, expectedY, name, label) {
+    assert.equal(
+      dragger.style.transform,
+      `translate3d(${expectedX}px, ${expectedY}px, 0px)`,
+      `${ label } - renders ${ name } dragger in the correct position`
+    );
+    // const [ , x, y ] = dragger.style.transform.split(/[(,]/);
+    // assert.equal(parseInt(x), parseInt(expectedX), `${ label } - renders ${ name } dragger in the correct x-position`);
+    // assert.equal(parseInt(y), parseInt(expectedY), `${ label } - renders ${ name } dragger in the correct y-position`);
+  };
+
+  const assertHsbaColor = function(color, hue, saturation, brightness, alpha, label) {
+    assert.equal(color.hue, hue, `${ label } - has the correct hue`);
+    assert.equal(color.saturation, saturation, `${ label } - has the correct saturation`);
+    assert.equal(color.brightness, brightness, `${ label } - has the correct brightness`);
+    assert.equal(color.alpha, alpha, `${ label } - has the correct alpha`);
+  };
+
+  const clickElementAtPosition = function(element, x, y) {
+    // Click an element some fractional distance across its width and height.
+    const { clientWidth: width, clientHeight: height } = element;
+    return click(element, {
+      clientX: (x * width),
+      clientY: (y * height),
+    });
+  };
+
+  // Grab the draggers to check their positions.
+  const [ colorDragger, hueDragger, alphaDragger ] = findAll(draggerSelector);
+  assertDraggerPosition(colorDragger, 32, 56, 'color', 'after initial render');
+  assertDraggerPosition(hueDragger, 0, 58, 'hue', 'after initial render');
+  assertDraggerPosition(alphaDragger, 0, 94, 'alpha', 'after initial render');
+
+  // Test moving the main color dragger.
+  clickElementAtPosition(colorDragger.parentNode, 0.25, 0.4);
+  assertDraggerPosition(colorDragger, 40, 64, 'color', 'after moving color dragger');
+  assertHsbaColor(this.get('color'), 120, 0.25, 0.6, 0.4, 'after moving color dragger');
+
+  // Test moving the hue dragger.
+  clickElementAtPosition(hueDragger.parentNode, 0, 0.5);
+  assertDraggerPosition(hueDragger, 0, 80.5, 'hue', 'after moving hue dragger');
+  assertHsbaColor(this.get('color'), 180, 0.25, 0.6, 0.4, 'after moving hue dragger');
+
+  // Test moving the alpha dragger.
+  clickElementAtPosition(alphaDragger.parentNode, 0, 0.5);
+  assertDraggerPosition(alphaDragger, 0, 80.5, 'alpha', 'after moving alpha dragger');
+  assertHsbaColor(this.get('color'), 180, 0.25, 0.6, 0.5, 'after moving alpha dragger');
 });

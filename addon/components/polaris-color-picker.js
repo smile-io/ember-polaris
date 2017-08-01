@@ -7,6 +7,7 @@ const {
   Component,
   computed,
   String: EmberString,
+  typeOf,
 } = Ember;
 
 const {
@@ -91,8 +92,58 @@ export default Component.extend({
   },
 
   actions: {
-    draggerMoved() {
+    draggerMoved({x, y}) {
+      const {
+        pickerSize,
+        color: { hue, alpha = 1 },
+        onChange,
+      } = this.getProperties('pickerSize', 'color', 'onChange');
 
+      if (typeOf(onChange) !== 'function') {
+        return;
+      }
+
+      const saturation = clamp(x / pickerSize, 0, 1);
+      const brightness = clamp(1 - y / pickerSize, 0, 1);
+
+      onChange({
+        hue,
+        saturation,
+        brightness,
+        alpha,
+      });
     },
+
+    handleHueChange(hue) {
+      const {
+        color: { brightness, saturation, alpha = 1 },
+        onChange,
+      } = this.getProperties('color', 'onChange');
+
+      if (typeOf(onChange) === 'function') {
+        onChange({
+          hue,
+          brightness,
+          saturation,
+          alpha,
+        });
+      }
+    },
+
+    handleAlphaChange(alpha) {
+      const {
+        color: { hue, brightness, saturation },
+        onChange,
+      } = this.getProperties('color', 'onChange');
+
+      if (typeOf(onChange) === 'function') {
+        onChange({
+          hue,
+          brightness,
+          saturation,
+          alpha,
+        });
+      }
+    }
   }
 });

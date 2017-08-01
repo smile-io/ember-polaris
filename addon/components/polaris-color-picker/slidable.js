@@ -57,6 +57,16 @@ export default Component.extend({
     return htmlSafe(`transform: ${ transform };`);
   }).readOnly(),
 
+  click(event) {
+    const moveHandler = this.get('onChange');
+    if (typeof(moveHandler) !== 'function') {
+      return;
+    }
+
+    const { clientX: x, clientY: y } = event;
+    moveHandler({x, y});
+  },
+
   /*
    * Lifecycle hooks.
    */

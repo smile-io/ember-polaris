@@ -7,6 +7,7 @@ const {
   Component,
   computed,
   String: EmberString,
+  typeOf,
 } = Ember;
 
 const {
@@ -18,6 +19,12 @@ const VERTICAL_PADDING = 13;
 function offsetForAlpha(alpha, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
   return clamp(((1 - alpha) * slidableArea) + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+}
+
+function alphaForOffset(offset, sliderHeight) {
+  const selectionHeight = (offset - VERTICAL_PADDING);
+  const slidableArea = sliderHeight - (2 * VERTICAL_PADDING);
+  return clamp(1 - (selectionHeight / slidableArea), 0, 1);
 }
 
 export default Component.extend({
@@ -68,4 +75,18 @@ export default Component.extend({
     const alphaPickerElement = this.$()[0];
     this.set('sliderHeight', alphaPickerElement.clientHeight);
   },
+
+  actions: {
+    handleChange({y}) {
+      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+      if (typeOf(onChange) !== 'function') {
+        return;
+      }
+
+      const offsetY = clamp(y, 0, sliderHeight);
+      const alpha = alphaForOffset(offsetY, sliderHeight);
+
+      onChange(alpha);
+    },
+  }
 });
