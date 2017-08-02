@@ -1,0 +1,21 @@
+{{#polaris-card sectioned=true}}
+  <div class="Polaris-SettingAction">
+    <div class="Polaris-SettingAction__Setting">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{text}}
+      {{/if}}
+    </div>
+
+    <div class="Polaris-SettingAction__Action">
+      {{#if action}}
+        {{polaris-button
+          text=action.content
+          primary=enabled
+          onClick=(action "fireAction" action)
+        }}
+      {{/if}}
+    </div>
+  </div>
+{{/polaris-card}}
