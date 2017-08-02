@@ -14,6 +14,7 @@
 - Action list
 - Button
 - Button group
+- Setting toggle
 
 #### Images and icons
 - Badge
@@ -210,6 +211,7 @@ Slim external link:
 {{/polaris-button}}
 ```
 
+##### Button group
 `polaris-button-group` implements the [Polaris Button group component](https://polaris.shopify.com/components/actions/button-group).
 
 Any child elements inside a `polaris-button-group` block will be auto-wrapped as group items as per the React component. We also make a `polaris-button-group/item` component available inside the block to allow more control over the items if desired.
@@ -246,6 +248,38 @@ Plain buttons:
     {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
   {{/buttonGroup.item}}
 {{/polaris-button-group}}
+```
+
+##### Setting toggle
+`polaris-setting-toggle` implements the [Polaris Setting toggle component](https://polaris.shopify.com/components/actions/setting-toggle).
+
+###### Examples
+
+Inline usage:
+
+```hbs
+{{polaris-setting-toggle
+  text="Some boolean setting"
+  enabled=enabled
+  action=(hash
+    content="Toggle it!"
+    action=(action "toggleSetting")
+  )
+}}
+```
+
+Block usage:
+
+```hbs
+{{#polaris-setting-toggle
+  enabled=enabled
+  action=(hash
+    content="Disable it!"
+    action=(action (mut enabled) false)
+  )
+}}
+  This setting is currently <strong>{{if enabled "enabled" "disabled"}}</strong>
+{{/polaris-setting-toggle}}
 ```
 
 #### Images and icons
