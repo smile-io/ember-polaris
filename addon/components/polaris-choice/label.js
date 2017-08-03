@@ -9,7 +9,7 @@ export default Component.extend({
   tagName: 'label',
   classNames: ['Polaris-Choice'],
   classNameBindings: ['labelHidden:Polaris-Choice--labelHidden'],
-  attributeBindings: ['id:for'],
+  attributeBindings: ['inputId:for'],
 
   layout,
 
@@ -17,13 +17,13 @@ export default Component.extend({
    * Public attributes.
    */
   /**
-   * ID of the choice this label is for.
+   * ID of the input this label is for.
    *
-   * @property id
+   * @property inputId
    * @type {string}
    * @default: null
    */
-  id: null,
+  inputId: null,
 
   /**
    * Label content for the choice this label belongs to.

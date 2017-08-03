@@ -24,13 +24,13 @@ export default Component.extend({
    * Public attributes.
    */
   /**
-   * ID of the choice
+   * ID of the choice's input
    *
-   * @property id
+   * @property inputId
    * @type {string}
    * @default: null
    */
-  id: null,
+  inputId: null,
 
   /**
    * Label content for the choice
@@ -73,11 +73,11 @@ export default Component.extend({
    */
   hasDescription: or('error', 'helpText'),
 
-  errorId: computed('id', function() {
-    return `${ this.get('id') }Error`;
+  errorId: computed('inputId', function() {
+    return `${ this.get('inputId') }Error`;
   }).readOnly(),
 
-  helpTextId: computed('id', function() {
-    return `${ this.get('id') }HelpText`;
+  helpTextId: computed('inputId', function() {
+    return `${ this.get('inputId') }HelpText`;
   }).readOnly(),
 });

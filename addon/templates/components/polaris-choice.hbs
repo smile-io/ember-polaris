@@ -1,6 +1,6 @@
 {{#if hasDescription}}
   <div>
-    {{#polaris-choice/label id=id label=label labelHidden=labelHidden}}
+    {{#polaris-choice/label inputId=inputId label=label labelHidden=labelHidden}}
       {{yield}}
     {{/polaris-choice/label}}
 
@@ -22,7 +22,7 @@
     </div>
   </div>
 {{else}}
-  {{#polaris-choice/label id=id label=label labelHidden=labelHidden}}
+  {{#polaris-choice/label inputId=inputId label=label labelHidden=labelHidden}}
     {{yield}}
   {{/polaris-choice/label}}
 {{/if}}
