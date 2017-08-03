@@ -1,0 +1,28 @@
+{{#if hasDescription}}
+  <div>
+    {{#polaris-choice/label id=id label=label labelHidden=labelHidden}}
+      {{yield}}
+    {{/polaris-choice/label}}
+
+    <div class="Polaris-Choice__Descriptions">
+      {{#if error}}
+        <div class="Polaris-Choice__Error" id={{errorID}}>
+          <div class="Polaris-Choice__ErrorIcon">
+            {{polaris-icon source="alert"}}
+          </div>
+          {{error}}
+        </div>
+      {{/if}}
+
+      {{#if helpText}}
+        <div class="Polaris-Choice__HelpText" id={{helpTextID}}>
+          {{helpText}}
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  {{#polaris-choice/label id=id label=label labelHidden=labelHidden}}
+    {{yield}}
+  {{/polaris-choice/label}}
+{{/if}}
