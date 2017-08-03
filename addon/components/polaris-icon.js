@@ -5,6 +5,7 @@ const {
   Component,
   computed,
   isEmpty,
+  isNone,
   isPresent,
   String: EmberString,
 } = Ember;
@@ -90,19 +91,25 @@ export default Component.extend({
     return `${ sourcePath }${ this.get('source') }`;
   }).readOnly(),
 
+  removeSvgFills() {
+    let svg = this.$('svg').length ? this.$('svg') : null;
+    if (isNone(svg)) {
+      return;
+    }
+
+    svg.children().each(function() {
+      let fill = this.getAttribute('fill');
+      // This is what Shopify does too in @shopify/images/icon-loader.js
+      let newFill = fill && fill.includes('#FFF') ? 'fill="currentColor"' : '';
+      this.setAttribute('fill', newFill);
+    });
+  },
+
   /*
    * Lifecycle hooks.
    */
   didInsertElement() {
     this._super(...arguments);
-
-    // Some of the Polaris SVG files have a greyish fill applied by default which
-    // prevents the color attribute working. These steps work around the known issues...
-    if (isPresent(this.get('color'))) {
-      this.$('g').removeAttr('fill');
-      this.$('path').css({
-        fill: 'inherit'
-      });
-    }
+    this.removeSvgFills();
   }
 });
