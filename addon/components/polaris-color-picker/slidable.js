@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 
 const {
+  $: $Ember,
   Component,
   computed,
   String: EmberString,
@@ -15,27 +16,14 @@ const {
 function startDrag(event) {
   this.set('isDragging', true);
   this.handleMove(event);
-}
 
-function handleMove(event) {
-  if (!this.get('isDragging')) {
-    return;
-  }
+  // Set up global event listeners to handle dragging outside the slidable area.
+  $Ember(window).on('mousemove', (...moveArgs) => { this.handleMove(...moveArgs); });
+  $Ember(window).on('mouseup', () => { this.handleDragEnd(); });
 
-  event.stopImmediatePropagation();
-  event.stopPropagation();
-  event.preventDefault();
-
-  if (event.touches && event.touches.length) {
-    this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
-    return;
-  }
-
-  this.handleDraggerMove(event.clientX, event.clientY);
-}
-
-function handleDragEnd() {
-  this.set('isDragging', false);
+  $Ember(window).on('touchmove', (...moveArgs) => { this.handleMove(...moveArgs); });
+  $Ember(window).on('touchend', () => { this.handleDragEnd(); });
+  $Ember(window).on('touchcancel', () => { this.handleDragEnd(); });
 }
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
@@ -88,7 +76,34 @@ export default Component.extend({
   /*
    * Internal methods.
    */
-  handleMove,
+  handleMove(event) {
+    if (!this.get('isDragging')) {
+      return;
+    }
+
+    event.stopImmediatePropagation();
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (event.touches && event.touches.length) {
+      this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
+      return;
+    }
+
+    this.handleDraggerMove(event.clientX, event.clientY);
+  },
+
+  handleDragEnd() {
+    this.set('isDragging', false);
+
+    // Remove our global event listeners.
+    $Ember(window).off('mousemove');
+    $Ember(window).off('mouseup');
+
+    $Ember(window).off('touchmove');
+    $Ember(window).off('touchend');
+    $Ember(window).off('touchcancel');
+  },
 
   handleDraggerMove(clientX, clientY) {
     const moveHandler = this.get('onChange');
@@ -107,13 +122,7 @@ export default Component.extend({
    * Action handlers.
    */
   mouseDown: startDrag,
-  mouseMove: handleMove,
-  mouseUp: handleDragEnd,
-
   touchStart: startDrag,
-  touchMove: handleMove,
-  touchEnd: handleDragEnd,
-  touchCancel: handleDragEnd,
 
   /*
    * Lifecycle hooks.
