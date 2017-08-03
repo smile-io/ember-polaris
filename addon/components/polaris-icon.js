@@ -5,6 +5,7 @@ const {
   Component,
   computed,
   isEmpty,
+  isNone,
   isPresent,
   String: EmberString,
 } = Ember;
@@ -92,7 +93,7 @@ export default Component.extend({
 
   removeSvgFills() {
     let svg = this.$('svg').length ? this.$('svg') : null;
-    if (isEmpty(svg)) {
+    if (isNone(svg)) {
       return;
     }
 
