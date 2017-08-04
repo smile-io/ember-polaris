@@ -6,7 +6,6 @@ const {
   computed,
   isEmpty,
   isNone,
-  isPresent,
   String: EmberString,
 } = Ember;
 
