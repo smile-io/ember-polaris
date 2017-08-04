@@ -1,4 +1,14 @@
-// implements https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+/*
+ * Implements https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV
+ * to convert a hue/saturation/brightness color to RGB.
+ *
+ * If an alpha value is present in the input, it will be passed through,
+ * otherwise a default value of 1 will be included in the output.
+ *
+ * Examples:
+ *   hsbaToRgba({ hue: 70, saturation: 0.3, brightness: 0.8 })
+ *     => { red: 194, green: 204, blue: 143, alpha: 1 }
+ */
 export function hsbaToRgba(color) {
   const { hue, saturation, brightness, alpha = 1 } = color;
   const chroma = brightness * saturation;
