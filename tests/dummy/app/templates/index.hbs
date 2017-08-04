@@ -1,6 +1,16 @@
 {{#polaris-page
   title="This is the application route"
 }}
+  {{polaris-color-picker
+    color=color
+    allowAlpha=true
+    onChange=(action (mut color))
+  }}
+  <div>Hue: {{color.hue}}</div>
+  <div>Saturation: {{color.saturation}}</div>
+  <div>Brightness: {{color.brightness}}</div>
+  <div>Alpha: {{color.alpha}}</div>
+  <hr>
   <div>
     {{#link-to "test"}}
       Go to test route
