@@ -38,6 +38,7 @@
 - VisuallyHidden
 
 #### Forms
+- Checkbox
 - Color picker
 - Form layout
 
@@ -710,6 +711,33 @@ Block form:
 ```
 
 #### Forms
+
+##### Checkbox
+`polaris-checkbox` implements the [Polaris Checkbox component](https://polaris.shopify.com/components/forms/checkbox).
+
+###### Examples
+
+Basic checkbox:
+
+```hbs
+{{polaris-checkbox
+  label="This is a checkbox"
+  checked=checked
+  onChange=(action (mut checked))
+}}
+```
+
+Checkbox with help text and value:
+
+```hbs
+{{polaris-checkbox
+  label="This is a checkbox with help text"
+  helpText="Click the checkbox to toggle something"
+  value="my-checkbox-value"
+  checked=checked
+  onChange=(action (mut checked))
+}}
+```
 
 ##### Color picker
 `polaris-color-picker` implements the [Polaris Color picker component](https://polaris.shopify.com/components/forms/color-picker).
