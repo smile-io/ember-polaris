@@ -812,7 +812,7 @@ Basic radio button:
 }}
 ```
 
-Checkbox with help text:
+Radio button with help text:
 
 ```hbs
 {{polaris-radio-button
