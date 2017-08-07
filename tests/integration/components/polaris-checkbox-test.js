@@ -169,16 +169,15 @@ test('it sets the input\'s aria-invalid attribute correctly', function(assert) {
 });
 
 test('it handles events correctly', function(assert) {
-  this.on('change', () => {
-    debugger;
-  });
   this.setProperties({
+    checked: false,
     focusFired: false,
     blurFired: false,
   });
   this.render(hbs`
     {{polaris-checkbox
-      onChange=(action "change")
+      checked=checked
+      onChange=(action (mut checked))
       onFocus=(action (mut focusFired) true)
       onBlur=(action (mut blurFired) true)
     }}
@@ -189,6 +188,8 @@ test('it handles events correctly', function(assert) {
   assert.notOk(this.get('blurFired'), 'after focus - onBlur not fired');
 
   click(checkboxInputSelector);
+  assert.notOk(this.get('blurFired'), 'after click - onBlur not fired');
+  assert.equal(this.get('checked'), true, 'after click - checked has updated');
 
   blur(checkboxInputSelector);
   assert.ok(this.get('blurFired'), 'after blur - onBlur fired');

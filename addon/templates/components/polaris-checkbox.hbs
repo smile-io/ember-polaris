@@ -6,20 +6,19 @@
   error=error
 }}
   <div class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
-    <input
-      id={{_id}}
-      name={{name}}
-      value={{value}}
-      type="checkbox"
-      checked={{checked}}
-      disabled={{disabled}}
+    {{one-way-checkbox
+      id=_id
+      name=name
+      value=value
+      checked=checked
+      disabled=disabled
       class="Polaris-Checkbox__Input"
-      aria-invalid={{if error "true" "false"}}
-      aria-describedby={{describedBy}}
-      {{action "onChange" on="change"}}
-      {{action onFocus on="focusIn"}}
-      {{action onBlur on="focusOut"}}
-    >
+      aria-invalid=(if error "true" "false")
+      aria-describedby=describedBy
+      update=(action onChange)
+      focusIn=(action onFocus)
+      focusOut=(action onBlur)
+    }}
 
     <div class="Polaris-Checkbox__Backdrop"></div>
 

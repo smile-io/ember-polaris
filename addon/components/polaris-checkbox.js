@@ -98,9 +98,9 @@ export default Component.extend({
    *
    * @property onChange
    * @type {function}
-   * @default null
+   * @default noop
    */
-  onChange: null,
+  onChange() {},
 
   /**
    * Callback when checkbox is focussed
@@ -124,7 +124,7 @@ export default Component.extend({
    * Internal properties.
    */
   _id: computed('inputId', function() {
-    return this.get('inputId') || guidFor(this);
+    return this.get('inputId') || `polaris-checkbox-${ guidFor(this) }`;
   }).readOnly(),
 
   describedBy: computed('error', 'helpText', function() {
@@ -141,10 +141,4 @@ export default Component.extend({
 
     return describedBy.join(' ');
   }).readOnly(),
-
-  actions: {
-    onChange(event) {
-      debugger;
-    }
-  }
 });
