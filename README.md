@@ -38,6 +38,7 @@
 - VisuallyHidden
 
 #### Forms
+- Color picker
 - Form layout
 
 #### Lists
@@ -709,6 +710,30 @@ Block form:
 ```
 
 #### Forms
+
+##### Color picker
+`polaris-color-picker` implements the [Polaris Color picker component](https://polaris.shopify.com/components/forms/color-picker).
+
+###### Examples
+
+Default color picker:
+
+```hbs
+{{polaris-color-picker
+  color=color
+  onChange=(action (mut color))
+}}
+```
+
+Color picker with alpha:
+
+```hbs
+{{polaris-color-picker
+  color=color
+  allowAlpha=true
+  onChange=(action (mut color))
+}}
+```
 
 ##### Form layout
 `polaris-form-layout` implements the [Polaris Form layout component](https://polaris.shopify.com/components/forms/form-layout).

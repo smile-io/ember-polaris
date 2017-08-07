@@ -98,6 +98,9 @@ test('it handles click events correctly', function(assert) {
 });
 
 test('clicking a link navigates but does not bubble to the parent', function(assert) {
+  // Reset the hash part of the browser URL to keep this test valid on reruns.
+  window.location.hash = 'linkNotClicked';
+
   let parentHandlerCalled = false;
   this.on('parentClicked', () => {
     parentHandlerCalled = true;
