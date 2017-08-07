@@ -32,6 +32,8 @@ export default Component.extend({
    */
   /**
    * The SVG contents to display in the icon
+   * If the source doesn't have a slash in the name, it will look for Polaris
+   * icons in the namespace specified by `sourcePath` property.
    *
    * @property source
    * @type {string}
@@ -85,9 +87,10 @@ export default Component.extend({
   }).readOnly(),
 
   iconSource: computed('sourcePath', 'source', function() {
-    let sourcePath = this.get('sourcePath');
-    sourcePath = isEmpty(sourcePath) ? '' : `${ sourcePath }/`;
-    return `${ sourcePath }${ this.get('source') }`;
+    let source = this.get('source');
+    source = source.indexOf('/') === -1 ? `${ this.get('sourcePath') }/${ source }` : source;
+
+    return source;
   }).readOnly(),
 
   removeSvgFills() {
