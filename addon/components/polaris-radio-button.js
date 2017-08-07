@@ -1,16 +1,15 @@
 import Ember from 'ember';
-import layout from '../templates/components/polaris-checkbox';
+import layout from '../templates/components/polaris-radio-button';
 
 const {
   Component,
   computed,
   guidFor,
-  typeOf,
 } = Ember;
 
 /**
- * Polaris checkbox component.
- * See https://polaris.shopify.com/components/forms/checkbox
+ * Polaris radio button component.
+ * See https://polaris.shopify.com/components/forms/radio-button
  */
 export default Component.extend({
   // Tagless component, renders a `polaris-choice` component internally.
@@ -22,7 +21,7 @@ export default Component.extend({
    * Public attributes.
    */
   /**
-   * Label for the checkbox
+   * Label for the radio button
    *
    * @property label
    * @type {string}
@@ -40,7 +39,7 @@ export default Component.extend({
   labelHidden: false,
 
   /**
-   * Checkbox is selected
+   * Radio button is selected
    *
    * @property checked
    * @type {boolean}
@@ -49,17 +48,17 @@ export default Component.extend({
   checked: false,
 
   /**
-   * Additional text to aide in use
+   * Additional text to aid in use
    *
    * @property helpText
-   * @type {string}
+   * @type {string or React.ReactNode}
    * @default null
    */
   helpText: null,
 
   /**
-   * ID for form input
-   *
+  * ID for form input
+  *
    * @property inputId
    * @type {string}
    * @default null
@@ -85,16 +84,7 @@ export default Component.extend({
   value: null,
 
   /**
-   * Display an error state
-   *
-   * @property error
-   * @type {string}
-   * @default null
-   */
-  error: null,
-
-  /**
-   * Callback when checkbox is toggled
+   * Callback when radio button is toggled
    *
    * @property onChange
    * @type {function}
@@ -103,7 +93,7 @@ export default Component.extend({
   onChange() {},
 
   /**
-   * Callback when checkbox is focussed
+   * Callback when radio button is focussed
    *
    * @property onFocus
    * @type {function}
@@ -124,21 +114,11 @@ export default Component.extend({
    * Internal properties.
    */
   _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-checkbox-${ guidFor(this) }`;
+    return this.get('inputId') || `polaris-radio-button-${ guidFor(this) }`;
   }).readOnly(),
 
-  describedBy: computed('error', 'helpText', '_id', function() {
-    const describedBy = [];
-    const { error, helpText } = this.getProperties('error', 'helpText');
-
-    if (typeOf(error) === 'string') {
-      describedBy.push(`${ this.get('_id') }Error`);
-    }
-
-    if (helpText) {
-      describedBy.push(`${ this.get('_id') }HelpText`);
-    }
-
-    return describedBy.join(' ');
+  describedBy: computed('helpText', '_id', function() {
+    const helpText = this.get('helpText');
+    return helpText ? `${ this.get('_id') }HelpText` : null;
   }).readOnly(),
 });

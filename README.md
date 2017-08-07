@@ -41,6 +41,7 @@
 - Checkbox
 - Color picker
 - Form layout
+- Radio button
 
 #### Lists
 - Resource list
@@ -715,6 +716,8 @@ Block form:
 ##### Checkbox
 `polaris-checkbox` implements the [Polaris Checkbox component](https://polaris.shopify.com/components/forms/checkbox).
 
+**NOTE:** _the React component's `id` property has been renamed to `inputId` in this Ember implementation._
+
 ###### Examples
 
 Basic checkbox:
@@ -790,6 +793,34 @@ Form layout with two groups, the second of which is condensed:
     ... second (condensed) group items...
   {{/formLayout.group}}
 {{/polaris-form-layout}}
+```
+
+##### Radio button
+`polaris-radio-button` implements the [Polaris Radio button component](https://polaris.shopify.com/components/forms/radio-button).
+
+**NOTE:** _the React component's `id` property has been renamed to `inputId` in this Ember implementation._
+
+###### Examples
+
+Basic radio button:
+
+```hbs
+{{polaris-radio-button
+  label="This is a radio button"
+  value="option-1"
+  onChange=(action (mut selectedValue))
+}}
+```
+
+Checkbox with help text:
+
+```hbs
+{{polaris-radio-button
+  label="This is a radio button"
+  helpText="Click the button to change the selected value"
+  value="option-1"
+  onChange=(action (mut selectedValue))
+}}
 ```
 
 #### Lists
