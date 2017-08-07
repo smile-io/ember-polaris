@@ -68,10 +68,10 @@ export default Component.extend({
    */
   accessibilityLabel: null,
 
-   /**
-    * Path under which `ember-svg-jar` serves the Polaris SVG icons
-    */
-   sourcePath: 'polaris',
+  /**
+   * Path under which `ember-svg-jar` serves the Polaris SVG icons
+   */
+  sourcePath: 'polaris',
 
   /*
    * Internal properties.
