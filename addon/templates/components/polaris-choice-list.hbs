@@ -1,0 +1,19 @@
+{{#if title}}
+  <legend class="Polaris-ChoiceList__Title">
+    {{title}}
+  </legend>
+{{/if}}
+
+<ul class="Polaris-ChoiceList__Choices">
+  {{#each checkedChoices as |choice|}}
+    <li>
+      {{component controlComponent
+        label=choice.label
+        value=choice.value
+        name=finalName
+        checked=choice.isSelected
+        onChange=(action "updateSelectedChoices" choice)
+      }}
+    </li>
+  {{/each}}
+</ul>

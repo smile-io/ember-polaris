@@ -39,6 +39,7 @@
 
 #### Forms
 - Checkbox
+- Choice list
 - Color picker
 - Form layout
 - Radio button
@@ -517,7 +518,7 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
       content="Settings"
       route="settings"
     )
-    (
+    (hash
       content="Advanced"
       route="settings.advanced"
     )
@@ -739,6 +740,60 @@ Checkbox with help text and value:
   value="my-checkbox-value"
   checked=checked
   onChange=(action (mut checked))
+}}
+```
+
+##### Choice list
+`polaris-choice-list` implements the [Polaris Choice list component](https://polaris.shopify.com/components/forms/choice-list).
+
+###### Examples
+
+Single choice list (radio buttons):
+
+```hbs
+{{polaris-choice-list
+  allowMultiple=false
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+    )
+    (hash
+      label="Option 3"
+      value="three"
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
+}}
+```
+
+Multiple choice list (checkboxes) with title:
+
+```hbs
+{{polaris-choice-list
+  allowMultiple=true
+  title="Choose from these options"
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+    )
+    (hash
+      label="Option 3"
+      value="three"
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
 }}
 ```
 
