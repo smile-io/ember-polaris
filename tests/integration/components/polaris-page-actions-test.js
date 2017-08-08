@@ -2,14 +2,26 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 moduleForComponent('polaris-page-actions', 'Integration | Component | polaris page actions', {
-  integration: true
+  integration: true,
+
+  beforeEach() {
+    this.register('component:svg-jar', MockSvgJarComponent);
+  },
 });
 
 const pageActionsSelector = 'div.Polaris-PageActions';
 const pageActionsStackSelector = buildNestedSelector(pageActionsSelector, 'div.Polaris-Stack');
 const pageActionsStackItemSelector = buildNestedSelector(pageActionsStackSelector, 'div.Polaris-Stack__Item');
+const secondaryButtonSelector = buildNestedSelector(
+  pageActionsStackItemSelector,
+  'div.Polaris-ButtonGroup',
+  'div.Polaris-ButtonGroup__Item',
+  'button.Polaris-Button'
+);
+const iconSelector = buildNestedSelector('span.Polaris-Icon', 'svg');
 
 test('it renders the correct HTML when primary and secondary actions are supplied', function(assert) {
   this.render(hbs`
@@ -48,12 +60,6 @@ test('it renders the correct HTML when primary and secondary actions are supplie
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
   assert.equal(primaryButtons[0].textContent.trim(), 'Primary button here', 'primary button - renders the correct content');
 
-  const secondaryButtonSelector = buildNestedSelector(
-    pageActionsStackItemSelector,
-    'div.Polaris-ButtonGroup',
-    'div.Polaris-ButtonGroup__Item',
-    'button.Polaris-Button'
-  );
   const secondaryButtons = findAll(secondaryButtonSelector);
   assert.equal(secondaryButtons.length, 2, 'renders two secondary button');
   assert.equal(secondaryButtons[0].textContent.trim(), 'This is a secondary button', 'first secondary button - renders the correct content');
@@ -154,6 +160,54 @@ test('it renders the correct HTML when the primary action is disabled', function
   const primaryButton = find(primaryButtonSelector);
   assert.ok(primaryButton, 'renders primary button');
   assert.ok(primaryButton.disabled, 'primary button is disabled');
+});
+
+test('it renders the correct HTML when secondary actions have complex properties', function(assert) {
+  this.render(hbs`
+    {{polaris-page-actions
+      secondaryActions=(array
+        (hash
+          content="Disabled secondary action"
+          disabled=true
+        )
+        (hash
+          content="Destructive secondary action"
+          destructive=true
+        )
+        (hash
+          content="Secondary action with icon"
+          icon="notes"
+        )
+      )
+    }}
+  `);
+
+  const secondaryButtons = findAll(secondaryButtonSelector);
+  assert.equal(secondaryButtons.length, 3, 'renders three secondary buttons');
+
+  // Check the first (disabled) button.
+  let secondaryButton = secondaryButtons[0];
+  assert.ok(secondaryButton.disabled, 'disabled secondary button is disabled');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--disabled'), 'disabled secondary button has disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'disabled secondary button does not have destructive class');
+  assert.notOk(find(iconSelector, secondaryButton), 'disabled secondary button does not have an icon');
+
+  // Check the second (destructive) button.
+  secondaryButton = secondaryButtons[1];
+  assert.notOk(secondaryButton.disabled, 'destructive secondary button is not disabled');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'destructive secondary button does not have disabled class');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--destructive'), 'destructive secondary button has destructive class');
+  assert.notOk(find(iconSelector, secondaryButton), 'destructive secondary button does not have an icon');
+
+  // Check the third (iconed) button.
+  secondaryButton = secondaryButtons[2];
+  assert.notOk(secondaryButton.disabled, 'iconed secondary button is not disabled');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'iconed secondary button does not have disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'iconed secondary button does not have destructive class');
+
+  const icon = find(iconSelector, secondaryButton);
+  assert.ok(icon, 'iconed secondary button has an icon');
+  assert.equal(icon.dataset.iconSource, 'polaris/notes', 'iconed secondary button has the correct icon');
 });
 
 test('it handles item actions correctly', function(assert) {

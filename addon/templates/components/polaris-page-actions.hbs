@@ -7,6 +7,9 @@
       {{#each secondaryActions as |secondaryAction|}}
         {{polaris-button
           text=secondaryAction.content
+          disabled=secondaryAction.disabled
+          destructive=secondaryAction.destructive
+          icon=secondaryAction.icon
           onClick=(action "fireAction" secondaryAction)
         }}
       {{/each}}
