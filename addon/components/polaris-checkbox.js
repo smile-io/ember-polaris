@@ -94,6 +94,15 @@ export default Component.extend({
   error: null,
 
   /**
+   * Disable the checkbox
+   *
+   * @property disabled
+   * @type {boolean}
+   * @default false
+   */
+  disabled: false,
+
+  /**
    * Callback when checkbox is toggled
    *
    * @property onChange
@@ -128,7 +137,7 @@ export default Component.extend({
   }).readOnly(),
 
   describedBy: computed('error', 'helpText', '_id', function() {
-    const describedBy = [];
+    let describedBy = [];
     const { error, helpText } = this.getProperties('error', 'helpText');
 
     if (typeOf(error) === 'string') {

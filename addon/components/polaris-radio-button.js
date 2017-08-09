@@ -84,6 +84,15 @@ export default Component.extend({
   value: null,
 
   /**
+   * Disable the radio button
+   *
+   * @property disabled
+   * @type {boolean}
+   * @default false
+   */
+  disabled: false,
+
+  /**
    * Callback when radio button is toggled
    *
    * @property onChange

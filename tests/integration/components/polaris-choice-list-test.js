@@ -19,6 +19,18 @@ const radioInputSelector = buildNestedSelector('div.Polaris-RadioButton', 'input
 const checkboxInputSelector = buildNestedSelector('div.Polaris-Checkbox', 'input[type="checkbox"]');
 const titleSelector = buildNestedSelector(choiceListSelector, 'legend.Polaris-ChoiceList__Title');
 
+const choiceWithDescriptionWrapperSelector = buildNestedSelector(
+  choicesWrapperSelector,
+  'li',
+  'div'
+);
+const choiceWithDescriptionSelector = buildNestedSelector(choiceWithDescriptionWrapperSelector, 'label.Polaris-Choice');
+const helpTextSelector = buildNestedSelector(
+  choiceWithDescriptionWrapperSelector,
+  'div.Polaris-Choice__Descriptions',
+  'div.Polaris-Choice__HelpText'
+);
+
 test('it renders the correct HTML when allowMultiple is false', function(assert) {
   this.render(hbs`
     {{polaris-choice-list
@@ -246,4 +258,72 @@ test('it handles choice selection correctly when allowMultiple is true', functio
   assert.ok(checkboxInputs[0].checked, 'after clicking third checkbox - first checkbox input is checked');
   assert.ok(checkboxInputs[1].checked, 'after clicking third checkbox - second checkbox input is checked');
   assert.notOk(checkboxInputs[2].checked, 'after clicking third checkbox - third checkbox input is not checked');
+});
+
+test('it handles choice helpText correctly when allowMultiple is false', function(assert) {
+  this.render(hbs`
+    {{polaris-choice-list
+      allowMultiple=false
+      choices=(array
+        (hash
+          label="First option"
+          value="one"
+          helpText="This is the first option"
+        )
+        (hash
+          label="Second option"
+          value="two"
+          helpText="This is the second option"
+        )
+        (hash
+          label="Third option"
+          value="three"
+          helpText="This is the third option"
+        )
+      )
+    }}
+  `);
+
+  const choices = findAll(choiceWithDescriptionSelector);
+  assert.equal(choices.length, 3, 'renders three choices with descriptions');
+
+  const helpTexts = findAll(helpTextSelector);
+  assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
+  assert.equal(helpTexts[0].textContent.trim(), 'This is the first option', 'first choice - renders the correct help text');
+  assert.equal(helpTexts[1].textContent.trim(), 'This is the second option', 'second choice - renders the correct help text');
+  assert.equal(helpTexts[2].textContent.trim(), 'This is the third option', 'third choice - renders the correct help text');
+});
+
+test('it handles choice helpText correctly when allowMultiple is true', function(assert) {
+  this.render(hbs`
+    {{polaris-choice-list
+      allowMultiple=true
+      choices=(array
+        (hash
+          label="First option"
+          value="one"
+          helpText="This is the first option"
+        )
+        (hash
+          label="Second option"
+          value="two"
+          helpText="This is the second option"
+        )
+        (hash
+          label="Third option"
+          value="three"
+          helpText="This is the third option"
+        )
+      )
+    }}
+  `);
+
+  const choices = findAll(choiceWithDescriptionSelector);
+  assert.equal(choices.length, 3, 'renders three choices with descriptions');
+
+  const helpTexts = findAll(helpTextSelector);
+  assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
+  assert.equal(helpTexts[0].textContent.trim(), 'This is the first option', 'first choice - renders the correct help text');
+  assert.equal(helpTexts[1].textContent.trim(), 'This is the second option', 'second choice - renders the correct help text');
+  assert.equal(helpTexts[2].textContent.trim(), 'This is the third option', 'third choice - renders the correct help text');
 });

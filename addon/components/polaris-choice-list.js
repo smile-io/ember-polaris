@@ -12,10 +12,11 @@ const {
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
 const CheckedChoice = ObjectProxy.extend({
-  choiceList: null,
+  selected: null,
 
-  isSelected: computed('content.value', 'choiceList.selected.[]', function() {
-    return this.get('choiceList.selected').indexOf(this.get('value')) >= 0;
+  isSelected: computed('content.value', 'selected.[]', function() {
+    const selected = this.get('selected');
+    return selected && selected.indexOf(this.get('value')) > -1;
   }).readOnly(),
 });
 
@@ -44,6 +45,9 @@ export default Component.extend({
 
   /**
    * Collection of choices
+   *
+   * Each choice should have `label` and `value` properties,
+   * and can optionally have a `helpText` property.
    *
    * @property choices
    * @type {Array}
@@ -111,7 +115,7 @@ export default Component.extend({
     }
 
     if (allowMultiple) {
-      name += '[]';
+      name = `${name}[]`;
     }
 
     return name;
@@ -119,10 +123,12 @@ export default Component.extend({
 
   checkedChoices: computed('choices.[]', function() {
     const choices = this.get('choices') || [];
+    const selected = this.get('selected');
+
     return choices.map((choice) => {
       return CheckedChoice.create({
         content: choice,
-        choiceList: this,
+        selected,
       });
     });
   }).readOnly(),
