@@ -1,0 +1,24 @@
+{{#polaris-choice
+  inputId=_id
+  label=label
+  labelHidden=labelHidden
+  helpText=helpText
+}}
+  <div class="Polaris-RadioButton">
+    {{one-way-radio
+      id=_id
+      name=name
+      option=value
+      checked=checked
+      disabled=disabled
+      class="Polaris-RadioButton__Input"
+      aria-describedby=describedBy
+      update=(action onChange)
+      focusIn=(action onFocus)
+      focusOut=(action onBlur)
+    }}
+
+    <div class="Polaris-RadioButton__Backdrop"></div>
+    <div class="Polaris-RadioButton__Icon"></div>
+  </div>
+{{/polaris-choice}}

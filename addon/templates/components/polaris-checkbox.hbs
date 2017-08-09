@@ -1,0 +1,29 @@
+{{#polaris-choice
+  inputId=_id
+  label=label
+  labelHidden=labelHidden
+  helpText=helpText
+  error=error
+}}
+  <div class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
+    {{one-way-checkbox
+      id=_id
+      name=name
+      value=value
+      checked=checked
+      disabled=disabled
+      class="Polaris-Checkbox__Input"
+      aria-invalid=(if error "true" "false")
+      aria-describedby=describedBy
+      update=(action onChange)
+      focusIn=(action onFocus)
+      focusOut=(action onBlur)
+    }}
+
+    <div class="Polaris-Checkbox__Backdrop"></div>
+
+    <div class="Polaris-Checkbox__Icon">
+      {{polaris-icon source="checkmark"}}
+    </div>
+  </div>
+{{/polaris-choice}}

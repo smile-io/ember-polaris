@@ -38,8 +38,11 @@
 - VisuallyHidden
 
 #### Forms
+- Checkbox
+- Choice list
 - Color picker
 - Form layout
+- Radio button
 
 #### Lists
 - Resource list
@@ -515,7 +518,7 @@ Page with title and breadcrumbs (using [ember-array-helper](https://github.com/k
       content="Settings"
       route="settings"
     )
-    (
+    (hash
       content="Advanced"
       route="settings.advanced"
     )
@@ -711,6 +714,89 @@ Block form:
 
 #### Forms
 
+##### Checkbox
+`polaris-checkbox` implements the [Polaris Checkbox component](https://polaris.shopify.com/components/forms/checkbox).
+
+**NOTE:** _the React component's `id` property has been renamed to `inputId` in this Ember implementation._
+
+###### Examples
+
+Basic checkbox:
+
+```hbs
+{{polaris-checkbox
+  label="This is a checkbox"
+  checked=checked
+  onChange=(action (mut checked))
+}}
+```
+
+Checkbox with help text and value:
+
+```hbs
+{{polaris-checkbox
+  label="This is a checkbox with help text"
+  helpText="Click the checkbox to toggle something"
+  value="my-checkbox-value"
+  checked=checked
+  onChange=(action (mut checked))
+}}
+```
+
+##### Choice list
+`polaris-choice-list` implements the [Polaris Choice list component](https://polaris.shopify.com/components/forms/choice-list).
+
+###### Examples
+
+Single choice list (radio buttons):
+
+```hbs
+{{polaris-choice-list
+  allowMultiple=false
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+    )
+    (hash
+      label="Option 3"
+      value="three"
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
+}}
+```
+
+Multiple choice list (checkboxes) with title:
+
+```hbs
+{{polaris-choice-list
+  allowMultiple=true
+  title="Choose from these options"
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+    )
+    (hash
+      label="Option 3"
+      value="three"
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
+}}
+```
+
 ##### Color picker
 `polaris-color-picker` implements the [Polaris Color picker component](https://polaris.shopify.com/components/forms/color-picker).
 
@@ -762,6 +848,34 @@ Form layout with two groups, the second of which is condensed:
     ... second (condensed) group items...
   {{/formLayout.group}}
 {{/polaris-form-layout}}
+```
+
+##### Radio button
+`polaris-radio-button` implements the [Polaris Radio button component](https://polaris.shopify.com/components/forms/radio-button).
+
+**NOTE:** _the React component's `id` property has been renamed to `inputId` in this Ember implementation._
+
+###### Examples
+
+Basic radio button:
+
+```hbs
+{{polaris-radio-button
+  label="This is a radio button"
+  value="option-1"
+  onChange=(action (mut selectedValue))
+}}
+```
+
+Radio button with help text:
+
+```hbs
+{{polaris-radio-button
+  label="This is a radio button"
+  helpText="Click the button to change the selected value"
+  value="option-1"
+  onChange=(action (mut selectedValue))
+}}
 ```
 
 #### Lists
