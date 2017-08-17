@@ -67,8 +67,8 @@ export default Component.extend({
       return;
     }
 
-    const trigger = $(`div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`)[0];
-    const content = $(`div#ember-basic-dropdown-content-${uniqueId}`)[0];
+    const trigger = $(`div.ember-basic-dropdown-trigger[data-ebd-id="${ uniqueId }-trigger"]`)[0];
+    const content = $(`div#ember-basic-dropdown-content-${ uniqueId }`)[0];
 
     if (isNone(trigger) || isNone(content)) {
       return;

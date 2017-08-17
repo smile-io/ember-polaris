@@ -3,7 +3,6 @@ import { clamp } from './math';
 
 const {
   isPresent,
-  assign,
 } = Ember;
 
 /*
@@ -97,9 +96,7 @@ export function rgbaToHsb(color) {
   const smallestComponent = Math.min(r, g, b);
 
   const delta = largestComponent - smallestComponent;
-  const saturation = largestComponent === 0
-    ? 0
-    : delta / largestComponent;
+  const saturation = largestComponent === 0 ? 0 : delta / largestComponent;
 
   let huePercentage = 0;
   switch (largestComponent) {
@@ -236,7 +233,7 @@ export function hexToRgb(hex) {
     red: num >> 16,
     green: num >> 8 & 255,
     blue: num & 255,
-  }
+  };
 }
 
 export function hexToHsb(hex) {
