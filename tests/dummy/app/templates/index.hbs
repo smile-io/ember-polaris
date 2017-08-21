@@ -28,4 +28,17 @@
     external=true
     text="Ember Polaris on GitHub"
   }}
+
+  {{#polaris-card
+  title="Test Disabled Header Action"
+  sectioned=true
+  headerActions=(array (hash
+    content="Edit"
+    disabled=true
+    action=(action (mut color))
+  ))
+  as |card|
+  }}
+    Test
+  {{/polaris-card}}
 {{/polaris-page}}

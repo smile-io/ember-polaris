@@ -121,6 +121,7 @@ test('it renders the correct HTML', function(assert) {
 
 test('it handles header actions correctly', function(assert) {
   let action1HandlerCalled = false;
+  this.set('action3HandlerCalled', false);
   this.set('action2HandlerCalled', false);
   this.on('action1Handler', () => {
     action1HandlerCalled = true;
@@ -137,6 +138,11 @@ test('it handles header actions correctly', function(assert) {
         (hash
           content="Action 2"
           action=(action (mut action2HandlerCalled) true)
+        )
+        (hash
+          content="Action 3"
+          disabled=true
+          action=(action (mut action3HandlerCalled) true)
         )
       )
     }}
@@ -162,9 +168,10 @@ test('it handles header actions correctly', function(assert) {
     'button.Polaris-Button.Polaris-Button--plain'
   );
   const actionButtons = findAll(actionButtonSelector);
-  assert.equal(actionButtons.length, 2, 'renders the correct number of action buttons');
+  assert.equal(actionButtons.length, 3, 'renders the correct number of action buttons');
   assert.equal(actionButtons[0].textContent.trim(), 'Action 1', 'first action button - renders correct content');
   assert.equal(actionButtons[1].textContent.trim(), 'Action 2', 'second action button - renders correct content');
+  assert.equal(actionButtons[2].textContent.trim(), 'Action 3', 'third action button - renders correct content');
 
   // Check clicking the buttons.
   click(actionButtons[0]);
@@ -173,6 +180,10 @@ test('it handles header actions correctly', function(assert) {
 
   click(actionButtons[1]);
   assert.equal(this.get('action2HandlerCalled'), true, 'clicking second action button - invokes second action handler correctly');
+
+  click(actionButtons[2]);
+  assert.equal(this.get('action3HandlerCalled'), false, 'clicking disabled third action button - does not invoke third action handler');
+  assert.ok(actionButtons[2].classList.contains('Polaris-Button--disabled'), 'third action is a disabled header action - disabled class');
 });
 
 test('it allows section header customisation', function(assert) {
