@@ -93,18 +93,24 @@ export default Component.extend({
     return source;
   }).readOnly(),
 
-  removeSvgFills() {
-    let svg = this.$('svg').length ? this.$('svg') : null;
-    if (isNone(svg)) {
+  removeSvgFills(elem) {
+    if (isNone(elem)) {
       return;
     }
 
-    svg.children().each(function() {
-      let fill = this.getAttribute('fill');
-      // This is what Shopify does too in @shopify/images/icon-loader.js
-      let newFill = fill && fill.includes('#FFF') ? 'fill="currentColor"' : '';
-      this.setAttribute('fill', newFill);
-    });
+    let childs = elem.children;
+    for (let i = 0, len = childs.length; i < len; i++) {
+      let child = childs[i];
+      if (child.tagName === 'g') {
+        child.removeAttribute('fill');
+        this.removeSvgFills(child);
+      } else {
+        let fill = child.getAttribute('fill');
+        // This is what Shopify does too in @shopify/images/icon-loader.js
+        let newFill = fill && fill.includes('#FFF') ? 'currentColor' : '';
+        child.setAttribute('fill', newFill);
+      }
+    }
   },
 
   /*
@@ -112,6 +118,6 @@ export default Component.extend({
    */
   didInsertElement() {
     this._super(...arguments);
-    this.removeSvgFills();
+    this.removeSvgFills(this.$('svg')[0]);
   }
 });
