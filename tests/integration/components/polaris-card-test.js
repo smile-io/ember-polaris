@@ -121,10 +121,13 @@ test('it renders the correct HTML', function(assert) {
 
 test('it handles header actions correctly', function(assert) {
   let action1HandlerCalled = false;
-  this.set('action3HandlerCalled', false);
-  this.set('action2HandlerCalled', false);
   this.on('action1Handler', () => {
     action1HandlerCalled = true;
+  });
+
+  this.setProperties({
+    action2HandlerCalled: false,
+    action3HandlerCalled: false
   });
 
   this.render(hbs`
