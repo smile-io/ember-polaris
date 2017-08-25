@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const {
+  get,
   Service,
 } = Ember;
 
@@ -20,8 +21,15 @@ const StubbedRoutingService = Service.extend({
     return true;
   },
 
-  generateURL(routeName /*, models, queryParams */) {
-    return routeName.replace('.', '/');
+  generateURL(routeName, models =[] /*, queryParams */) {
+    let url = [
+      routeName.replace(/\./g, '/'),
+      ...models.map((model) => {
+        return get(model, 'id') || model;
+      }),
+    ].join('/');
+
+    return url;
   },
 });
 

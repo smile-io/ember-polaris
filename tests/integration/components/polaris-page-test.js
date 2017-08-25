@@ -8,6 +8,7 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 const availableRoutes = [
   'home',
   'home.the-beginning',
+  'home.the-beginning.really',
 ];
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
@@ -221,7 +222,16 @@ test('it handles breadcrumbs correctly', function(assert) {
     },
     {
       content: 'No, really!',
-      route: 'home.the-beginning'
+      route: 'home.the-beginning',
+      models: [
+        { id: 13 },
+        27,
+      ],
+    },
+    {
+      content: `I'm telling you!`,
+      route: 'home.the-beginning.really',
+      models: 19,
     }
   ]);
 
@@ -234,7 +244,7 @@ test('it handles breadcrumbs correctly', function(assert) {
     'a.Polaris-Breadcrumbs__Breadcrumb'
   );
   const breadcrumbLinks = findAll(breadcrumbLinkSelector)
-  assert.equal(breadcrumbLinks.length, 2, 'with breadcrumbs - renders 2 breadcrumbs');
+  assert.equal(breadcrumbLinks.length, 3, 'with breadcrumbs - renders 3 breadcrumbs');
 
   // Check the first breadcrumb.
   const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
@@ -248,10 +258,19 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   // Check the second breadcrumb.
   breadcrumbLink = breadcrumbLinks[1];
-  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning`, 'second breadcrumb - has correct href');
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/13/27`, 'second breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'second breadcrumb - has data-polaris-unstyled attribute');
   assert.equal(breadcrumbLink.textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
 
   icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
+
+  // Check the third breadcrumb.
+  breadcrumbLink = breadcrumbLinks[2];
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/really/19`, 'third breadcrumb - has correct href');
+  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'third breadcrumb - has data-polaris-unstyled attribute');
+  assert.equal(breadcrumbLink.textContent.trim(), `I'm telling you!`, 'third breadcrumb - renders correct text');
+
+  icons = findAll(iconSelector, breadcrumbLink);
+  assert.equal(icons.length, 1, 'third breadcrumb - renders icon');
 });
