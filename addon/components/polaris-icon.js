@@ -98,7 +98,11 @@ export default Component.extend({
       return;
     }
 
-    let childs = elem.children;
+    if (!elem.hasChildNodes) {
+        return;
+    }
+
+    let childs = elem.childNodes;
     for (let i = 0, len = childs.length; i < len; i++) {
       let child = childs[i];
       if (child.tagName === 'g') {
@@ -107,7 +111,7 @@ export default Component.extend({
       } else {
         let fill = child.getAttribute('fill');
         // This is what Shopify does too in @shopify/images/icon-loader.js
-        let newFill = fill && fill.includes('#FFF') ? 'currentColor' : '';
+        let newFill = fill && fill.indexOf('#FFF') !== -1 ? 'currentColor' : '';
         child.setAttribute('fill', newFill);
       }
     }
