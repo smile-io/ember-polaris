@@ -17,7 +17,7 @@ export default LinkComponent.extend({
 
   breadcrumb: null,
 
-  params: computed('breadcrumb.{content,route,@each}', function() {
+  params: computed('breadcrumb.{content,route,models.@each.id}', function() {
     // Because we extend LinkComponent and don't yield, hasBlock is false
     // so LinkComponent expects the link title as the first parameter.
     let { content, route, models = [] } = this.get('breadcrumb');
