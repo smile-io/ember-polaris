@@ -21,7 +21,7 @@ const StubbedRoutingService = Service.extend({
     return true;
   },
 
-  generateURL(routeName, models =[] /*, queryParams */) {
+  generateURL(routeName, models = [] /*, queryParams */) {
     let url = [
       routeName.replace(/\./g, '/'),
       ...models.map((model) => {

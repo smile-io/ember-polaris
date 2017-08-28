@@ -509,19 +509,21 @@ Full-width page with disableable primary action and secondary actions (using [em
 }}
 ```
 
-Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)). Breadcrumbs take `content` and `route` properties, and an optional `models` property for dynamic route segments:
 
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
   breadcrumbs=(array
     (hash
-      content="Settings"
-      route="settings"
+      content="Parent"
+      route="parent"
+      models=parent
     )
     (hash
-      content="Advanced"
-      route="settings.advanced"
+      content="Child"
+      route="parent.child"
+      models=(array parent child)
     )
   )
 }}
