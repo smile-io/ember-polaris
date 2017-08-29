@@ -4,7 +4,6 @@ import {
   hsbaToRgba,
   rgbaToHsb,
   rgbaToHex,
-  hsbaToHex,
   hexToRgb,
 } from 'ember-polaris/utils/color';
 
