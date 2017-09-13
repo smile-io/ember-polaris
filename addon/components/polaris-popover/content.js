@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../../templates/components/polaris-popover/content';
 
 const {
-  $,
+  $: Ember$,
   Component,
   isNone,
 } = Ember;
@@ -67,8 +67,8 @@ export default Component.extend({
       return;
     }
 
-    const trigger = $(`div.ember-basic-dropdown-trigger[data-ebd-id="${ uniqueId }-trigger"]`)[0];
-    const content = $(`div#ember-basic-dropdown-content-${ uniqueId }`)[0];
+    const trigger = Ember$(`div.ember-basic-dropdown-trigger[data-ebd-id="${ uniqueId }-trigger"]`)[0];
+    const content = Ember$(`div#ember-basic-dropdown-content-${ uniqueId }`)[0];
 
     if (isNone(trigger) || isNone(content)) {
       return;
@@ -76,6 +76,15 @@ export default Component.extend({
 
     const triggerRect = trigger.getBoundingClientRect();
     const left = (triggerRect.width / 2) + (triggerRect.left - content.getBoundingClientRect().left);
-    $('div.Polaris-Popover__Tip', content).css({ left });
+    Ember$('div.Polaris-Popover__Tip', content).css({ left });
+
+    // Set the height explicitly so the popover displays on Safari.
+    const pane = Ember$('div.Polaris-Popover__Pane', content)[0];
+    if (isNone(pane)) {
+      return;
+    }
+    const paneContent = pane.firstElementChild;
+    const paneContentRect = paneContent.getBoundingClientRect();
+    Ember$('div.Polaris-Popover__Content', content).css({ height: paneContentRect.height });
   },
 });
