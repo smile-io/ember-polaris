@@ -1,4 +1,4 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, test, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { find, findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
@@ -17,7 +17,7 @@ const popoverPaneSelector = buildNestedSelector(
   'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
 );
 
-test('it renders the correct HTML with default attributes', function(assert) {
+skip('it renders the correct HTML with default attributes', function(assert) {
   this.render(hbs`
     {{#polaris-popover as |popover|}}
       {{#popover.activator}}
