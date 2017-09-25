@@ -24,6 +24,7 @@
 - Banner
 
 #### Structure
+- Callout card
 - Card
 - Layout
 - Page
@@ -356,6 +357,42 @@ With a success status set, custom icon, content, dismiss button and actions:
 ```
 
 #### Structure
+
+##### Callout card
+`polaris-callout-card` implements the [Polaris Callout card component](https://polaris.shopify.com/components/structure/callout-card).
+
+###### Examples
+
+Inline usage without secondary action:
+
+```hbs
+{{polaris-callout-card
+  title="New feature"
+  text="This new feature is awesome!"
+  primaryAction=(hash
+    content="Take a look"
+    action=(action "showNewFeature")
+  )
+}}
+```
+
+Block usage with secondary action:
+
+```hbs
+{{#polaris-callout-card
+  title="New feature"
+  primaryAction=(hash
+    content="Take a look"
+    action=(action "showNewFeature")
+  )
+  secondaryAction=(hash
+    content="Learn more"
+    action=(action "showDetails")
+  )
+}}
+  We've got an awesome new feature!
+{{/polaris-callout-card}}
+```
 
 ##### Card
 `polaris-card` implements the [Polaris Card component](https://polaris.shopify.com/components/structure/card), with the `actions` property renamed to `headerActions`.
