@@ -53,9 +53,9 @@ const {
    *
    * @property spacing
    * @type {enum}
-   * @default none
+   * @default null
    */
-  spacing: 'none',
+  spacing: null,
 
   /**
    * Adjust alignment of elements
@@ -80,7 +80,7 @@ const {
    */
   spacingClassName: computed('spacing', function() {
     const spacing = this.get('spacing');
-    if (isBlank(spacing) || spacing === 'none') {
+    if (isBlank(spacing)) {
       return null;
     }
 

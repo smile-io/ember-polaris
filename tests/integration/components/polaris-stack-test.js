@@ -57,11 +57,14 @@ test('it renders the correct HTML with vertical attribute', function(assert) {
 });
 
 test('it renders the correct HTML with spacing attribute', function(assert) {
-  this.set('spacing', 'none');
+  this.set('spacing', null);
   this.render(hbs`{{polaris-stack spacing=spacing}}`);
 
   const stack = find(stackSelector);
-  assert.equal(stack.className.indexOf('Polaris-Stack--spacing'), -1, 'spacing=none - does not add any spacing class');
+  assert.equal(stack.className.indexOf('Polaris-Stack--spacing'), -1, 'spacing=null - does not add any spacing class');
+
+  this.set('spacing', 'none');
+  assert.ok(stack.classList.contains('Polaris-Stack--spacingNone'), 'spacing=none - adds the correct spacing class');
 
   this.set('spacing', 'loose');
   assert.ok(stack.classList.contains('Polaris-Stack--spacingLoose'), 'spacing=loose - adds the correct spacing class');
