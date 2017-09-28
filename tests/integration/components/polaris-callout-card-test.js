@@ -7,7 +7,11 @@ moduleForComponent('polaris-callout-card', 'Integration | Component | polaris ca
   integration: true
 });
 
-const calloutCardSelector = buildNestedSelector('div.Polaris-Card', 'div.Polaris-CalloutCard');
+const calloutCardSelector = buildNestedSelector(
+  'div.Polaris-Card',
+  'div.Polaris-Card__Section',
+  'div.Polaris-CalloutCard'
+);
 const calloutCardContentSelector = buildNestedSelector(
   calloutCardSelector,
   'div.Polaris-CalloutCard__Content'

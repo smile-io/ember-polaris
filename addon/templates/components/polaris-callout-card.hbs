@@ -1,39 +1,41 @@
-<div class="Polaris-CalloutCard">
-  <div class="Polaris-CalloutCard__Content">
-    <div class="Polaris-CalloutCard__Title">
-      {{polaris-heading text=title}}
-    </div>
+{{#polaris-card sectioned=true}}
+  <div class="Polaris-CalloutCard">
+    <div class="Polaris-CalloutCard__Content">
+      <div class="Polaris-CalloutCard__Title">
+        {{polaris-heading text=title}}
+      </div>
 
-    {{#polaris-text-container}}
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    {{/polaris-text-container}}
-
-    <div class="Polaris-CalloutCard__Buttons">
-      {{#with (component "polaris-button"
-        text=primaryAction.content
-        onClick=(action primaryAction.action))
-        as |primaryButton|
-      }}
-        {{#if secondaryAction}}
-          {{#polaris-button-group}}
-            {{component primaryButton}}
-
-            {{polaris-button
-              plain=true
-              text=secondaryAction.content
-              onClick=(action secondaryAction.action)
-            }}
-          {{/polaris-button-group}}
+      {{#polaris-text-container}}
+        {{#if hasBlock}}
+          {{yield}}
         {{else}}
-          {{component primaryButton}}
+          {{text}}
         {{/if}}
-      {{/with}}
-    </div>
-  </div>
+      {{/polaris-text-container}}
 
-  <img src={{illustration}} alt="" class="Polaris-CalloutCard__Image">
-</div>
+      <div class="Polaris-CalloutCard__Buttons">
+        {{#with (component "polaris-button"
+          text=primaryAction.content
+          onClick=(action primaryAction.action))
+          as |primaryButton|
+        }}
+          {{#if secondaryAction}}
+            {{#polaris-button-group}}
+              {{component primaryButton}}
+
+              {{polaris-button
+                plain=true
+                text=secondaryAction.content
+                onClick=(action secondaryAction.action)
+              }}
+            {{/polaris-button-group}}
+          {{else}}
+            {{component primaryButton}}
+          {{/if}}
+        {{/with}}
+      </div>
+    </div>
+
+    <img src={{illustration}} alt="" class="Polaris-CalloutCard__Image">
+  </div>
+{{/polaris-card}}

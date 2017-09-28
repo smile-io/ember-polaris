@@ -10,13 +10,10 @@ const {
  * See https://polaris.shopify.com/components/structure/callout-card
  */
 export default Component.extend({
-  classNames: ['Polaris-Card'],
+  tagName: '',
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the callout card.
    *
@@ -25,7 +22,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    */
   text: null,
@@ -34,7 +31,7 @@ export default Component.extend({
    * The title of the card
    *
    * @property title
-   * @type {string}
+   * @type {String}
    * @default null
    */
   title: null,
@@ -43,7 +40,7 @@ export default Component.extend({
    * URL to the card illustration
    *
    * @property illustration
-   * @type {string}
+   * @type {String}
    * @default null
    */
   illustration: null,
