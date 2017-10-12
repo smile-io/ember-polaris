@@ -4,7 +4,6 @@ import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import Component from '@ember/component';
 import { capitalize } from '@ember/string';
-import Ember from 'ember';
 import layout from '../templates/components/polaris-banner';
 import { invokeAction } from 'ember-invoke-action';
 
