@@ -1,14 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { isEmpty } from '@ember/utils';
+import ObjectProxy from '@ember/object/proxy';
 import layout from '../templates/components/polaris-choice-list';
-
-const {
-  Component,
-  computed,
-  get,
-  guidFor,
-  isEmpty,
-  ObjectProxy,
-} = Ember;
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
 const CheckedChoice = ObjectProxy.extend({

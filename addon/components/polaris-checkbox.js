@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-checkbox';
-
-const {
-  Component,
-  computed,
-  guidFor,
-  typeOf,
-} = Ember;
 
 /**
  * Polaris checkbox component.

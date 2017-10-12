@@ -1,17 +1,9 @@
+import Component from '@ember/component';
+import { readOnly } from '@ember/object/computed';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-} = Ember;
-
-const {
-  readOnly,
-} = computed;
 
 moduleForComponent('polaris-resource-list', 'Integration | Component | polaris resource list', {
   integration: true

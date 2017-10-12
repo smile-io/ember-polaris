@@ -1,15 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-popover';
-
-const {
-  Component,
-  computed,
-  String: EmberString,
-} = Ember;
-
-const {
-  htmlSafe,
-} = EmberString;
 
 /**
  * Polaris popover component.

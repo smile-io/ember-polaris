@@ -1,17 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isNone, isEmpty } from '@ember/utils';
+import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-icon';
-
-const {
-  Component,
-  computed,
-  isEmpty,
-  isNone,
-  String: EmberString,
-} = Ember;
-
-const {
-  classify,
-} = EmberString;
 
 // TODO: look into importing icons properly.
 export default Component.extend({

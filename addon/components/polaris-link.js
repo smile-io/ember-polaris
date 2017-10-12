@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/polaris-link';
-
-const {
-  Component,
-  computed,
-} = Ember;
 
 /**
  * Polaris link component.

@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import { typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-page-actions';
-
-const {
-  Component,
-  computed,
-  isArray,
-  typeOf,
-} = Ember;
 
 /**
  * Polaris page actions component.

@@ -1,15 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { or, notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/polaris-page';
-
-const {
-  Component,
-  computed,
-} = Ember;
-
-const {
-  notEmpty,
-  or,
-} = computed;
 
 /**
  * Polaris page component.
@@ -107,6 +99,8 @@ export default Component.extend({
    * Computed properties.
    */
   hasBreadcrumbs: notEmpty('breadcrumbs'),
+  hasActions: or('primaryAction', 'secondaryActions'),
+
   headerClass: computed('hasBreadcrumbs', function() {
     const classNames = [
       'Polaris-Page__Header',
@@ -118,6 +112,4 @@ export default Component.extend({
 
     return classNames.join(' ');
   }).readOnly(),
-
-  hasActions: or('primaryAction', 'secondaryActions'),
 });

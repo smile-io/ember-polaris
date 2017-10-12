@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../templates/components/polaris-callout-card';
-
-const {
-  Component,
-} = Ember;
 
 /**
  * Polaris callout card component.

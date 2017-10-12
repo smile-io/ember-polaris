@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-setting-toggle';
-
-const {
-  Component,
-  typeOf,
-} = Ember;
 
 /**
  * Polaris setting toggle component.

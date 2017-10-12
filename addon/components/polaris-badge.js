@@ -1,20 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
+import { notEmpty } from '@ember/object/computed';
+import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-badge';
-
-const {
-  Component,
-  computed,
-  isBlank,
-  String: EmberString,
-} = Ember;
-
-const {
-  notEmpty,
-} = computed;
-
-const {
-  classify,
-} = EmberString;
 
 /**
  * Polaris badge component.

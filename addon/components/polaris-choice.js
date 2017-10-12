@@ -1,14 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import layout from '../templates/components/polaris-choice';
-
-const {
-  Component,
-  computed,
-} = Ember;
-
-const {
-  or,
-} = computed;
 
 /**
  * Polaris choice component.

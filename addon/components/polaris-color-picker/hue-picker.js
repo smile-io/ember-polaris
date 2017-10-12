@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
 import layout from '../../templates/components/polaris-color-picker/hue-picker';
 import { clamp } from '../../utils/math';
-
-const {
-  Component,
-  computed,
-  typeOf,
-} = Ember;
 
 const VERTICAL_PADDING = 13;
 

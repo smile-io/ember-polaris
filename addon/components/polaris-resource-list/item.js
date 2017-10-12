@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import layout from '../../templates/components/polaris-resource-list/item';
-
-const {
-  Component,
-  computed,
-  guidFor,
-} = Ember;
 
 export default Component.extend({
   classNames: ['Polaris-ResourceList__Item'],
