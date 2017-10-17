@@ -1,14 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { not } from '@ember/object/computed';
 import layout from '../templates/components/polaris-pagination';
-
-const {
-  Component,
-  computed,
-} = Ember;
-
-const {
-  not,
-} = computed;
 
 export default Component.extend({
   layout,

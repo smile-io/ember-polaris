@@ -1,17 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import { classify } from '@ember/string';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
-import Ember from 'ember';
-
-const {
-  String: EmberString,
-} = Ember;
-
-const {
-  classify,
-} = EmberString;
 
 moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
   integration: true,

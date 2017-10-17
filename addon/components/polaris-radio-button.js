@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import layout from '../templates/components/polaris-radio-button';
-
-const {
-  Component,
-  computed,
-  guidFor,
-} = Ember;
 
 /**
  * Polaris radio button component.

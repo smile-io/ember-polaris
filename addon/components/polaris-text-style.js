@@ -1,16 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-text-style';
-
-const {
-  Component,
-  computed,
-  isEmpty,
-  String: EmberString,
-} = Ember;
-
-const {
-  classify,
-} = EmberString;
 
 /**
  * Polaris text style component (undocumented).

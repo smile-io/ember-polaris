@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 import mapEventToAction from '../../utils/map-event-to-action';
-
-const {
-  Component,
-  computed,
- } = Ember;
 
 export default Component.extend({
   classNames: ['Polaris-Button'],

@@ -1,18 +1,11 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
+import { isBlank, isPresent } from '@ember/utils';
+import { guidFor } from '@ember/object/internals';
+import Component from '@ember/component';
+import { capitalize } from '@ember/string';
 import layout from '../templates/components/polaris-banner';
 import { invokeAction } from 'ember-invoke-action';
-
-const {
-  computed,
-  isPresent,
-  isBlank,
-  guidFor,
-  String: EmberString,
-  Component,
-} = Ember;
-
-const { capitalize } = EmberString;
-const { bool } = computed;
 
 const bannerIcons = {
   success: {

@@ -1,18 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { typeOf } from '@ember/utils';
+import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-color-picker';
 import { clamp } from '../utils/math';
 import { hsbaToRgba } from '../utils/color';
-
-const {
-  Component,
-  computed,
-  String: EmberString,
-  typeOf,
-} = Ember;
-
-const {
-  htmlSafe,
-} = EmberString;
 
 /**
  * Polaris color picker component.

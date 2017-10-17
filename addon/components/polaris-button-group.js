@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../templates/components/polaris-button-group';
-
-const {
-  Component,
-} = Ember;
 
 /**
  * Polaris button group component.

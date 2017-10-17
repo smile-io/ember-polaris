@@ -1,13 +1,9 @@
+import Component from '@ember/component';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, focus, click, blur } from 'ember-native-dom-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import Ember from 'ember';
-
-const {
-  Component,
-} = Ember;
 
 // Mock the polaris-choice component to simplify testing what gets rendered.
 const MockPolarisChoiceComponent = Component.extend({

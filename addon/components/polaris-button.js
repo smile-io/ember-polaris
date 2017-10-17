@@ -1,13 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isPresent, isBlank, isNone } from '@ember/utils';
 import layout from '../templates/components/polaris-button';
-
-const {
-  Component,
-  computed,
-  isNone,
-  isBlank,
-  isPresent,
-} = Ember;
 
 /**
  * Polaris button component.

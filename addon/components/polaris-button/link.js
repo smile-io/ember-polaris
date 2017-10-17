@@ -1,10 +1,6 @@
+import { computed } from '@ember/object';
 import BaseComponent from './base';
-import Ember from 'ember';
 import mapEventToAction from '../../utils/map-event-to-action';
-
-const {
-  computed,
-} = Ember;
 
 export default BaseComponent.extend({
   tagName: 'a',

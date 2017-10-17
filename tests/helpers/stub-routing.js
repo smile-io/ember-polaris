@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  get,
-  Service,
-} = Ember;
+import { get } from '@ember/object';
+import Service from '@ember/service';
 
 const StubbedRoutingService = Service.extend({
   _availableRoutes: null,

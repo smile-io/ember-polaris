@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../../templates/components/polaris-button-group/item';
-
-const {
-  Component,
-} = Ember;
 
 export default Component.extend({
   classNames: ['Polaris-ButtonGroup__Item'],

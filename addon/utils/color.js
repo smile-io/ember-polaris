@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import { isPresent } from '@ember/utils';
 import { clamp } from './math';
-
-const {
-  isPresent,
-} = Ember;
 
 /*
  * Implements https://en.wikipedia.org/wiki/HSL_and_HSV#From_HSV

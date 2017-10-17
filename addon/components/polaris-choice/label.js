@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../../templates/components/polaris-choice/label';
-
-const {
-  Component,
-} = Ember;
 
 export default Component.extend({
   tagName: 'label',

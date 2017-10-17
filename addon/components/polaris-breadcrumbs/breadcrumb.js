@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
+import LinkComponent from '@ember/routing/link-component';
 import layout from '../../templates/components/polaris-breadcrumbs/breadcrumb';
-
-const {
-  computed,
-  isArray,
-  LinkComponent,
-} = Ember;
 
 export default LinkComponent.extend({
   classNames: ['Polaris-Breadcrumbs__Breadcrumb'],

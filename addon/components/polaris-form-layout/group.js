@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import layout from '../../templates/components/polaris-form-layout/group';
-
-const {
-  Component,
-} = Ember;
 
 export default Component.extend({
   classNameBindings: ['condensed:Polaris-FormLayout--condensed'],

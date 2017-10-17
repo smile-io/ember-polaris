@@ -1,8 +1,4 @@
-import Ember from 'ember';
-
-const {
-  Component,
-} = Ember;
+import Component from '@ember/component';
 
 // Mock the svg-jar helper for testing, to avoid rendering SVGs.
 const SvgJar = Component.extend({
