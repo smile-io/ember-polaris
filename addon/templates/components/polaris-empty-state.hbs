@@ -1,0 +1,40 @@
+<div class="Polaris-EmptyState__Section">
+  <div class="Polaris-EmptyState__DetailsContainer">
+    <div class="Polaris-EmptyState__Details">
+      {{#polaris-text-container}}
+        {{polaris-display-text size="medium" text=heading}}
+        <div class="Polaris-EmptyState__Content">
+          {{#if hasBlock}}
+            {{yield}}
+          {{else}}
+            {{text}}
+          {{/if}}
+        </div>
+      {{/polaris-text-container}}
+
+      <div class="Polaris-EmptyState__Actions">
+        {{#polaris-button-group}}
+          {{polaris-button
+            primary=true
+            size="large"
+            text=action.content
+            onClick=(action action.action)
+          }}
+
+          {{#if secondaryAction}}
+            {{polaris-button
+              plain=true
+              text=secondaryAction.content
+              onClick=(action secondaryAction.action)
+            }}
+          {{/if}}
+        {{/polaris-button-group}}
+      </div>
+    </div>
+  </div>
+
+  <div class="Polaris-EmptyState__ImageContainer">
+    {{!-- TODO: replace this with polaris-image when implemented. --}}
+    <img src={{image}} role="presentation" alt="" class="Polaris-EmptyState__Image">
+  </div>
+</div>
