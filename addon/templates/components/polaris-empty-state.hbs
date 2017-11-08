@@ -12,24 +12,26 @@
         </div>
       {{/polaris-text-container}}
 
-      <div class="Polaris-EmptyState__Actions">
-        {{#polaris-button-group}}
-          {{polaris-button
-            primary=true
-            size="large"
-            text=action.content
-            onClick=(action action.action)
-          }}
-
-          {{#if secondaryAction}}
+      {{#if action}}
+        <div class="Polaris-EmptyState__Actions">
+          {{#polaris-button-group}}
             {{polaris-button
-              plain=true
-              text=secondaryAction.content
-              onClick=(action secondaryAction.action)
+              primary=true
+              size="large"
+              text=action.content
+              onClick=(action action.action)
             }}
-          {{/if}}
-        {{/polaris-button-group}}
-      </div>
+
+            {{#if secondaryAction}}
+              {{polaris-button
+                plain=true
+                text=secondaryAction.content
+                onClick=(action secondaryAction.action)
+              }}
+            {{/if}}
+          {{/polaris-button-group}}
+        </div>
+      {{/if}}
     </div>
   </div>
 
