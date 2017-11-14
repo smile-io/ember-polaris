@@ -26,6 +26,7 @@
 #### Structure
 - Callout card
 - Card
+- Empty state
 - Layout
 - Page
 - Page actions
@@ -454,6 +455,46 @@ Three sections - first section with a title, third section subdued:
     <p>This is the third section's subdued content</p>
   {{/card.section}}
 {{/polaris-card}}
+```
+
+##### Empty state
+`polaris-empty-state` implements the [Polaris Empty state component](https://polaris.shopify.com/components/structure/empty-state).
+
+**NOTE:** _the `largeImage` property is currently unimplemented._
+
+###### Examples
+
+Inline usage without secondary action:
+
+```hbs
+{{polaris-empty-state
+  heading="Check out this new feature"
+  image="new-feature.jpg"
+  text="This new feature is great"
+  action=(hash
+    content="Take a look"
+    action=(action "showNewFeature")
+  )
+}}
+```
+
+Block usage with secondary action:
+
+```hbs
+{{#polaris-empty-state
+  heading="Check out this new feature"
+  image="new-feature.jpg"
+  action=(hash
+    content="Take a look"
+    action=(action "showNewFeature")
+  )
+  secondaryAction=(hash
+    content="Learn more"
+    action=(action "openBlog")
+  )
+}}
+  We've got an awesome new feature!
+{{/polaris-empty-state}}
 ```
 
 ##### Layout

@@ -67,7 +67,7 @@ test('it renders banner heading correctly', function(assert) {
   assert.equal(
     banner.getAttribute('aria-labelledby'),
     heading.getAttribute('id'),
-    'banner with title - has the banner\s aria-labelledby as the heading Id'
+    'banner with title - has the banner\'s aria-labelledby as the heading Id'
   );
 });
 
