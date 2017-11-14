@@ -15,7 +15,7 @@ export default Component.extend({
    * The empty state heading
    *
    * @property heading
-   * @type {string}
+   * @type {String}
    * @default null
    */
   heading: null,
@@ -24,7 +24,7 @@ export default Component.extend({
    * The image to use for small screens
    *
    * @property image
-   * @type {string}
+   * @type {String}
    * @default null
    */
   image: null,
@@ -33,7 +33,7 @@ export default Component.extend({
    * The image to use for large screens
    *
    * @property largeImage
-   * @type {string}
+   * @type {String}
    * @default null
    * TODO: not implemented
    */
@@ -56,7 +56,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    */
   text: null,
