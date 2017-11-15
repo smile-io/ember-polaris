@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent, isBlank, isNone } from '@ember/utils';
+import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-button';
 
 /**
@@ -187,4 +188,6 @@ export default Component.extend({
   iconOnly: computed('icon', 'text', function() {
     return isBlank(this.get('text')) && isPresent(this.get('icon'));
   }).readOnly(),
+
+  handleMouseUpByBlurring,
 });

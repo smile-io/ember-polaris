@@ -47,23 +47,32 @@ test('it renders correctly', function(assert) {
  });
 
 test('it fires events correctly', function(assert) {
-  assert.expect(2);
+  assert.expect(5);
 
-  // TODO should we test explicitly these actions
-  this.on('clickPrevious', () => {
-    assert.ok(true, 'clicking previous button fires `onPrevious` callback');
-  });
-  this.on('clickNext', () => {
-    assert.ok(true, 'clicking next button fires `onNext` callback');
+  this.setProperties({
+    previousClicked: false,
+    nextClicked: false,
   });
 
   this.render(hbs`{{polaris-pagination
     hasPrevious=true
     hasNext=true
-    onPrevious=(action "clickPrevious")
-    onNext=(action "clickNext")
+    onPrevious=(action (mut previousClicked) true)
+    onNext=(action (mut nextClicked) true)
   }}`);
 
-  click('button[aria-label="Previous"]');
-  click('button[aria-label="Next"]');
+  const previousButtonSelector = 'button[aria-label="Previous"]';
+  click(previousButtonSelector);
+  assert.ok(this.get('previousClicked'), 'clicking previous button fires `onPrevious` callback');
+  assert.notOk(this.get('nextClicked'), 'clicking previous button does not fire `onNext` callback');
+
+  let focussedButton = find(`${ previousButtonSelector }:focus`);
+  assert.notOk(focussedButton, 'after clicking previous button, button is not focussed');
+
+  const nextButtonSelector = 'button[aria-label="Next"]';
+  click(nextButtonSelector);
+  assert.ok(this.get('nextClicked'), 'clicking next button fires `onNext` callback');
+
+  focussedButton = find(`${ nextButtonSelector }:focus`);
+  assert.notOk(focussedButton, 'after clicking next button, button is not focussed');
 });

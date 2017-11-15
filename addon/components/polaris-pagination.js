@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { not } from '@ember/object/computed';
+import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-pagination';
 
 export default Component.extend({
@@ -21,7 +22,7 @@ export default Component.extend({
   /**
    * The URL of the next page
    *
-   * @propety nextUrl
+   * @property nextUrl
    * @type {String}
    * @default null
    * TODO not implemented
@@ -31,7 +32,7 @@ export default Component.extend({
   /**
    * The URL of the previous page
    *
-   * @propety previousUrl
+   * @property previousUrl
    * @type {String}
    * @default null
    * TODO not implemented
@@ -76,4 +77,6 @@ export default Component.extend({
 
   isPreviousDisabled: not('hasPrevious').readOnly(),
   isNextDisabled: not('hasNext').readOnly(),
+
+  handleMouseUpByBlurring,
 });

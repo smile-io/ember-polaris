@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
 import LinkComponent from '@ember/routing/link-component';
+import { handleMouseUpByBlurring } from '../../utils/focus';
 import layout from '../../templates/components/polaris-breadcrumbs/breadcrumb';
 
 export default LinkComponent.extend({
@@ -27,4 +28,6 @@ export default LinkComponent.extend({
 
     return params;
   }).readOnly(),
+
+  mouseUp: handleMouseUpByBlurring,
 });
