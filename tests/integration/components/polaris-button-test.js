@@ -273,6 +273,9 @@ test('handles events correctly', function(assert) {
   })
   .then(() => {
     assert.ok(clickHandlerCalled, 'after click, click handler fired');
+
+    const focussedButton = find(`${ buttonSelector }:focus`);
+    assert.notOk(focussedButton, 'after click, button is not focussed');
   });
 });
 

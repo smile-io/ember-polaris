@@ -1,7 +1,19 @@
-<button class="Polaris-Pagination__Button" aria-label="Previous" disabled={{isPreviousDisabled}} {{action (action onPrevious)}}>
+{{#polaris-button/button
+  class="Polaris-Pagination__Button"
+  accessibilityLabel="Previous"
+  disabled=isPreviousDisabled
+  mouseUp=handleMouseUpByBlurring
+  onClick=(action onPrevious)
+}}
   {{polaris-icon source="arrow-left"}}
-</button>
+{{/polaris-button/button}}
 
-<button class="Polaris-Pagination__Button" aria-label="Next" disabled={{isNextDisabled}} {{action (action onNext)}}>
+{{#polaris-button/button
+  class="Polaris-Pagination__Button"
+  accessibilityLabel="Next"
+  disabled=isNextDisabled
+  mouseUp=handleMouseUpByBlurring
+  onClick=(action onNext)
+}}
   {{polaris-icon source="arrow-right"}}
-</button>
+{{/polaris-button/button}}

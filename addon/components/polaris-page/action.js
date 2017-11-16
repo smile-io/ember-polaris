@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/action';
+import { handleMouseUpByBlurring } from '../../utils/focus';
 import mapEventToAction from '../../utils/map-event-to-action';
 
 export default Component.extend({
@@ -23,5 +24,6 @@ export default Component.extend({
   /*
    * Action handlers.
    */
+  mouseUp: handleMouseUpByBlurring,
   click: mapEventToAction('action.action'),
 });

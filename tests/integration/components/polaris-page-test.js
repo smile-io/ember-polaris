@@ -157,8 +157,12 @@ test('it handles secondary actions correctly when supplied', function(assert) {
   assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
   assert.notOk(secondaryAction2Fired, 'second secondary action - not fired after clicking first button');
 
+  const focussedSecondaryButtonSelector = `${ secondaryActionsButtonSelector }:focus`;
+  assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking first secondary action');
+
   click('button:last-child', secondaryActionsWrapperSelector);
   assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
+  assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking second secondary action');
 });
 
 test('it renders action icons correctly', function(assert) {
