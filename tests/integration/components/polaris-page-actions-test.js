@@ -143,6 +143,45 @@ test('it renders the correct HTML when only a primary action is supplied', funct
   assert.equal(secondaryButtons.length, 0, 'does not render a secondary button group');
 });
 
+test('it renders the correct HTML when only a secondary action is supplied', function(assert) {
+  this.render(hbs`
+    {{polaris-page-actions
+      secondaryActions=(array (hash
+        content="I'm the only button here"
+      ))
+    }}
+  `);
+
+  const pageActions = findAll(pageActionsSelector);
+  assert.equal(pageActions.length, 1, 'renders one page actions component');
+
+  const pageActionsStacks = findAll(pageActionsStackSelector);
+  assert.equal(pageActionsStacks.length, 1, 'renders one stack component');
+  const pageActionsStack = pageActionsStacks[0];
+  assert.ok(pageActionsStack.classList.contains('Polaris-Stack--spacingTight'), 'stack has tight spacing');
+  assert.ok(pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'), 'stack has equal spacing distribution');
+
+  const pageActionsStackItems = findAll(pageActionsStackItemSelector);
+  assert.equal(pageActionsStackItems.length, 1, 'renders one stack item');
+
+  const primaryButtonSelector = buildNestedSelector(
+    pageActionsStackItemSelector,
+    'button.Polaris-Button.Polaris-Button--primary'
+  );
+  const primaryButtons = findAll(primaryButtonSelector);
+  assert.equal(primaryButtons.length, 0, 'does not render a primary button');
+
+  const secondaryButtonGroupSelector = buildNestedSelector(
+    pageActionsStackItemSelector,
+    'div.Polaris-ButtonGroup',
+    'div.Polaris-ButtonGroup__Item',
+    'button.Polaris-Button'
+  );
+  const secondaryButtons = findAll(secondaryButtonGroupSelector);
+  assert.equal(secondaryButtons.length, 1, 'renders one secondary button group');
+  assert.equal(secondaryButtons[0].textContent.trim(), 'I\'m the only button here', 'primary button - renders the correct content');
+});
+
 test('it renders the correct HTML when the primary action is disabled', function(assert) {
   this.render(hbs`
     {{polaris-page-actions
