@@ -327,3 +327,53 @@ test('it handles choice helpText correctly when allowMultiple is true', function
   assert.equal(helpTexts[1].textContent.trim(), 'This is the second option', 'second choice - renders the correct help text');
   assert.equal(helpTexts[2].textContent.trim(), 'This is the third option', 'third choice - renders the correct help text');
 });
+
+test('it handles choice disabled correctly when allowMultiple is false', function(assert) {
+  this.render(hbs`
+    {{polaris-choice-list
+      allowMultiple=false
+      choices=(array
+        (hash
+          label="First (disabled) option"
+          value="one"
+          disabled=true
+        )
+        (hash
+          label="Second (enabled) option"
+          value="two"
+          disabled=false
+        )
+      )
+    }}
+  `);
+
+  const choiceControls = findAll(radioInputSelector);
+  assert.equal(choiceControls.length, 2, 'renders two choices');
+  assert.ok(choiceControls[0].disabled, 'first choice is disabled');
+  assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
+});
+
+test('it handles choice disabled correctly when allowMultiple is true', function(assert) {
+  this.render(hbs`
+    {{polaris-choice-list
+      allowMultiple=true
+      choices=(array
+        (hash
+          label="First (disabled) option"
+          value="one"
+          disabled=true
+        )
+        (hash
+          label="Second (enabled) option"
+          value="two"
+          disabled=false
+        )
+      )
+    }}
+  `);
+
+  const choiceControls = findAll(checkboxInputSelector);
+  assert.equal(choiceControls.length, 2, 'renders two choices');
+  assert.ok(choiceControls[0].disabled, 'first choice is disabled');
+  assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
+});
