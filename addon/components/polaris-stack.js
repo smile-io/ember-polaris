@@ -15,6 +15,7 @@ export default Component.extend({
    'spacingClassName',
    'alignmentClassName',
    'distributionClassName',
+   'noWrapClassName'
  ],
 
  layout,
@@ -67,6 +68,15 @@ export default Component.extend({
   */
  distribution: 'baseline',
 
+ /**
+  * Adjust the elements dont wrap
+  *
+  * @property nowrap
+  * @type {boolean}
+  * @default false
+  */
+ nowrap: false,
+
  /*
   * Internal properties.
   */
@@ -96,6 +106,15 @@ export default Component.extend({
 
    return `Polaris-Stack--distribution${classify(distribution)}`;
  }).readOnly(),
+
+ noWrapClassName: computed('nowrap', function() {
+  const nowrap = this.get('nowra');
+  if (isBlank(noWrapClassName) || nowrap === true) {
+    return null;
+  }
+
+  return 'Polaris-Stack--noWrap';
+ })
 
  /**
   * Lifecycle hooks.
