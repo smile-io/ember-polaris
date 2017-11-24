@@ -119,6 +119,17 @@ test('it renders the correct HTML with distribution attribute', function(assert)
   assert.ok(stack.classList.contains('Polaris-Stack--distributionFillEvenly'), 'distribution=fillEvenly - adds the correct distribution class');
 });
 
+test('it renders the correct HTML with nowrap attribute', function(assert) {
+  this.set('nowrap', false);
+  this.render(hbs`{{polaris-stack nowrap=nowrap}}`);
+
+  const stack = find(stackSelector);
+  assert.equal(stack.className.indexOf('Polaris-Stack--noWrap'), -1, 'nowrap=false - does not add any noWrap class');
+
+  this.set('nowrap', true);
+  assert.ok(stack.classList.contains('Polaris-Stack--noWrap'), 'nowrap=true - adds the correct noWrap class');
+});
+
 test('it renders the correct HTML in block usage', function(assert) {
   this.render(hbs`
     {{#polaris-stack as |stack|}}
