@@ -75,7 +75,7 @@ export default Component.extend({
   * @type {boolean}
   * @default false
   */
- nowrap: false,
+ noWrap: false,
 
  /*
   * Internal properties.
@@ -107,9 +107,9 @@ export default Component.extend({
    return `Polaris-Stack--distribution${classify(distribution)}`;
  }).readOnly(),
 
- noWrapClassName: computed('nowrap', function() {
-  const nowrap = this.get('nowra');
-  if (isBlank(noWrapClassName) || nowrap === true) {
+ noWrapClassName: computed('noWrap', function() {
+  const noWrap = this.get('noWrap');
+  if (isBlank(noWrapClassName) || noWrap === true) {
     return null;
   }
 
