@@ -15,7 +15,7 @@ export default Component.extend({
    'spacingClassName',
    'alignmentClassName',
    'distributionClassName',
-   'noWrapClassName'
+   'noWrapClassName',
  ],
 
  layout,
@@ -69,13 +69,13 @@ export default Component.extend({
  distribution: 'baseline',
 
  /**
-  * Adjust the elements dont wrap
+  * Wrap stack elements to additional rows as needed on small screens (Defaults to true)
   *
-  * @property nowrap
+  * @property wrap
   * @type {boolean}
-  * @default false
+  * @default true
   */
- noWrap: false,
+ wrap: true,
 
  /*
   * Internal properties.
@@ -107,14 +107,9 @@ export default Component.extend({
    return `Polaris-Stack--distribution${classify(distribution)}`;
  }).readOnly(),
 
- noWrapClassName: computed('noWrap', function() {
-  const noWrap = this.get('noWrap');
-  if (isBlank(noWrapClassName) || noWrap === true) {
-    return null;
-  }
-
-  return 'Polaris-Stack--noWrap';
- })
+ noWrapClassName: computed('wrap', function() {
+   return this.get('wrap') === false ? 'Polaris-Stack--noWrap' : null;
+ }).readOnly(),
 
  /**
   * Lifecycle hooks.
