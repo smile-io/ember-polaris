@@ -1,0 +1,31 @@
+{{#polaris-text-container}}
+  {{polaris-display-text size="medium" text=heading}}
+  <div class="Polaris-EmptyState__Content">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </div>
+{{/polaris-text-container}}
+
+{{#if action}}
+  <div class="Polaris-EmptyState__Actions">
+    {{#polaris-button-group}}
+      {{polaris-button
+        primary=true
+        size="large"
+        text=action.content
+        onClick=(action action.action)
+      }}
+
+      {{#if secondaryAction}}
+        {{polaris-button
+          plain=true
+          text=secondaryAction.content
+          onClick=(action secondaryAction.action)
+        }}
+      {{/if}}
+    {{/polaris-button-group}}
+  </div>
+{{/if}}
