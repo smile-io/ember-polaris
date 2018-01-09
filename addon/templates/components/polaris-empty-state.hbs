@@ -1,38 +1,19 @@
 <div class="Polaris-EmptyState__Section">
   <div class="Polaris-EmptyState__DetailsContainer">
-    <div class="Polaris-EmptyState__Details">
-      {{#polaris-text-container}}
-        {{polaris-display-text size="medium" text=heading}}
-        <div class="Polaris-EmptyState__Content">
-          {{#if hasBlock}}
-            {{yield}}
-          {{else}}
-            {{text}}
-          {{/if}}
-        </div>
-      {{/polaris-text-container}}
-
-      {{#if action}}
-        <div class="Polaris-EmptyState__Actions">
-          {{#polaris-button-group}}
-            {{polaris-button
-              primary=true
-              size="large"
-              text=action.content
-              onClick=(action action.action)
-            }}
-
-            {{#if secondaryAction}}
-              {{polaris-button
-                plain=true
-                text=secondaryAction.content
-                onClick=(action secondaryAction.action)
-              }}
-            {{/if}}
-          {{/polaris-button-group}}
-        </div>
+    {{#with (component "polaris-empty-state/details"
+      heading=heading
+      text=text
+      action=action
+      secondaryAction=secondaryAction
+    ) as |detailsComponent|}}
+      {{#if hasBlock}}
+        {{#component detailsComponent}}
+          {{yield}}
+        {{/component}}
+      {{else}}
+        {{component detailsComponent}}
       {{/if}}
-    </div>
+    {{/with}}
   </div>
 
   <div class="Polaris-EmptyState__ImageContainer">
