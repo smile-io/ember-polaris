@@ -1,7 +1,7 @@
 import $Ember from 'jquery';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
+import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 
@@ -103,7 +103,12 @@ export default Component.extend({
       return;
     }
 
-    const rect = this.get('element').getBoundingClientRect();
+    const element = this.get('element');
+    if (isNone(element)) {
+      return;
+    }
+
+    const rect = element.getBoundingClientRect();
     moveHandler({
       x: clientX - rect.left,
       y: clientY - rect.top,
