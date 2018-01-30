@@ -1,0 +1,71 @@
+{{#if hasBreadcrumbs}}
+  {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+{{/if}}
+
+{{#wrapper-element
+  tagName=(if primaryAction "div" "")
+  class=(if primaryAction "Polaris-Page__MainContent")
+}}
+  {{#wrapper-element
+    tagName=(if primaryAction "div" "")
+    class=(if primaryAction "Polaris-Page__TitleAndActions")
+  }}
+    <div class="Polaris-Page__Title">
+      {{#polaris-display-text tagName="h1" size="large"}}
+        {{title}}
+      {{/polaris-display-text}}
+    </div>
+
+    <div class="Polaris-Page__Actions">
+      {{#if primaryAction}}
+        <div class="Polaris-Page__PrimaryAction">
+          {{polaris-button
+            primary=true
+            text=primaryAction.text
+            disabled=primaryAction.disabled
+            onClick=(action primaryAction.action)
+          }}
+        </div>
+      {{/if}}
+
+      <div class="Polaris-Page__SecondaryActions">
+        {{#if hasRollup}}
+          <div class="Polaris-Page__Rollup">
+            {{#polaris-popover as |popover|}}
+              {{#popover.activator}}
+                {{!-- TODO: needs `disclosure` support on button --}}
+                {{polaris-button text="Actions"}}
+              {{/popover.activator}}
+
+              {{#popover.content}}
+                {{polaris-action-list
+                  items=secondaryActions
+                }}
+              {{/popover.content}}
+            {{/polaris-popover}}
+          </div>
+        {{/if}}
+
+        <div class="Polaris-Page__IndividualActions">
+          {{#each secondaryActions as |secondaryAction|}}
+            {{polaris-page/action action=secondaryAction}}
+          {{/each}}
+
+          {{!-- TODO: implement action groups here. --}}
+        </div>
+      </div>
+    </div>
+  {{/wrapper-element}}
+
+  {{#if primaryAction}}
+    {{!-- Primary action gets rendered twice, with one getting hidden based on media queries. --}}
+    <div class="Polaris-Page__PrimaryAction">
+      {{polaris-button
+        primary=true
+        text=primaryAction.text
+        disabled=primaryAction.disabled
+        onClick=(action primaryAction.action)
+      }}
+    </div>
+  {{/if}}
+{{/wrapper-element}}

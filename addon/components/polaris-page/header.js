@@ -1,16 +1,14 @@
 import Component from '@ember/component';
-import { or } from '@ember/object/computed';
-import layout from '../templates/components/polaris-page';
+import layout from '../../templates/components/polaris-page/header';
+import { computed } from '@ember/object';
+import { or, notEmpty } from '@ember/object/computed';
 
-/**
- * Polaris page component.
- * See https://polaris.shopify.com/components/structure/page
- */
 export default Component.extend({
-  classNames: ['Polaris-Page'],
+  classNames: [ 'Polaris-Page__Header' ],
   classNameBindings: [
-    'fullWidth:Polaris-Page--fullWidth',
-    'singleColumn:Polaris-Page--singleColumn'
+    'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
+    'separator:Polaris-Page__Header--hasSeparator',
+    'secondaryActions:Polaris-Page__Header--hasSecondaryActions'
   ],
 
   layout,
@@ -22,7 +20,7 @@ export default Component.extend({
    * Page title, in large type
    *
    * @property title
-   * @type {string}
+   * @type {String}
    * @default null
    */
   title: null,
@@ -31,9 +29,9 @@ export default Component.extend({
    * App icon, for pages that are part of Shopify apps
    *
    * @property icon
-   * @type {string}
+   * @type {String}
    * @default null
-   * TODO: needs polaris-icon component.
+   * TODO: not implemented yet
    */
   icon: null,
 
@@ -45,37 +43,6 @@ export default Component.extend({
    * @default null
    */
   breadcrumbs: null,
-
-  /**
-   * The contents of the page
-   *
-   * This component can be used in block form,
-   * in which case the block content will be used
-   * instead of `text`
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   */
-  text: null,
-
-  /**
-   * Remove the normal max-width on the page
-   *
-   * @property fullWidth
-   * @type {boolean}
-   * @default false
-   */
-  fullWidth: false,
-
-  /**
-   * Decreases the maximum layout width. Intended for single-column layouts
-   *
-   * @property singleColumn
-   * @type {boolean}
-   * @default false
-   */
-  singleColumn: false,
 
   /**
    * Adds a border to the bottom of the page header
@@ -108,7 +75,7 @@ export default Component.extend({
    * Page-level pagination
    *
    * @property pagination
-   * @type {PaginationDescriptor}
+   * @type {Object}
    * @default null
    * TODO: not implemented yet
    */
@@ -117,5 +84,11 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasHeaderContent: or('title', 'primaryAction', 'secondaryActions', 'breadcrumbs').readOnly(),
+  hasBreadcrumbs: notEmpty('breadcrumbs'),
+
+  hasActions: or('primaryAction', 'secondaryActions'),
+
+  hasRollup: computed('secondaryActions.[]', function() {
+    return this.get('secondaryActions.length') > 1;
+  }).readOnly(),
 });

@@ -590,7 +590,7 @@ Annotated layout:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon`, `actionGroups` and `pagination` properties are currently unimplemented._
 
 ###### Examples
 

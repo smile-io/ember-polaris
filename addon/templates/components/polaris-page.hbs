@@ -1,35 +1,14 @@
-<div class={{headerClass}}>
-  {{#if hasBreadcrumbs}}
-    {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
-  {{/if}}
-
-  {{#polaris-display-text tagName="h1" size="large"}}
-    {{title}}
-  {{/polaris-display-text}}
-
-  {{#if hasActions}}
-    <div class="Polaris-Page__Actions">
-      {{#if primaryAction}}
-        <div class="Polaris-Page__PrimaryAction">
-          {{polaris-button
-            primary=true
-            text=primaryAction.text
-            disabled=primaryAction.disabled
-            onClick=(action primaryAction.action)
-          }}
-        </div>
-      {{/if}}
-
-      {{#if secondaryActions}}
-        <div class="Polaris-Page__SecondaryActions">
-          {{#each secondaryActions as |secondaryAction|}}
-            {{polaris-page/action action=secondaryAction}}
-          {{/each}}
-        </div>
-      {{/if}}
-    </div>
-  {{/if}}
-</div>
+{{#if hasHeaderContent}}
+  {{polaris-page/header
+    title=title
+    icon=icon
+    breadcrumbs=breadcrumbs
+    separator=separator
+    secondaryActions=secondaryActions
+    primaryAction=primaryAction
+    pagination=pagination
+  }}
+{{/if}}
 
 <div class="Polaris-Page__Content">
   {{#if hasBlock}}
