@@ -353,7 +353,7 @@ With a success status set, custom icon, content, dismiss button and actions:
   secondaryAction=(hash content="View" action=(action "viewOrder")
   onDismiss=(action "handleDismiss")
 }}
-    <p>This order has been shipped.</p>
+  <p>This order has been shipped.</p>
 {{/polaris-banner}}
 ```
 
