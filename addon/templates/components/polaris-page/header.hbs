@@ -39,6 +39,7 @@
               {{#popover.content}}
                 {{polaris-action-list
                   items=secondaryActions
+                  onActionAnyItem=(action popover.close)
                 }}
               {{/popover.content}}
             {{/polaris-popover}}
