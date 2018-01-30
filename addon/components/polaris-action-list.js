@@ -47,7 +47,7 @@ export default Component.extend({
    */
   finalSections: computed('items', 'sections.[]', function() {
     let finalSections = [{
-      items: this.get('items'),
+      items: this.get('items') || [],
     }];
     let sections = this.get('sections');
 
