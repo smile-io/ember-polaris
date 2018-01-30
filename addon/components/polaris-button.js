@@ -96,7 +96,7 @@ export default Component.extend({
   fullWidth: false,
 
   /**
-   * Display button with a disclosure icon (`caret-down`)
+   * Display button with a disclosure icon
    *
    * @property disclosure
    * @type {boolean}

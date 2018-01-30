@@ -33,7 +33,7 @@ export default Component.extend({
    * @property icon
    * @type {string}
    * @default null
-   * TODO: needs polaris-icon component.
+   * TODO: not implemented yet.
    */
   icon: null,
 
