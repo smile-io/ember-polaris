@@ -252,10 +252,15 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   // Check the first breadcrumb.
   const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
+  const contentSelector = 'span.Polaris-Breadcrumbs__Content';
+
   let breadcrumbLink = breadcrumbLinks[0];
   assert.equal(breadcrumbLink.href, `${window.location.origin}/home`, 'first breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'first breadcrumb - has data-polaris-unstyled attribute');
-  assert.equal(breadcrumbLink.textContent.trim(), 'Go back', 'first breadcrumb - renders correct text');
+
+  let contents = findAll(contentSelector, breadcrumbLink);
+  assert.equal(contents.length, 1, 'first breadcrumb - renders content');
+  assert.equal(contents[0].textContent.trim(), 'Go back', 'first breadcrumb - renders correct text');
 
   let icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'first breadcrumb - renders icon');
@@ -264,7 +269,10 @@ test('it handles breadcrumbs correctly', function(assert) {
   breadcrumbLink = breadcrumbLinks[1];
   assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/13/27`, 'second breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'second breadcrumb - has data-polaris-unstyled attribute');
-  assert.equal(breadcrumbLink.textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
+
+  contents = findAll(contentSelector, breadcrumbLink);
+  assert.equal(contents.length, 1, 'second breadcrumb - renders content');
+  assert.equal(contents[0].textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
 
   icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
@@ -273,7 +281,10 @@ test('it handles breadcrumbs correctly', function(assert) {
   breadcrumbLink = breadcrumbLinks[2];
   assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/really/19`, 'third breadcrumb - has correct href');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'third breadcrumb - has data-polaris-unstyled attribute');
-  assert.equal(breadcrumbLink.textContent.trim(), `I'm telling you!`, 'third breadcrumb - renders correct text');
+
+  contents = findAll(contentSelector, breadcrumbLink);
+  assert.equal(contents.length, 1, 'third breadcrumb - renders content');
+  assert.equal(contents[0].textContent.trim(), `I'm telling you!`, 'third breadcrumb - renders correct text');
 
   icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'third breadcrumb - renders icon');

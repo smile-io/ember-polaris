@@ -1,0 +1,6 @@
+<nav role="navigation">
+  {{!-- React component only renders the last breadcrumb... --}}
+  {{#each breadcrumbs as |breadcrumb|}}
+    {{polaris-breadcrumbs/breadcrumb breadcrumb=breadcrumb}}
+  {{/each}}
+</nav>

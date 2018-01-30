@@ -39,9 +39,8 @@ export default Component.extend({
    * Collection of breadcrumbs
    *
    * @property breadcrumbs
-   * @type {BreadcrumbProps["breadcrumbs"]}
+   * @type {Array}
    * @default null
-   * TODO: find out why the React example only shows the last breadcrumb...
    */
   breadcrumbs: null,
 
