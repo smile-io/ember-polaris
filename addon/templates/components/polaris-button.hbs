@@ -4,7 +4,7 @@
   external=external
   primary=primary
   destructive=destructive
-  disabled=disabled
+  disabled=isDisabled
   size=size
   outline=outline
   fullWidth=fullWidth
@@ -18,9 +18,19 @@
   mouseUp=handleMouseUpByBlurring
 }}
   <span class="Polaris-Button__Content">
+    {{#if loading}}
+      <span class="Polaris-Button__Spinner">
+        {{polaris-spinner
+          size="small"
+          accessibilityLabel="Loading"
+          color=spinnerColor
+        }}
+      </span>
+    {{/if}}
+
     {{#if icon}}
       <span class="Polaris-Button__Icon">
-        {{polaris-icon source=icon}}
+        {{polaris-icon source=iconSource}}
       </span>
     {{/if}}
 
@@ -34,7 +44,7 @@
 
     {{#if disclosure}}
       <span class="Polaris-Button__Icon">
-        {{polaris-icon source="caret-down"}}
+        {{polaris-icon source=disclosureIconSource}}
       </span>
     {{/if}}
   </span>
