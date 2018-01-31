@@ -67,6 +67,10 @@ export default Component.extend({
   /*
    * Internal properties.
    */
+  showPlaceholder: computed('source', function() {
+    return this.get('source') === 'placeholder';
+  }).readOnly(),
+
   colorClass: computed('color', function() {
     const color = this.get('color');
 
@@ -93,9 +97,9 @@ export default Component.extend({
         return;
     }
 
-    let childs = elem.childNodes;
-    for (let i = 0, len = childs.length; i < len; i++) {
-      let child = childs[i];
+    let children = elem.childNodes;
+    for (let i = 0, len = children.length; i < len; i++) {
+      let child = children[i];
       if (child.tagName === 'g') {
         child.removeAttribute('fill');
         this.removeSvgFills(child);
