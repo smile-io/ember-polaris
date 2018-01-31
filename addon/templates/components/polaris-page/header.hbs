@@ -33,12 +33,15 @@
           <div class="Polaris-Page__Rollup">
             {{#polaris-popover as |popover|}}
               {{#popover.activator}}
-                {{polaris-button text="Actions"}}
+                {{polaris-button
+                  text="Actions"
+                  disclosure=true
+                }}
               {{/popover.activator}}
 
               {{#popover.content}}
                 {{polaris-action-list
-                  items=secondaryActions
+                  items=secondaryActionsRollupItems
                   onActionAnyItem=(action popover.close)
                 }}
               {{/popover.content}}
