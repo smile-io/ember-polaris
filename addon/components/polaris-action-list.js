@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { typeOf } from '@ember/utils';
+import { computed } from '@ember/object';
+import { isArray } from '@ember/array';
 import layout from '../templates/components/polaris-action-list';
 
 /**
@@ -7,7 +8,7 @@ import layout from '../templates/components/polaris-action-list';
  * See https://polaris.shopify.com/components/actions/action-list
  */
 export default Component.extend({
-  classNames: ['Polaris-ActionList'],
+  tagName: '',
 
   layout,
 
@@ -29,22 +30,35 @@ export default Component.extend({
    * @property sections
    * @type {Array}
    * @default null
-   * TODO: not implemented
    */
   sections: null,
+
+  /**
+   * Callback when any item is clicked or keypressed
+   *
+   * @property onActionAnyItem
+   * @type {function}
+   * @default null
+   */
+  onActionAnyItem: null,
 
   /*
    * Internal properties.
    */
-  actions: {
-    fireItemAction(item, event) {
-      event.stopPropagation();
+  finalSections: computed('items', 'sections.[]', function() {
+    let finalSections = [{
+      items: this.get('items') || [],
+    }];
+    let sections = this.get('sections');
 
-      if (typeOf(item.action) === 'function') {
-        return item.action();
-      }
-
-      return null;
+    if (isArray(sections)) {
+      finalSections.push(...sections);
     }
-  }
+
+    return finalSections;
+  }).readOnly(),
+
+  hasMultipleSections: computed('finalSections.length', function() {
+    return this.get('finalSections.length') > 1;
+  }).readOnly(),
 });

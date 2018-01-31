@@ -1,0 +1,21 @@
+<button
+  class="Polaris-ActionList__Item"
+  disabled={{item.disabled}}
+  onclick={{action onAction item}}
+>
+  {{#if item.icon}}
+    <div class="Polaris-ActionList__Content">
+      <div class="Polaris-ActionList__Image">
+        {{polaris-icon
+          source=item.icon
+          sourcePath=(if item.iconPath item.iconPath "polaris")
+        }}
+      </div>
+      <div class="Polaris-ActionList__Text">
+        {{item.content}}
+      </div>
+    </div>
+  {{else}}
+    {{item.content}}
+  {{/if}}
+</button>
