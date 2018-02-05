@@ -131,6 +131,9 @@ export default Component.extend({
     if (typeOf(onDraggerHeightChanged) === 'function') {
       // Publish the height of our dragger.
       const draggerElement = this.$('div.Polaris-ColorPicker__Dragger')[0];
+      if (isNone(draggerElement)) {
+        return;
+      }
 
       // Yes, for some strange reason this is width not height in the shopify code...
       onDraggerHeightChanged(draggerElement.clientWidth);
