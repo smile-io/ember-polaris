@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
 import layout from '../templates/components/polaris-action-list';
 
@@ -46,9 +47,13 @@ export default Component.extend({
    * Internal properties.
    */
   finalSections: computed('items', 'sections.[]', function() {
-    let finalSections = [{
-      items: this.get('items') || [],
-    }];
+    let finalSections = [];
+
+    let items = this.get('items');
+    if (isPresent(items)) {
+      finalSections.push({ items });
+    }
+
     let sections = this.get('sections');
 
     if (isArray(sections)) {
