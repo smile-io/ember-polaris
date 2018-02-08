@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { equal } from '@ember/object/computed';
 import { isNone, isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-icon';
@@ -67,9 +68,7 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-  showPlaceholder: computed('source', function() {
-    return this.get('source') === 'placeholder';
-  }).readOnly(),
+  showPlaceholder: equal('source', 'placeholder').readOnly(),
 
   colorClass: computed('color', function() {
     const color = this.get('color');
