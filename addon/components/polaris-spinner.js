@@ -26,12 +26,10 @@ export default Component.extend({
   layout,
 
   /**
-   * Public attributes.
-   */
-  /**
    * Color of spinner
    *
    * @property color
+   * @public
    * @type {String}
    * @default teal
    */
@@ -41,6 +39,7 @@ export default Component.extend({
    * Size of spinner
    *
    * @property size
+   * @public
    * @type {String}
    * @default large
    */
@@ -50,9 +49,9 @@ export default Component.extend({
    * Accessible label for the spinner
    *
    * @property accessibilityLabel
+   * @public
    * @type {String}
    * @default null
-   * TODO: not implemented
    */
   accessibilityLabel: null,
 

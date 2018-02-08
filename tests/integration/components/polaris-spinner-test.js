@@ -65,3 +65,13 @@ test('handles size and color correctly', function(assert) {
   assert.ok(spinner.classList.contains('Polaris-Spinner--sizeLarge'), 'with supported color for large size - spinner size changes to large');
   assert.ok(spinner.classList.contains('Polaris-Spinner--colorInkLightest'), 'with supported color for large size - spinner color is honored');
 });
+
+test('handles `accessibilityLabel` correctly', function(assert) {
+  this.render(hbs`{{polaris-spinner accessibilityLabel="access granted"}}`);
+
+  let spinners = findAll(spinnerSelector);
+  assert.equal(spinners.length, 1, 'renders one spinner');
+
+  let spinner = spinners[0];
+  assert.equal(spinner.getAttribute('aria-label'), 'access granted', 'sets the correct aria-label');
+});

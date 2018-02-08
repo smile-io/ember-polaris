@@ -361,8 +361,6 @@ With a success status set, custom icon, content, dismiss button and actions:
 ##### Spinner
 `polaris-spinner` implements the [Polaris Spinner component](https://polaris.shopify.com/components/feedback-indicators/spinner).
 
-**NOTE:** _the `accessibilityLabel` property is currently unimplemented._
-
 ###### Examples
 
 Basic usage (renders a large, teal-colored spinner):
@@ -371,10 +369,14 @@ Basic usage (renders a large, teal-colored spinner):
 {{polaris-spinner}}
 ```
 
-With a size and color specified:
+With a size and color specified and an accessibility label:
 
 ```hbs
-{{polaris-spinner size="small" color="inkLightest"}}
+{{polaris-spinner
+  size="small"
+  color="inkLightest"
+  accessibilityLabel="access granted"
+}}
 ```
 
 #### Structure
