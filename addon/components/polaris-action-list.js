@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { gt } from '@ember/object/computed';
-import { isPresent } from '@ember/utils';
+import { isNone, isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
 import layout from '../templates/components/polaris-action-list';
 
 /**
@@ -56,10 +57,12 @@ export default Component.extend({
     }
 
     let sections = this.get('sections');
-
-    if (isArray(sections)) {
-      finalSections.push(...sections);
+    if (isNone(sections)) {
+      sections = [];
     }
+
+    assert(`ember-polaris::polaris-action-list - sections must be an array, you passed ${ sections }`, isArray(sections));
+    finalSections.push(...sections);
 
     return finalSections;
   }).readOnly(),

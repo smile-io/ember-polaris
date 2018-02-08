@@ -162,11 +162,11 @@ Basic usage:
   items=(array
     (hash
       content="This is the first item"
-      action=(action "firstItemClicked")
+      onAction=(action "firstItemClicked")
     )
     (hash
       content="This is item number two"
-      action=(action (mut secondItemClicked) true)
+      onAction=(action (mut secondItemClicked) true)
     )
   )
 }}
