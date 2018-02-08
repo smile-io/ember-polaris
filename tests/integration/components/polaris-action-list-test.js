@@ -124,11 +124,11 @@ test('it handles item actions correctly', function(assert) {
       items=(array
         (hash
           content="Item 1"
-          action=(action "action1")
+          onAction=(action "action1")
         )
         (hash
           content="Item 2"
-          action=(action (mut action2Fired) true)
+          onAction=(action (mut action2Fired) true)
         )
       )
     }}
@@ -159,11 +159,11 @@ test('it does not bubble item actions', function(assert) {
         items=(array
           (hash
             content="Item 1"
-            action=(action (mut action2Fired) true)
+            onAction=(action (mut action2Fired) true)
           )
           (hash
             content="Item 2"
-            action=(action (mut action2Fired) true)
+            onAction=(action (mut action2Fired) true)
           )
         )
       }}
@@ -199,7 +199,7 @@ test('it handles the "any item" action correctly', function(assert) {
         )
         (hash
           content="Item 2"
-          action=(action (mut itemActionFired) true)
+          onAction=(action (mut itemActionFired) true)
         )
       )
       onActionAnyItem=(action "anyItem")

@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
 import layout from '../templates/components/polaris-action-list';
@@ -39,9 +40,9 @@ export default Component.extend({
    *
    * @property onActionAnyItem
    * @type {function}
-   * @default null
+   * @default no-op
    */
-  onActionAnyItem: null,
+  onActionAnyItem() {},
 
   /*
    * Internal properties.
@@ -63,7 +64,5 @@ export default Component.extend({
     return finalSections;
   }).readOnly(),
 
-  hasMultipleSections: computed('finalSections.length', function() {
-    return this.get('finalSections.length') > 1;
-  }).readOnly(),
+  hasMultipleSections: gt('finalSections.length', 1).readOnly(),
 });

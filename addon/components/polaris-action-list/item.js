@@ -12,6 +12,14 @@ export default Component.extend({
   /**
    * The item to display
    *
+   * Supported properties:
+   *  - content
+   *  - url (not currently supported)
+   *  - disabled
+   *  - icon
+   *  - image (not currently supported)
+   *  - onAction
+   *
    * @property item
    * @type {Object}
    * @default null

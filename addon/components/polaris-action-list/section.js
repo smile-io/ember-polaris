@@ -30,7 +30,7 @@ export default Component.extend({
     onItemAction(item, event) {
       event.stopPropagation();
 
-      let itemAction = get(item, 'action');
+      let itemAction = get(item, 'onAction');
       if (typeOf(itemAction) === 'function') {
         itemAction();
       }
