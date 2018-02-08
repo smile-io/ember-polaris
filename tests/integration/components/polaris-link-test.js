@@ -120,6 +120,34 @@ test('clicking a link navigates but does not bubble to the parent', function(ass
   assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
 });
 
+test('clicking a link fires the onClick handler if present', function(assert) {
+  // Reset the hash part of the browser URL to keep this test valid on reruns.
+  window.location.hash = 'linkNotClicked';
+
+  this.set('clickHandlerCalled', false);
+  let parentHandlerCalled = false;
+  this.on('parentClicked', () => {
+    parentHandlerCalled = true;
+  });
+
+  this.render(hbs`
+    <div {{action (action "parentClicked")}}>
+      {{polaris-link
+        url="#linkClicked"
+        onClick=(action (mut clickHandlerCalled) true)
+      }}
+    </div>
+  `);
+
+  const links = findAll(linkSelector);
+  assert.equal(links.length, 1, 'renders one link');
+
+  click(linkSelector);
+  assert.equal(location.hash, '#linkClicked', 'app navigates to specified URL');
+  assert.ok(this.get('clickHandlerCalled'), 'link click handler is fired');
+  assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
+});
+
 test('clicking a link button performs the button action but does not bubble to the parent', function(assert) {
   let parentHandlerCalled = false;
   this.on('parentClicked', () => {
