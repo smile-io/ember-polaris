@@ -34,13 +34,16 @@
       </span>
     {{/if}}
 
-    <span>
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    </span>
+    {{!-- TODO: prevent rendering empty span here if block is empty. --}}
+    {{#if (or hasBlock text)}}
+      <span>
+        {{#if hasBlock}}
+          {{yield}}
+        {{else}}
+          {{text}}
+        {{/if}}
+      </span>
+    {{/if}}
 
     {{#if disclosure}}
       <span class="Polaris-Button__Icon">

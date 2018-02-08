@@ -22,15 +22,38 @@ moduleForComponent('polaris-button', 'Integration | Component | polaris button',
 });
 
 test('renders the correct HTML', function(assert) {
+  // Basic button, no text.
+  this.render(hbs`{{polaris-button}}`);
+
+  let buttons = findAll('button[type="button"].Polaris-Button');
+  assert.equal(buttons.length, 1, 'basic button with no text - renders');
+
+  let button = buttons[0];
+  let buttonTextElement = find(buttonTextSelector, button);
+  assert.notOk(buttonTextElement, 'basic button with no text - does not render text content element');
+
+
   // Basic button, using text attribute.
   this.render(hbs`{{polaris-button text="Look at my text"}}`);
 
-  let buttons = findAll('button[type="button"].Polaris-Button');
+  buttons = findAll('button[type="button"].Polaris-Button');
   assert.equal(buttons.length, 1, 'basic button with text attribute - renders');
 
-  let button = buttons[0];
+  button = buttons[0];
   let buttonText = find(buttonTextSelector, button).innerText;
   assert.equal(buttonText, 'Look at my text', 'basic button with text attribute - text');
+
+
+  // Basic button, block form, no content.
+  this.render(hbs`{{#polaris-button}}{{/polaris-button}}`);
+
+  buttons = findAll('button[type="button"].Polaris-Button');
+  assert.equal(buttons.length, 1, 'basic button in block form with no text - renders');
+
+  // TODO: prevent rendering empty span.
+  // button = buttons[0];
+  // buttonTextElement = find(buttonTextSelector, button);
+  // assert.notOk(buttonTextElement, 'basic button in block form with no text - does not render text content element');
 
 
   // Basic button, block form.
