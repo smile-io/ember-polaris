@@ -16,13 +16,11 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Page title, in large type
    *
    * @property title
+   * @public
    * @type {String}
    * @default null
    */
@@ -32,6 +30,7 @@ export default Component.extend({
    * App icon, for pages that are part of Shopify apps
    *
    * @property icon
+   * @public
    * @type {String}
    * @default null
    * TODO: not implemented yet
@@ -42,6 +41,7 @@ export default Component.extend({
    * Collection of breadcrumbs
    *
    * @property breadcrumbs
+   * @public
    * @type {Array}
    * @default null
    */
@@ -51,6 +51,7 @@ export default Component.extend({
    * Adds a border to the bottom of the page header
    *
    * @property separator
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -60,6 +61,7 @@ export default Component.extend({
    * Collection of secondary page-level actions
    *
    * @property secondaryActions
+   * @public
    * @type {Array}
    * @default null
    */
@@ -69,6 +71,7 @@ export default Component.extend({
    * Primary page-level action
    *
    * @property primaryAction
+   * @public
    * @type {Object}
    * @default null
    */
@@ -78,6 +81,7 @@ export default Component.extend({
    * Page-level pagination
    *
    * @property pagination
+   * @public
    * @type {Object}
    * @default null
    * TODO: not implemented yet

@@ -6,23 +6,26 @@
   </div>
 {{/if}}
 
+{{!-- Add a "main content" div if we have a primary action. --}}
 {{#wrapper-element
   tagName=(if primaryAction "div" "")
   class=(if primaryAction "Polaris-Page__MainContent")
 }}
   {{!--
-    Create a reusable button component for the primary action (if we have one).
+    Create a reusable button component for the primary action if we have one,
+    otherwise create a "no-op" empty component to use in its place.
     Note that we do not pass the `onClick` action in here because it causes
     the template to blow up if no primary action is supplied.
   --}}
   {{#with (if primaryAction
     (component "polaris-button"
-      primary=(not primaryAction.destructive)
+      primary=true
       text=primaryAction.text
       disabled=primaryAction.disabled
     )
     (component "wrapper-element" tagName="")
   ) as |primaryActionButton|}}
+    {{!-- Add a "title and actions" wrapper div if we have a primary action. --}}
     {{#wrapper-element
       tagName=(if primaryAction "div" "")
       class=(if primaryAction "Polaris-Page__TitleAndActions")

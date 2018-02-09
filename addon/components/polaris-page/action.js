@@ -10,18 +10,28 @@ export default Component.extend({
   attributeBindings: [
     'type',
     'action.disabled:disabled',
-    'action.ariaLabel:aria-label'
+    'action.accessibilityLabel:aria-label'
   ],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
-   * The action to render
+   * The action to render. The following properties can be set:
+   *
+   *  - text
+   *  - icon
+   *  - action
+   *  - accessibilityLabel
+   *  - disabled
+   *
+   * These properties are available in the React component
+   * but are not yet implemented in `ember-polaris`:
+   *  - url
+   *  - external
+   *  - disclosure
    *
    * @property action
+   * @public
    * @type {Object}
    * @default null
    */
