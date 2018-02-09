@@ -1,9 +1,11 @@
+{{!-- TODO: support action.url --}}
 {{#if action.icon}}
   <span class="Polaris-Page__ActionContent">
-    <span class="Polaris-Page__ActionIcon">
-      {{polaris-icon source=action.icon}}
+    {{polaris-page/action-icon icon=action.icon}}
+
+    <span>
+      {{action.text}}
     </span>
-    {{action.text}}
   </span>
 {{else}}
   {{action.text}}

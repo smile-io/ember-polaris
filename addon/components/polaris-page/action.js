@@ -5,21 +5,39 @@ import mapEventToAction from '../../utils/map-event-to-action';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['Polaris-Page__Action'],
+  classNames: [ 'Polaris-Page__Action' ],
+  classNameBindings: [ 'action.disabled:Polaris-Page--disabled', ],
+  attributeBindings: [
+    'type',
+    'action.disabled:disabled',
+    'action.accessibilityLabel:aria-label'
+  ],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
-   * The action to render
+   * The action to render. The following properties can be set:
+   *
+   *  - text
+   *  - icon
+   *  - action
+   *  - accessibilityLabel
+   *  - disabled
+   *
+   * These properties are available in the React component
+   * but are not yet implemented in `ember-polaris`:
+   *  - url
+   *  - external
+   *  - disclosure
    *
    * @property action
+   * @public
    * @type {Object}
    * @default null
    */
   action: null,
+
+  type: 'button',
 
   /*
    * Action handlers.

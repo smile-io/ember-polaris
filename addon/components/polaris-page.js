@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { or, notEmpty } from '@ember/object/computed';
+import { or } from '@ember/object/computed';
 import layout from '../templates/components/polaris-page';
 
 /**
@@ -9,17 +8,17 @@ import layout from '../templates/components/polaris-page';
  */
 export default Component.extend({
   classNames: ['Polaris-Page'],
-  classNameBindings: ['fullWidth:Polaris-Page--fullWidth'],
+  classNameBindings: [
+    'fullWidth:Polaris-Page--fullWidth',
+    'singleColumn:Polaris-Page--singleColumn'
+  ],
 
   layout,
-
-  /*
-   * Public attributes.
-   */
   /**
    * Page title, in large type
    *
    * @property title
+   * @public
    * @type {string}
    * @default null
    */
@@ -29,9 +28,10 @@ export default Component.extend({
    * App icon, for pages that are part of Shopify apps
    *
    * @property icon
+   * @public
    * @type {string}
    * @default null
-   * TODO: needs polaris-icon component.
+   * TODO: not implemented yet.
    */
   icon: null,
 
@@ -39,9 +39,9 @@ export default Component.extend({
    * Collection of breadcrumbs
    *
    * @property breadcrumbs
-   * @type {BreadcrumbProps["breadcrumbs"]}
+   * @public
+   * @type {Array}
    * @default null
-   * TODO: find out why the React example only shows the last breadcrumb...
    */
   breadcrumbs: null,
 
@@ -53,6 +53,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
+   * @public
    * @type {String}
    * @default null
    */
@@ -62,24 +63,58 @@ export default Component.extend({
    * Remove the normal max-width on the page
    *
    * @property fullWidth
+   * @public
    * @type {boolean}
    * @default false
    */
   fullWidth: false,
 
   /**
+   * Decreases the maximum layout width. Intended for single-column layouts
+   *
+   * @property singleColumn
+   * @public
+   * @type {boolean}
+   * @default false
+   */
+  singleColumn: false,
+
+  /**
+   * Adds a border to the bottom of the page header
+   *
+   * @property separator
+   * @public
+   * @type {boolean}
+   * @default false
+   */
+  separator: false,
+
+  /**
    * Collection of secondary page-level actions
    *
    * @property secondaryActions
+   * @public
    * @type {Array}
    * @default null
    */
   secondaryActions: null,
 
   /**
+   * Collection of page-level groups of secondary actions
+   *
+   * @property actionGroups
+   * @public
+   * @type {Array}
+   * @default null
+   * TODO: not implemented yet
+   */
+  actionGroups: null,
+
+  /**
    * Primary page-level action
    *
    * @property primaryAction
+   * @public
    * @type {Object}
    * @default null
    */
@@ -89,6 +124,7 @@ export default Component.extend({
    * Page-level pagination
    *
    * @property pagination
+   * @public
    * @type {PaginationDescriptor}
    * @default null
    * TODO: not implemented yet
@@ -98,18 +134,5 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasBreadcrumbs: notEmpty('breadcrumbs'),
-  hasActions: or('primaryAction', 'secondaryActions'),
-
-  headerClass: computed('hasBreadcrumbs', function() {
-    const classNames = [
-      'Polaris-Page__Header',
-    ];
-
-    if (this.get('hasBreadcrumbs')) {
-      classNames.push('Polaris-Page__Header--hasBreadcrumbs');
-    }
-
-    return classNames.join(' ');
-  }).readOnly(),
+  hasHeaderContent: or('title', 'primaryAction', 'secondaryActions', 'breadcrumbs').readOnly(),
 });
