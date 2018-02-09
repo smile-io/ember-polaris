@@ -212,11 +212,21 @@ Slim external link:
 ```hbs
 {{#polaris-button
   url="www.example.com"
-  external="true"
+  external=true
   size="slim"
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+Loading button with a spinner:
+
+```hbs
+{{polaris-button
+  text="Load something"
+  loading=isLoading
+  onClick=(action (mut isLoading) true)
+}}
 ```
 
 ##### Button group
