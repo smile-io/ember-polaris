@@ -58,10 +58,10 @@ test('it renders the correct HTML in basic usage', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="This is the first item"
+          text="This is the first item"
         )
         (hash
-          content="This is item number two"
+          text="This is item number two"
         )
       )
     }}
@@ -81,11 +81,11 @@ test('it renders the correct HTML when using icons', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Import some things"
+          text="Import some things"
           icon="import"
         )
         (hash
-          content="Export stuff"
+          text="Export stuff"
           icon="export"
         )
       )
@@ -123,11 +123,11 @@ test('it handles item actions correctly', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Item 1"
+          text="Item 1"
           onAction=(action "action1")
         )
         (hash
-          content="Item 2"
+          text="Item 2"
           onAction=(action (mut action2Fired) true)
         )
       )
@@ -158,11 +158,11 @@ test('it does not bubble item actions', function(assert) {
       {{polaris-action-list
         items=(array
           (hash
-            content="Item 1"
+            text="Item 1"
             onAction=(action (mut action2Fired) true)
           )
           (hash
-            content="Item 2"
+            text="Item 2"
             onAction=(action (mut action2Fired) true)
           )
         )
@@ -195,10 +195,10 @@ test('it handles the "any item" action correctly', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Item 1"
+          text="Item 1"
         )
         (hash
-          content="Item 2"
+          text="Item 2"
           onAction=(action (mut itemActionFired) true)
         )
       )
@@ -225,18 +225,18 @@ test('it renders the correct HTML when using sections', function(assert) {
           title="Section 2"
           items=(array
             (hash
-              content="Section 2 item 1"
+              text="Section 2 item 1"
               icon="notes"
             )
             (hash
-              content="Section 2 item 2"
+              text="Section 2 item 2"
             )
           )
         )
         (hash
           items=(array
             (hash
-              content="Section 3 item"
+              text="Section 3 item"
             )
           )
         )
@@ -252,7 +252,7 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(actionListSections.length, 2, 'with no items and two sections - renders two action list sections');
 
   // Add some items alongside the sections.
-  this.set('items', [{ content: 'Section 1 item' }]);
+  this.set('items', [{ text: 'Section 1 item' }]);
 
   actionListSections = findAll(sectionedActionListSectionSelector);
   assert.equal(actionListSections.length, 3, 'with items and two sections - renders three action list sections');

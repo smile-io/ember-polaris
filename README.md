@@ -162,11 +162,11 @@ Basic usage:
 {{polaris-action-list
   items=(array
     (hash
-      content="This is the first item"
+      text="This is the first item"
       onAction=(action "firstItemClicked")
     )
     (hash
-      content="This is item number two"
+      text="This is item number two"
       onAction=(action (mut secondItemClicked) true)
     )
   )
@@ -179,14 +179,14 @@ With icons:
 {{polaris-action-list
   items=(array
     (hash
-      content="Add an item..."
+      text="Add an item..."
       icon="add"
-      action=(action "addItem")
+      onAction=(action "addItem")
     )
     (hash
-      content="Delete this item"
+      text="Delete this item"
       icon="delete"
-      action=(action "deleteItem")
+      onAction=(action "deleteItem")
     )
   )
 }}
@@ -198,12 +198,12 @@ With sections and an action fired when any item is selected:
 {{polaris-action-list
   items=(array
     (hash
-      content="View"
-      action=(action "viewItem")
+      text="View"
+      onAction=(action "viewItem")
     )
     (hash
-      content="Delete"
-      action=(action "deleteItem")
+      text="Delete"
+      onAction=(action "deleteItem")
     )
   )
   sections=(array
@@ -211,20 +211,20 @@ With sections and an action fired when any item is selected:
       title="Social"
       items=(array
         (hash
-          content="Share on Facebook"
-          action=(action "shareOnFacebook")
+          text="Share on Facebook"
+          onAction=(action "shareOnFacebook")
         )
         (hash
-          content="Share on Twitter"
-          action=(action "shareOnTwitter")
+          text="Share on Twitter"
+          onAction=(action "shareOnTwitter")
         )
       )
     )
     (hash
       items=(array
         (hash
-          content="About"
-          action=(action "showInfo")
+          text="About"
+          onAction=(action "showInfo")
         )
       )
     )
@@ -321,8 +321,8 @@ Inline usage:
   text="Some boolean setting"
   enabled=enabled
   action=(hash
-    content="Toggle it!"
-    action=(action "toggleSetting")
+    text="Toggle it!"
+    onAction=(action "toggleSetting")
   )
 }}
 ```
@@ -333,8 +333,8 @@ Block usage:
 {{#polaris-setting-toggle
   enabled=enabled
   action=(hash
-    content="Disable it!"
-    action=(action (mut enabled) false)
+    text="Disable it!"
+    onAction=(action (mut enabled) false)
   )
 }}
   This setting is currently <strong>{{if enabled "enabled" "disabled"}}</strong>
@@ -401,8 +401,14 @@ With a success status set, custom icon, content, dismiss button and actions:
 {{#polaris-banner
   status="success"
   icon="confetti"
-  action=(hash content="Track" action=(action "trackPackage")
-  secondaryAction=(hash content="View" action=(action "viewOrder")
+  action=(hash
+    text="Track"
+    onAction=(action "trackPackage")
+  )
+  secondaryAction=(hash
+    text="View"
+    onAction=(action "viewOrder")
+  )
   onDismiss=(action "handleDismiss")
 }}
   <p>This order has been shipped.</p>
@@ -444,8 +450,8 @@ Inline usage without secondary action:
   title="New feature"
   text="This new feature is awesome!"
   primaryAction=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
 }}
 ```
@@ -456,12 +462,12 @@ Block usage with secondary action:
 {{#polaris-callout-card
   title="New feature"
   primaryAction=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
   secondaryAction=(hash
-    content="Learn more"
-    action=(action "showDetails")
+    text="Learn more"
+    onAction=(action "showDetails")
   )
 }}
   We've got an awesome new feature!
@@ -499,12 +505,12 @@ With actions in the header (needs a non-empty title):
   title="This is a card with actions"
   headerActions=(array
     (hash
-      content="Action 1"
-      action=(action "doSomething")
+      text="Action 1"
+      onAction=(action "doSomething")
     )
     (hash
-      content="Action 2"
-      action=(action (mut action2Clicked) true)
+      text="Action 2"
+      onAction=(action (mut action2Clicked) true)
     )
   )
 }}
@@ -545,8 +551,8 @@ Inline usage without secondary action:
   image="new-feature.jpg"
   text="This new feature is great"
   action=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
 }}
 ```
@@ -558,12 +564,12 @@ Block usage with secondary action:
   heading="Check out this new feature"
   image="new-feature.jpg"
   action=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
   secondaryAction=(hash
-    content="Learn more"
-    action=(action "openBlog")
+    text="Learn more"
+    onAction=(action "openBlog")
   )
 }}
   We've got an awesome new feature!
@@ -644,35 +650,35 @@ Full-width page with disableable primary action and secondary actions (using [em
   fullWidth=true
   primaryAction=(hash
     text="Take action!"
-    action=(action "primaryActionFired")
     disabled=primaryActionDisabled
+    onAction=(action "primaryActionFired")
   )
   secondaryActions=(array
     (hash
       text="Do something"
-      action=(action "secondaryAction1Fired")
+      onAction=(action "secondaryAction1Fired")
     )
     (hash
       text="Do something else"
-      action=(action (mut secondaryAction2Fired) true)
+      onAction=(action (mut secondaryAction2Fired) true)
     )
   )
 }}
 ```
 
-Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)). Breadcrumbs take `content` and `route` properties, and an optional `models` property for dynamic route segments. N.B. only the last breadcrumb will be rendered:
+Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)). Breadcrumbs take `text` and `route` properties, and an optional `models` property for dynamic route segments. N.B. only the last breadcrumb will be rendered:
 
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
   breadcrumbs=(array
     (hash
-      content="Parent"
+      text="Parent"
       route="parent"
       models=parent
     )
     (hash
-      content="Child"
+      text="Child"
       route="parent.child"
       models=(array parent child)
     )
@@ -692,8 +698,8 @@ Primary action only:
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
-    content="Save"
-    action=(action "save")
+    text="Save"
+    onAction=(action "save")
   )
 }}
 ```
@@ -703,17 +709,17 @@ Primary action with two secondary actions (using [ember-array-helper](https://gi
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
-    content="Save"
-    action=(action "save")
+    text="Save"
+    onAction=(action "save")
   )
   secondaryActions=(array
     (hash
-      content="Delete"
-      action=(action "delete")
+      text="Delete"
+      onAction=(action "delete")
     )
     (hash
-      content="Cancel"
-      action=(action "cancel")
+      text="Cancel"
+      onAction=(action "cancel")
     )
   )
 }}

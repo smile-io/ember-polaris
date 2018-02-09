@@ -14,14 +14,11 @@ export default Component.extend({
   tagName: '',
 
   layout,
-
-  /*
-   * Public attributes.
-   */
   /**
    * Collection of actions for list
    *
    * @property items
+   * @public
    * @type {Array}
    * @default null
    */
@@ -31,6 +28,7 @@ export default Component.extend({
    * Collection of sectioned action items
    *
    * @property sections
+   * @public
    * @type {Array}
    * @default null
    */
@@ -40,6 +38,7 @@ export default Component.extend({
    * Callback when any item is clicked or keypressed
    *
    * @property onActionAnyItem
+   * @public
    * @type {function}
    * @default no-op
    */

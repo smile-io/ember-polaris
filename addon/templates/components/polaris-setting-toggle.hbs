@@ -11,7 +11,7 @@
     <div class="Polaris-SettingAction__Action">
       {{#if action}}
         {{polaris-button
-          text=action.content
+          text=action.text
           primary=enabled
           onClick=(action "fireAction" action)
         }}

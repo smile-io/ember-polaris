@@ -1,5 +1,19 @@
 {{#polaris-page
   title="This is the application route"
+  primaryAction=(hash
+    text="Primary"
+    action=(action (mut primaryClicked) true)
+  )
+  secondaryActions=(array
+    (hash
+      text="Secondary 1"
+      action=(action (mut secondary1Clicked) true)
+    )
+    (hash
+      text="Secondary 2"
+      action=(action (mut secondary2Clicked) true)
+    )
+  )
 }}
   {{polaris-color-picker
     color=color

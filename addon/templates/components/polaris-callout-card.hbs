@@ -15,8 +15,8 @@
 
       <div class="Polaris-CalloutCard__Buttons">
         {{#with (component "polaris-button"
-          text=primaryAction.content
-          onClick=(action primaryAction.action))
+          text=primaryAction.text
+          onClick=(action primaryAction.onAction))
           as |primaryButton|
         }}
           {{#if secondaryAction}}
@@ -25,8 +25,8 @@
 
               {{polaris-button
                 plain=true
-                text=secondaryAction.content
-                onClick=(action secondaryAction.action)
+                text=secondaryAction.text
+                onClick=(action secondaryAction.onAction)
               }}
             {{/polaris-button-group}}
           {{else}}

@@ -1,9 +1,6 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/header';
-import EmberObject from '@ember/object';
-import { computed } from '@ember/object';
 import { gt, or } from '@ember/object/computed';
-import { copy } from '@ember/object/internals';
 
 export default Component.extend({
   classNames: [ 'Polaris-Page__Header' ],
@@ -96,18 +93,4 @@ export default Component.extend({
   hasActions: or('primaryAction', 'secondaryActions').readOnly(),
   hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
   hasRollup: gt('secondaryActions.length', 1).readOnly(),
-
-  secondaryActionsRollupItems: computed('secondaryActions.[]', function() {
-    let secondaryActions = this.get('secondaryActions') || [];
-
-    // `polaris-action-list` uses the `content` property while our secondary actions use `text`.
-    // Create a map of items with `text` renamed to `content` so the action list items display.
-    return secondaryActions.map((secondaryAction) => {
-      let actionProps = copy(secondaryAction);
-      actionProps.content = secondaryAction.text;
-      delete actionProps.text;
-
-      return EmberObject.create(actionProps);
-    });
-  }).readOnly(),
 });

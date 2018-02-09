@@ -17,12 +17,11 @@ export default Component.extend({
 
   /**
    * The action to render. The following properties can be set:
-   *
    *  - text
    *  - icon
-   *  - action
    *  - accessibilityLabel
    *  - disabled
+   *  - onAction
    *
    * These properties are available in the React component
    * but are not yet implemented in `ember-polaris`:
@@ -43,5 +42,5 @@ export default Component.extend({
    * Action handlers.
    */
   mouseUp: handleMouseUpByBlurring,
-  click: mapEventToAction('action.action'),
+  click: mapEventToAction('action.onAction'),
 });

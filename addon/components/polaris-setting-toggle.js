@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { typeOf } from '@ember/utils';
+import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-setting-toggle';
 
 /**
@@ -51,9 +51,7 @@ export default Component.extend({
    */
    actions: {
      fireAction(action) {
-       if (typeOf(action.action) === 'function') {
-         return action.action();
-       }
+       invokeAction(action, 'onAction');
      }
    }
 });

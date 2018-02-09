@@ -39,7 +39,7 @@
       <div class="Polaris-Page__Actions">
         {{#if primaryAction}}
           <div class="Polaris-Page__PrimaryAction">
-            {{component primaryActionButton onClick=(action primaryAction.action)}}
+            {{component primaryActionButton onClick=(action primaryAction.onAction)}}
           </div>
         {{/if}}
 
@@ -57,7 +57,7 @@
 
                   {{#popover.content}}
                     {{polaris-action-list
-                      items=secondaryActionsRollupItems
+                      items=secondaryActions
                       onActionAnyItem=(action popover.close)
                     }}
                   {{/popover.content}}
@@ -80,7 +80,7 @@
     {{#if primaryAction}}
       {{!-- Primary action gets rendered twice, with one getting hidden based on media queries. --}}
       <div class="Polaris-Page__PrimaryAction">
-        {{component primaryActionButton onClick=(action primaryAction.action)}}
+        {{component primaryActionButton onClick=(action primaryAction.onAction)}}
       </div>
     {{/if}}
   {{/with}}

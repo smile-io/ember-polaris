@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { get } from '@ember/object';
-import { typeOf } from '@ember/utils';
+import { invokeAction } from 'ember-invoke-action';
 import layout from '../../templates/components/polaris-action-list/section';
 
 export default Component.extend({
@@ -12,6 +11,7 @@ export default Component.extend({
    * Collection of action items
    *
    * @property section
+   * @public
    * @type {Object}
    * @default null
    */
@@ -21,6 +21,7 @@ export default Component.extend({
    * Whether the parent action list has multiple sections
    *
    * @property hasMultipleSections
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -30,15 +31,8 @@ export default Component.extend({
     onItemAction(item, event) {
       event.stopPropagation();
 
-      let itemAction = get(item, 'onAction');
-      if (typeOf(itemAction) === 'function') {
-        itemAction();
-      }
-
-      let listAction = this.get('onActionAnyItem');
-      if (typeOf(listAction) === 'function') {
-        listAction();
-      }
+      invokeAction(item, 'onAction');
+      invokeAction(this, 'onActionAnyItem');
     },
   }
 });
