@@ -26,14 +26,15 @@ test('it renders correctly in basic usage', function(assert) {
   assert.ok(banner, 'inline-mode - banner exists');
   assert.equal(banner.textContent.trim(), '', 'inline-mode - banner is empty, by default');
   assert.equal(banner.tabIndex, '0', 'inline-mode - has correct tabIndex');
-  assert.equal(banner.getAttribute('role'), 'banner', 'inline-mode - has correct role attribute');
+  assert.equal(banner.getAttribute('role'), 'status', 'inline-mode - has correct role attribute');
+  assert.equal(banner.getAttribute('aria-live'), 'polite', 'inline-mode - has correct aria-live attribute');
 
   let bannerIcon = find(iconSelector, banner);
   let iconSvg = find('svg', iconSelector);
   assert.ok(bannerIcon, 'inline-mode - has icon');
-  assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorInk'), 'inline-mode - icon has ink color');
+  assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorInkLighter'), 'inline-mode - icon has inkLighter color');
   assert.ok(bannerIcon.classList.contains('Polaris-Icon--hasBackdrop'), 'inline-mode - icon has backdrop');
-  assert.equal(iconSvg.dataset.iconSource, 'polaris/confetti', 'inline-mode - default icon is polaris/confetti');
+  assert.equal(iconSvg.dataset.iconSource, 'polaris/flag', 'inline-mode - default icon is polaris/flag');
 
   // Template block usage:
   this.render(hbs`
@@ -123,25 +124,25 @@ test('it handles banner status correctly', function(assert) {
 
   this.set('status', 'success');
   assert.ok(banner.classList.contains('Polaris-Banner--statusSuccess'), 'banner with success status - has correct class');
-  assert.notEqual(banner.getAttribute('role').indexOf('success'), -1, 'banner with success status - role attribute includes `success`')
+  assert.equal(banner.getAttribute('role'), 'status', 'banner with success status - has correct role attribute')
   assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorGreenDark'), 'banner with success status - has greenDark icon color');
   assert.equal(iconSvg.dataset.iconSource, 'polaris/circle-check-mark', 'banner with success status - has icon polaris/circle-check-mark');
 
   this.set('status', 'info');
   assert.ok(banner.classList.contains('Polaris-Banner--statusInfo'), 'banner with info status - has correct class');
-  assert.notEqual(banner.getAttribute('role').indexOf('info'), -1, 'banner with info status - role attribute includes `info`')
+  assert.equal(banner.getAttribute('role'), 'status', 'banner with info status - has correct role attribute')
   assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorTealDark'), 'banner with info status - has tealDark icon color');
-  assert.equal(iconSvg.dataset.iconSource, 'polaris/flag', 'banner with info status - has icon polaris/flag');
+  assert.equal(iconSvg.dataset.iconSource, 'polaris/circle-information', 'banner with info status - has icon polaris/circle-information');
 
   this.set('status', 'warning');
   assert.ok(banner.classList.contains('Polaris-Banner--statusWarning'), 'banner with warning status - has correct class');
-  assert.notEqual(banner.getAttribute('role').indexOf('warning'), -1, 'banner with warning status - role attribute includes `warning`')
+  assert.equal(banner.getAttribute('role'), 'alert', 'banner with warning status - has correct role attribute')
   assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorYellowDark'), 'banner with warning status - has yellowDark icon color');
   assert.equal(iconSvg.dataset.iconSource, 'polaris/circle-alert', 'banner with warning status - has icon polaris/circle-alert');
 
   this.set('status', 'critical');
   assert.ok(banner.classList.contains('Polaris-Banner--statusCritical'), 'banner with critical status - has correct class');
-  assert.notEqual(banner.getAttribute('role').indexOf('critical'), -1, 'banner with critical status - role attribute includes `critical`')
+  assert.equal(banner.getAttribute('role'), 'alert', 'banner with critical status - has correct role attribute')
   assert.ok(bannerIcon.classList.contains('Polaris-Icon--colorRedDark'), 'banner with critical status - has redDark icon color');
   assert.equal(iconSvg.dataset.iconSource, 'polaris/circle-barred', 'banner with critical status - has icon polaris/circle-barred');
 });

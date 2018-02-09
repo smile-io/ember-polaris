@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { find, click } from 'ember-native-dom-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-const paginationSelector = 'span.Polaris-Pagination';
+const paginationSelector = 'nav.Polaris-Pagination';
 
 moduleForComponent('polaris-pagination', 'Integration | Component | polaris pagination', {
   integration: true,
@@ -14,7 +14,7 @@ moduleForComponent('polaris-pagination', 'Integration | Component | polaris pagi
 });
 
 test('it renders correctly', function(assert) {
-  assert.expect(9);
+  assert.expect(11);
 
   this.render(hbs`{{polaris-pagination}}`);
 
@@ -27,6 +27,8 @@ test('it renders correctly', function(assert) {
 
   assert.ok(find('button.Polaris-Pagination__Button[aria-label="Next"][disabled] > span.Polaris-Icon'), 'inline-mode - has next button disabled');
   assert.ok(find('button.Polaris-Pagination__Button > span.Polaris-Icon'), 'inline-mode - next button has icon');
+
+  assert.equal(pagination.attributes['aria-label'].value, 'Pagination', 'inline mode - has correct default aria-label attribute');
 
 
   // Pagination in plain mode
@@ -44,6 +46,13 @@ test('it renders correctly', function(assert) {
 
   assert.ok(find('button.Polaris-Pagination__Button[aria-label="Previous"]:not([disabled])'), 'inline-mode - has previous button enabled');
   assert.ok(find('button.Polaris-Pagination__Button[aria-label="Next"]:not([disabled])'), 'inline-mode - has next button enabled');
+
+
+  // Pagination with accessibility label
+  this.render(hbs`{{polaris-pagination accessibilityLabel="Accessible to all"}}`);
+
+  pagination = find(paginationSelector);
+  assert.equal(pagination.attributes['aria-label'].value, 'Accessible to all', 'accessibility label - sets aria-label attribute');
  });
 
 test('it fires events correctly', function(assert) {
