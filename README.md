@@ -152,7 +152,7 @@ Some Polaris React components accept an `actions` property as a list of actions 
 #### Actions
 
 ##### Action list
-`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list). Note that `sections` are not yet supported.
+`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list).
 
 ###### Examples
 
@@ -163,11 +163,11 @@ Basic usage:
   items=(array
     (hash
       content="This is the first item"
-      action=(action "firstItemClicked")
+      onAction=(action "firstItemClicked")
     )
     (hash
       content="This is item number two"
-      action=(action (mut secondItemClicked) true)
+      onAction=(action (mut secondItemClicked) true)
     )
   )
 }}
@@ -189,6 +189,47 @@ With icons:
       action=(action "deleteItem")
     )
   )
+}}
+```
+
+With sections and an action fired when any item is selected:
+
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      content="View"
+      action=(action "viewItem")
+    )
+    (hash
+      content="Delete"
+      action=(action "deleteItem")
+    )
+  )
+  sections=(array
+    (hash
+      title="Social"
+      items=(array
+        (hash
+          content="Share on Facebook"
+          action=(action "shareOnFacebook")
+        )
+        (hash
+          content="Share on Twitter"
+          action=(action "shareOnTwitter")
+        )
+      )
+    )
+    (hash
+      items=(array
+        (hash
+          content="About"
+          action=(action "showInfo")
+        )
+      )
+    )
+  )
+  onActionAnyItem=(action "anyItemSelected")
 }}
 ```
 

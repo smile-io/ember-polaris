@@ -1,0 +1,18 @@
+{{#wrapper-element tagName=(if hasMultipleSections "li" "")}}
+  <div class={{unless section.title "Polaris-ActionList__Section--withoutTitle"}}>
+    {{#if section.title}}
+      <p class="Polaris-ActionList__Title">
+        {{section.title}}
+      </p>
+    {{/if}}
+
+    <ul class="Polaris-ActionList__Actions">
+      {{#each section.items as |item|}}
+        {{polaris-action-list/item
+          item=item
+          onAction=(action "onItemAction" item)
+        }}
+      {{/each}}
+    </ul>
+  </div>
+{{/wrapper-element}}

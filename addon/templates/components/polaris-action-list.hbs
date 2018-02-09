@@ -1,25 +1,12 @@
-<div>
-  <ul class="Polaris-ActionList__Actions">
-    {{#each items as |item|}}
-      <li>
-        <button class="Polaris-ActionList__Item" onclick={{action "fireItemAction" item}}>
-          {{#if item.icon}}
-            <div class="Polaris-ActionList__Content">
-              <div class="Polaris-ActionList__Image">
-                {{polaris-icon
-                  source=item.icon
-                  sourcePath=(if item.iconPath item.iconPath "polaris")
-                }}
-              </div>
-              <div class="Polaris-ActionList__Text">
-                {{item.content}}
-              </div>
-            </div>
-          {{else}}
-            {{item.content}}
-          {{/if}}
-        </button>
-      </li>
-    {{/each}}
-  </ul>
-</div>
+{{#wrapper-element
+  class="Polaris-ActionList"
+  tagName=(if hasMultipleSections "ul" "div")
+}}
+  {{#each finalSections as |section|}}
+    {{polaris-action-list/section
+      section=section
+      hasMultipleSections=hasMultipleSections
+      onActionAnyItem=(action onActionAnyItem)
+    }}
+  {{/each}}
+{{/wrapper-element}}
