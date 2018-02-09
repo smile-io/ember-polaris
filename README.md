@@ -6,7 +6,7 @@
 
 ## Status
 
-**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
+**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited and some features of those which have been built may be unimplemented._
 
 ### Implemented components
 
@@ -20,8 +20,9 @@
 - Badge
 - Icon
 
-#### Feedback and indicators
+#### Feedback indicators
 - Banner
+- Spinner
 
 #### Structure
 - Callout card
@@ -330,10 +331,10 @@ to render the SVG icons.
 You will have to make sure that you copy the icons into your public folder and
 configure `ember-svg-jar` to serve them from `polaris` namespace.
 
-#### Feedback and indicators
+#### Feedback indicators
 
 ##### Banner
-`polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner#navigation).
+`polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner).
 
 ###### Examples
 
@@ -355,6 +356,27 @@ With a success status set, custom icon, content, dismiss button and actions:
 }}
   <p>This order has been shipped.</p>
 {{/polaris-banner}}
+```
+
+##### Spinner
+`polaris-spinner` implements the [Polaris Spinner component](https://polaris.shopify.com/components/feedback-indicators/spinner).
+
+###### Examples
+
+Basic usage (renders a large, teal-colored spinner):
+
+```hbs
+{{polaris-spinner}}
+```
+
+With a size and color specified and an accessibility label:
+
+```hbs
+{{polaris-spinner
+  size="small"
+  color="inkLightest"
+  accessibilityLabel="access granted"
+}}
 ```
 
 #### Structure
@@ -1054,7 +1076,7 @@ Button usage:
 
 ##### Pagination
 `polaris-pagination` implements the [Polaris Pagination
-component](https://polaris.shopify.com/components/navigation/pagination#navigation).
+component](https://polaris.shopify.com/components/navigation/pagination).
 
 **NOTE:** _the following properties are not currently implemented: `nextUrl` and `previousUrl`._
 
