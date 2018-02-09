@@ -1,5 +1,9 @@
-{{#if hasBreadcrumbs}}
-  {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+{{#if hasNavigation}}
+  <div class="Polaris-Page__Navigation">
+    {{#if breadcrumbs}}
+      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+    {{/if}}
+  </div>
 {{/if}}
 
 {{#wrapper-element

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/header';
 import EmberObject from '@ember/object';
 import { computed } from '@ember/object';
-import { or, notEmpty } from '@ember/object/computed';
+import { gt, or } from '@ember/object/computed';
 import { copy } from '@ember/object/internals';
 
 export default Component.extend({
@@ -87,13 +87,10 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasBreadcrumbs: notEmpty('breadcrumbs'),
-
-  hasActions: or('primaryAction', 'secondaryActions'),
-
-  hasRollup: computed('secondaryActions.[]', function() {
-    return this.get('secondaryActions.length') > 1;
-  }).readOnly(),
+  hasBreadcrumbs: gt('breadcrumbs.length', 0).readOnly(),
+  hasNavigation: or('hasBreadcrumbs', 'pagination').readOnly(),
+  hasActions: or('primaryAction', 'secondaryActions').readOnly(),
+  hasRollup: gt('secondaryActions.length', 1).readOnly(),
 
   secondaryActionsRollupItems: computed('secondaryActions.[]', function() {
     let secondaryActions = this.get('secondaryActions') || [];

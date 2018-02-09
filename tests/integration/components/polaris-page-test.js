@@ -7,8 +7,7 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const availableRoutes = [
   'home',
-  'home.the-beginning',
-  'home.the-beginning.really',
+  'home.the-beginning'
 ];
 
 moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
@@ -249,11 +248,6 @@ test('it handles breadcrumbs correctly', function(assert) {
         { id: 13 },
         27,
       ],
-    },
-    {
-      content: `I'm telling you!`,
-      route: 'home.the-beginning.really',
-      models: 19,
     }
   ]);
 
@@ -266,44 +260,20 @@ test('it handles breadcrumbs correctly', function(assert) {
     'a.Polaris-Breadcrumbs__Breadcrumb'
   );
   const breadcrumbLinks = findAll(breadcrumbLinkSelector)
-  assert.equal(breadcrumbLinks.length, 3, 'with breadcrumbs - renders 3 breadcrumbs');
+  assert.equal(breadcrumbLinks.length, 1, 'with breadcrumbs - renders 1 breadcrumb');
 
-  // Check the first breadcrumb.
+  // Check the last breadcrumb in the list was rendered.
   const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
   const contentSelector = 'span.Polaris-Breadcrumbs__Content';
 
   let breadcrumbLink = breadcrumbLinks[0];
-  assert.equal(breadcrumbLink.href, `${window.location.origin}/home`, 'first breadcrumb - has correct href');
-  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'first breadcrumb - has data-polaris-unstyled attribute');
+  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/13/27`, 'breadcrumb has href of last breadcrumb in list');
+  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'breadcrumb has data-polaris-unstyled attribute');
 
   let contents = findAll(contentSelector, breadcrumbLink);
-  assert.equal(contents.length, 1, 'first breadcrumb - renders content');
-  assert.equal(contents[0].textContent.trim(), 'Go back', 'first breadcrumb - renders correct text');
+  assert.equal(contents.length, 1, 'breadcrumb renders content');
+  assert.equal(contents[0].textContent.trim(), 'No, really!', 'breadcrumb renders text from last breadcrumb in list');
 
   let icons = findAll(iconSelector, breadcrumbLink);
-  assert.equal(icons.length, 1, 'first breadcrumb - renders icon');
-
-  // Check the second breadcrumb.
-  breadcrumbLink = breadcrumbLinks[1];
-  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/13/27`, 'second breadcrumb - has correct href');
-  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'second breadcrumb - has data-polaris-unstyled attribute');
-
-  contents = findAll(contentSelector, breadcrumbLink);
-  assert.equal(contents.length, 1, 'second breadcrumb - renders content');
-  assert.equal(contents[0].textContent.trim(), 'No, really!', 'second breadcrumb - renders correct text');
-
-  icons = findAll(iconSelector, breadcrumbLink);
-  assert.equal(icons.length, 1, 'second breadcrumb - renders icon');
-
-  // Check the third breadcrumb.
-  breadcrumbLink = breadcrumbLinks[2];
-  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/really/19`, 'third breadcrumb - has correct href');
-  assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'third breadcrumb - has data-polaris-unstyled attribute');
-
-  contents = findAll(contentSelector, breadcrumbLink);
-  assert.equal(contents.length, 1, 'third breadcrumb - renders content');
-  assert.equal(contents[0].textContent.trim(), `I'm telling you!`, 'third breadcrumb - renders correct text');
-
-  icons = findAll(iconSelector, breadcrumbLink);
-  assert.equal(icons.length, 1, 'third breadcrumb - renders icon');
+  assert.equal(icons.length, 1, 'breadcrumb renders icon');
 });

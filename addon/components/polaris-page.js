@@ -14,14 +14,11 @@ export default Component.extend({
   ],
 
   layout,
-
-  /*
-   * Public attributes.
-   */
   /**
    * Page title, in large type
    *
    * @property title
+   * @public
    * @type {string}
    * @default null
    */
@@ -31,6 +28,7 @@ export default Component.extend({
    * App icon, for pages that are part of Shopify apps
    *
    * @property icon
+   * @public
    * @type {string}
    * @default null
    * TODO: not implemented yet.
@@ -41,6 +39,7 @@ export default Component.extend({
    * Collection of breadcrumbs
    *
    * @property breadcrumbs
+   * @public
    * @type {Array}
    * @default null
    */
@@ -54,6 +53,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
+   * @public
    * @type {String}
    * @default null
    */
@@ -63,6 +63,7 @@ export default Component.extend({
    * Remove the normal max-width on the page
    *
    * @property fullWidth
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -72,6 +73,7 @@ export default Component.extend({
    * Decreases the maximum layout width. Intended for single-column layouts
    *
    * @property singleColumn
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -81,6 +83,7 @@ export default Component.extend({
    * Adds a border to the bottom of the page header
    *
    * @property separator
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -90,15 +93,28 @@ export default Component.extend({
    * Collection of secondary page-level actions
    *
    * @property secondaryActions
+   * @public
    * @type {Array}
    * @default null
    */
   secondaryActions: null,
 
   /**
+   * Collection of page-level groups of secondary actions
+   *
+   * @property actionGroups
+   * @public
+   * @type {Array}
+   * @default null
+   * TODO: not implemented yet
+   */
+  actionGroups: null,
+
+  /**
    * Primary page-level action
    *
    * @property primaryAction
+   * @public
    * @type {Object}
    * @default null
    */
@@ -108,6 +124,7 @@ export default Component.extend({
    * Page-level pagination
    *
    * @property pagination
+   * @public
    * @type {PaginationDescriptor}
    * @default null
    * TODO: not implemented yet
