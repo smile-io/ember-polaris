@@ -40,35 +40,37 @@
           </div>
         {{/if}}
 
-        <div class="Polaris-Page__SecondaryActions">
-          {{#if hasRollup}}
-            <div class="Polaris-Page__Rollup">
-              {{#polaris-popover as |popover|}}
-                {{#popover.activator}}
-                  {{polaris-button
-                    text="Actions"
-                    disclosure=true
-                  }}
-                {{/popover.activator}}
+        {{#if hasSecondaryActions}}
+          <div class="Polaris-Page__SecondaryActions">
+            {{#if hasRollup}}
+              <div class="Polaris-Page__Rollup">
+                {{#polaris-popover as |popover|}}
+                  {{#popover.activator}}
+                    {{polaris-button
+                      text="Actions"
+                      disclosure=true
+                    }}
+                  {{/popover.activator}}
 
-                {{#popover.content}}
-                  {{polaris-action-list
-                    items=secondaryActionsRollupItems
-                    onActionAnyItem=(action popover.close)
-                  }}
-                {{/popover.content}}
-              {{/polaris-popover}}
+                  {{#popover.content}}
+                    {{polaris-action-list
+                      items=secondaryActionsRollupItems
+                      onActionAnyItem=(action popover.close)
+                    }}
+                  {{/popover.content}}
+                {{/polaris-popover}}
+              </div>
+            {{/if}}
+
+            <div class="Polaris-Page__IndividualActions">
+              {{#each secondaryActions as |secondaryAction|}}
+                {{polaris-page/action action=secondaryAction}}
+              {{/each}}
+
+              {{!-- TODO: implement action groups here. --}}
             </div>
-          {{/if}}
-
-          <div class="Polaris-Page__IndividualActions">
-            {{#each secondaryActions as |secondaryAction|}}
-              {{polaris-page/action action=secondaryAction}}
-            {{/each}}
-
-            {{!-- TODO: implement action groups here. --}}
           </div>
-        </div>
+        {{/if}}
       </div>
     {{/wrapper-element}}
 

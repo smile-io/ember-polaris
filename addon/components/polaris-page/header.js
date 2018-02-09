@@ -11,7 +11,7 @@ export default Component.extend({
     'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
     'hasRollup:Polaris-Page__Header--hasRollup',
     'separator:Polaris-Page__Header--hasSeparator',
-    'secondaryActions:Polaris-Page__Header--hasSecondaryActions'
+    'hasSecondaryActions:Polaris-Page__Header--hasSecondaryActions'
   ],
 
   layout,
@@ -90,6 +90,7 @@ export default Component.extend({
   hasBreadcrumbs: gt('breadcrumbs.length', 0).readOnly(),
   hasNavigation: or('hasBreadcrumbs', 'pagination').readOnly(),
   hasActions: or('primaryAction', 'secondaryActions').readOnly(),
+  hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
   hasRollup: gt('secondaryActions.length', 1).readOnly(),
 
   secondaryActionsRollupItems: computed('secondaryActions.[]', function() {

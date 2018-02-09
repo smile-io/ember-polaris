@@ -47,6 +47,7 @@ test('it renders the page correctly', function(assert) {
 
   const headers = findAll(headerSelector);
   assert.equal(headers.length, 1, 'renders one page header div');
+  assert.notOk(headers[0].classList.contains('Polaris-Page__Header--hasSecondaryActions'), 'does not apply secondary actions class to header');
 
   const displayTextSelector = buildNestedSelector(
     headerSelector,
@@ -147,9 +148,11 @@ test('it handles secondary actions correctly when supplied', function(assert) {
     }}
   `);
 
+  const header = find(headerSelector);
+  assert.ok(header.classList.contains('Polaris-Page__Header--hasSecondaryActions'), 'applies secondary actions class');
+
   const secondaryActionsWrapperSelector = buildNestedSelector(
-    'div.Polaris-Page',
-    'div.Polaris-Page__Header',
+    headerSelector,
     'div.Polaris-Page__Actions',
     'div.Polaris-Page__SecondaryActions',
     'div.Polaris-Page__IndividualActions'
