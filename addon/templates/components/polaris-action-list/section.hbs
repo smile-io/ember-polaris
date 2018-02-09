@@ -10,7 +10,7 @@
       {{#each section.items as |item|}}
         {{polaris-action-list/item
           item=item
-          onAction=(action "onItemAction")
+          onAction=(action "onItemAction" item)
         }}
       {{/each}}
     </ul>

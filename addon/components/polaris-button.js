@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import { isPresent, isBlank, isNone } from '@ember/utils';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-button';
@@ -67,6 +68,15 @@ export default Component.extend({
    * @default false
    */
   disabled: false,
+
+  /**
+   * 	Replaces button text with a spinner while a background action is being performed
+   *
+   * @property loading
+   * @type {boolean}
+   * @default false
+   */
+  loading: false,
 
   /**
    * Change the size of the button
@@ -179,6 +189,8 @@ export default Component.extend({
   /**
    * Computed properties.
    */
+  isDisabled: or('disabled', 'loading').readOnly(),
+
   buttonComponentName: computed('url', function() {
     // TODO: refactor to use polaris-unstyled-link here
     const buttonType = isNone(this.get('url')) ? 'button' : 'link';
@@ -187,6 +199,19 @@ export default Component.extend({
 
   iconOnly: computed('icon', 'text', function() {
     return isBlank(this.get('text')) && isPresent(this.get('icon'));
+  }).readOnly(),
+
+  iconSource: computed('icon', 'loading', function() {
+    return this.get('loading') ? 'placeholder' : this.get('icon');
+  }).readOnly(),
+
+  disclosureIconSource: computed('loading', function() {
+    return this.get('loading') ? 'placeholder' : 'caret-down';
+  }).readOnly(),
+
+  spinnerColor: computed('primary', 'destructive', function() {
+    let { primary, destructive } = this.getProperties('primary', 'destructive');
+    return primary || destructive ? 'white' : 'inkLightest';
   }).readOnly(),
 
   handleMouseUpByBlurring,

@@ -219,11 +219,7 @@ test('it handles the "any item" action correctly', function(assert) {
 test('it renders the correct HTML when using sections', function(assert) {
   this.render(hbs`
     {{polaris-action-list
-      items=(array
-        (hash
-          text="Section 1 item"
-        )
-      )
+      items=items
       sections=(array
         (hash
           title="Section 2"
@@ -251,8 +247,15 @@ test('it renders the correct HTML when using sections', function(assert) {
   const actionLists = findAll(sectionedActionListSelector);
   assert.equal(actionLists.length, 1, 'renders one sectioned action list');
 
-  const actionListSections = findAll(sectionedActionListSectionSelector);
-  assert.equal(actionListSections.length, 3, 'renders three action list sections');
+  // Test sections without any additional items passed in.
+  let actionListSections = findAll(sectionedActionListSectionSelector);
+  assert.equal(actionListSections.length, 2, 'with no items and two sections - renders two action list sections');
+
+  // Add some items alongside the sections.
+  this.set('items', [{ text: 'Section 1 item' }]);
+
+  actionListSections = findAll(sectionedActionListSectionSelector);
+  assert.equal(actionListSections.length, 3, 'with items and two sections - renders three action list sections');
 
   // First section should have no title, one item with no icon.
   let section = actionListSections[0];

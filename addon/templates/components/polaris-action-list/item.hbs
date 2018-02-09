@@ -1,16 +1,12 @@
 <button
   class="Polaris-ActionList__Item"
   disabled={{item.disabled}}
-  onclick={{action onAction item}}
+  onclick={{action onAction}}
 >
   {{#if item.icon}}
     <div class="Polaris-ActionList__Content">
-      <div class="Polaris-ActionList__Image">
-        {{polaris-icon
-          source=item.icon
-          sourcePath=(if item.iconPath item.iconPath "polaris")
-        }}
-      </div>
+      {{polaris-action-list/image icon=item.icon}}
+
       <div class="Polaris-ActionList__Text">
         {{item.text}}
       </div>
