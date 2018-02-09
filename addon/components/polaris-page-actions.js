@@ -1,7 +1,7 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
-import { typeOf } from '@ember/utils';
+import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-page-actions';
 
 /**
@@ -43,10 +43,7 @@ export default Component.extend({
 
   actions: {
     fireAction(action) {
-      let handler = get(action, 'onAction');
-      if (typeOf(handler) === 'function') {
-        return handler();
-      }
+      invokeAction(action, 'onAction');
     }
   }
 });
