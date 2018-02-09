@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { get } from '@ember/object';
 import { typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-setting-toggle';
 
@@ -51,8 +52,9 @@ export default Component.extend({
    */
    actions: {
      fireAction(action) {
-       if (typeOf(action.action) === 'function') {
-         return action.action();
+       let handler = get(action, 'onAction');
+       if (typeOf(handler) === 'function') {
+         return handler();
        }
      }
    }

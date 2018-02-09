@@ -27,14 +27,14 @@ test('it renders the correct HTML when primary and secondary actions are supplie
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary button here"
+        text="Primary button here"
       )
       secondaryActions=(array
         (hash
-          content="This is a secondary button"
+          text="This is a secondary button"
         )
         (hash
-          content="This is another secondary button"
+          text="This is another secondary button"
         )
       )
     }}
@@ -70,7 +70,7 @@ test('it renders the correct HTML when primary action is supplied with empty sec
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary button here"
+        text="Primary button here"
       )
       secondaryActions=(array)
     }}
@@ -110,7 +110,7 @@ test('it renders the correct HTML when only a primary action is supplied', funct
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="I'm the only button here"
+        text="I'm the only button here"
       )
     }}
   `);
@@ -147,7 +147,7 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
   this.render(hbs`
     {{polaris-page-actions
       secondaryActions=(array (hash
-        content="I'm the only button here"
+        text="I'm the only button here"
       ))
     }}
   `);
@@ -186,7 +186,7 @@ test('it renders the correct HTML when the primary action is disabled', function
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="I'm the only button here"
+        text="I'm the only button here"
         disabled=true
       )
     }}
@@ -206,15 +206,15 @@ test('it renders the correct HTML when secondary actions have complex properties
     {{polaris-page-actions
       secondaryActions=(array
         (hash
-          content="Disabled secondary action"
+          text="Disabled secondary action"
           disabled=true
         )
         (hash
-          content="Destructive secondary action"
+          text="Destructive secondary action"
           destructive=true
         )
         (hash
-          content="Secondary action with icon"
+          text="Secondary action with icon"
           icon="notes"
         )
       )
@@ -260,17 +260,17 @@ test('it handles item actions correctly', function(assert) {
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary"
-        action=(action "primaryAction")
+        text="Primary"
+        onAction=(action "primaryAction")
       )
       secondaryActions=(array
         (hash
-          content="Secondary 1"
-          action=(action (mut secondaryAction1Fired) true)
+          text="Secondary 1"
+          onAction=(action (mut secondaryAction1Fired) true)
         )
         (hash
-          content="Secondary 2"
-          action=(action (mut secondaryAction2Fired) true)
+          text="Secondary 2"
+          onAction=(action (mut secondaryAction2Fired) true)
         )
       )
     }}

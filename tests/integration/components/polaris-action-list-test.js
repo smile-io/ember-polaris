@@ -58,10 +58,10 @@ test('it renders the correct HTML in basic usage', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="This is the first item"
+          text="This is the first item"
         )
         (hash
-          content="This is item number two"
+          text="This is item number two"
         )
       )
     }}
@@ -81,11 +81,11 @@ test('it renders the correct HTML when using icons', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Import some things"
+          text="Import some things"
           icon="import"
         )
         (hash
-          content="Export stuff"
+          text="Export stuff"
           icon="export"
         )
       )
@@ -123,12 +123,12 @@ test('it handles item actions correctly', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Item 1"
-          action=(action "action1")
+          text="Item 1"
+          onAction=(action "action1")
         )
         (hash
-          content="Item 2"
-          action=(action (mut action2Fired) true)
+          text="Item 2"
+          onAction=(action (mut action2Fired) true)
         )
       )
     }}
@@ -158,12 +158,12 @@ test('it does not bubble item actions', function(assert) {
       {{polaris-action-list
         items=(array
           (hash
-            content="Item 1"
-            action=(action (mut action2Fired) true)
+            text="Item 1"
+            onAction=(action (mut action2Fired) true)
           )
           (hash
-            content="Item 2"
-            action=(action (mut action2Fired) true)
+            text="Item 2"
+            onAction=(action (mut action2Fired) true)
           )
         )
       }}
@@ -195,11 +195,11 @@ test('it handles the "any item" action correctly', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Item 1"
+          text="Item 1"
         )
         (hash
-          content="Item 2"
-          action=(action (mut itemActionFired) true)
+          text="Item 2"
+          onAction=(action (mut itemActionFired) true)
         )
       )
       onActionAnyItem=(action "anyItem")
@@ -221,7 +221,7 @@ test('it renders the correct HTML when using sections', function(assert) {
     {{polaris-action-list
       items=(array
         (hash
-          content="Section 1 item"
+          text="Section 1 item"
         )
       )
       sections=(array
@@ -229,18 +229,18 @@ test('it renders the correct HTML when using sections', function(assert) {
           title="Section 2"
           items=(array
             (hash
-              content="Section 2 item 1"
+              text="Section 2 item 1"
               icon="notes"
             )
             (hash
-              content="Section 2 item 2"
+              text="Section 2 item 2"
             )
           )
         )
         (hash
           items=(array
             (hash
-              content="Section 3 item"
+              text="Section 3 item"
             )
           )
         )

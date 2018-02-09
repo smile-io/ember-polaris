@@ -13,6 +13,7 @@ export default Component.extend({
    * The item to display
    *
    * @property item
+   * @public
    * @type {Object}
    * @default null
    */
@@ -22,6 +23,7 @@ export default Component.extend({
    * Callback for the item when clicked
    *
    * @property onAction
+   * @public
    * @type {function}
    * @default no-op
    */

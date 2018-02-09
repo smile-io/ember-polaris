@@ -12,6 +12,7 @@ export default Component.extend({
    * Collection of action items
    *
    * @property section
+   * @public
    * @type {Object}
    * @default null
    */
@@ -21,6 +22,7 @@ export default Component.extend({
    * Whether the parent action list has multiple sections
    *
    * @property hasMultipleSections
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -30,7 +32,7 @@ export default Component.extend({
     onItemAction(item, event) {
       event.stopPropagation();
 
-      let itemAction = get(item, 'action');
+      let itemAction = get(item, 'onAction');
       if (typeOf(itemAction) === 'function') {
         itemAction();
       }

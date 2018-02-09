@@ -89,8 +89,8 @@ test('it handles primary action correctly when supplied', function(assert) {
       title="This is the title"
       primaryAction=(hash
         text="Take action!"
-        action=(action "primaryActionFired")
         disabled=primaryActionDisabled
+        onAction=(action "primaryActionFired")
       )
     }}
   `);
@@ -138,11 +138,11 @@ test('it handles secondary actions correctly when supplied', function(assert) {
       secondaryActions=(array
         (hash
           text="First secondary action"
-          action=(action "secondaryAction1")
+          onAction=(action "secondaryAction1")
         )
         (hash
           text="Second secondary action"
-          action=(action "secondaryAction2")
+          onAction=(action "secondaryAction2")
         )
       )
     }}
@@ -241,11 +241,11 @@ test('it handles breadcrumbs correctly', function(assert) {
   // Add the breadcrumbs.
   this.set('breadcrumbs', [
     {
-      content: 'Go back',
+      text: 'Go back',
       route: 'home'
     },
     {
-      content: 'No, really!',
+      text: 'No, really!',
       route: 'home.the-beginning',
       models: [
         { id: 13 },

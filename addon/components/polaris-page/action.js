@@ -43,5 +43,5 @@ export default Component.extend({
    * Action handlers.
    */
   mouseUp: handleMouseUpByBlurring,
-  click: mapEventToAction('action.action'),
+  click: mapEventToAction('action.onAction'),
 });

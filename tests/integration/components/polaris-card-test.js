@@ -135,17 +135,17 @@ test('it handles header actions correctly', function(assert) {
       title="This is a card with actions"
       headerActions=(array
         (hash
-          content="Action 1"
-          action=(action "action1Handler")
+          text="Action 1"
+          onAction=(action "action1Handler")
         )
         (hash
-          content="Action 2"
-          action=(action (mut action2HandlerCalled) true)
+          text="Action 2"
+          onAction=(action (mut action2HandlerCalled) true)
         )
         (hash
-          content="Action 3"
+          text="Action 3"
           disabled=true
-          action=(action (mut action3HandlerCalled) true)
+          onAction=(action (mut action3HandlerCalled) true)
         )
       )
     }}

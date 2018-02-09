@@ -177,7 +177,7 @@ export default Component.extend({
         event.stopPropagation();
       }
 
-      return invokeAction(this, action.action);
+      return invokeAction(this, action.onAction);
     }
   }
 });

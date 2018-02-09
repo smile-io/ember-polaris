@@ -187,7 +187,7 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   this.on('secAction', () => secActionFired  = true);
 
   this.render(hbs`{{polaris-banner
-    secondaryAction=(hash content="View" action=(action "secAction"))
+    secondaryAction=(hash text="View" onAction=(action "secAction"))
   }}`);
 
   banner = find(bannerSelector);
@@ -196,7 +196,7 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   assert.notOk(actions, 'banner with `secondaryAction` only - does not render the actions container');
 
   this.render(hbs`{{polaris-banner
-    action=(hash content="Edit" action=(action "mainAction"))
+    action=(hash text="Edit" onAction=(action "mainAction"))
   }}`);
 
   banner = find(bannerSelector);
@@ -210,8 +210,8 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   assert.notOk(secondaryActionBtn, 'banner with `action` only - does not render `secondaryAction` button');
 
   this.render(hbs`{{polaris-banner
-    action=(hash content="Edit" action=(action "mainAction"))
-    secondaryAction=(hash content="View" action=(action "secAction"))
+    action=(hash text="Edit" onAction=(action "mainAction"))
+    secondaryAction=(hash text="View" onAction=(action "secAction"))
   }}`);
 
   banner = find(bannerSelector);
@@ -221,7 +221,9 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline', btnGroup);
   secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction', btnGroup);
   assert.ok(actionBtn, 'banner with actions - renders `action` button');
+  assert.equal(actionBtn.textContent.trim(), 'Edit', 'banner with actions - renders correct `action` button text');
   assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
+  assert.equal(secondaryActionBtn.textContent.trim(), 'View', 'banner with actions - renders correct `secondaryAction` button text');
 
   click(actionBtn);
 

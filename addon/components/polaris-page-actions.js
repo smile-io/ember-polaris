@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { isArray } from '@ember/array';
 import { typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-page-actions';
@@ -43,8 +43,9 @@ export default Component.extend({
 
   actions: {
     fireAction(action) {
-      if (typeOf(action.action) === 'function') {
-        return action.action();
+      let handler = get(action, 'onAction');
+      if (typeOf(handler) === 'function') {
+        return handler();
       }
     }
   }

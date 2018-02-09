@@ -33,8 +33,8 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
       image="http://www.somewhere.com/some-image.jpg"
       text="I'm some inline text"
       action=(hash
-        content="Do something"
-        action=(action "doSomething")
+        text="Do something"
+        onAction=(action "doSomething")
       )
     }}
   `);
@@ -64,8 +64,8 @@ test('it renders the correct HTML in basic block usage', function(assert) {
       heading="Empty State Here"
       image="http://www.somewhere.com/some-image.jpg"
       action=(hash
-        content="Do something"
-        action=(action "doSomething")
+        text="Do something"
+        onAction=(action "doSomething")
       )
     }}
       <p class="block-content">This is some block content</p>
@@ -107,8 +107,8 @@ test('it handles actions correctly', function(assert) {
       image="http://www.somewhere.com/some-image.jpg"
       text="I'm some inline text"
       action=(hash
-        content="Main action"
-        action=(action "mainAction")
+        text="Main action"
+        onAction=(action "mainAction")
       )
       secondaryAction=secondaryAction
     }}
@@ -125,12 +125,13 @@ test('it handles actions correctly', function(assert) {
   assert.notOk(secondaryActionButton, 'does not render secondary action button when no secondary action supplied');
 
   this.set('secondaryAction', {
-    content: 'Secondary action',
-    action: () => { this.set('secondaryActionFired', true); },
+    text: 'Secondary action',
+    onAction: () => { this.set('secondaryActionFired', true); },
   });
 
   secondaryActionButton = find(secondaryActionSelector);
   assert.ok(secondaryActionButton, 'renders secondary action button when secondary action supplied');
+  assert.equal(secondaryActionButton.textContent.trim(), 'Secondary action', 'renders correct secondary action text when secondary action supplied');
 
   click(mainActionSelector);
   assert.ok(this.get('mainActionFired'), 'main action fires when main action button clicked');
@@ -151,8 +152,8 @@ test('it handles the imageContained attribute correctly', function(assert) {
       text="I'm some inline text"
       imageContained=imageContained
       action=(hash
-        content="Do something"
-        action=(action "doSomething")
+        text="Do something"
+        onAction=(action "doSomething")
       )
     }}
   `);
