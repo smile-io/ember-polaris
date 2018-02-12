@@ -1206,7 +1206,7 @@ Sectioned popover:
 
 * `git clone` this repository
 * `cd ember-polaris`
-* `npm install`
+* `yarn install`
 
 ### Running
 
