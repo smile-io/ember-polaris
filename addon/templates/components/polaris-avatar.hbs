@@ -1,0 +1,15 @@
+{{#if initials}}
+  <span class="Polaris-Avatar__Initials" aria-hidden="true">
+    {{initials}}
+  </span>
+{{/if}}
+
+{{#if finalSource}}
+  {{!-- TODO: replace this with polaris-image when implemented. --}}
+  <img
+    class="Polaris-Avatar__Image"
+    src={{finalSource}}
+    alt=""
+    role="presentation"
+  >
+{{/if}}
