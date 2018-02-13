@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import wait from 'ember-test-helpers/wait';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
@@ -82,7 +83,10 @@ test('it handles primary action correctly when supplied', function(assert) {
   this.on('primaryActionFired', () => {
     primaryActionFired = true;
   });
-  this.set('primaryActionDisabled', true);
+  this.setProperties({
+    primaryActionDisabled: true,
+    primaryActionLoading: false,
+  });
 
   this.render(hbs`
     {{polaris-page
@@ -90,6 +94,7 @@ test('it handles primary action correctly when supplied', function(assert) {
       primaryAction=(hash
         text="Take action!"
         disabled=primaryActionDisabled
+        loading=primaryActionLoading
         onAction=(action "primaryActionFired")
       )
     }}
@@ -112,12 +117,20 @@ test('it handles primary action correctly when supplied', function(assert) {
   assert.equal(primaryButtonText, 'Take action!', 'uses correct text on primary button');
 
   assert.ok(primaryButton.disabled, 'primary action button is initially disabled');
-  this.set('primaryActionDisabled', false);
-  assert.notOk(primaryButton.disabled, 'primary action button becomes enabled');
+  assert.notOk(primaryButton.classList.contains('Polaris-Button--loading'), 'primary action button is not initially in loading state');
 
+  this.setProperties({
+    primaryActionDisabled: false,
+    primaryActionLoading: true,
+  });
+  assert.ok(primaryButton.classList.contains('Polaris-Button--loading'), 'primary action button goes into loading state');
+
+  this.set('primaryActionLoading', false);
+  assert.notOk(primaryButton.disabled, 'primary action button becomes enabled');
   assert.notOk(primaryActionFired, 'hasn\'t fired primary action before clicking button');
-  click(primaryButtonSelector)
-  .then(() => {
+
+  click(primaryButtonSelector);
+  return wait().then(() => {
     assert.ok(primaryActionFired, 'fires primary action on click');
   });
 });
@@ -171,17 +184,21 @@ test('it handles secondary actions correctly when supplied', function(assert) {
   assert.notOk(secondaryAction1Fired, 'first secondary action - not fired before clicking button');
   assert.notOk(secondaryAction2Fired, 'second secondary action - not fired before clicking button');
 
+  const focussedSecondaryButtonSelector = `${ secondaryActionsButtonSelector }:focus`;
   let secondaryActionsWrapper = find(secondaryActionsWrapperSelector);
   click('button:first-child', secondaryActionsWrapper);
-  assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
-  assert.notOk(secondaryAction2Fired, 'second secondary action - not fired after clicking first button');
+  return wait().then(() => {
+    assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
+    assert.notOk(secondaryAction2Fired, 'second secondary action - not fired after clicking first button');
 
-  const focussedSecondaryButtonSelector = `${ secondaryActionsButtonSelector }:focus`;
-  assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking first secondary action');
+    assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking first secondary action');
 
-  click('button:last-child', secondaryActionsWrapper);
-  assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
-  assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking second secondary action');
+    click('button:last-child', secondaryActionsWrapper);
+    return wait();
+  }).then(() => {
+    assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
+    assert.notOk(find(focussedSecondaryButtonSelector), 'no focussed buttons after clicking second secondary action');
+  });
 });
 
 test('it renders action icons correctly', function(assert) {

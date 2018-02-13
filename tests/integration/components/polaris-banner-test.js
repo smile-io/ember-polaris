@@ -210,8 +210,9 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   assert.ok(actionBtn, 'banner with `action` only - renders `action` button');
   assert.notOk(secondaryActionBtn, 'banner with `action` only - does not render `secondaryAction` button');
 
+  this.set('mainActionLoading', true);
   this.render(hbs`{{polaris-banner
-    action=(hash text="Edit" onAction=(action "mainAction"))
+    action=(hash text="Edit" loading=mainActionLoading onAction=(action "mainAction"))
     secondaryAction=(hash text="View" onAction=(action "secAction"))
   }}`);
 
@@ -222,7 +223,12 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   actionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline', btnGroup);
   secondaryActionBtn = find('div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction', btnGroup);
   assert.ok(actionBtn, 'banner with actions - renders `action` button');
+  assert.ok(actionBtn.classList.contains('Polaris-Button--loading'), 'banner with actions - `action` button starts in loading state');
+
+  this.set('mainActionLoading', false);
+  assert.notOk(actionBtn.classList.contains('Polaris-Button--loading'), 'banner with actions - `action` button exits loading state');
   assert.equal(actionBtn.textContent.trim(), 'Edit', 'banner with actions - renders correct `action` button text');
+
   assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
   assert.equal(secondaryActionBtn.textContent.trim(), 'View', 'banner with actions - renders correct `secondaryAction` button text');
 

@@ -8,6 +8,7 @@ export default Component.extend({
     'primary:Polaris-Button--primary',
     'destructive:Polaris-Button--destructive',
     'disabled:Polaris-Button--disabled',
+    'loading:Polaris-Button--loading',
     'outline:Polaris-Button--outline',
     'fullWidth:Polaris-Button--fullWidth',
     'plain:Polaris-Button--plain',
