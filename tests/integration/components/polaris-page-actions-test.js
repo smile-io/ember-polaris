@@ -201,6 +201,26 @@ test('it renders the correct HTML when the primary action is disabled', function
   assert.ok(primaryButton.disabled, 'primary button is disabled');
 });
 
+test('it renders the correct HTML when the primary action is loading', function(assert) {
+  this.render(hbs`
+    {{polaris-page-actions
+      primaryAction=(hash
+        text="I'm the only button here"
+        loading=true
+      )
+    }}
+  `);
+
+  const primaryButtonSelector = buildNestedSelector(
+    pageActionsStackItemSelector,
+    'button.Polaris-Button.Polaris-Button--primary'
+  );
+  const primaryButton = find(primaryButtonSelector);
+  assert.ok(primaryButton, 'renders primary button');
+  assert.ok(primaryButton.disabled, 'primary button is disabled');
+  assert.ok(primaryButton.classList.contains('Polaris-Button--loading'), 'primary button is in loading state');
+});
+
 test('it renders the correct HTML when secondary actions have complex properties', function(assert) {
   this.render(hbs`
     {{polaris-page-actions
@@ -208,6 +228,10 @@ test('it renders the correct HTML when secondary actions have complex properties
         (hash
           text="Disabled secondary action"
           disabled=true
+        )
+        (hash
+          text="Loading secondary action"
+          loading=true
         )
         (hash
           text="Destructive secondary action"
@@ -222,26 +246,37 @@ test('it renders the correct HTML when secondary actions have complex properties
   `);
 
   const secondaryButtons = findAll(secondaryButtonSelector);
-  assert.equal(secondaryButtons.length, 3, 'renders three secondary buttons');
+  assert.equal(secondaryButtons.length, 4, 'renders four secondary buttons');
 
   // Check the first (disabled) button.
   let secondaryButton = secondaryButtons[0];
   assert.ok(secondaryButton.disabled, 'disabled secondary button is disabled');
   assert.ok(secondaryButton.classList.contains('Polaris-Button--disabled'), 'disabled secondary button has disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'disabled secondary button does not have loading class');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'disabled secondary button does not have destructive class');
   assert.notOk(find(iconSelector, secondaryButton), 'disabled secondary button does not have an icon');
 
-  // Check the second (destructive) button.
+  // Check the second (loading) button.
   secondaryButton = secondaryButtons[1];
+  assert.ok(secondaryButton.disabled, 'loading secondary button is disabled');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--disabled'), 'loading secondary button has disabled class');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--loading'), 'loading secondary button has loading class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'disabled secondary button does not have destructive class');
+  assert.notOk(find(iconSelector, secondaryButton), 'disabled secondary button does not have an icon');
+
+  // Check the third (destructive) button.
+  secondaryButton = secondaryButtons[2];
   assert.notOk(secondaryButton.disabled, 'destructive secondary button is not disabled');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'destructive secondary button does not have disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'destructive secondary button does not have loading class');
   assert.ok(secondaryButton.classList.contains('Polaris-Button--destructive'), 'destructive secondary button has destructive class');
   assert.notOk(find(iconSelector, secondaryButton), 'destructive secondary button does not have an icon');
 
-  // Check the third (iconed) button.
-  secondaryButton = secondaryButtons[2];
+  // Check the fourth (iconed) button.
+  secondaryButton = secondaryButtons[3];
   assert.notOk(secondaryButton.disabled, 'iconed secondary button is not disabled');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'iconed secondary button does not have disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'iconed secondary button does not have loading class');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'iconed secondary button does not have destructive class');
 
   const icon = find(iconSelector, secondaryButton);

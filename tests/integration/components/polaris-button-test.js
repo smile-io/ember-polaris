@@ -354,7 +354,8 @@ test('handles the loading flag correctly', function(assert) {
 
   // Before setting the loading flag, the button should show text, icon and disclosure icon.
   let button = find('button.Polaris-Button');
-  assert.notOk(button.classList.contains('Polaris-Button--loading'), 'loading set - does not have loading class');
+  assert.notOk(button.classList.contains('Polaris-Button--loading'), 'loading unset - does not have loading class');
+  assert.notOk(button.classList.contains('Polaris-Button--disabled'), 'loading unset - does not have disabled class');
 
   let buttonText = find(buttonTextSelector, button).innerText;
   assert.equal(buttonText, 'This is a loading button', 'loading unset - renders correct button text');
@@ -384,6 +385,7 @@ test('handles the loading flag correctly', function(assert) {
   //  - render a spinner;
   //  - be disabled.
   assert.ok(button.classList.contains('Polaris-Button--loading'), 'loading set - has loading class');
+  assert.ok(button.classList.contains('Polaris-Button--disabled'), 'loading set - has disabled class');
   const iconPlaceholderSelector = buildNestedSelector(
     buttonIconSelector,
     'span.Polaris-Icon',
