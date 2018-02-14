@@ -1,0 +1,43 @@
+<div class="
+  Polaris-SkeletonPage__Header
+  {{if breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
+  {{if dummySecondaryActions "Polaris-SkeletonPage__Header--hasSecondaryActions"}}
+">
+  {{#if breadcrumbs}}
+    <div class="Polaris-SkeletonPage__Actions">
+      <div class="Polaris-SkeletonPage__Action">
+        {{polaris-skeleton-body-text lines=1}}
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if hasTitle}}
+    <div class="Polaris-SkeletonPage__Title">
+      {{#if hasTitleText}}
+        {{polaris-display-text
+          tagName="h1"
+          size="large"
+          text=title
+        }}
+      {{else}}
+        {{polaris-skeleton-display-text size="large"}}
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{#each dummySecondaryActions}}
+    <div class="Polaris-SkeletonPage__Actions">
+      <div class="Polaris-SkeletonPage__Action">
+        {{polaris-skeleton-body-text lines=1}}
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+<div class="Polaris-SkeletonPage__Content">
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</div>

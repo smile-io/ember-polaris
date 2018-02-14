@@ -20,13 +20,13 @@ export default Component.extend({
   lines: defaultLines,
 
   /**
-   * Array to iterate over in template
+   * Array of dummy lines to iterate over in template
    *
-   * @property linesArray
+   * @property dummyLines
    * @private
    * @type {Array}
    */
-  linesArray: computed('lines', function() {
+  dummyLines: computed('lines', function() {
     let lines = parseInt(this.get('lines'));
     if (isNaN(lines)) {
       lines = defaultLines;
