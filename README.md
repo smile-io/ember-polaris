@@ -23,6 +23,7 @@
 
 #### Feedback indicators
 - Banner
+- Skeleton body text
 - Spinner
 
 #### Structure
@@ -431,6 +432,23 @@ With a success status set, custom icon, content, dismiss button and actions:
 }}
   <p>This order has been shipped.</p>
 {{/polaris-banner}}
+```
+
+##### Skeleton body text
+`polaris-skeleton-body-text` implements the [Polaris Skeleton body text component](https://polaris.shopify.com/components/feedback-indicators/skeleton-body-text).
+
+###### Examples
+
+Basic usage (renders three skeleton text lines):
+
+```hbs
+{{polaris-skeleton-body-text}}
+```
+
+Single skeleton text line:
+
+```hbs
+{{polaris-skeleton-body-text lines=1}}
 ```
 
 ##### Spinner
