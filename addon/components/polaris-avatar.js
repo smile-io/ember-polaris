@@ -12,6 +12,7 @@ const allowedSizes = [
 ];
 const defaultSize = 'medium';
 
+// TODO currently we don't need these...recheck when icons are properly handled
 const avatarImages = [
   'avatarOne',
   'avatarTwo',
@@ -204,6 +205,6 @@ export default Component.extend({
 
     let name = this.get('finalName');
     let avatarIndex = isNone(name) ? 0 : name.charCodeAt(0) % avatarImages.length;
-    return `${ this.get('avatarSourcePath') }/${ avatarImages[avatarIndex] }.svg`;
+    return `${ this.get('avatarSourcePath') }/avatar-${ ++avatarIndex }.svg`;
   }).readOnly(),
 });
