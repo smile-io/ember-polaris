@@ -134,5 +134,5 @@ test('it renders the correct image markup', function(assert) {
   this.set('source', null);
   image = find(imageSelector);
   assert.ok(image, 'without source and with customer - renders an image');
-  assert.equal(image.src, 'https://my-avatar-images/avatarOne.svg', 'without source and with customer - renders the correct image');
+  assert.equal(image.src, 'https://my-avatar-images/avatar-1.svg', 'without source and with customer - renders the correct image');
 });
