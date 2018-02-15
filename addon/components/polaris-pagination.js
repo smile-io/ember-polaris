@@ -4,11 +4,12 @@ import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-pagination';
 
 export default Component.extend({
-  layout,
-  tagName: 'span',
-
+  tagName: 'nav',
   classNames: ['Polaris-Pagination'],
   classNameBindings: ['plain:Polaris-Pagination--plain'],
+  attributeBindings: ['accessibilityLabel:aria-label'],
+
+  layout,
 
   /**
    * A more subdued control for use in headers
@@ -56,6 +57,15 @@ export default Component.extend({
    * @default false
    */
   hasPrevious: false,
+
+  /**
+   * Visually hidden text for screen readers
+   *
+   * @property accessibilityLabel
+   * @type {string}
+   * @default 'Pagination'
+   */
+  accessibilityLabel: 'Pagination',
 
   /**
    * Callback when next button is clicked

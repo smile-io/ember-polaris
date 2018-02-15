@@ -1,5 +1,9 @@
 import Component from '@ember/component';
-import { typeOf } from '@ember/utils';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
+import { isPresent } from '@ember/utils';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
 import layout from '../templates/components/polaris-action-list';
 
 /**
@@ -7,17 +11,14 @@ import layout from '../templates/components/polaris-action-list';
  * See https://polaris.shopify.com/components/actions/action-list
  */
 export default Component.extend({
-  classNames: ['Polaris-ActionList'],
+  tagName: '',
 
   layout,
-
-  /*
-   * Public attributes.
-   */
   /**
    * Collection of actions for list
    *
    * @property items
+   * @public
    * @type {Array}
    * @default null
    */
@@ -27,24 +28,39 @@ export default Component.extend({
    * Collection of sectioned action items
    *
    * @property sections
+   * @public
    * @type {Array}
    * @default null
-   * TODO: not implemented
    */
   sections: null,
+
+  /**
+   * Callback when any item is clicked or keypressed
+   *
+   * @property onActionAnyItem
+   * @public
+   * @type {function}
+   * @default no-op
+   */
+  onActionAnyItem() {},
 
   /*
    * Internal properties.
    */
-  actions: {
-    fireItemAction(item, event) {
-      event.stopPropagation();
+  finalSections: computed('items', 'sections.[]', function() {
+    let finalSections = [];
 
-      if (typeOf(item.action) === 'function') {
-        return item.action();
-      }
-
-      return null;
+    let items = this.get('items');
+    if (isPresent(items)) {
+      finalSections.push({ items });
     }
-  }
+
+    let sections = this.get('sections') || [];
+    assert(`ember-polaris::polaris-action-list - sections must be an array, you passed ${ sections }`, isArray(sections));
+    finalSections.push(...sections);
+
+    return finalSections;
+  }).readOnly(),
+
+  hasMultipleSections: gt('finalSections.length', 1).readOnly(),
 });

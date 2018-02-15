@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
+import { typeOf, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-color-picker';
 import { clamp } from '../utils/math';
@@ -80,6 +80,10 @@ export default Component.extend({
 
     // Grab the size of the picker for positioning the draggable markers.
     const mainColorElement = this.$('div.Polaris-ColorPicker__MainColor')[0];
+    if (isNone(mainColorElement)) {
+      return;
+    }
+
     this.set('pickerSize', mainColorElement.clientWidth);
   },
 

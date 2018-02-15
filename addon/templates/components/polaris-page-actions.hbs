@@ -6,8 +6,9 @@
     {{#polaris-button-group}}
       {{#each secondaryActions as |secondaryAction|}}
         {{polaris-button
-          text=secondaryAction.content
+          text=secondaryAction.text
           disabled=secondaryAction.disabled
+          loading=secondaryAction.loading
           destructive=secondaryAction.destructive
           icon=secondaryAction.icon
           onClick=(action "fireAction" secondaryAction)
@@ -20,7 +21,8 @@
     {{polaris-button
       primary=true
       disabled=primaryAction.disabled
-      text=primaryAction.content
+      loading=primaryAction.loading
+      text=primaryAction.text
       onClick=(action "fireAction" primaryAction)
     }}
   {{/if}}

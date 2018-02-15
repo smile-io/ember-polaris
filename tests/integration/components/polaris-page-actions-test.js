@@ -27,14 +27,14 @@ test('it renders the correct HTML when primary and secondary actions are supplie
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary button here"
+        text="Primary button here"
       )
       secondaryActions=(array
         (hash
-          content="This is a secondary button"
+          text="This is a secondary button"
         )
         (hash
-          content="This is another secondary button"
+          text="This is another secondary button"
         )
       )
     }}
@@ -70,7 +70,7 @@ test('it renders the correct HTML when primary action is supplied with empty sec
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary button here"
+        text="Primary button here"
       )
       secondaryActions=(array)
     }}
@@ -110,7 +110,7 @@ test('it renders the correct HTML when only a primary action is supplied', funct
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="I'm the only button here"
+        text="I'm the only button here"
       )
     }}
   `);
@@ -147,7 +147,7 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
   this.render(hbs`
     {{polaris-page-actions
       secondaryActions=(array (hash
-        content="I'm the only button here"
+        text="I'm the only button here"
       ))
     }}
   `);
@@ -186,7 +186,7 @@ test('it renders the correct HTML when the primary action is disabled', function
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="I'm the only button here"
+        text="I'm the only button here"
         disabled=true
       )
     }}
@@ -201,20 +201,44 @@ test('it renders the correct HTML when the primary action is disabled', function
   assert.ok(primaryButton.disabled, 'primary button is disabled');
 });
 
+test('it renders the correct HTML when the primary action is loading', function(assert) {
+  this.render(hbs`
+    {{polaris-page-actions
+      primaryAction=(hash
+        text="I'm the only button here"
+        loading=true
+      )
+    }}
+  `);
+
+  const primaryButtonSelector = buildNestedSelector(
+    pageActionsStackItemSelector,
+    'button.Polaris-Button.Polaris-Button--primary'
+  );
+  const primaryButton = find(primaryButtonSelector);
+  assert.ok(primaryButton, 'renders primary button');
+  assert.ok(primaryButton.disabled, 'primary button is disabled');
+  assert.ok(primaryButton.classList.contains('Polaris-Button--loading'), 'primary button is in loading state');
+});
+
 test('it renders the correct HTML when secondary actions have complex properties', function(assert) {
   this.render(hbs`
     {{polaris-page-actions
       secondaryActions=(array
         (hash
-          content="Disabled secondary action"
+          text="Disabled secondary action"
           disabled=true
         )
         (hash
-          content="Destructive secondary action"
+          text="Loading secondary action"
+          loading=true
+        )
+        (hash
+          text="Destructive secondary action"
           destructive=true
         )
         (hash
-          content="Secondary action with icon"
+          text="Secondary action with icon"
           icon="notes"
         )
       )
@@ -222,26 +246,37 @@ test('it renders the correct HTML when secondary actions have complex properties
   `);
 
   const secondaryButtons = findAll(secondaryButtonSelector);
-  assert.equal(secondaryButtons.length, 3, 'renders three secondary buttons');
+  assert.equal(secondaryButtons.length, 4, 'renders four secondary buttons');
 
   // Check the first (disabled) button.
   let secondaryButton = secondaryButtons[0];
   assert.ok(secondaryButton.disabled, 'disabled secondary button is disabled');
   assert.ok(secondaryButton.classList.contains('Polaris-Button--disabled'), 'disabled secondary button has disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'disabled secondary button does not have loading class');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'disabled secondary button does not have destructive class');
   assert.notOk(find(iconSelector, secondaryButton), 'disabled secondary button does not have an icon');
 
-  // Check the second (destructive) button.
+  // Check the second (loading) button.
   secondaryButton = secondaryButtons[1];
+  assert.ok(secondaryButton.disabled, 'loading secondary button is disabled');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--disabled'), 'loading secondary button has disabled class');
+  assert.ok(secondaryButton.classList.contains('Polaris-Button--loading'), 'loading secondary button has loading class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'disabled secondary button does not have destructive class');
+  assert.notOk(find(iconSelector, secondaryButton), 'disabled secondary button does not have an icon');
+
+  // Check the third (destructive) button.
+  secondaryButton = secondaryButtons[2];
   assert.notOk(secondaryButton.disabled, 'destructive secondary button is not disabled');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'destructive secondary button does not have disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'destructive secondary button does not have loading class');
   assert.ok(secondaryButton.classList.contains('Polaris-Button--destructive'), 'destructive secondary button has destructive class');
   assert.notOk(find(iconSelector, secondaryButton), 'destructive secondary button does not have an icon');
 
-  // Check the third (iconed) button.
-  secondaryButton = secondaryButtons[2];
+  // Check the fourth (iconed) button.
+  secondaryButton = secondaryButtons[3];
   assert.notOk(secondaryButton.disabled, 'iconed secondary button is not disabled');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--disabled'), 'iconed secondary button does not have disabled class');
+  assert.notOk(secondaryButton.classList.contains('Polaris-Button--loading'), 'iconed secondary button does not have loading class');
   assert.notOk(secondaryButton.classList.contains('Polaris-Button--destructive'), 'iconed secondary button does not have destructive class');
 
   const icon = find(iconSelector, secondaryButton);
@@ -260,17 +295,17 @@ test('it handles item actions correctly', function(assert) {
   this.render(hbs`
     {{polaris-page-actions
       primaryAction=(hash
-        content="Primary"
-        action=(action "primaryAction")
+        text="Primary"
+        onAction=(action "primaryAction")
       )
       secondaryActions=(array
         (hash
-          content="Secondary 1"
-          action=(action (mut secondaryAction1Fired) true)
+          text="Secondary 1"
+          onAction=(action (mut secondaryAction1Fired) true)
         )
         (hash
-          content="Secondary 2"
-          action=(action (mut secondaryAction2Fired) true)
+          text="Secondary 2"
+          onAction=(action (mut secondaryAction2Fired) true)
         )
       )
     }}

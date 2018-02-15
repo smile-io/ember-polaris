@@ -6,7 +6,7 @@
 
 ## Status
 
-**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited._
+**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited and some features of those which have been built may be unimplemented._
 
 ### Implemented components
 
@@ -17,11 +17,13 @@
 - Setting toggle
 
 #### Images and icons
+- Avatar
 - Badge
 - Icon
 
-#### Feedback and indicators
+#### Feedback indicators
 - Banner
+- Spinner
 
 #### Structure
 - Callout card
@@ -151,7 +153,7 @@ Some Polaris React components accept an `actions` property as a list of actions 
 #### Actions
 
 ##### Action list
-`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list). Note that `sections` are not yet supported.
+`polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list).
 
 ###### Examples
 
@@ -161,12 +163,12 @@ Basic usage:
 {{polaris-action-list
   items=(array
     (hash
-      content="This is the first item"
-      action=(action "firstItemClicked")
+      text="This is the first item"
+      onAction=(action "firstItemClicked")
     )
     (hash
-      content="This is item number two"
-      action=(action (mut secondItemClicked) true)
+      text="This is item number two"
+      onAction=(action (mut secondItemClicked) true)
     )
   )
 }}
@@ -178,16 +180,57 @@ With icons:
 {{polaris-action-list
   items=(array
     (hash
-      content="Add an item..."
+      text="Add an item..."
       icon="add"
-      action=(action "addItem")
+      onAction=(action "addItem")
     )
     (hash
-      content="Delete this item"
+      text="Delete this item"
       icon="delete"
-      action=(action "deleteItem")
+      onAction=(action "deleteItem")
     )
   )
+}}
+```
+
+With sections and an action fired when any item is selected:
+
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      text="View"
+      onAction=(action "viewItem")
+    )
+    (hash
+      text="Delete"
+      onAction=(action "deleteItem")
+    )
+  )
+  sections=(array
+    (hash
+      title="Social"
+      items=(array
+        (hash
+          text="Share on Facebook"
+          onAction=(action "shareOnFacebook")
+        )
+        (hash
+          text="Share on Twitter"
+          onAction=(action "shareOnTwitter")
+        )
+      )
+    )
+    (hash
+      items=(array
+        (hash
+          text="About"
+          onAction=(action "showInfo")
+        )
+      )
+    )
+  )
+  onActionAnyItem=(action "anyItemSelected")
 }}
 ```
 
@@ -211,11 +254,21 @@ Slim external link:
 ```hbs
 {{#polaris-button
   url="www.example.com"
-  external="true"
+  external=true
   size="slim"
 }}
   I'm a link
 {{/polaris-button}}
+```
+
+Loading button with a spinner:
+
+```hbs
+{{polaris-button
+  text="Load something"
+  loading=isLoading
+  onClick=(action (mut isLoading) true)
+}}
 ```
 
 ##### Button group
@@ -269,8 +322,8 @@ Inline usage:
   text="Some boolean setting"
   enabled=enabled
   action=(hash
-    content="Toggle it!"
-    action=(action "toggleSetting")
+    text="Toggle it!"
+    onAction=(action "toggleSetting")
   )
 }}
 ```
@@ -281,8 +334,8 @@ Block usage:
 {{#polaris-setting-toggle
   enabled=enabled
   action=(hash
-    content="Disable it!"
-    action=(action (mut enabled) false)
+    text="Disable it!"
+    onAction=(action (mut enabled) false)
   )
 }}
   This setting is currently <strong>{{if enabled "enabled" "disabled"}}</strong>
@@ -290,6 +343,23 @@ Block usage:
 ```
 
 #### Images and icons
+
+##### Avatar
+`polaris-avatar` implements the [Polaris Avatar component](https://polaris.shopify.com/components/images-and-icons/avatar). Note that we have added an `avatarSourcePath` property which specifies the path to where the included Polaris avatar SVG images reside in the host application.
+
+###### Examples
+
+Basic usage:
+
+```hbs
+{{polaris-avatar name="Jim Smith"}}
+```
+
+Display a customer avatar with a specific image:
+
+```hbs
+{{polaris-avatar customer=true source="/assets/avatars/jim-smith.png"}}
+```
 
 ##### Badge
 `polaris-badge` implements the [Polaris Badge component](https://polaris.shopify.com/components/images-and-icons/badge).
@@ -330,10 +400,10 @@ to render the SVG icons.
 You will have to make sure that you copy the icons into your public folder and
 configure `ember-svg-jar` to serve them from `polaris` namespace.
 
-#### Feedback and indicators
+#### Feedback indicators
 
 ##### Banner
-`polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner#navigation).
+`polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner).
 
 ###### Examples
 
@@ -349,12 +419,39 @@ With a success status set, custom icon, content, dismiss button and actions:
 {{#polaris-banner
   status="success"
   icon="confetti"
-  action=(hash content="Track" action=(action "trackPackage")
-  secondaryAction=(hash content="View" action=(action "viewOrder")
+  action=(hash
+    text="Track"
+    onAction=(action "trackPackage")
+  )
+  secondaryAction=(hash
+    text="View"
+    onAction=(action "viewOrder")
+  )
   onDismiss=(action "handleDismiss")
 }}
-    <p>This order has been shipped.</p>
+  <p>This order has been shipped.</p>
 {{/polaris-banner}}
+```
+
+##### Spinner
+`polaris-spinner` implements the [Polaris Spinner component](https://polaris.shopify.com/components/feedback-indicators/spinner).
+
+###### Examples
+
+Basic usage (renders a large, teal-colored spinner):
+
+```hbs
+{{polaris-spinner}}
+```
+
+With a size and color specified and an accessibility label:
+
+```hbs
+{{polaris-spinner
+  size="small"
+  color="inkLightest"
+  accessibilityLabel="access granted"
+}}
 ```
 
 #### Structure
@@ -371,8 +468,8 @@ Inline usage without secondary action:
   title="New feature"
   text="This new feature is awesome!"
   primaryAction=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
 }}
 ```
@@ -383,12 +480,12 @@ Block usage with secondary action:
 {{#polaris-callout-card
   title="New feature"
   primaryAction=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
   secondaryAction=(hash
-    content="Learn more"
-    action=(action "showDetails")
+    text="Learn more"
+    onAction=(action "showDetails")
   )
 }}
   We've got an awesome new feature!
@@ -426,12 +523,12 @@ With actions in the header (needs a non-empty title):
   title="This is a card with actions"
   headerActions=(array
     (hash
-      content="Action 1"
-      action=(action "doSomething")
+      text="Action 1"
+      onAction=(action "doSomething")
     )
     (hash
-      content="Action 2"
-      action=(action (mut action2Clicked) true)
+      text="Action 2"
+      onAction=(action (mut action2Clicked) true)
     )
   )
 }}
@@ -472,8 +569,8 @@ Inline usage without secondary action:
   image="new-feature.jpg"
   text="This new feature is great"
   action=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
 }}
 ```
@@ -485,12 +582,12 @@ Block usage with secondary action:
   heading="Check out this new feature"
   image="new-feature.jpg"
   action=(hash
-    content="Take a look"
-    action=(action "showNewFeature")
+    text="Take a look"
+    onAction=(action "showNewFeature")
   )
   secondaryAction=(hash
-    content="Learn more"
-    action=(action "openBlog")
+    text="Learn more"
+    onAction=(action "openBlog")
   )
 }}
   We've got an awesome new feature!
@@ -549,7 +646,7 @@ Annotated layout:
 ##### Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon`, `actionGroups` and `pagination` properties are currently unimplemented._
 
 ###### Examples
 
@@ -571,35 +668,35 @@ Full-width page with disableable primary action and secondary actions (using [em
   fullWidth=true
   primaryAction=(hash
     text="Take action!"
-    action=(action "primaryActionFired")
     disabled=primaryActionDisabled
+    onAction=(action "primaryActionFired")
   )
   secondaryActions=(array
     (hash
       text="Do something"
-      action=(action "secondaryAction1Fired")
+      onAction=(action "secondaryAction1Fired")
     )
     (hash
       text="Do something else"
-      action=(action (mut secondaryAction2Fired) true)
+      onAction=(action (mut secondaryAction2Fired) true)
     )
   )
 }}
 ```
 
-Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)). Breadcrumbs take `content` and `route` properties, and an optional `models` property for dynamic route segments:
+Page with title and breadcrumbs (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)). Breadcrumbs take `text` and `route` properties, and an optional `models` property for dynamic route segments. N.B. only the last breadcrumb will be rendered:
 
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
   breadcrumbs=(array
     (hash
-      content="Parent"
+      text="Parent"
       route="parent"
       models=parent
     )
     (hash
-      content="Child"
+      text="Child"
       route="parent.child"
       models=(array parent child)
     )
@@ -619,8 +716,8 @@ Primary action only:
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
-    content="Save"
-    action=(action "save")
+    text="Save"
+    onAction=(action "save")
   )
 }}
 ```
@@ -630,17 +727,17 @@ Primary action with two secondary actions (using [ember-array-helper](https://gi
 ```hbs
 {{polaris-page-actions
   primaryAction=(hash
-    content="Save"
-    action=(action "save")
+    text="Save"
+    onAction=(action "save")
   )
   secondaryActions=(array
     (hash
-      content="Delete"
-      action=(action "delete")
+      text="Delete"
+      onAction=(action "delete")
     )
     (hash
-      content="Cancel"
-      action=(action "cancel")
+      text="Cancel"
+      onAction=(action "cancel")
     )
   )
 }}
@@ -1054,7 +1151,7 @@ Button usage:
 
 ##### Pagination
 `polaris-pagination` implements the [Polaris Pagination
-component](https://polaris.shopify.com/components/navigation/pagination#navigation).
+component](https://polaris.shopify.com/components/navigation/pagination).
 
 **NOTE:** _the following properties are not currently implemented: `nextUrl` and `previousUrl`._
 
@@ -1127,7 +1224,7 @@ Sectioned popover:
 
 * `git clone` this repository
 * `cd ember-polaris`
-* `npm install`
+* `yarn install`
 
 ### Running
 

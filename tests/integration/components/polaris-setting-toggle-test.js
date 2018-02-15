@@ -46,7 +46,7 @@ test('it renders the correct HTML in block usage with action supplied', function
   this.render(hbs`
     {{#polaris-setting-toggle
       action=(hash
-        content="Take action!"
+        text="Take action!"
       )
     }}
       Block setting toggle
@@ -77,7 +77,7 @@ test('it handles the enabled attribute correctly', function(assert) {
     {{polaris-setting-toggle
       enabled=enabled
       action=(hash
-        content="Flip the switch"
+        text="Flip the switch"
       )
     }}
   `);
@@ -98,8 +98,8 @@ test('it handles the suppied action correctly', function(assert) {
     {{polaris-setting-toggle
       enabled=enabled
       action=(hash
-        content="Flip the switch"
-        action=(action (mut actionFired) true)
+        text="Flip the switch"
+        onAction=(action (mut actionFired) true)
       )
     }}
   `);

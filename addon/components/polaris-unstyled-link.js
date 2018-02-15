@@ -1,6 +1,7 @@
 import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-unstyled-link';
+import mapEventToAction from '../utils/map-event-to-action';
 
 export default Component.extend({
   tagName: 'a',
@@ -43,6 +44,15 @@ export default Component.extend({
    */
   external: false,
 
+  /**
+   * Callback when a link is clicked
+   *
+   * @property onClick
+   * @type {function}
+   * @default noop
+   */
+  onClick() {},
+
   /*
    * Internal properties.
    */
@@ -59,8 +69,5 @@ export default Component.extend({
   /**
    * Action handlers.
    */
-  click(event) {
-    //  Allow clicking the link to perform its default action without bubbling.
-    event.stopPropagation();
-  },
+  click: mapEventToAction('onClick', { preventDefault: false, stopPropagation: true }),
 });

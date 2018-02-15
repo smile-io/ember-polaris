@@ -16,9 +16,7 @@ moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
 const iconSelector = 'span.Polaris-Icon';
 
 test('it renders the specified icon correctly', function(assert) {
-  this.render(hbs`
-    {{polaris-icon source="notes"}}
-  `);
+  this.render(hbs`{{polaris-icon source="notes"}}`);
 
   const icons = findAll(iconSelector);
   assert.equal(icons.length, 1, 'renders one icon component');
@@ -87,4 +85,12 @@ test('it handles accessibilityLabel correctly', function(assert) {
   this.set('accessibilityLabel', 'This is the accessibility label');
   assert.ok(icon.attributes['aria-label'], 'accessibilityLabel set - adds aria-label attribute');
   assert.equal(icon.attributes['aria-label'].value, 'This is the accessibility label', 'accessibilityLabel set - adds correct aria-label value');
+});
+
+test('it handles placeholder icons correctly', function(assert) {
+  this.render(hbs`{{polaris-icon source="placeholder"}}`);
+
+  const iconPlaceholderSelector = buildNestedSelector(iconSelector, 'div.Polaris-Icon__Placeholder');
+  const iconPlaceholders = findAll(iconPlaceholderSelector);
+  assert.equal(iconPlaceholders.length, 1, 'renders one icon placeholder');
 });

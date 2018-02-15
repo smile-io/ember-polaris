@@ -41,8 +41,8 @@ test('it renders the correct HTML in inline form without secondary action', func
       text="Without a secondary action"
       illustration="http://www.somewhere.com/some-image.jpg"
       primaryAction=(hash
-        content="Primary action here"
-        action=(action (mut primaryActionFired) true)
+        text="Primary action here"
+        onAction=(action (mut primaryActionFired) true)
       )
     }}
   `);
@@ -80,12 +80,12 @@ test('it renders the correct HTML in block form with secondary action', function
       title="This is a block callout card"
       illustration="http://www.somewhere.com/some-image.jpg"
       primaryAction=(hash
-        content="Primary action here"
-        action=(action (mut primaryActionFired) true)
+        text="Primary action here"
+        onAction=(action (mut primaryActionFired) true)
       )
       secondaryAction=(hash
-        content="Secondary action here"
-        action=(action (mut secondaryActionFired) true)
+        text="Secondary action here"
+        onAction=(action (mut secondaryActionFired) true)
       )
     }}
       With a secondary action
@@ -140,12 +140,12 @@ test('it handles actions correctly', function(assert) {
   this.render(hbs`
     {{polaris-callout-card
       primaryAction=(hash
-        content="Primary"
-        action=(action (mut primaryActionFired) true)
+        text="Primary"
+        onAction=(action (mut primaryActionFired) true)
       )
       secondaryAction=(hash
-        content="Secondary"
-        action=(action (mut secondaryActionFired) true)
+        text="Secondary"
+        onAction=(action (mut secondaryActionFired) true)
       )
     }}
   `);

@@ -69,26 +69,37 @@ test('it renders the correct HTML when using sections', function(assert) {
       {{/layout.section}}
 
       {{layout.section text="This is a secondary section" secondary=true}}
+
+      {{layout.section text="This is a full-width section" fullWidth=true}}
     {{/polaris-layout}}
   `);
 
   const layoutSections = findAll(layoutSectionSelector);
-  assert.equal(layoutSections.length, 3, 'renders three layout sections');
+  assert.equal(layoutSections.length, 4, 'renders four layout sections');
 
   // Check the first section.
   let layoutSection = layoutSections[0];
   assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'first section - does not have secondary class');
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'), 'first section - does not have full width class');
   assert.equal(layoutSection.textContent.trim(), 'This is an inline section', 'first section - renders text content');
 
   // Check the second section.
   layoutSection = layoutSections[1];
   assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'second section - does not have secondary class');
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'), 'second section - does not have full width class');
   assert.equal(layoutSection.textContent.trim(), 'This is a block section', 'second section - renders text content');
 
   // Check the third section.
   layoutSection = layoutSections[2];
   assert.ok(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'third section - has secondary class');
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'), 'third section - does not have full width class');
   assert.equal(layoutSection.textContent.trim(), 'This is a secondary section', 'third section - renders text content');
+
+  // Check the fourth section.
+  layoutSection = layoutSections[3];
+  assert.notOk(layoutSection.classList.contains('Polaris-Layout__Section--secondary'), 'fourth section - does not have secondary class');
+  assert.ok(layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'), 'fourth section - has full width class');
+  assert.equal(layoutSection.textContent.trim(), 'This is a full-width section', 'third section - renders text content');
 });
 
 test('it renders the correct HTML when using annotated sections in inline form', function(assert) {

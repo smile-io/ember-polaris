@@ -1,11 +1,12 @@
+import Component from '@ember/component';
+import layout from '../templates/components/polaris-banner';
 import { computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
-import Component from '@ember/component';
 import { capitalize } from '@ember/string';
-import layout from '../templates/components/polaris-banner';
 import { invokeAction } from 'ember-invoke-action';
+import { handleMouseUpByBlurring } from '../utils/focus';
 
 const bannerIcons = {
   success: {
@@ -13,7 +14,7 @@ const bannerIcons = {
     color: 'greenDark',
   },
   info: {
-    iconName: 'flag',
+    iconName: 'circle-information',
     color: 'tealDark',
   },
   warning: {
@@ -25,8 +26,8 @@ const bannerIcons = {
     color: 'redDark',
   },
   default: {
-    iconName: 'confetti',
-    color: 'ink',
+    iconName: 'flag',
+    color: 'inkLighter',
   },
 };
 
@@ -37,7 +38,6 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * component `polaris-banner/content`
  */
 export default Component.extend({
-  layout,
   classNames: ['Polaris-Banner'],
 
   classNameBindings: [
@@ -47,10 +47,13 @@ export default Component.extend({
 
   attributeBindings: [
     'tabIndex',
-    'roleAttr:role',
+    'role',
+    'ariaLive:aria-live',
     'contentId:aria-describedby',
     'headingId:aria-labelledby',
   ],
+
+  layout,
 
   /**
    * Title content for the banner.
@@ -108,16 +111,17 @@ export default Component.extend({
 
   tabIndex: '0',
 
+  ariaLive: 'polite',
+
   hasDismiss: bool('onDismiss').readOnly(),
 
-  roleAttr: computed('status', function() {
-    let role = 'banner';
+  role: computed('status', function() {
     let status = this.get('status');
-    if (isBlank(status) || !supportedStatuses.includes(status)) {
-      return role;
+    if (status === 'warning' || status === 'critical') {
+      return 'alert';
     }
 
-    return `${ role } ${ status }`;
+    return 'status';
   }).readOnly(),
 
   iconName: computed('icon', 'status', function() {
@@ -171,13 +175,15 @@ export default Component.extend({
     this.set('contentId', contentId);
   },
 
+  mouseUp: handleMouseUpByBlurring,
+
   actions: {
     triggerAction(action, event) {
       if (event) {
         event.stopPropagation();
       }
 
-      return invokeAction(this, action.action);
+      return invokeAction(this, action.onAction);
     }
   }
 });

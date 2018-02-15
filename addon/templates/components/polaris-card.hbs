@@ -11,9 +11,9 @@
             {{#buttonGroup.item plain=true}}
               {{polaris-button
                 plain=true
-                text=headerAction.content
+                text=headerAction.text
                 disabled=headerAction.disabled
-                onClick=(action headerAction.action)
+                onClick=(action headerAction.onAction)
               }}
             {{/buttonGroup.item}}
           {{/each}}

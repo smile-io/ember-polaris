@@ -15,15 +15,15 @@
       {{polaris-button
         primary=true
         size="large"
-        text=action.content
-        onClick=(action action.action)
+        text=action.text
+        onClick=(action action.onAction)
       }}
 
       {{#if secondaryAction}}
         {{polaris-button
           plain=true
-          text=secondaryAction.content
-          onClick=(action secondaryAction.action)
+          text=secondaryAction.text
+          onClick=(action secondaryAction.onAction)
         }}
       {{/if}}
     {{/polaris-button-group}}

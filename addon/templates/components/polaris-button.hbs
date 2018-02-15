@@ -4,7 +4,8 @@
   external=external
   primary=primary
   destructive=destructive
-  disabled=disabled
+  disabled=isDisabled
+  loading=loading
   size=size
   outline=outline
   fullWidth=fullWidth
@@ -18,23 +19,36 @@
   mouseUp=handleMouseUpByBlurring
 }}
   <span class="Polaris-Button__Content">
-    {{#if icon}}
-      <span class="Polaris-Button__Icon">
-        {{polaris-icon source=icon}}
+    {{#if loading}}
+      <span class="Polaris-Button__Spinner">
+        {{polaris-spinner
+          size="small"
+          accessibilityLabel="Loading"
+          color=spinnerColor
+        }}
       </span>
     {{/if}}
 
-    <span>
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    </span>
+    {{#if icon}}
+      <span class="Polaris-Button__Icon">
+        {{polaris-icon source=iconSource}}
+      </span>
+    {{/if}}
+
+    {{!-- TODO: prevent rendering empty span here if block is empty. --}}
+    {{#if (or hasBlock text)}}
+      <span>
+        {{#if hasBlock}}
+          {{yield}}
+        {{else}}
+          {{text}}
+        {{/if}}
+      </span>
+    {{/if}}
 
     {{#if disclosure}}
       <span class="Polaris-Button__Icon">
-        {{polaris-icon source="caret-down"}}
+        {{polaris-icon source=disclosureIconSource}}
       </span>
     {{/if}}
   </span>

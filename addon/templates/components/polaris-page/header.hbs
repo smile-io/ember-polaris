@@ -1,0 +1,88 @@
+{{#if hasNavigation}}
+  <div class="Polaris-Page__Navigation">
+    {{#if breadcrumbs}}
+      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+    {{/if}}
+  </div>
+{{/if}}
+
+{{!-- Add a "main content" div if we have a primary action. --}}
+{{#wrapper-element
+  tagName=(if primaryAction "div" "")
+  class=(if primaryAction "Polaris-Page__MainContent")
+}}
+  {{!--
+    Create a reusable button component for the primary action if we have one,
+    otherwise create a "no-op" empty component to use in its place.
+    Note that we do not pass the `onClick` action in here because it causes
+    the template to blow up if no primary action is supplied.
+  --}}
+  {{#with (if primaryAction
+    (component "polaris-button"
+      primary=true
+      text=primaryAction.text
+      disabled=primaryAction.disabled
+      loading=primaryAction.loading
+    )
+    (component "wrapper-element" tagName="")
+  ) as |primaryActionButton|}}
+    {{!-- Add a "title and actions" wrapper div if we have a primary action. --}}
+    {{#wrapper-element
+      tagName=(if primaryAction "div" "")
+      class=(if primaryAction "Polaris-Page__TitleAndActions")
+    }}
+      <div class="Polaris-Page__Title">
+        {{#polaris-display-text tagName="h1" size="large"}}
+          {{title}}
+        {{/polaris-display-text}}
+      </div>
+
+      <div class="Polaris-Page__Actions">
+        {{#if primaryAction}}
+          <div class="Polaris-Page__PrimaryAction">
+            {{component primaryActionButton onClick=(action primaryAction.onAction)}}
+          </div>
+        {{/if}}
+
+        {{#if hasSecondaryActions}}
+          <div class="Polaris-Page__SecondaryActions">
+            {{#if hasRollup}}
+              <div class="Polaris-Page__Rollup">
+                {{#polaris-popover as |popover|}}
+                  {{#popover.activator}}
+                    {{polaris-button
+                      text="Actions"
+                      disclosure=true
+                    }}
+                  {{/popover.activator}}
+
+                  {{#popover.content}}
+                    {{polaris-action-list
+                      items=secondaryActions
+                      onActionAnyItem=(action popover.close)
+                    }}
+                  {{/popover.content}}
+                {{/polaris-popover}}
+              </div>
+            {{/if}}
+
+            <div class="Polaris-Page__IndividualActions">
+              {{#each secondaryActions as |secondaryAction|}}
+                {{polaris-page/action action=secondaryAction}}
+              {{/each}}
+
+              {{!-- TODO: implement action groups here. --}}
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    {{/wrapper-element}}
+
+    {{#if primaryAction}}
+      {{!-- Primary action gets rendered twice, with one getting hidden based on media queries. --}}
+      <div class="Polaris-Page__PrimaryAction">
+        {{component primaryActionButton onClick=(action primaryAction.onAction)}}
+      </div>
+    {{/if}}
+  {{/with}}
+{{/wrapper-element}}
