@@ -943,6 +943,8 @@ Checkbox with help text and value:
 ##### Choice list
 `polaris-choice-list` implements the [Polaris Choice list component](https://polaris.shopify.com/components/forms/choice-list).
 
+**NOTE:** _the `renderChildren` choice property is currently unimplemented._
+
 ###### Examples
 
 Single choice list (radio buttons):

@@ -26,13 +26,11 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Label for list of choices
    *
    * @property title
+   * @public
    * @type {string}
    * @default null
    */
@@ -41,10 +39,16 @@ export default Component.extend({
   /**
    * Collection of choices
    *
-   * Each choice should have `label` and `value` properties,
-   * and can optionally have a `helpText` property.
+   * Each choice can have these properties:
+   *
+   *  - value
+   *  - label
+   *  - disabled
+   *  - helpText
+   *  - renderChildren (not implemented yet)
    *
    * @property choices
+   * @public
    * @type {Array}
    * @default null
    */
@@ -54,6 +58,7 @@ export default Component.extend({
    * Collection of selected choices
    *
    * @property selected
+   * @public
    * @type {Array}
    * @default null
    */
@@ -63,6 +68,7 @@ export default Component.extend({
    * Name for form input
    *
    * @property name
+   * @public
    * @type {string}
    * @default null
    */
@@ -72,6 +78,7 @@ export default Component.extend({
    * Allow multiple selections
    *
    * @property allowMultiple
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -81,6 +88,7 @@ export default Component.extend({
    * Toggles display of the title
    *
    * @property titleHidden
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -90,6 +98,7 @@ export default Component.extend({
    * Callback when the selected choices change
    *
    * @property onChange
+   * @public
    * @type {function}
    * @default noop
    */
