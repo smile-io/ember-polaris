@@ -2,6 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import stubMathRandom from '../../stubbers/math/random';
 
 moduleForComponent('polaris-skeleton-page', 'Integration | Component | polaris skeleton page', {
   integration: true
@@ -108,6 +109,9 @@ test('it renders the page title correctly', function(assert) {
 });
 
 test('it renders breadcrumbs correctly', function(assert) {
+  // Stub Math.random so we know what width the breadcrumb should be.
+  const mathRandomStubber = stubMathRandom(0.1);
+
   this.render(hbs`{{polaris-skeleton-page breadcrumbs=breadcrumbs}}`);
 
   const breadcrumbSelector = buildNestedSelector(
@@ -133,12 +137,18 @@ test('it renders breadcrumbs correctly', function(assert) {
 
   breadcrumbs = findAll(breadcrumbSelector);
   assert.equal(breadcrumbs.length, 1, 'breadcrumbs specified - renders one breadcrumb');
+  assert.equal(breadcrumbs[0].style.width, '64px', 'breadcrumbs specified - renders the breadcrumb with the correct width');
 
   let breadcrumbSkeletonTexts = findAll(breadcrumbSkeletonTextSelector);
   assert.equal(breadcrumbSkeletonTexts.length, 1, 'breadcrumbs specified - renders one skeleton breadcrumb text');
+
+  mathRandomStubber.restore();
 });
 
 test('it renders secondary actions correctly', function(assert) {
+  // Stub Math.random so we know what width the breadcrumb should be.
+  const mathRandomStubber = stubMathRandom(0.7, 1, 0);
+
   this.render(hbs`{{polaris-skeleton-page secondaryActions=secondaryActions}}`);
 
   const secondaryActionSelector = buildNestedSelector(
@@ -163,10 +173,13 @@ test('it renders secondary actions correctly', function(assert) {
   secondaryActions = findAll(secondaryActionSelector);
   assert.equal(secondaryActions.length, 3, 'secondaryActions specified - renders the correct number of secondary actions');
 
+  let expectedWidths = [ 88, 100, 60 ];
   secondaryActions.forEach((secondaryAction, index) => {
-    let secondaryActionSkeletonTexts = findAll(secondaryActionSkeletonTextSelector, secondaryAction);
-    assert.equal(secondaryActionSkeletonTexts.length, 1, `secondary action ${ index } - renders one skeleton action text`);
-  });
-});
+    assert.equal(secondaryAction.style.width, `${ expectedWidths[index] }px`, `secondary action ${ index + 1 } - renders the action with the correct width`);
 
-// TODO: set random width on breadcrumbs and secondary actions
+    let secondaryActionSkeletonTexts = findAll(secondaryActionSkeletonTextSelector, secondaryAction);
+    assert.equal(secondaryActionSkeletonTexts.length, 1, `secondary action ${ index + 1 } - renders one skeleton action text`);
+  });
+
+  mathRandomStubber.restore();
+});

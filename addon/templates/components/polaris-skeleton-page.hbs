@@ -5,9 +5,7 @@
 ">
   {{#if breadcrumbs}}
     <div class="Polaris-SkeletonPage__Actions">
-      <div class="Polaris-SkeletonPage__Action">
-        {{polaris-skeleton-body-text lines=1}}
-      </div>
+      {{polaris-skeleton-page/action}}
     </div>
   {{/if}}
 
@@ -25,13 +23,13 @@
     </div>
   {{/if}}
 
-  {{#each dummySecondaryActions}}
+  {{#if dummySecondaryActions}}
     <div class="Polaris-SkeletonPage__Actions">
-      <div class="Polaris-SkeletonPage__Action">
-        {{polaris-skeleton-body-text lines=1}}
-      </div>
+      {{#each dummySecondaryActions}}
+        {{polaris-skeleton-page/action}}
+      {{/each}}
     </div>
-  {{/each}}
+  {{/if}}
 </div>
 
 <div class="Polaris-SkeletonPage__Content">
