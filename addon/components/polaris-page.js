@@ -14,6 +14,7 @@ export default Component.extend({
   ],
 
   layout,
+
   /**
    * Page title, in large type
    *
