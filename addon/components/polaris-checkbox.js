@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { typeOf } from '@ember/utils';
+import { equal } from '@ember/object/computed';
 import layout from '../templates/components/polaris-checkbox';
 
 /**
@@ -14,13 +15,11 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Label for the checkbox
    *
    * @property label
+   * @public
    * @type {string}
    * @default null
    */
@@ -30,16 +29,18 @@ export default Component.extend({
    * Visually hide the label
    *
    * @property labelHidden
+   * @public
    * @type {boolean}
    * @default false
    */
   labelHidden: false,
 
   /**
-   * Checkbox is selected
+   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
    *
    * @property checked
-   * @type {boolean}
+   * @public
+   * @type {boolean/String}
    * @default false
    */
   checked: false,
@@ -48,6 +49,7 @@ export default Component.extend({
    * Additional text to aide in use
    *
    * @property helpText
+   * @public
    * @type {string}
    * @default null
    */
@@ -57,6 +59,7 @@ export default Component.extend({
    * ID for form input
    *
    * @property inputId
+   * @public
    * @type {string}
    * @default null
    */
@@ -66,6 +69,7 @@ export default Component.extend({
    * Name for form input
    *
    * @property name
+   * @public
    * @type {string}
    * @default null
    */
@@ -75,6 +79,7 @@ export default Component.extend({
    * Value for form input
    *
    * @property value
+   * @public
    * @type {string}
    * @default null
    */
@@ -84,6 +89,7 @@ export default Component.extend({
    * Display an error state
    *
    * @property error
+   * @public
    * @type {string}
    * @default null
    */
@@ -93,6 +99,7 @@ export default Component.extend({
    * Disable the checkbox
    *
    * @property disabled
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -102,6 +109,7 @@ export default Component.extend({
    * Callback when checkbox is toggled
    *
    * @property onChange
+   * @public
    * @type {function}
    * @default noop
    */
@@ -111,6 +119,7 @@ export default Component.extend({
    * Callback when checkbox is focussed
    *
    * @property onFocus
+   * @public
    * @type {function}
    * @default noop
    */
@@ -120,6 +129,7 @@ export default Component.extend({
    * Callback when focus is removed
    *
    * @property onBlur
+   * @public
    * @type {function}
    * @default noop
    */
@@ -128,6 +138,26 @@ export default Component.extend({
   /*
    * Internal properties.
    */
+  isIndeterminate: equal('checked', 'indeterminate').readOnly(),
+
+  isChecked: computed('isIndeterminate', 'checked', function() {
+    return !this.get('isIndeterminate') && Boolean(this.get('checked'));
+  }).readOnly(),
+
+  checkedState: computed('isIndeterminate', 'isChecked', function() {
+    return this.get('isIndeterminate') ? 'mixed' : `${ this.get('isChecked') }`;
+  }).readOnly(),
+
+  checkboxClass: computed('isIndeterminate', function() {
+    let classNames = ['Polaris-Checkbox__Input'];
+
+    if (this.get('isIndeterminate')) {
+      classNames.push('Polaris-Checkbox__Input--indeterminate');
+    }
+
+    return classNames.join(' ');
+  }).readOnly(),
+
   _id: computed('inputId', function() {
     return this.get('inputId') || `polaris-checkbox-${ guidFor(this) }`;
   }).readOnly(),
