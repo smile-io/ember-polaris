@@ -1159,7 +1159,7 @@ Default (bulleted) list - can also be achieved by explicitly passing `type="bull
 {{/polaris-list}}
 ```
 
-Numbered list:
+Numbered list iterating over a `numberedItems` array:
 
 ```hbs
 {{#polaris-list type="number" as |list|}}
