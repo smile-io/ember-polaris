@@ -26,6 +26,15 @@ export default Component.extend({
   type: defaultListType,
 
   /**
+   * Flag to determine whether to render an ordered or unordered list
+   *
+   * @property isBulletListType
+   * @private
+   * @type {boolean}
+   */
+  isBulletListType: equal('listType', 'bullet').readOnly(),
+
+  /**
    * Actual list type for internal use
    *
    * @property listType
@@ -40,15 +49,6 @@ export default Component.extend({
 
     return type;
   }).readOnly(),
-
-  /**
-   * Flag to determine whether to render an ordered or unordered list
-   *
-   * @property isBulletedList
-   * @private
-   * @type {boolean}
-   */
-  isBulletedList: equal('listType', 'bullet').readOnly(),
 
   /**
    * Class for list element
