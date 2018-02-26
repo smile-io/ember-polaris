@@ -1,0 +1,11 @@
+{{#component
+  (if isBulletListType
+    (component "wrapper-element" tagName="ul")
+    (component "wrapper-element" tagName="ol")
+  )
+  class=listElementClass
+}}
+  {{yield (hash
+    item=(component "polaris-list/item")
+  )}}
+{{/component}}
