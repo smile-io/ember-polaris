@@ -190,3 +190,44 @@ test('it handles events correctly', function(assert) {
   blur(checkboxInputSelector);
   assert.ok(this.get('blurFired'), 'after blur - onBlur fired');
 });
+
+test('it handles the checked state correctly', function(assert) {
+  this.render(hbs`{{polaris-checkbox checked=checked}}`);
+
+  let checkboxInput = find(checkboxInputSelector);
+  assert.ok(checkboxInput, 'renders the checkbox input');
+
+  let checkboxIcon = find(checkboxIconSelector);
+  assert.ok(checkboxIcon, 'renders the checkbox icon');
+
+  // `checked` should default to false.
+  assert.notOk(checkboxInput.checked, 'checked unset - checkbox is not checked');
+  assert.equal(checkboxInput.getAttribute('aria-checked'), 'false', 'checked unset - checkbox has aria-checked false');
+  assert.notOk(checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'), 'checked unset - checkbox does not have indeterminate class');
+  assert.equal(checkboxIcon.dataset.iconSource, 'polaris/checkmark', 'checked unset - renders the correct checkbox icon');
+  assert.notOk(checkboxInput.hasAttribute('indeterminate'), 'checked unset - checkbox does not have indeterminate attribute');
+
+  this.set('checked', true);
+  assert.ok(checkboxInput.checked, 'checked true - checkbox is checked');
+  assert.equal(checkboxInput.getAttribute('aria-checked'), 'true', 'checked true - checkbox has aria-checked true');
+  assert.notOk(checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'), 'checked true - checkbox does not have indeterminate class');
+  assert.equal(checkboxIcon.dataset.iconSource, 'polaris/checkmark', 'checked true - renders the correct checkbox icon');
+  assert.notOk(checkboxInput.hasAttribute('indeterminate'), 'checked true - checkbox does not have indeterminate attribute');
+
+  this.set('checked', 'indeterminate');
+  assert.notOk(checkboxInput.checked, 'checked indeterminate - checkbox is not checked');
+  assert.equal(checkboxInput.getAttribute('aria-checked'), 'mixed', 'checked indeterminate - checkbox has aria-checked mixed');
+  assert.ok(checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'), 'checked indeterminate - checkbox has indeterminate class');
+  assert.equal(checkboxIcon.dataset.iconSource, 'polaris/subtract', 'checked indeterminate - renders the correct checkbox icon');
+  // TODO: figure out why this attribute isn't binding...
+  // assert.equal(checkboxInput.getAttribute('indeterminate'), 'true', 'checked indeterminate - checkbox has indeterminate attribute');
+
+  this.set('checked', false);
+  assert.notOk(checkboxInput.checked, 'checked false - checkbox is not checked');
+  assert.equal(checkboxInput.getAttribute('aria-checked'), 'false', 'checked false - checkbox has aria-checked false');
+  assert.notOk(checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'), 'checked false - checkbox does not have indeterminate class');
+  assert.equal(checkboxIcon.dataset.iconSource, 'polaris/checkmark', 'checked false - renders the correct checkbox icon');
+  assert.notOk(checkboxInput.hasAttribute('indeterminate'), 'checked false - checkbox does not have indeterminate attribute');
+
+  // TODO: check icon
+});
