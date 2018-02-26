@@ -148,7 +148,7 @@ export default Component.extend({
     return this.get('isIndeterminate') ? 'mixed' : `${ this.get('isChecked') }`;
   }).readOnly(),
 
-  checkboxClass: computed('isIndeterminate', function() {
+  checkboxClasses: computed('isIndeterminate', function() {
     let classNames = ['Polaris-Checkbox__Input'];
 
     if (this.get('isIndeterminate')) {
