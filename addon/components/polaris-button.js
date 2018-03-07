@@ -17,9 +17,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the button
    *
@@ -28,6 +25,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
+   * @public
    * @type {String}
    * @default null
    */
@@ -37,6 +35,7 @@ export default Component.extend({
    * URL to link to
    *
    * @property url
+   * @public
    * @type {string}
    * @default null
    */
@@ -46,6 +45,7 @@ export default Component.extend({
    * Display as primary button
    *
    * @property primary
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -55,6 +55,7 @@ export default Component.extend({
    * Display as destructive button
    *
    * @property destructive
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -64,6 +65,7 @@ export default Component.extend({
    * Disable button
    *
    * @property disabled
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -73,6 +75,7 @@ export default Component.extend({
    * 	Replaces button text with a spinner while a background action is being performed
    *
    * @property loading
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -82,6 +85,7 @@ export default Component.extend({
    * Change the size of the button
    *
    * @property size
+   * @public
    * @type {enum}
    * @default null
    */
@@ -91,6 +95,7 @@ export default Component.extend({
    * Display an outlined button
    *
    * @property outline
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -100,6 +105,7 @@ export default Component.extend({
    * Display full width button
    *
    * @property fullWidth
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -109,6 +115,7 @@ export default Component.extend({
    * Display button with a disclosure icon
    *
    * @property disclosure
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -118,6 +125,7 @@ export default Component.extend({
    * Button will submit a form
    *
    * @property submit
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -127,6 +135,7 @@ export default Component.extend({
    * Use plain button style
    *
    * @property plain
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -136,15 +145,17 @@ export default Component.extend({
    * Force url to open in a new tab
    *
    * @property external
+   * @public
    * @type {boolean}
    * @default false
    */
   external: false,
 
   /**
-   * Icon to display in the banner
+   * Icon to display to the left of the button content
    *
    * @property icon
+   * @public
    * @type {SVG}
    * @default null
    */
@@ -154,15 +165,37 @@ export default Component.extend({
    * Visually hidden text for screen readers
    *
    * @property accessibilityLabel
+   * @public
    * @type {string}
    * @default null
    */
   accessibilityLabel: null,
 
   /**
+   * ID of the element this button reveals
+   *
+   * @property ariaControls
+   * @public
+   * @type {string}
+   * @default null
+   */
+  ariaControls: null,
+
+  /**
+   * Whether the content revealed by this button is visible
+   *
+   * @property ariaExpanded
+   * @public
+   * @type {boolean|null}
+   * @default null
+   */
+  ariaExpanded: null,
+
+  /**
    * Callback when clicked
    *
    * @property onClick
+   * @public
    * @type {function}
    * @default null
    */
@@ -172,6 +205,7 @@ export default Component.extend({
    * Callback when button becomes focussed
    *
    * @property onFocus
+   * @public
    * @type {function}
    * @default null
    */
@@ -181,6 +215,7 @@ export default Component.extend({
    * Callback when focus leaves button
    *
    * @property onBlur
+   * @public
    * @type {function}
    * @default null
    */
@@ -212,6 +247,11 @@ export default Component.extend({
   spinnerColor: computed('primary', 'destructive', function() {
     let { primary, destructive } = this.getProperties('primary', 'destructive');
     return primary || destructive ? 'white' : 'inkLightest';
+  }).readOnly(),
+
+  ariaExpandedText: computed('ariaExpanded', function() {
+    let ariaExpanded = this.get('ariaExpanded');
+    return isPresent(ariaExpanded) ? ariaExpanded.toString() : null;
   }).readOnly(),
 
   handleMouseUpByBlurring,
