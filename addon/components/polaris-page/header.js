@@ -5,6 +5,7 @@ import { gt, or } from '@ember/object/computed';
 export default Component.extend({
   classNames: [ 'Polaris-Page__Header' ],
   classNameBindings: [
+    'titleHidden:Polaris-Page__Title--hidden',
     'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
     'hasRollup:Polaris-Page__Header--hasRollup',
     'separator:Polaris-Page__Header--hasSeparator',
@@ -22,6 +23,16 @@ export default Component.extend({
    * @default null
    */
   title: null,
+
+  /**
+   * Visually hide the title
+   *
+   * @property titleHidden
+   * @public
+   * @type {boolean}
+   * @default false
+   */
+  titleHidden: false,
 
   /**
    * App icon, for pages that are part of Shopify apps
