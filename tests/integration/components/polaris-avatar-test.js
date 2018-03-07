@@ -10,7 +10,12 @@ moduleForComponent('polaris-avatar', 'Integration | Component | polaris avatar',
 const avatarSelector = 'span.Polaris-Avatar[role="img"]';
 const initialsSelector = buildNestedSelector(
   avatarSelector,
-  'span.Polaris-Avatar__Initials[aria-hidden="true"]'
+  'span.Polaris-Avatar__Initials'
+);
+const initialsTextSelector = buildNestedSelector(
+  initialsSelector,
+  'svg.Polaris-Avatar__Svg[viewbox="0 0 48 48"]',
+  'text[x="50%"][y="50%"][dy="0.35em"][fill="currentColor"][font-size="26"][text-anchor="middle"]'
 );
 const imageSelector = buildNestedSelector(
   avatarSelector,
@@ -105,7 +110,10 @@ test('it renders the correct initials markup', function(assert) {
   this.set('initials', 'EPD');
   initials = find(initialsSelector);
   assert.ok(initials, 'with initials - renders initials element');
-  assert.equal(initials.textContent.trim(), 'EPD', 'with initials - renders the correct initials');
+
+  let initialsText = find(initialsTextSelector);
+  assert.ok(initialsText, 'with initials - renders the correct initials markup')
+  assert.equal(initialsText.textContent.trim(), 'EPD', 'with initials - renders the correct initials');
 });
 
 test('it renders the correct image markup', function(assert) {
