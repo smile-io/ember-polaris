@@ -26,6 +26,16 @@ export default Component.extend({
   title: null,
 
   /**
+   * Visually hide the title
+   *
+   * @property titleHidden
+   * @public
+   * @type {boolean}
+   * @default false
+   */
+  titleHidden: false,
+
+  /**
    * App icon, for pages that are part of Shopify apps
    *
    * @property icon

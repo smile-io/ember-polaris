@@ -34,6 +34,7 @@ test('it renders the page correctly', function(assert) {
       title="This is the title"
       fullWidth=fullWidth
       singleColumn=singleColumn
+      titleHidden=titleHidden
     }}
       <div class="test-page-content">This is some test content</div>
     {{/polaris-page}}`
@@ -71,11 +72,18 @@ test('it renders the page correctly', function(assert) {
   const contentText = contents[0].textContent.trim();
   assert.equal(contentText, 'This is some test content', 'renders correct content');
 
+  assert.notOk(page.classList.contains('Polaris-Page--fullWidth'), 'fullWidth unset - does not apply fullWidth class');
   this.set('fullWidth', true);
-  assert.ok(page.classList.contains('Polaris-Page--fullWidth'), 'honours fullWidth flag');
+  assert.ok(page.classList.contains('Polaris-Page--fullWidth'), 'fullWidth set - applies fullWidth class');
 
+  assert.notOk(page.classList.contains('Polaris-Page--singleColumn'), 'singleColumn unset - does not apply singleColumn class');
   this.set('singleColumn', true);
-  assert.ok(page.classList.contains('Polaris-Page--singleColumn'), 'honours singleColumn flag');
+  assert.ok(page.classList.contains('Polaris-Page--singleColumn'), 'singleColumn set - applies singleColumn class');
+
+  let header = headers[0];
+  assert.notOk(header.classList.contains('Polaris-Page__Title--hidden'), 'titleHidden unset - does not apply titleHidden class');
+  this.set('titleHidden', true);
+  assert.ok(header.classList.contains('Polaris-Page__Title--hidden'), 'titleHidden set - applies titleHidden class');
 });
 
 test('it handles primary action correctly when supplied', function(assert) {
