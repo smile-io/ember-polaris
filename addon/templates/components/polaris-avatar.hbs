@@ -1,6 +1,17 @@
 {{#if initials}}
-  <span class="Polaris-Avatar__Initials" aria-hidden="true">
-    {{initials}}
+  <span class="Polaris-Avatar__Initials">
+    <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
+      <text
+        x="50%"
+        y="50%"
+        dy="0.35em"
+        fill="currentColor"
+        font-size="26"
+        text-anchor="middle"
+      >
+        {{initials}}
+      </text>
+    </svg>
   </span>
 {{/if}}
 
