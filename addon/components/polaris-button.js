@@ -249,7 +249,7 @@ export default Component.extend({
     return primary || destructive ? 'white' : 'inkLightest';
   }).readOnly(),
 
-  ariaExpandedText: computed('ariaExpanded', function() {
+  ariaExpandedValue: computed('ariaExpanded', function() {
     let ariaExpanded = this.get('ariaExpanded');
     return isPresent(ariaExpanded) ? ariaExpanded.toString() : null;
   }).readOnly(),
