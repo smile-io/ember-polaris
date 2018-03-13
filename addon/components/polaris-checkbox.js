@@ -26,6 +26,16 @@ export default Component.extend({
   label: null,
 
   /**
+   * Component to render for the checkbox's label
+   *
+   * @property label
+   * @public
+   * @type {string | component}
+   * @default null
+   */
+  labelComponent: null,
+
+  /**
    * Visually hide the label
    *
    * @property labelHidden

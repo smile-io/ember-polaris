@@ -13,13 +13,11 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * ID of the choice's input
    *
    * @property inputId
+   * @public
    * @type {string}
    * @default: null
    */
@@ -29,15 +27,27 @@ export default Component.extend({
    * Label content for the choice
    *
    * @property label
+   * @public
    * @type {string}
    * @default: null
    */
   label: null,
 
   /**
+   * Component to render for the choice's label
+   *
+   * @property label
+   * @public
+   * @type {string | component}
+   * @default null
+   */
+  labelComponent: null,
+
+  /**
    * Error content for this choice
    *
    * @property error
+   * @public
    * @type {string}
    * @default: null
    */
@@ -47,6 +57,7 @@ export default Component.extend({
    * Flag to hide the label for this choice
    *
    * @property labelHidden
+   * @public
    * @type {boolean}
    * @default: false
    */
@@ -56,6 +67,7 @@ export default Component.extend({
    * Help text for this choice
    *
    * @property helpText
+   * @public
    * @type {string}
    * @default: null
    */
