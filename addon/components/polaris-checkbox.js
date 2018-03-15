@@ -19,7 +19,7 @@ export default Component.extend({
    * Label for the checkbox
    *
    * @property label
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -29,7 +29,7 @@ export default Component.extend({
    * Component to render for the checkbox's label
    *
    * @property labelComponent
-   * @type {string | component}
+   * @type {String | Component}
    * @default null
    * @public
    */
@@ -39,7 +39,7 @@ export default Component.extend({
    * Visually hide the label
    *
    * @property labelHidden
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -49,7 +49,7 @@ export default Component.extend({
    * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
    *
    * @property checked
-   * @type {boolean/String}
+   * @type {Boolean/String}
    * @default false
    * @public
    */
@@ -59,7 +59,7 @@ export default Component.extend({
    * Additional text to aide in use
    *
    * @property helpText
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -69,7 +69,7 @@ export default Component.extend({
    * ID for form input
    *
    * @property inputId
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -79,7 +79,7 @@ export default Component.extend({
    * Name for form input
    *
    * @property name
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -89,7 +89,7 @@ export default Component.extend({
    * Value for form input
    *
    * @property value
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -99,7 +99,7 @@ export default Component.extend({
    * Display an error state
    *
    * @property error
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -109,7 +109,7 @@ export default Component.extend({
    * Disable the checkbox
    *
    * @property disabled
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
