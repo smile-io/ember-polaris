@@ -17,9 +17,9 @@ export default Component.extend({
    * ID of the choice's input
    *
    * @property inputId
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   inputId: null,
 
@@ -27,9 +27,9 @@ export default Component.extend({
    * Label content for the choice
    *
    * @property label
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   label: null,
 
@@ -37,9 +37,9 @@ export default Component.extend({
    * Component to render for the choice's label
    *
    * @property labelComponent
-   * @public
    * @type {string | component}
    * @default null
+   * @public
    */
   labelComponent: null,
 
@@ -47,9 +47,9 @@ export default Component.extend({
    * Error content for this choice
    *
    * @property error
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   error: null,
 
@@ -57,9 +57,9 @@ export default Component.extend({
    * Flag to hide the label for this choice
    *
    * @property labelHidden
-   * @public
    * @type {boolean}
    * @default: false
+   * @public
    */
   labelHidden: false,
 
@@ -67,9 +67,9 @@ export default Component.extend({
    * Help text for this choice
    *
    * @property helpText
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   helpText: null,
 

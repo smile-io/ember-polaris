@@ -13,9 +13,9 @@ export default Component.extend({
    * ID of the input this label is for.
    *
    * @property inputId
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   inputId: null,
 
@@ -23,9 +23,9 @@ export default Component.extend({
    * Label content for the choice this label belongs to.
    *
    * @property label
-   * @public
    * @type {string}
    * @default: null
+   * @public
    */
   label: null,
 
@@ -33,9 +33,9 @@ export default Component.extend({
    * Component to render for the label
    *
    * @property labelComponent
-   * @public
    * @type {string | component}
    * @default null
+   * @public
    */
   labelComponent: null,
 
@@ -43,9 +43,9 @@ export default Component.extend({
    * Flag to hide the label
    *
    * @property labelHidden
-   * @public
    * @type {boolean}
    * @default: false
+   * @public
    */
   labelHidden: false,
 });

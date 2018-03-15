@@ -19,9 +19,9 @@ export default Component.extend({
    * Label for the checkbox
    *
    * @property label
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   label: null,
 
@@ -29,9 +29,9 @@ export default Component.extend({
    * Component to render for the checkbox's label
    *
    * @property labelComponent
-   * @public
    * @type {string | component}
    * @default null
+   * @public
    */
   labelComponent: null,
 
@@ -39,9 +39,9 @@ export default Component.extend({
    * Visually hide the label
    *
    * @property labelHidden
-   * @public
    * @type {boolean}
    * @default false
+   * @public
    */
   labelHidden: false,
 
@@ -49,9 +49,9 @@ export default Component.extend({
    * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
    *
    * @property checked
-   * @public
    * @type {boolean/String}
    * @default false
+   * @public
    */
   checked: false,
 
@@ -59,9 +59,9 @@ export default Component.extend({
    * Additional text to aide in use
    *
    * @property helpText
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   helpText: null,
 
@@ -69,9 +69,9 @@ export default Component.extend({
    * ID for form input
    *
    * @property inputId
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   inputId: null,
 
@@ -79,9 +79,9 @@ export default Component.extend({
    * Name for form input
    *
    * @property name
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   name: null,
 
@@ -89,9 +89,9 @@ export default Component.extend({
    * Value for form input
    *
    * @property value
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   value: null,
 
@@ -99,9 +99,9 @@ export default Component.extend({
    * Display an error state
    *
    * @property error
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
   error: null,
 
@@ -109,9 +109,9 @@ export default Component.extend({
    * Disable the checkbox
    *
    * @property disabled
-   * @public
    * @type {boolean}
    * @default false
+   * @public
    */
   disabled: false,
 
@@ -119,9 +119,9 @@ export default Component.extend({
    * Callback when checkbox is toggled
    *
    * @property onChange
-   * @public
    * @type {function}
    * @default noop
+   * @public
    */
   onChange() {},
 
@@ -129,9 +129,9 @@ export default Component.extend({
    * Callback when checkbox is focussed
    *
    * @property onFocus
-   * @public
    * @type {function}
    * @default noop
+   * @public
    */
   onFocus() {},
 
@@ -139,9 +139,9 @@ export default Component.extend({
    * Callback when focus is removed
    *
    * @property onBlur
-   * @public
    * @type {function}
    * @default noop
+   * @public
    */
   onBlur() {},
 
