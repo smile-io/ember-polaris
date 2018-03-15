@@ -3,10 +3,10 @@
   label=label
   labelComponent=labelComponent
   labelHidden=labelHidden
-) as |labelComponent|}}
+) as |choiceLabelComponent|}}
   {{#if hasDescription}}
     <div>
-      {{#component labelComponent}}
+      {{#component choiceLabelComponent}}
         {{yield}}
       {{/component}}
 
@@ -28,7 +28,7 @@
       </div>
     </div>
   {{else}}
-    {{#component labelComponent}}
+    {{#component choiceLabelComponent}}
       {{yield}}
     {{/component}}
   {{/if}}

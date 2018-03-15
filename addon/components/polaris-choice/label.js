@@ -32,7 +32,7 @@ export default Component.extend({
   /**
    * Component to render for the label
    *
-   * @property label
+   * @property labelComponent
    * @public
    * @type {string | component}
    * @default null
