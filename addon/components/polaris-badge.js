@@ -12,7 +12,7 @@ import layout from '../templates/components/polaris-badge';
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Badge'],
-  classNameBindings: ['statusClass'],
+  classNameBindings: ['statusClass', 'progressClass'],
 
   layout,
 
@@ -41,10 +41,20 @@ export default Component.extend({
    */
   status: null,
 
+  /**
+   * Render a pip showing the progress of a given task.
+   *
+   * @property progress
+   * @type {string}
+   * @default: null
+   */
+  progress: null,
+
   /*
    * Internal properties.
    */
   hasStatus: notEmpty('status'),
+  hasProgress: notEmpty('progress'),
 
   statusDescription: computed('status', function() {
     const status = this.get('status');
@@ -62,5 +72,23 @@ export default Component.extend({
     }
 
     return `Polaris-Badge--status${statusDescription}`;
+  }).readOnly(),
+
+  progressDescription: computed('progress', function() {
+    const progress = this.get('progress');
+    if (isBlank(progress) || progress === 'default') {
+      return null;
+    }
+
+    return classify(progress);
+  }).readOnly(),
+
+  progressClass: computed('progressDescription', function() {
+    const progressDescription = this.get('progressDescription');
+    if (isBlank(progressDescription)) {
+      return null;
+    }
+
+    return `Polaris-Badge--progress${progressDescription}`;
   }).readOnly(),
 });

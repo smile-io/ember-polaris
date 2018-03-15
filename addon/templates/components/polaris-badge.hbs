@@ -4,6 +4,14 @@
   {{/polaris-visually-hidden}}
 {{/if}}
 
+{{#if hasProgress}}
+  <span class="Polaris-Badge__Pip">
+    {{#polaris-visually-hidden}}
+      {{progressDescription}}
+    {{/polaris-visually-hidden}}
+  </span>
+{{/if}}
+
 {{#if hasBlock}}
   {{yield}}
 {{else}}
