@@ -9,15 +9,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * ID of the input this label is for.
    *
    * @property inputId
-   * @type {string}
+   * @type {String}
    * @default: null
+   * @public
    */
   inputId: null,
 
@@ -25,17 +23,29 @@ export default Component.extend({
    * Label content for the choice this label belongs to.
    *
    * @property label
-   * @type {string}
+   * @type {String}
    * @default: null
+   * @public
    */
   label: null,
+
+  /**
+   * Component to render for the label
+   *
+   * @property labelComponent
+   * @type {String | Component}
+   * @default null
+   * @public
+   */
+  labelComponent: null,
 
   /**
    * Flag to hide the label
    *
    * @property labelHidden
-   * @type {boolean}
+   * @type {Boolean}
    * @default: false
+   * @public
    */
   labelHidden: false,
 });

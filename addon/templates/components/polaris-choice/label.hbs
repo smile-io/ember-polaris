@@ -3,5 +3,9 @@
 </span>
 
 <span class="Polaris-Choice__Label">
-  {{label}}
+  {{#if labelComponent}}
+    {{component labelComponent}}
+  {{else}}
+    {{label}}
+  {{/if}}
 </span>
