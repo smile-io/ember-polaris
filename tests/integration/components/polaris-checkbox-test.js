@@ -16,6 +16,7 @@ const MockPolarisChoiceComponent = Component.extend({
   attributeBindings: [
     'inputId:data-input-id',
     'label:data-label',
+    'labelComponent:data-label-component',
     'labelHidden:data-label-hidden',
     'helpText:data-help-text',
     'error:data-error',
@@ -230,4 +231,12 @@ test('it handles the checked state correctly', function(assert) {
   assert.notOk(checkboxInput.hasAttribute('indeterminate'), 'checked false - checkbox does not have indeterminate attribute');
 
   // TODO: check icon
+});
+
+test('it handles label components correctly', function(assert) {
+  this.render(hbs`{{polaris-checkbox labelComponent="dummy-label"}}`);
+
+  const choices = findAll(choiceSelector);
+  assert.equal(choices.length, 1, 'renders one `polaris-choice` component');
+  assert.equal(choices[0].dataset.labelComponent, 'dummy-label', 'passes the label component to the `polaris-choice`');
 });

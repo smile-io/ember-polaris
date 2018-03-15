@@ -18,6 +18,8 @@ export default Component.extend({
   attributeBindings: [
     'disabled',
     'accessibilityLabel:aria-label',
+    'ariaControls:aria-controls',
+    'ariaExpanded:aria-expanded',
   ],
 
   /*

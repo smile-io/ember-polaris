@@ -222,6 +222,31 @@ test('renders the correct HTML', function(assert) {
 
   button = buttons[0];
   assert.equal(button.attributes['aria-label'].value, 'You can\'t see me!', 'accessible button - aria-label');
+
+
+  // Button with aria controls.
+  this.render(hbs`{{polaris-button ariaControls=ariaControls}}`);
+
+  buttons = findAll('button[type="button"].Polaris-Button');
+  assert.equal(buttons.length, 1, 'button with aria controls - renders');
+
+  button = buttons[0];
+  assert.notOk(button.attributes['aria-controls'], 'button with aria controls undefined - does not set aria-controls');
+
+  this.set('ariaControls', 'some-element');
+  assert.equal(button.attributes['aria-controls'].value, 'some-element', 'button with aria controls set - sets aria-controls');
+
+  // Button with aria expanded.
+  this.render(hbs`{{polaris-button ariaExpanded=ariaExpanded}}`);
+
+  buttons = findAll('button[type="button"].Polaris-Button');
+  assert.equal(buttons.length, 1, 'button with aria expanded - renders');
+
+  button = buttons[0];
+  assert.notOk(button.attributes['aria-expanded'], 'button with aria expanded undefined - does not set aria-expanded');
+
+  this.set('ariaExpanded', false);
+  assert.equal(button.attributes['aria-expanded'].value, "false", 'button with aria expanded set - sets aria-expanded');
 });
 
 test('it supports `icon`', function(assert) {
