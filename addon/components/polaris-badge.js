@@ -11,6 +11,13 @@ const PROGRESS_LABELS = {
   complete: 'Complete',
 };
 
+const STATUS_LABELS = {
+  info: 'Info',
+  success: 'Success',
+  warning: 'Warning',
+  attention: 'Attention',
+};
+
 /**
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
@@ -86,15 +93,15 @@ export default Component.extend({
       return null;
     }
 
-    return classify(status);
+    return STATUS_LABELS[status];
   }).readOnly(),
 
-  statusClass: computed('statusDescription', function() {
-    const statusDescription = this.get('statusDescription');
-    if (isBlank(statusDescription)) {
+  statusClass: computed('status', function() {
+    const status = this.get('status');
+    if (isBlank(status) || status === 'default') {
       return null;
     }
 
-    return `Polaris-Badge--status${statusDescription}`;
+    return `Polaris-Badge--status${classify(status)}`;
   }).readOnly()
 });

@@ -1,7 +1,5 @@
-{{#if hasStatus}}
-  {{#polaris-visually-hidden}}
-    {{statusDescription}}
-  {{/polaris-visually-hidden}}
+{{#if statusDescription}}
+  {{polaris-visually-hidden text=statusDescription}}
 {{/if}}
 
 {{#if progressDescription}}
