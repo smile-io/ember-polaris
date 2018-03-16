@@ -382,6 +382,10 @@ With a success status set:
 {{polaris-badge status="success" text="Complete"}}
 ```
 
+```hbs
+{{polaris-badge progress="complete" text="Complete"}}
+```
+
 ##### Icon
 `polaris-icon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
 
