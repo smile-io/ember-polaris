@@ -5,6 +5,12 @@ import { notEmpty } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-badge';
 
+const PROGRESS_LABELS = {
+  incomplete: 'Incomplete',
+  partiallyComplete: 'Partially complete',
+  complete: 'Complete',
+};
+
 /**
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
@@ -12,7 +18,7 @@ import layout from '../templates/components/polaris-badge';
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Badge'],
-  classNameBindings: ['statusClass'],
+  classNameBindings: ['statusClass', 'progressClass'],
 
   layout,
 
@@ -33,6 +39,15 @@ export default Component.extend({
   text: null,
 
   /**
+   * Render a pip showing the progress of a given task.
+   *
+   * @property progress
+   * @type {string}
+   * @default: null
+   */
+  progress: null,
+
+  /**
    * Set the color of the badge for the given status.
    *
    * @property status
@@ -44,7 +59,26 @@ export default Component.extend({
   /*
    * Internal properties.
    */
+  hasProgress: notEmpty('progress'),
   hasStatus: notEmpty('status'),
+
+  progressDescription: computed('progress', function() {
+    const progress = this.get('progress');
+    if (isBlank(progress) || progress === 'default') {
+      return null;
+    }
+
+    return PROGRESS_LABELS[progress];
+  }).readOnly(),
+
+  progressClass: computed('progress', function() {
+    const progress = this.get('progress');
+    if (isBlank(progress) || progress === 'default') {
+      return null;
+    }
+
+    return `Polaris-Badge--progress${classify(progress)}`;
+  }).readOnly(),
 
   statusDescription: computed('status', function() {
     const status = this.get('status');
@@ -62,5 +96,5 @@ export default Component.extend({
     }
 
     return `Polaris-Badge--status${statusDescription}`;
-  }).readOnly(),
+  }).readOnly()
 });
