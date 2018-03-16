@@ -33,15 +33,6 @@ export default Component.extend({
   text: null,
 
   /**
-   * Set the color of the badge for the given status.
-   *
-   * @property status
-   * @type {string}
-   * @default: null
-   */
-  status: null,
-
-  /**
    * Render a pip showing the progress of a given task.
    *
    * @property progress
@@ -50,29 +41,20 @@ export default Component.extend({
    */
   progress: null,
 
+  /**
+   * Set the color of the badge for the given status.
+   *
+   * @property status
+   * @type {string}
+   * @default: null
+   */
+  status: null,
+
   /*
    * Internal properties.
    */
-  hasStatus: notEmpty('status'),
   hasProgress: notEmpty('progress'),
-
-  statusDescription: computed('status', function() {
-    const status = this.get('status');
-    if (isBlank(status) || status === 'default') {
-      return null;
-    }
-
-    return classify(status);
-  }).readOnly(),
-
-  statusClass: computed('statusDescription', function() {
-    const statusDescription = this.get('statusDescription');
-    if (isBlank(statusDescription)) {
-      return null;
-    }
-
-    return `Polaris-Badge--status${statusDescription}`;
-  }).readOnly(),
+  hasStatus: notEmpty('status'),
 
   progressDescription: computed('progress', function() {
     const progress = this.get('progress');
@@ -91,4 +73,22 @@ export default Component.extend({
 
     return `Polaris-Badge--progress${progressDescription}`;
   }).readOnly(),
+
+  statusDescription: computed('status', function() {
+    const status = this.get('status');
+    if (isBlank(status) || status === 'default') {
+      return null;
+    }
+
+    return classify(status);
+  }).readOnly(),
+
+  statusClass: computed('statusDescription', function() {
+    const statusDescription = this.get('statusDescription');
+    if (isBlank(statusDescription)) {
+      return null;
+    }
+
+    return `Polaris-Badge--status${statusDescription}`;
+  }).readOnly()
 });
