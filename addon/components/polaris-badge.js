@@ -5,6 +5,12 @@ import { notEmpty } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-badge';
 
+const PROGRESS_LABELS = {
+  incomplete: 'Incomplete',
+  partiallyComplete: 'Partially complete',
+  complete: 'Complete',
+};
+
 /**
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
@@ -62,16 +68,16 @@ export default Component.extend({
       return null;
     }
 
-    return classify(progress);
+    return PROGRESS_LABELS[progress];
   }).readOnly(),
 
-  progressClass: computed('progressDescription', function() {
-    const progressDescription = this.get('progressDescription');
-    if (isBlank(progressDescription)) {
+  progressClass: computed('progress', function() {
+    const progress = this.get('progress');
+    if (isBlank(progress) || progress === 'default') {
       return null;
     }
 
-    return `Polaris-Badge--progress${progressDescription}`;
+    return `Polaris-Badge--progress${classify(progress)}`;
   }).readOnly(),
 
   statusDescription: computed('status', function() {
