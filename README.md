@@ -382,8 +382,10 @@ With a success status set:
 {{polaris-badge status="success" text="Complete"}}
 ```
 
+With a progress status set:
+
 ```hbs
-{{polaris-badge progress="complete" text="Complete"}}
+{{polaris-badge progress="partiallyComplete" text="Partially complete"}}
 ```
 
 ##### Icon
