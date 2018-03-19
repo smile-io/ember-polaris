@@ -38,7 +38,7 @@ export default Component.extend({
    * Internal properties.
    */
   sizeClass: computed('size', function() {
-    let size = this.get('size') || 'medium';
+    const size = this.get('size') || 'medium';
 
     return `Polaris-ProgressBar--size${ classify(size) }`;
   }).readOnly(),
