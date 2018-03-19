@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 import { computed } from '@ember/object';
-import { isBlank } from '@ember/utils';
 import layout from '../templates/components/polaris-thumbnail';
 
 export default Component.extend({
