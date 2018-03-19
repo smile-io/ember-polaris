@@ -55,8 +55,7 @@ test('it renders the correct HTML when status is set', function(assert) {
   assert.equal(badge.className.indexOf('Polaris-Badge--status'), -1, 'status set to default - does not apply status classes');
 
   visuallyHiddenComponents = findAll(visuallyHiddenSelector);
-  assert.equal(visuallyHiddenComponents.length, 1, 'status set to default - renders one visually hidden component');
-  assert.equal(visuallyHiddenComponents[0].textContent.trim(), '', 'status set to default - renders correct visually hidden content');
+  assert.equal(visuallyHiddenComponents.length, 0, 'status not set - does not render any visually hidden components');
 
   // With status set to success:
   //  - should apply success status class
