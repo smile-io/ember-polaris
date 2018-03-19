@@ -3,7 +3,7 @@ import { find } from 'ember-native-dom-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('progress-bar', 'Integration | Component | progress bar', {
+moduleForComponent('polaris-progress-bar', 'Integration | Component | polaris progress bar', {
   integration: true
 });
 
@@ -14,7 +14,7 @@ const LABEL_SELECTOR = '.Polaris-ProgressBar__Label';
 const PROGRESS = 23;
 
 test('it renders the correct HTML when progress and size are set', function(assert) {
-  this.render(hbs`{{progress-bar progress=23 size='small'}}`);
+  this.render(hbs`{{polaris-progress-bar progress=23 size='small'}}`);
 
   let barNode = find(BAR_SELECTOR);
   let progressNode = find( buildNestedSelector(BAR_SELECTOR, PROGRESS_SELECTOR) );
@@ -45,7 +45,7 @@ test('it renders the correct HTML when progress and size are set', function(asse
 });
 
 test('it renders a medium sized progress bar is no size is set', function(assert) {
-  this.render(hbs`{{progress-bar}}`);
+  this.render(hbs`{{polaris-progress-bar}}`);
 
   let barNode = find(BAR_SELECTOR);
 

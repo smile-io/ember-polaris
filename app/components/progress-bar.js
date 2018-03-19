@@ -1,1 +1,0 @@
-export { default } from 'ember-polaris/components/progress-bar';
