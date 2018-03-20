@@ -20,6 +20,7 @@
 - Avatar
 - Badge
 - Icon
+- Thumbnail
 
 #### Feedback indicators
 - Banner
@@ -409,6 +410,23 @@ Customising with color and backdrop:
 to render the SVG icons.
 You will have to make sure that you copy the icons into your public folder and
 configure `ember-svg-jar` to serve them from `polaris` namespace.
+
+##### Thumbnail
+`polaris-thumbnail` implements the [Polaris Thumbnail component](https://polaris.shopify.com/components/images-and-icons/thumbnail).
+
+###### Examples
+
+Basic usage:
+
+```hbs
+{{polaris-thumbnail source='black-leather-choker-necklace_373x@2x.jpg'}}
+```
+
+With alt text and size:
+
+```hbs
+{{polaris-thumbnail size='small' source='black-leather-choker-necklace_373x@2x.jpg' alt='Black choker necklace'}}
+```
 
 #### Feedback indicators
 
