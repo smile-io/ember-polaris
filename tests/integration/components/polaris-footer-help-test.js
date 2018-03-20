@@ -43,7 +43,7 @@ test('it renders the correct HTML in inline usage', function(assert) {
   const iconWrapper = icon.parentNode;
   assert.ok(iconWrapper.classList.contains('Polaris-Icon--colorTeal'), 'renders the icon with the correct color');
   assert.ok(iconWrapper.classList.contains('Polaris-Icon--hasBackdrop'), 'renders the icon with backdrop');
-
+  debugger;
   // Check the text.
   const footerHelpTexts = findAll(footerHelpTextSelector);
   assert.equal(footerHelpTexts.length, 1, 'renders one footer help text wrapper');
