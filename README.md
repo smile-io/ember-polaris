@@ -22,6 +22,7 @@
 - Icon
 
 #### Feedback indicators
+- Progress bar
 - Banner
 - Skeleton body text
 - Skeleton display text
@@ -411,6 +412,23 @@ You will have to make sure that you copy the icons into your public folder and
 configure `ember-svg-jar` to serve them from `polaris` namespace.
 
 #### Feedback indicators
+
+##### Progress bar
+`polaris-progress-bar` implements the [Polaris Progress bar component](https://polaris.shopify.com/components/feedback-indicators/progress-bar).
+
+###### Example
+
+Basic usage (renders medium-sized progress bar):
+
+```hbs
+{{polaris-progress-bar progress=75}}
+```
+
+With size option:
+
+```hbs
+{{polaris-progress-bar size="large" progress=75}}
+```
 
 ##### Banner
 `polaris-banner` implements the [Polaris Banner component](https://polaris.shopify.com/components/feedback-indicators/banner).
