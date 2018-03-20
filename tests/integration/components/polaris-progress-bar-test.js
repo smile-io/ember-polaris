@@ -7,10 +7,10 @@ moduleForComponent('polaris-progress-bar', 'Integration | Component | polaris pr
   integration: true
 });
 
-const BAR_SELECTOR = '.Polaris-ProgressBar';
-const PROGRESS_SELECTOR = '.Polaris-ProgressBar__Progress';
-const INDICATOR_SELECTOR = '.Polaris-ProgressBar__Indicator';
-const LABEL_SELECTOR = '.Polaris-ProgressBar__Label';
+const BAR_SELECTOR = 'div.Polaris-ProgressBar';
+const PROGRESS_SELECTOR = 'progress.Polaris-ProgressBar__Progress';
+const INDICATOR_SELECTOR = 'div.Polaris-ProgressBar__Indicator';
+const LABEL_SELECTOR = 'span.Polaris-ProgressBar__Label';
 const PROGRESS = 23;
 
 test('it renders the correct HTML when progress and size are set', function(assert) {
@@ -21,34 +21,75 @@ test('it renders the correct HTML when progress and size are set', function(asse
   let indicatorNode = find( buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR) );
   let labelNode = find( buildNestedSelector(INDICATOR_SELECTOR, LABEL_SELECTOR) );
 
-  // component renders correctly
+  // Component renders correctly
   assert.ok(barNode, 'the progress bar container is rendered');
   assert.ok(progressNode, 'the progress node is rendered inside the container');
   assert.ok(indicatorNode, 'the indicator node is rendered inside the container');
   assert.ok(labelNode, 'the label node is rendered inside the indicator');
 
-  // bar attributes
+  // Bar attributes
   assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'size class is added to the container');
 
-  // progress attributes
+  // Progress attributes
   assert.equal(progressNode.getAttribute('value'), PROGRESS, 'progress value attribute is correct');
 
-  // indicator attributes
+  // Indicator attributes
   let percentStyle = `width: ${ PROGRESS }%;`;
 
   assert.equal(indicatorNode.getAttribute('style'), percentStyle, 'indicator width style is correct');
 
-  // label attributes
+  // Label attributes
   let percentLabel = `${ PROGRESS }%`;
 
   assert.equal(labelNode.textContent.trim(), percentLabel, 'progress label is correct');
 });
 
-test('it renders a medium sized progress bar is no size is set', function(assert) {
-  this.render(hbs`{{polaris-progress-bar}}`);
+test('it renders a correctly-sized progress bar', function(assert) {
+  this.set('size', '');
+  this.render(hbs`{{polaris-progress-bar size=size}}`);
 
   let barNode = find(BAR_SELECTOR);
 
-  // bar attributes
-  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'medium size class is applied to container');
+  // No size should default to medium
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'no size - does not apply small size class');
+  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'no size - applies medium size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeLarge'), 'no size - does not apply large size class');
+
+  this.set('size', 'small');
+  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'small size - applies small size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'small size - does not apply medium size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeLarge'), 'small size - does not apply large size class');
+
+  this.set('size', 'medium');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'medium size - does not apply small size class');
+  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'medium size - applies medium size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeLarge'), 'medium size - does not apply large size class');
+
+  this.set('size', 'large');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'large size - does not apply small size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'large size - does not apply medium size class');
+  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeLarge'), 'large size - applies large size class');
+
+  this.set('size', 'unsupported');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeSmall'), 'unsupported size - does not apply small size class');
+  assert.ok(barNode.classList.contains('Polaris-ProgressBar--sizeMedium'), 'unsupported size - applies medium size class');
+  assert.notOk(barNode.classList.contains('Polaris-ProgressBar--sizeLarge'), 'unsupported size - does not apply large size class');
+});
+
+test('it correctly handles out-of-bounds progress numbers', function(assert) {
+  this.set('progress', -23);
+  this.render(hbs`{{polaris-progress-bar progress=progress}}`);
+
+  let progressNode = find( buildNestedSelector(BAR_SELECTOR, PROGRESS_SELECTOR) );
+  let indicatorNode = find( buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR) );
+  let labelNode = find( buildNestedSelector(INDICATOR_SELECTOR, LABEL_SELECTOR) );
+
+  assert.equal(progressNode.getAttribute('value'), '0', 'negative progress value - rounds progress value attribute up to 0');
+  assert.equal(indicatorNode.getAttribute('style'), 'width: 0%;', 'negative progress value - rounds indicator width percentage up to 0');
+  assert.equal(labelNode.textContent.trim(), '0%', 'negative progress value - renders a 0% in progress label');
+
+  this.set('progress', 145);
+  assert.equal(progressNode.getAttribute('value'), '100', 'progress value over 100 - rounds progress value attribute up to 0');
+  assert.equal(indicatorNode.getAttribute('style'), 'width: 100%;', 'progress value over 100 - rounds indicator width percentage down to 100');
+  assert.equal(labelNode.textContent.trim(), '100%', 'progress value over 100 - renders a 100% in progress label');
 });
