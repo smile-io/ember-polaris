@@ -1,10 +1,15 @@
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 import { computed } from '@ember/object';
+import { warn } from '@ember/debug';
 import layout from '../templates/components/polaris-thumbnail';
 
-const SIZES = ['small', 'medium', 'large'];
-const DEFAULT_SIZE = 'medium';
+const allowedSizes = [
+  'small',
+  'medium',
+  'large'
+];
+const defaultSize = 'medium';
 
 /**
  * Polaris thumbnail component.
@@ -25,7 +30,7 @@ export default Component.extend({
    * @type {String}
    * @default: 'medium'
    */
-  size: DEFAULT_SIZE,
+  size: defaultSize,
 
   /**
    * URL for the image
@@ -47,20 +52,15 @@ export default Component.extend({
    */
   alt: null,
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-
-    if (SIZES.indexOf(this.get('size')) === -1) {
-      this.set('size', DEFAULT_SIZE);
-      Ember.assert('Invalid `size` attribute. Please use `small`, `medium`, or `large`');
-    }
-  },
-
   /*
    * Internal properties.
    */
   sizeClass: computed('size', function() {
-    let size = this.get('size') || 'medium';
+    let size = this.get('size');
+    if (allowedSizes.indexOf(size) === -1) {
+      size = defaultSize;
+      warn('Unsupported `size` attribute. Please use `small`, `medium`, or `large`');
+    }
 
     return `Polaris-Thumbnail--size${ classify(size) }`;
   }).readOnly()
