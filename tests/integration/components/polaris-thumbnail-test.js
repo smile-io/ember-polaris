@@ -65,3 +65,21 @@ test('it renders a correctly-sized thumbnail', function(assert) {
   assert.ok(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'), 'unsupported size - falls back to applying medium size class');
   assert.notOk(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'), 'unsupported size - does not apply large size class');
 });
+
+test('it does not apply alt text if `alt` is not passed in', function(assert) {
+  this.render(hbs`{{polaris-thumbnail}}`);
+
+  let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
+  let image = find(imageSelector);
+
+  assert.equal(image.getAttribute('alt'), '', 'no alt text - alt text is not applied to image');
+});
+
+test('it does not apply src if `source` is not passed in', function(assert) {
+  this.render(hbs`{{polaris-thumbnail}}`);
+
+  let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
+  let image = find(imageSelector);
+
+  assert.equal(image.getAttribute('src'), '', 'no source - src is not applied to image');
+});

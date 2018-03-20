@@ -38,9 +38,9 @@ export default Component.extend({
    * @public
    * @property source
    * @type {String}
-   * @default: null
+   * @default: ''
    */
-  source: null,
+  source: '',
 
   /**
    * Alt text for the thumbnail image
@@ -48,9 +48,9 @@ export default Component.extend({
    * @public
    * @property alt
    * @type {String}
-   * @default: null
+   * @default: ''
    */
-  alt: null,
+  alt: '',
 
   /*
    * Internal properties.
