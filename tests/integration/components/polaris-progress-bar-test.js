@@ -84,12 +84,12 @@ test('it correctly handles out-of-bounds progress numbers', function(assert) {
   let indicatorNode = find( buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR) );
   let labelNode = find( buildNestedSelector(INDICATOR_SELECTOR, LABEL_SELECTOR) );
 
-  assert.equal(progressNode.getAttribute('value'), '0', 'negative progress value - rounds progress value attribute up to 0');
-  assert.equal(indicatorNode.getAttribute('style'), 'width: 0%;', 'negative progress value - rounds indicator width percentage up to 0');
-  assert.equal(labelNode.textContent.trim(), '0%', 'negative progress value - renders a 0% in progress label');
+  assert.equal(progressNode.getAttribute('value'), '0', 'negative progress value - value attribute limited to a min of 0');
+  assert.equal(indicatorNode.style.width, '0%', 'negative progress value - indicator width limited to a min of 0%');
+  assert.equal(labelNode.textContent.trim(), '0%', 'negative progress value - label limited to a min of 0% in progress label');
 
   this.set('progress', 145);
-  assert.equal(progressNode.getAttribute('value'), '100', 'progress value over 100 - rounds progress value attribute up to 0');
-  assert.equal(indicatorNode.getAttribute('style'), 'width: 100%;', 'progress value over 100 - rounds indicator width percentage down to 100');
-  assert.equal(labelNode.textContent.trim(), '100%', 'progress value over 100 - renders a 100% in progress label');
+  assert.equal(progressNode.getAttribute('value'), '100', 'progress value over 100 - value attribute limited to a max of 100');
+  assert.equal(indicatorNode.style.width, '100%', 'progress value over 100 - indicator width limited to a max of 100%');
+  assert.equal(labelNode.textContent.trim(), '100%', 'progress value over 100 - label limited to a max of 100% in progress label');
 });
