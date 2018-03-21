@@ -72,7 +72,7 @@ test('it does not apply alt text if `alt` is not passed in', function(assert) {
   let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
   let image = find(imageSelector);
 
-  assert.equal(image.getAttribute('alt'), '', 'no alt text - alt text is not applied to image');
+  assert.equal(image.getAttribute('alt'), null, 'no alt text - alt text is not applied to image');
 });
 
 test('it does not apply src if `source` is not passed in', function(assert) {
@@ -81,5 +81,5 @@ test('it does not apply src if `source` is not passed in', function(assert) {
   let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
   let image = find(imageSelector);
 
-  assert.equal(image.getAttribute('src'), '', 'no source - src is not applied to image');
+  assert.equal(image.getAttribute('src'), null, 'no source - src is not applied to image');
 });

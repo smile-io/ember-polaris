@@ -38,9 +38,9 @@ export default Component.extend({
    * @public
    * @property source
    * @type {String}
-   * @default: ''
+   * @default: null
    */
-  source: '',
+  source: null,
 
   /**
    * Alt text for the thumbnail image
@@ -48,9 +48,9 @@ export default Component.extend({
    * @public
    * @property alt
    * @type {String}
-   * @default: ''
+   * @default: null
    */
-  alt: '',
+  alt: null,
 
   /*
    * Internal properties.
@@ -59,7 +59,7 @@ export default Component.extend({
     let size = this.get('size');
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
-      warn('Unsupported `size` attribute. Please use `small`, `medium`, or `large`');
+      warn(`Unsupported 'size' attribute for 'polaris-thumbnail'. Please use: ${ allowedSizes.join(' ') }.`);
     }
 
     return `Polaris-Thumbnail--size${ classify(size) }`;

@@ -419,13 +419,13 @@ configure `ember-svg-jar` to serve them from `polaris` namespace.
 Basic usage:
 
 ```hbs
-{{polaris-thumbnail source='black-leather-choker-necklace_373x@2x.jpg'}}
+{{polaris-thumbnail source="image.jpg"}}
 ```
 
 With alt text and size:
 
 ```hbs
-{{polaris-thumbnail size='small' source='black-leather-choker-necklace_373x@2x.jpg' alt='Black choker necklace'}}
+{{polaris-thumbnail size="small" source="image.jpg" alt="My image"}}
 ```
 
 #### Feedback indicators
