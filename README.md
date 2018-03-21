@@ -23,6 +23,7 @@
 
 #### Feedback indicators
 - Banner
+- Progress bar
 - Skeleton body text
 - Skeleton display text
 - Skeleton page
@@ -441,6 +442,23 @@ With a success status set, custom icon, content, dismiss button and actions:
 }}
   <p>This order has been shipped.</p>
 {{/polaris-banner}}
+```
+
+##### Progress bar
+`polaris-progress-bar` implements the [Polaris Progress bar component](https://polaris.shopify.com/components/feedback-indicators/progress-bar).
+
+###### Example
+
+Basic usage (renders medium-sized progress bar):
+
+```hbs
+{{polaris-progress-bar progress=75}}
+```
+
+With size option:
+
+```hbs
+{{polaris-progress-bar size="large" progress=75}}
 ```
 
 ##### Skeleton body text
