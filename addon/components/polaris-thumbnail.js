@@ -59,7 +59,7 @@ export default Component.extend({
     let size = this.get('size');
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
-      warn(`Unsupported 'size' attribute for 'polaris-thumbnail'. Please use: ${ allowedSizes.join(' ') }.`);
+      warn(`Unsupported 'size' attribute for 'polaris-thumbnail'. Supported values: ${ allowedSizes.join(' ') }.`);
     }
 
     return `Polaris-Thumbnail--size${ classify(size) }`;
