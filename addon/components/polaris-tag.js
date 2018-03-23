@@ -20,7 +20,7 @@ export default Component.extend({
    *
    * @public
    * @property text
-   * @type {string}
+   * @type {String}
    * @default: null
    */
   text: null,
@@ -29,7 +29,7 @@ export default Component.extend({
    *  Callback when tag is removed
    *
    * @property onRemove
-   * @type {function}
+   * @type {Function}
    * @default no-op
    */
   onRemove() {},

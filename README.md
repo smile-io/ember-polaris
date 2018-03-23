@@ -51,6 +51,7 @@
 - Color picker
 - Form layout
 - Radio button
+- Tag
 
 #### Lists
 - List
@@ -1164,6 +1165,30 @@ Radio button with help text:
   value="option-1"
   onChange=(action (mut selectedValue))
 }}
+```
+
+##### Tag
+`polaris-tag` implements the [Polaris Tag component](https://polaris.shopify.com/components/forms/tag).
+
+###### Examples
+
+Basic tag inline usage:
+
+```hbs
+{{polaris-tag
+  text="Wholesale"
+  onRemove=(action "myTagRemoveAction")
+}}
+```
+
+Basic tag block usage:
+
+```hbs
+{{#polaris-tag
+  onRemove=(action "myTagRemoveAction")
+}}
+  Wholesale
+{{/polaris-tag}}
 ```
 
 #### Lists

@@ -49,11 +49,11 @@ test('it renders the correct HTML in inline usage', function(assert) {
 });
 
 test('it renders the correct HTML in block usage', function(assert) {
-  this.set('text', tag);
+  this.set('tag', tag);
 
   this.render(hbs`
     {{#polaris-tag}}
-      Wholesale
+      {{tag}}
     {{/polaris-tag}}
   `);
 
