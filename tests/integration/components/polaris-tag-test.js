@@ -70,3 +70,16 @@ test('it renders the correct HTML in block usage', function(assert) {
   const tagIcon = find(tagIconSelector);
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
 });
+
+test('it calls an `onRemove` action when the button is clicked', function(assert) {
+  let done = assert.async();
+
+  this.on('onRemove', () => {
+    assert.ok(true, '`onRemove` action was called');
+    done();
+  });
+
+  this.render(hbs`{{polaris-tag onRemove=(action 'onRemove')}}`);
+
+  click(tagButtonSelector);
+});
