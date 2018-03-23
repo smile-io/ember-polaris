@@ -55,6 +55,7 @@
 - Radio button
 
 #### Lists
+- Description list
 - List
 - Resource list
 
@@ -1203,6 +1204,17 @@ Radio button with help text:
 ```
 
 #### Lists
+
+##### Description list
+`polaris-description-list` implements the [Polaris Description list component](https://polaris.shopify.com/components/lists/description-list).
+
+###### Example
+
+Default description list - where `items` is an array of objects formatted with `term` and `description` keys:
+
+```hbs
+{{polaris-description-list items=items}}
+```
 
 ##### List
 `polaris-list` implements the [Polaris List component](https://polaris.shopify.com/components/lists/list). This component should be used in block form to access the `list.item` component, as in the examples below.
