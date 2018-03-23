@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { find, findAll } from 'ember-native-dom-helpers';
+import { click, find, findAll } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
@@ -33,6 +33,29 @@ const tagIconSelector = buildNestedSelector(
 test('it renders the correct HTML in inline usage', function(assert) {
   this.set('text', tag);
   this.render(hbs`{{polaris-tag text=text}}`);
+
+  const tagComponent = findAll(componentSelector);
+  assert.equal(tagComponent.length, 1, 'it renders a single tag component');
+
+  const tagValue = find(tagValueSelector);
+  assert.ok(tagValue, 'it renders a span to hold the `text` value');
+  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `text` value correctly');
+
+  const tagButton = find(tagButtonSelector);
+  assert.ok(tagButton, 'it renders a tag button');
+
+  const tagIcon = find(tagIconSelector);
+  assert.ok(tagIcon, 'it renders an icon inside the tag button');
+});
+
+test('it renders the correct HTML in block usage', function(assert) {
+  this.set('text', tag);
+
+  this.render(hbs`
+    {{#polaris-tag}}
+      Wholesale
+    {{/polaris-tag}}
+  `);
 
   const tagComponent = findAll(componentSelector);
   assert.equal(tagComponent.length, 1, 'it renders a single tag component');
