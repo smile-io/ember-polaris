@@ -1,24 +1,20 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { find } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-caption', 'Integration | Component | polaris caption', {
   integration: true
 });
 
-test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });
+const caption = 'Received April 21, 2017'
+const componentSelector = 'p.Polaris-Caption';
 
-  this.render(hbs`{{polaris-caption}}`);
+test('it renders the correct HTML with inline usage', function(assert) {
+  this.set('text', caption);
+  this.render(hbs`{{polaris-caption text=text}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  const captionNode = find(componentSelector);
 
-  // Template block usage:
-  this.render(hbs`
-    {{#polaris-caption}}
-      template block text
-    {{/polaris-caption}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.ok(captionNode, 'it renders the caption');
+  assert.equal(captionNode.textContent.trim(), caption, 'it renders to `text` value inside the caption');
 });
