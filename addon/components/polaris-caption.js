@@ -16,7 +16,7 @@ export default Component.extend({
    *
    * @public
    * @property text
-   * @type {string}
+   * @type {String}
    * @default: null
    */
   text: null

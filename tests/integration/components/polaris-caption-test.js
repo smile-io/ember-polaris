@@ -18,3 +18,17 @@ test('it renders the correct HTML with inline usage', function(assert) {
   assert.ok(captionNode, 'it renders the caption');
   assert.equal(captionNode.textContent.trim(), caption, 'it renders to `text` value inside the caption');
 });
+
+test('it renders the correct HTML with block usage', function(assert) {
+  this.set('caption', caption);
+  this.render(hbs`
+    {{#polaris-caption}}
+      {{caption}}
+    {{/polaris-caption}}
+  `);
+
+  const captionNode = find(componentSelector);
+
+  assert.ok(captionNode, 'it renders the caption');
+  assert.equal(captionNode.textContent.trim(), caption, 'it renders to `text` value inside the caption');
+});
