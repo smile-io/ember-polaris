@@ -68,9 +68,9 @@
     lodash "^4.17.4"
     lodash-decorators "^4.3.5"
 
-"@shopify/polaris@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris/-/polaris-1.12.1.tgz#54fa6c9c1096138705db2cba9fa9d4672824240b"
+"@shopify/polaris@1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris/-/polaris-1.12.4.tgz#70abb444c1bcef4ca7a09c1d061a03b3496380db"
   dependencies:
     "@shopify/images" "^1.1.0"
     "@shopify/javascript-utilities" "^2.1.0"
