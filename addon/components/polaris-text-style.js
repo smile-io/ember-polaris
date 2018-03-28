@@ -13,28 +13,29 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
-   * Text style to apply (positive, negative, strong or subdued)
+   * Give text additional visual meaning
+   *
+   * Possible values: positive, negative, strong, subdued
    *
    * @property variation
-   * @type {string}
+   * @type {String}
    * @default: null
+   * @public
    */
   variation: null,
 
   /**
-   * Content to apply the variation to
+   * The content that should get the intended styling
    *
    * This component can be used in block form,
    * in which case the block content will be used
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default: null
+   * @public
    */
   text: null,
 
