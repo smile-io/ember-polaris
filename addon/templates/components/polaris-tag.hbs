@@ -1,31 +1,18 @@
-{{#if hasBlock}}
-  <span>
+<span>
+  {{#if hasBlock}}
     {{yield}}
-  </span>
-
-  <button
-    type="button"
-    aria-label="Remove"
-    class="Polaris-Tag__Button"
-    onclick={{action "remove"}}
-  >
-
-    {{polaris-icon source="cancel"}}
-
-  </button>
-{{else}}
-  <span>
+  {{else}}
     {{text}}
-  </span>
+  {{/if}}
+</span>
 
-  <button
-    type="button"
-    aria-label="Remove"
-    class="Polaris-Tag__Button"
-    onclick={{action "remove"}}
-  >
+<button
+  type="button"
+  aria-label="Remove"
+  class="Polaris-Tag__Button"
+  onclick={{action onRemove}}
+>
 
-    {{polaris-icon source="cancel"}}
+  {{polaris-icon source="cancel"}}
 
-  </button>
-{{/if}}
+</button>

@@ -1172,7 +1172,7 @@ Radio button with help text:
 
 ###### Examples
 
-Basic tag inline usage:
+Tag inline usage:
 
 ```hbs
 {{polaris-tag
@@ -1181,7 +1181,7 @@ Basic tag inline usage:
 }}
 ```
 
-Basic tag block usage:
+Tag block usage:
 
 ```hbs
 {{#polaris-tag

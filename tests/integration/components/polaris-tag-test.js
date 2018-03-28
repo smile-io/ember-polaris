@@ -45,7 +45,9 @@ test('it renders the correct HTML in inline usage', function(assert) {
   assert.ok(tagButton, 'it renders a tag button');
 
   const tagIcon = find(tagIconSelector);
+  const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
+  assert.equal(iconSource, 'polaris/cancel', 'it uses the correct polaris/cancel icon as the icon source');
 });
 
 test('it renders the correct HTML in block usage', function(assert) {
@@ -61,25 +63,27 @@ test('it renders the correct HTML in block usage', function(assert) {
   assert.equal(tagComponent.length, 1, 'it renders a single tag component');
 
   const tagValue = find(tagValueSelector);
-  assert.ok(tagValue, 'it renders a span to hold the `text` value');
-  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `text` value correctly');
+  assert.ok(tagValue, 'it renders a span to hold the `tag` value');
+  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `tag` value correctly');
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
 
   const tagIcon = find(tagIconSelector);
+  const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
+  assert.equal(iconSource, 'polaris/cancel', 'it uses the correct polaris/cancel icon as the icon source');
 });
 
 test('it calls an `onRemove` action when the button is clicked', function(assert) {
-  let done = assert.async();
+  this.set('onRemoveActionFired', false);
 
-  this.on('onRemove', () => {
-    assert.ok(true, '`onRemove` action was called');
-    done();
-  });
-
-  this.render(hbs`{{polaris-tag onRemove=(action 'onRemove')}}`);
+  this.render(hbs`
+    {{polaris-tag
+      onRemove=(action (mut onRemoveActionFired) true)
+    }}
+  `);
 
   click(tagButtonSelector);
+  assert.ok(this.get('onRemoveActionFired'), 'button clicked - onRemove action is called');
 });

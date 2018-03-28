@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-tag';
+import { handleMouseUpByBlurring } from '../utils/focus';
 
 /**
  * Polaris tag component.
@@ -10,6 +11,8 @@ export default Component.extend({
   classNames: ['Polaris-Tag'],
 
   layout,
+
+  mouseUp: handleMouseUpByBlurring,
 
   /**
    * The content to display inside the tag.
@@ -32,11 +35,5 @@ export default Component.extend({
    * @type {Function}
    * @default no-op
    */
-  onRemove() {},
-
-  actions: {
-    remove() {
-      this.get('onRemove')();
-    }
-  }
+  onRemove() {}
 });
