@@ -11,7 +11,7 @@
     "component library"
   ],
   "license": "MIT",
-  "author": "Sweet Tooth",
+  "author": "Smile.io <devs@smile.io>",
   "directories": {
     "doc": "doc",
     "test": "tests"
