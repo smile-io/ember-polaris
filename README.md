@@ -893,13 +893,13 @@ Stack with one item on the left and one pushed to the right:
 
 ###### Examples
 
-Basic caption inline usage:
+Caption inline usage:
 
 ```hbs
 {{polaris-caption text="Caption text"}}
 ```
 
-Basic caption block usage:
+Caption block usage:
 
 ```hbs
 {{#polaris-caption}}

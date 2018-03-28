@@ -16,7 +16,7 @@ test('it renders the correct HTML with inline usage', function(assert) {
   const captionNode = find(componentSelector);
 
   assert.ok(captionNode, 'it renders the caption');
-  assert.equal(captionNode.textContent.trim(), caption, 'it renders to `text` value inside the caption');
+  assert.equal(captionNode.textContent.trim(), caption, 'it renders the correct caption text');
 });
 
 test('it renders the correct HTML with block usage', function(assert) {
@@ -30,5 +30,5 @@ test('it renders the correct HTML with block usage', function(assert) {
   const captionNode = find(componentSelector);
 
   assert.ok(captionNode, 'it renders the caption');
-  assert.equal(captionNode.textContent.trim(), caption, 'it renders to `text` value inside the caption');
+  assert.equal(captionNode.textContent.trim(), caption, 'it renders the correct caption text');
 });
