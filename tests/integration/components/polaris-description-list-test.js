@@ -9,16 +9,16 @@ moduleForComponent('polaris-description-list', 'Integration | Component | polari
 
 const items = [
   {
-    term: 'Logistics',
-    description: 'The management of products or other resources as they travel between a point of origin and a destination.',
+    term: 'First term',
+    description: 'First description'
   },
   {
-    term: 'Sole proprietorship',
-    description: 'A business structure where a single individual both owns and runs the company.',
+    term: 'Second term',
+    description: 'Second description'
   },
   {
-    term: 'Discount code',
-    description: 'A series of numbers and/or letters that an online shopper may enter at checkout to get a discount or special offer.',
+    term: 'Third term',
+    description: 'Third description'
   },
 ];
 
@@ -64,29 +64,3 @@ test('it does not render terms or descriptions if no items are passed in', funct
   const itemsDescriptions = findAll(listItemsDescriptionsSelector);
   assert.equal(itemsDescriptions.length, 0, 'no items - it does not render any descriptions within the list');
 });
-
-test('it does not render items if they only contain unsupported keys', function(assert) {
-  const supportedKeysItem = {
-    term: 'term',
-    description: 'description'
-  };
-  const unsupportedKeysItem = {
-    label: 'label is not a supported key',
-    summary: 'summary is not a supported key'
-  };
-  const mixedKeyItems = [
-    supportedKeysItem,
-    unsupportedKeysItem
-  ];
-  const numberOfItemsWithSupportedKeys = 1;
-
-  this.set('mixedKeyItems', mixedKeyItems);
-  this.render(hbs`{{polaris-description-list items=mixedKeyItems}}`);
-
-  const itemsTerms = findAll(listItemsTermsSelector);
-  assert.equal(itemsTerms.length, numberOfItemsWithSupportedKeys, 'unsupported keys - it does not render item terms with unsupported keys');
-
-  const itemsDescriptions = findAll(listItemsDescriptionsSelector);
-  assert.equal(itemsDescriptions.length, numberOfItemsWithSupportedKeys, 'unsupported keys - it does not render item descriptions with unsupported keys');
-});
-

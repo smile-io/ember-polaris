@@ -19,32 +19,19 @@ export default Component.extend({
    *   description: 'Description here'
    * }]
    *
+   * values can also be set to custom components:
+   *
+   * items=(array
+   *  (hash
+   *    termComponent=(component my-term-component)
+   *    descriptionComponent=(component my-description-component)
+   *  )
+   * )
+   *
    * @public
    * @property items
    * @type {Array}
    * @default: null
    */
-  items: null,
-
-  /*
-   * Internal properties.
-   */
-  /*
-   * Only render items that have the correct keys.
-   */
-  displayItems: computed('items.[]', function() {
-    let items = this.get('items');
-
-    if (!items) {
-      return [];
-    }
-
-    return items.filter((item) => {
-      if (item.term && item.description) {
-        return true;
-      } else {
-        warn('Unsupported key(s) for `description-list`. Supported keys: `term` `description`');
-      }
-    });
-  })
+  items: null
 });

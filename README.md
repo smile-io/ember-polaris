@@ -1210,10 +1210,38 @@ Radio button with help text:
 
 ###### Example
 
-Default description list - where `items` is an array of objects formatted with `term` and `description` keys:
+Basic description list usage:
 
 ```hbs
-{{polaris-description-list items=items}}
+{{polaris-description-list
+  items=(array
+    (hash
+      term="My term"
+      description="My description"
+    )
+    (hash
+      term="Another term"
+      description="Another description"
+    )
+  )
+}}
+```
+
+Rendering a component in place of `item` or `description`:
+
+```hbs
+{{polaris-description-list
+  items=(array
+    (hash
+      termComponent=(component my-term-component)
+      description="..."
+    )
+    (hash
+      term="..."
+      descriptionComponent=(component my-description-component)
+    )
+  )
+}}
 ```
 
 ##### List
