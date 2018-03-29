@@ -1,0 +1,18 @@
+<span>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</span>
+
+<button
+  type="button"
+  aria-label="Remove"
+  class="Polaris-Tag__Button"
+  onclick={{action onRemove}}
+>
+
+  {{polaris-icon source="cancel"}}
+
+</button>
