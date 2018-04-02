@@ -40,6 +40,7 @@
 - Stack
 
 #### Titles and text
+- Caption
 - Display text
 - Footer help
 - Heading
@@ -888,6 +889,25 @@ Stack with one item on the left and one pushed to the right:
 ```
 
 #### Titles and Text
+
+##### Caption
+`polaris-caption` implements the [Polaris Caption component](https://polaris.shopify.com/components/titles-and-text/caption).
+
+###### Examples
+
+Caption inline usage:
+
+```hbs
+{{polaris-caption text="Caption text"}}
+```
+
+Caption block usage:
+
+```hbs
+{{#polaris-caption}}
+  Caption text
+{{/polaris-caption}}
+```
 
 ##### Display text
 `polaris-display-text` implements the [Polaris Display text component](https://polaris.shopify.com/components/titles-and-text/display-text).
