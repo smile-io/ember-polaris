@@ -1,7 +1,5 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-description-list';
-import { warn } from '@ember/debug';
-import { computed } from '@ember/object';
 
 export default Component.extend({
   tagName: 'dl',
