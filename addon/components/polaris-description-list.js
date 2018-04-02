@@ -20,10 +20,10 @@ export default Component.extend({
    * values can also be set to custom components:
    *
    * items=(array
-   *  (hash
-   *    termComponent=(component my-term-component)
-   *    descriptionComponent=(component my-description-component)
-   *  )
+   *   (hash
+   *     termComponent=(component my-term-component)
+   *     descriptionComponent=(component my-description-component)
+   *   )
    * )
    *
    * @public
