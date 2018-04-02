@@ -1,0 +1,16 @@
+{{#each items as |item|}}
+  <dt class="Polaris-DescriptionList__Term">
+    {{#if item.termComponent}}
+      {{component item.termComponent}}
+    {{else}}
+      {{item.term}}
+    {{/if}}
+  </dt>
+  <dd class="Polaris-DescriptionList__Description">
+    {{#if item.descriptionComponent}}
+      {{component item.descriptionComponent}}
+    {{else}}
+      {{item.description}}
+    {{/if}}
+  </dd>
+{{/each}}

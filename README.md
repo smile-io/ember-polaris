@@ -56,6 +56,7 @@
 - Tag
 
 #### Lists
+- Description list
 - List
 - Resource list
 
@@ -1228,6 +1229,47 @@ Tag block usage:
 ```
 
 #### Lists
+
+##### Description list
+`polaris-description-list` implements the [Polaris Description list component](https://polaris.shopify.com/components/lists/description-list).
+
+**NOTE:** _The `term` and `description` properties in this implementation only support string values - to emulate the React component's ability to pass a node in for these attributes, use `termComponent` and `descriptionComponent` instead._
+
+###### Example
+
+Basic description list usage:
+
+```hbs
+{{polaris-description-list
+  items=(array
+    (hash
+      term="My term"
+      description="My description"
+    )
+    (hash
+      term="Another term"
+      description="Another description"
+    )
+  )
+}}
+```
+
+Rendering a component in place of `item` or `description`:
+
+```hbs
+{{polaris-description-list
+  items=(array
+    (hash
+      termComponent=(component "my-term-component")
+      description="..."
+    )
+    (hash
+      term="..."
+      descriptionComponent=(component "my-description-component")
+    )
+  )
+}}
+```
 
 ##### List
 `polaris-list` implements the [Polaris List component](https://polaris.shopify.com/components/lists/list). This component should be used in block form to access the `list.item` component, as in the examples below.
