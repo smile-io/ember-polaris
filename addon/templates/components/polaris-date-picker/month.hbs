@@ -1,4 +1,13 @@
-{{!-- TODO define isCurrent --}}
-<div class="Polaris-DatePicker__Title {{if isCurrent 'Polaris-DatePicker__Month--current'}}">
-  {{!-- TODO define title --}}
+<div class="Polaris-DatePicker__Title {{if current 'Polaris-DatePicker__Month--current'}}">
+  {{month}} {{year}}
 </div>
+<div role="rowheader" class="Polaris-DatePicker__WeekHeadings">
+  {{#each weekdays as |weekday|}}
+    {{polaris-date-picker/weekday
+      title=weekday.title
+      current=weekday.current
+      label=weekday.label
+    }}
+  {{/each}}
+</div>
+{weeksMarkup}

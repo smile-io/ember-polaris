@@ -135,4 +135,39 @@ export default Component.extend({
    * @default noop
    */
   weekdayName(weekday) {},
+
+  /**
+   * Internal Properties
+   */
+  current: computed('month', function() {
+    return new Date().getMonth() === this.get('month');
+  }),
+
+  weeks: computed('month', 'year', function() {
+    let month = this.get('month');
+    let year = this.get('year');
+
+    return getWeeksForMonth(month, year);
+  }),
+
+  weekdays: computed(function() {
+    let current = this.get('current');
+
+    return WEEKDAYS.map((weekday, i) => {
+      return {
+        title: abbreviationForWeekday(weekday),
+        current: (current && new Date().getDay() === i),
+        label: weekday
+      };
+    })
+  }),
+
+  isInHoveringRange(day = null, range, hoverEndDate) {
+    if (!this.get('allowRange') || day === null) {
+      return false;
+    }
+    const { start, end } = range;
+
+    return Boolean(start === end && day > start && day <= hoverEndDate);
+  }
 });
