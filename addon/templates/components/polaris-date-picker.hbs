@@ -1,0 +1,15 @@
+<div className="Polaris-DatePicker__Header">
+  {{polaris-button
+    plain=true
+    icon="arrowLeft"
+    accessibilityLabel=previousMonthLabel
+    onClick=(action "handleMonthChangeClick" showPreviousMonth showPreviousYear)
+  }}
+
+  {{polaris-button
+    plain=true
+    icon="arrowRight"
+    accessibilityLabel=nextMonthLabel
+    onClick=(action "handleMonthChangeClick" showNextMonth showNextYear)
+  }}
+</div>
