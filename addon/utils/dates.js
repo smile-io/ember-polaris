@@ -1,27 +1,27 @@
-export const Weekdays = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
+export const Weekdays = {
+  Sunday: 'Sunday',
+  Monday: 'Monday',
+  Tuesday: 'Tuesday',
+  Wednesday: 'Wednesday',
+  Thursday: 'Thursday',
+  Friday: 'Friday',
+  Saturday: 'Saturday'
+};
 
-export const Months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
+export const Months = {
+  January: 'January',
+  February: 'February',
+  March: 'March',
+  April: 'April',
+  May: 'May',
+  June: 'June',
+  July: 'July',
+  August: 'August',
+  September: 'September',
+  October: 'October',
+  November: 'November',
+  December: 'December'
+};
 
 export function getYearForRange({ start, end }) {
   if (start) {
@@ -33,7 +33,7 @@ export function getYearForRange({ start, end }) {
   return (new Date()).getFullYear();
 };
 
-export function getMonthForRange({ start, end }): Months {
+export function getMonthForRange({ start, end }) {
   if (start) {
     return start.getMonth();
   }
@@ -52,7 +52,7 @@ const WEEK_LENGTH = 7;
 export function getWeeksForMonth(month, year) {
   const firstOfMonth = new Date(year, month, 1);
   const firstDayOfWeek = firstOfMonth.getDay();
-  const weeks: Week[] = [[]];
+  const weeks = [[]];
 
   let currentWeek = weeks[0];
   let currentDate = firstOfMonth;
@@ -129,33 +129,41 @@ export function getNewRange(range = undefined, selected) {
   return { start: selected, end: selected };
 };
 
-// export function getNextDisplayMonth(month) {
-//   if (Months[month] === Months[11]) {
-//     return 0;
-//   }
-//   return (month as number) + 1;
-// }
+export function getNextDisplayMonth(month) {
+  let i = Months.indexOf(month);
 
-// export function getNextDisplayYear(month: Months, year: Year): Year {
-//   if (Months[month] === Months[11]) {
-//     return year + 1;
-//   }
-//   return year;
-// }
+  if (i === 11) {
+    return 0;
+  }
+  return i + 1;
+}
 
-// export function getPreviousDisplayMonth(month: Months): Months {
-//   if (Months[month] === Months[0]) {
-//     return 11;
-//   }
-//   return (month as number) - 1;
-// }
+export function getNextDisplayYear(month, year) {
+  let i = Months.indexOf(month);
 
-// export function getPreviousDisplayYear(month: Months, year: Year): Year {
-//   if (Months[month] === Months[0]) {
-//     return year - 1;
-//   }
-//   return year;
-// }
+  if (i === 11) {
+    return year + 1;
+  }
+  return year;
+}
+
+export function getPreviousDisplayMonth(month) {
+  let i = Months.indexOf(month);
+
+  if (i === 0) {
+    return 11;
+  }
+  return i - 1;
+}
+
+export function getPreviousDisplayYear(month, year) {
+  let i = Months.indexOf(month);
+
+  if (i === 0) {
+    return year - 1;
+  }
+  return year;
+}
 
 export function isDateAfter(date, dateToCompare) {
   return date.getTime() > dateToCompare.getTime();
