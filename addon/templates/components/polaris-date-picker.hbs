@@ -13,3 +13,88 @@
     onClick=(action "handleMonthChangeClick" showNextMonth showNextYear)
   }}
 </div>
+<div class="Polaris-DatePicker__MonthContainer">
+
+</div>
+
+<!--
+<div class="Polaris-DatePicker">
+  <div class="Polaris-DatePicker__Header">
+    <button type="button" class="Polaris-Button Polaris-Button--plain Polaris-Button--iconOnly" aria-label="Show previous month, January 2018">
+      <span class="Polaris-Button__Content">
+        <span class="Polaris-Button__Icon">
+          <span class="Polaris-Icon">
+            <svg class="Polaris-Icon__Svg" viewBox="0 0 20 20">
+              <path d="M17 9H5.414l3.293-3.293a.999.999 0 1 0-1.414-1.414l-5 5a.999.999 0 0 0 0 1.414l5 5a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L5.414 11H17a1 1 0 1 0 0-2" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+        </span>
+      </span>
+    </button>
+    <button
+      type="button" class="Polaris-Button Polaris-Button--plain Polaris-Button--iconOnly" aria-label="Show next month, March 2018">
+      <span class="Polaris-Button__Content">
+        <span class="Polaris-Button__Icon">
+          <span class="Polaris-Icon">
+            <svg class="Polaris-Icon__Svg" viewBox="0 0 20 20">
+              <path d="M17.707 9.293l-5-5a.999.999 0 1 0-1.414 1.414L14.586 9H3a1 1 0 1 0 0 2h11.586l-3.293 3.293a.999.999 0 1 0 1.414 1.414l5-5a.999.999 0 0 0 0-1.414" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+        </span>
+      </span>
+    </button>
+  </div>
+  <div class="Polaris-DatePicker__MonthContainer">
+    <div role="grid" class="Polaris-DatePicker__Month">
+      <div class="Polaris-DatePicker__Title">February 2018</div>
+      <div role="rowheader" class="Polaris-DatePicker__WeekHeadings">
+        <div aria-label="Sunday" class="Polaris-DatePicker__Weekday">Su</div>
+        <div aria-label="Monday" class="Polaris-DatePicker__Weekday">Mo</div>
+        <div aria-label="Tuesday" class="Polaris-DatePicker__Weekday">Tu</div>
+        <div aria-label="Wednesday" class="Polaris-DatePicker__Weekday">We</div>
+        <div aria-label="Thursday" class="Polaris-DatePicker__Weekday">Th</div>
+        <div aria-label="Friday" class="Polaris-DatePicker__Weekday">Fr</div>
+        <div aria-label="Saturday" class="Polaris-DatePicker__Weekday">Sa</div>
+      </div>
+      <div role="row" class="Polaris-DatePicker__Week">
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <button tabindex="0" class="Polaris-DatePicker__Day" aria-label="February 1 2018" aria-selected="false" role="gridcell">1</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 2 2018" aria-selected="false" role="gridcell">2</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 3 2018" aria-selected="false" role="gridcell">3</button>
+      </div>
+      <div role="row" class="Polaris-DatePicker__Week">
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 4 2018" aria-selected="false" role="gridcell">4</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 5 2018" aria-selected="false" role="gridcell">5</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 6 2018" aria-selected="false" role="gridcell">6</button>
+        <button tabindex="0" class="Polaris-DatePicker__Day Polaris-DatePicker__Day--selected" aria-label="February 7 2018" aria-selected="true" role="gridcell">7</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 8 2018" aria-selected="false" role="gridcell">8</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 9 2018" aria-selected="false" role="gridcell">9</button>
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 10 2018" aria-selected="false" role="gridcell">10</button>
+      </div>
+      <div role="row" class="Polaris-DatePicker__Week"><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 11 2018" aria-selected="false" role="gridcell">11</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 12 2018" aria-selected="false" role="gridcell">12</button>
+        <button
+          tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 13 2018" aria-selected="false" role="gridcell">13</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 14 2018" aria-selected="false" role="gridcell">14</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 15 2018" aria-selected="false"
+          role="gridcell">15</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 16 2018" aria-selected="false" role="gridcell">16</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 17 2018"
+          aria-selected="false" role="gridcell">17</button>
+      </div>
+      <div role="row" class="Polaris-DatePicker__Week"><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 18 2018" aria-selected="false" role="gridcell">18</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 19 2018" aria-selected="false" role="gridcell">19</button>
+        <button
+          tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 20 2018" aria-selected="false" role="gridcell">20</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 21 2018" aria-selected="false" role="gridcell">21</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 22 2018" aria-selected="false"
+          role="gridcell">22</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 23 2018" aria-selected="false" role="gridcell">23</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 24 2018"
+          aria-selected="false" role="gridcell">24</button>
+      </div>
+      <div role="row" class="Polaris-DatePicker__Week">
+        <button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 25 2018" aria-selected="false" role="gridcell">25</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 26 2018" aria-selected="false" role="gridcell">26</button>
+        <button
+          tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 27 2018" aria-selected="false" role="gridcell">27</button><button tabindex="-1" class="Polaris-DatePicker__Day" aria-label="February 28 2018" aria-selected="false" role="gridcell">28</button>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
