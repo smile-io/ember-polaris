@@ -13,7 +13,22 @@
 {{#each weeks as |week|}}
   <div role="row" class="Polaris-DatePicker__Week">
     {{#each week as |day|}}
-
+      {{#if day}}
+        {{polaris-date-picker/day
+          focusedDate=focusedDate
+          day=day
+          onFocus=(action onFocus)
+          onClick=(action onChange)
+          onHover=(action onHover)
+          selectedDates=selected
+          disabledDatesBefore=disabledDatesBefore
+          disabledDatesAfter=disabledDatesAfter
+          hoverDate=hoverDate
+          allowRange=allowRange
+        }}
+      {{else}}
+        <div class="Polaris-DatePicker__EmptyDay"></div>
+      {{/if}}
     {{/each}}
   </div>
 {{/each}}

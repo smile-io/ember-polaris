@@ -160,14 +160,5 @@ export default Component.extend({
         label: weekday
       };
     })
-  }),
-
-  isInHoveringRange(day = null, range, hoverEndDate) {
-    if (!this.get('allowRange') || day === null) {
-      return false;
-    }
-    const { start, end } = range;
-
-    return Boolean(start === end && day > start && day <= hoverEndDate);
-  }
+  })
 });

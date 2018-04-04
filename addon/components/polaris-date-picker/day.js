@@ -1,7 +1,13 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/day';
 import { computed } from '@ember/object';
-import { Months, isSameDay } from '../utils/dates';
+import {
+  Months,
+  isSameDay,
+  dateIsSelected,
+  isDateBefore,
+  isDateAfter
+} from '../utils/dates';
 
 export default Component.extend({
   tagName: '',
@@ -9,12 +15,18 @@ export default Component.extend({
   layout,
 
   /**
-   * @property focused
+   * @property focusedDate
    * @public
-   * @type {Boolean}
-   * @default false
+   * @type {Date}
+   * @default null
    */
-  focused: false,
+  focusedDate: null,
+
+  focused: computed('focusedDate', 'day', function() {
+    let focusedDate = this.get('focusedDate');
+    let day = this.get('day');
+    return focusedDate !== null && isSameDay(day, focusedDate);
+  }),
 
   /**
    * @property day
@@ -25,20 +37,24 @@ export default Component.extend({
   day: null,
 
   /**
-   * @property selected
+   * @property selectedDates
    * @public
-   * @type {Boolean}
-   * @default false
+   * @type {Object}
+   * @default null
    */
-  selected: false,
+  selectedDates: null,
 
-  /**
-   * @property inRange
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  inRange: false,
+  selected: computed('selectedDates', 'day', function() {
+    let selectedDates = this.get('selectedDates');
+    let day = this.get('day');
+    return selectedDates !== null && dateIsSelected(day, selectedDates);
+  }),
+
+  inRange: computed('selectedDates', 'day', function() {
+    let selectedDates = this.get('selectedDates');
+    let day = this.get('day');
+    return selectedDates !== null && dateIsInRange(day, selectedDates);
+  }),
 
   /**
    * @property inHoveringRange
@@ -49,12 +65,39 @@ export default Component.extend({
   inHoveringRange: false,
 
   /**
-   * @property disabled
+   * @property disabledDatesBefore
+   * @public
+   * @type {Date}
+   * @default null
+   */
+  disabledDatesBefore: null,
+
+  /**
+   * @property disabledDatesAfter
+   * @public
+   * @type {Date}
+   * @default null
+   */
+  disabledDatesAfter: null,
+
+  disabled: computed('day', 'disableDatesBefore', 'disabledDatesAfter', function() {
+    let {
+      day,
+      disableDatesBefore,
+      disabledDatesAfter
+    } = this.getProperties('day', 'disableDatesBefore', 'disabledDatesAfter');
+
+    return (disableDatesBefore && isDateBefore(day, disableDatesBefore)) ||
+           (disableDatesAfter && isDateAfter(day, disableDatesAfter))
+  }),
+
+  /**
+   * @property allowRange
    * @public
    * @type {Boolean}
    * @default false
    */
-  disabled: false,
+  allowRange: false,
 
   /**
    * @property focused
@@ -118,5 +161,22 @@ export default Component.extend({
     } = this.getProperties('focused', 'selected', 'disabled', 'date', 'today');
 
     return (focused || selected || today || date === 1) && !disabled ? 0 : -1;
-  })
+  }),
+
+  inHoveringRange: computed('day', 'selectedDates', 'hoverDate', 'allowRange' function() {
+    let {
+      day,
+      selectedDates,
+      hoverDate,
+      allowRange
+    } = this.getProperties('day', 'selectedDates', 'hoverDate', 'allowRange');
+
+    if (!allowRange || day === null) {
+      return false;
+    }
+
+    const { start, end } = selectedDates;
+
+    return Boolean(start === end && day > start && day <= hoverDate);
+  }),
 });
