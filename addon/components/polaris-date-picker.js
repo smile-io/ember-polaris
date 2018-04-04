@@ -164,6 +164,79 @@ export default Component.extend({
     return hoverDate && hoverDate.end;
   }),
 
+  setFocusDateAndHandleMonthChange(date) {
+    this.onMonthChange(date.getMonth(), date.getFullYear());
+
+    this.setProperties({
+      hoverDate: date,
+      focusDate: date
+    });
+  },
+
+  /**
+   * Events
+   */
+  keyUp(e) {
+    let { key } = e;
+    let {
+      selected,
+      disableDatesBefore,
+      disableDatesAfter,
+      focusDate,
+      range
+    } = this.getProperties('selected', 'disableDatesBefore', 'disableDatesAfter', 'focusDate', 'range');
+
+    let focusedDate = focusDate || (range && range.start);
+
+    if (!focusedDate) {
+      return;
+    }
+
+
+    if (key === 'ArrowUp') {
+      let previousWeek = new Date(focusedDate);
+
+      previousWeek.setDate(focusedDate.getDate() - 7);
+
+      if ( !(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore)) ) {
+        this.setFocusDateAndHandleMonthChange(previousWeek);
+      }
+    }
+
+    if (key === 'ArrowDown') {
+      let nextWeek = new Date(focusedDate);
+
+      nextWeek.setDate(focusedDate.getDate() + 7);
+
+      if ( (disableDatesAfter && isDateAfter(nextWeek, disableDatesAfter)) ) {
+        this.setFocusDateAndHandleMonthChange(nextWeek);
+      }
+    }
+
+    if (key === 'ArrowRight') {
+      let tomorrow = new Date(focusedDate);
+
+      tomorrow.setDate(focusedDate.getDate() + 1);
+
+      if ( !(disableDatesAfter && isDateAfter(tomorrow, disableDatesAfter)) ) {
+        this.setFocusDateAndHandleMonthChange(tomorrow);
+      }
+    }
+
+    if (key === 'ArrowLeft') {
+      let yesterday = new Date(focusedDate);
+
+      yesterday.setDate(focusedDate.getDate() - 1);
+
+      if ( !(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore)) ) {
+        this.setFocusDateAndHandleMonthChange(yesterday);
+      }
+    }
+  },
+
+  /**
+   * Actions
+   */
   actions: {
     handleDateSelection(dateRange) {
       let { end: endDate } = this.get('dateRange');
