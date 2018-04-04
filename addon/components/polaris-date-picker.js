@@ -21,7 +21,7 @@ export default Component.extend({
    *
    * @property selected
    * @public
-   * @type {Date} // TODO: this should probably just always be a { start, end } object
+   * @type {Date}
    * @type {Object}
    * @default null
    */
@@ -164,6 +164,14 @@ export default Component.extend({
     return hoverDate && hoverDate.end;
   }),
 
+  previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
+    return `Show previous month, ${ this.get('previousMonthName') } ${ this.get('showPreviousYear') }`;
+  }).readOnly(),
+
+  nextMonthLabel: computed('nextMonth', 'nextYear', function() {
+    return `Show next month, ${ this.get('nextMonth') } ${ this.get('nextYear') }`;
+  }).readOnly(),
+
   setFocusDateAndHandleMonthChange(date) {
     this.onMonthChange(date.getMonth(), date.getFullYear());
 
@@ -263,6 +271,12 @@ export default Component.extend({
       this.get('onChange')(dateRange);
     },
 
+    handleMonthChangeClick(month, year) {
+      this.onMonthChange(month, year);
+
+      this.set('focusDate', null);
+    },
+
     handleHover(date) {
       this.set('hoverDate', date);
     },
@@ -271,24 +285,4 @@ export default Component.extend({
       this.set('focusDate');
     }
   }
-
-  /**
-   * Accessibility labels for the next/previous month buttons.
-   * @type {String}
-   * @private
-   */
-  // previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
-  //   return `Show previous month, ${ this.get('previousMonthName') } ${ this.get('showPreviousYear') }`;
-  // }).readOnly(),
-
-  // nextMonthLabel: computed('nextMonth', 'nextYear', function() {
-  //   return `Show next month, ${ this.get('nextMonth') } ${ this.get('nextYear') }`;
-  // }).readOnly(),
-
-
-  // actions: {
-  //   handleMonthChangeClick(month, year) {
-  //     // TODO date-picker: implement handleMonthChangeClick
-  //   }
-  // }
 });
