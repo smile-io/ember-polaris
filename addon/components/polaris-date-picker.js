@@ -234,6 +234,20 @@ export default Component.extend({
     }
   },
 
+  keyDown(e) {
+    let { key } = e;
+
+    if (
+      key === 'ArrowUp' ||
+      key === 'ArrowDown' ||
+      key === 'ArrowLeft' ||
+      key === 'ArrowRight'
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  },
+
   /**
    * Actions
    */
@@ -271,17 +285,6 @@ export default Component.extend({
   //   return `Show next month, ${ this.get('nextMonth') } ${ this.get('nextYear') }`;
   // }).readOnly(),
 
-  // /**
-  //  * Actions.
-  //  */
-  // // TODO date-picker: keyDown/keyUp aren't being fired and need implementing.
-  // keyDown() {
-  //   console.log('keyDown');
-  // },
-
-  // keyUp() {
-  //   console.log('keyUp');
-  // },
 
   // actions: {
   //   handleMonthChangeClick(month, year) {
