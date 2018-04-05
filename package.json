@@ -1,25 +1,34 @@
 {
   "name": "ember-polaris",
   "version": "1.1.6",
-  "description": "Ember wrappers for Shopify's product component library.",
+  "description": "Ember components for Shopify's Polaris design system.",
   "keywords": [
     "ember-addon",
     "shopify",
     "polaris",
+    "design",
     "ember",
     "components",
     "component library"
   ],
   "license": "MIT",
   "author": "Smile.io <devs@smile.io>",
+  "contributors": [
+    "Tom Netzband <tom@smile.io>",
+    "Vlad Vanca <vlad@smile.io>",
+    "Andrew Pye <andy@smile.io>"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "homepage": "https://github.com/sweettooth/ember-polaris#readme",
-  "repository": "https://github.com/sweettooth/ember-polaris",
+  "homepage": "https://github.com/smile-io/ember-polaris#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smile-io/ember-polaris"
+  },
   "bugs": {
-    "url": "https://github.com/sweettooth/ember-polaris/issues"
+    "url": "https://github.com/smile-io/ember-polaris/issues"
   },
   "scripts": {
     "build": "ember build",
