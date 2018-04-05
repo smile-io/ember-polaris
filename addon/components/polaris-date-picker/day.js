@@ -1,13 +1,15 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/day';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import {
-  Months,
+  MonthsArray,
   isSameDay,
+  dateIsInRange,
   dateIsSelected,
   isDateBefore,
   isDateAfter
-} from '../utils/dates';
+} from '../../utils/dates';
 
 export default Component.extend({
   tagName: '',
@@ -21,12 +23,6 @@ export default Component.extend({
    * @default null
    */
   focusedDate: null,
-
-  focused: computed('focusedDate', 'day', function() {
-    let focusedDate = this.get('focusedDate');
-    let day = this.get('day');
-    return focusedDate !== null && isSameDay(day, focusedDate);
-  }),
 
   /**
    * @property day
@@ -44,52 +40,21 @@ export default Component.extend({
    */
   selectedDates: null,
 
-  selected: computed('selectedDates', 'day', function() {
-    let selectedDates = this.get('selectedDates');
-    let day = this.get('day');
-    return selectedDates !== null && dateIsSelected(day, selectedDates);
-  }),
-
-  inRange: computed('selectedDates', 'day', function() {
-    let selectedDates = this.get('selectedDates');
-    let day = this.get('day');
-    return selectedDates !== null && dateIsInRange(day, selectedDates);
-  }),
-
   /**
-   * @property inHoveringRange
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  inHoveringRange: false,
-
-  /**
-   * @property disabledDatesBefore
+   * @property disableDatesBefore
    * @public
    * @type {Date}
    * @default null
    */
-  disabledDatesBefore: null,
+  disableDatesBefore: null,
 
   /**
-   * @property disabledDatesAfter
+   * @property disableDatesAfter
    * @public
    * @type {Date}
    * @default null
    */
-  disabledDatesAfter: null,
-
-  disabled: computed('day', 'disableDatesBefore', 'disabledDatesAfter', function() {
-    let {
-      day,
-      disableDatesBefore,
-      disabledDatesAfter
-    } = this.getProperties('day', 'disableDatesBefore', 'disabledDatesAfter');
-
-    return (disableDatesBefore && isDateBefore(day, disableDatesBefore)) ||
-           (disableDatesAfter && isDateAfter(day, disableDatesAfter))
-  }),
+  disableDatesAfter: null,
 
   /**
    * @property allowRange
@@ -100,28 +65,28 @@ export default Component.extend({
   allowRange: false,
 
   /**
-   * @property focused
+   * @property onClick
    * @public
    * @type {Function}
    * @default noop
    */
-  onClick(day) {},
+  onClick(/*day*/) {},
 
   /**
-   * @property focused
+   * @property onHover
    * @public
    * @type {Function}
    * @default noop
    */
-  onHover(day) {},
+  onHover(/*day*/) {},
 
   /**
-   * @property focused
+   * @property onFocus
    * @public
    * @type {Function}
    * @default noop
    */
-  onFocus(day) {},
+  onFocus(/*day*/) {},
 
   /**
    * Internal Properties
@@ -136,10 +101,40 @@ export default Component.extend({
     return isSameDay(new Date(), day);
   }),
 
+  focused: computed('focusedDate', 'day', function() {
+    let focusedDate = this.get('focusedDate');
+    let day = this.get('day');
+
+    return focusedDate != null && isSameDay(day, focusedDate);
+  }),
+
+  selected: computed('selectedDates', 'day', function() {
+    let selectedDates = this.get('selectedDates');
+    let day = this.get('day');
+    return selectedDates !== null && dateIsSelected(day, selectedDates);
+  }),
+
+  inRange: computed('selectedDates', 'day', function() {
+    let selectedDates = this.get('selectedDates');
+    let day = this.get('day');
+    return selectedDates !== null && dateIsInRange(day, selectedDates);
+  }),
+
+  disabled: computed('day', 'disableDatesBefore', 'disableDatesAfter', function() {
+    let {
+      day,
+      disableDatesBefore,
+      disableDatesAfter
+    } = this.getProperties('day', 'disableDatesBefore', 'disableDatesAfter');
+
+    return (disableDatesBefore && isDateBefore(day, disableDatesBefore)) ||
+           (disableDatesAfter && isDateAfter(day, disableDatesAfter))
+  }),
+
   ariaLabel: computed('day', 'today', 'date', function() {
     let today = this.get('today');
     let day = this.get('day');
-    let month = Months[day.getMonth()];
+    let month = MonthsArray[day.getMonth()];
     let date = this.get('date');
     let year = day.getFullYear();
 
@@ -163,7 +158,7 @@ export default Component.extend({
     return (focused || selected || today || date === 1) && !disabled ? 0 : -1;
   }),
 
-  inHoveringRange: computed('day', 'selectedDates', 'hoverDate', 'allowRange' function() {
+  inHoveringRange: computed('day', 'selectedDates', 'hoverDate', 'allowRange', function() {
     let {
       day,
       selectedDates,
@@ -179,4 +174,20 @@ export default Component.extend({
 
     return Boolean(start === end && day > start && day <= hoverDate);
   }),
+
+  applyInRangeStyles: or('inHoveringRange', 'inRange'),
+
+  actions: {
+    handleClick(day) {
+      this.get('onClick')(day);
+    },
+
+    handleFocus(day) {
+      this.get('onFocus')(day);
+    },
+
+    handleHover(day) {
+      this.get('onHover')(day);
+    }
+  }
 });

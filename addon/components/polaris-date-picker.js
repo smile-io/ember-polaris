@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../templates/components/polaris-date-picker';
 import {
-  Months,
+  MonthsArray,
   isDateAfter,
   isDateBefore,
   getNextDisplayYear,
@@ -85,7 +85,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(dateRange) {},
+  onChange(/*dateRange*/) {},
 
   /**
    * Callback when month is changed
@@ -95,7 +95,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onMonthChange(month, year) {},
+  onMonthChange(/*month, year*/) {},
 
   /**
    * Internal Properties
@@ -103,6 +103,12 @@ export default Component.extend({
   hoverDate: null,
 
   focusDate: null,
+
+  allowRange: computed('selected', function() {
+    let selected = this.get('selected');
+
+    return selected != null && !(selected instanceof Date);
+  }),
 
   showNextYear: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
@@ -135,7 +141,7 @@ export default Component.extend({
   }),
 
   previousMonthName: computed('showPreviousMonth', function() {
-    return Months[ this.get('showPreviousMonth') ];
+    return MonthsArray[ this.get('showPreviousMonth') ];
   }),
 
   nextMonth: computed('multiMonth', 'showNextToNextMonth', 'showNextMonth', function() {
@@ -145,12 +151,12 @@ export default Component.extend({
       showNextMonth
     } = this.getProperties('multiMonth', 'showNextToNextMonth', 'showNextMonth');
 
-    return multiMonth ? Months[showNextToNextMonth] : Months[showNextMonth];
+    return multiMonth ? MonthsArray[showNextToNextMonth] : MonthsArray[showNextMonth];
   }),
 
   nextYear: computed('multiMonth', 'showNextToNextYear', 'showNextYear', function() {
     let {
-      multiYear,
+      multiMonth,
       showNextToNextYear,
       showNextYear
     } = this.getProperties('multiMonth', 'showNextToNextYear', 'showNextYear');
@@ -160,8 +166,12 @@ export default Component.extend({
 
   range: computed('selected', function() {
     let selected = this.get('selected');
-    let hoverDate = (selected instanceof Date) ? { start: selected, end: selected } : selected;
-    return hoverDate && hoverDate.end;
+
+    if (selected && (selected instanceof Date)) {
+      return { start: selected, end: selected }
+    } else {
+      return selected;
+    }
   }),
 
   previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
@@ -187,12 +197,11 @@ export default Component.extend({
   keyUp(e) {
     let { key } = e;
     let {
-      selected,
       disableDatesBefore,
       disableDatesAfter,
       focusDate,
       range
-    } = this.getProperties('selected', 'disableDatesBefore', 'disableDatesAfter', 'focusDate', 'range');
+    } = this.getProperties('disableDatesBefore', 'disableDatesAfter', 'focusDate', 'range');
 
     let focusedDate = focusDate || (range && range.start);
 
@@ -261,7 +270,7 @@ export default Component.extend({
    */
   actions: {
     handleDateSelection(dateRange) {
-      let { end: endDate } = this.get('dateRange');
+      let { end: endDate } = dateRange;
 
       this.setProperties({
         hoverDate: endDate,
@@ -282,7 +291,7 @@ export default Component.extend({
     },
 
     handleFocus(date) {
-      this.set('focusDate');
+      this.set('focusDate', date);
     }
   }
 });

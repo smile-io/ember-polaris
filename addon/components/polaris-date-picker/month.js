@@ -2,27 +2,12 @@ import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/month';
 import { computed } from '@ember/object';
 import {
-  Months,
-  Weekdays,
-  isDateBefore,
-  isDateAfter,
-  isSameDay,
+  MonthsArray,
+  WeekdaysArray,
   getWeeksForMonth,
-  dateIsInRange,
-  dateIsSelected,
   getNewRange,
   abbreviationForWeekday
-} from '../utils/dates';
-
-const WEEKDAYS = [
-  Weekdays.Sunday,
-  Weekdays.Monday,
-  Weekdays.Tuesday,
-  Weekdays.Wednesday,
-  Weekdays.Thursday,
-  Weekdays.Friday,
-  Weekdays.Saturday,
-];
+} from '../../utils/dates';
 
 export default Component.extend({
   classNames: ['Polaris-DatePicker__Month'],
@@ -102,7 +87,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(dateRange) {},
+  onChange(/*dateRange*/) {},
 
   /**
    * @property onHover
@@ -110,7 +95,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onHover(hoverEnd) {},
+  onHover(/*hoverEnd*/) {},
 
   /**
    * @property onFocus
@@ -118,7 +103,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onFocus(date) {},
+  onFocus(/*date*/) {},
 
   /**
    * @property monthName
@@ -126,7 +111,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  monthName(month) {},
+  monthName(/*month*/) {},
 
   /**
    * @property weekdayName
@@ -134,13 +119,21 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  weekdayName(weekday) {},
+  weekdayName(/*weekday*/) {},
 
   /**
    * Internal Properties
    */
-  current: computed('month', function() {
-    return new Date().getMonth() === this.get('month');
+  current: computed('month', 'year', function() {
+    let date = new Date();
+    let thisMonth = date.getMonth();
+    let thisYear = date.getFullYear();
+
+    return thisMonth === this.get('month') && thisYear === this.get('year');
+  }),
+
+  monthDisplayName: computed('month', function() {
+    return MonthsArray[ this.get('month') ];
   }),
 
   weeks: computed('month', 'year', function() {
@@ -153,12 +146,20 @@ export default Component.extend({
   weekdays: computed(function() {
     let current = this.get('current');
 
-    return WEEKDAYS.map((weekday, i) => {
+    return WeekdaysArray.map((weekday, i) => {
       return {
         title: abbreviationForWeekday(weekday),
         current: (current && new Date().getDay() === i),
         label: weekday
       };
     })
-  })
+  }),
+
+  actions: {
+    handleDateClick(day) {
+      let range = getNewRange(this.get('selected'), day);
+
+      this.get('onChange')(range);
+    }
+  }
 });

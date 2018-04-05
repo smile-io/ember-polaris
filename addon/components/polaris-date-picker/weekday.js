@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/weekday';
-import { Weekdays } from '../utils/dates';
+import { Weekdays } from '../../utils/dates';
+import { computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['Polaris-DatePicker__Weekday'],

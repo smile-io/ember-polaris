@@ -6,22 +6,32 @@ export const Weekdays = {
   Thursday: 'Thursday',
   Friday: 'Friday',
   Saturday: 'Saturday'
-};
+}
 
-export const Months = {
-  January: 'January',
-  February: 'February',
-  March: 'March',
-  April: 'April',
-  May: 'May',
-  June: 'June',
-  July: 'July',
-  August: 'August',
-  September: 'September',
-  October: 'October',
-  November: 'November',
-  December: 'December'
-};
+export const WeekdaysArray = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+
+export const MonthsArray = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
 
 export function getYearForRange({ start, end }) {
   if (start) {
@@ -31,7 +41,7 @@ export function getYearForRange({ start, end }) {
     return end.getFullYear();
   }
   return (new Date()).getFullYear();
-};
+}
 
 export function getMonthForRange({ start, end }) {
   if (start) {
@@ -41,11 +51,11 @@ export function getMonthForRange({ start, end }) {
     return end.getMonth();
   }
   return (new Date()).getMonth();
-};
+}
 
 export function abbreviationForWeekday(weekday) {
   return Weekdays[weekday].substring(0, 2);
-};
+}
 
 const WEEK_LENGTH = 7;
 
@@ -76,7 +86,7 @@ export function getWeeksForMonth(month, year) {
   }
 
   return weeks;
-};
+}
 
 export function dateIsInRange(day = null, range) {
   if (day == null) { return false; }
@@ -84,14 +94,14 @@ export function dateIsInRange(day = null, range) {
   const { start, end } = range;
 
   return Boolean((start && day > start) && (end && day < end));
-};
+}
 
 export function dateIsSelected(day = null, range) {
   if (day == null) { return false; }
   const {start, end} = range;
 
   return Boolean((start && isSameDay(start, day)) || (end && isSameDay(end, day)));
-};
+}
 
 export function isSameDay(day1, day2) {
   return (
@@ -99,14 +109,14 @@ export function isSameDay(day1, day2) {
     (day1.getMonth() === day2.getMonth()) &&
     (day1.getFullYear() === day2.getFullYear())
   );
-};
+}
 
 export function getNewRange(range = undefined, selected) {
-  if (range == null) {
+  if (!range) {
     return { start: selected, end: selected };
   }
 
-  const { start, end } = range;
+  let { start, end } = range;
 
   if (end && start !== end) {
     return { start: selected, end: selected };
@@ -127,39 +137,31 @@ export function getNewRange(range = undefined, selected) {
   }
 
   return { start: selected, end: selected };
-};
+}
 
 export function getNextDisplayMonth(month) {
-  let i = Months.indexOf(month);
-
-  if (i === 11) {
+  if (month === 11) {
     return 0;
   }
-  return i + 1;
+  return month + 1;
 }
 
 export function getNextDisplayYear(month, year) {
-  let i = Months.indexOf(month);
-
-  if (i === 11) {
+  if (month === 11) {
     return year + 1;
   }
   return year;
 }
 
 export function getPreviousDisplayMonth(month) {
-  let i = Months.indexOf(month);
-
-  if (i === 0) {
+  if (month === 0) {
     return 11;
   }
-  return i - 1;
+  return month - 1;
 }
 
 export function getPreviousDisplayYear(month, year) {
-  let i = Months.indexOf(month);
-
-  if (i === 0) {
+  if (month === 0) {
     return year - 1;
   }
   return year;
@@ -167,8 +169,8 @@ export function getPreviousDisplayYear(month, year) {
 
 export function isDateAfter(date, dateToCompare) {
   return date.getTime() > dateToCompare.getTime();
-};
+}
 
 export function isDateBefore(date, dateToCompare) {
   return date.getTime() < dateToCompare.getTime();
-};
+}

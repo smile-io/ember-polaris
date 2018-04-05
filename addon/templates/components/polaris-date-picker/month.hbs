@@ -1,5 +1,5 @@
 <div class="Polaris-DatePicker__Title {{if current 'Polaris-DatePicker__Month--current'}}">
-  {{month}} {{year}}
+  {{monthDisplayName}} {{year}}
 </div>
 <div role="rowheader" class="Polaris-DatePicker__WeekHeadings">
   {{#each weekdays as |weekday|}}
@@ -18,11 +18,11 @@
           focusedDate=focusedDate
           day=day
           onFocus=(action onFocus)
-          onClick=(action onChange)
+          onClick=(action "handleDateClick" day)
           onHover=(action onHover)
           selectedDates=selected
-          disabledDatesBefore=disabledDatesBefore
-          disabledDatesAfter=disabledDatesAfter
+          disableDatesBefore=disableDatesBefore
+          disableDatesAfter=disableDatesAfter
           hoverDate=hoverDate
           allowRange=allowRange
         }}

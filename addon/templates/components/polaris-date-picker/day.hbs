@@ -4,14 +4,15 @@
     class="Polaris-DatePicker__Day
       {{if selected ' Polaris-DatePicker__Day--selected'}}
       {{if disabled ' Polaris-DatePicker__Day--disabled'}}
-      {{if today ' Polaris-DatePicker__Day--today'}}"
+      {{if today ' Polaris-DatePicker__Day--today'}}
+      {{if applyInRangeStyles ' Polaris-DatePicker__Day--inRange'}}"
     tabindex={{tabIndex}}
     aria-label={{ariaLabel}}
     aria-selected={{selected}}
     aria-disabled={{disabled}}
-    onclick=(action onClick day)
-    onmouseover=(action onMouseOver day)
-    onfocus=(action onFocus day)
+    onclick={{action "handleClick" day}}
+    onmouseover={{action "handleHover" day}}
+    onfocus={{action "handleFocus" day}}
   >
     {{date}}
   </button>
