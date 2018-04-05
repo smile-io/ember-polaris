@@ -6,7 +6,7 @@
 
 ## Status
 
-**NOTE:** _this addon is still in its very early stages. As such the number of components available is limited and some features of those which have been built may be unimplemented._
+**NOTE:** _this addon is still in development. As such, not all of the components available in the React component library have been built yet, and some features of those which have been built are currently unimplemented._
 
 ### Implemented components
 

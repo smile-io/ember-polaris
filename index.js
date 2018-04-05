@@ -19,9 +19,4 @@ module.exports = {
 
     return this._super.treeForStyles(mergeTrees([polarisScssFiles, tree], { overwrite: true }));
   },
-
-  // TODO remove this once shipping to prod
-  isDevelopingAddon() {
-    return true;
-  }
 };
