@@ -15,16 +15,16 @@
     {{#each week as |day|}}
       {{#if day}}
         {{polaris-date-picker/day
-          focusedDate=focusedDate
           day=day
-          onFocus=(action onFocus)
-          onClick=(action "handleDateClick" day)
-          onHover=(action onHover)
+          focusedDate=focusedDate
           selectedDates=selected
           disableDatesBefore=disableDatesBefore
           disableDatesAfter=disableDatesAfter
           hoverDate=hoverDate
           allowRange=allowRange
+          onFocus=(action onFocus)
+          onClick=(action "handleDateClick" day)
+          onHover=(action onHover)
         }}
       {{else}}
         <div class="Polaris-DatePicker__EmptyDay"></div>

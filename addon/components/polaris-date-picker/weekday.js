@@ -6,7 +6,9 @@ import { computed } from '@ember/object';
 export default Component.extend({
   classNames: ['Polaris-DatePicker__Weekday'],
   classNameBindings: ['current:Polaris-DatePicker__Weekday--current'],
-  attributeBindings: ['ariaLabel:aria-label'],
+  attributeBindings: ['label:aria-label'],
+
+  layout,
 
   /**
    * @property label
@@ -30,14 +32,5 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  current: false,
-
-  layout,
-
-  /**
-   * Internal Properties
-   */
-  ariaLabel: computed('label', function() {
-    return Weekdays[this.get('label')];
-  }),
+  current: false
 });

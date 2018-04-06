@@ -21,8 +21,7 @@ export default Component.extend({
    *
    * @property selected
    * @public
-   * @type {Date}
-   * @type {Object}
+   * @type {Date | Object}
    * @default null
    */
   selected: null,
@@ -73,9 +72,9 @@ export default Component.extend({
    * @property multiMonth
    * @public
    * @type {Boolean}
-   * @default null
+   * @default false
    */
-  multiMonth: null,
+  multiMonth: false,
 
   /**
    * Callback when date is selected
@@ -107,7 +106,7 @@ export default Component.extend({
   allowRange: computed('selected', function() {
     let selected = this.get('selected');
 
-    return selected != null && !(selected instanceof Date);
+    return selected !== null && !(selected instanceof Date);
   }),
 
   showNextYear: computed('month', 'year', function() {
@@ -183,7 +182,7 @@ export default Component.extend({
   }).readOnly(),
 
   setFocusDateAndHandleMonthChange(date) {
-    this.onMonthChange(date.getMonth(), date.getFullYear());
+    this.get('onMonthChange')(date.getMonth(), date.getFullYear());
 
     this.setProperties({
       hoverDate: date,
@@ -281,17 +280,9 @@ export default Component.extend({
     },
 
     handleMonthChangeClick(month, year) {
-      this.onMonthChange(month, year);
+      this.get('onMonthChange')(month, year);
 
       this.set('focusDate', null);
-    },
-
-    handleHover(date) {
-      this.set('hoverDate', date);
-    },
-
-    handleFocus(date) {
-      this.set('focusDate', date);
     }
   }
 });

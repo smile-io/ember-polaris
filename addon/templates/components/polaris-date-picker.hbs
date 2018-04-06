@@ -24,8 +24,8 @@
     hoverDate=hoverDate
     focusedDate=focusDate
     onChange=(action "handleDateSelection")
-    onFocus=(action "handleFocus")
-    onHover=(action "handleHover")
+    onFocus=(action (mut focusDate))
+    onHover=(action (mut hoverDate))
   }}
 
   {{#if multiMonth}}
@@ -39,8 +39,8 @@
       hoverDate=hoverDate
       focusedDate=focusDate
       onChange=(action "handleDateSelection")
-      onFocus=(action "handleFocus")
-      onHover=(action "handleHover")
+      onFocus=(action (mut focusDate))
+      onHover=(action (mut hoverDate))
     }}
   {{/if}}
 </div>

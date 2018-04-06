@@ -102,15 +102,14 @@ export default Component.extend({
   }),
 
   focused: computed('focusedDate', 'day', function() {
-    let focusedDate = this.get('focusedDate');
-    let day = this.get('day');
+    let { focusedDate, day } = this.getProperties('focusedDate', 'day');
 
-    return focusedDate != null && isSameDay(day, focusedDate);
+    return focusedDate !== null && isSameDay(day, focusedDate);
   }),
 
   selected: computed('selectedDates', 'day', function() {
-    let selectedDates = this.get('selectedDates');
-    let day = this.get('day');
+    let { selectedDates, day } = this.getProperties('selectedDates', 'day');
+
     return selectedDates !== null && dateIsSelected(day, selectedDates);
   }),
 
@@ -134,7 +133,7 @@ export default Component.extend({
   ariaLabel: computed('day', 'today', 'date', function() {
     let today = this.get('today');
     let day = this.get('day');
-    let month = MonthsArray[day.getMonth()];
+    let month = MonthsArray[ day.getMonth() ];
     let date = this.get('date');
     let year = day.getFullYear();
 
@@ -175,19 +174,5 @@ export default Component.extend({
     return Boolean(start === end && day > start && day <= hoverDate);
   }),
 
-  applyInRangeStyles: or('inHoveringRange', 'inRange'),
-
-  actions: {
-    handleClick(day) {
-      this.get('onClick')(day);
-    },
-
-    handleFocus(day) {
-      this.get('onFocus')(day);
-    },
-
-    handleHover(day) {
-      this.get('onHover')(day);
-    }
-  }
+  applyInRangeStyles: or('inHoveringRange', 'inRange')
 });

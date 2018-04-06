@@ -137,13 +137,12 @@ export default Component.extend({
   }),
 
   weeks: computed('month', 'year', function() {
-    let month = this.get('month');
-    let year = this.get('year');
+    let { month, year } = this.getProperties('month', 'year');
 
     return getWeeksForMonth(month, year);
   }),
 
-  weekdays: computed(function() {
+  weekdays: computed('current', function() {
     let current = this.get('current');
 
     return WeekdaysArray.map((weekday, i) => {
@@ -152,7 +151,7 @@ export default Component.extend({
         current: (current && new Date().getDay() === i),
         label: weekday
       };
-    })
+    });
   }),
 
   actions: {
