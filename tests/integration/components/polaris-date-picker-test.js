@@ -127,11 +127,11 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.ok(dpHeaderNextBtnSelector, 'it renders a `next` button in the header');
   assert.equal(iconNext.dataset.iconSource, 'polaris/arrowRight', 'it renders a right arrow icon as the `next` button');
 
-  let dpMonthEls = findAll(dpMonthSelector);
-  assert.equal(dpMonthEls.length, 1, 'it renders a single month container');
+  let dpMonthsEl = findAll(dpMonthSelector);
+  assert.ok(dpMonthsEl, 'it renders a single month container');
 
-  let dpMonthBodyEl = find(dpMonthBodySelector);
-  assert.ok(dpMonthBodyEl, 'it renders the month body');
+  let dpMonthBodyEls = findAll(dpMonthBodySelector);
+  assert.equal(dpMonthBodyEls.length, 1, 'it renders a single month body');
 
   let dpWeekdayEls = findAll(dpWeekdaySelector);
   let [ sunday ] = dpWeekdayEls;
@@ -198,26 +198,27 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
   assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `next` button is clicked');
 });
 
-test('it sets a selected range with `start` and `end` attrs when clicking dates', function(assert) {
-
-});
-
-test('it resets the range when clicking a day before the selected date(s)', function(assert) {
-
-});
-
-test('it resets the range when clicking a day when a range is currently selected', function(assert) {
-
-});
-
-test('it can change months using prev and next buttons', function(assert) {
-
-});
-
 test('it displays two months at a time when `multiMonth` is true', function(assert) {
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    multiMonth: true
+  });
 
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      multiMonth=multiMonth
+    }}
+  `);
+
+  let dpMonthBodyEls = findAll(dpMonthBodySelector);
+  assert.equal(dpMonthBodyEls.length, 2, 'it renders 2 months when `multiMonth` is true');
 });
 
-test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
+// test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
 
-});
+// });
