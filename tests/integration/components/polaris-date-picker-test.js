@@ -152,7 +152,24 @@ test('it renders the correct date-picker HTML', function(assert) {
 });
 
 test('it calls a passed-in `onChange` action when a new date is chosen', function(assert) {
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    onChangeActionFired: false
+  });
 
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      onChange=(action (mut onChangeActionFired) true)
+    }}
+  `);
+
+  click(dpDaySelector);
+  assert.ok(this.get('onChangeActionFired'), 'onChange action is called when a day is clicked');
 });
 
 test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', function(assert) {
