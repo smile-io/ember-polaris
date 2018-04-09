@@ -142,6 +142,10 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.ok(dpHeaderNextBtnSelector, 'it renders a `next` button in the header');
   assert.equal(iconNext.dataset.iconSource, 'polaris/arrowRight', 'it renders a right arrow icon as the `next` button');
 
+  let dpMonthTitleEl = find(dpMonthTitleSelector);
+  let expectedTitle = `${ MONTH_NAME } ${ YEAR }`;
+  assert.equal(dpMonthTitleEl.textContent.trim(), expectedTitle, 'it renders a title displaying the current month name and year');
+
   let dpMonthsEl = findAll(dpMonthSelector);
   assert.ok(dpMonthsEl, 'it renders a single month container');
 
