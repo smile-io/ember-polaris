@@ -19,6 +19,21 @@ const DAY_IS_TODAY = 'Polaris-DatePicker__Day--today';
 
 const DAYS_PER_WEEK = 7;
 
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 const MONTH = 1;
 const YEAR = 2018;
 const MONTH_NAME = 'February';
@@ -219,6 +234,88 @@ test('it displays two months at a time when `multiMonth` is true', function(asse
   assert.equal(dpMonthBodyEls.length, 2, 'it renders 2 months when `multiMonth` is true');
 });
 
-// test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
+test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
+  const DISABLE_BEFORE = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
+  const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+  const DISABLE_BEFORE_SELECTOR = '[aria-label="February 4 2018"]';
+  const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
 
-// });
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    disableDatesBefore: DISABLE_BEFORE,
+    disableDatesAfter: DISABLE_AFTER
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      disableDatesBefore=disableDatesBefore
+      disableDatesAfter=disableDatesAfter
+    }}
+  `);
+
+  let disabledBeforeDateEl = find(DISABLE_BEFORE_SELECTOR);
+  assert.ok(disabledBeforeDateEl.classList.contains(DAY_DISABLED), 'dates before `disableDatesBefore` have a disabled class');
+
+  let disabledAfterDateEl = find(DISABLE_AFTER_SELECTOR);
+  assert.ok(disabledAfterDateEl.classList.contains(DAY_DISABLED), 'dates after `disableDatesAfter` have a disabled class');
+});
+
+test('it applies an `inRange` class to days between the selected range', function(assert) {
+  const RANGE_START = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
+  const RANGE_END = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+  const IN_RANGE_SELECTOR = '[aria-label="February 7 2018"]';
+
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: {
+      start: RANGE_START,
+      end: RANGE_END
+    }
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+    }}
+  `);
+
+  let inRangeDayEl = find(IN_RANGE_SELECTOR);
+  assert.ok(inRangeDayEl.classList.contains(DAY_IN_RANGE), 'days within the provided range contain an `inRange` class');
+});
+
+test('it applies a `today` class to the day representing the current day', function(assert) {
+  const TODAY = new Date();
+  const TODAY_MONTH = TODAY.getMonth();
+  const TODAY_DATE = TODAY.getDate();
+  const TODAY_YEAR = TODAY.getFullYear();
+  const TODAY_LABEL = `${ MONTHS[ TODAY_MONTH ] } ${ TODAY_DATE } ${ TODAY_YEAR }` // ex: 'February 9 2018'
+  const TODAY_SELECTOR = `[aria-label="Today ${ TODAY_LABEL }"]`;
+
+  this.setProperties({
+    month: TODAY_MONTH,
+    year: TODAY_YEAR,
+    selected: null
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+    }}
+  `);
+
+  let todayEl = find(TODAY_SELECTOR);
+  assert.ok(todayEl.classList.contains(DAY_IS_TODAY), 'the day representing today contains a `today` class');
+
+  let todayEls = findAll(`.${ DAY_IS_TODAY }`);
+  assert.ok(todayEls.length, 1, 'only a single day element contains a `today` class');
+});
