@@ -173,7 +173,29 @@ test('it calls a passed-in `onChange` action when a new date is chosen', functio
 });
 
 test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', function(assert) {
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    onMonthChangeActionFired: false
+  });
 
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      onMonthChange=(action (mut onMonthChangeActionFired) true)
+    }}
+  `);
+
+  click(dpHeaderPrevBtnSelector);
+  assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `prev` button is clicked');
+
+  this.set('onMonthChangeActionFired', false);
+
+  click(dpHeaderNextBtnSelector);
+  assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `next` button is clicked');
 });
 
 test('it sets a selected range with `start` and `end` attrs when clicking dates', function(assert) {
