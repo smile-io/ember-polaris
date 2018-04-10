@@ -5,18 +5,19 @@
   helpText=helpText
 }}
   <div class="Polaris-RadioButton">
-    {{one-way-radio
-      id=_id
-      name=name
-      option=value
-      checked=checked
-      disabled=disabled
+    <input
+      type="radio"
       class="Polaris-RadioButton__Input"
-      aria-describedby=describedBy
-      update=(action onChange)
-      focusIn=(action onFocus)
-      focusOut=(action onBlur)
-    }}
+      id={{_id}}
+      name={{name}}
+      value={{value}}
+      checked={{checked}}
+      disabled={{disabled}}
+      aria-describedby={{describedBy}}
+      onchange={{action onChange value="target.value"}}
+      onfocus={{action onFocus}}
+      onblur={{action onBlur}}
+    >
 
     <div class="Polaris-RadioButton__Backdrop"></div>
     <div class="Polaris-RadioButton__Icon"></div>
