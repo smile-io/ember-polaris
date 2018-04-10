@@ -191,6 +191,32 @@ test('it calls a passed-in `onChange` action when a new date is chosen', functio
   assert.ok(this.get('onChangeActionFired'), 'onChange action is called when a day is clicked');
 });
 
+test('it passes a `selected` range argument to the `onChange` action', function(assert) {
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    onChangeActionFired: false,
+    onChange: (selected) => {
+      assert.ok(selected.start, '`onChange` receives a range with a `start` attribute');
+      assert.ok(selected.end, '`onChange` receives a range with an `end` attribute');
+      this.set('onChangeActionFired', true);
+    }
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      onChange=(action onChange)
+    }}
+  `);
+
+  click(daySelector);
+  assert.ok(this.get('onChangeActionFired'), '`onChange` action sends up correct arguments');
+});
+
 test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', function(assert) {
   this.setProperties({
     month: MONTH,
@@ -215,6 +241,35 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
 
   click(headerNextBtnSelector);
   assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `next` button is clicked');
+});
+
+test('it passes `month` and `year` arguments to the `onMonthChange` action', function(assert) {
+  let expectedMonth = MONTH + 1;
+  let expectedYear = YEAR;
+
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    onMonthChangeActionFired: false,
+    onMonthChange: (month, year) => {
+      assert.equal(month, expectedMonth, '`onMonthChange` receives the correct `month` argument');
+      assert.equal(year, expectedYear, '`onMonthChange` receives the correct `year` argument');
+      this.set('onMonthChangeActionFired', true);
+    }
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      onMonthChange=(action onMonthChange)
+    }}
+  `);
+
+  click(headerNextBtnSelector);
+  assert.ok(this.get('onMonthChangeActionFired'), '`onMonthChange` action sends up correct arguments')
 });
 
 test('it displays two months at a time when `multiMonth` is true', function(assert) {
