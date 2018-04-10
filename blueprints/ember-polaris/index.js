@@ -1,7 +1,8 @@
 /* eslint-env node */
-const rsvp = require('rsvp');
-const fs = require('fs-extra');
 const path = require('path');
+const fs = require('fs-extra');
+const chalk = require('chalk');
+const rsvp = require('rsvp');
 const writeFile = rsvp.denodeify(fs.writeFile);
 
 module.exports = {
