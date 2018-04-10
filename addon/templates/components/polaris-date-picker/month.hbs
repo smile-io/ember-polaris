@@ -1,6 +1,7 @@
 <div class="Polaris-DatePicker__Title {{if current 'Polaris-DatePicker__Month--current'}}">
   {{monthDisplayName}} {{year}}
 </div>
+
 <div role="rowheader" class="Polaris-DatePicker__WeekHeadings">
   {{#each weekdays as |weekday|}}
     {{polaris-date-picker/weekday
@@ -10,6 +11,7 @@
     }}
   {{/each}}
 </div>
+
 {{#each weeks as |week|}}
   <div role="row" class="Polaris-DatePicker__Week">
     {{#each week as |day|}}

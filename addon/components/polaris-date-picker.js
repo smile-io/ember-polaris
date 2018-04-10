@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { isNone, isPresent, typeOf } from '@ember/utils';
 import layout from '../templates/components/polaris-date-picker';
 import {
-  MonthsArray,
+  monthsArray,
   isDateAfter,
   isDateBefore,
   getNextDisplayYear,
@@ -84,7 +85,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(/*dateRange*/) {},
+  onChange(/* dateRange */) {},
 
   /**
    * Callback when month is changed
@@ -94,7 +95,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onMonthChange(/*month, year*/) {},
+  onMonthChange(/* month, year */) {},
 
   /**
    * Internal Properties
@@ -107,41 +108,41 @@ export default Component.extend({
     let selected = this.get('selected');
 
     return selected !== null && !(selected instanceof Date);
-  }),
+  }).readOnly(),
 
   showNextYear: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getNextDisplayYear(month, year);
-  }),
+  }).readOnly(),
 
   showNextMonth: computed('month', function() {
     return getNextDisplayMonth( this.get('month') );
-  }),
+  }).readOnly(),
 
   showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
     let { showNextMonth, showNextYear } = this.getProperties('showNextMonth', 'showNextYear');
 
     return getNextDisplayYear(showNextMonth, showNextYear);
-  }),
+  }).readOnly(),
 
   showNextToNextMonth: computed('showNextMonth', function() {
     return getNextDisplayMonth( this.get('showNextMonth') );
-  }),
+  }).readOnly(),
 
   showPreviousYear: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getPreviousDisplayYear(month, year);
-  }),
+  }).readOnly(),
 
   showPreviousMonth: computed('month', function() {
     return getPreviousDisplayMonth(this.get('month'));
-  }),
+  }).readOnly(),
 
   previousMonthName: computed('showPreviousMonth', function() {
-    return MonthsArray[ this.get('showPreviousMonth') ];
-  }),
+    return monthsArray[ this.get('showPreviousMonth') ];
+  }).readOnly(),
 
   nextMonth: computed('multiMonth', 'showNextToNextMonth', 'showNextMonth', function() {
     let {
@@ -150,8 +151,8 @@ export default Component.extend({
       showNextMonth
     } = this.getProperties('multiMonth', 'showNextToNextMonth', 'showNextMonth');
 
-    return multiMonth ? MonthsArray[showNextToNextMonth] : MonthsArray[showNextMonth];
-  }),
+    return multiMonth ? monthsArray[showNextToNextMonth] : monthsArray[showNextMonth];
+  }).readOnly(),
 
   nextYear: computed('multiMonth', 'showNextToNextYear', 'showNextYear', function() {
     let {
@@ -161,17 +162,17 @@ export default Component.extend({
     } = this.getProperties('multiMonth', 'showNextToNextYear', 'showNextYear');
 
     return multiMonth ? showNextToNextYear : showNextYear;
-  }),
+  }).readOnly(),
 
   range: computed('selected', function() {
     let selected = this.get('selected');
 
-    if (selected && (selected instanceof Date)) {
+    if (isPresent(selected) && (typeOf(selected) === 'date')) {
       return { start: selected, end: selected }
     } else {
       return selected;
     }
-  }),
+  }).readOnly(),
 
   previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
     return `Show previous month, ${ this.get('previousMonthName') } ${ this.get('showPreviousYear') }`;
@@ -193,8 +194,7 @@ export default Component.extend({
   /**
    * Events
    */
-  keyUp(e) {
-    let { key } = e;
+  keyUp({ key }) {
     let {
       disableDatesBefore,
       disableDatesAfter,
@@ -204,10 +204,9 @@ export default Component.extend({
 
     let focusedDate = focusDate || (range && range.start);
 
-    if (!focusedDate) {
+    if (isNone(focusedDate)) {
       return;
     }
-
 
     if (key === 'ArrowUp') {
       let previousWeek = new Date(focusedDate);

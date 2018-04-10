@@ -12,10 +12,10 @@ moduleForComponent('polaris-date-picker', 'Integration | Component | polaris dat
   }
 });
 
-const DAY_SELECTED = 'Polaris-DatePicker__Day--selected';
-const DAY_DISABLED = 'Polaris-DatePicker__Day--disabled';
-const DAY_IN_RANGE = 'Polaris-DatePicker__Day--inRange';
-const DAY_IS_TODAY = 'Polaris-DatePicker__Day--today';
+const DAY_SELECTED_CLASS = 'Polaris-DatePicker__Day--selected';
+const DAY_DISABLED_CLASS = 'Polaris-DatePicker__Day--disabled';
+const DAY_IN_RANGE_CLASS = 'Polaris-DatePicker__Day--inRange';
+const DAY_IS_TODAY_CLASS = 'Polaris-DatePicker__Day--today';
 
 const DAYS_PER_WEEK = 7;
 
@@ -40,66 +40,66 @@ const MONTH_NAME = 'February';
 const START_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
 const END_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
 
-const dpContainer      = '.Polaris-DatePicker';
-const dpHeader         = '.Polaris-DatePicker__Header';
-const dpMonthContainer = '.Polaris-DatePicker__MonthContainer';
-const dpMonthBody      = '.Polaris-DatePicker__Month';
-const dpMonthTitle     = '.Polaris-DatePicker__Title';
-const dpWeekdaysHeader = '.Polaris-DatePicker__WeekHeadings';
-const dpWeekday        = '.Polaris-DatePicker__Weekday';
-const dpWeek           = '.Polaris-DatePicker__Week';
-const dpDay            = '.Polaris-DatePicker__Day';
-const dpDayEmpty       = '.Polaris-DatePicker__EmptyDay';
+const container      = '.Polaris-DatePicker';
+const header         = '.Polaris-DatePicker__Header';
+const monthContainer = '.Polaris-DatePicker__MonthContainer';
+const monthBody      = '.Polaris-DatePicker__Month';
+const monthTitle     = '.Polaris-DatePicker__Title';
+const weekdaysHeader = '.Polaris-DatePicker__WeekHeadings';
+const weekday        = '.Polaris-DatePicker__Weekday';
+const week           = '.Polaris-DatePicker__Week';
+const day            = '.Polaris-DatePicker__Day';
+const dayEmpty       = '.Polaris-DatePicker__EmptyDay';
 
-const dpHeaderSelector = buildNestedSelector(
-  dpContainer,
-  dpHeader
+const headerSelector = buildNestedSelector(
+  container,
+  header
 );
 
-const dpHeaderPrevBtnSelector = `${ dpHeader } button:first-of-type`;
+const headerPrevBtnSelector = `${ header } button:first-of-type`;
 
-const dpHeaderNextBtnSelector = `${ dpHeader } button:last-of-type`;
+const headerNextBtnSelector = `${ header } button:last-of-type`;
 
-const dpMonthSelector = buildNestedSelector(
-  dpContainer,
-  dpMonthContainer
+const monthSelector = buildNestedSelector(
+  container,
+  monthContainer
 );
 
-const dpMonthBodySelector = buildNestedSelector(
-  dpMonthContainer,
-  dpMonthBody
+const monthBodySelector = buildNestedSelector(
+  monthContainer,
+  monthBody
 );
 
-const dpMonthTitleSelector = buildNestedSelector(
-  dpMonthContainer,
-  dpMonthBody,
-  dpMonthTitle
+const monthTitleSelector = buildNestedSelector(
+  monthContainer,
+  monthBody,
+  monthTitle
 );
 
-const dpWeekdaySelector = buildNestedSelector(
-  dpMonthContainer,
-  dpMonthBody,
-  dpWeekdaysHeader,
-  dpWeekday
+const weekdaySelector = buildNestedSelector(
+  monthContainer,
+  monthBody,
+  weekdaysHeader,
+  weekday
 );
 
-const dpMonthWeekSelector = buildNestedSelector(
-  dpMonthContainer,
-  dpMonthBody,
-  dpWeek
+const monthWeekSelector = buildNestedSelector(
+  monthContainer,
+  monthBody,
+  week
 );
 
-const dpDaySelector = buildNestedSelector(
-  dpWeek,
-  dpDay
+const daySelector = buildNestedSelector(
+  week,
+  day
 );
 
-const dpDayEmptySelector = buildNestedSelector(
-  dpWeek,
-  dpDayEmpty
+const dayEmptySelector = buildNestedSelector(
+  week,
+  dayEmpty
 );
 
-const dpDaySelectedSelector = `.${ DAY_SELECTED }`;
+const daySelectedSelector = `.${ DAY_SELECTED_CLASS }`;
 
 test('it renders the correct date-picker HTML', function(assert) {
   /**
@@ -126,47 +126,47 @@ test('it renders the correct date-picker HTML', function(assert) {
     }}
   `);
 
-  let dpContainerEl = find(dpContainer);
-  assert.ok(dpContainerEl, 'it renders the date picker component');
+  let containerEl = find(container);
+  assert.ok(containerEl, 'it renders the date picker component');
 
-  let dpHeaderEl = find(dpHeaderSelector);
-  assert.ok(dpHeaderEl, 'it renders the date picker header');
+  let headerEl = find(headerSelector);
+  assert.ok(headerEl, 'it renders the date picker header');
 
-  let dpHeaderPrevBtnEl = find(dpHeaderPrevBtnSelector);
-  let iconPrev = find('svg', dpHeaderPrevBtnEl);
-  assert.ok(dpHeaderPrevBtnSelector, 'it renders a `prev` button in the header');
-  assert.equal(iconPrev.dataset.iconSource, 'polaris/arrowLeft', 'it renders a left arrow icon as the `prev` button');
+  let headerPrevBtnEl = find(headerPrevBtnSelector);
+  let iconPrev = find('svg', headerPrevBtnEl);
+  assert.ok(headerPrevBtnSelector, 'it renders a `prev` button in the header');
+  assert.equal(iconPrev.dataset.iconSource, 'polaris/arrow-left', 'it renders a left arrow icon as the `prev` button');
 
-  let dpHeaderNextBtnEl = find(dpHeaderNextBtnSelector);
-  let iconNext = find('svg', dpHeaderNextBtnEl);
-  assert.ok(dpHeaderNextBtnSelector, 'it renders a `next` button in the header');
-  assert.equal(iconNext.dataset.iconSource, 'polaris/arrowRight', 'it renders a right arrow icon as the `next` button');
+  let headerNextBtnEl = find(headerNextBtnSelector);
+  let iconNext = find('svg', headerNextBtnEl);
+  assert.ok(headerNextBtnSelector, 'it renders a `next` button in the header');
+  assert.equal(iconNext.dataset.iconSource, 'polaris/arrow-right', 'it renders a right arrow icon as the `next` button');
 
-  let dpMonthTitleEl = find(dpMonthTitleSelector);
+  let monthTitleEl = find(monthTitleSelector);
   let expectedTitle = `${ MONTH_NAME } ${ YEAR }`;
-  assert.equal(dpMonthTitleEl.textContent.trim(), expectedTitle, 'it renders a title displaying the current month name and year');
+  assert.equal(monthTitleEl.textContent.trim(), expectedTitle, 'it renders a title displaying the current month name and year');
 
-  let dpMonthsEl = findAll(dpMonthSelector);
-  assert.ok(dpMonthsEl, 'it renders a single month container');
+  let monthsEl = findAll(monthSelector);
+  assert.ok(monthsEl, 'it renders a single month container');
 
-  let dpMonthBodyEls = findAll(dpMonthBodySelector);
-  assert.equal(dpMonthBodyEls.length, 1, 'it renders a single month body');
+  let monthBodyEls = findAll(monthBodySelector);
+  assert.equal(monthBodyEls.length, 1, 'it renders a single month body');
 
-  let dpWeekdayEls = findAll(dpWeekdaySelector);
-  let [ sunday ] = dpWeekdayEls;
-  assert.equal(dpWeekdayEls.length, DAYS_PER_WEEK, 'it renders 7 weekday labels in the weekday header');
+  let weekdayEls = findAll(weekdaySelector);
+  let [ sunday ] = weekdayEls;
+  assert.equal(weekdayEls.length, DAYS_PER_WEEK, 'it renders 7 weekday labels in the weekday header');
   assert.equal(sunday.textContent.trim(), 'Su', 'it abbreviates the weekday names in the weekday header');
 
-  let dpWeekEls = findAll(dpMonthWeekSelector);
-  assert.equal(dpWeekEls.length, FEB_2018_WEEKS, 'it renders 5 weeks for February 2018');
+  let weekEls = findAll(monthWeekSelector);
+  assert.equal(weekEls.length, FEB_2018_WEEKS, 'it renders 5 weeks for February 2018');
 
-  let dpDayEls = findAll(dpDaySelector);
-  assert.equal(dpDayEls.length, FEB_2018_DAYS, 'it renders 28 days for February 2018');
+  let dayEls = findAll(daySelector);
+  assert.equal(dayEls.length, FEB_2018_DAYS, 'it renders 28 days for February 2018');
 
-  let dpDayEmptyEls = findAll(dpDayEmptySelector);
-  assert.equal(dpDayEmptyEls.length, FEB_2018_DAYS_EMPTY, 'it renders 6 empty days for February 2018');
+  let dayEmptyEls = findAll(dayEmptySelector);
+  assert.equal(dayEmptyEls.length, FEB_2018_DAYS_EMPTY, 'it renders 6 empty days for February 2018');
 
-  let selectedDay = find(dpDaySelectedSelector);
+  let selectedDay = find(daySelectedSelector);
   assert.equal(selectedDay.textContent.trim(), '7', 'it renders February 7th as the selected date');
 });
 
@@ -187,7 +187,7 @@ test('it calls a passed-in `onChange` action when a new date is chosen', functio
     }}
   `);
 
-  click(dpDaySelector);
+  click(daySelector);
   assert.ok(this.get('onChangeActionFired'), 'onChange action is called when a day is clicked');
 });
 
@@ -208,12 +208,12 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
     }}
   `);
 
-  click(dpHeaderPrevBtnSelector);
+  click(headerPrevBtnSelector);
   assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `prev` button is clicked');
 
   this.set('onMonthChangeActionFired', false);
 
-  click(dpHeaderNextBtnSelector);
+  click(headerNextBtnSelector);
   assert.ok(this.get('onMonthChangeActionFired'), 'onMonthChange action is called when `next` button is clicked');
 });
 
@@ -234,8 +234,8 @@ test('it displays two months at a time when `multiMonth` is true', function(asse
     }}
   `);
 
-  let dpMonthBodyEls = findAll(dpMonthBodySelector);
-  assert.equal(dpMonthBodyEls.length, 2, 'it renders 2 months when `multiMonth` is true');
+  let monthBodyEls = findAll(monthBodySelector);
+  assert.equal(monthBodyEls.length, 2, 'it renders 2 months when `multiMonth` is true');
 });
 
 test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
@@ -263,10 +263,10 @@ test('it disables certain days when `disableDatesBefore` and `disableDatesAfter`
   `);
 
   let disabledBeforeDateEl = find(DISABLE_BEFORE_SELECTOR);
-  assert.ok(disabledBeforeDateEl.classList.contains(DAY_DISABLED), 'dates before `disableDatesBefore` have a disabled class');
+  assert.ok(disabledBeforeDateEl.classList.contains(DAY_DISABLED_CLASS), 'dates before `disableDatesBefore` have a disabled class');
 
   let disabledAfterDateEl = find(DISABLE_AFTER_SELECTOR);
-  assert.ok(disabledAfterDateEl.classList.contains(DAY_DISABLED), 'dates after `disableDatesAfter` have a disabled class');
+  assert.ok(disabledAfterDateEl.classList.contains(DAY_DISABLED_CLASS), 'dates after `disableDatesAfter` have a disabled class');
 });
 
 test('it applies an `inRange` class to days between the selected range', function(assert) {
@@ -292,7 +292,7 @@ test('it applies an `inRange` class to days between the selected range', functio
   `);
 
   let inRangeDayEl = find(IN_RANGE_SELECTOR);
-  assert.ok(inRangeDayEl.classList.contains(DAY_IN_RANGE), 'days within the provided range contain an `inRange` class');
+  assert.ok(inRangeDayEl.classList.contains(DAY_IN_RANGE_CLASS), 'days within the provided range contain an `inRange` class');
 });
 
 test('it applies a `today` class to the day representing the current day', function(assert) {
@@ -318,8 +318,8 @@ test('it applies a `today` class to the day representing the current day', funct
   `);
 
   let todayEl = find(TODAY_SELECTOR);
-  assert.ok(todayEl.classList.contains(DAY_IS_TODAY), 'the day representing today contains a `today` class');
+  assert.ok(todayEl.classList.contains(DAY_IS_TODAY_CLASS), 'the day representing today contains a `today` class');
 
-  let todayEls = findAll(`.${ DAY_IS_TODAY }`);
+  let todayEls = findAll(`.${ DAY_IS_TODAY_CLASS }`);
   assert.ok(todayEls.length, 1, 'only a single day element contains a `today` class');
 });

@@ -1,9 +1,8 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-date-picker/day';
 import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
+import layout from '../../templates/components/polaris-date-picker/day';
 import {
-  MonthsArray,
+  monthsArray,
   isSameDay,
   dateIsInRange,
   dateIsSelected,
@@ -70,7 +69,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onClick(/*day*/) {},
+  onClick(/* day */) {},
 
   /**
    * @property onHover
@@ -78,7 +77,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onHover(/*day*/) {},
+  onHover(/* day */) {},
 
   /**
    * @property onFocus
@@ -86,17 +85,52 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onFocus(/*day*/) {},
+  onFocus(/* day */) {},
 
   /**
    * Internal Properties
    */
+  dayButtonClasses: computed('selected', 'disabled', 'isDateToday', 'inHoveringRange', 'inRange', function() {
+    let classNames = ['Polaris-DatePicker__Day'];
+    let {
+      selected,
+      disabled,
+      isDateToday,
+      inHoveringRange,
+      inRange
+    } = this.getProperties(
+      'selected',
+      'disabled',
+      'isDateToday',
+      'inHoveringRange',
+      'inRange'
+    );
+
+    if (selected) {
+      classNames.push('Polaris-DatePicker__Day--selected');
+    }
+
+    if (disabled) {
+      classNames.push('Polaris-DatePicker__Day--disabled');
+    }
+
+    if (isDateToday) {
+      classNames.push('Polaris-DatePicker__Day--today');
+    }
+
+    if (inHoveringRange || inRange) {
+      classNames.push('Polaris-DatePicker__Day--inRange');
+    }
+
+    return classNames.join(' ');
+  }),
+
   date: computed('day', function() {
     let day = this.get('day');
     return day.getDate();
   }),
 
-  today: computed('day', function() {
+  isDateToday: computed('day', function() {
     let day = this.get('day');
     return isSameDay(new Date(), day);
   }),
@@ -130,49 +164,39 @@ export default Component.extend({
            (disableDatesAfter && isDateAfter(day, disableDatesAfter))
   }),
 
-  ariaLabel: computed('day', 'today', 'date', function() {
-    let today = this.get('today');
+  ariaLabel: computed('day', 'isDateToday', 'date', function() {
+    let isDateToday = this.get('isDateToday');
     let day = this.get('day');
-    let month = MonthsArray[ day.getMonth() ];
+    let month = monthsArray[ day.getMonth() ];
     let date = this.get('date');
     let year = day.getFullYear();
 
-    return [
-      `${ today ? 'Today ' : '' }`,
-      `${ month } `,
-      `${ date } `,
-      `${ year }`
-    ].join('');
+    return `${ isDateToday ? 'Today ' : '' }${ month } ${ date } ${ year }`;
   }),
 
-  tabIndex: computed('focused', 'selected', 'disabled', 'date', 'today', function() {
+  tabIndex: computed('focused', 'selected', 'disabled', 'date', 'isDateToday', function() {
     let {
       focused,
       selected,
       disabled,
       date,
-      today
-    } = this.getProperties('focused', 'selected', 'disabled', 'date', 'today');
+      isDateToday
+    } = this.getProperties('focused', 'selected', 'disabled', 'date', 'isDateToday');
 
-    return (focused || selected || today || date === 1) && !disabled ? 0 : -1;
+    return (focused || selected || isDateToday || date === 1) && !disabled ? 0 : -1;
   }),
 
   inHoveringRange: computed('day', 'selectedDates', 'hoverDate', 'allowRange', function() {
-    let {
-      day,
-      selectedDates,
-      hoverDate,
-      allowRange
-    } = this.getProperties('day', 'selectedDates', 'hoverDate', 'allowRange');
+    let { day, allowRange } = this.getProperties('day', 'allowRange');
 
     if (!allowRange || day === null) {
       return false;
     }
 
+    let { selectedDates, hoverDate } = this.getProperties('selectedDates', 'hoverDate');
+
     const { start, end } = selectedDates;
 
-    return Boolean(start === end && day > start && day <= hoverDate);
-  }),
-
-  applyInRangeStyles: or('inHoveringRange', 'inRange')
+    return start === end && day > start && day <= hoverDate;
+  })
 });

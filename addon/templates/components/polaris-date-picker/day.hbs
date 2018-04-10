@@ -1,11 +1,7 @@
 {{#if day}}
   <button
     role="gridcell"
-    class="Polaris-DatePicker__Day
-      {{if selected ' Polaris-DatePicker__Day--selected'}}
-      {{if disabled ' Polaris-DatePicker__Day--disabled'}}
-      {{if today ' Polaris-DatePicker__Day--today'}}
-      {{if applyInRangeStyles ' Polaris-DatePicker__Day--inRange'}}"
+    class={{dayButtonClasses}}
     tabindex={{tabIndex}}
     aria-label={{ariaLabel}}
     aria-selected={{selected}}

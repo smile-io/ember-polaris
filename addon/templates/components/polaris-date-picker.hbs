@@ -1,18 +1,19 @@
 <div class="Polaris-DatePicker__Header">
   {{polaris-button
     plain=true
-    icon="arrowLeft"
+    icon="arrow-left"
     accessibilityLabel=previousMonthLabel
     onClick=(action "handleMonthChangeClick" showPreviousMonth showPreviousYear)
   }}
 
   {{polaris-button
     plain=true
-    icon="arrowRight"
+    icon="arrow-right"
     accessibilityLabel=nextMonthLabel
     onClick=(action "handleMonthChangeClick" showNextMonth showNextYear)
   }}
 </div>
+
 <div class="Polaris-DatePicker__MonthContainer">
   {{polaris-date-picker/month
     month=month
