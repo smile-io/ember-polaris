@@ -25,7 +25,7 @@ module.exports = {
   },
 
   addStyleImportToHostApp() {
-    let importStatement = '@import "ember-polaris";\n';
+    let importStatement = '\n@import "ember-polaris";\n';
     let stylePath = path.join('app', 'styles');
     let file = path.join(stylePath, 'app.scss');
 
@@ -35,7 +35,7 @@ module.exports = {
 
     if (fs.existsSync(file)) {
       this.ui.writeLine(chalk.green(`Adding import statement to ${ file }`));
-      return this.insertIntoFile(file, `\n${ importStatement }`, {});
+      return this.insertIntoFile(file, importStatement, {});
     } else {
       this.ui.writeLine(chalk.green(`Creating ${ file }`));
       return writeFile(file, importStatement);
