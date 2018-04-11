@@ -2,8 +2,8 @@ import Component from '@ember/component';
 import layout from '../templates/components/polaris-visually-hidden';
 
 /**
- * Polaris VisuallyHidden component.
- * See https://polaris.shopify.com/components/titles-and-text/visuallyhidden
+ * Polaris Visually hidden component.
+ * See https://polaris.shopify.com/components/titles-and-text/visually-hidden
  */
 export default Component.extend({
   tagName: 'span',

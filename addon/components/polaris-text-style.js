@@ -5,7 +5,8 @@ import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-text-style';
 
 /**
- * Polaris text style component (undocumented).
+ * Polaris text style component.
+ * See https://polaris.shopify.com/components/titles-and-text/text-style
  */
 export default Component.extend({
   tagName: 'span',
