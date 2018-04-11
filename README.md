@@ -76,15 +76,9 @@ Install `ember-polaris` using `ember-cli`:
 $ ember install ember-polaris
 ```
 
-This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app.
-If your app does not already have a `app/styles/app.scss` it will create one with `@import 'ember-polaris';` (you will have to import Polaris styles manually in your `app/styles/app.scss`, if that file already exists):
+This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app. It will also set up your app's `app/styles/app.scss` to `@import "ember-polaris";`, creating the file if it does not already exist.
 
-```css
-/* app/styles/app.scss */
-@import "ember-polaris";
-```
-
-In addition, for icons to work you will need to:
+For icons to work you will need to:
 * copy Polaris SVG's into a folder in `public`, ex: `public/assets/images/svg/polaris`
 * install `ember-svg-jar`
 * add the following `ember-svg-jar` options to your `ember-cli-build.js`:
