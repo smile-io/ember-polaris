@@ -1,3 +1,5 @@
+import { isNone, isPresent } from '@ember/utils';
+
 export const weekdays = {
   Sunday: 'Sunday',
   Monday: 'Monday',
@@ -34,11 +36,11 @@ export const monthsArray = [
 ]
 
 export function getYearForRange({ start, end }) {
-  if (start) {
+  if (isPresent(start)) {
     return start.getFullYear();
   }
 
-  if (end) {
+  if (isPresent(end)) {
     return end.getFullYear();
   }
 
@@ -46,11 +48,11 @@ export function getYearForRange({ start, end }) {
 }
 
 export function getMonthForRange({ start, end }) {
-  if (start) {
+  if (isPresent(start)) {
     return start.getMonth();
   }
 
-  if (end) {
+  if (isPresent(end)) {
     return end.getMonth();
   }
 
@@ -93,23 +95,23 @@ export function getWeeksForMonth(month, year) {
 }
 
 export function dateIsInRange(day, range) {
-  if (day === null) {
+  if (isNone(day)) {
     return false;
   }
 
   const { start, end } = range;
 
-  return (start && day > start) && (end && day < end);
+  return (isPresent(start) && day > start) && (isPresent(end) && day < end);
 }
 
 export function dateIsSelected(day, range) {
-  if (day === null) {
+  if (isNone(day)) {
     return false;
   }
 
   const {start, end} = range;
 
-  return (start && isSameDay(start, day)) || (end && isSameDay(end, day));
+  return (isPresent(start) && isSameDay(start, day)) || (isPresent(end) && isSameDay(end, day));
 }
 
 export function isSameDay(day1, day2) {
@@ -121,17 +123,17 @@ export function isSameDay(day1, day2) {
 }
 
 export function getNewRange(range, selected) {
-  if (!range) {
+  if (isNone(range)) {
     return { start: selected, end: selected };
   }
 
   let { start, end } = range;
 
-  if (end && start !== end) {
+  if (isPresent(end) && start !== end) {
     return { start: selected, end: selected };
   }
 
-  if (start) {
+  if (isPresent(start)) {
     if (selected < start) {
       return { start: selected, end: selected };
     }
@@ -139,7 +141,7 @@ export function getNewRange(range, selected) {
     return { start, end: selected };
   }
 
-  if (end) {
+  if (isPresent(end)) {
     if (selected < end) {
       return { start: selected, end };
     }
