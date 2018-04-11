@@ -1,0 +1,17 @@
+{{#if day}}
+  <button
+    role="gridcell"
+    class={{dayButtonClasses}}
+    tabindex={{tabIndex}}
+    aria-label={{ariaLabel}}
+    aria-selected={{selected}}
+    aria-disabled={{disabled}}
+    onclick={{action onClick day}}
+    onmouseover={{action onHover day}}
+    onfocus={{action onFocus day}}
+  >
+    {{date}}
+  </button>
+{{else}}
+  <div class="Polaris-DatePicker__EmptyDay"></div>
+{{/if}}
