@@ -8,10 +8,12 @@
 
 **NOTE:** _this addon is still in development. As such, not all of the components available in the React component library have been built yet, and some features of those which have been built are currently unimplemented._
 
-### Implemented components
+### Components
+
+Below is a categorised list of the components available in `ember-polaris`. Click an item to see more information and usage examples for that component.
 
 #### Actions
-- Action list
+- [Action list](docs/action-list.md)
 - Button
 - Button group
 - Setting toggle
