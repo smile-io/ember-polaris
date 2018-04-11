@@ -130,7 +130,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Heading](docs/heading.md#heading)
 - [Subheading](docs/subheading.md#subheading)
 - [Text style](docs/text-style.md#text-style)
-- [VisuallyHidden](docs/visually-hidden.md#visually-hidden)
+- [Visually hidden](docs/visually-hidden.md#visually-hidden)
 
 #### Forms
 - [Checkbox](docs/checkbox.md#checkbox)
