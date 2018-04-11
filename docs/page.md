@@ -1,4 +1,4 @@
-[< Back](../README.md)
+[< Back to Components List](../README.md#components)
 
 ## Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).

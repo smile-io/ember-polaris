@@ -1,4 +1,4 @@
-[< Back](../README.md)
+[< Back to Components List](../README.md#components)
 
 ## Form layout
 `polaris-form-layout` implements the [Polaris Form layout component](https://polaris.shopify.com/components/forms/form-layout).

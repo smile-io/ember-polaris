@@ -1,4 +1,4 @@
-[< Back](../README.md)
+[< Back to Components List](../README.md#components)
 
 ## Skeleton display text
 
