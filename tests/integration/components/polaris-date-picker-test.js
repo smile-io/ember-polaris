@@ -192,6 +192,8 @@ test('it calls a passed-in `onChange` action when a new date is chosen', functio
 });
 
 test('it passes a `selected` range argument to the `onChange` action', function(assert) {
+  assert.expect(3);
+
   this.setProperties({
     month: MONTH,
     year: YEAR,
@@ -244,6 +246,8 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
 });
 
 test('it passes `month` and `year` arguments to the `onMonthChange` action', function(assert) {
+  assert.expect(3);
+
   let expectedMonth = MONTH + 1;
   let expectedYear = YEAR;
 

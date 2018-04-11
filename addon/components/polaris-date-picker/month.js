@@ -119,9 +119,6 @@ export default Component.extend({
    */
   weekdayName(/* weekday */) {},
 
-  /**
-   * Internal Properties
-   */
   role: 'grid',
 
   current: computed('month', 'year', function() {
@@ -130,17 +127,17 @@ export default Component.extend({
     let thisYear = date.getFullYear();
 
     return thisMonth === this.get('month') && thisYear === this.get('year');
-  }),
+  }).readOnly(),
 
   monthDisplayName: computed('month', function() {
-    return monthsArray[ this.get('month') ];
-  }),
+    return monthsArray[this.get('month')];
+  }).readOnly(),
 
   weeks: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getWeeksForMonth(month, year);
-  }),
+  }).readOnly(),
 
   weekdays: computed('current', function() {
     let current = this.get('current');
@@ -153,7 +150,7 @@ export default Component.extend({
         label: weekday
       };
     });
-  }),
+  }).readOnly(),
 
   actions: {
     handleDateClick(day) {

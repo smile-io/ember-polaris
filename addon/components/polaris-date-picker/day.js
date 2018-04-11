@@ -87,9 +87,6 @@ export default Component.extend({
    */
   onFocus(/* day */) {},
 
-  /**
-   * Internal Properties
-   */
   dayButtonClasses: computed('selected', 'disabled', 'isDateToday', 'inHoveringRange', 'inRange', function() {
     let classNames = ['Polaris-DatePicker__Day'];
     let {
@@ -123,35 +120,35 @@ export default Component.extend({
     }
 
     return classNames.join(' ');
-  }),
+  }).readOnly(),
 
   date: computed('day', function() {
     let day = this.get('day');
     return day.getDate();
-  }),
+  }).readOnly(),
 
   isDateToday: computed('day', function() {
     let day = this.get('day');
     return isSameDay(new Date(), day);
-  }),
+  }).readOnly(),
 
   focused: computed('focusedDate', 'day', function() {
     let { focusedDate, day } = this.getProperties('focusedDate', 'day');
 
     return focusedDate !== null && isSameDay(day, focusedDate);
-  }),
+  }).readOnly(),
 
   selected: computed('selectedDates', 'day', function() {
     let { selectedDates, day } = this.getProperties('selectedDates', 'day');
 
     return selectedDates !== null && dateIsSelected(day, selectedDates);
-  }),
+  }).readOnly(),
 
   inRange: computed('selectedDates', 'day', function() {
     let selectedDates = this.get('selectedDates');
     let day = this.get('day');
     return selectedDates !== null && dateIsInRange(day, selectedDates);
-  }),
+  }).readOnly(),
 
   disabled: computed('day', 'disableDatesBefore', 'disableDatesAfter', function() {
     let {
@@ -162,7 +159,7 @@ export default Component.extend({
 
     return (disableDatesBefore && isDateBefore(day, disableDatesBefore)) ||
            (disableDatesAfter && isDateAfter(day, disableDatesAfter))
-  }),
+  }).readOnly(),
 
   ariaLabel: computed('day', 'isDateToday', 'date', function() {
     let isDateToday = this.get('isDateToday');
@@ -172,7 +169,7 @@ export default Component.extend({
     let year = day.getFullYear();
 
     return `${ isDateToday ? 'Today ' : '' }${ month } ${ date } ${ year }`;
-  }),
+  }).readOnly(),
 
   tabIndex: computed('focused', 'selected', 'disabled', 'date', 'isDateToday', function() {
     let {
@@ -184,7 +181,7 @@ export default Component.extend({
     } = this.getProperties('focused', 'selected', 'disabled', 'date', 'isDateToday');
 
     return (focused || selected || isDateToday || date === 1) && !disabled ? 0 : -1;
-  }),
+  }).readOnly(),
 
   inHoveringRange: computed('day', 'selectedDates', 'hoverDate', 'allowRange', function() {
     let { day, allowRange } = this.getProperties('day', 'allowRange');
@@ -198,5 +195,5 @@ export default Component.extend({
     const { start, end } = selectedDates;
 
     return start === end && day > start && day <= hoverDate;
-  })
+  }).readOnly()
 });

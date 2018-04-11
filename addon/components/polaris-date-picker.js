@@ -97,9 +97,6 @@ export default Component.extend({
    */
   onMonthChange(/* month, year */) {},
 
-  /**
-   * Internal Properties
-   */
   hoverDate: null,
 
   focusDate: null,
@@ -117,7 +114,7 @@ export default Component.extend({
   }).readOnly(),
 
   showNextMonth: computed('month', function() {
-    return getNextDisplayMonth( this.get('month') );
+    return getNextDisplayMonth(this.get('month'));
   }).readOnly(),
 
   showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
@@ -127,7 +124,7 @@ export default Component.extend({
   }).readOnly(),
 
   showNextToNextMonth: computed('showNextMonth', function() {
-    return getNextDisplayMonth( this.get('showNextMonth') );
+    return getNextDisplayMonth(this.get('showNextMonth'));
   }).readOnly(),
 
   showPreviousYear: computed('month', 'year', function() {
@@ -169,9 +166,9 @@ export default Component.extend({
 
     if (isPresent(selected) && (typeOf(selected) === 'date')) {
       return { start: selected, end: selected }
-    } else {
-      return selected;
     }
+
+    return selected;
   }).readOnly(),
 
   previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
@@ -213,7 +210,7 @@ export default Component.extend({
 
       previousWeek.setDate(focusedDate.getDate() - 7);
 
-      if ( !(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore)) ) {
+      if (!(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore))) {
         this.setFocusDateAndHandleMonthChange(previousWeek);
       }
     }
@@ -223,7 +220,7 @@ export default Component.extend({
 
       nextWeek.setDate(focusedDate.getDate() + 7);
 
-      if ( (disableDatesAfter && isDateAfter(nextWeek, disableDatesAfter)) ) {
+      if ((disableDatesAfter && isDateAfter(nextWeek, disableDatesAfter))) {
         this.setFocusDateAndHandleMonthChange(nextWeek);
       }
     }
@@ -233,7 +230,7 @@ export default Component.extend({
 
       tomorrow.setDate(focusedDate.getDate() + 1);
 
-      if ( !(disableDatesAfter && isDateAfter(tomorrow, disableDatesAfter)) ) {
+      if (!(disableDatesAfter && isDateAfter(tomorrow, disableDatesAfter))) {
         this.setFocusDateAndHandleMonthChange(tomorrow);
       }
     }
@@ -243,7 +240,7 @@ export default Component.extend({
 
       yesterday.setDate(focusedDate.getDate() - 1);
 
-      if ( !(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore)) ) {
+      if (!(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore))) {
         this.setFocusDateAndHandleMonthChange(yesterday);
       }
     }
