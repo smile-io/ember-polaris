@@ -328,6 +328,36 @@ test('it disables certain days when `disableDatesBefore` and `disableDatesAfter`
   assert.ok(disabledAfterDateEl.classList.contains(DAY_DISABLED_CLASS), 'dates after `disableDatesAfter` have a disabled class');
 });
 
+test('it does not fire actions when disabled days are clicked', function(assert) {
+  const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+  const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
+
+  this.set('onChangeActionFired', false);
+
+  this.setProperties({
+    month: MONTH,
+    year: YEAR,
+    selected: null,
+    disableDatesAfter: DISABLE_AFTER,
+    onChange: (selected) => {
+      this.set('onChangeActionFired', true);
+    }
+  });
+
+  this.render(hbs`
+    {{polaris-date-picker
+      month=month
+      year=year
+      selected=selected
+      disableDatesAfter=disableDatesAfter
+      onChange=(action onChange)
+    }}
+  `);
+
+  click(DISABLE_AFTER_SELECTOR);
+  assert.notOk(this.get('onChangeActionFired'), 'clicking disabled day did not fire `onChange` action');
+});
+
 test('it applies an `inRange` class to days between the selected range', function(assert) {
   const RANGE_START = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
   const RANGE_END = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
