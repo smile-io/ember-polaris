@@ -104,8 +104,8 @@ export default Component.extend({
       return preferredPosition;
     }
 
-    // If set to `mostSpace`, the value will be
-    // calculated when the user opens the popover.
+    // If set to `mostSpace`, the value will be calculated
+    // and set when the user opens the popover.
 
     return null;
   }),

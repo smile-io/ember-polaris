@@ -12,6 +12,8 @@ const overlaySelector = 'div.Polaris-PositionedOverlay';
 const popoverSelector = buildNestedSelector(overlaySelector, 'div.Polaris-Popover');
 const popoverChildSelector = buildNestedSelector(popoverSelector, 'div');
 const popoverContentSelector = buildNestedSelector(popoverChildSelector, 'div.Polaris-Popover__Content');
+const popoverContentAboveSelector = '.ember-basic-dropdown-content--above';
+const popoverContentBelowSelector = '.ember-basic-dropdown-content--below';
 const popoverPaneSelector = buildNestedSelector(
   popoverContentSelector,
   'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
@@ -100,4 +102,30 @@ test('it renders the correct HTML with sectioned attribute', function(assert) {
   const popoverSections = findAll(popoverSectionSelector);
   assert.equal(popoverSections.length, 1, 'renders one popover section');
   assert.equal(popoverSections[0].textContent.trim(), 'This is some sectioned popover content', 'popover section contains the correct content');
+});
+
+skip('it renders the correct HTML with `prefferedPosition` attribute', function(assert) {
+  this.set('prefferedPosition', 'above');
+
+  this.render(hbs`
+    {{#polaris-popover prefferedPosition=prefferedPosition as |popover|}}
+      {{#popover.activator}}
+        {{polaris-button text="Toggle popover"}}
+      {{/popover.activator}}
+
+      {{#popover.content}}
+        This is some sectioned popover content
+      {{/popover.content}}
+    {{/polaris-popover}}
+  `);
+
+  click(activatorSelector);
+
+  const contentAbove = find(popoverContentAboveSelector);
+  assert.ok(contentAbove, 'renders popover content above the trigger');
+
+  this.set('prefferedPosition', 'below');
+
+  const contentBelow = find(popoverContentBelowSelector);
+  assert.ok(contentBelow, 'renders popover content below the trigger');
 });
