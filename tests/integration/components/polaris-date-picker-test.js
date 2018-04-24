@@ -339,7 +339,7 @@ test('it does not fire actions when disabled days are clicked', function(assert)
     year: YEAR,
     selected: null,
     disableDatesAfter: DISABLE_AFTER,
-    onChange: (selected) => {
+    onChange: () => {
       this.set('onChangeActionFired', true);
     }
   });
