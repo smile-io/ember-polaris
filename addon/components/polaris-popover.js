@@ -37,9 +37,11 @@ export default Component.extend({
    *
    * @property preferredPosition
    * @type {string}
-   * @default null
+   * @default 'below'
    */
-  preferredPosition: null,
+  preferredPosition: computed(function() {
+    return 'below';
+  }),
 
   /**
    * Show or hide the Popover
@@ -96,11 +98,7 @@ export default Component.extend({
   verticalPosition: computed('preferredPosition', function() {
     let preferredPosition = this.get('preferredPosition');
 
-    if (preferredPosition === 'above') {
-      return preferredPosition;
-    }
-
-    if (preferredPosition === 'below') {
+    if (preferredPosition === 'above' || preferredPosition === 'below') {
       return preferredPosition;
     }
 
@@ -119,30 +117,31 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-   * Checks the dropdown trigger's location on
+   * Checks the dropdown activator's location on
    * screen to determine which vertical direction
    * has more space to open the dropdown.
    */
-  mostVerticalSpace() {
+  getMostVerticalSpace() {
     let component;
 
     // Hack to get the component's container
     // element since this component uses `tagName: ''`
+    // https://github.com/emberjs/rfcs/issues/168#issue-178381310
     if (ViewUtils && ViewUtils.getViewBounds) {
       component =  ViewUtils.getViewBounds(this).parentElement;
     } else {
       component = this._renderNode.contextualElement;
     }
 
-    let triggers = component.querySelectorAll('.ember-basic-dropdown-trigger');
+    let activators = component.querySelectorAll('.ember-basic-dropdown-trigger');
 
-    if (triggers.length > 1) {
-      warn('Multiple popover triggers found. Defaulting to `preferredPosition` of `below`');
+    if (activators.length > 1) {
+      warn('Multiple popover activators found. Defaulting to `preferredPosition` of `below`');
       return 'below';
     }
 
-    let [trigger] = triggers;
-    let { top, bottom } = trigger.getBoundingClientRect();
+    let [activator] = activators;
+    let { top, bottom } = activator.getBoundingClientRect();
     let windowHeight = window.innerHeight;
     let bottomSpace = windowHeight - bottom;
 
@@ -158,7 +157,7 @@ export default Component.extend({
       let preferredPosition = this.get('preferredPosition');
 
       if (preferredPosition === 'mostSpace') {
-        this.set('verticalPosition', this.mostVerticalSpace());
+        this.set('verticalPosition', this.getMostVerticalSpace());
       }
     }
   }

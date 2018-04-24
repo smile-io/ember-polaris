@@ -104,11 +104,17 @@ test('it renders the correct HTML with sectioned attribute', function(assert) {
   assert.equal(popoverSections[0].textContent.trim(), 'This is some sectioned popover content', 'popover section contains the correct content');
 });
 
-skip('it renders the correct HTML with `prefferedPosition` attribute', function(assert) {
-  this.set('prefferedPosition', 'above');
+test('it renders the correct HTML with preferredPosition attribute', function(assert) {
+  assert.expect(2);
+
+  this.set('preferredPosition', 'above');
 
   this.render(hbs`
-    {{#polaris-popover prefferedPosition=prefferedPosition as |popover|}}
+    {{#polaris-popover
+      preferredPosition=preferredPosition
+      sectioned=true
+      as |popover|
+    }}
       {{#popover.activator}}
         {{polaris-button text="Toggle popover"}}
       {{/popover.activator}}
@@ -121,11 +127,16 @@ skip('it renders the correct HTML with `prefferedPosition` attribute', function(
 
   click(activatorSelector);
 
-  const contentAbove = find(popoverContentAboveSelector);
+  const contentAbove = document.querySelector(popoverContentAboveSelector);
   assert.ok(contentAbove, 'renders popover content above the trigger');
 
-  this.set('prefferedPosition', 'below');
+  // close the popover before resetting position
+  click(activatorSelector);
 
-  const contentBelow = find(popoverContentBelowSelector);
+  this.set('preferredPosition', 'below');
+
+  click(activatorSelector);
+
+  const contentBelow = document.querySelector(popoverContentBelowSelector);
   assert.ok(contentBelow, 'renders popover content below the trigger');
 });
