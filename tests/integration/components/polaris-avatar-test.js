@@ -37,6 +37,10 @@ test('it renders a correctly-styled avatar', function(assert) {
 
   this.set('name', 'Jimmy');
   assert.ok(avatar.classList.contains('Polaris-Avatar--styleThree'), 'with name - applies style three class');
+
+  this.set('name', '');
+  this.set('initials', '');
+  assert.ok(avatar.classList.contains('Polaris-Avatar--styleOne'), 'with empty name & initials - applies style one class');
 });
 
 test('it renders a correctly-sized avatar', function(assert) {
