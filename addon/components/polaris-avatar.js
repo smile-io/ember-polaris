@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { isNone } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
@@ -170,8 +170,8 @@ export default Component.extend({
    * @type {String}
    */
   styleClass: computed('finalName', function() {
-    let name = this.get('finalName');
-    let styleIndex = isNone(name) ? 0 : name.charCodeAt(0) % styleClasses.length;
+    let finalName = this.get('finalName');
+    let styleIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % styleClasses.length;
     let style = styleClasses[styleIndex];
 
     return `Polaris-Avatar--style${ classify(style) }`;
@@ -203,8 +203,8 @@ export default Component.extend({
       return null;
     }
 
-    let name = this.get('finalName');
-    let avatarIndex = isNone(name) ? 0 : name.charCodeAt(0) % avatarImages.length;
+    let finalName = this.get('finalName');
+    let avatarIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % avatarImages.length;
     return `${ this.get('avatarSourcePath') }/avatar-${ ++avatarIndex }.svg`;
   }).readOnly(),
 });
