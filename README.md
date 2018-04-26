@@ -1,4 +1,4 @@
-# ember-polaris
+ember-polaris
 ==============================================================================
 
 [![Build Status](https://travis-ci.org/smile-io/ember-polaris.svg?branch=master)](https://travis-ci.org/smile-io/ember-polaris)
