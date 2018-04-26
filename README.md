@@ -1,4 +1,5 @@
 # ember-polaris
+==============================================================================
 
 ![image](https://user-images.githubusercontent.com/5737342/26935493-c8c81c76-4c74-11e7-90dd-ff8b0fdc434e.png)
 
@@ -8,7 +9,8 @@
 
 **NOTE:** _this addon is still in development. As such, not all of the components available in the React component library have been built yet, and some features of those which have been built are currently unimplemented. Check the [component list](#components) for a list of those which are currently available._
 
-## Installation
+Installation
+------------------------------------------------------------------------------
 
 Install `ember-polaris` using `ember-cli`:
 
@@ -47,7 +49,8 @@ var app = new EmberApp(defaults, {
 
 **NOTE:** This will be handled by `ember-polaris` in the near future.
 
-## Usage
+Usage
+------------------------------------------------------------------------------
 
 `ember-polaris` provides a set of Ember components intended to implement the same behavior and functionality as the [Shopify Polaris React components](https://github.com/Shopify/polaris). In general the usage can be inferred from the [Polaris component documentation](https://polaris.shopify.com/components/get-started), with some exceptions as described below.
 
@@ -153,26 +156,35 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 #### Overlays
 - [Popover](docs/popover.md#popover)
 
-## Contributing
+
+Contributing
+------------------------------------------------------------------------------
+
 ### Installation
 
-* `git clone` this repository
+* `git clone <repository-url>`
 * `cd ember-polaris`
 * `yarn install`
 
-### Running
+### Linting
+
+* `yarn lint:js`
+* `yarn lint:js --fix`
+
+### Running tests
+
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `ember try:each` – Runs the test suite against multiple Ember versions
+
+### Running the dummy application
 
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Running Tests
-
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200)
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
