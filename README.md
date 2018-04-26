@@ -1,6 +1,8 @@
 # ember-polaris
 ==============================================================================
 
+[![Build Status](https://travis-ci.org/smile-io/ember-polaris.svg?branch=master)](https://travis-ci.org/smile-io/ember-polaris)
+
 ![image](https://user-images.githubusercontent.com/5737342/26935493-c8c81c76-4c74-11e7-90dd-ff8b0fdc434e.png)
 
 `ember-polaris` is an `ember-cli` addon to make [Shopify's Polaris design system](https://polaris.shopify.com/) accessible to Ember developers.
