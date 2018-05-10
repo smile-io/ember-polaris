@@ -43,7 +43,7 @@ const actionListItemContentTextSelector = buildNestedSelector(
 const sectionedActionListSelector = 'ul.Polaris-ActionList';
 const sectionedActionListSectionSelector = buildNestedSelector(
   sectionedActionListSelector,
-  'li',
+  'li.Polaris-ActionList__Section',
   'div'
 );
 const actionListSectionTitleSelector = 'p.Polaris-ActionList__Title';
