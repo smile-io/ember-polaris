@@ -1,45 +1,13 @@
 {{#polaris-page
   title="This is the application route"
-  primaryAction=(hash
-    text="Primary"
-    action=(action (mut primaryClicked) true)
-  )
-  secondaryActions=(array
-    (hash
-      text="Secondary 1"
-      action=(action (mut secondary1Clicked) true)
-    )
-    (hash
-      text="Secondary 2"
-      action=(action (mut secondary2Clicked) true)
-    )
-  )
 }}
-  {{polaris-color-picker
-    color=color
-    allowAlpha=true
-    onChange=(action (mut color))
-  }}
-  <div>Hue: {{color.hue}}</div>
-  <div>Saturation: {{color.saturation}}</div>
-  <div>Brightness: {{color.brightness}}</div>
-  <div>Alpha: {{color.alpha}}</div>
-  <hr>
-  <div>
-    {{#link-to "test"}}
-      Go to test route
-    {{/link-to}}
-  </div>
+  {{#polaris-button-group segmented=true as |buttonGroup|}}
+    {{#buttonGroup.item}}
+      {{polaris-button text="Button 1"}}
+    {{/buttonGroup.item}}
 
-  <div>
-    {{#link-to "test.child"}}
-      Go to child route
-    {{/link-to}}
-  </div>
-
-  {{polaris-link
-    url="https://github.com/smile-io/ember-polaris"
-    external=true
-    text="Ember Polaris on GitHub"
-  }}
+    {{#buttonGroup.item}}
+      {{polaris-button text="Button 2"}}
+    {{/buttonGroup.item}}
+  {{/polaris-button-group}}
 {{/polaris-page}}
