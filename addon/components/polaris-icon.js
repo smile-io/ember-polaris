@@ -11,6 +11,7 @@ export default Component.extend({
   classNames: ['Polaris-Icon'],
   classNameBindings: [
     'colorClass',
+    'isColored:Polaris-Icon--isColored',
     'backdrop:Polaris-Icon--hasBackdrop'
   ],
   attributeBindings: [
@@ -19,15 +20,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris
    * icons in the namespace specified by `sourcePath` property.
    *
    * @property source
+   * @public
    * @type {string}
    * @default null
    */
@@ -37,6 +36,7 @@ export default Component.extend({
    * Sets the color for the SVG fill
    *
    * @property color
+   * @public
    * @type {string}
    * @default null
    */
@@ -46,6 +46,7 @@ export default Component.extend({
    * Show a backdrop behind the icon
    *
    * @property backdrop
+   * @public
    * @type {boolean}
    * @default false
    */
@@ -55,6 +56,7 @@ export default Component.extend({
    * Descriptive text to be read to screenreaders
    *
    * @property accessibilityLabel
+   * @public
    * @type {string}
    * @default null
    */
@@ -62,16 +64,32 @@ export default Component.extend({
 
   /**
    * Path under which `ember-svg-jar` serves the Polaris SVG icons
+   *
+   * @property sourcePath
+   * @public
+   * @type {string}
+   * @default 'polaris'
    */
   sourcePath: 'polaris',
 
-  /*
-   * Internal properties.
+  /**
+   * Whether the component should leave space for an icon
+   *
+   * @property showPlaceholder
+   * @private
+   * @type {boolean}
    */
   showPlaceholder: equal('source', 'placeholder').readOnly(),
 
+  /**
+   * Class to apply to color the icon
+   *
+   * @property colorClass
+   * @private
+   * @type {string}
+   */
   colorClass: computed('color', function() {
-    const color = this.get('color');
+    let color = this.get('color');
 
     if (isEmpty(color)) {
       return null;
@@ -80,6 +98,30 @@ export default Component.extend({
     return `Polaris-Icon--color${classify(color)}`;
   }).readOnly(),
 
+  /**
+   * Whether a color has been specified for the icon
+   *
+   * @property isColored
+   * @private
+   * @type {boolean}
+   */
+  isColored: computed('color', function() {
+    let color = this.get('color');
+
+    if (isEmpty(color)) {
+      return false;
+    }
+
+    return color !== 'white';
+  }).readOnly(),
+
+  /**
+   * Final source for the icon SVG
+   *
+   * @property iconSource
+   * @private
+   * @type {string}
+   */
   iconSource: computed('sourcePath', 'source', function() {
     let source = this.get('source');
     source = source.indexOf('/') === -1 ? `${ this.get('sourcePath') }/${ source }` : source;
