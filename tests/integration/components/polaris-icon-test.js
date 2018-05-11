@@ -24,7 +24,11 @@ test('it renders the specified icon correctly', function(assert) {
   const svgSelector = buildNestedSelector(iconSelector, 'svg.Polaris-Icon__Svg');
   const svgs = findAll(svgSelector);
   assert.equal(svgs.length, 1, 'renders one SVG element');
-  assert.equal(svgs[0].dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
+
+  const svg = svgs[0];
+  assert.equal(svg.dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
+  assert.equal(svg.getAttribute('focusable'), 'false', 'applies focusable:false to the SVG element');
+  assert.equal(svg.getAttribute('aria-hidden'), 'true', 'applies aria-hidden to the SVG element');
 });
 
 test('it applies colors correctly', function(assert) {
