@@ -217,30 +217,30 @@ test('it handles the "any item" action correctly', function(assert) {
 });
 
 test('it renders the correct HTML when using sections', function(assert) {
+  this.set('sections', [
+    {
+      title: 'Section 2',
+      items: [
+        {
+          text: 'Section 2 item 1',
+          icon: 'notes',
+        }, {
+          text: 'Section 2 item 2',
+        }
+      ]
+    }, {
+      items: [
+        {
+          text: 'Section 3 item',
+        }
+      ]
+    }
+  ]);
+
   this.render(hbs`
     {{polaris-action-list
       items=items
-      sections=(array
-        (hash
-          title="Section 2"
-          items=(array
-            (hash
-              text="Section 2 item 1"
-              icon="notes"
-            )
-            (hash
-              text="Section 2 item 2"
-            )
-          )
-        )
-        (hash
-          items=(array
-            (hash
-              text="Section 3 item"
-            )
-          )
-        )
-      )
+      sections=sections
     }}
   `);
 
