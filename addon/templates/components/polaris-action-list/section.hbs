@@ -1,4 +1,7 @@
-{{#wrapper-element tagName=(if hasMultipleSections "li" "")}}
+{{#wrapper-element
+  tagName=(if hasMultipleSections "li" "")
+  class=(if hasMultipleSections "Polaris-ActionList__Section" "")
+}}
   <div class={{unless section.title "Polaris-ActionList__Section--withoutTitle"}}>
     {{#if section.title}}
       <p class="Polaris-ActionList__Title">
