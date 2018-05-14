@@ -295,7 +295,7 @@ test('it handles breadcrumbs correctly', function(assert) {
   const contentSelector = 'span.Polaris-Breadcrumbs__Content';
 
   let breadcrumbLink = breadcrumbLinks[0];
-  assert.equal(breadcrumbLink.href, `${window.location.origin}/home/the-beginning/13/27`, 'breadcrumb has href of last breadcrumb in list');
+  assert.ok(breadcrumbLink.href.indexOf('/home/the-beginning/13/27') > -1, 'breadcrumb has href of last breadcrumb in list');
   assert.equal(breadcrumbLink.dataset.polarisUnstyled, 'true', 'breadcrumb has data-polaris-unstyled attribute');
 
   let contents = findAll(contentSelector, breadcrumbLink);

@@ -17,12 +17,17 @@ Basic usage:
 {{/polaris-button-group}}
 ```
 
-Buttons joined as segmented group:
+Buttons joined as segmented group (*N.B.* when using segmented button groups, you must explicitly add group item wrappers around each item to handle focused styling correctly):
 
 ```hbs
-{{#polaris-button-group segmented=true}}
-  {{polaris-button text="Button 1" onClick=(action "doSomething")}}
-  {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+{{#polaris-button-group segmented=true as |group|}}
+  {{#group.item}}
+    {{polaris-button text="Button 1" onClick=(action "doSomething")}}
+  {{/group.item}}
+
+  {{#group.item}}
+    {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+  {{/group.item}}
 {{/polaris-button-group}}
 ```
 
