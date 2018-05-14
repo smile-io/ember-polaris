@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### v1.3.2 (May 14, 2018)
+
+- [#125](https://github.com/smile-io/ember-polaris/pull/125) [FIX] Fix test failures caused by deprecation warnings from `Ember.warn`.
+
 ### v1.3.0 (April 24, 2018)
 
 - [#117](https://github.com/smile-io/ember-polaris/pull/117) [FEATURE] Add `preferredPosition` attribute to polaris-popover.
