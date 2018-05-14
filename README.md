@@ -17,7 +17,7 @@ Installation
 Install `ember-polaris` using `ember-cli`:
 
 ```sh
-$ ember install ember-polaris
+$ ember install @smile-io/ember-polaris
 ```
 
 This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app. It will also set up your app's `app/styles/app.scss` to `@import "ember-polaris";`, creating the file if it does not already exist.
