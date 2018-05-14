@@ -2,12 +2,14 @@
   {{polaris-heading text=title}}
 
   {{#if (or hasBlock description)}}
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      <p>
-        {{description}}
-      </p>
-    {{/if}}
+    {{#polaris-text-style variation="subdued"}}
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        <p>
+          {{description}}
+        </p>
+      {{/if}}
+    {{/polaris-text-style}}
   {{/if}}
 </div>
