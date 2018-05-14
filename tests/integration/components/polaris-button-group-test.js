@@ -1,6 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
+import { findAll, find, focus, blur } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 moduleForComponent('polaris-button-group', 'Integration | Component | polaris button group', {
@@ -73,4 +73,25 @@ test('it renders the correct HTML in block usage', function(assert) {
   buttonGroupItem = buttonGroupItems[2];
   assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'), 'third group item - does not have plain class');
   assert.equal(buttonGroupItem.textContent.trim(), 'Magically wrapped button', 'third group item - renders the correct content');
+});
+
+test('it handles focused buttons correctly', function(assert) {
+  this.render(hbs`
+    {{#polaris-button-group as |buttonGroup|}}
+      {{#buttonGroup.item}}
+        {{polaris-button text="Focus me please!"}}
+      {{/buttonGroup.item}}
+    {{/polaris-button-group}}
+  `);
+
+  const buttonGroupItem = find(buttonGroupItemSelector);
+  assert.ok(buttonGroupItem, 'renders the button group item');
+
+  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'before focus - group item does not have focused class');
+
+  focus('.Polaris-Button');
+  assert.ok(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'after focus - group item has focused class');
+
+  blur('.Polaris-Button');
+  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'after blur - group item does not have focused class');
 });

@@ -3,17 +3,18 @@ import layout from '../../templates/components/polaris-button-group/item';
 
 export default Component.extend({
   classNames: ['Polaris-ButtonGroup__Item'],
-  classNameBindings: ['plain:Polaris-ButtonGroup__Item--plain'],
+  classNameBindings: [
+    'plain:Polaris-ButtonGroup__Item--plain',
+    'focused:Polaris-ButtonGroup__Item--focused'
+  ],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Elements to display inside group item
    *
    * @property text
+   * @public
    * @type {string}
    * @default null
    */
@@ -23,8 +24,30 @@ export default Component.extend({
    * Use a plain style for the group item
    *
    * @property plain
+   * @public
    * @type {boolean}
    * @default false
    */
   plain: false,
+
+  /**
+   * Whether the group item is focused
+   *
+   * @property focused
+   * @private
+   * @type {boolean}
+   * @default false
+   */
+  focused: false,
+
+  /**
+   * Events.
+   */
+  focusIn() {
+    this.set('focused', true);
+  },
+
+  focusOut() {
+    this.set('focused', false);
+  },
 });
