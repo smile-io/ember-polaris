@@ -64,7 +64,9 @@ test('it applies colors correctly', function(assert) {
     const colorClass = `Polaris-Icon--color${classify(color)}`;
     assert.ok(icon.classList.contains(colorClass), `icon with ${color} color applies ${colorClass} class`);
 
-    const colorClassNames = [...icon.classList].filter((className) => className.indexOf('Polaris-Icon--color') === 0);
+    const colorClassNames = [...icon.classList].filter((className) => {
+      return className.indexOf('Polaris-Icon--color') === 0;
+    });
     assert.equal(colorClassNames.length, 1, `icon with ${color} color does not add other color classes`);
 
     if (color === 'white') {
