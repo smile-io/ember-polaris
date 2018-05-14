@@ -148,7 +148,11 @@ export default Component.extend({
     let activators = component.querySelectorAll('.ember-basic-dropdown-trigger');
 
     if (activators.length > 1) {
-      warn('Multiple popover activators found. Defaulting to `preferredPosition` of `below`');
+      warn(
+        'Multiple popover activators found. Defaulting to `preferredPosition` of `below`',
+        { id: 'ember-polaris.polaris-popover.multiple-popover-activators' }
+      );
+
       return BELOW;
     }
 
