@@ -4,8 +4,8 @@ import layout from '../../templates/components/polaris-card/section';
 export default Component.extend({
   classNames: ['Polaris-Card__Section'],
   classNameBindings: [
-    'fullWidth:Polaris-Card__Section--fullWidth',
     'subdued:Polaris-Card__Section--subdued',
+    'fullWidth:Polaris-Card__Section--fullWidth'
   ],
 
   layout,
