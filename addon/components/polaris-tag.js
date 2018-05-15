@@ -9,6 +9,7 @@ import { handleMouseUpByBlurring } from '../utils/focus';
 export default Component.extend({
   tagName: 'span',
   classNames: ['Polaris-Tag'],
+  classNameBindings: ['disabled:Polaris-Tag--disabled'],
 
   layout,
 
@@ -25,6 +26,16 @@ export default Component.extend({
    * @default: null
    */
   text: null,
+
+  /**
+   * Disables the tag.
+   *
+   * @public
+   * @property disabled
+   * @type {boolean}
+   * @default: false
+   */
+  disabled: false,
 
   /**
    *  Callback when tag is removed
