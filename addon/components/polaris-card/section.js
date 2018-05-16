@@ -5,17 +5,16 @@ export default Component.extend({
   classNames: ['Polaris-Card__Section'],
   classNameBindings: [
     'subdued:Polaris-Card__Section--subdued',
+    'fullWidth:Polaris-Card__Section--fullWidth'
   ],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Title for the section
    *
    * @property title
+   * @public
    * @type {string}
    * @default: null
    */
@@ -25,10 +24,21 @@ export default Component.extend({
    * A less prominent section
    *
    * @property subdued
+   * @public
    * @type {boolean}
    * @default: false
    */
   subdued: false,
+
+  /**
+   * A full-width section without any padding
+   *
+   * @property fullWidth
+   * @public
+   * @type {boolean}
+   * @default: false
+   */
+  fullWidth: false,
 
   /**
    * Inner content of the section
@@ -38,6 +48,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
+   * @public
    * @type {string}
    * @default: null
    */

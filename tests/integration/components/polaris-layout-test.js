@@ -134,7 +134,7 @@ test('it renders the correct HTML when using annotated sections in inline form',
 
   const textContainerSelector = buildNestedSelector('div.Polaris-Layout__Annotation', 'div.Polaris-TextContainer');
   const headerSelector = buildNestedSelector(textContainerSelector, 'h2.Polaris-Heading');
-  const descriptionSelector = buildNestedSelector(textContainerSelector, 'p');
+  const descriptionSelector = buildNestedSelector(textContainerSelector, 'span.Polaris-TextStyle--variationSubdued', 'p');
   const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
   // Check the first annotation.
@@ -245,7 +245,7 @@ test('it renders the correct HTML when using annotated sections in block form', 
 
   const textContainerSelector = buildNestedSelector('div.Polaris-Layout__Annotation', 'div.Polaris-TextContainer');
   const headerSelector = buildNestedSelector(textContainerSelector, 'h2.Polaris-Heading');
-  const descriptionSelector = buildNestedSelector(textContainerSelector, 'p');
+  const descriptionSelector = buildNestedSelector(textContainerSelector, 'span.Polaris-TextStyle--variationSubdued', 'p');
   const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
   // Check the first annotation.

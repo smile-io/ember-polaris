@@ -15,8 +15,8 @@ moduleForComponent('polaris-choice-list', 'Integration | Component | polaris cho
 const choiceListSelector = 'fieldset.Polaris-ChoiceList';
 const choicesWrapperSelector = buildNestedSelector(choiceListSelector, 'ul.Polaris-ChoiceList__Choices');
 const choiceSelector = buildNestedSelector(choicesWrapperSelector, 'li', 'label.Polaris-Choice');
-const radioInputSelector = buildNestedSelector('div.Polaris-RadioButton', 'input[type="radio"]');
-const checkboxInputSelector = buildNestedSelector('div.Polaris-Checkbox', 'input[type="checkbox"]');
+const radioInputSelector = buildNestedSelector('span.Polaris-RadioButton', 'input[type="radio"]');
+const checkboxInputSelector = buildNestedSelector('span.Polaris-Checkbox', 'input[type="checkbox"]');
 const titleSelector = buildNestedSelector(choiceListSelector, 'legend.Polaris-ChoiceList__Title');
 
 const choiceWithDescriptionWrapperSelector = buildNestedSelector(

@@ -33,15 +33,15 @@ moduleForComponent('polaris-checkbox', 'Integration | Component | polaris checkb
 });
 
 const choiceSelector = 'label.Polaris-Choice';
-const checkboxSelector = buildNestedSelector(choiceSelector, 'div.Polaris-Checkbox');
+const checkboxSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Checkbox');
 const checkboxInputSelector = buildNestedSelector(
   checkboxSelector,
   'input.Polaris-Checkbox__Input[type="checkbox"]'
 );
-const checkboxBackdropSelector = buildNestedSelector(checkboxSelector, 'div.Polaris-Checkbox__Backdrop');
+const checkboxBackdropSelector = buildNestedSelector(checkboxSelector, 'span.Polaris-Checkbox__Backdrop');
 const checkboxIconSelector = buildNestedSelector(
   checkboxSelector,
-  'div.Polaris-Checkbox__Icon',
+  'span.Polaris-Checkbox__Icon',
   'span.Polaris-Icon',
   'svg'
 );
@@ -70,9 +70,9 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(choiceData.helpText, 'Help!', 'passes helpText through to `polaris-choice` component');
   assert.equal(choiceData.error, 'I\'ve got an error', 'passes error through to `polaris-choice` component');
 
-  // Check the wrapper div and its class handling.
+  // Check the wrapper element and its class handling.
   const checkboxes = findAll(checkboxSelector);
-  assert.equal(checkboxes.length, 1, 'renders one checkbox div');
+  assert.equal(checkboxes.length, 1, 'renders one checkbox wrapper');
   assert.ok(checkboxes[0].classList.contains('Polaris-Checkbox--error'), 'applies error class when error present');
 
   this.set('error', null);

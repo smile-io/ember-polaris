@@ -24,7 +24,11 @@ test('it renders the specified icon correctly', function(assert) {
   const svgSelector = buildNestedSelector(iconSelector, 'svg.Polaris-Icon__Svg');
   const svgs = findAll(svgSelector);
   assert.equal(svgs.length, 1, 'renders one SVG element');
-  assert.equal(svgs[0].dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
+
+  const svg = svgs[0];
+  assert.equal(svg.dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
+  assert.equal(svg.getAttribute('focusable'), 'false', 'applies focusable:false to the SVG element');
+  assert.equal(svg.getAttribute('aria-hidden'), 'true', 'applies aria-hidden to the SVG element');
 });
 
 test('it applies colors correctly', function(assert) {
@@ -44,19 +48,32 @@ test('it applies colors correctly', function(assert) {
     'purple'
   ];
 
+  assert.expect(2 + colors.length * 3);
+
   this.render(hbs`{{polaris-icon source="add" color=color}}`);
 
   // Check without any color set first.
   const icon = find(iconSelector);
-  assert.equal(icon.classList.length, 2, 'icon without color does not add color class');
+  assert.ok(icon.className.indexOf('Polaris-Icon--color') === -1, 'icon without color does not add color class');
+  assert.notOk(icon.classList.contains('Polaris-Icon--isColored'), 'icon without color does not add isColored class');
 
-  // Check all the available colors.
+  // Check all the available colors are handled correctly.
   for (const color of colors) {
     this.set('color', color);
 
     const colorClass = `Polaris-Icon--color${classify(color)}`;
     assert.ok(icon.classList.contains(colorClass), `icon with ${color} color applies ${colorClass} class`);
-    assert.equal(icon.classList.length, 3, `icon with ${color} color does not add other color classes`);
+
+    const colorClassNames = [...icon.classList].filter((className) => {
+      return className.indexOf('Polaris-Icon--color') === 0;
+    });
+    assert.equal(colorClassNames.length, 1, `icon with ${color} color does not add other color classes`);
+
+    if (color === 'white') {
+      assert.notOk(icon.classList.contains('Polaris-Icon--isColored'), `icon with ${color} color does not add isColored class`);
+    } else {
+      assert.ok(icon.classList.contains('Polaris-Icon--isColored'), `icon with ${color} color adds isColored class`);
+    }
   }
 });
 
