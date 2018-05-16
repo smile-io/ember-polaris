@@ -24,3 +24,12 @@ Tag block usage:
   Wholesale
 {{/polaris-tag}}
 ```
+
+Disabled tag:
+
+```hbs
+{{polaris-tag
+  text="Disabled"
+  disabled=true
+}}
+```
