@@ -6,7 +6,7 @@
   helpText=helpText
   error=error
 }}
-  <div class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
+  <span class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
     <input
       type="checkbox"
       role="checkbox"
@@ -25,10 +25,10 @@
       onblur={{action onBlur}}
     >
 
-    <div class="Polaris-Checkbox__Backdrop"></div>
+    <span class="Polaris-Checkbox__Backdrop"></span>
 
-    <div class="Polaris-Checkbox__Icon">
+    <span class="Polaris-Checkbox__Icon">
       {{polaris-icon source=(if isIndeterminate "subtract" "checkmark")}}
-    </div>
-  </div>
+    </span>
+  </span>
 {{/polaris-choice}}

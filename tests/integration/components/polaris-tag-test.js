@@ -75,6 +75,25 @@ test('it renders the correct HTML in block usage', function(assert) {
   assert.equal(iconSource, 'polaris/cancel', 'it uses the correct polaris/cancel icon as the icon source');
 });
 
+test('it handles the disabled attribute correctly', function(assert) {
+  this.render(hbs`{{polaris-tag disabled=disabled}}`);
+
+  const tagComponent = find(componentSelector);
+  assert.ok(tagComponent, 'it renders the tag component');
+
+  const button = find(buttonSelector, tagComponent);
+  assert.ok(tagComponent, 'it renders the remove button');
+
+  // Check the component when no value for `disabled` is given.
+  assert.notOk(tagComponent.classList.contains('Polaris-Tag--disabled'), 'when disabled is not specified - does not apply disabled class to tag');
+  assert.notOk(button.disabled, 'when disabled is not specified - does not disable the remove button');
+
+  // Specify that the tag's disabled and check the component again.
+  this.set('disabled', true);
+  assert.ok(tagComponent.classList.contains('Polaris-Tag--disabled'), 'when disabled is specified - applies disabled class to tag');
+  assert.ok(button.disabled, 'when disabled is specified - disables the remove button');
+});
+
 test('it calls an `onRemove` action when the button is clicked', function(assert) {
   this.set('onRemoveActionFired', false);
 
