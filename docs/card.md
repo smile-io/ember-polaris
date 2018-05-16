@@ -46,7 +46,7 @@ With actions in the header (needs a non-empty title) using [ember-array-helper](
 {{/polaris-card}}
 ```
 
-Three sections - first section with a title, third section subdued:
+Three sections - first section with a title, second full width (without padding), third section subdued:
 
 ```hbs
 {{#polaris-card title="This is the card title" sectioned=false as |card|}}
@@ -54,7 +54,7 @@ Three sections - first section with a title, third section subdued:
     <p>This is the first section's content</p>
   {{/card.section}}
 
-  {{#card.section}}
+  {{#card.section fullWidth=true}}
     <p>This is the second section's content</p>
   {{/card.section}}
 

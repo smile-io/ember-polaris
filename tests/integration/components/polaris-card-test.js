@@ -66,7 +66,7 @@ test('it renders the correct HTML', function(assert) {
         <p>This is the first section's content</p>
       {{/card.section}}
 
-      {{#card.section}}
+      {{#card.section fullWidth=true}}
         <p>This is the second section's content</p>
       {{/card.section}}
 
@@ -82,6 +82,7 @@ test('it renders the correct HTML', function(assert) {
   // Check the first section.
   let section = sections[0];
   assert.notOk(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, first section - does not apply subdued class');
+  assert.notOk(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, first section - does not apply full width class');
 
   const sectionTitleSelector = 'div.Polaris-Card__SectionHeader';
   let sectionTitles = findAll(sectionTitleSelector, section);
@@ -99,6 +100,7 @@ test('it renders the correct HTML', function(assert) {
   // Check the second section.
   section = sections[1];
   assert.notOk(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, second section - does not apply subdued class');
+  assert.ok(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, second section - applies full width class');
 
   sectionTitles = findAll(sectionTitleSelector, section);
   assert.equal(sectionTitles.length, 0, 'mutiple sections, second section - does not render title');
@@ -110,6 +112,7 @@ test('it renders the correct HTML', function(assert) {
   // Check the third section.
   section = sections[2];
   assert.ok(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, third section - applies subdued class');
+  assert.notOk(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, third section - does not apply full width class');
 
   sectionTitles = findAll(sectionTitleSelector, section);
   assert.equal(sectionTitles.length, 0, 'mutiple sections, third section - does not render title');
