@@ -31,15 +31,15 @@ moduleForComponent('polaris-radio-button', 'Integration | Component | polaris ra
 });
 
 const choiceSelector = 'label.Polaris-Choice';
-const radioButtonSelector = buildNestedSelector(choiceSelector, 'div.Polaris-RadioButton');
+const radioButtonSelector = buildNestedSelector(choiceSelector, 'span.Polaris-RadioButton');
 const radioButtonInputSelector = buildNestedSelector(
   radioButtonSelector,
   'input.Polaris-RadioButton__Input[type="radio"]'
 );
-const radioButtonBackdropSelector = buildNestedSelector(radioButtonSelector, 'div.Polaris-RadioButton__Backdrop');
+const radioButtonBackdropSelector = buildNestedSelector(radioButtonSelector, 'span.Polaris-RadioButton__Backdrop');
 const radioButtonIconSelector = buildNestedSelector(
   radioButtonSelector,
-  'div.Polaris-RadioButton__Icon'
+  'span.Polaris-RadioButton__Icon'
 );
 
 test('it renders the correct HTML', function(assert) {
@@ -63,9 +63,9 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(choiceData.labelHidden, 'Label is hidden, yes', 'passes labelHidden through to `polaris-choice` component');
   assert.equal(choiceData.helpText, 'Help!', 'passes helpText through to `polaris-choice` component');
 
-  // Check the wrapper div.
+  // Check the wrapper element.
   const radioButtons = findAll(radioButtonSelector);
-  assert.equal(radioButtons.length, 1, 'renders one radio button div');
+  assert.equal(radioButtons.length, 1, 'renders one radio button wrapper');
 
   // Check the input.
   const inputs = findAll(radioButtonInputSelector);
