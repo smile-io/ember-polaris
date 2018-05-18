@@ -23,7 +23,10 @@
     "test": "tests"
   },
   "homepage": "https://github.com/smile-io/ember-polaris#readme",
-  "repository": "https://github.com/smile-io/ember-polaris.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smile-io/ember-polaris.git"
+  },
   "bugs": {
     "url": "https://github.com/smile-io/ember-polaris/issues"
   },
