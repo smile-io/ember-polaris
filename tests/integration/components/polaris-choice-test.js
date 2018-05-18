@@ -184,7 +184,7 @@ test('it handles label components correctly when no description is present', fun
     }}
   `);
 
-  let labelContent = find(labelContent);
+  let labelContent = find(labelContentSelector);
   assert.ok(labelContent, 'renders the label');
 
   const labelComponentSelector = buildNestedSelector(labelContentSelector, 'div.test-label-component');
@@ -211,7 +211,7 @@ test('it handles label components correctly when no description is present', fun
     }}
   `);
 
-  labelContent = find(labelContent);
+  labelContent = find(labelContentSelector);
   assert.ok(labelContent, 'renders the label');
 
   labelComponent = find(labelComponentSelector);
@@ -239,7 +239,7 @@ test('it handles label components correctly when a description is supplied', fun
     }}
   `);
 
-  let labelContent = find(labelContent);
+  let labelContent = find(labelContentSelector);
   assert.ok(labelContent, 'renders the label');
 
   const labelComponentSelector = buildNestedSelector(labelContentSelector, 'div.test-label-component');
@@ -266,7 +266,7 @@ test('it handles label components correctly when a description is supplied', fun
     }}
   `);
 
-  labelContent = find(labelContent);
+  labelContent = find(labelContentSelector);
   assert.ok(labelContent, 'renders the label');
 
   labelComponent = find(labelComponentSelector);

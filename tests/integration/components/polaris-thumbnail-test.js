@@ -36,8 +36,7 @@ test('it renders the correct HTML when all attributes are passed in', function(a
 
 
 test('it renders a correctly-sized thumbnail', function(assert) {
-  this.set('size', null);
-  this.render(hbs`{{polaris-thumbnail size=size}}`);
+  this.render(hbs`{{polaris-thumbnail}}`);
 
   let thumbnailSpan = find(THUMB_SELECTOR);
 
@@ -46,6 +45,10 @@ test('it renders a correctly-sized thumbnail', function(assert) {
   assert.notOk(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'), 'no size - does not apply large size class');
 
   this.set('size', 'small');
+  this.render(hbs`{{polaris-thumbnail size=size}}`);
+
+  thumbnailSpan = find(THUMB_SELECTOR);
+
   assert.ok(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'), 'size small - applies small size class');
   assert.notOk(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'), 'size small - does not apply medium size class');
   assert.notOk(thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'), 'size small - does not apply large size class');
