@@ -1,4 +1,4 @@
-import { moduleForComponent, test, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import wait from 'ember-test-helpers/wait';
 import { findAll, find, click } from 'ember-native-dom-helpers';
@@ -250,7 +250,7 @@ test('it renders action icons correctly', function(assert) {
   assert.equal(secondaryActionIcons[1].dataset.iconSource, 'polaris/cancel', 'second secondary action icon - renders the correct icon');
 });
 
-skip('it handles breadcrumbs correctly', function(assert) {
+test('it handles breadcrumbs correctly', function(assert) {
   this.render(hbs`{{polaris-page title="This is a page" breadcrumbs=breadcrumbs}}`);
 
   // Test before setting breadcrumbs.
