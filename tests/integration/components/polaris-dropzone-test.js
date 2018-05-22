@@ -50,11 +50,11 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
     await render(hbs`{{polaris-dropzone disabled=disabled}}`);
 
     assert.dom(dropzoneSelector).doesNotHaveAttribute('aria-disabled', 'if `disabled` is not provided, dropzone does not have `aria-label` attribute')
-    assert.dom('.Polaris-VisuallyHidden > input').doesNotHaveAttribute('disabled', 'if `disabled` is not provided, input does not have `disabled` attribute');
+    assert.dom(inputSelector).isNotDisabled('if `disabled` is not provided, input does not have `disabled` attribute');
 
     this.set('disabled', true);
     assert.dom(dropzoneSelector).hasAttribute('aria-disabled', 'true', '`aria-disabled` attribute set, if `disabled` is true');
-    assert.dom(inputSelector).hasAttribute('disabled', '', '`disabled` attribute set, if `disabled` is `true`');
+    assert.dom(inputSelector).isDisabled('if `disabled` is true, input is disabled');
   });
 
   test('it supports `accept` property', async function(assert) {
@@ -183,26 +183,24 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
       assert.expect(6);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'drop action receives correct `files`');
-        assert.deepEqual(acceptedFiles, uploadedFiles, 'drop action receives correct `acceptedFiles`');
-        assert.deepEqual(rejectedFiles, [], 'drop action receives correct `rejectedFiles`');
+        assert.deepEqual(files, expectedFiles, 'onDrop action receives correct `files`');
+        assert.deepEqual(acceptedFiles, expectedAcceptedFiles, 'onDrop action receives correct `acceptedFiles`');
+        assert.deepEqual(rejectedFiles, expectedRejectedFiles, 'onDrop action receives correct `rejectedFiles`');
       });
-
-      await render(hbs`{{polaris-dropzone onDrop=(action drop)}}`);
+      let expectedFiles = uploadedFiles;
+      let expectedAcceptedFiles = uploadedFiles;
+      let expectedRejectedFiles = [];
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone onDrop=(action drop)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
 
       // Test with `accept` being set
-      this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'drop action receives correct `files`');
-        assert.deepEqual(acceptedFiles, uploadedFiles.slice(0, 2), 'drop action receives correct `acceptedFiles`');
-        assert.deepEqual(rejectedFiles, uploadedFiles.slice(2, 3), 'drop action receives correct `rejectedFiles`');
-      });
+      expectedAcceptedFiles = uploadedFiles.slice(0, 2);
+      expectedRejectedFiles = uploadedFiles.slice(2, 3);
 
       await render(hbs`{{polaris-dropzone accept="image/*" onDrop=(action drop)}}`);
-
-      event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
     });
 
@@ -210,26 +208,29 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
       assert.expect(6);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'onDrop action receives correct `files`');
-        assert.deepEqual(acceptedFiles, uploadedFiles, 'onDrop action receives correct `acceptedFiles`');
-        assert.deepEqual(rejectedFiles, [], 'onDrop action receives correct `rejectedFiles`');
+        assert.deepEqual(files, expectedFiles, 'onDrop action receives correct `files`');
+        assert.deepEqual(acceptedFiles, expectedAcceptedFiles, 'onDrop action receives correct `acceptedFiles`');
+        assert.deepEqual(rejectedFiles, expectedRejectedFiles, 'onDrop action receives correct `rejectedFiles`');
       });
-
-      await render(hbs`{{polaris-dropzone dropOnPage=true onDrop=(action drop)}}`);
+      let expectedFiles = uploadedFiles;
+      let expectedAcceptedFiles = uploadedFiles;
+      let expectedRejectedFiles = [];
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
-      await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
+
+      // Test that by default the document will not trigger callbacks
+      await render(hbs`{{polaris-dropzone onDrop=(action drop)}}`);
+      await triggerEvent(document, 'drop', event);
+
+      // Test that triggering callbacks on document when `dropOnPage` is true works
+      await render(hbs`{{polaris-dropzone dropOnPage=true onDrop=(action drop)}}`);
+      await triggerEvent(document, 'drop', event);
 
       // Test with `accept` being set
-      this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'onDrop action receives correct `files`');
-        assert.deepEqual(acceptedFiles, uploadedFiles.slice(0, 2), 'onDrop action receives correct `acceptedFiles`');
-        assert.deepEqual(rejectedFiles, uploadedFiles.slice(2, 3), 'onDrop action receives correct `rejectedFiles`');
-      });
+      expectedAcceptedFiles = uploadedFiles.slice(0, 2);
+      expectedRejectedFiles = uploadedFiles.slice(2, 3);
 
       await render(hbs`{{polaris-dropzone dropOnPage=true accept="image/*" onDrop=(action drop)}}`);
-
-      event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
       await triggerEvent(document, 'drop', event);
     });
 
@@ -240,9 +241,9 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.ok('onDragEnter callback is invoked');
       });
 
-      await render(hbs`{{polaris-dropzone onDragEnter=(action dragEnter)}}`);
-
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone onDragEnter=(action dragEnter)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'dragenter', event);
     });
 
@@ -253,9 +254,9 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.ok('onDragOver callback is invoked');
       });
 
-      await render(hbs`{{polaris-dropzone onDragOver=(action dragOver)}}`);
-
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone onDragOver=(action dragOver)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'dragover', event);
     });
 
@@ -266,9 +267,9 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.ok('onDragLeave callback is invoked');
       });
 
-      await render(hbs`{{polaris-dropzone onDragLeave=(action dragLeave)}}`);
-
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone onDragLeave=(action dragLeave)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'dragleave', event);
     });
 
@@ -279,9 +280,9 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.deepEqual(acceptedFiles, uploadedFiles.slice(0, 2), 'onDropAccepted action receives correct `acceptedFiles`');
       });
 
-      await render(hbs`{{polaris-dropzone accept="image/*" onDropAccepted=(action dropAccepted)}}`);
-
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone accept="image/*" onDropAccepted=(action dropAccepted)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
     });
 
@@ -292,10 +293,23 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.deepEqual(rejectedFiles, uploadedFiles.slice(2, 3), 'onDropRejected action receives correct `rejectedFiles`');
       });
 
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
       await render(hbs`{{polaris-dropzone accept="image/*" onDropRejected=(action dropRejected)}}`);
+      await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
+    });
+
+    test('it calls onClick callback', async function(assert) {
+      assert.expect(1);
+
+      this.set('clickAction', () => {
+        assert.ok('onClick is invoked');
+      });
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
-      await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
+
+      await render(hbs`{{polaris-dropzone onClick=(action clickAction)}}`);
+      await triggerEvent(this.element.querySelector(dropzoneSelector), 'click', event);
     });
 
     test('should not call any callback when the dropzone is disabled', async function(assert) {
@@ -307,6 +321,8 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         });
       }
 
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
       await render(hbs`{{polaris-dropzone
         disabled=true
         onDrop=(action drop)
@@ -316,8 +332,6 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         onDragLeave=(action dragLeave)
         onDragOver=(action dragOver)
       }}`);
-
-      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'dragenter', event);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'dragleave', event);
@@ -334,10 +348,29 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         assert.deepEqual(rejectedFiles, uploadedFiles.slice(1, 3), 'drop action receives correct `rejectedFiles`');
       });
 
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
       await render(hbs`{{polaris-dropzone customValidator=(action customValidator) onDrop=(action drop)}}`);
+      await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
+    });
+
+
+    test('it supports `allowMultiple` property', async function(assert) {
+      assert.expect(4);
+
+      this.set('drop', (files, acceptedFiles, rejectedFiles) => {
+        assert.deepEqual(files, uploadedFiles, 'drop action receives correct `files`');
+        assert.deepEqual(acceptedFiles, uploadedFiles.slice(0, 1), 'drop action receives correct `acceptedFiles`');
+        assert.deepEqual(rejectedFiles, [], 'drop action receives correct `rejectedFiles`');
+      });
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+
+      await render(hbs`{{polaris-dropzone allowMultiple=false onDrop=(action drop)}}`);
       await triggerEvent(this.element.querySelector(dropzoneSelector), 'drop', event);
+
+      assert.dom(inputSelector).doesNotHaveAttribute('multiple', 'when `allowMultiple` is false, input element does not have `multiple` attribute');
+
     });
   });
 

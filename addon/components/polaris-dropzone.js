@@ -265,7 +265,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       return;
     }
 
-    return onClick ? onClick(e) : this.open(e);
+    return onClick ? onClick(e) : this.open();
   },
 
   handleDrop(e) {
@@ -483,6 +483,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let newErrorOverlayText = this.get('errorOverlayText');
     if (isPresent(newErrorOverlayText) && newErrorOverlayText !== errorOverlayText) {
       this.set('state.errorOverlayText', newErrorOverlayText);
+    }
+
+    if (this.get('openFileDialog')) {
+      this.open();
+      this.get('onFileDialogClose')();
     }
   },
 
