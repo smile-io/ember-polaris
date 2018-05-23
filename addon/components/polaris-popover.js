@@ -87,10 +87,9 @@ export default Component.extend({
    *
    * @property onClose
    * @type {function(source: React.ReactElement)}
-   * @default null
-   * TODO: not implemented
+   * @default noop
    */
-  onClose: null,
+  onClose() {},
 
   /*
    * Internal properties.

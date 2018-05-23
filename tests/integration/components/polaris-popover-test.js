@@ -140,3 +140,35 @@ test('it renders the correct HTML with preferredPosition attribute', function(as
   const contentBelow = document.querySelector(popoverContentBelowSelector);
   assert.ok(contentBelow, 'renders popover content below the trigger');
 });
+
+test('it calls a passed-in onClose action when closed', function(assert) {
+  this.set('onCloseCalled', false);
+
+  this.on('close', () => {
+    this.set('onCloseCalled', true);
+  });
+
+  this.render(hbs`
+    {{#polaris-popover
+      sectioned=true
+      onClose=(action "close")
+      as |popover|
+    }}
+      {{#popover.activator}}
+        {{polaris-button text="Toggle popover"}}
+      {{/popover.activator}}
+
+      {{#popover.content}}
+        This is some sectioned popover content
+      {{/popover.content}}
+    {{/polaris-popover}}
+  `);
+
+  // open the popover
+  click(activatorSelector);
+
+  // close the popover
+  click(activatorSelector);
+
+  assert.ok(this.get('onCloseCalled'), 'the passed-in onClose action is called when popover is closed');
+});
