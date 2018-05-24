@@ -1,7 +1,7 @@
 {{#basic-dropdown
   verticalPosition=verticalPosition
   onOpen=(action "onOpen")
-  onClose=onClose
+  onClose=(action onClose)
   as |dd|
 }}
   {{yield (hash

@@ -86,7 +86,7 @@ export default Component.extend({
    * Callback when popover is closed
    *
    * @property onClose
-   * @type {function(source: React.ReactElement)}
+   * @type {function}
    * @default noop
    */
   onClose() {},

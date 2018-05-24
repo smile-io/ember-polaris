@@ -167,6 +167,8 @@ test('it calls a passed-in onClose action when closed', function(assert) {
   // open the popover
   click(activatorSelector);
 
+  assert.notOk(this.get('onCloseCalled'), 'the passed-in onClose action has not been called');
+
   // close the popover
   click(activatorSelector);
 

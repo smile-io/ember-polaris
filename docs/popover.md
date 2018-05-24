@@ -24,10 +24,14 @@ Basic usage:
 {{/polaris-popover}}
 ```
 
-Sectioned popover:
+Sectioned popover with `onClose` action:
 
 ```hbs
-{{#polaris-popover sectioned=true as |popover|}}
+{{#polaris-popover
+  sectioned=true
+  onClose=(action "myCloseAction")
+  as |popover|
+}}
   {{#popover.activator}}
     {{polaris-button text="Toggle popover"}}
   {{/popover.activator}}
