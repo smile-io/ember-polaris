@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### v1.5.1 (May 24, 2018)
+
+- [#131](https://github.com/smile-io/ember-polaris/pull/131) [FEATURE] Add `onClose` attribute to polaris-popover.
+
 ### v1.4.0 (May 16, 2018)
 
 - [#122](https://github.com/smile-io/ember-polaris/pull/122) [UPDATE] Bring in Polaris v2.0.0 styles and component updates.
