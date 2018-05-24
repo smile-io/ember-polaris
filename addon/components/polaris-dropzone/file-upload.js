@@ -17,7 +17,7 @@ const fileUpload = {
 
 export default Component.extend({
   layout,
-  classNames: ['Polaris-FileUpload'],
+  classNames: ['Polaris-DropZone-FileUpload'],
 
   type: readOnly('context.type'),
   size: readOnly('context.size'),

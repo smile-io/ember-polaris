@@ -17,11 +17,11 @@
 {{#if (eq size "large")}}
   {{#polaris-stack vertical=true}}
     {{#if (eq type "file")}}
-      <img class="Polaris-FileUpload__Image" src={{assetFileUpload}} alt="">
+      <img class="Polaris-DropZone-FileUpload__Image" src={{assetFileUpload}} alt="">
     {{/if}}
 
     {{#if (eq type "image")}}
-      <img class="Polaris-FileUpload__Image" src={{assetImageUpload}} alt="">
+      <img class="Polaris-DropZone-FileUpload__Image" src={{assetImageUpload}} alt="">
     {{/if}}
 
     {{polaris-button text=actionTitle}}

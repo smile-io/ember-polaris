@@ -70,10 +70,10 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
    * Testing dropzone when the `size` is `large`
    */
   module('when size is large', function() {
-    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-FileUpload');
+    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-DropZone-FileUpload');
     const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack.Polaris-Stack--vertical');
     const fileUploadStackItemSelector = buildNestedSelector(fileUploadStackSelector, '.Polaris-Stack__Item');
-    const fileUploadImageSelector = buildNestedSelector(fileUploadStackItemSelector, '.Polaris-FileUpload__Image');
+    const fileUploadImageSelector = buildNestedSelector(fileUploadStackItemSelector, '.Polaris-DropZone-FileUpload__Image');
     const fileUploadButtonTextSelector = buildNestedSelector(
       fileUploadStackItemSelector,
       'button.Polaris-Button',
@@ -106,7 +106,7 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
   });
 
   module('when size is medium', function() {
-    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-FileUpload');
+    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-DropZone-FileUpload');
     const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack.Polaris-Stack--vertical');
     const fileUploadStackItemSelector = buildNestedSelector(fileUploadStackSelector, '.Polaris-Stack__Item');
     const fileUploadLinkSelector = buildNestedSelector(fileUploadStackItemSelector, 'button.Polaris-Link');
@@ -139,7 +139,7 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
       this.owner.register('component:svg-jar', MockSvgJarComponent);
     });
 
-    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-FileUpload');
+    const fileUploadSelector = buildNestedSelector(containerSelector, '.Polaris-DropZone-FileUpload');
     const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack.Polaris-Stack--vertical');
     const fileUploadStackItemSelector = buildNestedSelector(fileUploadStackSelector, '.Polaris-Stack__Item');
     const fileUploadIconSelector = buildNestedSelector(

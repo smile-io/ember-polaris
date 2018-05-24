@@ -16,7 +16,7 @@ export function getDataTransferFiles(event) {
       return Array.from(dt.items);
     }
   } else if (event.target && event.target.files) {
-    // Return files from even when a file was selected from an upload dialog
+    // Return files from event when a file was selected from an upload dialog
     return Array.from(event.target.files);
   }
 

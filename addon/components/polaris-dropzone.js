@@ -247,11 +247,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   }).readOnly(),
 
   showDragOverlay: computed('isDragging', 'state.error', 'overlay', function() {
-    let { isDragging, error, overlay } = this.getProperties(
-      'isDragging',
-      'state.error',
-      'overlay',
-    );
+    let error = this.get('state.error');
+    let { isDragging, overlay } = this.getProperties('isDragging', 'overlay');
 
     return isDragging && !error && overlay;
   }).readOnly(),
@@ -259,18 +256,18 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * Event handlers
    */
-  handleClick(e) {
+  handleClick(event) {
     let { onClick, disabled } = this.getProperties('onClick', 'disabled');
     if (disabled) {
       return;
     }
 
-    return onClick ? onClick(e) : this.open();
+    return onClick ? onClick(event) : this.open();
   },
 
-  handleDrop(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
     let { disabled, onDrop, onDropAccepted, onDropRejected } = this.getProperties(
       'disabled',
@@ -281,7 +278,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     if (disabled) {
       return;
     }
-    let fileList = getDataTransferFiles(e);
+    let fileList = getDataTransferFiles(event);
     let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(fileList);
 
     this.set('dragTargets', []);
@@ -302,28 +299,28 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   },
 
-  handleDragEnter(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  handleDragEnter(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-    let dragging = this.get('state.dragging');
     let { disabled, onDragEnter, dragTargets } = this.getProperties('disabled', 'onDragEnter', 'dragTargets');
     if (disabled) {
       return;
     }
 
-    let fileList = getDataTransferFiles(e);
-    if (dragTargets.indexOf(e.target) === -1) {
-      dragTargets.push(e.target);
+    let fileList = getDataTransferFiles(event);
+    if (event.target && dragTargets.indexOf(event.target) === -1) {
+      dragTargets.push(event.target);
     }
 
-    if (dragging) {
+    let state = this.get('state');
+    if (state.get('dragging')) {
       return false;
     }
 
     let { rejectedFiles } = this.getValidatedFiles(fileList);
 
-    this.get('state').setProperties({
+    state.setProperties({
       dragging: true,
       error: rejectedFiles.length > 0,
     });
@@ -331,9 +328,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     onDragEnter();
   },
 
-  handleDragOver(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  handleDragOver(event) {
+    event.preventDefault();
+    event.stopPropagation();
 
     let { disabled, onDragOver } = this.getProperties('disabled', 'onDragOver');
     if (disabled) {
@@ -345,8 +342,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     return false;
   },
 
-  handleDragLeave(e) {
-    e.preventDefault();
+  handleDragLeave(event) {
+    event.preventDefault();
 
     let { disabled, onDragLeave, dragTargets, dropNode } = this.getProperties(
       'disabled',
@@ -359,10 +356,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     dragTargets = dragTargets.filter((el) => {
-      return el !== e.target &&
+      return el !== event.target &&
         dropNode &&
         dropNode.contains(el);
     });
+    this.set('dragTargets', dragTargets);
 
     if (dragTargets.length > 0) {
       return;
@@ -376,9 +374,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     onDragLeave();
   },
 
-  handleDragStart(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  handleDragStart(event) {
+    event.preventDefault();
+    event.stopPropagation();
   },
 
   adjustSize() {
@@ -515,7 +513,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   didInsertElement() {
     this._super(...arguments);
-
     this.setNode();
     this.setupEvents();
   },
