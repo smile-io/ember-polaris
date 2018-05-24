@@ -1,1 +1,1 @@
-export { default } from 'ember-polaris/utils/dropzone';
+export { default } from '@smile-io/ember-polaris/utils/dropzone';

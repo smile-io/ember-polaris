@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { capitalize } from '@ember/string';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
-import MockEvent from 'ember-polaris/test-support/mock-dropzone-event';
+import MockEvent from '@smile-io/ember-polaris/test-support/mock-dropzone-event';
 
 module('Integration | Component | polaris-dropzone', function(hooks) {
   setupRenderingTest(hooks);
