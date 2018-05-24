@@ -3,7 +3,7 @@ import layout from '../templates/components/polaris-dropzone';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { capitalize } from '@ember/string';
-import { debounce } from '@ember/runloop';
+import { throttle } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
 import State from '../-private/dropzone-state';
 import { fileAccepted, getDataTransferFiles } from '../utils/dropzone';
@@ -281,7 +281,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let fileList = getDataTransferFiles(event);
     let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(fileList);
 
-    this.set('dragTargets', []);
+    this.dragTargets = [];
 
     this.get('state').setProperties({
       dragging: false,
@@ -303,14 +303,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter, dragTargets } = this.getProperties('disabled', 'onDragEnter', 'dragTargets');
+    let { disabled, onDragEnter } = this.getProperties('disabled', 'onDragEnter');
     if (disabled) {
       return;
     }
 
     let fileList = getDataTransferFiles(event);
-    if (event.target && dragTargets.indexOf(event.target) === -1) {
-      dragTargets.push(event.target);
+    if (event.target && this.dragTargets.indexOf(event.target) === -1) {
+      this.dragTargets.push(event.target);
     }
 
     let state = this.get('state');
@@ -345,24 +345,22 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   handleDragLeave(event) {
     event.preventDefault();
 
-    let { disabled, onDragLeave, dragTargets, dropNode } = this.getProperties(
+    let { disabled, onDragLeave, dropNode } = this.getProperties(
       'disabled',
       'onDragLeave',
-      'dragTargets',
       'dropNode',
     );
     if (disabled) {
       return;
     }
 
-    dragTargets = dragTargets.filter((el) => {
+    this.dragTargets = this.dragTargets.filter((el) => {
       return el !== event.target &&
         dropNode &&
         dropNode.contains(el);
     });
-    this.set('dragTargets', dragTargets);
 
-    if (dragTargets.length > 0) {
+    if (this.dragTargets.length > 0) {
       return;
     }
 
@@ -380,12 +378,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   adjustSize() {
-    debounce(this, function() {
+    throttle(this, function() {
       let node = this.get('node');
-      if (isNone(node)) {
-        return;
-      }
-
       let size = 'large';
       let width = node.getBoundingClientRect().width;
 
@@ -485,6 +479,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
     if (this.get('openFileDialog')) {
       this.open();
+      // NOTE: this doesn't seems right, might be a bug
       this.get('onFileDialogClose')();
     }
   },
@@ -503,7 +498,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    */
   init() {
     this._super(...arguments);
-    this.set('dragTargets', []);
+    this.dragTargets = [];
   },
 
   didReceiveAttrs() {
@@ -513,7 +508,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   didInsertElement() {
     this._super(...arguments);
+
     this.setNode();
+    this.set('state.error', this.get('error'));
     this.setupEvents();
   },
 
