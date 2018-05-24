@@ -1,1 +1,1 @@
-export { default } from 'ember-polaris/utils/focus';
+export { default } from '@smile-io/ember-polaris/utils/focus';

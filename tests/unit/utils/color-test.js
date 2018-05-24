@@ -5,7 +5,7 @@ import {
   rgbaToHsb,
   rgbaToHex,
   hexToRgb,
-} from 'ember-polaris/utils/color';
+} from '@smile-io/ember-polaris/utils/color';
 
 module('Unit | Utility | color');
 

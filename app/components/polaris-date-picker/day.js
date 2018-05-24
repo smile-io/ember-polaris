@@ -1,1 +1,1 @@
-export { default } from 'ember-polaris/components/polaris-date-picker/day';
+export { default } from '@smile-io/ember-polaris/components/polaris-date-picker/day';
