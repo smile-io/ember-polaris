@@ -6,7 +6,7 @@
 component](https://polaris.shopify.com/components/overlays/popover). This component uses [`ember-basic-dropdown`](https://github.com/cibernox/ember-basic-dropdown) to implement popover functionality. Note that the usage is slightly different from the React implementation so please pay attention to the examples below.
 
 
-**NOTE:** _the `active`, `activatorWrapper`, `preventAutofocus` and `onClose` properties are currently unimplemented._
+**NOTE:** _the `active`, `activatorWrapper`, and `preventAutofocus` properties are currently unimplemented._
 
 ### Examples
 
@@ -24,10 +24,14 @@ Basic usage:
 {{/polaris-popover}}
 ```
 
-Sectioned popover:
+Sectioned popover with `onClose` action:
 
 ```hbs
-{{#polaris-popover sectioned=true as |popover|}}
+{{#polaris-popover
+  sectioned=true
+  onClose=(action "myCloseAction")
+  as |popover|
+}}
   {{#popover.activator}}
     {{polaris-button text="Toggle popover"}}
   {{/popover.activator}}
