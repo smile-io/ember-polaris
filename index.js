@@ -6,7 +6,7 @@ var Funnel = require('broccoli-funnel');
 var mergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
-  name: 'ember-polaris',
+  name: '@smile-io/ember-polaris',
 
   treeForStyles(tree) {
     var packageRoot = path.dirname(resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }));

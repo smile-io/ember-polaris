@@ -1,5 +1,5 @@
 {
-  "name": "ember-polaris",
+  "name": "@smile-io/ember-polaris",
   "version": "1.4.1",
   "description": "Ember components for Shopify's Polaris design system.",
   "keywords": [
@@ -80,7 +80,7 @@
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "6.* || >= 7.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
