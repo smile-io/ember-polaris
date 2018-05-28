@@ -11,8 +11,11 @@ const formLayoutSelector = 'div.Polaris-FormLayout';
 
 test('it renders the correct HTML in basic usage', function(assert) {
   this.render(hbs`
-    {{#polaris-form-layout}}
-      <div class="item">Item 1</div>
+    {{#polaris-form-layout as |formLayout|}}
+      {{#formLayout.item}}
+        <div class="item">Item 1</div>
+      {{/formLayout.item}}
+
       <div class="item">Item 2</div>
     {{/polaris-form-layout}}
   `);
@@ -38,8 +41,12 @@ test('it renders the correct HTML in basic usage', function(assert) {
 test('it renders the correct HTML when using groups', function(assert) {
   this.render(hbs`
     {{#polaris-form-layout as |formLayout|}}
-      {{#formLayout.group}}
-        <div class="item">Default group item</div>
+      {{#formLayout.group as |group|}}
+        {{#group.item}}
+          <div class="item">Default group item 1</div>
+        {{/group.item}}
+
+        <div class="item">Default group item 2</div>
       {{/formLayout.group}}
 
       {{#formLayout.group condensed=true}}
@@ -55,7 +62,7 @@ test('it renders the correct HTML when using groups', function(assert) {
 
   const itemSelector = buildNestedSelector('div.Polaris-FormLayout__Item', 'div.item');
   const items = findAll(itemSelector);
-  assert.equal(items.length, 3, 'renders the correct number of items');
+  assert.equal(items.length, 4, 'renders the correct number of items');
 
   const formLayoutGroupSelector = buildNestedSelector(formLayoutSelector, 'div[role="group"]');
   const formLayoutGroups = findAll(formLayoutGroupSelector);
@@ -67,8 +74,9 @@ test('it renders the correct HTML when using groups', function(assert) {
 
   const groupItemSelector = buildNestedSelector('div.Polaris-FormLayout__Items', itemSelector);
   let groupItems = findAll(groupItemSelector, group);
-  assert.equal(groupItems.length, 1, 'first group - renders the correct number of items');
-  assert.equal(groupItems[0].textContent.trim(), 'Default group item', 'first group - renders the correct content');
+  assert.equal(groupItems.length, 2, 'first group - renders the correct number of items');
+  assert.equal(groupItems[0].textContent.trim(), 'Default group item 1', 'first group item 1 - renders the correct content');
+  assert.equal(groupItems[1].textContent.trim(), 'Default group item 2', 'first group item 2 - renders the correct content');
 
   // Check the second group.
   group = formLayoutGroups[1];
