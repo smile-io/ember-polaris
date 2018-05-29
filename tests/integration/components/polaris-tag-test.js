@@ -43,11 +43,12 @@ test('it renders the correct HTML in inline usage', function(assert) {
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
+  assert.equal(tagButton.getAttribute('aria-label'), `Remove ${tag}`, 'it gives the remove button the correct aria-label');
 
   const tagIcon = find(tagIconSelector);
   const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
-  assert.equal(iconSource, 'polaris/cancel', 'it uses the correct polaris/cancel icon as the icon source');
+  assert.equal(iconSource, 'polaris/cancel-small', 'it uses the correct polaris/cancel-small icon as the icon source');
 });
 
 test('it renders the correct HTML in block usage', function(assert) {
@@ -68,11 +69,12 @@ test('it renders the correct HTML in block usage', function(assert) {
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
+  assert.equal(tagButton.getAttribute('aria-label'), `Remove ${tag}`, 'it gives the remove button the correct aria-label');
 
   const tagIcon = find(tagIconSelector);
   const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
-  assert.equal(iconSource, 'polaris/cancel', 'it uses the correct polaris/cancel icon as the icon source');
+  assert.equal(iconSource, 'polaris/cancel-small', 'it uses the correct polaris/cancel-small icon as the icon source');
 });
 
 test('it handles the disabled attribute correctly', function(assert) {

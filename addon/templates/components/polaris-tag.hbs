@@ -8,10 +8,11 @@
 
 <button
   type="button"
-  aria-label="Remove"
   class="Polaris-Tag__Button"
+  aria-label={{buttonLabel}}
   disabled={{disabled}}
   onclick={{action onRemove}}
+  onmouseup={{action handleMouseUpByBlurring}}
 >
-  {{polaris-icon source="cancel"}}
+  {{polaris-icon source="cancel-small"}}
 </button>
