@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### v1.5.3 (May 29, 2018)
+
+- [#136](https://github.com/smile-io/ember-polaris/pull/136) [FIX] Minor fixes for `polaris-tag`: use the correct icon on the remove button, apply blur on mouseup to the remove button instead of the whole component, and ensure the button's `aria-label` always contains the latest tag text.
+
 ### v1.5.2 (May 29, 2018)
 
 - [#134](https://github.com/smile-io/ember-polaris/pull/134) [ENHANCEMENT] Yield `item` component from `polaris-form-layout` and `polaris-form-layout/group`.
