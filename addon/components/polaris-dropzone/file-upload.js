@@ -32,6 +32,7 @@ export default Component.extend({
    * @type {String}
    * @default `Add file`
    * @public
+   * @property actionTitle
    */
   actionTitle: computed('type', function() {
     let type = this.get('type');
@@ -44,6 +45,7 @@ export default Component.extend({
    * @type {String}
    * @default `or drop files to upload`
    * @public
+   * @property actionHint
    */
   actionHint: computed('type', function() {
     let type = this.get('type');

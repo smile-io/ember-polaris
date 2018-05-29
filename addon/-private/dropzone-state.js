@@ -14,6 +14,7 @@ export default EmberObject.extend({
    *
    * @type {String}
    * @default 'file'
+   * @property type
    */
   type: 'file',
 
@@ -21,6 +22,7 @@ export default EmberObject.extend({
    * The size of the dropzone
    * @type {String}
    * @default 'large'
+   * @property size
    */
   size: 'large',
 
@@ -28,6 +30,7 @@ export default EmberObject.extend({
    * True, when dragging in progress
    * @type {Boolean}
    * @default false
+   * @property dragging
    */
   dragging: false,
 
@@ -35,6 +38,7 @@ export default EmberObject.extend({
    * True, when dropzone has errors
    * @type {Boolean}
    * @default false
+   * @property error
    */
   error: false,
 

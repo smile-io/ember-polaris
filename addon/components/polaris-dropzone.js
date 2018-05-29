@@ -34,7 +34,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * Allowed file types
    *
    * @type {String}
+   * @default null
    * @public
+   * @property accept
    */
   accept: null,
 
@@ -44,6 +46,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
+   * @property active
    */
   active: false,
 
@@ -53,6 +56,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
+   * @property allowMultiple
    */
   allowMultiple: true,
 
@@ -62,6 +66,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
+   * @property disabled
    */
   disabled: false,
 
@@ -71,6 +76,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
+   * @property dropOnPage
    */
   dropOnPage: false,
 
@@ -80,6 +86,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
+   * @property error
    */
   error: false,
 
@@ -89,6 +96,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
+   * @property errorOverlayText
    */
   errorOverlayText: null,
 
@@ -98,6 +106,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
+   * @property openFileDialog
    */
   openFileDialog: false,
 
@@ -107,6 +116,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
+   * @property outline
    */
   outline: true,
 
@@ -116,6 +126,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
+   * @property overlay
    */
   overlay: true,
 
@@ -125,6 +136,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
+   * @property overlayText
    */
   overlayText: null,
 
@@ -134,6 +146,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default 'file'
    * @public
+   * @property type
    */
   type: 'file',
 
@@ -144,6 +157,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default null
    * @public
+   * @property customValidator
    */
   customValidator: null,
 
@@ -154,6 +168,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default null
    * @public
+   * @property onClick
    */
   onClick: null,
 
@@ -164,6 +179,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDragEnter
    */
   onDragEnter() {},
 
@@ -174,6 +190,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDragLeave
    */
   onDragLeave() {},
 
@@ -184,6 +201,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDragOver
    */
   onDragOver() {},
 
@@ -194,6 +212,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDrop
    */
   onDrop() {},
 
@@ -204,6 +223,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDropAccepted
    */
   onDropAccepted() {},
 
@@ -214,6 +234,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onDropRejected
    */
   onDropRejected() {},
 
@@ -224,6 +245,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
+   * @property onFileDialogClose
    */
   onFileDialogClose() {},
 
