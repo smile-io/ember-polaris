@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### v1.5.2 (May 29, 2018)
+
+- [#134](https://github.com/smile-io/ember-polaris/pull/134) [ENHANCEMENT] Yield `item` component from `polaris-form-layout` and `polaris-form-layout/group`.
+
 ### v1.5.1 (May 24, 2018)
 
 - [#131](https://github.com/smile-io/ember-polaris/pull/131) [FEATURE] Add `onClose` attribute to polaris-popover.
