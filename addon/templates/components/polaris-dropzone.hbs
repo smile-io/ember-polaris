@@ -1,7 +1,7 @@
 {{#if showDragOverlay}}
   <div class="Polaris-DropZone__Overlay">
     {{#polaris-stack vertical=true spacing="tight"}}
-      {{polaris-icon source=iconDragDrop color="indigo"}}
+      {{polaris-icon color="indigo" source=iconDragDrop}}
 
       {{#if (eq state.size "large")}}
         {{polaris-display-text
@@ -9,9 +9,7 @@
           tagName="p"
           text=state.overlayText
         }}
-      {{/if}}
-
-      {{#if (eq state.size "medium")}}
+      {{else if (eq state.size "medium")}}
         {{polaris-caption text=state.overlayText}}
       {{/if}}
     {{/polaris-stack}}
@@ -21,7 +19,7 @@
 {{#if (and state.dragging state.error)}}
   <div class="Polaris-DropZone__Overlay">
     {{#polaris-stack vertical=true spacing="tight"}}
-      {{polaris-icon source=iconAlertCircle color="red"}}
+      {{polaris-icon color="red" source=iconAlertCircle}}
 
       {{#if (eq state.size "large")}}
         {{polaris-display-text
@@ -29,9 +27,7 @@
           tagName="p"
           text=state.errorOverlayText
         }}
-      {{/if}}
-
-      {{#if (eq state.size "medium")}}
+      {{else if (eq state.size "medium")}}
         {{polaris-caption text=state.errorOverlayText}}
       {{/if}}
     {{/polaris-stack}}
@@ -57,6 +53,6 @@
     accept={{accept}}
     disabled={{disabled}}
     multiple={{allowMultiple}}
-    onchange={{action "handleDrop"}}
+    onchange={{action handleDrop}}
   >
 {{/polaris-visually-hidden}}

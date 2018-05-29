@@ -42,7 +42,7 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
   const dropzoneOverlayTextSelector = buildNestedSelector(dropzoneOverlayStackItemSelector, '.Polaris-DisplayText');
   const dropzoneOverlayCaptionSelector = buildNestedSelector(dropzoneOverlayStackItemSelector, '.Polaris-Caption');
 
-  test('it renders in non-block form', async function(assert) {
+  test('it renders in inline form', async function(assert) {
     assert.expect(8);
 
     await render(hbs`{{polaris-dropzone}}`);
@@ -91,7 +91,7 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
 
     await render(hbs`{{polaris-dropzone accept=accept}}`);
 
-    assert.dom('.Polaris-VisuallyHidden > input').doesNotHaveAttribute('accept', 'if `accept` is not provided, input does not have `accept` attribute');
+    assert.dom(inputSelector).doesNotHaveAttribute('accept', 'if `accept` is not provided, input does not have `accept` attribute');
 
     this.set('accept', 'image/*');
     assert.dom(inputSelector).hasAttribute('accept', 'image/*', '`accept` attribute properly set');
@@ -532,10 +532,10 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
         onDragOver=(action dragOver)
         onClick=(action click)
       }}`);
-      await triggerEvent(dropzoneSelector, 'drop', event);
       await triggerEvent(dropzoneSelector, 'dragenter', event);
-      await triggerEvent(dropzoneSelector, 'dragleave', event);
       await triggerEvent(dropzoneSelector, 'dragover', event);
+      await triggerEvent(dropzoneSelector, 'dragleave', event);
+      await triggerEvent(dropzoneSelector, 'drop', event);
       await triggerEvent(dropzoneSelector, 'click', event);
     });
 

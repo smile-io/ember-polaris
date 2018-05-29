@@ -1,16 +1,21 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-dropzone';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
-import { capitalize } from '@ember/string';
+import { classify } from '@ember/string';
 import { throttle } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
+import layout from '../templates/components/polaris-dropzone';
 import State from '../-private/dropzone-state';
 import { fileAccepted, getDataTransferFiles } from '../utils/dropzone';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
+
+// Under this width limit, dropzone is considered 'small'
+const smallSizeWidthLimit = 114;
+// Under this width limit, dropzone is considered 'medium'
+const mediumSizeWidthLimit = 300;
 
 export default Component.extend(ContextBoundEventListenersMixin, {
   layout,
@@ -137,7 +142,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * (file) => boolean
    *
    * @type {Function}
-   * @default no-op
+   * @default null
    * @public
    */
   customValidator: null,
@@ -147,7 +152,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * (event) => void
    *
    * @type {Function}
-   * @default no-op
+   * @default null
    * @public
    */
   onClick: null,
@@ -230,20 +235,16 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   isDragging: or('active', 'state.dragging').readOnly(),
 
   fileInputNode: computed(function() {
-    return this.$(`#${ this.get('elementId') }-input:first`);
+    return this.element.querySelector(`input[id='${ this.get('elementId') }-input']`);
   }).readOnly(),
 
   ariaDisabled: computed('disabled', function() {
-    if (isPresent(this.get('disabled'))) {
-      return 'true';
-    }
-
-    return null;
+    return isPresent(this.get('disabled')) ? 'true' : null;
   }).readOnly(),
 
   sizeClass: computed('state.size', function() {
     let size = this.get('state.size');
-    return `Polaris-DropZone--size${ capitalize(size) }`;
+    return `Polaris-DropZone--size${ classify(size) }`;
   }).readOnly(),
 
   showDragOverlay: computed('isDragging', 'state.error', 'overlay', function() {
@@ -339,6 +340,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
     onDragOver();
 
+    // Browsers are somewhat inconsistent about needing these, but they don't hurt to add.
     return false;
   },
 
@@ -383,9 +385,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       let size = 'large';
       let width = node.getBoundingClientRect().width;
 
-      if (width < 114) {
+      if (width < smallSizeWidthLimit) {
         size = 'small';
-      } else if (width < 300) {
+      } else if (width < mediumSizeWidthLimit) {
         size = 'medium';
       }
 
@@ -412,7 +414,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     });
 
     if (!allowMultiple) {
+      // Remove all accepted files after the first one
       acceptedFiles.splice(1, acceptedFiles.length);
+      // TODO check if this is intended behaviour...smells like a bug
       rejectedFiles.push(...acceptedFiles.slice(1));
     }
 
@@ -513,10 +517,4 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     this.set('state.error', this.get('error'));
     this.setupEvents();
   },
-
-  actions: {
-    handleDrop() {
-      this.handleDrop(...arguments);
-    }
-  }
 });

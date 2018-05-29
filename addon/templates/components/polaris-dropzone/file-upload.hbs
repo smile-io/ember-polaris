@@ -5,23 +5,19 @@
       source=iconDragDrop
     }}
   {{/polaris-stack}}
-{{/if}}
-
-{{#if (eq size "medium")}}
+{{else if (eq size "medium")}}
   {{#polaris-stack vertical=true spacing="tight"}}
     {{polaris-link text=actionTitle}}
     {{polaris-caption text=actionHint}}
   {{/polaris-stack}}
-{{/if}}
-
-{{#if (eq size "large")}}
+{{else if (eq size "large")}}
   {{#polaris-stack vertical=true}}
     {{#if (eq type "file")}}
-      <img class="Polaris-DropZone-FileUpload__Image" src={{assetFileUpload}} alt="">
+      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetFileUpload}}>
     {{/if}}
 
     {{#if (eq type "image")}}
-      <img class="Polaris-DropZone-FileUpload__Image" src={{assetImageUpload}} alt="">
+      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetImageUpload}}>
     {{/if}}
 
     {{polaris-button text=actionTitle}}
