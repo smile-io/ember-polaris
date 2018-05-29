@@ -1,14 +1,6 @@
 class DataTransfer {
-  constructor(options) {
-    this.setProperties(options);
-  }
-
-  setProperties(props) {
-    for (let prop in props) {
-      this[prop] = props[prop];
-    }
-
-    return this;
+  constructor(options = {}) {
+    Object.assign(this, options);
   }
 }
 
