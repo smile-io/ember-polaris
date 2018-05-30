@@ -100,63 +100,63 @@ Some Polaris React components accept an `actions` property as a list of actions 
 Below is a categorised list of the components available in `ember-polaris`. Click an item to see more information and usage examples for that component.
 
 #### Actions
-- [Action list](docs/action-list.md#action-list)
-- [Button](docs/button.md#button)
-- [Button group](docs/button-group.md#button-group)
-- [Setting toggle](docs/setting-toggle.md#setting-toggle)
+- [Action list](./docs/action-list.md#action-list)
+- [Button](./docs/button.md#button)
+- [Button group](./docs/button-group.md#button-group)
+- [Setting toggle](./docs/setting-toggle.md#setting-toggle)
 
 #### Images and icons
-- [Avatar](docs/avatar.md#avatar)
-- [Badge](docs/badge.md#badge)
-- [Icon](docs/icon.md#icon)
-- [Thumbnail](docs/thumbnail.md#thumbnail)
+- [Avatar](./docs/avatar.md#avatar)
+- [Badge](./docs/badge.md#badge)
+- [Icon](./docs/icon.md#icon)
+- [Thumbnail](./docs/thumbnail.md#thumbnail)
 
 #### Feedback indicators
-- [Banner](docs/banner.md#banner)
-- [Progress bar](docs/progress-bar.md#progress-bar)
-- [Skeleton body text](docs/skeleton-body-text.md#skeleton-body-text)
-- [Skeleton display text](docs/skeleton-display-text.md#skeleton-display-text)
-- [Skeleton page](docs/skeleton-page.md#skeleton-page)
-- [Spinner](docs/spinner.md#spinner)
+- [Banner](./docs/banner.md#banner)
+- [Progress bar](./docs/progress-bar.md#progress-bar)
+- [Skeleton body text](./docs/skeleton-body-text.md#skeleton-body-text)
+- [Skeleton display text](./docs/skeleton-display-text.md#skeleton-display-text)
+- [Skeleton page](./docs/skeleton-page.md#skeleton-page)
+- [Spinner](./docs/spinner.md#spinner)
 
 #### Structure
-- [Callout card](docs/callout-card.md#callout-card)
-- [Card](docs/card.md#card)
-- [Empty state](docs/empty-state.md#empty-state)
-- [Layout](docs/layout.md#layout)
-- [Page](docs/page.md#page)
-- [Page actions](docs/page-actions.md#page-actions)
-- [Stack](docs/stack.md#stack)
+- [Callout card](./docs/callout-card.md#callout-card)
+- [Card](./docs/card.md#card)
+- [Empty state](./docs/empty-state.md#empty-state)
+- [Layout](./docs/layout.md#layout)
+- [Page](./docs/page.md#page)
+- [Page actions](./docs/page-actions.md#page-actions)
+- [Stack](./docs/stack.md#stack)
 
 #### Titles and text
-- [Caption](docs/caption.md#caption)
-- [Display text](docs/display-text.md#display-text)
-- [Footer help](docs/footer-help.md#footer-help)
-- [Heading](docs/heading.md#heading)
-- [Subheading](docs/subheading.md#subheading)
-- [Text style](docs/text-style.md#text-style)
-- [Visually hidden](docs/visually-hidden.md#visually-hidden)
+- [Caption](./docs/caption.md#caption)
+- [Display text](./docs/display-text.md#display-text)
+- [Footer help](./docs/footer-help.md#footer-help)
+- [Heading](./docs/heading.md#heading)
+- [Subheading](./docs/subheading.md#subheading)
+- [Text style](./docs/text-style.md#text-style)
+- [Visually hidden](./docs/visually-hidden.md#visually-hidden)
 
 #### Forms
-- [Checkbox](docs/checkbox.md#checkbox)
-- [Choice list](docs/choice-list.md#choice-list)
-- [Color picker](docs/color-picker.md#color-picker)
-- [Date picker](docs/date-picker.md#date-picker)
-- [Form layout](docs/form-layout.md#form-layout)
-- [Radio button](docs/radio-button.md#radio-button)
-- [Tag](docs/tag.md#tag)
+- [Checkbox](./docs/checkbox.md#checkbox)
+- [Choice list](./docs/choice-list.md#choice-list)
+- [Color picker](./docs/color-picker.md#color-picker)
+- [Date picker](./docs/date-picker.md#date-picker)
+- [Form layout](./docs/form-layout.md#form-layout)
+- [Radio button](./docs/radio-button.md#radio-button)
+- [Tag](./docs/tag.md#tag)
 
 #### Lists
-- [Description list](docs/description-list.md#description-list)
-- [List](docs/list.md#list)
-- [Resource list](docs/resource-list.md#resource-list)
+- [Description list](./docs/description-list.md#description-list)
+- [List](./docs/list.md#list)
+- [Resource list](./docs/resource-list.md#resource-list)
 
 #### Navigation
-- [Link](docs/link.md#link)
-- [Pagination](docs/pagination.md#pagination)
+- [Link](./docs/link.md#link)
+- [Pagination](./docs/pagination.md#pagination)
 
 #### Overlays
-- [Popover](docs/popover.md#popover)
+- [Popover](./docs/popover.md#popover)
 
 
 Contributing
