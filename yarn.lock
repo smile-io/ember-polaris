@@ -2723,9 +2723,9 @@ ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
 
-ember-cli-template-lint@^0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-0.7.5.tgz#10be75cca0b8996571fbb4e2accf804c76d386d5"
+ember-cli-template-lint@^0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-0.7.6.tgz#33e55efa460fbfa2f108775318460ba9d6bf8667"
   dependencies:
     aot-test-generators "^0.1.0"
     broccoli-concat "^3.2.2"
@@ -2733,7 +2733,7 @@ ember-cli-template-lint@^0.7.5:
     chalk "^2.0.1"
     debug "^3.0.0"
     ember-cli-version-checker "^2.1.0"
-    ember-template-lint "^0.8.1"
+    ember-template-lint "^0.8.16"
     json-stable-stringify "^1.0.1"
     md5-hex "^2.0.0"
     strip-ansi "^4.0.0"
@@ -2983,9 +2983,9 @@ ember-svg-jar@^1.2.0:
     mkdirp "^0.5.1"
     path-posix "^1.0.0"
 
-ember-template-lint@^0.8.1:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-0.8.15.tgz#558a2b1e2b55a51698bf6009d98f89f91bcdc12c"
+ember-template-lint@^0.8.16:
+  version "0.8.17"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-0.8.17.tgz#f257e440a50915f74dad9e81b6a19298008bacbf"
   dependencies:
     "@glimmer/compiler" "^0.32.3"
     chalk "^2.0.0"
