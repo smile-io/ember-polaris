@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### Unpublished
+
+- [#137](https://github.com/smile-io/ember-polaris/pull/137) [ENHANCEMENT] Replace hand-rolled `<div class="Polaris-TextContainer">` with `polaris-text-container` in `polaris-layout/annotation`.
+
 ### v1.5.4 (May 30, 2018)
 
 - [#135](https://github.com/smile-io/ember-polaris/pull/135) [FIX] Fix component documentation links on npm.
