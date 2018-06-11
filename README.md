@@ -103,6 +103,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Action list](./docs/action-list.md#action-list)
 - [Button](./docs/button.md#button)
 - [Button group](./docs/button-group.md#button-group)
+- [Drop zone](./docs/drop-zone.md#drop-zone)
 - [Setting toggle](./docs/setting-toggle.md#setting-toggle)
 
 #### Images and icons
