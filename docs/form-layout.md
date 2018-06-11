@@ -3,7 +3,7 @@
 ## Form layout
 `polaris-form-layout` implements the [Polaris Form layout component](https://polaris.shopify.com/components/forms/form-layout).
 
-Any child elements inside a `polaris-form-layout` or `polaris-form-layout/group` block will be auto-wrapped as form items as per the React components.
+`polaris-form-layout` and `polaris-form-layout/group` yield an `item` component that can be used to explicitly wrap form items should you wish to. Any items inside a `polaris-form-layout` or `polaris-form-layout/group` block that are not explicitly wrapped in this way will be auto-wrapped as per the React components.
 
 ### Examples
 

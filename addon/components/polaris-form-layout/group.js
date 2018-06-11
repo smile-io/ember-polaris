@@ -31,7 +31,7 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-   role: 'group',
+  role: 'group',
 
    /**
     * Lifecycle hooks.

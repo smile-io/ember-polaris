@@ -1,5 +1,21 @@
 # ember-polaris Changelog
 
+### v1.5.5 (May 31, 2018)
+
+- [#137](https://github.com/smile-io/ember-polaris/pull/137) [ENHANCEMENT] Replace hand-rolled `<div class="Polaris-TextContainer">` with `polaris-text-container` in `polaris-layout/annotation`.
+
+### v1.5.4 (May 30, 2018)
+
+- [#135](https://github.com/smile-io/ember-polaris/pull/135) [FIX] Fix component documentation links on npm.
+
+### v1.5.3 (May 29, 2018)
+
+- [#136](https://github.com/smile-io/ember-polaris/pull/136) [FIX] Minor fixes for `polaris-tag`: use the correct icon on the remove button, apply blur on mouseup to the remove button instead of the whole component, and ensure the button's `aria-label` always contains the latest tag text.
+
+### v1.5.2 (May 29, 2018)
+
+- [#134](https://github.com/smile-io/ember-polaris/pull/134) [ENHANCEMENT] Yield `item` component from `polaris-form-layout` and `polaris-form-layout/group`.
+
 ### v1.5.1 (May 24, 2018)
 
 - [#131](https://github.com/smile-io/ember-polaris/pull/131) [FEATURE] Add `onClose` attribute to polaris-popover.
