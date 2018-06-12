@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v1.5.7 (June 12, 2018)
 
 - [#139](https://github.com/smile-io/ember-polaris/pull/139) [FIX] Make `polaris-spinner` respect the `color` property.
 
