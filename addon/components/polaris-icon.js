@@ -1,12 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
-import { isNone, isEmpty } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-icon';
+import SvgHandling from '../mixins/components/svg-handling';
 
 // TODO: look into importing icons properly.
-export default Component.extend({
+export default Component.extend(SvgHandling, {
   tagName: 'span',
   classNames: ['Polaris-Icon'],
   classNameBindings: [
@@ -128,36 +129,4 @@ export default Component.extend({
 
     return source;
   }).readOnly(),
-
-  removeSvgFills(elem) {
-    if (isNone(elem)) {
-      return;
-    }
-
-    if (!elem.hasChildNodes) {
-        return;
-    }
-
-    let children = elem.childNodes;
-    for (let i = 0, len = children.length; i < len; i++) {
-      let child = children[i];
-      if (child.tagName === 'g') {
-        child.removeAttribute('fill');
-        this.removeSvgFills(child);
-      } else {
-        let fill = child.getAttribute('fill');
-        // This is what Shopify does too in @shopify/images/icon-loader.js
-        let newFill = fill && fill.indexOf('#FFF') !== -1 ? 'currentColor' : '';
-        child.setAttribute('fill', newFill);
-      }
-    }
-  },
-
-  /*
-   * Lifecycle hooks.
-   */
-  didInsertElement() {
-    this._super(...arguments);
-    this.removeSvgFills(this.$('svg')[0]);
-  }
 });

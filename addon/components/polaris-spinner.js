@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import layout from '../templates/components/polaris-spinner';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import SvgHandling from '../mixins/components/svg-handling';
 
 const allowedColors = [
   'white',
@@ -20,7 +21,7 @@ const allowedSizes = [
 ];
 const defaultSize = 'large';
 
-export default Component.extend({
+export default Component.extend(SvgHandling, {
   tagName: '',
 
   layout,
