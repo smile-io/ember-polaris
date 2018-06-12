@@ -1,5 +1,9 @@
 # ember-polaris Changelog
 
+### Unreleased
+
+- [#139](https://github.com/smile-io/ember-polaris/pull/139) [FIX] Make `polaris-spinner` respect the `color` property.
+
 ### v1.5.5 (May 31, 2018)
 
 - [#137](https://github.com/smile-io/ember-polaris/pull/137) [ENHANCEMENT] Replace hand-rolled `<div class="Polaris-TextContainer">` with `polaris-text-container` in `polaris-layout/annotation`.
