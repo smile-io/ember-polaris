@@ -35,6 +35,12 @@ export default Mixin.create({
 
   /**
    * Volatile CP to find the SVG element for this component.
+   * This is marked as `volatile` so that `this.get('svgElement')`
+   * essentially becomes an alias for the `document.querySelector`
+   * call, meaning that each time we try to access it, we'll get
+   * an up-to-date indication of whether the element is still
+   * in the DOM. Without the `volatile` modifier, we could for
+   * example end up using a cached element that's no longer in the DOM.
    *
    * @property svgElement
    * @type {DOMNode}
