@@ -1,5 +1,7 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-text-field';
+import { createUniqueIDFactory } from '../utils/other';
+import { assert } from '@ember/debug';
 
 const allowedTypes = [
   'text',
@@ -325,4 +327,26 @@ export default Component.extend({
    * @default noop
    */
   onBlur() {},
+
+  init() {
+    let { id, type } = this.getProperties('id', 'type');
+
+    assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
+
+    id = id || createUniqueIDFactory('TextField');
+
+    this.setProperties({
+      height: null,
+      focus: false,
+      id
+    });
+  },
+
+  didReceiveAttrs() {
+    let { input, focused } = this.getProperties('input', 'focused');
+
+    if (input && focused) {
+      input.focus();
+    }
+  }
 });
