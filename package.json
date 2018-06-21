@@ -42,6 +42,7 @@
     "@shopify/polaris": "2.0.0",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
+    "chalk": "^2.4.1",
     "ember-basic-dropdown": "^1.0.0",
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
@@ -54,7 +55,6 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "chalk": "^2.4.1",
     "ember-array-helper": "^3.0.0",
     "ember-cli": "~3.1.4",
     "ember-cli-code-coverage": "1.0.0-beta.4",
