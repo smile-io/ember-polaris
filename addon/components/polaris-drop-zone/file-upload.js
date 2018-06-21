@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
-import layout from '../../templates/components/polaris-dropzone/file-upload';
+import layout from '../../templates/components/polaris-drop-zone/file-upload';
 
 const iconDragDrop = 'drag-drop';
 const assetFileUpload = '/ember-polaris/images/file-upload.svg';

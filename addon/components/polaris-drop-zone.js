@@ -4,9 +4,9 @@ import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
-import layout from '../templates/components/polaris-dropzone';
-import State from '../-private/dropzone-state';
-import { fileAccepted, getDataTransferFiles } from '../utils/dropzone';
+import layout from '../templates/components/polaris-drop-zone';
+import State from '../-private/drop-zone-state';
+import { fileAccepted, getDataTransferFiles } from '../utils/drop-zone';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 
 const iconDragDrop = 'drag-drop';

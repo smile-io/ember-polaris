@@ -2,25 +2,25 @@
 
 ## Drop zone
 
-`polaris-dropzone` implements the [Polaris Drop zone component](https://polaris.shopify.com/components/actions/drop-zone).
+`polaris-drop-zone` implements the [Polaris Drop zone component](https://polaris.shopify.com/components/actions/drop-zone).
 
 ### Examples
 
 Plain drop zone:
 
 ```hbs
-{{polaris-dropzone}}
+{{polaris-drop-zone}}
 ```
 
-Dropzone with image file upload:
+Drop zone with image file upload:
 
 ```hbs
-{{#polaris-dropzone
+{{#polaris-drop-zone
   accept="image/*"
   type="image"
   onDrop=(action "dropImages")
-  as |dropzone|
+  as |dropZone|
 }}
-  {{dropzone.fileUpload}}
-{{/polaris-dropzone}}
+  {{dropZone.fileUpload}}
+{{/polaris-drop-zone}}
 ```
