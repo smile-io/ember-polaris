@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
-import { throttle } from '@ember/runloop';
+import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
 import layout from '../templates/components/polaris-dropzone';
 import State from '../-private/dropzone-state';
@@ -505,8 +505,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
     if (this.get('openFileDialog')) {
       this.open();
-      // NOTE: this doesn't seems right, might be a bug
-      this.get('onFileDialogClose')();
+      scheduleOnce('afterRender', () => this.get('onFileDialogClose')());
     }
   },
 

@@ -572,5 +572,18 @@ module('Integration | Component | polaris-dropzone', function(hooks) {
 
       assert.dom(inputSelector).doesNotHaveAttribute('multiple', 'when `allowMultiple` is false, input element does not have `multiple` attribute');
     });
+
+    test('it supports custom dialog trigger', async function(assert) {
+      this.set('openFileDialog', false);
+
+      await render(hbs`
+        {{polaris-button text="Upload file" onClick=(action (mut openFileDialog) true)}}
+        {{polaris-dropzone openFileDialog=openFileDialog onFileDialogClose=(action (mut openFileDialog) false)}}
+      `);
+
+      await triggerEvent('.Polaris-Button', 'click', event);
+
+      assert.notOk(this.get('openFileDialog'));
+    });
   });
 });
