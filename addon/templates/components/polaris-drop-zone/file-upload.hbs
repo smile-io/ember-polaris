@@ -1,0 +1,26 @@
+{{#if (eq size "small")}}
+  {{#polaris-stack vertical=true spacing="tight"}}
+    {{polaris-icon
+      color="inkLightest"
+      source=iconDragDrop
+    }}
+  {{/polaris-stack}}
+{{else if (eq size "medium")}}
+  {{#polaris-stack vertical=true spacing="tight"}}
+    {{polaris-link text=actionTitle}}
+    {{polaris-caption text=actionHint}}
+  {{/polaris-stack}}
+{{else if (eq size "large")}}
+  {{#polaris-stack vertical=true}}
+    {{#if (eq type "file")}}
+      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetFileUpload}}>
+    {{/if}}
+
+    {{#if (eq type "image")}}
+      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetImageUpload}}>
+    {{/if}}
+
+    {{polaris-button text=actionTitle}}
+    {{polaris-text-style variation="subdued" text=actionHint}}
+  {{/polaris-stack}}
+{{/if}}

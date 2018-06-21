@@ -10,6 +10,8 @@ Router.map(function() {
   this.route('test', function() {
     this.route('child', function() {});
   });
+
+  this.route('dropzone');
 });
 
 export default Router;

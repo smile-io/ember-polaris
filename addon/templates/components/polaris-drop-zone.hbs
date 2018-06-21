@@ -1,0 +1,58 @@
+{{#if showDragOverlay}}
+  <div class="Polaris-DropZone__Overlay">
+    {{#polaris-stack vertical=true spacing="tight"}}
+      {{polaris-icon color="indigo" source=iconDragDrop}}
+
+      {{#if (eq state.size "large")}}
+        {{polaris-display-text
+          size="small"
+          tagName="p"
+          text=state.overlayText
+        }}
+      {{else if (eq state.size "medium")}}
+        {{polaris-caption text=state.overlayText}}
+      {{/if}}
+    {{/polaris-stack}}
+  </div>
+{{/if}}
+
+{{#if (and state.dragging state.error)}}
+  <div class="Polaris-DropZone__Overlay">
+    {{#polaris-stack vertical=true spacing="tight"}}
+      {{polaris-icon color="red" source=iconAlertCircle}}
+
+      {{#if (eq state.size "large")}}
+        {{polaris-display-text
+          size="small"
+          tagName="p"
+          text=state.errorOverlayText
+        }}
+      {{else if (eq state.size "medium")}}
+        {{polaris-caption text=state.errorOverlayText}}
+      {{/if}}
+    {{/polaris-stack}}
+  </div>
+{{/if}}
+
+<div class="Polaris-DropZone__Container">
+  {{yield (hash
+    fileUpload=(component "polaris-drop-zone/file-upload"
+      context=(hash
+        type=(readonly state.type)
+        size=(readonly state.size)
+      )
+    )
+  )}}
+</div>
+
+{{#polaris-visually-hidden}}
+  <input
+    id={{concat elementId "-input"}}
+    type="file"
+    autocomplete="off"
+    accept={{accept}}
+    disabled={{disabled}}
+    multiple={{allowMultiple}}
+    onchange={{action handleDrop}}
+  >
+{{/polaris-visually-hidden}}
