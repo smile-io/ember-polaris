@@ -6,6 +6,11 @@ import { scheduleOnce, debounce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
 import layout from '../templates/components/polaris-data-table';
 
+const eventHandlerParams = [
+  [ window, 'resize', 'handleResize' ],
+  [ window, 'scroll', 'scrollListener', true ],
+];
+
 function volatileElementLookup(selector) {
   return computed(function() {
     return this.element.querySelector(selector);
@@ -253,6 +258,20 @@ export default Component.extend({
   previousTruncate: null,
 
   /**
+   * @property totalsRowHeading
+   * @type {String}
+   * @private
+   */
+  totalsRowHeading: 'Totals',
+
+  /**
+   * @property eventHandlerParams
+   * @type {Array[]}
+   * @private
+   */
+  eventHandlerParams,
+
+  /**
    * @property dataTable
    * @type {HTMLElement}
    * @private
@@ -272,13 +291,6 @@ export default Component.extend({
    * @private
    */
   table: volatileElementLookup('.Polaris-DataTable__Table').readOnly(),
-
-  /**
-   * @property totalsRowHeading
-   * @type {String}
-   * @private
-   */
-  totalsRowHeading: 'Totals',
 
   /**
    * @property contentTypes
@@ -382,6 +394,10 @@ export default Component.extend({
     });
   },
 
+  scrollListener() {
+    this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
+  },
+
   tallestCellHeights() {
     let { footerContent, truncate, heights } = this.getProperties('footerContent', 'truncate', 'heights');
     let rows = Array.from(this.get('table').getElementsByTagName('tr'));
@@ -399,6 +415,18 @@ export default Component.extend({
     }
 
     return heights;
+  },
+
+  addEventHandlers() {
+    this.get('eventHandlerParams').forEach(([ target, eventName, callbackName, ...rest ]) => {
+      target.addEventListener(eventName, this[callbackName].bind(this), ...rest);
+    });
+  },
+
+  removeEventHandlers() {
+    this.get('eventHandlerParams').forEach(([ target, eventName, callbackName, ...rest ]) => {
+      target.removeEventListener(eventName, this[callbackName].bind(this), ...rest);
+    });
   },
 
   /*
@@ -419,6 +447,12 @@ export default Component.extend({
     this._super(...arguments);
 
     this.handleResize();
+
+    this.addEventHandlers();
+  },
+
+  willDestroyElement() {
+    this.removeEventHandlers();
   },
 
   didUpdateAttrs() {
@@ -433,8 +467,20 @@ export default Component.extend({
   },
 
   actions: {
-    navigateTable() {
-      // TODO: implement this.
+    navigateTable(direction) {
+      let { scrollContainer, currentColumn, previousColumn } = this.getProperties('scrollContainer', 'currentColumn', 'previousColumn');
+
+      if (direction === 'right' && currentColumn) {
+        scrollContainer.scrollLeft = currentColumn.rightEdge;
+      } else if (previousColumn) {
+        scrollContainer.scrollLeft =
+          previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+      }
+
+      // TODO: use run loop instead of `requestAnimationFrame` here?
+      requestAnimationFrame(() => {
+        this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
+      });
     },
 
     defaultOnSort() {
