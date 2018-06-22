@@ -375,6 +375,10 @@ export default Component.extend({
   },
 
   debouncedHandleResize() {
+    if (this.get('isDestroying') || this.get('isDestroyed')) {
+      return;
+    }
+
     let { footerContent, truncate } = this.getProperties('footerContent', 'truncate');
     let collapsed = this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
 
@@ -395,6 +399,10 @@ export default Component.extend({
   },
 
   scrollListener() {
+    if (this.get('isDestroying') || this.get('isDestroyed')) {
+      return;
+    }
+
     this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
   },
 
@@ -479,6 +487,10 @@ export default Component.extend({
 
       // TODO: use run loop instead of `requestAnimationFrame` here?
       requestAnimationFrame(() => {
+        if (this.get('isDestroying') || this.get('isDestroyed')) {
+          return;
+        }
+
         this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
       });
     },

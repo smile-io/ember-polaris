@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
+import { findAll } from 'ember-native-dom-helpers';
 
 const sortable = [false, true, false, false, true, false];
 const columnContentTypes = [
@@ -89,7 +89,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         headings=headings
         rows=rows
         summary=summary
-        sortable=true
+        sortable=sortable
         initialSortColumnIndex=4
       }}
     `);
