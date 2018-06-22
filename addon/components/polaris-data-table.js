@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isBlank, isPresent } from '@ember/utils';
+import { isBlank, isPresent, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { scheduleOnce, debounce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
@@ -490,8 +490,9 @@ export default Component.extend({
         defaultSortDirection = 'ascending',
         initialSortColumnIndex,
         sortDirection,
-        sortedColumnIndex = initialSortColumnIndex,
+        sortedColumnIndex,
       } = this.getProperties('onSort', 'truncate', 'defaultSortDirection', 'initialSortColumnIndex', 'sortDirection', 'sortedColumnIndex');
+      sortedColumnIndex = isNone(sortedColumnIndex) ? initialSortColumnIndex : sortedColumnIndex;
       let newSortDirection = defaultSortDirection;
       if (sortedColumnIndex === headingIndex) {
         newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
@@ -508,7 +509,7 @@ export default Component.extend({
           onSort(headingIndex, newSortDirection);
           if (!truncate) {
             let preservedScrollPosition = {
-              left: this.scrollContainer.scrollLeft,
+              left: this.get('scrollContainer').scrollLeft,
               top: window.scrollY,
             };
             this.set('preservedScrollPosition', preservedScrollPosition);
