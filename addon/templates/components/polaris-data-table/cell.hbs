@@ -7,41 +7,58 @@
 {{else}}
   {{#if (or header fixed)}}
     {{#if header}}
-      {{#with (component "wrapper-element"
-        tagName="th"
-        scope="col"
-        class=cellClassNames
-        style=style
-      ) as |headerComponent|}}
-        {{#if sortable}}
-          {{#component headerComponent
-            role=button
-            aria-sort=sortDirection
-            aria-label=sortAccessibilityLabel
-            click=(action onSort)
-            keyDown=(action onKeyDown)
-          }}
-            {{#if (eq contentType "text")}}
-              {{!-- TODO: add headerClassName, iconClassName, sortableIconMarkup and sortedIconMarkup --}}
-              <span class={headerClassName}>
-                {{text}}
-                <span class={iconClassName}>{sortableIconMarkup}</span>
-                <span>{sortedIconMarkup}</span>
-              </span>
-            {{else}}
-              <span class={headerClassName}>
-              <span class={iconClassName}>{sortableIconMarkup}</span>
-              <span>{sortedIconMarkup}</span>
+      {{#if sortable}}
+        <th
+          scope="col"
+          class={{cellClassNames}}
+          style={{style}}
+          role="button"
+          aria-sort={{sortDirection}}
+          aria-label={{sortAccessibilityLabel}}
+          tabindex="0"
+          {{action onSort}}
+          onkeydown={{action "onKeyDown"}}
+        >
+          {{#if (eq contentType "text")}}
+            <span class="Polaris-DataTable__Heading {{if (eq contentType "text") "Polaris-DataTable__Heading--left"}}">
               {{text}}
-             </span>
-            {{/if}}
-          {{/component}}
-        {{else}}
-          {{#component headerComponent aria-disabled=true}}
-            {{text}}
-          {{/component}}
-        {{/if}}
-      {{/with}}
+              <span class="Polaris-DataTable__Heading--sortable">
+                {{#unless sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/unless}}
+              </span>
+              <span>
+                {{#if sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/if}}
+              </span>
+            </span>
+          {{else}}
+            <span class="Polaris-DataTable__Heading {{if (eq contentType "text") "Polaris-DataTable__Heading--left"}}">
+              <span class="Polaris-DataTable__Heading--sortable">
+                {{#unless sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/unless}}
+              </span>
+              <span>
+                {{#if sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/if}}
+              </span>
+              {{text}}
+            </span>
+          {{/if}}
+        </th>
+      {{else}}
+        <th
+          scope="col"
+          class={{cellClassNames}}
+          style={{style}}
+          aria-disabled="true"
+        >
+          {{text}}
+        </th>
+      {{/if}}
     {{else}}
       <th class={{cellClassNames}} scope="row" style={{style}}>
         {{text}}

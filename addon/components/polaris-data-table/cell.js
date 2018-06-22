@@ -167,4 +167,28 @@ export default Component.extend({
     let height = this.get('height');
     return height ? htmlSafe(`height: ${ height }px`) : undefined;
   }).readOnly(),
+
+  /**
+   * @property sortIconSource
+   * @type {String}
+   * @private
+   */
+  sortIconSource: computed('sortable', 'sorted', 'sortDirection', 'defaultSortDirection', function() {
+    if (!this.get('sortable')) {
+      return null;
+    }
+
+    let sortDirection = this.get('sorted') ? this.get('sortDirection') : this.get('defaultSortDirection');
+    return `caret-${ sortDirection === 'ascending' ? 'up' : 'down' }`;
+  }).readOnly(),
+
+  actions: {
+    onKeyDown(event) {
+      let { keyCode } = event;
+      let sortFunc = this.get('onSort');
+      if (keyCode === 13 && sortFunc !== undefined) {
+        sortFunc();
+      }
+    },
+  }
 });

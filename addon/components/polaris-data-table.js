@@ -483,8 +483,39 @@ export default Component.extend({
       });
     },
 
-    defaultOnSort() {
-      // TODO: implement this.
+    defaultOnSort(headingIndex) {
+      let {
+        onSort,
+        truncate,
+        defaultSortDirection = 'ascending',
+        initialSortColumnIndex,
+        sortDirection,
+        sortedColumnIndex = initialSortColumnIndex,
+      } = this.getProperties('onSort', 'truncate', 'defaultSortDirection', 'initialSortColumnIndex', 'sortDirection', 'sortedColumnIndex');
+      let newSortDirection = defaultSortDirection;
+      if (sortedColumnIndex === headingIndex) {
+        newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
+      }
+
+      this.setProperties({
+        sorted: true,
+        sortDirection: newSortDirection,
+        sortedColumnIndex: headingIndex,
+      });
+
+      scheduleOnce('afterRender', () => {
+        if (onSort) {
+          onSort(headingIndex, newSortDirection);
+          if (!truncate) {
+            let preservedScrollPosition = {
+              left: this.scrollContainer.scrollLeft,
+              top: window.scrollY,
+            };
+            this.set('preservedScrollPosition', preservedScrollPosition);
+            this.handleResize();
+          }
+        }
+      });
     },
   }
 });
