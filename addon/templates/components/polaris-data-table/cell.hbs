@@ -1,0 +1,55 @@
+{{#if presentational}}
+  {{#if header}}
+    <th aria-hidden="true" role="presentation" class={{cellClassNames}} style={{style}}></th>
+  {{else}}
+    <td aria-hidden="true" role="presentation" class={{cellClassNames}} style={{style}}></td>
+  {{/if}}
+{{else}}
+  {{#if (or header fixed)}}
+    {{#if header}}
+      {{#with (component "wrapper-element"
+        tagName="th"
+        scope="col"
+        class=cellClassNames
+        style=style
+      ) as |headerComponent|}}
+        {{#if sortable}}
+          {{#component headerComponent
+            role=button
+            aria-sort=sortDirection
+            aria-label=sortAccessibilityLabel
+            click=(action onSort)
+            keyDown=(action onKeyDown)
+          }}
+            {{#if (eq contentType "text")}}
+              {{!-- TODO: add headerClassName, iconClassName, sortableIconMarkup and sortedIconMarkup --}}
+              <span class={headerClassName}>
+                {{text}}
+                <span class={iconClassName}>{sortableIconMarkup}</span>
+                <span>{sortedIconMarkup}</span>
+              </span>
+            {{else}}
+              <span class={headerClassName}>
+              <span class={iconClassName}>{sortableIconMarkup}</span>
+              <span>{sortedIconMarkup}</span>
+              {{text}}
+             </span>
+            {{/if}}
+          {{/component}}
+        {{else}}
+          {{#component headerComponent aria-disabled=true}}
+            {{text}}
+          {{/component}}
+        {{/if}}
+      {{/with}}
+    {{else}}
+      <th class={{cellClassNames}} scope="row" style={{style}}>
+        {{text}}
+      </th>
+    {{/if}}
+  {{else}}
+    <td class={{cellClassNames}} style={{style}}>
+      {{text}}
+    </td>
+  {{/if}}
+{{/if}}
