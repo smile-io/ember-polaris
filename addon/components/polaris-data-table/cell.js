@@ -16,8 +16,6 @@ export default Component.extend({
   height: null,
 
   /**
-   * TODO: support rendering a component here
-   *
    * @property text
    * @type {String|Component}
    * @public
