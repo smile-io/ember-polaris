@@ -5,7 +5,7 @@
 </div>
 
 {{#if connectedLeft}}
-  {{component connectedLeft}}
+  {{render-content connectedLeft}}
 {{/if}}
 
 <div
@@ -14,17 +14,26 @@
   onblur={{action handleBlur}}
   onclick={{action handleClick}}
 >
-  <!-- prefix -->
+
+  {{#if prefix}}
+    <div class="Polaris-TextField__Prefix" id="{{id}}Prefix">
+      {{render-content prefix}}
+    </div>
+  {{/if}}
 
   {{component input
     id=id
     class="Polaris-TextField__Input"
-    aria-labelledby=(concat {{id}}Label)
+    aria-labelledby=(concat id "Label")
     aria-invalid="false"
     value=""
   }}
 
-  <!-- suffix -->
+  {{#if suffix}}
+    <div class="Polaris-TextField__Suffix" id="{{id}}Suffix">
+      {{render-content suffix}}
+    </div>
+  {{/if}}
 
   <!-- spinner -->
 
@@ -34,5 +43,5 @@
 </div>
 
 {{#if connectedRight}}
-  {{component connectedRight}}
+  {{render-content connectedRight}}
 {{/if}}
