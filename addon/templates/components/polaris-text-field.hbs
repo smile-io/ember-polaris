@@ -1,1 +1,38 @@
-{{yield}}
+<div class="Polaris-Labelled__LabelWrapper">
+  <div class="Polaris-Label">
+    <label id="TextField6Label" for={{id}} class="Polaris-Label__Text">{{label}}</label>
+  </div>
+</div>
+
+{{#if connectedLeft}}
+  {{component connectedLeft}}
+{{/if}}
+
+<div
+  class={{textFieldClasses}}
+  onfocus={{action handleFocus}}
+  onblur={{action handleBlur}}
+  onclick={{action handleClick}}
+>
+  <!-- prefix -->
+
+  {{component input
+    id=id
+    class="Polaris-TextField__Input"
+    aria-labelledby=(concat {{id}}Label)
+    aria-invalid="false"
+    value=""
+  }}
+
+  <!-- suffix -->
+
+  <!-- spinner -->
+
+  <div class="Polaris-TextField__Backdrop"></div>
+
+  <!-- resizer -->
+</div>
+
+{{#if connectedRight}}
+  {{component connectedRight}}
+{{/if}}

@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import layout from '../templates/components/polaris-text-field';
 import { createUniqueIDFactory } from '../utils/other';
 import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
 
 const allowedTypes = [
   'text',
@@ -24,6 +25,8 @@ const allowedTypes = [
  * See https://polaris.shopify.com/components/forms/text-field
  */
 export default Component.extend({
+  classNameBindings: ['labelHidden:Polaris-Labelled--hidden'],
+
   layout,
 
   /**
@@ -327,6 +330,43 @@ export default Component.extend({
    * @default noop
    */
   onBlur() {},
+
+  textFieldClasses: computed('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus', function() {
+    let { value, disabled, readOnly, error, multiline, focus } = this.getProperties('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus');
+
+    let valueClass = value ? 'Polaris-TextField--hasValue' : '';
+    let disabledClass = disabled ? 'Polaris-TextField--disabled' : '';
+    let readOnlyClass = readOnly ? 'Polaris-TextField--readOnly' : '';
+    let errorClass = error ? 'Polaris-TextField--error' : '';
+    let multilineClass = multiline ? 'Polaris-TextField--multiline' : '';
+    let focusClass = focus ? 'Polaris-TextField--focus' : '';
+
+    return `Polaris-TextField ${ valueClass } ${ disabledClass } ${ readOnlyClass } ${ errorClass } ${ multilineClass } ${ focusClass }`;
+  }),
+
+  inputType: computed('type', function() {
+    let type = this.get('type');
+
+    return type === 'currency' ? 'text' : type;
+  }),
+
+  input: computed('multiline', function() {
+    let multiline = this.get('multiline');
+    return multiline ? 'textarea' : 'input';
+  }),
+
+  // prefixMarkup: build in template
+
+  // suffixMarkup: build in template
+
+  // spinnerMarkup: build in template
+
+  // TODO: resizer and style/height?
+
+  // TODO: describedBy
+
+  // TODO: labelledBy
+
 
   init() {
     let { id, type } = this.getProperties('id', 'type');
