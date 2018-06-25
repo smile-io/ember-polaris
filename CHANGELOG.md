@@ -1,7 +1,8 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v1.6.0 (June 25, 2018)
 - [#133](https://github.com/smile-io/ember-polaris/pull/133) [FEATURE] Add [polaris-drop-zone](https://polaris.shopify.com/components/actions/drop-zone) component
+- [##140](https://github.com/smile-io/ember-polaris/pull/140) [INTERNAL] Update some dependencies and other minor tweaks
 
 ### v1.5.7 (June 12, 2018)
 
