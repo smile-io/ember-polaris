@@ -21,11 +21,7 @@
         >
           {{#if (eq contentType "text")}}
             <span class="Polaris-DataTable__Heading {{if (eq contentType "text") "Polaris-DataTable__Heading--left"}}">
-              {{#if hasContentComponent}}
-                {{component text}}
-              {{else}}
-                {{text}}
-              {{/if}}
+              {{render-content text}}
               <span class="Polaris-DataTable__Heading--sortable">
                 {{#unless sorted}}
                   {{polaris-icon source=sortIconSource}}
@@ -49,11 +45,7 @@
                   {{polaris-icon source=sortIconSource}}
                 {{/if}}
               </span>
-              {{#if hasContentComponent}}
-                {{component text}}
-              {{else}}
-                {{text}}
-              {{/if}}
+              {{render-content text}}
             </span>
           {{/if}}
         </th>
@@ -64,29 +56,17 @@
           style={{style}}
           aria-disabled="true"
         >
-          {{#if hasContentComponent}}
-            {{component text}}
-          {{else}}
-            {{text}}
-          {{/if}}
+          {{render-content text}}
         </th>
       {{/if}}
     {{else}}
       <th class={{cellClassNames}} scope="row" style={{style}}>
-        {{#if hasContentComponent}}
-          {{component text}}
-        {{else}}
-          {{text}}
-        {{/if}}
+        {{render-content text}}
       </th>
     {{/if}}
   {{else}}
     <td class={{cellClassNames}} style={{style}}>
-      {{#if hasContentComponent}}
-        {{component text}}
-      {{else}}
-        {{text}}
-      {{/if}}
+      {{render-content text}}
     </td>
   {{/if}}
 {{/if}}

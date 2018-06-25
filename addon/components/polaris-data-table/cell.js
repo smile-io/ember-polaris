@@ -182,17 +182,6 @@ export default Component.extend({
     return `caret-${ sortDirection === 'ascending' ? 'up' : 'down' }`;
   }).readOnly(),
 
-  /**
-   * Check if the `text` passed is actually a component.
-   * @property hasContentComponent
-   * @type {String}
-   * @private
-   */
-  hasContentComponent: computed('text', function() {
-    let className = this.get('text.constructor.name') || '';
-    return className.indexOf('ComponentDefinition') > -1;
-  }).readOnly(),
-
   actions: {
     onKeyDown(event) {
       let { keyCode } = event;
