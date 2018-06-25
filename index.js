@@ -1,22 +1,22 @@
 'use strict';
 
-var path = require('path');
-var resolve = require('resolve');
-var Funnel = require('broccoli-funnel');
-var mergeTrees = require('broccoli-merge-trees');
+const path = require('path');
+const resolve = require('resolve');
+const Funnel = require('broccoli-funnel');
+const MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
   name: '@smile-io/ember-polaris',
 
   treeForStyles(tree) {
-    var packageRoot = path.dirname(resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }));
-    var polarisScssFiles = new Funnel(packageRoot, {
+    let packageRoot = path.dirname(resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }));
+    let polarisScssFiles = new Funnel(packageRoot, {
       include: ['styles.scss', 'styles/**/*'],
       srcDir: './',
       destDir: 'ember-polaris',
       annotation: 'PolarisScssFunnel'
     });
 
-    return this._super.treeForStyles(mergeTrees([polarisScssFiles, tree], { overwrite: true }));
+    return this._super.treeForStyles(new MergeTrees([polarisScssFiles, tree], { overwrite: true }));
   },
 };
