@@ -1,3 +1,4 @@
+import { helper } from '@ember/component/helper';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
@@ -37,6 +38,12 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       rows,
       footerContent,
     });
+
+    // Register a simple array helper to avoid "object is not extensible"
+    // errors in some versions of Ember.
+    this.owner.register('helper:array', helper(function array(items) {
+      return [ ...items ];
+    }));
   });
 
   test('it renders all table body rows', async function(assert) {
