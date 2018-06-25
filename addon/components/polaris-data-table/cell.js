@@ -182,6 +182,17 @@ export default Component.extend({
     return `caret-${ sortDirection === 'ascending' ? 'up' : 'down' }`;
   }).readOnly(),
 
+  /**
+   * Check if the `text` passed is actually a component.
+   * @property hasContentComponent
+   * @type {String}
+   * @private
+   */
+  hasContentComponent: computed('text', function() {
+    // TODO: use `ember-cli-is-component` here? This seems fragile...
+    return this.get('text.constructor.name') === 'CurriedComponentDefinition';
+  }).readOnly(),
+
   actions: {
     onKeyDown(event) {
       let { keyCode } = event;
