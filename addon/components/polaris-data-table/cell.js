@@ -189,8 +189,8 @@ export default Component.extend({
    * @private
    */
   hasContentComponent: computed('text', function() {
-    // TODO: use `ember-cli-is-component` here? This seems fragile...
-    return this.get('text.constructor.name') === 'CurriedComponentDefinition';
+    let className = this.get('text.constructor.name') || '';
+    return className.indexOf('ComponentDefinition') > -1;
   }).readOnly(),
 
   actions: {
