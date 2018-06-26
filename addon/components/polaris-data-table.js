@@ -181,6 +181,7 @@ export default Component.extend({
    *
    * @property onSort
    * @type {function}
+   * @default no-op
    * @public
    */
   onSort(/* headingIndex, direction */) {},

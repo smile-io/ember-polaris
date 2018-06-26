@@ -25,6 +25,7 @@ export default Component.extend({
   /**
    * @property truncate
    * @type {boolean}
+   * @default false
    * @public
    */
   truncate: false,

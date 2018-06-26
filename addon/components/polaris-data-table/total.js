@@ -8,10 +8,8 @@ export default Component.extend({
   layout,
 
   /**
-   * TODO: make this support passing a component to render instead of just text/numbers.
-   *
    * @property total
-   * @type {String|Number}
+   * @type {String|Number|Component}
    * @public
    */
   total: null,
@@ -33,6 +31,7 @@ export default Component.extend({
   /**
    * @property truncate
    * @type {boolean}
+   * @default false
    * @public
    */
   truncate: false,

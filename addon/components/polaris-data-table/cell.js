@@ -32,6 +32,7 @@ export default Component.extend({
   /**
    * @property fixed
    * @type {boolean}
+   * @default false
    * @public
    */
   fixed: false,
@@ -39,6 +40,7 @@ export default Component.extend({
   /**
    * @property truncate
    * @type {boolean}
+   * @default false
    * @public
    */
   truncate: false,
@@ -46,6 +48,7 @@ export default Component.extend({
   /**
    * @property presentational
    * @type {boolean}
+   * @default false
    * @public
    */
   presentational: false,
@@ -53,6 +56,7 @@ export default Component.extend({
   /**
    * @property header
    * @type {boolean}
+   * @default false
    * @public
    */
   header: false,
@@ -60,6 +64,7 @@ export default Component.extend({
   /**
    * @property total
    * @type {boolean}
+   * @default false
    * @public
    */
   total: false,
@@ -67,6 +72,7 @@ export default Component.extend({
   /**
    * @property footer
    * @type {boolean}
+   * @default false
    * @public
    */
   footer: false,
@@ -74,6 +80,7 @@ export default Component.extend({
   /**
    * @property sorted
    * @type {boolean}
+   * @default false
    * @public
    */
   sorted: false,
@@ -81,6 +88,7 @@ export default Component.extend({
   /**
    * @property sortable
    * @type {boolean}
+   * @default false
    * @public
    */
   sortable: false,
