@@ -2,6 +2,7 @@
 
 ### Unreleased
 - [#142](https://github.com/smile-io/ember-polaris/pull/142) [ENHANCEMENT] Support React-style child content.
+- [#143](https://github.com/smile-io/ember-polaris/pull/143) [ENHANCEMENT] Remove need for separate `label` and `labelComponent` properties for `polaris-checkbox`, and `termComponent`/`term` and `descriptionComponent`/`description` properties for `polaris-description-list` `items`.
 
 ### v1.6.0 (June 25, 2018)
 - [#133](https://github.com/smile-io/ember-polaris/pull/133) [FEATURE] Add [polaris-drop-zone](https://polaris.shopify.com/components/actions/drop-zone) component
