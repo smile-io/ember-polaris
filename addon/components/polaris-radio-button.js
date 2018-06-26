@@ -20,7 +20,7 @@ export default Component.extend({
    * Label for the radio button
    *
    * @property label
-   * @type {string}
+   * @type {String|Component}
    * @default null
    */
   label: null,
