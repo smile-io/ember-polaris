@@ -23,7 +23,7 @@ export default Component.extend({
    * Label content for the choice this label belongs to.
    *
    * @property label
-   * @type {String}
+   * @type {String|Component}
    * @default: null
    * @public
    */
@@ -31,6 +31,8 @@ export default Component.extend({
 
   /**
    * Component to render for the label
+   *
+   * DEPRECATED: pass the component as `label` instead.
    *
    * @property labelComponent
    * @type {String | Component}

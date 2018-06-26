@@ -6,55 +6,61 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 // Mock the polaris-choice component to simplify testing what gets rendered.
-const MockPolarisChoiceComponent = Component.extend({
-  tagName: 'label',
-  classNames: ['Polaris-Choice'],
+// const MockPolarisChoiceComponent = Component.extend({
+//   tagName: 'label',
+//   classNames: ['Polaris-Choice'],
+//
+//   layout: hbs`{{yield}}`,
+//
+//   // Bind attributes to the element's dataset for testing.
+//   attributeBindings: [
+//     'inputId:data-input-id',
+//     'label:data-label',
+//     'labelHidden:data-label-hidden',
+//     'helpText:data-help-text',
+//     'error:data-error',
+//   ],
+// });
+
+const DummyLabelComponent = Component.extend({
+  tagName: 'div',
+  classNames: ['dummy-label'],
+
+  text: null,
 
   layout: hbs`{{yield}}`,
-
-  // Bind attributes to the element's dataset for testing.
-  attributeBindings: [
-    'inputId:data-input-id',
-    'label:data-label',
-    'labelComponent:data-label-component',
-    'labelHidden:data-label-hidden',
-    'helpText:data-help-text',
-    'error:data-error',
-  ],
 });
 
 moduleForComponent('polaris-checkbox', 'Integration | Component | polaris checkbox', {
   integration: true,
 
   beforeEach() {
-    this.register('component:polaris-choice', MockPolarisChoiceComponent);
     this.register('component:svg-jar', MockSvgJarComponent);
+    this.register('component:dummy-label', DummyLabelComponent);
   },
 });
 
 const choiceSelector = 'label.Polaris-Choice';
-const checkboxSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Checkbox');
-const checkboxInputSelector = buildNestedSelector(
-  checkboxSelector,
-  'input.Polaris-Checkbox__Input[type="checkbox"]'
-);
-const checkboxBackdropSelector = buildNestedSelector(checkboxSelector, 'span.Polaris-Checkbox__Backdrop');
-const checkboxIconSelector = buildNestedSelector(
-  checkboxSelector,
-  'span.Polaris-Checkbox__Icon',
-  'span.Polaris-Icon',
-  'svg'
-);
+const checkboxControlWrapperSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Choice__Control');
+const checkboxWrapperSelector = buildNestedSelector(checkboxControlWrapperSelector, 'span.Polaris-Checkbox');
+const checkboxInputSelector = buildNestedSelector(checkboxWrapperSelector, 'input.Polaris-Checkbox__Input[type="checkbox"]');
+const checkboxBackdropSelector = buildNestedSelector(checkboxWrapperSelector, 'span.Polaris-Checkbox__Backdrop');
+const checkboxIconSelector = buildNestedSelector(checkboxWrapperSelector, 'span.Polaris-Checkbox__Icon');
+const checkboxIconSvgSelector = buildNestedSelector(checkboxIconSelector, 'span.Polaris-Icon', 'svg');
+const checkboxLabelSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Choice__Label');
 
 test('it renders the correct HTML', function(assert) {
-  this.set('error', 'I\'ve got an error');
+  this.setProperties({
+    error: 'I\'ve got an error',
+    labelHidden: true,
+  });
   this.render(hbs`
     {{polaris-checkbox
       inputId="some-checkbox-id"
       name="Check me out"
       value="Check it"
       label="Checkbox label"
-      labelHidden="Label is hidden, yes"
+      labelHidden=labelHidden
       helpText="Help!"
       error=error
     }}
@@ -63,20 +69,34 @@ test('it renders the correct HTML', function(assert) {
   const choices = findAll(choiceSelector);
   assert.equal(choices.length, 1, 'renders one `polaris-choice` component');
 
-  const choiceData = choices[0].dataset;
-  assert.equal(choiceData.inputId, 'some-checkbox-id', 'passes inputId through to `polaris-choice` component');
-  assert.equal(choiceData.label, 'Checkbox label', 'passes label through to `polaris-choice` component');
-  assert.equal(choiceData.labelHidden, 'Label is hidden, yes', 'passes labelHidden through to `polaris-choice` component');
-  assert.equal(choiceData.helpText, 'Help!', 'passes helpText through to `polaris-choice` component');
-  assert.equal(choiceData.error, 'I\'ve got an error', 'passes error through to `polaris-choice` component');
+  const choice = choices[0];
+  assert.ok(choice.classList.contains('Polaris-Choice--labelHidden'), 'sets the labelHidden class when the label is hidden');
+
+  this.set('labelHidden', false);
+  assert.notOk(choice.classList.contains('Polaris-Choice--labelHidden'), 'does not set the labelHidden class when the label is not hidden');
+
+  const helpTextSelector = buildNestedSelector('div.Polaris-Choice__Descriptions', 'div.Polaris-Choice__HelpText');
+  const helpTexts = findAll(helpTextSelector);
+  assert.equal(helpTexts.length, 1, 'renders one help text');
+  assert.equal(helpTexts[0].textContent.trim(), 'Help!', 'renders the correct help text');
+
+  const errorSelector = buildNestedSelector('div.Polaris-Choice__Descriptions', 'div.Polaris-Choice__Error');
+  const errors = findAll(errorSelector);
+  assert.equal(errors.length, 1, 'renders one error');
+  assert.equal(errors[0].textContent.trim(), 'I\'ve got an error', 'renders the correct error text');
+
+  // Check the label.
+  const labels = findAll(checkboxLabelSelector);
+  assert.equal(labels.length, 1, 'renders one checkbox label');
+  assert.equal(labels[0].textContent.trim(), 'Checkbox label', 'renders the correct checkbox label content');
 
   // Check the wrapper element and its class handling.
-  const checkboxes = findAll(checkboxSelector);
-  assert.equal(checkboxes.length, 1, 'renders one checkbox wrapper');
-  assert.ok(checkboxes[0].classList.contains('Polaris-Checkbox--error'), 'applies error class when error present');
+  const checkboxWrappers = findAll(checkboxWrapperSelector);
+  assert.equal(checkboxWrappers.length, 1, 'renders one checkbox wrapper');
+  assert.ok(checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'), 'applies error class when error present');
 
   this.set('error', null);
-  assert.notOk(checkboxes[0].classList.contains('Polaris-Checkbox--error'), 'does not apply error class when error not present');
+  assert.notOk(checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'), 'does not apply error class when error not present');
 
   // Check the input.
   const inputs = findAll(checkboxInputSelector);
@@ -90,7 +110,7 @@ test('it renders the correct HTML', function(assert) {
   const backdrops = findAll(checkboxBackdropSelector);
   assert.equal(backdrops.length, 1, 'renders one checkbox backdrop');
 
-  const icons = findAll(checkboxIconSelector);
+  const icons = findAll(checkboxIconSvgSelector);
   assert.equal(icons.length, 1, 'renders one checkbox icon');
   assert.equal(icons[0].dataset.iconSource, 'polaris/checkmark', 'renders the correct checkbox icon');
 });
@@ -120,33 +140,32 @@ test('it sets the input\'s aria-describedby attribute correctly', function(asser
     }}
   `);
 
-  const input = find(checkboxInputSelector);
-  assert.ok(input, 'renders the input');
+  assert.ok(find(checkboxInputSelector), 'renders the input');
 
   // With both an error and helpText, the checkbox input should
   // be described by both the error and help text elements.
-  assert.equal(
-    input.getAttribute('aria-describedby'),
-    'described-checkboxError described-checkboxHelpText',
+  assert.ok(
+    find(checkboxInputSelector).getAttribute('aria-describedby').indexOf('described-checkboxError') > -1 &&
+    find(checkboxInputSelector).getAttribute('aria-describedby').indexOf('described-checkboxHelpText') > -1,
     'described by error and help text elements when error and help text are present'
   );
 
   this.set('error', null);
   assert.equal(
-    input.getAttribute('aria-describedby'),
+    find(checkboxInputSelector).getAttribute('aria-describedby'),
     'described-checkboxHelpText',
     'described by help text element when help text is present'
   );
 
   this.set('helpText', null);
   assert.notOk(
-    input.getAttribute('aria-describedby'),
+    find(checkboxInputSelector).getAttribute('aria-describedby'),
     'has no description when no error or help text are present'
   );
 
   this.set('error', 'some other error');
   assert.equal(
-    input.getAttribute('aria-describedby'),
+    find(checkboxInputSelector).getAttribute('aria-describedby'),
     'described-checkboxError',
     'described by error element when error is present'
   );
@@ -156,13 +175,12 @@ test('it sets the input\'s aria-invalid attribute correctly', function(assert) {
   this.set('error', 'some error');
   this.render(hbs`{{polaris-checkbox error=error}}`);
 
-  const input = find(checkboxInputSelector);
-  assert.ok(input, 'renders the input');
+  assert.ok(find(checkboxInputSelector), 'renders the input');
 
-  assert.equal(input.getAttribute('aria-invalid'), 'true', 'aria-invalid attribute set when error present');
+  assert.equal(find(checkboxInputSelector).getAttribute('aria-invalid'), 'true', 'aria-invalid attribute set when error present');
 
   this.set('error', null);
-  assert.equal(input.getAttribute('aria-invalid'), 'false', 'aria-invalid attribute not when no error');
+  assert.equal(find(checkboxInputSelector).getAttribute('aria-invalid'), 'false', 'aria-invalid attribute not when no error');
 });
 
 test('it handles events correctly', function(assert) {
@@ -198,7 +216,7 @@ test('it handles the checked state correctly', function(assert) {
   let checkboxInput = find(checkboxInputSelector);
   assert.ok(checkboxInput, 'renders the checkbox input');
 
-  let checkboxIcon = find(checkboxIconSelector);
+  let checkboxIcon = find(checkboxIconSvgSelector);
   assert.ok(checkboxIcon, 'renders the checkbox icon');
 
   // `checked` should default to false.
@@ -233,10 +251,18 @@ test('it handles the checked state correctly', function(assert) {
   // TODO: check icon
 });
 
-test('it handles label components correctly', function(assert) {
+test('it handles explicit label components correctly', function(assert) {
   this.render(hbs`{{polaris-checkbox labelComponent="dummy-label"}}`);
 
-  const choices = findAll(choiceSelector);
-  assert.equal(choices.length, 1, 'renders one `polaris-choice` component');
-  assert.equal(choices[0].dataset.labelComponent, 'dummy-label', 'passes the label component to the `polaris-choice`');
+  const dummyLabelSelector = buildNestedSelector(checkboxLabelSelector, 'div.dummy-label');
+  const dummyLabels = findAll(dummyLabelSelector);
+  assert.equal(dummyLabels.length, 1, 'renders one label component');
+});
+
+test('it handles label components correctly', function(assert) {
+  this.render(hbs`{{polaris-checkbox label=(component "dummy-label")}}`);
+
+  const dummyLabelSelector = buildNestedSelector(checkboxLabelSelector, 'div.dummy-label');
+  const dummyLabels = findAll(dummyLabelSelector);
+  assert.equal(dummyLabels.length, 1, 'renders one label component');
 });

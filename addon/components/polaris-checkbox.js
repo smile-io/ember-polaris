@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { typeOf } from '@ember/utils';
 import { equal } from '@ember/object/computed';
+import { deprecate } from '@ember/debug';
 import layout from '../templates/components/polaris-checkbox';
 
 /**
@@ -19,7 +20,7 @@ export default Component.extend({
    * Label for the checkbox
    *
    * @property label
-   * @type {String}
+   * @type {String|Component}
    * @default null
    * @public
    */
@@ -27,6 +28,8 @@ export default Component.extend({
 
   /**
    * Component to render for the checkbox's label
+   *
+   * DEPRECATED: pass the component as `label` instead.
    *
    * @property labelComponent
    * @type {String | Component}
@@ -186,4 +189,20 @@ export default Component.extend({
 
     return describedBy.join(' ');
   }).readOnly(),
+
+  /**
+   * Lifecycle hooks.
+   */
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    deprecate(
+      'Passing an explicit `labelComponent` to `polaris-checkbox` is deprecated - pass the component as `label` instead',
+      !this.get('labelComponent'),
+      {
+        id: 'ember-polaris.polaris-checkbox.label-component',
+        until: '2.0.0',
+      }
+    );
+  },
 });
