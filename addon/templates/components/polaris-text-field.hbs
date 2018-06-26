@@ -93,6 +93,19 @@
   {{/if}}
 </div>
 
+{{#if error}}
+  <div id="{{id}}Error" class="Polaris-Labelled__Error">
+    <div class="Polaris-Labelled__ErrorIcon">
+      {{polaris-icon source="error"}}
+    </div>
+    {{render-content error}}
+  </div>
+{{/if}}
+
+{{#if helpText}}
+  <div class="Polaris-Labelled__HelpText" id="{{id}}HelpText">{{render-content helpText}}</div>
+{{/if}}
+
 {{#if connectedRight}}
   {{render-content connectedRight}}
 {{/if}}
