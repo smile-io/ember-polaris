@@ -71,13 +71,35 @@ test('it renders the correct HTML when items are passed in', function(assert) {
   assert.equal(itemsDescriptions.length, itemsLength, 'it renders the correct number of descriptions following terms');
 });
 
-test('it renders items with `termComponent` and `descriptionComponent` attributes', function(assert) {
+test('it renders items with explicit `termComponent` and `descriptionComponent` attributes', function(assert) {
   this.render(hbs`
     {{polaris-description-list
       items=(array
         (hash
           termComponent=(component "stub-term-component")
           descriptionComponent=(component "stub-description-component")
+        )
+      )
+    }}
+  `);
+
+  const descriptionListComponent = findAll(componentSelector);
+  assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
+
+  const termComponent = findAll(stubTermSelector);
+  assert.equal(termComponent.length, 1, 'it renders a component passed as a `termComponent` attribute');
+
+  const descriptionComponent = findAll(stubDescriptionSelector);
+  assert.equal(descriptionComponent.length, 1, 'it renders a component passed as a `descriptionComponent` attribute');
+});
+
+test('it renders items with `term` and `description` components', function(assert) {
+  this.render(hbs`
+    {{polaris-description-list
+      items=(array
+        (hash
+          term=(component "stub-term-component")
+          description=(component "stub-description-component")
         )
       )
     }}

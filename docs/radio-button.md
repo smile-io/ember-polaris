@@ -28,3 +28,13 @@ Radio button with help text:
   onChange=(action (mut selectedValue))
 }}
 ```
+
+Radio button with customer label component:
+
+```hbs
+{{polaris-radio-button
+  label=(component "my-custom-label")
+  value="option-1"
+  onChange=(action (mut selectedValue))
+}}
+```
