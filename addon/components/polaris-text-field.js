@@ -349,6 +349,29 @@ export default Component.extend({
     return `Polaris-TextField ${ valueClass } ${ disabledClass } ${ readOnlyClass } ${ errorClass } ${ multilineClass } ${ focusClass }`;
   }),
 
+  ariaDescribedBy: computed('error', 'helpText', 'id', function() {
+    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let describedBy = [];
+
+    if (error) {
+      describedBy.push(`${ id }Error`);
+    }
+
+    if (helpText) {
+      describedBy.push(`${ id }HelpText`);
+    }
+
+    return describedBy.join(' ');
+  }),
+
+  ariaLabelledBy: computed('id', function() {
+    return `${ this.get('id') }Label`;
+  }),
+
+  ariaInvalid: computed('error', function() {
+    return !!this.get('error');
+  }),
+
   inputType: computed('type', function() {
     let type = this.get('type');
 
@@ -357,6 +380,7 @@ export default Component.extend({
 
   input: computed('multiline', function() {
     let multiline = this.get('multiline');
+
     return multiline ? 'textarea' : 'input';
   }),
 
@@ -366,14 +390,11 @@ export default Component.extend({
     return (typeof multiline === 'number') ? multiline : 1;
   }),
 
-  // TODO: set height style
+  heightStyle: computed('height', 'multiline', function() {
+    let { height, multiline } = this.getProperties('height', 'multiline');
 
-  // TODO: describedBy
-
-  // TODO: labelledBy
-
-  // TODO: add attrs to input
-
+    return (height && multiline) ? htmlSafe(`height: ${ height }px`) : '';
+  }),
 
   init() {
     this._super(...arguments);
@@ -428,6 +449,10 @@ export default Component.extend({
 
     handleExpandingResize(height) {
       this.set('height', height);
+    },
+
+    handleChange(e) {
+      this.get('onChange')(e, this.get('id'));
     }
   }
 });
