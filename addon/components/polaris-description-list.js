@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { A as EmberArray } from '@ember/array';
+import { deprecate } from '@ember/debug';
 import layout from '../templates/components/polaris-description-list';
 
 export default Component.extend({
@@ -21,8 +23,8 @@ export default Component.extend({
    *
    * items=(array
    *   (hash
-   *     termComponent=(component my-term-component)
-   *     descriptionComponent=(component my-description-component)
+   *     term=(component "my-term-component")
+   *     description=(component "my-description-component")
    *   )
    * )
    *
@@ -31,5 +33,30 @@ export default Component.extend({
    * @type {Array}
    * @default: null
    */
-  items: null
+  items: null,
+
+  /**
+   * Lifecycle hooks.
+   */
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    let items = EmberArray(this.get('items') || []);
+    deprecate(
+      'Passing an explicit `termComponent` in `polaris-description-list` `items` is deprecated - pass the component as `term` instead',
+      !items.any((item) => item && item.termComponent),
+      {
+        id: 'ember-polaris.polaris-description-list.term-component',
+        until: '2.0.0',
+      }
+    );
+    deprecate(
+      'Passing an explicit `descriptionComponent` in `polaris-description-list` `items` is deprecated - pass the component as `description` instead',
+      !items.any((item) => item && item.descriptionComponent),
+      {
+        id: 'ember-polaris.polaris-description-list.description-component',
+        until: '2.0.0',
+      }
+    );
+  },
 });
