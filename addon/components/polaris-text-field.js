@@ -360,14 +360,24 @@ export default Component.extend({
     return multiline ? 'textarea' : 'input';
   }),
 
-  // TODO: resizer and style/height?
+  minimumLines: computed('multiline', function() {
+    let multiline = this.get('multiline');
+
+    return (typeof multiline === 'number') ? multiline : 1;
+  }),
+
+  // TODO: set height style
 
   // TODO: describedBy
 
   // TODO: labelledBy
 
+  // TODO: add attrs to input
+
 
   init() {
+    this._super(...arguments);
+
     let { id, type } = this.getProperties('id', 'type');
 
     assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
@@ -382,6 +392,8 @@ export default Component.extend({
   },
 
   didReceiveAttrs() {
+    this._super(...arguments);
+
     let { input, focused } = this.getProperties('input', 'focused');
 
     if (input && focused) {
@@ -412,6 +424,10 @@ export default Component.extend({
       let newValue = Math.min(max, Math.max(numericValue + steps * step, min));
 
       onChange(String(newValue.toFixed(decimalPlaces)), id);
+    },
+
+    handleExpandingResize(height) {
+      this.set('height', height);
     }
   }
 });

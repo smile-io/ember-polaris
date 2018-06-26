@@ -43,7 +43,14 @@
 
   <div class="Polaris-TextField__Backdrop"></div>
 
-  <!-- resizer -->
+  {{#if multiline}}
+    {{polaris-text-field/resizer
+      contents=(or value placeholder)
+      currentHeight=height
+      minimumLines=minimumLines
+      onHeightChange=(action "handleExpandingResize")
+    }}
+  {{/if}}
 </div>
 
 {{#if connectedRight}}
