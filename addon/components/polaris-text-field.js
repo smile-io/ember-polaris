@@ -20,6 +20,11 @@ const allowedTypes = [
   'currency'
 ];
 
+// Returns the length of decimal places in a number
+const dpl = (num) => {
+  (num.toString().split('.')[1] || []).length;
+};
+
 /**
  * Polaris text-field component.
  * See https://polaris.shopify.com/components/forms/text-field
@@ -355,12 +360,6 @@ export default Component.extend({
     return multiline ? 'textarea' : 'input';
   }),
 
-  // prefixMarkup: build in template
-
-  // suffixMarkup: build in template
-
-  // spinnerMarkup: build in template
-
   // TODO: resizer and style/height?
 
   // TODO: describedBy
@@ -387,6 +386,32 @@ export default Component.extend({
 
     if (input && focused) {
       input.focus();
+    }
+  },
+
+  actions: {
+    handleNumberChange() {
+      let {
+        id,
+        onChange,
+        value,
+        step = 1,
+        min = -Infinity,
+        max = Infinity,
+      } = this.getProperties('id', 'onChange', 'value', 'step', 'min', 'max');
+
+      let numericValue = value ? parseFloat(value) : 0;
+
+      if (isNaN(numericValue)) {
+        return;
+      }
+
+      // Making sure the new value has the same length of decimal places as the
+      // step / value has.
+      let decimalPlaces = Math.max(dpl(numericValue), dpl(step));
+      let newValue = Math.min(max, Math.max(numericValue + steps * step, min));
+
+      onChange(String(newValue.toFixed(decimalPlaces)), id);
     }
   }
 });

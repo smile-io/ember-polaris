@@ -35,7 +35,11 @@
     </div>
   {{/if}}
 
-  <!-- spinner -->
+  {{#if (and (eq type "number") (not disabled))}}
+    {{polaris-text-field/spinner
+      onChange=(action "handleNumberChange")
+    }}
+  {{/if}}
 
   <div class="Polaris-TextField__Backdrop"></div>
 

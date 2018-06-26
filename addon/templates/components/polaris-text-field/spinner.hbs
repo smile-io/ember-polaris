@@ -1,0 +1,24 @@
+<div
+  class="Polaris-TextField__Spinner"
+  aria-hidden="true"
+  onclick={{action onClick}}
+>
+  <div role="button"
+    class="Polaris-TextField__Segment"
+    tabindex="-1"
+    onclick={{action onChange 1}}
+  >
+    <div class="Polaris-TextField__SpinnerIcon">
+      {{polaris-icon source='caret-up'}}
+    </div>
+  </div>
+  <div role="button"
+    class="Polaris-TextField__Segment"
+    tabindex="-1"
+    onclick={{action onChange -1}}
+  >
+    <div class="Polaris-TextField__SpinnerIcon">
+      {{polaris-icon source='caret-down'}}
+    </div>
+  </div>
+</div>
