@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import layout from '../../templates/components/polaris-text-field/resizer';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
 
 const REPLACE_REGEX = /[\n&<>]/g;
 
@@ -31,7 +32,7 @@ export default Component.extend({
 
   onHeightChange(/* height */) {},
 
-  finalContents: computed('content', function() {
+  finalContents: computed('contents', function() {
     let contents = this.get('contents');
 
     contents = contents
@@ -53,9 +54,9 @@ export default Component.extend({
   }),
 
   handleHeightCheck() {
-    let [ contentNode, minimumLinesNode ] = this.element.querySelectorAll('Polaris-TextField__DummyInput');
+    let [ contentNode, minimumLinesNode ] = this.element.querySelectorAll('.Polaris-TextField__DummyInput');
 
-    if (contentNode === null || minimumLinesNode === null) {
+    if (!contentNode || !minimumLinesNode) {
       return;
     }
 
@@ -86,9 +87,9 @@ export default Component.extend({
     this.addResizeHandler();
   },
 
-  didReceiveAttrs() {
+  didUpdateAttrs() {
     this._super(...arguments);
-    this.handleHeightCheck();
+    scheduleOnce('afterRender', this, this.handleHeightCheck);
   },
 
   willDestroyElement() {

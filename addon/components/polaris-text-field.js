@@ -4,6 +4,8 @@ import { createUniqueIDFactory } from '../utils/other';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { debounceTask, runDisposables } from 'ember-lifeline';
+import { next } from '@ember/runloop';
 
 const allowedTypes = [
   'text',
@@ -337,6 +339,25 @@ export default Component.extend({
    */
   onBlur() {},
 
+  addValueListener() {
+    let [ field ] = this.element.querySelectorAll('input, textarea');
+    let _this = this;
+
+    field.addEventListener('keyup', () => {
+      debounceTask(_this, 'debouncedUpdateValue', 250);
+    });
+  },
+
+  removeValueListener() {
+    let [ field ] = this.element.querySelectorAll('input, textarea');
+    field.removeEventListener('keyup');
+  },
+
+  debouncedUpdateValue() {
+    let [ field ] = this.element.querySelectorAll('input, textarea');
+    this.set('value', field.value);
+  },
+
   textFieldClasses: computed('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus', function() {
     let { value, disabled, readOnly, error, multiline, focus } = this.getProperties('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus');
 
@@ -400,16 +421,22 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let { id, type } = this.getProperties('id', 'type');
+    let { id, type, value, placeholder } = this.getProperties('id', 'type', 'value', 'placeholder');
+    let getUniqueID = createUniqueIDFactory('TextField');
 
     assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
 
-    id = id || createUniqueIDFactory('TextField');
+    id = id || getUniqueID();
 
     this.setProperties({
       height: null,
       focus: false,
-      id
+      id,
+      resizeContents: (value || placeholder)
+    });
+
+    next(this, ()=> {
+      this.addValueListener();
     });
   },
 
@@ -423,16 +450,30 @@ export default Component.extend({
     }
   },
 
+  willDestroyElement() {
+    this.removeValueListener();
+  },
+
+  destroy() {
+    runDisposables(this);
+
+    this._super(...arguments);
+  },
+
   actions: {
     handleNumberChange(steps) {
       let {
         id,
         onChange,
         value,
-        step = 1,
-        min = -Infinity,
-        max = Infinity,
+        step,
+        min,
+        max,
       } = this.getProperties('id', 'onChange', 'value', 'step', 'min', 'max');
+
+      step = step || 1;
+      min = min || -Infinity;
+      max = max || Infinity;
 
       let numericValue = value ? parseFloat(value) : 0;
 
@@ -467,6 +508,6 @@ export default Component.extend({
     handleClick() {
       let [ field ] = this.element.querySelectorAll('input, textarea');
       field.focus();
-    },
+    }
   }
 });
