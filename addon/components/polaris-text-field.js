@@ -353,7 +353,12 @@ export default Component.extend({
 
   removeValueListener() {
     let [ field ] = this.element.querySelectorAll('input, textarea');
-    field.removeEventListener('keyup');
+
+    // inline method is passed so tests don't fail
+    let _this = this;
+    field.removeEventListener('keyup', () => {
+      debounceTask(_this, 'debouncedUpdateValue', 250);
+    });
   },
 
   debouncedUpdateValue() {
