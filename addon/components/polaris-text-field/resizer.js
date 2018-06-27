@@ -24,12 +24,45 @@ export default Component.extend({
 
   layout,
 
+  /**
+   * The value of the textarea
+   *
+   * @property contents
+   * @public
+   * @type {String}
+   * @default null
+   */
   contents: null,
 
+  /**
+   * The height (in px) of the textarea
+   *
+   * @property currentHeight
+   * @public
+   * @type {Number}
+   * @default null
+   */
   currentHeight: null,
 
+  /**
+   * The multiline value of the textarea if
+   * a numeric value was passed-in to the polaris-text-field
+   *
+   * @property minimumLines
+   * @public
+   * @type {Number}
+   * @default null
+   */
   minimumLines: null,
 
+  /**
+   * Callback when the height of the resize container changes
+   *
+   * @property onHeightChange
+   * @public
+   * @type {Function}
+   * @default noop
+   */
   onHeightChange(/* height */) {},
 
   finalContents: computed('contents', function() {
