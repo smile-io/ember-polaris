@@ -429,7 +429,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let { id, type, value, placeholder } = this.getProperties('id', 'type', 'value', 'placeholder');
+    let { id, type } = this.getProperties('id', 'type');
     let getUniqueID = createUniqueIDFactory('TextField');
 
     assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
@@ -439,8 +439,7 @@ export default Component.extend({
     this.setProperties({
       height: null,
       focus: false,
-      id,
-      resizeContents: (value || placeholder)
+      id
     });
 
     next(this, ()=> {
