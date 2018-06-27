@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-text-field/resizer';
 import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
 
 const REPLACE_REGEX = /[\n&<>]/g;
 

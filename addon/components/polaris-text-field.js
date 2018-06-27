@@ -3,6 +3,7 @@ import layout from '../templates/components/polaris-text-field';
 import { createUniqueIDFactory } from '../utils/other';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 
 const allowedTypes = [
   'text',
@@ -190,9 +191,9 @@ export default Component.extend({
    * @property type
    * @public
    * @type {String}
-   * @default null
+   * @default text
    */
-  type: null,
+  type: 'text',
 
   /**
    * Name of the input
@@ -314,7 +315,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(value, id) {},
+  onChange(/* value, id */) {},
 
   /**
    * Callback when input is focused
@@ -423,7 +424,7 @@ export default Component.extend({
   },
 
   actions: {
-    handleNumberChange() {
+    handleNumberChange(steps) {
       let {
         id,
         onChange,
@@ -453,6 +454,19 @@ export default Component.extend({
 
     handleChange(e) {
       this.get('onChange')(e, this.get('id'));
-    }
+    },
+
+    handleFocus() {
+      this.set('focus', true);
+    },
+
+    handleBlur() {
+      this.set('focus', false);
+    },
+
+    handleClick() {
+      let [ field ] = this.element.querySelectorAll('input, textarea');
+      field.focus();
+    },
   }
 });
