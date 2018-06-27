@@ -7,10 +7,10 @@ import { assign } from '@ember/polyfills';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../templates/components/polaris-data-table';
 
-function volatileElementLookup(selector) {
+function elementLookup(selector) {
   return computed(function() {
     return this.element.querySelector(selector);
-  }).volatile();
+  });
 }
 
 function measureColumn(tableData) {
@@ -44,7 +44,7 @@ function measureColumn(tableData) {
         index,
       );
     }
-    return {leftEdge, rightEdge, isVisible};
+    return { leftEdge, rightEdge, isVisible };
   };
 }
 
@@ -71,7 +71,7 @@ function getPrevAndCurrentColumns(tableData, columnData) {
     },
     columnData[firstVisibleColumnIndex]
   );
-  return {previousColumn, currentColumn};
+  return { previousColumn, currentColumn };
 }
 
 /**
@@ -266,21 +266,21 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {HTMLElement}
    * @private
    */
-  dataTable: volatileElementLookup('.Polaris-DataTable').readOnly(),
+  dataTable: elementLookup('.Polaris-DataTable').readOnly(),
 
   /**
    * @property scrollContainer
    * @type {HTMLElement}
    * @private
    */
-  scrollContainer: volatileElementLookup('.Polaris-DataTable__ScrollContainer').readOnly(),
+  scrollContainer: elementLookup('.Polaris-DataTable__ScrollContainer').readOnly(),
 
   /**
    * @property table
    * @type {HTMLElement}
    * @private
    */
-  table: volatileElementLookup('.Polaris-DataTable__Table').readOnly(),
+  table: elementLookup('.Polaris-DataTable__Table').readOnly(),
 
   /**
    * @property contentTypes
@@ -327,9 +327,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   calculateColumnVisibilityData(collapsed) {
     if (collapsed) {
-      let headerCells = this.get('table').querySelectorAll(
-        '[class*=header]',
-      );
+      let headerCells = this.get('table').querySelectorAll('[class*=header]');
       let collapsedHeaderCells = Array.from(headerCells).slice(2);
       let fixedColumnWidth = headerCells[0].offsetWidth;
       let tableData = {
