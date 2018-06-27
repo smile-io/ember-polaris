@@ -2,9 +2,10 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isBlank, isPresent, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { scheduleOnce, debounce } from '@ember/runloop';
+import { scheduleOnce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../templates/components/polaris-data-table';
 
 function elementLookup(selector) {
@@ -78,7 +79,7 @@ function getPrevAndCurrentColumns(tableData, columnData) {
  * Polaris data table component.
  * See https://polaris.shopify.com/components/lists-and-tables/data-table
  */
-export default Component.extend(ContextBoundEventListenersMixin, {
+export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin, {
   classNameBindings: ['collapsed:Polaris-DataTable--collapsed'],
 
   layout,
@@ -359,14 +360,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   handleResize() {
     // This is needed to replicate the React implementation's `@debounce` decorator.
-    debounce(this, 'debouncedHandleResize', 0);
+    this.debounceTask('debouncedHandleResize', 0);
   },
 
   debouncedHandleResize() {
-    if (this.get('isDestroying') || this.get('isDestroyed')) {
-      return;
-    }
-
     let { footerContent, truncate } = this.getProperties('footerContent', 'truncate');
     let collapsed = this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
 
