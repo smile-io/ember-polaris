@@ -2,6 +2,14 @@
   <div class="Polaris-Label">
     <label id="TextField6Label" for={{id}} class="Polaris-Label__Text">{{label}}</label>
   </div>
+  {{#if labelAction}}
+    {{polaris-button
+      plain=true
+      text=labelAction.content
+      accessibilityLabel=labelAction.accessibilityLabel
+      onClick=(action labelAction.onAction)
+    }}
+  {{/if}}
 </div>
 
 {{#polaris-text-field/connected

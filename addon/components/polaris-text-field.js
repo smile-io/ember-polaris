@@ -304,10 +304,13 @@ export default Component.extend({
    *
    * @property labelAction
    * @public
-   * @type {Function}
-   * @default noop
+   * @type {Object}
+   * @default null
+   *
+   * Currently supports:
+   * { onAction, content, accessibilityLabel }
    */
-  labelAction() {},
+  labelAction: null,
 
   /**
    * Callback when value is changed
