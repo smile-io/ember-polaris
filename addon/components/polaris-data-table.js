@@ -4,12 +4,8 @@ import { isBlank, isPresent, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { scheduleOnce, debounce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
+import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../templates/components/polaris-data-table';
-
-const eventHandlerParams = [
-  [ window, 'resize', 'handleResize' ],
-  [ window, 'scroll', 'scrollListener', true ],
-];
 
 function volatileElementLookup(selector) {
   return computed(function() {
@@ -82,7 +78,7 @@ function getPrevAndCurrentColumns(tableData, columnData) {
  * Polaris data table component.
  * See https://polaris.shopify.com/components/lists-and-tables/data-table
  */
-export default Component.extend({
+export default Component.extend(ContextBoundEventListenersMixin, {
   classNameBindings: ['collapsed:Polaris-DataTable--collapsed'],
 
   layout,
@@ -266,13 +262,6 @@ export default Component.extend({
   totalsRowHeading: 'Totals',
 
   /**
-   * @property eventHandlerParams
-   * @type {Array[]}
-   * @private
-   */
-  eventHandlerParams,
-
-  /**
    * @property dataTable
    * @type {HTMLElement}
    * @private
@@ -427,15 +416,8 @@ export default Component.extend({
   },
 
   addEventHandlers() {
-    this.get('eventHandlerParams').forEach(([ target, eventName, callbackName, ...rest ]) => {
-      target.addEventListener(eventName, this[callbackName].bind(this), ...rest);
-    });
-  },
-
-  removeEventHandlers() {
-    this.get('eventHandlerParams').forEach(([ target, eventName, callbackName, ...rest ]) => {
-      target.removeEventListener(eventName, this[callbackName].bind(this), ...rest);
-    });
+    this.addEventListener(window, 'resize', this.handleResize);
+    this.addEventListener(window, 'scroll', this.scrollListener, { capture: true });
   },
 
   /*
@@ -458,10 +440,6 @@ export default Component.extend({
     this.handleResize();
 
     this.addEventHandlers();
-  },
-
-  willDestroyElement() {
-    this.removeEventHandlers();
   },
 
   didUpdateAttrs() {

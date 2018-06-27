@@ -21,7 +21,7 @@
           onkeydown={{action "onKeyDown"}}
         >
           {{#if (eq contentType "text")}}
-            <span class="Polaris-DataTable__Heading {{if (eq contentType "text") "Polaris-DataTable__Heading--left"}}">
+            <span class="Polaris-DataTable__Heading Polaris-DataTable__Heading--left">
               {{render-content text}}
               <span class="Polaris-DataTable__Heading--sortable">
                 {{#unless sorted}}
@@ -35,7 +35,7 @@
               </span>
             </span>
           {{else}}
-            <span class="Polaris-DataTable__Heading {{if (eq contentType "text") "Polaris-DataTable__Heading--left"}}">
+            <span class="Polaris-DataTable__Heading">
               <span class="Polaris-DataTable__Heading--sortable">
                 {{#unless sorted}}
                   {{polaris-icon source=sortIconSource}}
