@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { guidFor } from '@ember/object/internals';
 import layout from '../../templates/components/polaris-data-table/cell';
 
 export default Component.extend({
@@ -116,6 +117,26 @@ export default Component.extend({
   onSort() {},
 
   /**
+   * Accessibility label for the cell. This will get set dynamically after rendering.
+   *
+   * @property sortAccessibilityLabel
+   * @type {String}
+   * @private
+   */
+  sortAccessibilityLabel: null,
+
+  /**
+   * Generated unique ID to be set on the rendered SVG element.
+   *
+   * @property cellElementId
+   * @type {String}
+   * @private
+   */
+  cellElementId: computed(function() {
+    return guidFor(this);
+  }).readOnly(),
+
+  /**
    * @property cellClassNames
    * @type {String}
    * @private
@@ -187,6 +208,17 @@ export default Component.extend({
     let sortDirection = this.get('sorted') ? this.get('sortDirection') : this.get('defaultSortDirection');
     return `caret-${ sortDirection === 'ascending' ? 'up' : 'down' }`;
   }).readOnly(),
+
+  updateAccessibilityLabel() {
+    let cellElement = document.querySelector(`#${ this.get('cellElementId') }`);
+    this.set('sortAccessibilityLabel', `Sort by ${cellElement.textContent.trim().toLowerCase()}`);
+  },
+
+  didRender() {
+    this._super(...arguments);
+
+    this.updateAccessibilityLabel();
+  },
 
   actions: {
     onKeyDown(event) {

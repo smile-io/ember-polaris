@@ -1,14 +1,15 @@
 {{#if presentational}}
   {{#if header}}
-    <th aria-hidden="true" role="presentation" class={{cellClassNames}} style={{style}}></th>
+    <th aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></th>
   {{else}}
-    <td aria-hidden="true" role="presentation" class={{cellClassNames}} style={{style}}></td>
+    <td aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></td>
   {{/if}}
 {{else}}
   {{#if (or header fixed)}}
     {{#if header}}
       {{#if sortable}}
         <th
+          id={{cellElementId}}
           scope="col"
           class={{cellClassNames}}
           style={{style}}
@@ -52,6 +53,7 @@
       {{else}}
         <th
           scope="col"
+          id={{cellElementId}}
           class={{cellClassNames}}
           style={{style}}
           aria-disabled="true"
@@ -60,12 +62,12 @@
         </th>
       {{/if}}
     {{else}}
-      <th class={{cellClassNames}} scope="row" style={{style}}>
+      <th id={{cellElementId}} class={{cellClassNames}} scope="row" style={{style}}>
         {{render-content text}}
       </th>
     {{/if}}
   {{else}}
-    <td class={{cellClassNames}} style={{style}}>
+    <td id={{cellElementId}} class={{cellClassNames}} style={{style}}>
       {{render-content text}}
     </td>
   {{/if}}
