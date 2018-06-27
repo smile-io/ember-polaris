@@ -6,21 +6,111 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | polaris-text-field', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`{{polaris-text-field}}`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
+  test('it renders a text input by default', async function(assert) {
     await render(hbs`
-      {{#polaris-text-field}}
-        template block text
-      {{/polaris-text-field}}
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
     `);
+  });
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('when `type` is numeric, it renders a spinner which changes the value on click', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders as a textarea when `multiline` is true', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders a link with an action when a `labelAction` hash is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders help text when `helpText` is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it renders validation errors when `error` is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it calls `handleChange` when input is changed', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it calls `handleFocus` when the container is focused', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it calls `handleBlur` when the container is blurred', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
+  });
+
+  test('it calls `handleClick` when the container is clicked', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        label="Hello"
+        value=''
+      }}
+    `);
   });
 });
