@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v1.6.1 (June 28, 2018)
 
 - [#141](https://github.com/smile-io/ember-polaris/pull/141) [FEATURE] Add `polaris-data-table` component.
 - [#142](https://github.com/smile-io/ember-polaris/pull/142) [ENHANCEMENT] Support React-style child content.
