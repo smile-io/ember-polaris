@@ -148,6 +148,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Tag](./docs/tag.md#tag)
 
 #### Lists
+- [Data table](./docs/data-table.md#data-table)
 - [Description list](./docs/description-list.md#description-list)
 - [List](./docs/list.md#list)
 - [Resource list](./docs/resource-list.md#resource-list)

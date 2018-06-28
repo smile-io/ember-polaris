@@ -2,6 +2,7 @@ import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isNone } from '@ember/utils';
+import { scheduleOnce } from '@ember/runloop';
 
 /*
  * This mixin is intended for use with components that render an SVG icon
@@ -49,6 +50,10 @@ export default Mixin.create({
     return document.querySelector(`#${ this.get('svgElementId') }`);
   }).volatile(),
 
+  removeFillsFromSvgElement() {
+    this.removeSvgFills(this.get('svgElement'));
+  },
+
   /*
    * Helper method to process the `fill` attribute
    * on a given SVG element and its children.
@@ -79,6 +84,12 @@ export default Mixin.create({
   didInsertElement() {
     this._super(...arguments);
 
-    this.removeSvgFills(this.get('svgElement'));
+    this.removeFillsFromSvgElement();
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+
+    scheduleOnce('afterRender', this, this.removeFillsFromSvgElement);
   },
 });
