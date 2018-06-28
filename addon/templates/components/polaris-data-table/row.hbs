@@ -1,0 +1,10 @@
+{{#each (polaris-data-table/insert-presentational-cell row) as |cellText cellIndex|}}
+  {{polaris-data-table/cell
+    height=(get-array-item bodyCellHeights index)
+    text=cellText
+    contentType=(get-array-item contentTypes cellIndex)
+    fixed=(eq cellIndex 0)
+    truncate=truncate
+    presentational=(eq cellIndex 1)
+  }}
+{{/each}}
