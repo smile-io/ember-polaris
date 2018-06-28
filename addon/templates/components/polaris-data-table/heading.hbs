@@ -1,0 +1,14 @@
+{{polaris-data-table/cell
+  header=true
+  height=height
+  text=heading
+  contentType=(get-array-item contentTypes headingIndex)
+  fixed=isFixed
+  truncate=truncate
+  presentational=isPresentational
+  defaultSortDirection=(if sortable defaultSortDirection)
+  sorted=(if sortable isSorted)
+  sortable=(if sortable isSortable)
+  sortDirection=(if sortable direction)
+  onSort=(if sortable (action defaultOnSort index))
+}}

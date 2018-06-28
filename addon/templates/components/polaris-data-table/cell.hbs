@@ -1,0 +1,74 @@
+{{#if presentational}}
+  {{#if header}}
+    <th aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></th>
+  {{else}}
+    <td aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></td>
+  {{/if}}
+{{else}}
+  {{#if (or header fixed)}}
+    {{#if header}}
+      {{#if sortable}}
+        <th
+          id={{cellElementId}}
+          scope="col"
+          class={{cellClassNames}}
+          style={{style}}
+          role="button"
+          aria-sort={{sortDirection}}
+          aria-label={{sortAccessibilityLabel}}
+          tabindex="0"
+          {{action onSort}}
+          onkeydown={{action "onKeyDown"}}
+        >
+          {{#if (eq contentType "text")}}
+            <span class="Polaris-DataTable__Heading Polaris-DataTable__Heading--left">
+              {{render-content text}}
+              <span class="Polaris-DataTable__Heading--sortable">
+                {{#unless sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/unless}}
+              </span>
+              <span>
+                {{#if sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/if}}
+              </span>
+            </span>
+          {{else}}
+            <span class="Polaris-DataTable__Heading">
+              <span class="Polaris-DataTable__Heading--sortable">
+                {{#unless sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/unless}}
+              </span>
+              <span>
+                {{#if sorted}}
+                  {{polaris-icon source=sortIconSource}}
+                {{/if}}
+              </span>
+              {{render-content text}}
+            </span>
+          {{/if}}
+        </th>
+      {{else}}
+        <th
+          scope="col"
+          id={{cellElementId}}
+          class={{cellClassNames}}
+          style={{style}}
+          aria-disabled="true"
+        >
+          {{render-content text}}
+        </th>
+      {{/if}}
+    {{else}}
+      <th id={{cellElementId}} class={{cellClassNames}} scope="row" style={{style}}>
+        {{render-content text}}
+      </th>
+    {{/if}}
+  {{else}}
+    <td id={{cellElementId}} class={{cellClassNames}} style={{style}}>
+      {{render-content text}}
+    </td>
+  {{/if}}
+{{/if}}

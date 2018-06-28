@@ -1,0 +1,72 @@
+{{polaris-data-table/navigation
+  currentColumn=currentColumn
+  columnVisibilityData=columnVisibilityData
+  navigateTableLeft=(action "navigateTable" "left")
+  navigateTableRight=(action "navigateTable" "right")
+}}
+
+<div class="Polaris-DataTable {{if collapsed "Polaris-DataTable--collapsed"}} {{if footerContent "Polaris-DataTable--hasFooter"}}">
+  <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
+    <table class="Polaris-DataTable__Table">
+      <thead>
+        <tr>
+          {{#each (polaris-data-table/insert-presentational-cell headings) as |heading headingIndex|}}
+            {{polaris-data-table/heading
+              heading=heading
+              headingIndex=headingIndex
+              truncate=truncate
+              heights=heights
+              sortable=sortable
+              sortedColumnIndex=(or sortedColumnIndex initialSortColumnIndex)
+              sortDirection=sortDirection
+              contentTypes=contentTypes
+              defaultSortDirection=defaultSortDirection
+              defaultOnSort=(action "defaultOnSort")
+            }}
+          {{/each}}
+        </tr>
+
+        {{#if totals}}
+          <tr>
+            {{#each (polaris-data-table/insert-presentational-cell totals) as |total index|}}
+              {{polaris-data-table/total
+                total=total
+                index=index
+                heights=heights
+                truncate=truncate
+                totalsRowHeading=totalsRowHeading
+              }}
+            {{/each}}
+          </tr>
+        {{/if}}
+      </thead>
+
+      <tbody>
+        {{#each rows as |row index|}}
+          {{polaris-data-table/row
+            row=row
+            index=index
+            totals=totals
+            heights=heights
+            footerContent=footerContent
+            contentTypes=contentTypes
+            truncate=truncate
+          }}
+        {{/each}}
+      </tbody>
+
+      {{#if footerContent}}
+        <tfoot class="Polaris-DataTable__TableFoot">
+          <tr>
+            {{polaris-data-table/cell
+              footer=true
+              height=heights.lastObject
+              text=footerContent
+              truncate=truncate
+            }}
+          </tr>
+        </tfoot>
+      {{/if}}
+    </table>
+  </div>
+</div>
