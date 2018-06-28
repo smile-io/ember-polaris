@@ -109,6 +109,19 @@ module('Integration | Component | polaris badge', function(hooks) {
       'Warning',
       'status set to warning - renders correct visually hidden content'
     );
+
+    // With status set to new:
+    //  - should apply new status class
+    //  - should render visually hidden component with new text
+    this.set('status', 'new');
+    assert.dom(badge).hasClass(
+      'Polaris-Badge--statusNew',
+      'status set to new - applies correct status class'
+    );
+    assert.dom(visuallyHiddenSelector).hasText(
+      'New',
+      'status set to new - renders correct visually hidden content'
+    );
   });
 
   test('it renders the correct HTML when progress is set', async function(assert) {

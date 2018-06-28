@@ -16,6 +16,7 @@ const STATUS_LABELS = {
   success: 'Success',
   warning: 'Warning',
   attention: 'Attention',
+  new: 'New',
 };
 
 /**
