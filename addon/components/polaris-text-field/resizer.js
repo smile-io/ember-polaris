@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../../templates/components/polaris-text-field/resizer';
@@ -76,7 +75,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
       : '<br>';
 
     return htmlSafe(contents);
-  }),
+  }).readOnly(),
 
   contentsForMinimumLines: computed('minimumLines', function() {
     let minimumLines = this.get('minimumLines');
@@ -87,7 +86,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     }
 
     return htmlSafe(content);
-  }),
+  }).readOnly(),
 
   handleHeightCheck() {
     let [ contentNode, minimumLinesNode ] = this.element.querySelectorAll('.Polaris-TextField__DummyInput');
@@ -121,6 +120,6 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
 
   didUpdateAttrs() {
     this._super(...arguments);
-    scheduleOnce('afterRender', this, this.handleHeightCheck);
+    this.handleHeightCheck();
   }
 });
