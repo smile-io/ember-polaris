@@ -4,11 +4,11 @@ import { computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import Ember from 'ember'
 
-// Renders another component with a passed-in hash of properties.
+// Renders a named component with a passed-in hash of properties.
 // This effectively allows us to spread/splat a props hash onto
 // another component.
 //
-// Example: dynamically render a my-button component with some props:
+// Example - dynamically rendering a my-button component with some props:
 //   {{component-renderer
 //     componentName="my-button"
 //     props=(hash
@@ -41,6 +41,10 @@ export default Component.extend({
    */
   propNames: null,
 
+  /**
+   * Dynamically-generated layout to render the proxied component.
+   * @private
+   */
   layout: computed('componentName', 'propsString', function() {
     let { componentName, propsString } = this.getProperties('componentName', 'propsString');
 
@@ -58,9 +62,14 @@ export default Component.extend({
     `);
   }).readOnly(),
 
-  propsString: computed('props', function() {
-    let props = this.get('props') || {};
-    return Object.keys(props).reduce((propsString, propName) => {
+  /**
+   * String representing the properties to pass to the proxied component.
+   * @type {String}
+   * @private
+   */
+  propsString: computed('propNames.[]', function() {
+    let propNames = this.get('propNames') || [];
+    return propNames.reduce((propsString, propName) => {
       return `${propsString} ${ propName }=${ propName }`;
     }, '');
   }).readOnly(),
