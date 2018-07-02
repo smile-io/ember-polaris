@@ -2,7 +2,7 @@
 
 ### Unreleased
 - [#144](https://github.com/smile-io/ember-polaris/pull/144) [UPDATE] Shopify Polaris `v2.2.0`
-  - Add `new` status to the Badge component
+  - [#146](https://github.com/smile-io/ember-polaris/pull/146) Add `new` status to the Badge component
 
 ### v1.6.1 (June 28, 2018)
 
