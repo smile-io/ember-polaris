@@ -1,8 +1,10 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-text-field/resizer';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
+import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
+import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import layout from '../../templates/components/polaris-text-field/resizer';
 
 const REPLACE_REGEX = /[\n&<>]/g;
 
@@ -17,7 +19,7 @@ function replaceEntity(entity) {
   return ENTITIES_TO_REPLACE[entity] || entity;
 }
 
-export default Component.extend({
+export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListenersMixin, {
   classNames: ['Polaris-TextField__Resizer'],
   attributeBindings: ['ariaHidden:aria-hidden'],
 
@@ -105,11 +107,7 @@ export default Component.extend({
   },
 
   addResizeHandler() {
-    this.element.addEventListener('resize', this.handleHeightCheck.bind(this));
-  },
-
-  removeResizeHandler() {
-    this.element.removeEventListener('resize', this.handleHeightCheck.bind(this));
+    this.addEventListener('resize', this.handleHeightCheck);
   },
 
   /*
@@ -124,10 +122,5 @@ export default Component.extend({
   didUpdateAttrs() {
     this._super(...arguments);
     scheduleOnce('afterRender', this, this.handleHeightCheck);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this.removeResizeHandler();
   }
 });

@@ -6,7 +6,8 @@ import { bool } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { typeOf } from '@ember/utils';
 import { isPresent } from '@ember/utils';
-import { debounceTask, runDisposables } from 'ember-lifeline';
+import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
+import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../templates/components/polaris-text-field';
 
 const allowedTypes = [
@@ -34,7 +35,7 @@ function dpl(num) {
  * Polaris text-field component.
  * See https://polaris.shopify.com/components/forms/text-field
  */
-export default Component.extend({
+export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListenersMixin, {
   classNameBindings: ['labelHidden:Polaris-Labelled--hidden'],
 
   layout,
@@ -421,21 +422,8 @@ export default Component.extend({
   }).readOnly(),
 
   addValueListener() {
-    let field = this.get('fieldElement');
-    let _this = this;
-
-    field.addEventListener('keyup', () => {
-      debounceTask(_this, 'debouncedUpdateValue', 250);
-    });
-  },
-
-  removeValueListener() {
-    let field = this.get('fieldElement');
-
-    // inline method is passed so tests don't fail
-    let _this = this;
-    field.removeEventListener('keyup', () => {
-      debounceTask(_this, 'debouncedUpdateValue', 250);
+    this.addEventListener('keyup', () => {
+      this.debounceTask('debouncedUpdateValue', 250);
     });
   },
 
@@ -477,16 +465,6 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
     this.checkFocus();
-  },
-
-  willDestroyElement() {
-    this.removeValueListener();
-  },
-
-  destroy() {
-    runDisposables(this);
-
-    this._super(...arguments);
   },
 
   actions: {
