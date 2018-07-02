@@ -1,11 +1,13 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-text-field';
-import { createUniqueIDFactory } from '../utils/other';
+import { guidFor } from '@ember/object/internals';
 import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
+import { typeOf } from '@ember/utils';
+import { isPresent } from '@ember/utils';
 import { debounceTask, runDisposables } from 'ember-lifeline';
-import { next } from '@ember/runloop';
+import layout from '../templates/components/polaris-text-field';
 
 const allowedTypes = [
   'text',
@@ -24,9 +26,9 @@ const allowedTypes = [
 ];
 
 // Returns the length of decimal places in a number
-const dpl = (num) => {
+function dpl(num) {
   (num.toString().split('.')[1] || []).length;
-};
+}
 
 /**
  * Polaris text-field component.
@@ -98,14 +100,27 @@ export default Component.extend({
   label: null,
 
   /**
+   * Adds an action to the label
+   *
+   * @property labelAction
+   * @public
+   * @type {Object}
+   * @default null
+   *
+   * Currently supports:
+   * { onAction, text, accessibilityLabel }
+   */
+  labelAction: null,
+
+  /**
    * Visually hide the label
    *
    * @property labelHidden
    * @public
    * @type {Boolean}
-   * @default null
+   * @default false
    */
-  labelHidden: null,
+  labelHidden: false,
 
   /**
    * Disable the input
@@ -162,7 +177,7 @@ export default Component.extend({
    *
    * @property error
    * @public
-   * @type {String}
+   * @type {String|Component}
    * @default null
    */
   error: null,
@@ -300,19 +315,6 @@ export default Component.extend({
   spellCheck: null,
 
   /**
-   * Adds an action to the label
-   *
-   * @property labelAction
-   * @public
-   * @type {Object}
-   * @default null
-   *
-   * Currently supports:
-   * { onAction, content, accessibilityLabel }
-   */
-  labelAction: null,
-
-  /**
    * Callback when value is changed
    *
    * @property onChange
@@ -342,42 +344,36 @@ export default Component.extend({
    */
   onBlur() {},
 
-  addValueListener() {
-    let [ field ] = this.element.querySelectorAll('input, textarea');
-    let _this = this;
-
-    field.addEventListener('keyup', () => {
-      debounceTask(_this, 'debouncedUpdateValue', 250);
-    });
-  },
-
-  removeValueListener() {
-    let [ field ] = this.element.querySelectorAll('input, textarea');
-
-    // inline method is passed so tests don't fail
-    let _this = this;
-    field.removeEventListener('keyup', () => {
-      debounceTask(_this, 'debouncedUpdateValue', 250);
-    });
-  },
-
-  debouncedUpdateValue() {
-    let [ field ] = this.element.querySelectorAll('input, textarea');
-    this.set('value', field.value);
-  },
-
   textFieldClasses: computed('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus', function() {
     let { value, disabled, readOnly, error, multiline, focus } = this.getProperties('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus');
+    let classes = ['Polaris-TextField'];
 
-    let valueClass = value ? 'Polaris-TextField--hasValue' : '';
-    let disabledClass = disabled ? 'Polaris-TextField--disabled' : '';
-    let readOnlyClass = readOnly ? 'Polaris-TextField--readOnly' : '';
-    let errorClass = error ? 'Polaris-TextField--error' : '';
-    let multilineClass = multiline ? 'Polaris-TextField--multiline' : '';
-    let focusClass = focus ? 'Polaris-TextField--focus' : '';
+    if (value) {
+      classes.push('Polaris-TextField--hasValue');
+    }
 
-    return `Polaris-TextField ${ valueClass } ${ disabledClass } ${ readOnlyClass } ${ errorClass } ${ multilineClass } ${ focusClass }`;
-  }),
+    if (disabled) {
+      classes.push('Polaris-TextField--disabled');
+    }
+
+    if (readOnly) {
+      classes.push('Polaris-TextField--readOnly');
+    }
+
+    if (error) {
+      classes.push('Polaris-TextField--error');
+    }
+
+    if (multiline) {
+      classes.push('Polaris-TextField--multiline');
+    }
+
+    if (focus) {
+      classes.push('Polaris-TextField--focus');
+    }
+
+    return classes.join(' ');
+  }).readOnly(),
 
   ariaDescribedBy: computed('error', 'helpText', 'id', function() {
     let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
@@ -392,69 +388,95 @@ export default Component.extend({
     }
 
     return describedBy.join(' ');
-  }),
+  }).readOnly(),
 
   ariaLabelledBy: computed('id', function() {
     return `${ this.get('id') }Label`;
-  }),
+  }).readOnly(),
 
-  ariaInvalid: computed('error', function() {
-    return !!this.get('error');
-  }),
+  ariaInvalid: bool('error').readOnly(),
 
   inputType: computed('type', function() {
     let type = this.get('type');
 
     return type === 'currency' ? 'text' : type;
-  }),
-
-  input: computed('multiline', function() {
-    let multiline = this.get('multiline');
-
-    return multiline ? 'textarea' : 'input';
-  }),
+  }).readOnly(),
 
   minimumLines: computed('multiline', function() {
     let multiline = this.get('multiline');
 
-    return (typeof multiline === 'number') ? multiline : 1;
-  }),
+    return (typeOf(multiline) === 'number') ? multiline : 1;
+  }).readOnly(),
 
   heightStyle: computed('height', 'multiline', function() {
     let { height, multiline } = this.getProperties('height', 'multiline');
 
-    return (height && multiline) ? htmlSafe(`height: ${ height }px`) : '';
-  }),
+    return (height && multiline) ? htmlSafe(`height: ${ height }px`) : null;
+  }).readOnly(),
+
+  shouldShowSpinner: computed('disabled', 'type', function() {
+    let { type, disabled } = this.getProperties('type', 'disabled');
+
+    return (typeOf(type) === 'number') && !disabled;
+  }).readOnly(),
+
+  addValueListener() {
+    let field = this.get('fieldElement');
+    let _this = this;
+
+    field.addEventListener('keyup', () => {
+      debounceTask(_this, 'debouncedUpdateValue', 250);
+    });
+  },
+
+  removeValueListener() {
+    let field = this.get('fieldElement');
+
+    // inline method is passed so tests don't fail
+    let _this = this;
+    field.removeEventListener('keyup', () => {
+      debounceTask(_this, 'debouncedUpdateValue', 250);
+    });
+  },
+
+  debouncedUpdateValue() {
+    let field = this.get('fieldElement');
+    this.set('value', field.value);
+  },
 
   init() {
     this._super(...arguments);
 
     let { id, type } = this.getProperties('id', 'type');
-    let getUniqueID = createUniqueIDFactory('TextField');
 
     assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
 
-    id = id || getUniqueID();
+    id = id || `TextField-${ guidFor(this) }`;
 
     this.setProperties({
       height: null,
       focus: false,
       id
     });
+  },
 
-    next(this, ()=> {
-      this.addValueListener();
-    });
+  checkFocus() {
+    let { fieldElement, focused } = this.getProperties('fieldElement', 'focused');
+
+    if (fieldElement && focused) {
+      this.$(fieldElement).focus();
+    }
+  },
+
+  didInsertElement() {
+    this.set('fieldElement', this.element.querySelector('input, textarea'));
+    this.addValueListener();
+    this.checkFocus();
   },
 
   didReceiveAttrs() {
     this._super(...arguments);
-
-    let { input, focused } = this.getProperties('input', 'focused');
-
-    if (input && focused) {
-      input.focus();
-    }
+    this.checkFocus();
   },
 
   willDestroyElement() {
@@ -479,8 +501,8 @@ export default Component.extend({
       } = this.getProperties('id', 'onChange', 'value', 'step', 'min', 'max');
 
       step = step || 1;
-      min = min || -Infinity;
-      max = max || Infinity;
+      min = isPresent(min) ? min : -Infinity;
+      max = isPresent(max) ? max : Infinity;
 
       let numericValue = value ? parseFloat(value) : 0;
 
@@ -513,7 +535,7 @@ export default Component.extend({
     },
 
     handleClick() {
-      let [ field ] = this.element.querySelectorAll('input, textarea');
+      let field = this.get('fieldElement');
       field.focus();
     }
   }

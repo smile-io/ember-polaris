@@ -1,5 +1,3 @@
-<!-- template-lint invalid-interactive=false -->
-
 <div class="Polaris-Labelled__LabelWrapper">
   <div class="Polaris-Label">
     <label id="{{id}}Label" for={{id}} class="Polaris-Label__Text">{{label}}</label>
@@ -7,7 +5,7 @@
   {{#if labelAction}}
     {{polaris-button
       plain=true
-      text=labelAction.content
+      text=labelAction.text
       accessibilityLabel=labelAction.accessibilityLabel
       onClick=(action labelAction.onAction)
     }}
@@ -18,6 +16,8 @@
   left=connectedLeft
   right=connectedRight
 }}
+
+  <!-- template-lint invalid-interactive=false -->
   <div
     class={{textFieldClasses}}
     onfocus={{action "handleFocus"}}
@@ -30,6 +30,42 @@
         {{render-content prefix}}
       </div>
     {{/if}}
+
+    {{!#with
+      (component "wrapper-element"
+        name=name
+        id=id
+        disabled=disabled
+        readonly=readOnly
+        autofocus=autoFocus
+        placeholder=placeholder
+        onfocus=(action onFocus)
+        onblur=(action onBlur)
+        autocomplete=(if autoComplete "on" "off")
+        class="Polaris-TextField__Input"
+        onchange=(action "handleChange")
+        minlength=minLength
+        maxlength=maxLength
+        spellcheck=spellCheck
+        aria-describedby=ariaDescribedBy
+        aria-labelledby=ariaLabelledBy
+        aria-invalid=ariaInvalid
+        value=value
+      ) as |inputElement|
+    }}
+      {{#if multiline}}
+         {{component inputElement
+            tagName="textarea"
+            style=heightStyle
+          }}
+      {{else}}
+         {{component inputElement
+            tagName="input"
+            max=max
+            min=min
+          }}
+      {{/if}}
+    {{!/with}}
 
     {{#if multiline}}
       <textarea
@@ -85,7 +121,7 @@
       </div>
     {{/if}}
 
-    {{#if (and (eq type "number") (not disabled))}}
+    {{#if shouldShowSpinner}}
       {{polaris-text-field/spinner
         onChange=(action "handleNumberChange")
       }}

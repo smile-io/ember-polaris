@@ -13,14 +13,15 @@ const ENTITIES_TO_REPLACE = {
   '\n': '<br>',
 };
 
-const replaceEntity = (entity) => {
+function replaceEntity(entity) {
   return ENTITIES_TO_REPLACE[entity] || entity;
-};
+}
 
 export default Component.extend({
   classNames: ['Polaris-TextField__Resizer'],
+  attributeBindings: ['ariaHidden:aria-hidden'],
 
-  'aria-hidden': true,
+  ariaHidden: "true",
 
   layout,
 
@@ -80,7 +81,7 @@ export default Component.extend({
     let content = '';
 
     for (let line = 0; line < minimumLines; line++) {
-      content += '<br>';
+      content = `${ content }<br>`;
     }
 
     return htmlSafe(content);

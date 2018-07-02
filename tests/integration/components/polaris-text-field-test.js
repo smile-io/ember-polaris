@@ -85,11 +85,10 @@ module('Integration | Component | polaris-text-field', function(hooks) {
   test('it renders an actionable link when a `labelAction` hash is present', async function(assert) {
     this.setProperties({
       labelActionText: label,
-      labelActionCalled: false
-    });
-
-    this.set('labelAction', () => {
-      this.set('labelActionCalled', true);
+      labelActionCalled: false,
+      labelAction() {
+        this.set('labelActionCalled', true);
+      }
     });
 
     await render(hbs`
