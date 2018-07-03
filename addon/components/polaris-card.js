@@ -13,15 +13,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Title content for the card
    *
    * @property title
-   * @type {string}
+   * @type {String|Component}
    * @default: null
+   * @public
    */
   title: null,
 
@@ -33,8 +31,9 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {React.ReactNode}
+   * @type {String}
    * @default: null
+   * @public
    */
   text: null,
 
@@ -42,8 +41,9 @@ export default Component.extend({
    * A less prominent card
    *
    * @property subdued
-   * @type {boolean}
+   * @type {Boolean}
    * @default: false
+   * @public
    */
   subdued: false,
 
@@ -51,8 +51,9 @@ export default Component.extend({
    * Auto wrap content in section
    *
    * @property sectioned
-   * @type {boolean}
+   * @type {Boolean}
    * @default: false
+   * @public
    */
   sectioned: false,
 
@@ -62,6 +63,7 @@ export default Component.extend({
    * @property headerActions
    * @type {Action[]}
    * @default: null
+   * @public
    */
   headerActions: null,
 
