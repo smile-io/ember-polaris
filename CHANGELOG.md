@@ -2,6 +2,7 @@
 
 ### Unreleased
 - [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
+- [#151](https://github.com/smile-io/ember-polaris/pull/151) [FIX] Add missing `hidden` class to `polaris-label`.
 
 ### v1.6.1 (June 28, 2018)
 
