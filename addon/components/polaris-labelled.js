@@ -45,18 +45,6 @@ export default Component.extend({
    */
   helpText: null,
 
-  // /**
-  //  * Content to display inside the connected
-  //  *
-  //  * This component can be used in block form,
-  //  * in which case the block content will be used
-  //  * instead of `text`
-  //  *
-  //  * @type {String}
-  //  * @public
-  //  */
-  // text: null,
-
   /**
    * Visually hide the label
    *
@@ -84,7 +72,7 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  errorID: computed('id', function() {
+  errorId: computed('id', function() {
     return `${ this.get('id') }Error`;
   }).readOnly(),
 
@@ -94,7 +82,7 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  helpTextID: computed('id', function() {
+  helpTextId: computed('id', function() {
     return `${ this.get('id') }HelpText`;
   }).readOnly(),
 });

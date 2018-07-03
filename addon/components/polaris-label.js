@@ -47,7 +47,7 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  labelID: computed('id', function() {
+  labelId: computed('id', function() {
     return `${ this.get('id') }Label`;
   }).readOnly(),
 });
