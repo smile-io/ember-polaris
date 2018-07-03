@@ -115,6 +115,17 @@ module('Integration | Component | polaris card', function(hooks) {
     assert.dom('p', section).hasText('This is the third section\'s subdued content', 'mutiple sections, third section - renders correct content text');
   });
 
+  test('it supports card title property as a component or a string', async function(assert) {
+    await render(hbs` {{polaris-card title=(component "polaris-badge" text="My title")}} `);
+
+    assert.dom('.Polaris-Card__Header > .Polaris-Badge').hasText('My title', 'as a component - renders correctly');
+    assert.dom('Polaris-Heading').doesNotExist('as a component - does not wrap the title in a heading component');
+
+    await render(hbs` {{polaris-card title="My title"}} `);
+
+    assert.dom('.Polaris-Card__Header > .Polaris-Heading').hasText('My title', 'renders title as a component');
+  });
+  
   test('it handles header actions correctly', async function(assert) {
     let action1HandlerCalled = false;
     this.actions.action1Handler = () => {
