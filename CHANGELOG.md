@@ -1,6 +1,7 @@
 # ember-polaris Changelog
 
 ### Unreleased
+- [#150](https://github.com/smile-io/ember-polaris/pull/150) [ENHANCEMENT] Auto-bind supplied attributes on internal `wrapper-element` component.
 - [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
 - [#151](https://github.com/smile-io/ember-polaris/pull/151) [FIX] Add missing `hidden` class to `polaris-label`.
 
