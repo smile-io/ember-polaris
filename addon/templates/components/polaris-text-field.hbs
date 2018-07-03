@@ -1,118 +1,101 @@
-<div class="Polaris-Labelled__LabelWrapper">
-  <div class="Polaris-Label">
-    <label id="{{id}}Label" for={{id}} class="Polaris-Label__Text">{{label}}</label>
-  </div>
-  {{#if labelAction}}
-    {{polaris-button
-      plain=true
-      text=labelAction.text
-      accessibilityLabel=labelAction.accessibilityLabel
-      onClick=(action labelAction.onAction)
-    }}
-  {{/if}}
-</div>
-
-{{#polaris-text-field/connected
-  left=connectedLeft
-  right=connectedRight
+{{#polaris-labelled
+  id=id
+  label=label
+  error=error
+  action=labelAction
+  labelHidden=labelHidden
+  helpText=helpText
 }}
 
-  <!-- template-lint invalid-interactive=false -->
-  <div
-    class={{textFieldClasses}}
-    onfocus={{action "handleFocus"}}
-    onblur={{action "handleBlur"}}
-    onclick={{action "handleClick"}}
-  >
+  {{#polaris-text-field/connected
+    left=connectedLeft
+    right=connectedRight
+  }}
 
-    {{#if prefix}}
-      <div class="Polaris-TextField__Prefix" id="{{id}}Prefix">
-        {{render-content prefix}}
-      </div>
-    {{/if}}
+    <!-- template-lint invalid-interactive=false -->
+    <div
+      class={{textFieldClasses}}
+      onfocus={{action "handleFocus"}}
+      onblur={{action "handleBlur"}}
+      onclick={{action "handleClick"}}
+    >
 
-    {{#if multiline}}
-      <textarea
-        name={{name}}
-        id={{id}}
-        disabled={{disabled}}
-        readonly={{readOnly}}
-        autofocus={{autoFocus}}
-        placeholder={{placeholder}}
-        onfocus={{action onFocus}}
-        onblur={{action onBlur}}
-        style={{heightStyle}}
-        autocomplete={{if autoComplete "on" "off"}}
-        class="Polaris-TextField__Input"
-        onchange={{action "handleChange"}}
-        minlength={{minLength}}
-        maxlength={{maxLength}}
-        spellcheck={{spellCheck}}
-        aria-describedby={{ariaDescribedBy}}
-        aria-labelledby={{ariaLabelledBy}}
-        aria-invalid={{ariaInvalid}}
-        value={{value}}
-      >
-      </textarea>
-    {{else}}
-      <input
-        name={{name}}
-        id={{id}}
-        disabled={{disabled}}
-        readonly={{readOnly}}
-        autofocus={{autoFocus}}
-        value={{value}}
-        placeholder={{placeholder}}
-        onfocus={{action onFocus}}
-        onblur={{action onBlur}}
-        autocomplete={{if autoComplete "on" "off"}}
-        class="Polaris-TextField__Input"
-        onchange={{action "handleChange"}}
-        min={{min}}
-        max={{max}}
-        minlength={{minLength}}
-        maxlength={{maxLength}}
-        spellcheck={{spellCheck}}
-        aria-describedby={{ariaDescribedBy}}
-        aria-labelledby={{ariaLabelledBy}}
-        aria-invalid={{ariaInvalid}}
-      >
-    {{/if}}
+      {{#if prefix}}
+        <div class="Polaris-TextField__Prefix" id="{{id}}Prefix">
+          {{render-content prefix}}
+        </div>
+      {{/if}}
 
-    {{#if suffix}}
-      <div class="Polaris-TextField__Suffix" id="{{id}}Suffix">
-        {{render-content suffix}}
-      </div>
-    {{/if}}
+      {{#if multiline}}
+        <textarea
+          name={{name}}
+          id={{id}}
+          disabled={{disabled}}
+          readonly={{readOnly}}
+          autofocus={{autoFocus}}
+          placeholder={{placeholder}}
+          onfocus={{action onFocus}}
+          onblur={{action onBlur}}
+          style={{heightStyle}}
+          autocomplete={{if autoComplete "on" "off"}}
+          class="Polaris-TextField__Input"
+          onchange={{action "handleChange"}}
+          minlength={{minLength}}
+          maxlength={{maxLength}}
+          spellcheck={{spellCheck}}
+          aria-describedby={{ariaDescribedBy}}
+          aria-labelledby={{ariaLabelledBy}}
+          aria-invalid={{ariaInvalid}}
+          value={{value}}
+        >
+        </textarea>
+      {{else}}
+        <input
+          name={{name}}
+          id={{id}}
+          disabled={{disabled}}
+          readonly={{readOnly}}
+          autofocus={{autoFocus}}
+          value={{value}}
+          placeholder={{placeholder}}
+          onfocus={{action onFocus}}
+          onblur={{action onBlur}}
+          autocomplete={{if autoComplete "on" "off"}}
+          class="Polaris-TextField__Input"
+          onchange={{action "handleChange"}}
+          min={{min}}
+          max={{max}}
+          minlength={{minLength}}
+          maxlength={{maxLength}}
+          spellcheck={{spellCheck}}
+          aria-describedby={{ariaDescribedBy}}
+          aria-labelledby={{ariaLabelledBy}}
+          aria-invalid={{ariaInvalid}}
+        >
+      {{/if}}
 
-    {{#if shouldShowSpinner}}
-      {{polaris-text-field/spinner
-        onChange=(action "handleNumberChange")
-      }}
-    {{/if}}
+      {{#if suffix}}
+        <div class="Polaris-TextField__Suffix" id="{{id}}Suffix">
+          {{render-content suffix}}
+        </div>
+      {{/if}}
 
-    <div class="Polaris-TextField__Backdrop"></div>
+      {{#if shouldShowSpinner}}
+        {{polaris-text-field/spinner
+          onChange=(action "handleNumberChange")
+        }}
+      {{/if}}
 
-    {{#if multiline}}
-      {{polaris-text-field/resizer
-        contents=(or value placeholder)
-        currentHeight=height
-        minimumLines=minimumLines
-        onHeightChange=(action "handleExpandingResize")
-      }}
-    {{/if}}
-  </div>
+      <div class="Polaris-TextField__Backdrop"></div>
 
-  {{#if error}}
-    <div id="{{id}}Error" class="Polaris-Labelled__Error">
-      <div class="Polaris-Labelled__ErrorIcon">
-        {{polaris-icon source="error"}}
-      </div>
-      {{render-content error}}
+      {{#if multiline}}
+        {{polaris-text-field/resizer
+          contents=(or value placeholder)
+          currentHeight=height
+          minimumLines=minimumLines
+          onHeightChange=(action "handleExpandingResize")
+        }}
+      {{/if}}
     </div>
-  {{/if}}
-
-  {{#if helpText}}
-    <div class="Polaris-Labelled__HelpText" id="{{id}}HelpText">{{render-content helpText}}</div>
-  {{/if}}
-{{/polaris-text-field/connected}}
+  {{/polaris-text-field/connected}}
+{{/polaris-labelled}}
