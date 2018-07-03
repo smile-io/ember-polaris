@@ -504,7 +504,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     },
 
     handleChange(e) {
-      this.get('onChange')(e, this.get('id'));
+      this.get('onChange')(e.target.value, this.get('id'));
     },
 
     handleFocus() {

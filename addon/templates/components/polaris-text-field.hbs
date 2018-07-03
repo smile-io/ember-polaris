@@ -26,53 +26,41 @@
         </div>
       {{/if}}
 
-      {{#if multiline}}
-        <textarea
-          name={{name}}
-          id={{id}}
-          disabled={{disabled}}
-          readonly={{readOnly}}
-          autofocus={{autoFocus}}
-          placeholder={{placeholder}}
-          onfocus={{action onFocus}}
-          onblur={{action onBlur}}
-          style={{heightStyle}}
-          autocomplete={{if autoComplete "on" "off"}}
+      {{#with
+        (component "wrapper-element"
+          name=name
+          id=id
+          disabled=disabled
+          readonly=readOnly
+          autofocus=autoFocus
+          placeholder=placeholder
+          onfocus=(action onFocus)
+          onblur=(action onBlur)
+          autocomplete=(if autoComplete "on" "off")
           class="Polaris-TextField__Input"
-          onchange={{action "handleChange"}}
-          minlength={{minLength}}
-          maxlength={{maxLength}}
-          spellcheck={{spellCheck}}
-          aria-describedby={{ariaDescribedBy}}
-          aria-labelledby={{ariaLabelledBy}}
-          aria-invalid={{ariaInvalid}}
-          value={{value}}
-        >
-        </textarea>
-      {{else}}
-        <input
-          name={{name}}
-          id={{id}}
-          disabled={{disabled}}
-          readonly={{readOnly}}
-          autofocus={{autoFocus}}
-          value={{value}}
-          placeholder={{placeholder}}
-          onfocus={{action onFocus}}
-          onblur={{action onBlur}}
-          autocomplete={{if autoComplete "on" "off"}}
-          class="Polaris-TextField__Input"
-          onchange={{action "handleChange"}}
-          min={{min}}
-          max={{max}}
-          minlength={{minLength}}
-          maxlength={{maxLength}}
-          spellcheck={{spellCheck}}
-          aria-describedby={{ariaDescribedBy}}
-          aria-labelledby={{ariaLabelledBy}}
-          aria-invalid={{ariaInvalid}}
-        >
-      {{/if}}
+          onchange=(action "handleChange")
+          minlength=minLength
+          maxlength=maxLength
+          spellcheck=spellCheck
+          aria-describedby=ariaDescribedBy
+          aria-labelledby=ariaLabelledBy
+          aria-invalid=ariaInvalid
+          value=value
+        ) as |inputElement|
+      }}
+        {{#if multiline}}
+           {{component inputElement
+              tagName="textarea"
+              style=heightStyle
+            }}
+        {{else}}
+           {{component inputElement
+              tagName="input"
+              max=max
+              min=min
+            }}
+        {{/if}}
+      {{/with}}
 
       {{#if suffix}}
         <div class="Polaris-TextField__Suffix" id="{{id}}Suffix">
