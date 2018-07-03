@@ -13,11 +13,31 @@ export default Component.extend({
 
   layout,
 
+  /**
+   * The position of the item.
+   *
+   * Allowed values: 'left', 'right', or 'primary'
+   *
+   * @property position
+   * @public
+   * @type {String}
+   * @default null
+   */
+  position: null,
+
+  /**
+   * Whether or not the item is focused.
+   *
+   * @property focused
+   * @private
+   * @type {Boolean}
+   * @default false
+   */
+  focused: false,
+
   left: equal('position', 'left').readOnly(),
   right: equal('position', 'right').readOnly(),
   primary: equal('position', 'primary').readOnly(),
-
-  focused: false,
 
   focusIn() {
     this.set('focused', true);
