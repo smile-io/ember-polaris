@@ -93,9 +93,10 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     await render(hbs`
       {{polaris-text-field
+        label="label"
         labelAction=(hash
-          content=labelActionText
-          onAction=labelAction
+          text=labelActionText
+          onAction=(action labelAction)
         )
       }}
     `);

@@ -415,10 +415,10 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     return (height && multiline) ? htmlSafe(`height: ${ height }px`) : null;
   }).readOnly(),
 
-  shouldShowSpinner: computed('disabled', 'type', function() {
-    let { type, disabled } = this.getProperties('type', 'disabled');
+  shouldShowSpinner: computed('disabled', 'inputType', function() {
+    let { inputType, disabled } = this.getProperties('inputType', 'disabled');
 
-    return (typeOf(type) === 'number') && !disabled;
+    return (inputType === 'number') && !disabled;
   }).readOnly(),
 
   addValueListener() {
