@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
+
 ### v1.6.1 (June 28, 2018)
 
 - [#141](https://github.com/smile-io/ember-polaris/pull/141) [FEATURE] Add `polaris-data-table` component.

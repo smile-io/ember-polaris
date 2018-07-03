@@ -1,0 +1,9 @@
+<div class="Polaris-Label">
+  <label id={{labelId}} htmlFor={{id}} class="Polaris-Label__Text">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{render-content text}}
+    {{/if}}
+  </label>
+</div>
