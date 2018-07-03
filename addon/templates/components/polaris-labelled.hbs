@@ -1,0 +1,37 @@
+<div class={{if labelHidden "Polaris-Labelled--hidden"}}>
+  {{#if label}}
+    <div class="Polaris-Labelled__LabelWrapper">
+      {{#polaris-label id=id hidden=false}}
+        {{label}}
+      {{/polaris-label}}
+
+      {{#if action}}
+        {{polaris-button
+          plain=true
+          text=action.text
+          disabled=action.disabled
+          loading=action.loading
+          accessibilityLabel=action.accessibilityLabel
+          onClick=(action action.onAction)
+        }}
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{yield}}
+
+  {{#if error}}
+    <div id={{errorId}} class="Polaris-Labelled__Error">
+      <div class="Polaris-Labelled__ErrorIcon">
+        {{polaris-icon source="alert"}}
+      </div>
+      {{render-content error}}
+    </div>
+  {{/if}}
+
+  {{#if helpText}}
+    <div id={{helpTextId}} class="Polaris-Labelled__HelpText">
+      {{render-content helpText}}
+    </div>
+  {{/if}}
+</div>
