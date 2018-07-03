@@ -81,50 +81,38 @@ module('Integration | Component | polaris card', function(hooks) {
       {{/polaris-card}}
     `);
 
-    const sections = findAll(sectionSelector);
-    assert.equal(sections.length, 3, 'multiple sections - renders all sections');
+    assert.dom(sectionSelector).exists({ count: 3 }, 'multiple sections - renders all sections');
 
+    const sections = findAll(sectionSelector);
     // Check the first section.
     let section = sections[0];
-    assert.notOk(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, first section - does not apply subdued class');
-    assert.notOk(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, first section - does not apply full width class');
+    assert.dom(section).doesNotHaveClass('Polaris-Card__Section--subdued', 'mutiple sections, first section - does not apply subdued class');
+    assert.dom(section).doesNotHaveClass('Polaris-Card__Section--fullWidth', 'mutiple sections, first section - does not apply full width class');
 
     const sectionTitleSelector = 'div.Polaris-Card__SectionHeader';
-    let sectionTitles = findAll(sectionTitleSelector, section);
-    assert.equal(sectionTitles.length, 1, 'mutiple sections, first section - renders title');
+    assert.dom(sectionTitleSelector, section).exists({ count: 1 }, 'mutiple sections, first section - renders title');
 
     const sectionTitleSubheadingSelector = buildNestedSelector(sectionTitleSelector, 'h3.Polaris-Subheading');
-    const sectionTitleSubheadings = findAll(sectionTitleSubheadingSelector, section);
-    assert.equal(sectionTitleSubheadings.length, 1, 'mutiple sections, first section - renders title subheading');
-    assert.equal(sectionTitleSubheadings[0].textContent.trim(), 'Section 1', 'mutiple sections, first section - renders correct heading text');
+    assert.dom(sectionTitleSubheadingSelector, section).exists({ count: 1 }, 'mutiple sections, first section - renders title subheading');
+    assert.dom(sectionTitleSubheadingSelector, section).hasText('Section 1', 'mutiple sections, first section - renders correct heading text');
 
-    let sectionContents = findAll('p', section);
-    assert.equal(sectionContents.length, 1, 'mutiple sections, first section - renders content');
-    assert.equal(sectionContents[0].textContent.trim(), 'This is the first section\'s content', 'mutiple sections, first section - renders correct content text');
+    assert.dom('p', section).exists({ count: 1 }, 'mutiple sections, first section - renders content');
+    assert.dom('p', section).hasText('This is the first section\'s content', 'mutiple sections, first section - renders correct content text');
 
     // Check the second section.
     section = sections[1];
-    assert.notOk(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, second section - does not apply subdued class');
-    assert.ok(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, second section - applies full width class');
-
-    sectionTitles = findAll(sectionTitleSelector, section);
-    assert.equal(sectionTitles.length, 0, 'mutiple sections, second section - does not render title');
-
-    sectionContents = findAll('p', section);
-    assert.equal(sectionContents.length, 1, 'mutiple sections, second section - renders content');
-    assert.equal(sectionContents[0].textContent.trim(), 'This is the second section\'s content', 'mutiple sections, second section - renders correct content text');
+    assert.dom(section).doesNotHaveClass('Polaris-Card__Section--subdued', 'mutiple sections, second section - does not apply subdued class');
+    assert.dom(section).hasClass('Polaris-Card__Section--fullWidth', 'mutiple sections, second section - applies full width class');
+    assert.dom('p', section).exists({ count: 1 }, 'mutiple sections, second section - renders content');
+    assert.dom('p', section).hasText('This is the second section\'s content', 'mutiple sections, second section - renders correct content text');
 
     // Check the third section.
     section = sections[2];
-    assert.ok(section.classList.contains('Polaris-Card__Section--subdued'), 'mutiple sections, third section - applies subdued class');
-    assert.notOk(section.classList.contains('Polaris-Card__Section--fullWidth'), 'mutiple sections, third section - does not apply full width class');
-
-    sectionTitles = findAll(sectionTitleSelector, section);
-    assert.equal(sectionTitles.length, 0, 'mutiple sections, third section - does not render title');
-
-    sectionContents = findAll('p', section);
-    assert.equal(sectionContents.length, 1, 'mutiple sections, third section - renders content');
-    assert.equal(sectionContents[0].textContent.trim(), 'This is the third section\'s subdued content', 'mutiple sections, third section - renders correct content text');
+    assert.dom(section).hasClass('Polaris-Card__Section--subdued', 'mutiple sections, third section - applies subdued class');
+    assert.dom(section).doesNotHaveClass('Polaris-Card__Section--fullWidth', 'mutiple sections, third section - does not apply full width class');
+    assert.dom(sectionTitleSelector, section).doesNotExist('mutiple sections, third section - does not render title');
+    assert.dom('p', section).exists({ count: 1 }, 'mutiple sections, third section - renders content');
+    assert.dom('p', section).hasText('This is the third section\'s subdued content', 'mutiple sections, third section - renders correct content text');
   });
 
   test('it handles header actions correctly', async function(assert) {
@@ -185,14 +173,14 @@ module('Integration | Component | polaris card', function(hooks) {
     assert.equal(actionButtons[2].textContent.trim(), 'Action 3', 'third action button - renders correct content');
 
     // Check clicking the buttons.
-    click(actionButtons[0]);
+    await click(actionButtons[0]);
     assert.equal(action1HandlerCalled, true, 'clicking first action button - invokes first action handler correctly');
     assert.equal(this.get('action2HandlerCalled'), false, 'clicking first action button - does not invoke second action handler');
 
-    click(actionButtons[1]);
+    await click(actionButtons[1]);
     assert.equal(this.get('action2HandlerCalled'), true, 'clicking second action button - invokes second action handler correctly');
 
-    click(actionButtons[2]);
+    await click(actionButtons[2]);
     assert.equal(this.get('action3HandlerCalled'), false, 'clicking disabled third action button - does not invoke third action handler');
     assert.ok(actionButtons[2].classList.contains('Polaris-Button--disabled'), 'third action is a disabled header action - disabled class');
   });
