@@ -9,7 +9,7 @@ moduleForComponent('polaris-tag', 'Integration | Component | polaris tag', {
 
   beforeEach() {
     this.register('component:svg-jar', MockSvgJarComponent);
-  }
+  },
 });
 
 const tag = 'Wholesale';
@@ -17,18 +17,12 @@ const componentSelector = 'span.Polaris-Tag';
 const buttonSelector = 'button.Polaris-Tag__Button';
 const iconSelector = 'span.Polaris-Icon';
 
-const tagValueSelector = buildNestedSelector(
-  componentSelector,
-  'span'
-);
+const tagValueSelector = buildNestedSelector(componentSelector, 'span');
 const tagButtonSelector = buildNestedSelector(
   componentSelector,
   buttonSelector
 );
-const tagIconSelector = buildNestedSelector(
-  buttonSelector,
-  iconSelector
-);
+const tagIconSelector = buildNestedSelector(buttonSelector, iconSelector);
 
 test('it renders the correct HTML in inline usage', function(assert) {
   this.set('text', tag);
@@ -39,16 +33,28 @@ test('it renders the correct HTML in inline usage', function(assert) {
 
   const tagValue = find(tagValueSelector);
   assert.ok(tagValue, 'it renders a span to hold the `text` value');
-  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `text` value correctly');
+  assert.equal(
+    tagValue.textContent.trim(),
+    tag,
+    'it renders the `text` value correctly'
+  );
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
-  assert.equal(tagButton.getAttribute('aria-label'), `Remove ${tag}`, 'it gives the remove button the correct aria-label');
+  assert.equal(
+    tagButton.getAttribute('aria-label'),
+    `Remove ${tag}`,
+    'it gives the remove button the correct aria-label'
+  );
 
   const tagIcon = find(tagIconSelector);
   const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
-  assert.equal(iconSource, 'polaris/cancel-small', 'it uses the correct polaris/cancel-small icon as the icon source');
+  assert.equal(
+    iconSource,
+    'polaris/cancel-small',
+    'it uses the correct polaris/cancel-small icon as the icon source'
+  );
 });
 
 test('it renders the correct HTML in block usage', function(assert) {
@@ -65,16 +71,28 @@ test('it renders the correct HTML in block usage', function(assert) {
 
   const tagValue = find(tagValueSelector);
   assert.ok(tagValue, 'it renders a span to hold the `tag` value');
-  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `tag` value correctly');
+  assert.equal(
+    tagValue.textContent.trim(),
+    tag,
+    'it renders the `tag` value correctly'
+  );
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
-  assert.equal(tagButton.getAttribute('aria-label'), `Remove ${tag}`, 'it gives the remove button the correct aria-label');
+  assert.equal(
+    tagButton.getAttribute('aria-label'),
+    `Remove ${tag}`,
+    'it gives the remove button the correct aria-label'
+  );
 
   const tagIcon = find(tagIconSelector);
   const { iconSource } = tagIcon.querySelector('svg').dataset;
   assert.ok(tagIcon, 'it renders an icon inside the tag button');
-  assert.equal(iconSource, 'polaris/cancel-small', 'it uses the correct polaris/cancel-small icon as the icon source');
+  assert.equal(
+    iconSource,
+    'polaris/cancel-small',
+    'it uses the correct polaris/cancel-small icon as the icon source'
+  );
 });
 
 test('it handles the disabled attribute correctly', function(assert) {
@@ -87,13 +105,25 @@ test('it handles the disabled attribute correctly', function(assert) {
   assert.ok(tagComponent, 'it renders the remove button');
 
   // Check the component when no value for `disabled` is given.
-  assert.notOk(tagComponent.classList.contains('Polaris-Tag--disabled'), 'when disabled is not specified - does not apply disabled class to tag');
-  assert.notOk(button.disabled, 'when disabled is not specified - does not disable the remove button');
+  assert.notOk(
+    tagComponent.classList.contains('Polaris-Tag--disabled'),
+    'when disabled is not specified - does not apply disabled class to tag'
+  );
+  assert.notOk(
+    button.disabled,
+    'when disabled is not specified - does not disable the remove button'
+  );
 
   // Specify that the tag's disabled and check the component again.
   this.set('disabled', true);
-  assert.ok(tagComponent.classList.contains('Polaris-Tag--disabled'), 'when disabled is specified - applies disabled class to tag');
-  assert.ok(button.disabled, 'when disabled is specified - disables the remove button');
+  assert.ok(
+    tagComponent.classList.contains('Polaris-Tag--disabled'),
+    'when disabled is specified - applies disabled class to tag'
+  );
+  assert.ok(
+    button.disabled,
+    'when disabled is specified - disables the remove button'
+  );
 });
 
 test('it calls an `onRemove` action when the button is clicked', function(assert) {
@@ -106,5 +136,8 @@ test('it calls an `onRemove` action when the button is clicked', function(assert
   `);
 
   click(tagButtonSelector);
-  assert.ok(this.get('onRemoveActionFired'), 'button clicked - onRemove action is called');
+  assert.ok(
+    this.get('onRemoveActionFired'),
+    'button clicked - onRemove action is called'
+  );
 });

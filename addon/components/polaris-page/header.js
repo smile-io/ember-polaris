@@ -3,13 +3,13 @@ import layout from '../../templates/components/polaris-page/header';
 import { gt, or } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: [ 'Polaris-Page__Header' ],
+  classNames: ['Polaris-Page__Header'],
   classNameBindings: [
     'titleHidden:Polaris-Page__Title--hidden',
     'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
     'hasRollup:Polaris-Page__Header--hasRollup',
     'separator:Polaris-Page__Header--hasSeparator',
-    'hasSecondaryActions:Polaris-Page__Header--hasSecondaryActions'
+    'hasSecondaryActions:Polaris-Page__Header--hasSecondaryActions',
   ],
 
   layout,

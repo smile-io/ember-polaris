@@ -10,7 +10,7 @@ export default Component.extend({
   classNames: ['Polaris-Page'],
   classNameBindings: [
     'fullWidth:Polaris-Page--fullWidth',
-    'singleColumn:Polaris-Page--singleColumn'
+    'singleColumn:Polaris-Page--singleColumn',
   ],
 
   layout,
@@ -145,5 +145,10 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasHeaderContent: or('title', 'primaryAction', 'secondaryActions', 'breadcrumbs').readOnly(),
+  hasHeaderContent: or(
+    'title',
+    'primaryAction',
+    'secondaryActions',
+    'breadcrumbs'
+  ).readOnly(),
 });

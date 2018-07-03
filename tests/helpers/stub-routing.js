@@ -20,7 +20,7 @@ const StubbedRoutingService = Service.extend({
   generateURL(routeName, models = [] /*, queryParams */) {
     let url = [
       routeName.replace(/\./g, '/'),
-      ...models.map((model) => {
+      ...models.map(model => {
         return get(model, 'id') || model;
       }),
     ].join('/');
@@ -31,7 +31,7 @@ const StubbedRoutingService = Service.extend({
 
 export default function(registry, availableRoutes) {
   StubbedRoutingService.reopenClass({
-    _availableRoutes: availableRoutes
+    _availableRoutes: availableRoutes,
   });
 
   registry.register('service:-routing', StubbedRoutingService);

@@ -19,5 +19,5 @@ export default Component.extend({
    * @type {String}
    * @default: null
    */
-  text: null
+  text: null,
 });

@@ -108,7 +108,9 @@ export default Component.extend({
    * Internal properties.
    */
   controlComponent: computed('allowMultiple', function() {
-    return this.get('allowMultiple') ? 'polaris-checkbox' : 'polaris-radio-button';
+    return this.get('allowMultiple')
+      ? 'polaris-checkbox'
+      : 'polaris-radio-button';
   }).readOnly(),
 
   finalName: computed('name', 'allowMultiple', function() {
@@ -129,7 +131,7 @@ export default Component.extend({
     const choices = this.get('choices') || [];
     const selected = this.get('selected');
 
-    return choices.map((choice) => {
+    return choices.map(choice => {
       return CheckedChoice.create({
         content: choice,
         selected,
@@ -150,13 +152,15 @@ export default Component.extend({
         if (checked) {
           updatedSelectedChoices = [...selected, value];
         } else {
-          updatedSelectedChoices = selected.filter((selectedChoice) => selectedChoice !== value);
+          updatedSelectedChoices = selected.filter(
+            selectedChoice => selectedChoice !== value
+          );
         }
       } else {
-        updatedSelectedChoices = [ value ];
+        updatedSelectedChoices = [value];
       }
 
       return this.get('onChange')(updatedSelectedChoices, this.get('name'));
     },
-  }
+  },
 });

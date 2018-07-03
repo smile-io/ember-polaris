@@ -34,7 +34,7 @@ export default Component.extend({
    * @property action
    * @type {Object}
    * @default null
-  */
+   */
   action: null,
 
   /**
@@ -49,9 +49,9 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-   actions: {
-     fireAction(action) {
-       invokeAction(action, 'onAction');
-     }
-   }
+  actions: {
+    fireAction(action) {
+      invokeAction(action, 'onAction');
+    },
+  },
 });

@@ -6,10 +6,7 @@ import layout from '../templates/components/polaris-skeleton-page';
 export default Component.extend({
   classNames: ['Polaris-SkeletonPage__Page'],
   classNameBindings: ['fullWidth:Polaris-SkeletonPage--fullWidth'],
-  attributeBindings: [
-    'role',
-    'ariaLabel:aria-label'
-  ],
+  attributeBindings: ['role', 'ariaLabel:aria-label'],
 
   layout,
 

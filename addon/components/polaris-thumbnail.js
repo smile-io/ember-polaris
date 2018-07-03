@@ -4,11 +4,7 @@ import { computed } from '@ember/object';
 import { warn } from '@ember/debug';
 import layout from '../templates/components/polaris-thumbnail';
 
-const allowedSizes = [
-  'small',
-  'medium',
-  'large'
-];
+const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
 
 /**
@@ -60,11 +56,13 @@ export default Component.extend({
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
       warn(
-        `Unsupported 'size' attribute for 'polaris-thumbnail'. Supported values: ${ allowedSizes.join(', ') }.`,
+        `Unsupported 'size' attribute for 'polaris-thumbnail'. Supported values: ${allowedSizes.join(
+          ', '
+        )}.`,
         { id: 'ember-polaris.polaris-thumbnail.unsupported-size' }
       );
     }
 
-    return `Polaris-Thumbnail--size${ classify(size) }`;
-  }).readOnly()
+    return `Polaris-Thumbnail--size${classify(size)}`;
+  }).readOnly(),
 });

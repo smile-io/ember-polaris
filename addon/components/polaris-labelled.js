@@ -73,7 +73,7 @@ export default Component.extend({
    * @private
    */
   errorId: computed('id', function() {
-    return `${ this.get('id') }Error`;
+    return `${this.get('id')}Error`;
   }).readOnly(),
 
   /**
@@ -83,6 +83,6 @@ export default Component.extend({
    * @private
    */
   helpTextId: computed('id', function() {
-    return `${ this.get('id') }HelpText`;
+    return `${this.get('id')}HelpText`;
   }).readOnly(),
 });

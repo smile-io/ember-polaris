@@ -8,12 +8,16 @@ const VERTICAL_PADDING = 13;
 
 function offsetForHue(hue, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
-  return clamp((hue / 360 * slidableArea) + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+  return clamp(
+    (hue / 360) * slidableArea + VERTICAL_PADDING,
+    0,
+    sliderHeight - draggerHeight
+  );
 }
 
 function hueForOffset(offset, sliderHeight) {
-  const selectionHeight = (offset - VERTICAL_PADDING);
-  const slidableArea = sliderHeight - (2 * VERTICAL_PADDING);
+  const selectionHeight = offset - VERTICAL_PADDING;
+  const slidableArea = sliderHeight - 2 * VERTICAL_PADDING;
   return clamp((selectionHeight / slidableArea) * 360, 0, 360);
 }
 
@@ -50,7 +54,11 @@ export default Component.extend({
   draggerHeight: null,
 
   draggerY: computed('hue', 'sliderHeight', function() {
-    const { hue, sliderHeight, draggerHeight } = this.getProperties('hue', 'sliderHeight', 'draggerHeight');
+    const { hue, sliderHeight, draggerHeight } = this.getProperties(
+      'hue',
+      'sliderHeight',
+      'draggerHeight'
+    );
     const offset = offsetForHue(hue, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);
   }).readOnly(),
@@ -67,8 +75,11 @@ export default Component.extend({
   },
 
   actions: {
-    handleChange({y}) {
-      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+    handleChange({ y }) {
+      const { sliderHeight, onChange } = this.getProperties(
+        'sliderHeight',
+        'onChange'
+      );
       if (typeOf(onChange) !== 'function') {
         return;
       }
@@ -78,5 +89,5 @@ export default Component.extend({
 
       onChange(hue);
     },
-  }
+  },
 });

@@ -56,7 +56,10 @@ export default Component.extend({
     }
 
     let sections = this.get('sections') || [];
-    assert(`ember-polaris::polaris-action-list - sections must be an array, you passed ${ sections }`, isArray(sections));
+    assert(
+      `ember-polaris::polaris-action-list - sections must be an array, you passed ${sections}`,
+      isArray(sections)
+    );
     finalSections.push(...sections);
 
     return finalSections;

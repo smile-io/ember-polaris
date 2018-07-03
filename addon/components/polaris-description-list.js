@@ -44,7 +44,7 @@ export default Component.extend({
     let items = EmberArray(this.get('items') || []);
     deprecate(
       'Passing an explicit `termComponent` in `polaris-description-list` `items` is deprecated - pass the component as `term` instead',
-      !items.any((item) => item && item.termComponent),
+      !items.any(item => item && item.termComponent),
       {
         id: 'ember-polaris.polaris-description-list.term-component',
         until: '2.0.0',
@@ -52,7 +52,7 @@ export default Component.extend({
     );
     deprecate(
       'Passing an explicit `descriptionComponent` in `polaris-description-list` `items` is deprecated - pass the component as `description` instead',
-      !items.any((item) => item && item.descriptionComponent),
+      !items.any(item => item && item.descriptionComponent),
       {
         id: 'ember-polaris.polaris-description-list.description-component',
         until: '2.0.0',

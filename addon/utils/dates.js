@@ -7,8 +7,8 @@ export const weekdays = {
   Wednesday: 'Wednesday',
   Thursday: 'Thursday',
   Friday: 'Friday',
-  Saturday: 'Saturday'
-}
+  Saturday: 'Saturday',
+};
 
 export const weekdaysArray = [
   'Sunday',
@@ -17,8 +17,8 @@ export const weekdaysArray = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday'
-]
+  'Saturday',
+];
 
 export const monthsArray = [
   'January',
@@ -32,8 +32,8 @@ export const monthsArray = [
   'September',
   'October',
   'November',
-  'December'
-]
+  'December',
+];
 
 export function getYearForRange({ start, end }) {
   if (isPresent(start)) {
@@ -44,7 +44,7 @@ export function getYearForRange({ start, end }) {
     return end.getFullYear();
   }
 
-  return (new Date()).getFullYear();
+  return new Date().getFullYear();
 }
 
 export function getMonthForRange({ start, end }) {
@@ -56,7 +56,7 @@ export function getMonthForRange({ start, end }) {
     return end.getMonth();
   }
 
-  return (new Date()).getMonth();
+  return new Date().getMonth();
 }
 
 export function abbreviationForWeekday(weekday) {
@@ -101,7 +101,7 @@ export function dateIsInRange(day, range) {
 
   const { start, end } = range;
 
-  return (isPresent(start) && day > start) && (isPresent(end) && day < end);
+  return isPresent(start) && day > start && (isPresent(end) && day < end);
 }
 
 export function dateIsSelected(day, range) {
@@ -109,9 +109,12 @@ export function dateIsSelected(day, range) {
     return false;
   }
 
-  const {start, end} = range;
+  const { start, end } = range;
 
-  return (isPresent(start) && isSameDay(start, day)) || (isPresent(end) && isSameDay(end, day));
+  return (
+    (isPresent(start) && isSameDay(start, day)) ||
+    (isPresent(end) && isSameDay(end, day))
+  );
 }
 
 export function isSameDay(day1, day2) {
@@ -146,7 +149,7 @@ export function getNewRange(range, selected) {
       return { start: selected, end };
     }
 
-    return { start: (start || end), end: selected };
+    return { start: start || end, end: selected };
   }
 
   return { start: selected, end: selected };

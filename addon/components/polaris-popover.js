@@ -116,7 +116,7 @@ export default Component.extend({
       }
 
       return null;
-    }
+    },
   }),
 
   triggerStyle: computed(function() {
@@ -139,17 +139,21 @@ export default Component.extend({
     // element since this component uses `tagName: ''`
     // https://github.com/emberjs/rfcs/issues/168#issue-178381310
     if (ViewUtils && ViewUtils.getViewBounds) {
-      component =  ViewUtils.getViewBounds(this).parentElement;
+      component = ViewUtils.getViewBounds(this).parentElement;
     } else {
       component = this._renderNode.contextualElement;
     }
 
-    let activators = component.querySelectorAll('.ember-basic-dropdown-trigger');
+    let activators = component.querySelectorAll(
+      '.ember-basic-dropdown-trigger'
+    );
 
     if (activators.length > 1) {
       warn(
         'Multiple popover activators found. Defaulting to `preferredPosition` of `below`',
-        { id: 'ember-polaris.polaris-popover.multiple-popover-activators' }
+        {
+          id: 'ember-polaris.polaris-popover.multiple-popover-activators',
+        }
       );
 
       return BELOW;
@@ -174,6 +178,6 @@ export default Component.extend({
       if (preferredPosition === 'mostSpace') {
         this.set('verticalPosition', this.getMostVerticalSpace());
       }
-    }
-  }
+    },
+  },
 });

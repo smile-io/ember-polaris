@@ -58,18 +58,24 @@ export default Component.extend({
       brightness: 1,
     });
 
-    const backgroundColor = `rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`;
-    return htmlSafe(`background-color: ${ backgroundColor };`);
+    const backgroundColor = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+    return htmlSafe(`background-color: ${backgroundColor};`);
   }).readOnly(),
 
   draggerX: computed('color.saturation', 'pickerSize', function() {
-    const { color: { saturation }, pickerSize } = this.getProperties('color', 'pickerSize');
+    const {
+      color: { saturation },
+      pickerSize,
+    } = this.getProperties('color', 'pickerSize');
     return clamp(saturation * pickerSize, 0, pickerSize);
   }).readOnly(),
 
   draggerY: computed('color.brightness', 'pickerSize', function() {
-    const { color: { brightness }, pickerSize } = this.getProperties('color', 'pickerSize');
-    return clamp(pickerSize - (brightness * pickerSize), 0, pickerSize);
+    const {
+      color: { brightness },
+      pickerSize,
+    } = this.getProperties('color', 'pickerSize');
+    return clamp(pickerSize - brightness * pickerSize, 0, pickerSize);
   }).readOnly(),
 
   /*
@@ -88,7 +94,7 @@ export default Component.extend({
   },
 
   actions: {
-    draggerMoved({x, y}) {
+    draggerMoved({ x, y }) {
       const {
         pickerSize,
         color: { hue, alpha = 1 },
@@ -140,6 +146,6 @@ export default Component.extend({
           alpha,
         });
       }
-    }
-  }
+    },
+  },
 });

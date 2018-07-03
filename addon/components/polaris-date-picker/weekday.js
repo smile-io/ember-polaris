@@ -30,5 +30,5 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  current: false
+  current: false,
 });

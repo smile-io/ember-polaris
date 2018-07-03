@@ -7,7 +7,7 @@ import { helper } from '@ember/component/helper';
 // Ember 2.12, we can remove this helper and
 // replace its usages with the existing `get`
 // helper.
-export function getArrayItem([ array, index ]) {
+export function getArrayItem([array, index]) {
   return array[index];
 }
 

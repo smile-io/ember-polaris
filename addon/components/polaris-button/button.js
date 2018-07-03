@@ -3,11 +3,7 @@ import BaseComponent from './base';
 
 export default BaseComponent.extend({
   tagName: 'button',
-  attributeBindings: [
-    'type',
-    'accessibilityLabel:aria-label',
-    'disabled',
-  ],
+  attributeBindings: ['type', 'accessibilityLabel:aria-label', 'disabled'],
 
   accessibilityLabel: null,
 

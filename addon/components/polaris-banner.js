@@ -40,10 +40,7 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 export default Component.extend({
   classNames: ['Polaris-Banner'],
 
-  classNameBindings: [
-    'statusClass',
-    'hasDismiss:Polaris-Banner__hasDismiss',
-  ],
+  classNameBindings: ['statusClass', 'hasDismiss:Polaris-Banner__hasDismiss'],
 
   attributeBindings: [
     'tabIndex',
@@ -152,7 +149,7 @@ export default Component.extend({
       return;
     }
 
-    return `${ guidFor(this) }-heading`;
+    return `${guidFor(this)}-heading`;
   }).readOnly(),
 
   statusClass: computed('status', function() {
@@ -161,7 +158,7 @@ export default Component.extend({
       return;
     }
 
-    return `Polaris-Banner--status${ capitalize(status) }`;
+    return `Polaris-Banner--status${capitalize(status)}`;
   }).readOnly(),
 
   /**
@@ -171,7 +168,7 @@ export default Component.extend({
     this._super(...arguments);
 
     let hasContentWrapper = this.$().find('div.Polaris-Banner__Content').length;
-    let contentId = hasContentWrapper ? `${ guidFor(this) }-content` : null;
+    let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
     this.set('contentId', contentId);
   },
 
@@ -184,6 +181,6 @@ export default Component.extend({
       }
 
       return invokeAction(this, action.onAction);
-    }
-  }
+    },
+  },
 });

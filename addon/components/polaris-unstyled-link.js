@@ -69,5 +69,8 @@ export default Component.extend({
   /**
    * Action handlers.
    */
-  click: mapEventToAction('onClick', { preventDefault: false, stopPropagation: true }),
+  click: mapEventToAction('onClick', {
+    preventDefault: false,
+    stopPropagation: true,
+  }),
 });

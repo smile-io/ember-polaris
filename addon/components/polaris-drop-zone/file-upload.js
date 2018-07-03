@@ -12,8 +12,8 @@ const fileUpload = {
   actionTitleFile: 'Add file',
   actionTitleImage: 'Add image',
   actionHintFile: 'or drop files to upload',
-  actionHintImage: 'or drop images to upload'
-}
+  actionHintImage: 'or drop images to upload',
+};
 
 export default Component.extend({
   layout,
@@ -36,7 +36,7 @@ export default Component.extend({
    */
   actionTitle: computed('type', function() {
     let type = this.get('type');
-    return fileUpload[`actionTitle${ classify(type) }`];
+    return fileUpload[`actionTitle${classify(type)}`];
   }),
 
   /**
@@ -49,6 +49,6 @@ export default Component.extend({
    */
   actionHint: computed('type', function() {
     let type = this.get('type');
-    return fileUpload[`actionHint${ classify(type) }`];
+    return fileUpload[`actionHint${classify(type)}`];
   }),
 });

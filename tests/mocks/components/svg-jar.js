@@ -9,7 +9,7 @@ const SvgJar = Component.extend({
     'source:data-icon-source',
     'aria-label',
     'aria-hidden',
-    'focusable'
+    'focusable',
   ],
 
   source: null,

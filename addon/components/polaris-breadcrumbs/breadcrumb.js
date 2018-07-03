@@ -19,7 +19,7 @@ export default LinkComponent.extend({
     // so LinkComponent expects the link title as the first parameter.
     let { content, route, models = [] } = this.get('breadcrumb');
 
-    let params = [ content, route ];
+    let params = [content, route];
     if (isArray(models)) {
       params.push(...models);
     } else {

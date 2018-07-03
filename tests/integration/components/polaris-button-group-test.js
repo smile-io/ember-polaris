@@ -3,9 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, focus, blur } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-button-group', 'Integration | Component | polaris button group', {
-  integration: true
-});
+moduleForComponent(
+  'polaris-button-group',
+  'Integration | Component | polaris button group',
+  {
+    integration: true,
+  }
+);
 
 const buttonGroupSelector = 'div.Polaris-ButtonGroup';
 const buttonGroupItemSelector = buildNestedSelector(
@@ -29,7 +33,11 @@ test('it renders the correct HTML with default attributes', function(assert) {
   assert.equal(buttonGroups.length, 1, 'renders one button group');
 
   const buttons = findAll(buttonSelector);
-  assert.equal(buttons.length, 2, 'renders the correct number of wrapped buttons');
+  assert.equal(
+    buttons.length,
+    2,
+    'renders the correct number of wrapped buttons'
+  );
 });
 
 test('it renders the correct HTML with segmented attribute', function(assert) {
@@ -37,10 +45,16 @@ test('it renders the correct HTML with segmented attribute', function(assert) {
   this.render(hbs`{{polaris-button-group segmented=segmented}}`);
 
   const buttonGroup = find(buttonGroupSelector);
-  assert.ok(buttonGroup.classList.contains('Polaris-ButtonGroup--segmented'), 'segmented=true - adds the segmented class');
+  assert.ok(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--segmented'),
+    'segmented=true - adds the segmented class'
+  );
 
   this.set('segmented', false);
-  assert.notOk(buttonGroup.classList.contains('Polaris-ButtonGroup--segmented'), 'segmented=true - does not add the segmented class');
+  assert.notOk(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--segmented'),
+    'segmented=true - does not add the segmented class'
+  );
 });
 
 test('it renders the correct HTML in block usage', function(assert) {
@@ -57,22 +71,47 @@ test('it renders the correct HTML in block usage', function(assert) {
   `);
 
   const buttonGroupItems = findAll(buttonGroupItemSelector);
-  assert.equal(buttonGroupItems.length, 3, 'renders the correct number of button group items');
+  assert.equal(
+    buttonGroupItems.length,
+    3,
+    'renders the correct number of button group items'
+  );
 
   // Check the first item.
   let buttonGroupItem = buttonGroupItems[0];
-  assert.ok(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'), 'first group item - has plain class');
-  assert.equal(buttonGroupItem.textContent.trim(), 'Plain block item', 'first group item - renders the correct content');
+  assert.ok(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'),
+    'first group item - has plain class'
+  );
+  assert.equal(
+    buttonGroupItem.textContent.trim(),
+    'Plain block item',
+    'first group item - renders the correct content'
+  );
 
   // Check the second item.
   buttonGroupItem = buttonGroupItems[1];
-  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'), 'second group item - does not have plain class');
-  assert.equal(buttonGroupItem.textContent.trim(), 'Inline item', 'second group item - renders the correct content');
+  assert.notOk(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'),
+    'second group item - does not have plain class'
+  );
+  assert.equal(
+    buttonGroupItem.textContent.trim(),
+    'Inline item',
+    'second group item - renders the correct content'
+  );
 
   // Check the third item.
   buttonGroupItem = buttonGroupItems[2];
-  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'), 'third group item - does not have plain class');
-  assert.equal(buttonGroupItem.textContent.trim(), 'Magically wrapped button', 'third group item - renders the correct content');
+  assert.notOk(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--plain'),
+    'third group item - does not have plain class'
+  );
+  assert.equal(
+    buttonGroupItem.textContent.trim(),
+    'Magically wrapped button',
+    'third group item - renders the correct content'
+  );
 });
 
 test('it handles focused buttons correctly', function(assert) {
@@ -87,11 +126,20 @@ test('it handles focused buttons correctly', function(assert) {
   const buttonGroupItem = find(buttonGroupItemSelector);
   assert.ok(buttonGroupItem, 'renders the button group item');
 
-  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'before focus - group item does not have focused class');
+  assert.notOk(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'),
+    'before focus - group item does not have focused class'
+  );
 
   focus('.Polaris-Button');
-  assert.ok(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'after focus - group item has focused class');
+  assert.ok(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'),
+    'after focus - group item has focused class'
+  );
 
   blur('.Polaris-Button');
-  assert.notOk(buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'), 'after blur - group item does not have focused class');
+  assert.notOk(
+    buttonGroupItem.classList.contains('Polaris-ButtonGroup__Item--focused'),
+    'after blur - group item does not have focused class'
+  );
 });

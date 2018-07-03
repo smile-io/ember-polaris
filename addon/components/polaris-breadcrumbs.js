@@ -40,8 +40,8 @@ export default Component.extend({
   breadcrumb: computed('breadcrumbs.[]', function() {
     let breadcrumbs = this.get('breadcrumbs') || [];
     let breadcrumbsCount = get(breadcrumbs, 'length');
-    return breadcrumbsCount && breadcrumbsCount > 0 ?
-      breadcrumbs[breadcrumbsCount - 1] :
-      null;
+    return breadcrumbsCount && breadcrumbsCount > 0
+      ? breadcrumbs[breadcrumbsCount - 1]
+      : null;
   }).readOnly(),
 });
