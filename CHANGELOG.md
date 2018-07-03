@@ -2,8 +2,10 @@
 
 ### Unreleased
 - [#144](https://github.com/smile-io/ember-polaris/pull/144) [UPDATE] Shopify Polaris `v2.2.0`
-  - [#146](https://github.com/smile-io/ember-polaris/pull/146) Add `new` status to the Badge component
-  - [#152](https://github.com/smile-io/ember-polaris/pull/152) Accept card title as a string or a component
+- [#146](https://github.com/smile-io/ember-polaris/pull/146) Add `new` status to the Badge component
+- [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
+- [#151](https://github.com/smile-io/ember-polaris/pull/151) [FIX] Add missing `hidden` class to `polaris-label`.
+- [#152](https://github.com/smile-io/ember-polaris/pull/152) Accept card title as a string or a component
 
 ### v1.6.1 (June 28, 2018)
 
