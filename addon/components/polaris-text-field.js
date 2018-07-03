@@ -452,11 +452,13 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     let { fieldElement, focused } = this.getProperties('fieldElement', 'focused');
 
     if (fieldElement && focused) {
-      this.$(fieldElement).focus();
+      fieldElement.focus();
     }
   },
 
   didInsertElement() {
+    this._super(...arguments);
+
     this.set('fieldElement', this.element.querySelector('input, textarea'));
     this.addValueListener();
     this.checkFocus();
@@ -464,6 +466,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
 
   didReceiveAttrs() {
     this._super(...arguments);
+
     this.checkFocus();
   },
 

@@ -22,7 +22,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
   classNames: ['Polaris-TextField__Resizer'],
   attributeBindings: ['ariaHidden:aria-hidden'],
 
-  ariaHidden: "true",
+  ariaHidden: 'true',
 
   layout,
 
