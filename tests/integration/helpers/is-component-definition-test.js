@@ -10,8 +10,10 @@ module('Integration | Helper | is-component-definition', function(hooks) {
   test('it renders', async function(assert) {
     this.set('inputValue', '1234');
 
-    await render(hbs`{{is-component-definition inputValue}}`);
+    await render(hbs`{{if (is-component-definition inputValue) 'yes' 'no'}}`);
+    assert.dom(this.element).hasText('no', 'returns false when it\'s not a component definition');
 
-    assert.equal(this.element.textContent.trim(), '1234');
+    await render(hbs`{{if (is-component-definition (component "polaris-heading" text="Text")) 'yes' 'no'}}`);
+    assert.dom(this.element).hasText('yes', 'returns true when it\'s a component definition');
   });
 });
