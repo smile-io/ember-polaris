@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { pauseTest, render, triggerEvent, settled } from '@ember/test-helpers';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { capitalize, htmlSafe } from '@ember/string';
 import { selectFiles } from 'ember-native-dom-helpers';
