@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
@@ -30,16 +30,13 @@ module('Integration | Component | polaris-connected', function(hooks) {
       {{/polaris-connected}}
     `);
 
-    const connectedComponentNode = find(connectedContainerSelector);
-    const leftContentNode = find(leftContentSelector);
-    const rightContentNode = find(rightContentSelector);
-    const primaryContent = find('.primary-content');
+    const primaryContentSelector = '.primary-content';
 
-    assert.notOk(connectedComponentNode, 'connected component container does not get rendered');
-    assert.notOk(leftContentNode, 'left content node does not get rendered');
-    assert.notOk(rightContentNode, 'right content node does not get rendered');
-    assert.ok(primaryContent, 'the block content still renders when connected sides are not passed in');
-    assert.equal(primaryContent.textContent.trim(), yieldedContent, 'block content value is correct');
+    assert.dom(connectedContainerSelector).doesNotExist('connected component container does not get rendered');
+    assert.dom(leftContentSelector).doesNotExist('left content node does not get rendered');
+    assert.dom(rightContentSelector).doesNotExist('right content node does not get rendered');
+    assert.dom(primaryContentSelector).exists('the block content still renders when connected sides are not passed in');
+    assert.dom(primaryContentSelector).hasText(yieldedContent, 'block content value is correct');
   });
 
   test('it renders yielded content inside the primary content div', async function(assert) {
@@ -60,10 +57,8 @@ module('Integration | Component | polaris-connected', function(hooks) {
       {{/polaris-connected}}
     `);
 
-    const primaryContentNode = find(primaryContentSelector);
-
-    assert.ok(primaryContentNode, 1, 'a primary content block is rendered');
-    assert.equal(primaryContentNode.textContent.trim(), yieldedContent, 'the block content renders correctly');
+    assert.dom(primaryContentSelector).exists('a primary content block is rendered');
+    assert.dom(primaryContentSelector).hasText(yieldedContent, 'the block content renders correctly');
   });
 
   test('it renders connected blocks when `left` and `right` are passed-in', async function(assert) {
@@ -80,12 +75,9 @@ module('Integration | Component | polaris-connected', function(hooks) {
       {{/polaris-connected}}
     `);
 
-    const leftContentNode = find(leftContentSelector);
-    const rightContentNode = find(rightContentSelector);
-
-    assert.ok(leftContentNode, 'a left content block is rendered');
-    assert.ok(rightContentNode, 'a right content block is rendered');
-    assert.equal(leftContentNode.textContent.trim(), leftContent, 'the left block content renders correctly');
-    assert.equal(rightContentNode.textContent.trim(), rightContent, 'the right block content renders correctly');
+    assert.dom(leftContentSelector).exists('a left content block is rendered');
+    assert.dom(rightContentSelector).exists('a right content block is rendered');
+    assert.dom(leftContentSelector).hasText(leftContent, 'the left block content renders correctly');
+    assert.dom(rightContentSelector).hasText(rightContent, 'the right block content renders correctly');
   });
 });
