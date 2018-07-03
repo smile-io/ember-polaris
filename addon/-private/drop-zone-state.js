@@ -21,10 +21,10 @@ export default EmberObject.extend({
   /**
    * The size of the dropzone
    * @type {String}
-   * @default 'large'
+   * @default 'extraLarge'
    * @property size
    */
-  size: 'large',
+  size: 'extraLarge',
 
   /**
    * True, when dragging in progress

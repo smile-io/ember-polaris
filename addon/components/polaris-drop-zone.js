@@ -12,10 +12,10 @@ import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
-// Under this width limit, dropzone is considered 'small'
-const smallSizeWidthLimit = 114;
-// Under this width limit, dropzone is considered 'medium'
-const mediumSizeWidthLimit = 300;
+// Width limits based on which dropzone size is computed
+const smallSizeWidthLimit = 100;
+const mediumSizeWidthLimit = 160;
+const largeSizeWidthLimit = 300;
 
 export default Component.extend(ContextBoundEventListenersMixin, {
   layout,
@@ -404,13 +404,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   adjustSize() {
     throttle(this, function() {
       let node = this.get('node');
-      let size = 'large';
+      let size = 'extraLarge';
       let width = node.getBoundingClientRect().width;
 
       if (width < smallSizeWidthLimit) {
         size = 'small';
       } else if (width < mediumSizeWidthLimit) {
         size = 'medium';
+      } else if (width < largeSizeWidthLimit) {
+        size = 'large';
       }
 
       this.set('state.size', size);

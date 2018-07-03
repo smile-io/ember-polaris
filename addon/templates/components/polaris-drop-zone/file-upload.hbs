@@ -11,13 +11,29 @@
     {{polaris-caption text=actionHint}}
   {{/polaris-stack}}
 {{else if (eq size "large")}}
-  {{#polaris-stack vertical=true}}
+  {{#polaris-stack vertical=true spacing="tight"}}
     {{#if (eq type "file")}}
-      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetFileUpload}}>
+      <img class={{imageClasses}} alt="" src={{assetFileUpload}}>
     {{/if}}
 
     {{#if (eq type "image")}}
-      <img class="Polaris-DropZone-FileUpload__Image" alt="" src={{assetImageUpload}}>
+      <img class={{imageClasses}} alt="" src={{assetImageUpload}}>
+    {{/if}}
+
+    {{polaris-button size="slim" text=actionTitle}}
+
+    {{#polaris-caption}}
+      {{polaris-text-style variation="subdued" text=actionHint}}
+    {{/polaris-caption}}
+  {{/polaris-stack}}
+{{else if (eq size "extraLarge")}}
+  {{#polaris-stack vertical=true}}
+    {{#if (eq type "file")}}
+      <img class={{imageClasses}} alt="" src={{assetFileUpload}}>
+    {{/if}}
+
+    {{#if (eq type "image")}}
+      <img class={{imageClasses}} alt="" src={{assetImageUpload}}>
     {{/if}}
 
     {{polaris-button text=actionTitle}}
