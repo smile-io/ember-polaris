@@ -17,6 +17,10 @@ function invertNumber(number) {
   }
 }
 
+/**
+ * Polaris range slider component.
+ * See https://polaris.shopify.com/components/forms/range-slider
+ */
 export default Component.extend({
   tagName: '',
 

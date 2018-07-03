@@ -145,6 +145,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Date picker](./docs/date-picker.md#date-picker)
 - [Form layout](./docs/form-layout.md#form-layout)
 - [Radio button](./docs/radio-button.md#radio-button)
+- [Range slider](./docs/range-slider.md#range-slider)
 - [Tag](./docs/tag.md#tag)
 
 #### Lists
