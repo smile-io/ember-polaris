@@ -100,7 +100,7 @@ export default Component.extend({
    * Increment value for range input changes
    *
    * @property {step}
-   * @type {Number?}
+   * @type {Number}
    * @default null
    * @public
    */
