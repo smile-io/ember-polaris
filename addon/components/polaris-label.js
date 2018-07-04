@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computedLabelId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-label';
 
 /**
@@ -47,7 +47,5 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  labelId: computed('id', function() {
-    return `${ this.get('id') }Label`;
-  }).readOnly(),
+  labelId: computedLabelId('id').readOnly(),
 });
