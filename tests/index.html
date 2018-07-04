@@ -14,16 +14,6 @@
     <link rel="stylesheet" href="{{rootURL}}assets/dummy.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
 
-    <!-- NOTE: Overwriting default here, because it messes dropzone resizing tests -->
-    <style>
-      #ember-testing {
-        transform: none;
-        transform-origin: initial;
-        width: initial;
-        height: initial;
-      }
-    </style>
-
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
   </head>

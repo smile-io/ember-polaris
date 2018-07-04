@@ -6,16 +6,11 @@ import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
 import layout from '../templates/components/polaris-drop-zone';
 import State from '../-private/drop-zone-state';
-import { fileAccepted, getDataTransferFiles } from '../utils/drop-zone';
+import { fileAccepted, getDataTransferFiles, smallSizeWidthLimit, mediumSizeWidthLimit, largeSizeWidthLimit } from '../utils/drop-zone';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
-
-// Width limits based on which dropzone size is computed
-const smallSizeWidthLimit = 100;
-const mediumSizeWidthLimit = 160;
-const largeSizeWidthLimit = 300;
 
 export default Component.extend(ContextBoundEventListenersMixin, {
   layout,
@@ -404,7 +399,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   adjustSize() {
     throttle(this, function() {
       let node = this.get('node');
-      let size = 'extraLarge';
+      let size = this.get('state.size');
       let width = node.getBoundingClientRect().width;
 
       if (width < smallSizeWidthLimit) {

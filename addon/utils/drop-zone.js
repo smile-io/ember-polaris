@@ -1,5 +1,10 @@
 const dragEvents = ['dragover', 'dragenter', 'drop'];
 
+// Width limits based on which dropzone size is computed
+export const smallSizeWidthLimit = 100;
+export const mediumSizeWidthLimit = 160;
+export const largeSizeWidthLimit = 300;
+
 export function fileAccepted(file, accept) {
   return file.type === 'application/x-moz-file' || accepts(file, accept);
 }

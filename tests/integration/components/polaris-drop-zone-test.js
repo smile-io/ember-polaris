@@ -7,6 +7,13 @@ import { selectFiles } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import MockEvent from '@smile-io/ember-polaris/test-support/mock-drop-zone-event';
+import { smallSizeWidthLimit, mediumSizeWidthLimit, largeSizeWidthLimit } from '@smile-io/ember-polaris/utils/drop-zone';
+
+// NOTE: Doubling the size because of the wrapping #ember-testing container which has a 200% width and 
+// transform scale of 0.5
+const smallWidth = 2 * (smallSizeWidthLimit - 1);
+const mediumWidth = 2 * (mediumSizeWidthLimit - 1);
+const largeWidth = 2 * (largeSizeWidthLimit - 1);
 
 module('Integration | Component | polaris-drop-zone', function(hooks) {
   setupRenderingTest(hooks);
@@ -138,17 +145,17 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeExtraLarge', 'has extra large class');
 
-    this.set('style', htmlSafe('width: 299px;'));
+    this.set('style', htmlSafe(`width: ${ largeWidth }px;`));
     await triggerEvent(window, 'resize');
     await settled();
     assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeLarge', 'has large class');
 
-    this.set('style', htmlSafe('width: 159px;'));
+    this.set('style', htmlSafe(`width: ${ mediumWidth }px;`));
     await triggerEvent(window, 'resize');
     await settled();
     assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeMedium', 'has medium class');
 
-    this.set('style', htmlSafe('width: 99px;'));
+    this.set('style', htmlSafe(`width: ${ smallWidth }px;`));
     await triggerEvent(window, 'resize');
     await settled();
     assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeSmall', 'has small class');
@@ -270,8 +277,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       test('it renders properly with FileUpload', async function(assert) {
         assert.expect(16);
 
+        this.set('style', htmlSafe(`width: ${ largeWidth }px;`));
         await render(hbs`
-          <div style="width: 200px;">
+          <div style={{style}}>
             {{#polaris-drop-zone type=type as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
@@ -304,8 +312,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
 
+        this.set('style', htmlSafe(`width: ${ largeWidth }px;`));
         await render(hbs`
-          <div style="width: 160px;">
+          <div style={{style}}>
             {{#polaris-drop-zone accept=accept as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
@@ -335,8 +344,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       test('it renders properly with FileUpload', async function(assert) {
         assert.expect(8);
 
+        this.set('style', htmlSafe(`width: ${ mediumWidth }px;`));
         await render(hbs`
-          <div style="width: 120px;">
+          <div style={{style}}>
             {{#polaris-drop-zone type=type as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
@@ -361,8 +371,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
 
+        this.set('style', htmlSafe(`width: ${ mediumWidth }px;`));
         await render(hbs`
-          <div style="width: 120px;">
+          <div style={{style}}>
             {{#polaris-drop-zone accept=accept as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
@@ -396,8 +407,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       test('it renders properly with FileUpload', async function(assert) {
         assert.expect(8);
 
+        this.set('style', htmlSafe(`width: ${ smallWidth }px;`));
         await render(hbs`
-          <div style="width: 99px;">
+          <div style={{style}}>
             {{#polaris-drop-zone type=type as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
@@ -419,8 +431,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
 
+        this.set('style', htmlSafe(`width: ${ smallWidth }px;`));
         await render(hbs`
-          <div style="width: 99px;">
+          <div style={{style}}>
             {{#polaris-drop-zone accept=accept as |dropZone|}}
               {{dropZone.fileUpload}}
             {{/polaris-drop-zone}}
