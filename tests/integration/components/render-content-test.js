@@ -16,7 +16,7 @@ module('Integration | Component | render-content', function(hooks) {
     }));
   });
 
-  test('it renders simple content correctly', async function(assert) {
+  test('it renders correctly when content is a string', async function(assert) {
     await render(hbs`
       <div id="render-content-test">
         {{render-content "blah"}}
@@ -26,7 +26,22 @@ module('Integration | Component | render-content', function(hooks) {
     assert.equal(find('#render-content-test').textContent.trim(), 'blah');
   });
 
-  test('it renders component content correctly', async function(assert) {
+  test('it renders correctly when content is a hash of component name and props', async function(assert) {
+    await render(hbs`
+      {{render-content
+        (hash
+          componentName="my-component"
+          props=(hash
+            text="component content here"
+          )
+        )
+      }}
+    `);
+
+    assert.equal(find('.my-test-component').textContent.trim(), 'component content here');
+  });
+
+  test('it renders correctly when content is a component definition', async function(assert) {
     await render(hbs`
       {{render-content (component "my-component" text="component content here")}}
     `);
