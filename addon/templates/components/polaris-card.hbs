@@ -3,7 +3,11 @@
     <div class="Polaris-Card__Header">
       {{#polaris-stack alignment="baseline" as |stack|}}
         {{#stack.item fill=true}}
-          {{polaris-heading text=title}}
+          {{#if (is-component-definition title)}}
+            {{render-content title}}
+          {{else}}
+            {{polaris-heading text=title}}
+          {{/if}}
         {{/stack.item}}
 
         {{#polaris-button-group as |buttonGroup|}}
@@ -22,7 +26,11 @@
     </div>
   {{else}}
     <div class="Polaris-Card__Header">
-      {{polaris-heading text=title}}
+      {{#if (is-component-definition title)}}
+        {{render-content title}}
+      {{else}}
+        {{polaris-heading text=title}}
+      {{/if}}
     </div>
   {{/if}}
 {{/if}}
