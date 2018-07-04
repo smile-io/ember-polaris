@@ -3,7 +3,6 @@ import { guidFor } from '@ember/object/internals';
 import { computed } from '@ember/object';
 import { dasherize, htmlSafe } from '@ember/string';
 import { assign } from '@ember/polyfills';
-import { isNone } from '@ember/utils';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-range-slider';
 
@@ -207,7 +206,6 @@ export default Component.extend({
   rangeInputWrapperStyle: computed('min', 'max', 'value', 'sliderProgress', function() {
     let { min, max, value: current, sliderProgress } = this.getProperties('min', 'max', 'value', 'sliderProgress');
     let styleProps = assign({ min, max, current }, {
-      current,
       progress: `${ sliderProgress }%`,
       outputFactor: invertNumber((sliderProgress - 50) / 100),
     });
@@ -278,12 +276,7 @@ export default Component.extend({
 
   actions: {
     handleChange(event) {
-      let onChange = this.get('onChange');
-      if (isNone(onChange)) {
-        return;
-      }
-
-      onChange(parseFloat(event.currentTarget.value), this.get('id'));
+      this.get('onChange')(parseFloat(event.currentTarget.value), this.get('id'));
     },
   }
 });
