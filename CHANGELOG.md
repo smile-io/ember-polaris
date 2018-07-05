@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v.1.6.3 (July 5, 2018)
+- [#145](https://github.com/smile-io/ember-polaris/pull/145) [FEATURE] Add `polaris-text-field` component.
+
 ### v1.6.2 (July 4, 2018)
 - [#147](https://github.com/smile-io/ember-polaris/pull/147) [FEATURE] Allow passing hash of `componentName` and `props` to `polaris-data-table` cells.
 - [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
