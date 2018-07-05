@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
-import { next } from '@ember/runloop';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../../templates/components/polaris-text-field/resizer';
@@ -102,7 +101,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     let { currentHeight, onHeightChange } = this.getProperties('currentHeight', 'onHeightChange');
 
     if (newHeight !== currentHeight) {
-      next(this, () => {
+      this.scheduleTask('actions', () => {
         onHeightChange(newHeight);
       });
     }
