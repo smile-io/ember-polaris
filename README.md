@@ -168,6 +168,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Form layout](./docs/form-layout.md#form-layout)
 - [Radio button](./docs/radio-button.md#radio-button)
 - [Tag](./docs/tag.md#tag)
+- [Text field](./docs/text-field.md#text-field)
 
 #### Lists
 - [Data table](./docs/data-table.md#data-table)
