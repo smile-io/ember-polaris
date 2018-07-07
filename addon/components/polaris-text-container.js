@@ -3,10 +3,7 @@ import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-text-container';
 
-const allowedSpacings = [
-  'tight',
-  'loose'
-];
+const allowedSpacings = ['tight', 'loose'];
 
 /**
  * Undocumented Polaris text container component.
@@ -48,7 +45,7 @@ export default Component.extend({
   spacingClass: computed('spacing', function() {
     let spacing = this.get('spacing');
     if (allowedSpacings.indexOf(spacing) > -1) {
-      return `Polaris-TextContainer--spacing${ classify(spacing) }`;
+      return `Polaris-TextContainer--spacing${classify(spacing)}`;
     }
 
     return null;

@@ -33,15 +33,16 @@ export default Component.extend({
    */
   role: 'group',
 
-   /**
-    * Lifecycle hooks.
-    */
-   didRender() {
-     this._super(...arguments);
+  /**
+   * Lifecycle hooks.
+   */
+  didRender() {
+    this._super(...arguments);
 
-     // Wrap each element that isn't already an item.
-     this.$('div.Polaris-FormLayout__Items').children()
-       .not('div.Polaris-FormLayout__Item')
-       .wrap('<div class="Polaris-FormLayout__Item"></div>');
-   },
+    // Wrap each element that isn't already an item.
+    this.$('div.Polaris-FormLayout__Items')
+      .children()
+      .not('div.Polaris-FormLayout__Item')
+      .wrap('<div class="Polaris-FormLayout__Item"></div>');
+  },
 });

@@ -31,7 +31,7 @@ export default Component.extend({
    * @property secondaryActions
    * @type {Array}
    * @default null
-  */
+   */
   secondaryActions: null,
 
   /*
@@ -44,6 +44,6 @@ export default Component.extend({
   actions: {
     fireAction(action) {
       invokeAction(action, 'onAction');
-    }
-  }
+    },
+  },
 });

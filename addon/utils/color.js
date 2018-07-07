@@ -16,7 +16,7 @@ export function hsbaToRgba(color) {
   const { hue, saturation, brightness, alpha = 1 } = color;
   const chroma = brightness * saturation;
   const huePrime = hue / 60;
-  const hueDelta = 1 - Math.abs(huePrime % 2 - 1);
+  const hueDelta = 1 - Math.abs((huePrime % 2) - 1);
   const intermediateValue = chroma * hueDelta;
 
   let red = 0;
@@ -107,7 +107,7 @@ export function rgbaToHsb(color) {
       break;
   }
 
-  const hue = Math.round(huePercentage / 6 * 360);
+  const hue = Math.round((huePercentage / 6) * 360);
 
   return {
     hue: clamp(hue, 0, 360) || 0,
@@ -131,19 +131,21 @@ export function rgbaString(color) {
   const { red, green, blue, alpha } = color;
 
   if (isPresent(alpha)) {
-    return `rgba(${ red }, ${ green }, ${ blue }, ${ alpha })`;
+    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
   }
 
-  return `rgb(${ red }, ${ green }, ${ blue })`;
+  return `rgb(${red}, ${green}, ${blue})`;
 }
 
-export function rgbToHex({red, green, blue}) {
-  return `#${ componentToHex(red) }${ componentToHex(green) }${ componentToHex(blue) }`;
+export function rgbToHex({ red, green, blue }) {
+  return `#${componentToHex(red)}${componentToHex(green)}${componentToHex(
+    blue
+  )}`;
 }
 
 function componentToHex(component) {
   const hex = component.toString(16);
-  return hex.length === 1 ? `0${ hex }` : hex;
+  return hex.length === 1 ? `0${hex}` : hex;
 }
 
 export function hsbToHex(color) {
@@ -176,23 +178,25 @@ export function hsbToHex(color) {
  * => '282a36bf'
  */
 export function rgbaToHex(red, green, blue, alpha) {
-  const isPercent = `${ red }${ alpha || '' }`.toString().includes('%');
+  const isPercent = `${red}${alpha || ''}`.toString().includes('%');
 
   if (typeof red === 'string') {
     const res = red.match(/(0?\.?\d{1,3})%?\b/g).map(Number);
-    [ red, green, blue, alpha ] = res;
+    [red, green, blue, alpha] = res;
   } else if (typeof red === 'object') {
     ({ red, green, blue, alpha } = red);
   } else if (isPresent(alpha)) {
     alpha = parseFloat(alpha);
   }
 
-  if (typeof red !== 'number' ||
+  if (
+    typeof red !== 'number' ||
     typeof green !== 'number' ||
     typeof blue !== 'number' ||
     red > 255 ||
     green > 255 ||
-    blue > 255) {
+    blue > 255
+  ) {
     throw new TypeError('Expected three numbers below 256');
   }
 
@@ -200,16 +204,21 @@ export function rgbaToHex(red, green, blue, alpha) {
     if (!isPercent && alpha >= 0 && alpha <= 1) {
       alpha = Math.round(255 * alpha);
     } else if (isPercent && alpha >= 0 && alpha <= 100) {
-      alpha = Math.round(255 * alpha / 100);
+      alpha = Math.round((255 * alpha) / 100);
     } else {
-      throw new TypeError(`Expected alpha value (${alpha}) as a fraction or percentage`);
+      throw new TypeError(
+        `Expected alpha value (${alpha}) as a fraction or percentage`
+      );
     }
-    alpha = (alpha | 1 << 8).toString(16).slice(1);
+    alpha = (alpha | (1 << 8)).toString(16).slice(1);
   } else {
     alpha = '';
   }
 
-  return ((blue | green << 8 | red << 16) | 1 << 24).toString(16).slice(1) + alpha;
+  return (
+    (blue | (green << 8) | (red << 16) | (1 << 24)).toString(16).slice(1) +
+    alpha
+  );
 }
 
 export function hexToRgb(hex) {
@@ -227,7 +236,7 @@ export function hexToRgb(hex) {
 
   return {
     red: num >> 16,
-    green: num >> 8 & 255,
+    green: (num >> 8) & 255,
     blue: num & 255,
   };
 }

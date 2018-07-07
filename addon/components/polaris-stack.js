@@ -114,14 +114,15 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-  * Lifecycle hooks.
-  */
+   * Lifecycle hooks.
+   */
   didRender() {
     this._super(...arguments);
 
     // Wrap each child element that isn't already a stack item.
-    this.$().children()
+    this.$()
+      .children()
       .not('div.Polaris-Stack__Item')
       .wrap('<div class="Polaris-Stack__Item"></div>');
-    },
+  },
 });

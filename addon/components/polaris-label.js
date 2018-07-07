@@ -48,6 +48,6 @@ export default Component.extend({
    * @private
    */
   labelId: computed('id', function() {
-    return `${ this.get('id') }Label`;
+    return `${this.get('id')}Label`;
   }).readOnly(),
 });

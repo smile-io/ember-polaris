@@ -13,11 +13,9 @@ export default Component.extend(SvgHandling, {
   classNameBindings: [
     'colorClass',
     'isColored:Polaris-Icon--isColored',
-    'backdrop:Polaris-Icon--hasBackdrop'
+    'backdrop:Polaris-Icon--hasBackdrop',
   ],
-  attributeBindings: [
-    'accessibilityLabel:aria-label',
-  ],
+  attributeBindings: ['accessibilityLabel:aria-label'],
 
   layout,
 
@@ -125,7 +123,10 @@ export default Component.extend(SvgHandling, {
    */
   iconSource: computed('sourcePath', 'source', function() {
     let source = this.get('source');
-    source = source.indexOf('/') === -1 ? `${ this.get('sourcePath') }/${ source }` : source;
+    source =
+      source.indexOf('/') === -1
+        ? `${this.get('sourcePath')}/${source}`
+        : source;
 
     return source;
   }).readOnly(),

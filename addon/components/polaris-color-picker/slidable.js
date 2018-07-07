@@ -10,12 +10,22 @@ function startDrag(event) {
   this.handleMove(event);
 
   // Set up global event listeners to handle dragging outside the slidable area.
-  $Ember(window).on('mousemove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('mouseup', () => { this.handleDragEnd(); });
+  $Ember(window).on('mousemove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('mouseup', () => {
+    this.handleDragEnd();
+  });
 
-  $Ember(window).on('touchmove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('touchend', () => { this.handleDragEnd(); });
-  $Ember(window).on('touchcancel', () => { this.handleDragEnd(); });
+  $Ember(window).on('touchmove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('touchend', () => {
+    this.handleDragEnd();
+  });
+  $Ember(window).on('touchcancel', () => {
+    this.handleDragEnd();
+  });
 }
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
@@ -61,8 +71,8 @@ export default Component.extend({
 
   draggerStyle: computed('draggerX', 'draggerY', function() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
-    const transform = `translate3d(${ draggerX }px, ${ draggerY }px, 0)`;
-    return htmlSafe(`transform: ${ transform };`);
+    const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
+    return htmlSafe(`transform: ${transform};`);
   }).readOnly(),
 
   /*
@@ -78,7 +88,10 @@ export default Component.extend({
     event.preventDefault();
 
     if (event.touches && event.touches.length) {
-      this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
+      this.handleDraggerMove(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
       return;
     }
 
@@ -99,7 +112,7 @@ export default Component.extend({
 
   handleDraggerMove(clientX, clientY) {
     const moveHandler = this.get('onChange');
-    if (typeof(moveHandler) !== 'function') {
+    if (typeof moveHandler !== 'function') {
       return;
     }
 

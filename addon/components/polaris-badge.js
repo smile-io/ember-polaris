@@ -103,5 +103,5 @@ export default Component.extend({
     }
 
     return `Polaris-Badge--status${classify(status)}`;
-  }).readOnly()
+  }).readOnly(),
 });

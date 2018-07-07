@@ -44,11 +44,11 @@ export default EmberObject.extend({
 
   overlayText: computed('type', function() {
     let type = this.get('type');
-    return get(dropZone, `overlayText${ capitalize(type) }`);
+    return get(dropZone, `overlayText${capitalize(type)}`);
   }),
 
   errorOverlayText: computed('type', function() {
     let type = this.get('type');
-    return get(dropZone, `errorOverlayText${ capitalize(type) }`);
+    return get(dropZone, `errorOverlayText${capitalize(type)}`);
   }),
 });

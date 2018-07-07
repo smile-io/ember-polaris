@@ -81,10 +81,10 @@ export default Component.extend({
   hasDescription: or('error', 'helpText'),
 
   errorId: computed('inputId', function() {
-    return `${ this.get('inputId') }Error`;
+    return `${this.get('inputId')}Error`;
   }).readOnly(),
 
   helpTextId: computed('inputId', function() {
-    return `${ this.get('inputId') }HelpText`;
+    return `${this.get('inputId')}HelpText`;
   }).readOnly(),
 });

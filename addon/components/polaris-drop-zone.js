@@ -26,9 +26,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     'state.error:Polaris-DropZone--hasError',
     'sizeClass',
   ],
-  attributeBindings: [
-    'ariaDisabled:aria-disabled',
-  ],
+  attributeBindings: ['ariaDisabled:aria-disabled'],
 
   /**
    * Allowed file types
@@ -257,7 +255,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   isDragging: or('active', 'state.dragging').readOnly(),
 
   fileInputNode: computed(function() {
-    return this.element.querySelector(`input[id='${ this.get('elementId') }-input']`);
+    return this.element.querySelector(
+      `input[id='${this.get('elementId')}-input']`
+    );
   }).readOnly(),
 
   ariaDisabled: computed('disabled', function() {
@@ -266,7 +266,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   sizeClass: computed('state.size', function() {
     let size = this.get('state.size');
-    return `Polaris-DropZone--size${ classify(size) }`;
+    return `Polaris-DropZone--size${classify(size)}`;
   }).readOnly(),
 
   showDragOverlay: computed('isDragging', 'state.error', 'overlay', function() {
@@ -292,17 +292,24 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDrop, onDropAccepted, onDropRejected } = this.getProperties(
+    let {
+      disabled,
+      onDrop,
+      onDropAccepted,
+      onDropRejected,
+    } = this.getProperties(
       'disabled',
       'onDrop',
       'onDropAccepted',
-      'onDropRejected',
+      'onDropRejected'
     );
     if (disabled) {
       return;
     }
     let fileList = getDataTransferFiles(event);
-    let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(fileList);
+    let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(
+      fileList
+    );
 
     this.dragTargets = [];
 
@@ -326,7 +333,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter } = this.getProperties('disabled', 'onDragEnter');
+    let { disabled, onDragEnter } = this.getProperties(
+      'disabled',
+      'onDragEnter'
+    );
     if (disabled) {
       return;
     }
@@ -372,16 +382,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let { disabled, onDragLeave, dropNode } = this.getProperties(
       'disabled',
       'onDragLeave',
-      'dropNode',
+      'dropNode'
     );
     if (disabled) {
       return;
     }
 
-    this.dragTargets = this.dragTargets.filter((el) => {
-      return el !== event.target &&
-        dropNode &&
-        dropNode.contains(el);
+    this.dragTargets = this.dragTargets.filter(el => {
+      return el !== event.target && dropNode && dropNode.contains(el);
     });
 
     if (this.dragTargets.length > 0) {
@@ -402,33 +410,40 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   adjustSize() {
-    throttle(this, function() {
-      let node = this.get('node');
-      let size = 'large';
-      let width = node.getBoundingClientRect().width;
+    throttle(
+      this,
+      function() {
+        let node = this.get('node');
+        let size = 'large';
+        let width = node.getBoundingClientRect().width;
 
-      if (width < smallSizeWidthLimit) {
-        size = 'small';
-      } else if (width < mediumSizeWidthLimit) {
-        size = 'medium';
-      }
+        if (width < smallSizeWidthLimit) {
+          size = 'small';
+        } else if (width < mediumSizeWidthLimit) {
+          size = 'medium';
+        }
 
-      this.set('state.size', size);
-    }, 50);
+        this.set('state.size', size);
+      },
+      50
+    );
   },
 
   getValidatedFiles(files) {
     let { accept, allowMultiple, customValidator } = this.getProperties(
       'accept',
       'allowMultiple',
-      'customValidator',
+      'customValidator'
     );
 
     let acceptedFiles = [];
     let rejectedFiles = [];
 
-    Array.from(files).forEach((file) => {
-      if (!fileAccepted(file, accept) || (customValidator && !customValidator(file))) {
+    Array.from(files).forEach(file => {
+      if (
+        !fileAccepted(file, accept) ||
+        (customValidator && !customValidator(file))
+      ) {
         rejectedFiles.push(file);
       } else {
         acceptedFiles.push(file);
@@ -477,12 +492,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   updateStateFromProps() {
-    let { error, type, overlayText, errorOverlayText } = this.get('state').getProperties(
-      'error',
-      'type',
-      'overlayText',
-      'errorOverlayText',
-    );
+    let { error, type, overlayText, errorOverlayText } = this.get(
+      'state'
+    ).getProperties('error', 'type', 'overlayText', 'errorOverlayText');
 
     if (error !== this.get('error')) {
       this.set('state.error', this.get('error'));
@@ -499,7 +511,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     let newErrorOverlayText = this.get('errorOverlayText');
-    if (isPresent(newErrorOverlayText) && newErrorOverlayText !== errorOverlayText) {
+    if (
+      isPresent(newErrorOverlayText) &&
+      newErrorOverlayText !== errorOverlayText
+    ) {
       this.set('state.errorOverlayText', newErrorOverlayText);
     }
 

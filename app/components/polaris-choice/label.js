@@ -1,1 +1,3 @@
-export { default } from '@smile-io/ember-polaris/components/polaris-choice/label';
+export {
+  default,
+} from '@smile-io/ember-polaris/components/polaris-choice/label';

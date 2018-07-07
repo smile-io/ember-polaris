@@ -18,7 +18,7 @@ module.exports = {
   afterInstall(/* options */) {
     this.ui.writeLine('Adding `ember-cli-sass` to application');
     return this.addPackagesToProject([
-      { name: 'ember-cli-sass', target: 'latest' }
+      { name: 'ember-cli-sass', target: 'latest' },
     ]).then(() => {
       this.ui.writeLine('Adding Polaris styles to application');
       return this.addStyleImportToHostApp();
@@ -35,10 +35,10 @@ module.exports = {
     }
 
     if (fs.existsSync(file)) {
-      this.ui.writeLine(chalk.green(`Adding import statement to ${ file }`));
+      this.ui.writeLine(chalk.green(`Adding import statement to ${file}`));
       return this.insertIntoFile(file, importStatement, {});
     } else {
-      this.ui.writeLine(chalk.green(`Creating ${ file }`));
+      this.ui.writeLine(chalk.green(`Creating ${file}`));
       return writeFile(file, importStatement);
     }
   },

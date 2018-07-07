@@ -9,7 +9,7 @@ import {
   getNextDisplayYear,
   getNextDisplayMonth,
   getPreviousDisplayYear,
-  getPreviousDisplayMonth
+  getPreviousDisplayMonth,
 } from '../utils/dates';
 
 export default Component.extend({
@@ -118,7 +118,10 @@ export default Component.extend({
   }).readOnly(),
 
   showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
-    let { showNextMonth, showNextYear } = this.getProperties('showNextMonth', 'showNextYear');
+    let { showNextMonth, showNextYear } = this.getProperties(
+      'showNextMonth',
+      'showNextYear'
+    );
 
     return getNextDisplayYear(showNextMonth, showNextYear);
   }).readOnly(),
@@ -138,45 +141,67 @@ export default Component.extend({
   }).readOnly(),
 
   previousMonthName: computed('showPreviousMonth', function() {
-    return monthsArray[ this.get('showPreviousMonth') ];
+    return monthsArray[this.get('showPreviousMonth')];
   }).readOnly(),
 
-  nextMonth: computed('multiMonth', 'showNextToNextMonth', 'showNextMonth', function() {
-    let {
-      multiMonth,
-      showNextToNextMonth,
-      showNextMonth
-    } = this.getProperties('multiMonth', 'showNextToNextMonth', 'showNextMonth');
+  nextMonth: computed(
+    'multiMonth',
+    'showNextToNextMonth',
+    'showNextMonth',
+    function() {
+      let {
+        multiMonth,
+        showNextToNextMonth,
+        showNextMonth,
+      } = this.getProperties(
+        'multiMonth',
+        'showNextToNextMonth',
+        'showNextMonth'
+      );
 
-    return multiMonth ? monthsArray[showNextToNextMonth] : monthsArray[showNextMonth];
-  }).readOnly(),
+      return multiMonth
+        ? monthsArray[showNextToNextMonth]
+        : monthsArray[showNextMonth];
+    }
+  ).readOnly(),
 
-  nextYear: computed('multiMonth', 'showNextToNextYear', 'showNextYear', function() {
-    let {
-      multiMonth,
-      showNextToNextYear,
-      showNextYear
-    } = this.getProperties('multiMonth', 'showNextToNextYear', 'showNextYear');
+  nextYear: computed(
+    'multiMonth',
+    'showNextToNextYear',
+    'showNextYear',
+    function() {
+      let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
+        'multiMonth',
+        'showNextToNextYear',
+        'showNextYear'
+      );
 
-    return multiMonth ? showNextToNextYear : showNextYear;
-  }).readOnly(),
+      return multiMonth ? showNextToNextYear : showNextYear;
+    }
+  ).readOnly(),
 
   range: computed('selected', function() {
     let selected = this.get('selected');
 
-    if (isPresent(selected) && (typeOf(selected) === 'date')) {
-      return { start: selected, end: selected }
+    if (isPresent(selected) && typeOf(selected) === 'date') {
+      return { start: selected, end: selected };
     }
 
     return selected;
   }).readOnly(),
 
-  previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
-    return `Show previous month, ${ this.get('previousMonthName') } ${ this.get('showPreviousYear') }`;
-  }).readOnly(),
+  previousMonthLabel: computed(
+    'previousMonthName',
+    'showPreviousYear',
+    function() {
+      return `Show previous month, ${this.get('previousMonthName')} ${this.get(
+        'showPreviousYear'
+      )}`;
+    }
+  ).readOnly(),
 
   nextMonthLabel: computed('nextMonth', 'nextYear', function() {
-    return `Show next month, ${ this.get('nextMonth') } ${ this.get('nextYear') }`;
+    return `Show next month, ${this.get('nextMonth')} ${this.get('nextYear')}`;
   }).readOnly(),
 
   setFocusDateAndHandleMonthChange(date) {
@@ -184,7 +209,7 @@ export default Component.extend({
 
     this.setProperties({
       hoverDate: date,
-      focusDate: date
+      focusDate: date,
     });
   },
 
@@ -196,8 +221,13 @@ export default Component.extend({
       disableDatesBefore,
       disableDatesAfter,
       focusDate,
-      range
-    } = this.getProperties('disableDatesBefore', 'disableDatesAfter', 'focusDate', 'range');
+      range,
+    } = this.getProperties(
+      'disableDatesBefore',
+      'disableDatesAfter',
+      'focusDate',
+      'range'
+    );
 
     let focusedDate = focusDate || (range && range.start);
 
@@ -210,7 +240,9 @@ export default Component.extend({
 
       previousWeek.setDate(focusedDate.getDate() - 7);
 
-      if (!(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore))) {
+      if (
+        !(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore))
+      ) {
         this.setFocusDateAndHandleMonthChange(previousWeek);
       }
     }
@@ -220,7 +252,7 @@ export default Component.extend({
 
       nextWeek.setDate(focusedDate.getDate() + 7);
 
-      if ((disableDatesAfter && isDateAfter(nextWeek, disableDatesAfter))) {
+      if (disableDatesAfter && isDateAfter(nextWeek, disableDatesAfter)) {
         this.setFocusDateAndHandleMonthChange(nextWeek);
       }
     }
@@ -240,7 +272,9 @@ export default Component.extend({
 
       yesterday.setDate(focusedDate.getDate() - 1);
 
-      if (!(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore))) {
+      if (
+        !(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore))
+      ) {
         this.setFocusDateAndHandleMonthChange(yesterday);
       }
     }
@@ -269,7 +303,7 @@ export default Component.extend({
 
       this.setProperties({
         hoverDate: endDate,
-        focusDate: new Date(endDate)
+        focusDate: new Date(endDate),
       });
 
       this.get('onChange')(dateRange);
@@ -279,6 +313,6 @@ export default Component.extend({
       this.get('onMonthChange')(month, year);
 
       this.set('focusDate', null);
-    }
-  }
+    },
+  },
 });

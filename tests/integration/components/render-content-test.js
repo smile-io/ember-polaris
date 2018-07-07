@@ -10,10 +10,13 @@ module('Integration | Component | render-content', function(hooks) {
 
   hooks.beforeEach(function() {
     // Register a simple component to test `render-content` with.
-    this.owner.register('component:my-component', Component.extend({
-      classNames: ['my-test-component'],
-      layout: hbs`{{text}}`,
-    }));
+    this.owner.register(
+      'component:my-component',
+      Component.extend({
+        classNames: ['my-test-component'],
+        layout: hbs`{{text}}`,
+      })
+    );
   });
 
   test('it renders correctly when content is a string', async function(assert) {
@@ -46,6 +49,9 @@ module('Integration | Component | render-content', function(hooks) {
       {{render-content (component "my-component" text="component content here")}}
     `);
 
-    assert.equal(find('.my-test-component').textContent.trim(), 'component content here');
+    assert.equal(
+      find('.my-test-component').textContent.trim(),
+      'component content here'
+    );
   });
 });

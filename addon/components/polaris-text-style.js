@@ -49,6 +49,6 @@ export default Component.extend({
       return null;
     }
 
-    return `Polaris-TextStyle--variation${ classify(variation) }`;
+    return `Polaris-TextStyle--variation${classify(variation)}`;
   }).readOnly(),
 });

@@ -34,5 +34,5 @@ export default Component.extend({
       invokeAction(item, 'onAction');
       invokeAction(this, 'onActionAnyItem');
     },
-  }
+  },
 });

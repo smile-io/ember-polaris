@@ -32,7 +32,7 @@ function accepts(file, acceptedFiles) {
       ? acceptedFiles
       : acceptedFiles.split(',');
 
-    return acceptedFilesArray.some((type) => {
+    return acceptedFilesArray.some(type => {
       const validType = type.trim();
       if (validType.charAt(0) === '.') {
         return fileName.toLowerCase().endsWith(validType.toLowerCase());

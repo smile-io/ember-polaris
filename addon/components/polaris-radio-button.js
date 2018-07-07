@@ -53,8 +53,8 @@ export default Component.extend({
   helpText: null,
 
   /**
-  * ID for form input
-  *
+   * ID for form input
+   *
    * @property inputId
    * @type {string}
    * @default null
@@ -119,11 +119,11 @@ export default Component.extend({
    * Internal properties.
    */
   _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-radio-button-${ guidFor(this) }`;
+    return this.get('inputId') || `polaris-radio-button-${guidFor(this)}`;
   }).readOnly(),
 
   describedBy: computed('helpText', '_id', function() {
     const helpText = this.get('helpText');
-    return helpText ? `${ this.get('_id') }HelpText` : null;
+    return helpText ? `${this.get('_id')}HelpText` : null;
   }).readOnly(),
 });

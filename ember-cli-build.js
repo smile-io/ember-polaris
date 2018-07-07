@@ -9,11 +9,9 @@ module.exports = function(defaults) {
     // in their `ember-cli-build.js` for icons to work.
     svgJar: {
       strategy: 'inline',
-      sourceDirs: [
-        'tests/dummy/public/assets/images/svg'
-      ],
-      stripPath: false
-    }
+      sourceDirs: ['tests/dummy/public/assets/images/svg'],
+      stripPath: false,
+    },
   });
 
   /*
