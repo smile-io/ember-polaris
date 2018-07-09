@@ -43,6 +43,7 @@ export default Component.extend({
   classNameBindings: [
     'statusClass',
     'hasDismiss:Polaris-Banner__hasDismiss',
+    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
   ],
 
   attributeBindings: [
@@ -112,6 +113,14 @@ export default Component.extend({
   tabIndex: '0',
 
   ariaLive: 'polite',
+
+  /**
+   * Temporary workaround for not having appProvider/withAppProvider equivalents implemented yet.
+   * Pass `withinContentContainer` true if banner is in a modal/card component.
+   *
+   * TODO implement appProvider/withAppProvider
+   */
+  withinContentContainer: false,
 
   hasDismiss: bool('onDismiss').readOnly(),
 
