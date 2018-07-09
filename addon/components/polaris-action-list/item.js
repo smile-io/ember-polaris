@@ -18,6 +18,8 @@ export default Component.extend({
    *  - disabled
    *  - icon
    *  - image (not currently supported)
+   *  - ellipsis (not currently supported)
+   *  - badge (not currently supported)
    *  - onAction
    *
    * @property item

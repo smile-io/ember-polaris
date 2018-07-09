@@ -16,6 +16,7 @@ const STATUS_LABELS = {
   success: 'Success',
   warning: 'Warning',
   attention: 'Attention',
+  new: 'New',
 };
 
 /**
@@ -102,6 +103,6 @@ export default Component.extend({
       return null;
     }
 
-    return `Polaris-Badge--status${classify(status)}`;
+    return `Polaris-Badge--status${ classify(status) }`;
   }).readOnly()
 });

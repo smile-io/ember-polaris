@@ -3,13 +3,13 @@
     {{#polaris-stack vertical=true spacing="tight"}}
       {{polaris-icon color="indigo" source=iconDragDrop}}
 
-      {{#if (eq state.size "large")}}
+      {{#if (eq state.size "extraLarge")}}
         {{polaris-display-text
           size="small"
           tagName="p"
           text=state.overlayText
         }}
-      {{else if (eq state.size "medium")}}
+      {{else if (or (eq state.size "medium") (eq state.size "large"))}}
         {{polaris-caption text=state.overlayText}}
       {{/if}}
     {{/polaris-stack}}
@@ -21,13 +21,13 @@
     {{#polaris-stack vertical=true spacing="tight"}}
       {{polaris-icon color="red" source=iconAlertCircle}}
 
-      {{#if (eq state.size "large")}}
+      {{#if (eq state.size "extraLarge")}}
         {{polaris-display-text
           size="small"
           tagName="p"
           text=state.errorOverlayText
         }}
-      {{else if (eq state.size "medium")}}
+      {{else if (or (eq state.size "medium") (eq state.size "large"))}}
         {{polaris-caption text=state.errorOverlayText}}
       {{/if}}
     {{/polaris-stack}}

@@ -29,7 +29,7 @@ Radio button with help text:
 }}
 ```
 
-Radio button with customer label component:
+Radio button with custom label component:
 
 ```hbs
 {{polaris-radio-button

@@ -4,6 +4,8 @@
 
 `polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list).
 
+**NOTE:** _the 'url', 'image', 'ellipsis' and 'badge' list item properties are not currently implemented._
+
 ### Examples
 
 Basic usage (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
