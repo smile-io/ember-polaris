@@ -31,3 +31,5 @@ With a success status set, custom icon, content, dismiss button and actions:
   <p>This order has been shipped.</p>
 {{/polaris-banner}}
 ```
+
+**NOTE:** If using the banner inside a card/modal, you need to manually pass `withinContentContainer=true`. This manual requirement won't be needed once `app-provider` component is implemented.
