@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v.1.7.0 (July 9, 2018)
 - [#144](https://github.com/smile-io/ember-polaris/pull/144) [UPDATE] Shopify Polaris `v2.2.0`
 - [#146](https://github.com/smile-io/ember-polaris/pull/146) [ENHANCEMENT] Add `new` status to the Badge component
 - [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
