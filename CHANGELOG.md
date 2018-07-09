@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v.1.7.1 (July 9, 2018)
+- [#158](https://github.com/smile-io/ember-polaris/pull/158) [FIX] Pass textfield selectors to `polaris-text-field` event listener.
+
 ### v.1.7.0 (July 9, 2018)
 - [#144](https://github.com/smile-io/ember-polaris/pull/144) [UPDATE] Shopify Polaris `v2.2.0`
 - [#146](https://github.com/smile-io/ember-polaris/pull/146) [ENHANCEMENT] Add `new` status to the Badge component

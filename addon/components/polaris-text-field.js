@@ -422,7 +422,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
   }).readOnly(),
 
   addValueListener() {
-    this.addEventListener('keyup', () => {
+    this.addEventListener('input, textarea', 'keyup', () => {
       this.debounceTask('debouncedUpdateValue', 250);
     });
   },
