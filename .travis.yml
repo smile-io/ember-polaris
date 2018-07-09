@@ -12,8 +12,7 @@ addons:
   chrome: stable
 
 cache:
-  directories:
-    yarn: true
+  yarn: true
 
 env:
   global:

@@ -1,0 +1,21 @@
+{{#if hasConnection}}
+  <div class="Polaris-Connected">
+    {{#if left}}
+      {{#polaris-connected/item position="left"}}
+        {{render-content left}}
+      {{/polaris-connected/item}}
+    {{/if}}
+
+    {{#polaris-connected/item position="primary"}}
+      {{yield}}
+    {{/polaris-connected/item}}
+
+    {{#if right}}
+      {{#polaris-connected/item position="right"}}
+        {{render-content right}}
+      {{/polaris-connected/item}}
+    {{/if}}
+  </div>
+{{else}}
+  {{yield}}
+{{/if}}

@@ -20,8 +20,10 @@ Install `ember-polaris` using `ember-cli`:
 $ ember install @smile-io/ember-polaris
 ```
 
+### Styles
 This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app. It will also set up your app's `app/styles/app.scss` to `@import "ember-polaris";`, creating the file if it does not already exist.
 
+### Icons
 For icons to work you will need to:
 * copy Polaris SVG's into a folder in `public`, ex: `public/assets/images/svg/polaris`
 * install `ember-svg-jar`
@@ -49,7 +51,27 @@ var app = new EmberApp(defaults, {
 });
 ```
 
-**NOTE:** This will be handled by `ember-polaris` in the near future.
+### Template compiler
+If your app does not already import `ember-template-compiler`, you may get an error similar to this one when passing a hash of `componentName` and `props` into one of the `ember-polaris` components:
+
+```
+Uncaught TypeError: _ember.default.HTMLBars.compile is not a function
+```
+
+If that happens, you need to add an import statement to its `ember-cli-build.js`. For non-Bower projects (Ember 2.13 and later by default):
+
+```javascript
+// ember-cli-build.js
+app.import('vendor/ember/ember-template-compiler.js');
+```
+
+For projects using Bower, this should be:
+
+```javascript
+app.import('bower_components/ember/ember-template-compiler.js');
+```
+
+**NOTE:** This setup will be handled by `ember-polaris` in the future.
 
 Usage
 ------------------------------------------------------------------------------
@@ -147,6 +169,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Radio button](./docs/radio-button.md#radio-button)
 - [Range slider](./docs/range-slider.md#range-slider)
 - [Tag](./docs/tag.md#tag)
+- [Text field](./docs/text-field.md#text-field)
 
 #### Lists
 - [Data table](./docs/data-table.md#data-table)
