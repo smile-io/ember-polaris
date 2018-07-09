@@ -12,6 +12,10 @@ import {
   getPreviousDisplayMonth
 } from '../utils/dates';
 
+// TODO: add changes for Polaris v2.2.0
+// See https://github.com/Shopify/polaris/compare/v2.0.0...v2.2.0?diff=split#diff-31dd30c75130536eea45b3bccfbb92b9
+// (fixes https://github.com/Shopify/polaris/issues/313, if the bug's present in our Ember implementation)
+
 export default Component.extend({
   classNames: ['Polaris-DatePicker'],
 
