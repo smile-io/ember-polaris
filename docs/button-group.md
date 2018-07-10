@@ -44,3 +44,14 @@ Plain buttons:
   {{/buttonGroup.item}}
 {{/polaris-button-group}}
 ```
+
+For dynamic button groups where buttons are added or removed once the button group has rendered, you must explicitly add an item component around each item to prevent a Glimmer error such as `Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node`:
+
+```hbs
+{{#polaris-button-group as |group|}}
+  {{#each buttons as |button|}}
+    {{#group.item}}
+      ...
+    {{/group.item}}
+{{/polaris-button-group}}
+```
