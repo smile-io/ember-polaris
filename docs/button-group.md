@@ -53,5 +53,12 @@ For dynamic button groups where buttons are added or removed once the button gro
     {{#group.item}}
       ...
     {{/group.item}}
+  {{/each}}
+
+  {{#if canRemove}}
+    {{#group.item}}
+      ...
+    {{/group.item}}
+  {{/if}}
 {{/polaris-button-group}}
 ```

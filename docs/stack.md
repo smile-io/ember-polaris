@@ -46,5 +46,12 @@ For dynamic stacks where items are added or removed once the stack has rendered,
     {{#stack.item}}
       ...
     {{/stack.item}}
+  {{/each}}
+
+  {{#unless isUpdating}}
+    {{#stack.item}}
+      ...
+    {{/stack.item}}
+  {{/unless}}
 {{/polaris-stack}}
 ```

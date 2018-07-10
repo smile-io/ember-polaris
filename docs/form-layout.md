@@ -33,11 +33,11 @@ For dynamic forms where items are added or removed once the form has rendered, y
 
 ```hbs
 {{#polaris-form-layout as |formLayout|}}
-  {{#each formItems as |formItem|}}
+  {{#if canEdit}}
     {{#formLayout.item}}
       ...
     {{/formLayout.item}}
-  {{/each}}
+  {{/if}}
 
   {{#formLayout.group as |group|}}
     {{#each formGroupItems as |formGroupItem|}}
