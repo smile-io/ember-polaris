@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#159](https://github.com/smile-io/ember-polaris/pull/159) [DOCUMENTATION] Add notes about avoiding Glimmer error under dynamic usages of auto-wrapping components (`polaris-button-group`, `polaris-form-layout`, `polaris-form-layout/group` and `polaris-stack`).
+
 ### v.1.7.1 (July 9, 2018)
 - [#158](https://github.com/smile-io/ember-polaris/pull/158) [FIX] Pass textfield selectors to `polaris-text-field` event listener.
 
