@@ -29,7 +29,7 @@ Form layout with two groups, the second of which is condensed:
 {{/polaris-form-layout}}
 ```
 
-For dynamic forms where items are added or removed once the form has rendered, you must explicitly a form layout item component around each item to prevent a Glimmer error such as `Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node`:
+For dynamic forms where items are added or removed once the form has rendered, you must explicitly add a form layout item component around each item to prevent a Glimmer error such as `Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node`:
 
 ```hbs
 {{#polaris-form-layout as |formLayout|}}
