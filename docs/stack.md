@@ -37,3 +37,21 @@ Stack with one item on the left and one pushed to the right:
   <div>Stack item 2</div>
 {{/polaris-stack}}
 ```
+
+For dynamic stacks where items are added or removed once the stack has rendered, you must explicitly add an item component around each item to prevent a Glimmer error such as `Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node`:
+
+```hbs
+{{#polaris-stack as |stack|}}
+  {{#each stackItems as |stackItem|}}
+    {{#stack.item}}
+      ...
+    {{/stack.item}}
+  {{/each}}
+
+  {{#unless isUpdating}}
+    {{#stack.item}}
+      ...
+    {{/stack.item}}
+  {{/unless}}
+{{/polaris-stack}}
+```
