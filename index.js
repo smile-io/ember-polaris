@@ -19,4 +19,14 @@ module.exports = {
 
     return this._super.treeForStyles(new MergeTrees([polarisScssFiles, tree], { overwrite: true }));
   },
+
+  options: {
+    svgJar: {
+      sourceDirs: [
+        'public',
+        'tests/dummy/public/assets/images/svg',
+        'node_modules/@smile-io/ember-polaris/public',
+      ]
+    }
+  }
 };

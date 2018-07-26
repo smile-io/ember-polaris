@@ -5,8 +5,8 @@ import { classify } from '@ember/string';
 import layout from '../../templates/components/polaris-drop-zone/file-upload';
 
 const iconDragDrop = 'drag-drop';
-const assetFileUpload = '/ember-polaris/images/file-upload.svg';
-const assetImageUpload = '/ember-polaris/images/image-upload.svg';
+const assetFileUpload = 'file-upload';
+const assetImageUpload = 'image-upload';
 
 const fileUpload = {
   actionTitleFile: 'Add file',
