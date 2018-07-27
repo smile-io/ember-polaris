@@ -1,8 +1,8 @@
 # ember-polaris Changelog
 
-### Unreleased
-- [#160](https://github.com/smile-io/ember-polaris/pull/160) [FIX] Replace img tag with `svg-jar` usage in `polaris-drop-zone` component to load the image. Svg jar configuration in the host app isn't required to use this addon anymore.
+### v.1.7.2 (July 27, 2018)
 - [#159](https://github.com/smile-io/ember-polaris/pull/159) [DOCUMENTATION] Add notes about avoiding Glimmer error under dynamic usages of auto-wrapping components (`polaris-button-group`, `polaris-form-layout`, `polaris-form-layout/group` and `polaris-stack`).
+- [#160](https://github.com/smile-io/ember-polaris/pull/160) [FIX] Replace img tag with `svg-jar` usage in `polaris-drop-zone` component to load images. `svg-jar` configuration in the host app isn't required to use this addon anymore.
 
 ### v.1.7.1 (July 9, 2018)
 - [#158](https://github.com/smile-io/ember-polaris/pull/158) [FIX] Pass textfield selectors to `polaris-text-field` event listener.
