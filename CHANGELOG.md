@@ -1,6 +1,7 @@
 # ember-polaris Changelog
 
 ### Unreleased
+- [#160](https://github.com/smile-io/ember-polaris/pull/160) [FIX] Replace img tag with `svg-jar` usage in `polaris-drop-zone` component to load the image. Svg jar configuration in the host app isn't required to use this addon anymore.
 - [#159](https://github.com/smile-io/ember-polaris/pull/159) [DOCUMENTATION] Add notes about avoiding Glimmer error under dynamic usages of auto-wrapping components (`polaris-button-group`, `polaris-form-layout`, `polaris-form-layout/group` and `polaris-stack`).
 
 ### v.1.7.1 (July 9, 2018)

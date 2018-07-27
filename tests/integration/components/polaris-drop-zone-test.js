@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent, settled } from '@ember/test-helpers';
+import { find, render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { capitalize, htmlSafe } from '@ember/string';
 import { selectFiles } from 'ember-native-dom-helpers';
@@ -9,7 +9,7 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import MockEvent from '@smile-io/ember-polaris/test-support/mock-drop-zone-event';
 import { smallSizeWidthLimit, mediumSizeWidthLimit, largeSizeWidthLimit } from '@smile-io/ember-polaris/utils/drop-zone';
 
-// NOTE: Doubling the size because of the wrapping #ember-testing container which has a 200% width and 
+// NOTE: Doubling the size because of the wrapping #ember-testing container which has a 200% width and
 // transform scale of 0.5
 const smallWidth = 2 * (smallSizeWidthLimit - 1);
 const mediumWidth = 2 * (mediumSizeWidthLimit - 1);
@@ -229,7 +229,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       const fileUploadTextSelector = buildNestedSelector(fileUploadStackItemSelector, '.Polaris-TextStyle--variationSubdued');
 
       test('it renders properly with FileUpload', async function(assert) {
-        assert.expect(14);
+        assert.expect(12);
 
         await render(hbs`
           {{#polaris-drop-zone type=type as |dropZone|}}
@@ -241,17 +241,15 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert.dom(fileUploadStackSelector).exists('fileUpload wraps content in a stack');
         assert.dom(fileUploadStackSelector).hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
         assert.dom(fileUploadImageSelector).exists('fileUpload image is rendered');
-        assert.dom(fileUploadImageSelector).hasAttribute('src', '/ember-polaris/images/file-upload.svg', 'fileUpload has correct image `src` attribute');
-        assert.dom(fileUploadImageSelector).hasAttribute('alt', '', 'fileUpload has correct image `alt` attribute');
+        assert.equal(find(fileUploadImageSelector).dataset.iconSource, 'file-upload', 'fileUpload has correct image set');
         assert.dom(fileUploadImageSelector).hasClass('Polaris-DropZone-FileUpload--sizeExtraLarge', '', 'fileUpload has extra large class');
         assert.dom(fileUploadButtonTextSelector).hasText('Add file', 'fileUpload button has correct text');
         assert.dom(fileUploadTextSelector).hasText('or drop files to upload', 'fileUpload has correct text');
 
         this.set('type', 'image');
 
-        assert.dom(fileUploadImageSelector).hasAttribute('src', '/ember-polaris/images/image-upload.svg', 'fileUpload has correct image `src` attribute when image-type dropzone');
+        assert.equal(find(fileUploadImageSelector).dataset.iconSource, 'image-upload', 'fileUpload has correct image set when image-type dropzone');
         assert.dom(fileUploadImageSelector).hasClass('Polaris-DropZone-FileUpload--sizeExtraLarge', '', 'fileUpload has extra large class');
-        assert.dom(fileUploadImageSelector).hasAttribute('alt', '', 'fileUpload has correct image `alt` attribute');
         assert.dom(fileUploadButtonTextSelector).hasText('Add image', 'fileUpload button has correct text when image-type dropzone');
         assert.dom(fileUploadTextSelector).hasText('or drop images to upload', 'fileUpload has correct text when image-type dropzone');
       });
@@ -275,7 +273,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       );
 
       test('it renders properly with FileUpload', async function(assert) {
-        assert.expect(16);
+        assert.expect(14);
 
         this.set('style', htmlSafe(`width: ${ largeWidth }px;`));
         await render(hbs`
@@ -291,8 +289,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert.dom(fileUploadStackSelector).hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
         assert.dom(fileUploadStackSelector).hasClass('Polaris-Stack--spacingTight', 'fileUpload stack has tight spacing');
         assert.dom(fileUploadImageSelector).exists('fileUpload image is rendered');
-        assert.dom(fileUploadImageSelector).hasAttribute('src', '/ember-polaris/images/file-upload.svg', 'fileUpload has correct image `src` attribute');
-        assert.dom(fileUploadImageSelector).hasAttribute('alt', '', 'fileUpload has correct image `alt` attribute');
+        assert.equal(find(fileUploadImageSelector).dataset.iconSource, 'file-upload', 'fileUpload has correct image set');
         assert.dom(fileUploadImageSelector).hasClass('Polaris-DropZone-FileUpload--sizeLarge', '', 'fileUpload has large class');
         assert.dom(fileUploadButtonTextSelector).hasText('Add file', 'fileUpload button has correct text');
         assert.dom('.Polaris-Button').hasClass('Polaris-Button--sizeSlim', 'fileUpload button is slim');
@@ -300,9 +297,8 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         this.set('type', 'image');
 
-        assert.dom(fileUploadImageSelector).hasAttribute('src', '/ember-polaris/images/image-upload.svg', 'fileUpload has correct image `src` attribute when image-type dropzone');
+        assert.equal(find(fileUploadImageSelector).dataset.iconSource, 'image-upload', 'fileUpload has correct image set when image-type dropzone');
         assert.dom(fileUploadImageSelector).hasClass('Polaris-DropZone-FileUpload--sizeLarge', '', 'fileUpload has large class');
-        assert.dom(fileUploadImageSelector).hasAttribute('alt', '', 'fileUpload has correct image `alt` attribute');
         assert.dom(fileUploadButtonTextSelector).hasText('Add image', 'fileUpload button has correct text');
         assert.dom(fileUploadCaptionSelector).hasText('or drop images to upload', 'fileUpload has correct text when image-type dropzone');
       });

@@ -3,18 +3,7 @@
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  let app = new EmberAddon(defaults, {
-    // This only affects the dummy app, not a real host app.
-    // The latter will need to duplicate these options
-    // in their `ember-cli-build.js` for icons to work.
-    svgJar: {
-      strategy: 'inline',
-      sourceDirs: [
-        'tests/dummy/public/assets/images/svg'
-      ],
-      stripPath: false
-    }
-  });
+  let app = new EmberAddon(defaults, {});
 
   /*
     This build file specifies the options for the dummy test app of this
