@@ -44,7 +44,7 @@ With icons:
 }}
 ```
 
-With images:
+With image:
 
 ```hbs
 {{polaris-action-list
