@@ -3,15 +3,21 @@
   disabled={{item.disabled}}
   onclick={{action onAction}}
 >
-  {{#if item.icon}}
-    <div class="Polaris-ActionList__Content">
-      {{polaris-action-list/image icon=item.icon}}
-
-      <div class="Polaris-ActionList__Text">
-        {{item.text}}
+  <div class="Polaris-ActionList__Content">
+    {{#if item.icon}}
+      <div class="Polaris-ActionList__Image">
+        {{polaris-icon source=item.icon}}
       </div>
+    {{else if item.image}}
+      <div
+        role="presentation"
+        className="Polaris-ActionList__Image"
+        style="background-image: url('{{icon.image}}')"
+      />
+    {{/if}}
+
+    <div class="Polaris-ActionList__Text">
+      {{item.text}}
     </div>
-  {{else}}
-    {{item.text}}
-  {{/if}}
+  </div>
 </button>

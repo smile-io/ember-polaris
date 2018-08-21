@@ -17,7 +17,7 @@ export default Component.extend({
    *  - url (not currently supported)
    *  - disabled
    *  - icon
-   *  - image (not currently supported)
+   *  - image
    *  - ellipsis (not currently supported)
    *  - badge (not currently supported)
    *  - onAction
