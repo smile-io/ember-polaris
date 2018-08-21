@@ -1,9 +1,8 @@
 import Component from '@ember/component';
+import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
 import layout from '../../templates/components/polaris-action-list/item';
 
-/**
- * TODO: support link items and items with an `image`.
- */
 export default Component.extend({
   tagName: 'li',
 
@@ -17,7 +16,7 @@ export default Component.extend({
    *  - url (not currently supported)
    *  - disabled
    *  - icon
-   *  - image (not currently supported)
+   *  - image
    *  - ellipsis (not currently supported)
    *  - badge (not currently supported)
    *  - onAction
@@ -38,4 +37,9 @@ export default Component.extend({
    * @default no-op
    */
   onAction() {},
+
+  imageBackgroundStyle: computed('item.image', function() {
+    let url = this.get('item.image');
+    return url ? htmlSafe(`background-image: url(${ url })`) : '';
+  }).readOnly(),
 });

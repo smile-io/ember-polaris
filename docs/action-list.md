@@ -4,7 +4,7 @@
 
 `polaris-action-list` implements the [Polaris Action list component](https://polaris.shopify.com/components/actions/action-list).
 
-**NOTE:** _the 'url', 'image', 'ellipsis' and 'badge' list item properties are not currently implemented._
+**NOTE:** _the 'url', 'ellipsis' and 'badge' list item properties are not currently implemented._
 
 ### Examples
 
@@ -39,6 +39,20 @@ With icons:
       text="Delete this item"
       icon="delete"
       onAction=(action "deleteItem")
+    )
+  )
+}}
+```
+
+With image:
+
+```hbs
+{{polaris-action-list
+  items=(array
+    (hash
+      text="View product"
+      image="https://product-image-path.png"
+      onAction=(action "goToProduct")
     )
   )
 }}
