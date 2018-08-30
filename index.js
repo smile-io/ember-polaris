@@ -8,6 +8,10 @@ const MergeTrees = require('broccoli-merge-trees');
 module.exports = {
   name: '@smile-io/ember-polaris',
 
+  isDevelopingAddon() {
+    return process.env.SMILE_DEV;
+  },
+
   treeForStyles(tree) {
     let packageRoot = path.dirname(resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }));
     let polarisScssFiles = new Funnel(packageRoot, {
