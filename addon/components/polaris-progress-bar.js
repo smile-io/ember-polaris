@@ -56,7 +56,7 @@ export default Component.extend({
     let progress = this.get('progress');
     let parsedProgress;
 
-    if (progress < 0) {
+    if (progress < 0 || !Number.isFinite(progress)) {
       parsedProgress = 0;
     } else if (progress > 100) {
       parsedProgress = 100;
