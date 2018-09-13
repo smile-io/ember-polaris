@@ -196,6 +196,7 @@ Contributing
 
 ### Linting
 
+* `yarn lint:hbs`
 * `yarn lint:js`
 * `yarn lint:js --fix`
 
