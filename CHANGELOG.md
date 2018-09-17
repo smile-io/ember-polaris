@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#170](https://github.com/smile-io/ember-polaris/pull/170) [FIX] Allow class names on `polaris-callout-card`.
+
 ### v.1.7.3 (August 21, 2018)
 - [#163](https://github.com/smile-io/ember-polaris/pull/163) [ENHANCEMENT] Add `image` property to `polaris-action-list/item` component.
 
