@@ -7,7 +7,9 @@
 }}
 
 {{#each columnVisibilityData as |column|}}
-  <div class="Polaris-DataTable__Pip {{if column.isVisible 'Polaris-DataTable__Pip--visible'}}"></div>
+  <div
+    class="Polaris-DataTable__Pip {{if column.isVisible "Polaris-DataTable__Pip--visible"}}"
+  />
 {{/each}}
 
 {{polaris-button

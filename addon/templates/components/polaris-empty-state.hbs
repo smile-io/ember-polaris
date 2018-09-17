@@ -1,11 +1,16 @@
 <div class="Polaris-EmptyState__Section">
   <div class="Polaris-EmptyState__DetailsContainer">
-    {{#with (component "polaris-empty-state/details"
-      heading=heading
-      text=text
-      action=action
-      secondaryAction=secondaryAction
-    ) as |detailsComponent|}}
+    {{!-- template-lint-disable attribute-indentation --}}
+    {{!-- TODO remove rule above once linter handles this correctly --}}
+    {{#with
+      (component "polaris-empty-state/details"
+        heading=heading
+        text=text
+        action=action
+        secondaryAction=secondaryAction
+      )
+    as |detailsComponent|
+    }}
       {{#if hasBlock}}
         {{#component detailsComponent}}
           {{yield}}

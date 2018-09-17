@@ -44,7 +44,10 @@
             }}
 
             {{#if secondaryAction}}
-              <button class="Polaris-Banner__SecondaryAction" onclick={{action "triggerAction" secondaryAction}}>
+              <button
+                class="Polaris-Banner__SecondaryAction"
+                onclick={{action "triggerAction" secondaryAction}}
+              >
                 <span class="Polaris-Banner__Text">{{secondaryAction.text}}</span>
               </button>
             {{/if}}

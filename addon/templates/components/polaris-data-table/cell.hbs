@@ -1,8 +1,22 @@
 {{#if presentational}}
   {{#if header}}
-    <th aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></th>
+    <th
+      aria-hidden="true"
+      role="presentation"
+      id={{cellElementId}}
+      class={{cellClassNames}}
+      style={{style}}
+    >
+    </th>
   {{else}}
-    <td aria-hidden="true" role="presentation" id={{cellElementId}} class={{cellClassNames}} style={{style}}></td>
+    <td
+      aria-hidden="true"
+      role="presentation"
+      id={{cellElementId}}
+      class={{cellClassNames}}
+      style={{style}}
+    >
+    </td>
   {{/if}}
 {{else}}
   {{#if (or header fixed)}}
@@ -17,8 +31,8 @@
           aria-sort={{sortDirection}}
           aria-label={{sortAccessibilityLabel}}
           tabindex="0"
-          {{action onSort}}
           onkeydown={{action "onKeyDown"}}
+          onclick={{action onSort}}
         >
           {{#if (eq contentType "text")}}
             <span class="Polaris-DataTable__Heading Polaris-DataTable__Heading--left">

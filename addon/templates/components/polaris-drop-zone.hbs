@@ -35,14 +35,16 @@
 {{/if}}
 
 <div class="Polaris-DropZone__Container">
-  {{yield (hash
-    fileUpload=(component "polaris-drop-zone/file-upload"
-      context=(hash
-        type=(readonly state.type)
-        size=(readonly state.size)
+  {{yield
+    (hash
+      fileUpload=(component "polaris-drop-zone/file-upload"
+        context=(hash
+          type=(readonly state.type)
+          size=(readonly state.size)
+        )
       )
     )
-  )}}
+  }}
 </div>
 
 {{#polaris-visually-hidden}}

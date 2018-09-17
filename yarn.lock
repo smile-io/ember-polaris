@@ -2954,7 +2954,7 @@ ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
 
-ember-cli-template-lint@^1.0.0-beta.1:
+ember-cli-template-lint@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/ember-cli-template-lint/-/ember-cli-template-lint-1.0.0-beta.2.tgz#0ebd2f8c1f9ca47f9ee3b42755d66262440c14f6"
   dependencies:
