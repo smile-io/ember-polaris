@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v.1.7.4 (September 17, 2018)
 - [#170](https://github.com/smile-io/ember-polaris/pull/170) [FIX] Allow class names on `polaris-callout-card`.
 
 ### v.1.7.3 (August 21, 2018)
