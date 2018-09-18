@@ -16,7 +16,7 @@
         <tr>
           {{#each
             (polaris-data-table/insert-presentational-cell headings)
-          as |heading headingIndex|
+            as |heading headingIndex|
           }}
             {{polaris-data-table/heading
               heading=heading
@@ -37,7 +37,7 @@
           <tr>
             {{#each
               (polaris-data-table/insert-presentational-cell totals)
-            as |total index|
+              as |total index|
             }}
               {{polaris-data-table/total
                 total=total
