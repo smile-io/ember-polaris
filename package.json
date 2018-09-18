@@ -39,7 +39,7 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "@shopify/polaris": "2.2.0",
+    "@shopify/polaris": "2.9.0",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
     "chalk": "^2.4.1",

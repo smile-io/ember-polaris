@@ -2,6 +2,7 @@
 
 ### Unrelease
 - [#168](https://github.com/smile-io/ember-polaris/pull/168) [INTERNAL] Upgrade to Ember CLI `3.4.2`
+- [#144](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.9.0`
 
 ### v.1.7.3 (August 21, 2018)
 - [#163](https://github.com/smile-io/ember-polaris/pull/163) [ENHANCEMENT] Add `image` property to `polaris-action-list/item` component.
