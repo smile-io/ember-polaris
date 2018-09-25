@@ -24,3 +24,5 @@ bower.json.ember-try
 package.json.ember-try
 
 package-lock.json
+jsconfig.json
+.vscode
