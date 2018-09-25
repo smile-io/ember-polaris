@@ -33,7 +33,7 @@ export default Component.extend({
   /*
    * Internal properties.
    */
-  itemId: computed(function () {
+  itemId: computed(function() {
     return guidFor(this);
   }),
 });

@@ -34,5 +34,5 @@ export default Component.extend({
    * @private
    * @type {Boolean}
    */
-  hasConnection: or('left', 'right').readOnly()
+  hasConnection: or('left', 'right').readOnly(),
 });

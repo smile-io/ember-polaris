@@ -10,12 +10,22 @@ function startDrag(event) {
   this.handleMove(event);
 
   // Set up global event listeners to handle dragging outside the slidable area.
-  $Ember(window).on('mousemove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('mouseup', () => { this.handleDragEnd(); });
+  $Ember(window).on('mousemove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('mouseup', () => {
+    this.handleDragEnd();
+  });
 
-  $Ember(window).on('touchmove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('touchend', () => { this.handleDragEnd(); });
-  $Ember(window).on('touchcancel', () => { this.handleDragEnd(); });
+  $Ember(window).on('touchmove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('touchend', () => {
+    this.handleDragEnd();
+  });
+  $Ember(window).on('touchcancel', () => {
+    this.handleDragEnd();
+  });
 }
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
@@ -59,10 +69,16 @@ export default Component.extend({
    */
   isDragging: false,
 
+  /*
+   * Action handlers.
+   */
+  mouseDown: startDrag,
+  touchStart: startDrag,
+
   draggerStyle: computed('draggerX', 'draggerY', function() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
-    const transform = `translate3d(${ draggerX }px, ${ draggerY }px, 0)`;
-    return htmlSafe(`transform: ${ transform };`);
+    const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
+    return htmlSafe(`transform: ${transform};`);
   }).readOnly(),
 
   /*
@@ -99,7 +115,7 @@ export default Component.extend({
 
   handleDraggerMove(clientX, clientY) {
     const moveHandler = this.get('onChange');
-    if (typeof(moveHandler) !== 'function') {
+    if (typeof moveHandler !== 'function') {
       return;
     }
 
@@ -114,12 +130,6 @@ export default Component.extend({
       y: clientY - rect.top,
     });
   },
-
-  /*
-   * Action handlers.
-   */
-  mouseDown: startDrag,
-  touchStart: startDrag,
 
   /*
    * Lifecycle hooks.

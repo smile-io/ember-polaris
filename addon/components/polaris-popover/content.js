@@ -63,15 +63,17 @@ export default Component.extend({
       return;
     }
 
-    const trigger = Ember$(`div.ember-basic-dropdown-trigger[data-ebd-id="${ uniqueId }-trigger"]`)[0];
-    const content = Ember$(`div#ember-basic-dropdown-content-${ uniqueId }`)[0];
+    const trigger = Ember$(
+      `div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`,
+    )[0];
+    const content = Ember$(`div#ember-basic-dropdown-content-${uniqueId}`)[0];
 
     if (isNone(trigger) || isNone(content)) {
       return;
     }
 
     const triggerRect = trigger.getBoundingClientRect();
-    const left = (triggerRect.width / 2) + (triggerRect.left - content.getBoundingClientRect().left);
+    const left = triggerRect.width / 2 + (triggerRect.left - content.getBoundingClientRect().left);
     Ember$('div.Polaris-Popover__Tip', content).css({ left });
 
     // Set the height explicitly so the popover displays on Safari.

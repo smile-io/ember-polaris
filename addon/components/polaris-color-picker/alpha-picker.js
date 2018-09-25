@@ -10,13 +10,13 @@ const VERTICAL_PADDING = 13;
 
 function offsetForAlpha(alpha, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
-  return clamp(((1 - alpha) * slidableArea) + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+  return clamp((1 - alpha) * slidableArea + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
 }
 
 function alphaForOffset(offset, sliderHeight) {
-  const selectionHeight = (offset - VERTICAL_PADDING);
-  const slidableArea = sliderHeight - (2 * VERTICAL_PADDING);
-  return clamp(1 - (selectionHeight / slidableArea), 0, 1);
+  const selectionHeight = offset - VERTICAL_PADDING;
+  const slidableArea = sliderHeight - 2 * VERTICAL_PADDING;
+  return clamp(1 - selectionHeight / slidableArea, 0, 1);
 }
 
 export default Component.extend({
@@ -46,13 +46,17 @@ export default Component.extend({
     const color = this.get('color');
     const { red, green, blue } = hsbaToRgba(color);
 
-    const rgb = `${ red }, ${ green }, ${ blue }`;
-    const background = `linear-gradient(to top, rgba(${ rgb }, 0) 18px, rgba(${ rgb }, 1) calc(100% - 18px))`;
-    return htmlSafe(`background: ${ background };`);
+    const rgb = `${red}, ${green}, ${blue}`;
+    const background = `linear-gradient(to top, rgba(${rgb}, 0) 18px, rgba(${rgb}, 1) calc(100% - 18px))`;
+    return htmlSafe(`background: ${background};`);
   }).readOnly(),
 
   draggerY: computed('alpha', 'sliderHeight', function() {
-    const { alpha, sliderHeight, draggerHeight } = this.getProperties('alpha', 'sliderHeight', 'draggerHeight');
+    const { alpha, sliderHeight, draggerHeight } = this.getProperties(
+      'alpha',
+      'sliderHeight',
+      'draggerHeight',
+    );
     const offset = offsetForAlpha(alpha, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);
   }).readOnly(),
@@ -69,7 +73,7 @@ export default Component.extend({
   },
 
   actions: {
-    handleChange({y}) {
+    handleChange({ y }) {
       const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
       if (typeOf(onChange) !== 'function') {
         return;
@@ -80,5 +84,5 @@ export default Component.extend({
 
       onChange(alpha);
     },
-  }
+  },
 });

@@ -67,6 +67,8 @@ export default Component.extend({
    */
   accessibilityLabel: 'Pagination',
 
+  handleMouseUpByBlurring,
+
   /**
    * Callback when next button is clicked
    *
@@ -87,6 +89,4 @@ export default Component.extend({
 
   isPreviousDisabled: not('hasPrevious').readOnly(),
   isNextDisabled: not('hasNext').readOnly(),
-
-  handleMouseUpByBlurring,
 });

@@ -4,10 +4,7 @@ import { equal } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-list';
 
-const allowedListTypes = [
-  'bullet',
-  'number'
-];
+const allowedListTypes = ['bullet', 'number'];
 const defaultListType = 'bullet';
 
 export default Component.extend({
@@ -58,12 +55,10 @@ export default Component.extend({
    * @type {String}
    */
   listElementClass: computed('listType', function() {
-    let classNames = [
-      'Polaris-List'
-    ];
+    let classNames = ['Polaris-List'];
 
     let type = this.get('listType');
-    classNames.push(`Polaris-List--type${ classify(type) }`);
+    classNames.push(`Polaris-List--type${classify(type)}`);
 
     return classNames.join(' ');
   }).readOnly(),

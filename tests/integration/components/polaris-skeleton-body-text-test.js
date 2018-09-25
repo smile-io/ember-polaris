@@ -3,15 +3,16 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-skeleton-body-text', 'Integration | Component | polaris skeleton body text', {
-  integration: true
-});
+moduleForComponent(
+  'polaris-skeleton-body-text',
+  'Integration | Component | polaris skeleton body text',
+  {
+    integration: true,
+  },
+);
 
 const containerSelector = 'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer';
-const lineSelector = buildNestedSelector(
-  containerSelector,
-  'div.Polaris-SkeletonBodyText'
-);
+const lineSelector = buildNestedSelector(containerSelector, 'div.Polaris-SkeletonBodyText');
 
 test('it renders the specified number of lines', function(assert) {
   this.render(hbs`{{polaris-skeleton-body-text lines=lines}}`);

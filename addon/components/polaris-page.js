@@ -10,7 +10,7 @@ export default Component.extend({
   classNames: ['Polaris-Page'],
   classNameBindings: [
     'fullWidth:Polaris-Page--fullWidth',
-    'singleColumn:Polaris-Page--singleColumn'
+    'singleColumn:Polaris-Page--singleColumn',
   ],
 
   layout,

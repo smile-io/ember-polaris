@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 // import { compileTemplate } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
-import Ember from 'ember'
+import Ember from 'ember';
 
 // Renders a named component with a passed-in hash of properties.
 // This effectively allows us to spread/splat a props hash onto
@@ -53,11 +53,11 @@ export default Component.extend({
     // eslint-disable-next-line ember/new-module-imports
     return Ember.HTMLBars.compile(`
       {{#if hasBlock}}
-        {{#component "${ componentName }"${ propsString }}}
+        {{#component "${componentName}"${propsString}}}
           {{yield}}
         {{/component}}
       {{else}}
-        {{component "${ componentName }"${ propsString }}}
+        {{component "${componentName}"${propsString}}}
       {{/if}}
     `);
   }).readOnly(),
@@ -70,7 +70,7 @@ export default Component.extend({
   propsString: computed('propNames.[]', function() {
     let propNames = this.get('propNames') || [];
     return propNames.reduce((propsString, propName) => {
-      return `${propsString} ${ propName }=${ propName }`;
+      return `${propsString} ${propName}=${propName}`;
     }, '');
   }).readOnly(),
 
@@ -86,7 +86,7 @@ export default Component.extend({
       propsToUnset[propName] = undefined;
     }, {});
 
-    let newProps = assign(propsToUnset, props, { propNames })
+    let newProps = assign(propsToUnset, props, { propNames });
     this.setProperties(newProps);
   },
 

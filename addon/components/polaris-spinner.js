@@ -4,21 +4,11 @@ import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import SvgHandling from '../mixins/components/svg-handling';
 
-const allowedColors = [
-  'white',
-  'teal',
-  'inkLightest'
-];
-const colorsForLargeSpinner = [
-  'teal',
-  'inkLightest'
-];
+const allowedColors = ['white', 'teal', 'inkLightest'];
+const colorsForLargeSpinner = ['teal', 'inkLightest'];
 const defaultColor = 'teal';
 
-const allowedSizes = [
-  'small',
-  'large'
-];
+const allowedSizes = ['small', 'large'];
 const defaultSize = 'large';
 
 export default Component.extend(SvgHandling, {
@@ -67,23 +57,21 @@ export default Component.extend(SvgHandling, {
   normalizedSize: computed('size', 'normalizedColor', function() {
     let size = this.get('size');
     if (allowedSizes.includes(size)) {
-      return colorsForLargeSpinner.includes(this.get('normalizedColor')) ?
-        size :
-        'small';
+      return colorsForLargeSpinner.includes(this.get('normalizedColor')) ? size : 'small';
     }
 
     return defaultSize;
   }).readOnly(),
 
   spinnerSource: computed('normalizedSize', function() {
-    return `polaris/spinner-${ this.get('normalizedSize') }`;
+    return `polaris/spinner-${this.get('normalizedSize')}`;
   }).readOnly(),
 
   spinnerClass: computed('normalizedSize', function() {
     return [
       'Polaris-Spinner',
-      `Polaris-Spinner--color${ classify(this.get('normalizedColor')) }`,
-      `Polaris-Spinner--size${ classify(this.get('normalizedSize')) }`
+      `Polaris-Spinner--color${classify(this.get('normalizedColor'))}`,
+      `Polaris-Spinner--size${classify(this.get('normalizedSize'))}`,
     ].join(' ');
   }).readOnly(),
 });

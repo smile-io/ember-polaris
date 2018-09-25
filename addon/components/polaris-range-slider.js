@@ -54,19 +54,6 @@ export default Component.extend({
   labelHidden: false,
 
   /**
-   * ID for range input
-   *
-   * Defaults to Ember's internal GUID for the component instance
-   *
-   * @property {id}
-   * @type {String}
-   * @public
-   */
-  id: computed(function() {
-    return guidFor(this);
-  }),
-
-  /**
    * Initial value for range input
    *
    * @property {value}
@@ -144,7 +131,7 @@ export default Component.extend({
    */
   disabled: false,
 
-   /**
+  /**
    * Callback when the range input is changed
    *
    * @property {onChange}
@@ -173,6 +160,19 @@ export default Component.extend({
    * @public
    */
   onBlur() {},
+
+  /**
+   * ID for range input
+   *
+   * Defaults to Ember's internal GUID for the component instance
+   *
+   * @property {id}
+   * @type {String}
+   * @public
+   */
+  id: computed(function() {
+    return guidFor(this);
+  }),
 
   /**
    * Class names for the range input wrapper div
@@ -204,14 +204,22 @@ export default Component.extend({
    * @private
    */
   rangeInputWrapperStyle: computed('min', 'max', 'value', 'sliderProgress', function() {
-    let { min, max, value: current, sliderProgress } = this.getProperties('min', 'max', 'value', 'sliderProgress');
-    let styleProps = assign({ min, max, current }, {
-      progress: `${ sliderProgress }%`,
-      outputFactor: invertNumber((sliderProgress - 50) / 100),
-    });
+    let { min, max, value: current, sliderProgress } = this.getProperties(
+      'min',
+      'max',
+      'value',
+      'sliderProgress',
+    );
+    let styleProps = assign(
+      { min, max, current },
+      {
+        progress: `${sliderProgress}%`,
+        outputFactor: invertNumber((sliderProgress - 50) / 100),
+      },
+    );
 
     let styleString = Object.keys(styleProps).reduce((styleString, propName) => {
-      return `${ styleString } --Polaris-RangeSlider-${ dasherize(propName) }:${ styleProps[propName] };`;
+      return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${styleProps[propName]};`;
     }, '');
 
     return htmlSafe(styleString.trim());
@@ -278,5 +286,5 @@ export default Component.extend({
     handleChange(event) {
       this.get('onChange')(parseFloat(event.currentTarget.value), this.get('id'));
     },
-  }
+  },
 });

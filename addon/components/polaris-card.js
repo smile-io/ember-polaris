@@ -7,9 +7,7 @@ import layout from '../templates/components/polaris-card';
  */
 export default Component.extend({
   classNames: ['Polaris-Card'],
-  classNameBindings: [
-    'subdued:Polaris-Card--subdued',
-  ],
+  classNameBindings: ['subdued:Polaris-Card--subdued'],
 
   layout,
 

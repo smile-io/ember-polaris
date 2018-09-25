@@ -5,56 +5,54 @@ import buildNestedSelector from '../../helpers/build-nested-selector';
 import Component from '@ember/component';
 
 const stubTermClass = 'stub-term-component';
-const stubTermSelector = `.${ stubTermClass }`;
+const stubTermSelector = `.${stubTermClass}`;
 const stubDescriptionClass = 'stub-description-component';
-const stubDescriptionSelector = `.${ stubDescriptionClass }`;
+const stubDescriptionSelector = `.${stubDescriptionClass}`;
 
 const stubTermComponent = Component.extend({
-  classNames: [stubTermClass]
+  classNames: [stubTermClass],
 });
 
 const stubDescriptionComponent = Component.extend({
-  classNames: [stubDescriptionClass]
+  classNames: [stubDescriptionClass],
 });
 
-moduleForComponent('polaris-description-list', 'Integration | Component | polaris description list', {
-  integration: true,
+moduleForComponent(
+  'polaris-description-list',
+  'Integration | Component | polaris description list',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:stub-term-component', stubTermComponent);
-    this.register('component:stub-description-component', stubDescriptionComponent);
-  }
-});
+    beforeEach() {
+      this.register('component:stub-term-component', stubTermComponent);
+      this.register('component:stub-description-component', stubDescriptionComponent);
+    },
+  },
+);
 
 const items = [
   {
     term: 'First term',
-    description: 'First description'
+    description: 'First description',
   },
   {
     term: 'Second term',
-    description: 'Second description'
+    description: 'Second description',
   },
   {
     term: 'Third term',
-    description: 'Third description'
+    description: 'Third description',
   },
 ];
 
 const componentSelector = 'dl.Polaris-DescriptionList';
-const listItemsTermsSelector = buildNestedSelector(
-  componentSelector,
-  'dt'
-);
+const listItemsTermsSelector = buildNestedSelector(componentSelector, 'dt');
 
 /**
  * This selector also tests that each description
  * is rendered directly after a term.
  */
-const listItemsDescriptionsSelector = buildNestedSelector(
-  componentSelector,
-  'dt + dd'
-);
+const listItemsDescriptionsSelector = buildNestedSelector(componentSelector, 'dt + dd');
 
 test('it renders the correct HTML when items are passed in', function(assert) {
   this.set('items', items);
@@ -65,10 +63,18 @@ test('it renders the correct HTML when items are passed in', function(assert) {
 
   const itemsTerms = findAll(listItemsTermsSelector);
   const itemsLength = items.length;
-  assert.equal(itemsTerms.length, itemsLength, 'it renders the correct number of terms within the list');
+  assert.equal(
+    itemsTerms.length,
+    itemsLength,
+    'it renders the correct number of terms within the list',
+  );
 
   const itemsDescriptions = findAll(listItemsDescriptionsSelector);
-  assert.equal(itemsDescriptions.length, itemsLength, 'it renders the correct number of descriptions following terms');
+  assert.equal(
+    itemsDescriptions.length,
+    itemsLength,
+    'it renders the correct number of descriptions following terms',
+  );
 });
 
 test('it renders items with explicit `termComponent` and `descriptionComponent` attributes', function(assert) {
@@ -87,10 +93,18 @@ test('it renders items with explicit `termComponent` and `descriptionComponent` 
   assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
 
   const termComponent = findAll(stubTermSelector);
-  assert.equal(termComponent.length, 1, 'it renders a component passed as a `termComponent` attribute');
+  assert.equal(
+    termComponent.length,
+    1,
+    'it renders a component passed as a `termComponent` attribute',
+  );
 
   const descriptionComponent = findAll(stubDescriptionSelector);
-  assert.equal(descriptionComponent.length, 1, 'it renders a component passed as a `descriptionComponent` attribute');
+  assert.equal(
+    descriptionComponent.length,
+    1,
+    'it renders a component passed as a `descriptionComponent` attribute',
+  );
 });
 
 test('it renders items with `term` and `description` components', function(assert) {
@@ -109,8 +123,16 @@ test('it renders items with `term` and `description` components', function(asser
   assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
 
   const termComponent = findAll(stubTermSelector);
-  assert.equal(termComponent.length, 1, 'it renders a component passed as a `termComponent` attribute');
+  assert.equal(
+    termComponent.length,
+    1,
+    'it renders a component passed as a `termComponent` attribute',
+  );
 
   const descriptionComponent = findAll(stubDescriptionSelector);
-  assert.equal(descriptionComponent.length, 1, 'it renders a component passed as a `descriptionComponent` attribute');
+  assert.equal(
+    descriptionComponent.length,
+    1,
+    'it renders a component passed as a `descriptionComponent` attribute',
+  );
 });

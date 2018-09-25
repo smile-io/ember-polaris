@@ -5,13 +5,7 @@ import { render, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const sortable = [false, true, false, false, true, false];
-const columnContentTypes = [
-  'text',
-  'numeric',
-  'numeric',
-  'numeric',
-  'numeric',
-];
+const columnContentTypes = ['text', 'numeric', 'numeric', 'numeric', 'numeric'];
 const headings = ['Product', 'Price', 'Order Number', 'Quantity', 'Subtotal'];
 const rows = [
   [
@@ -40,9 +34,12 @@ module('Integration | Component | polaris-data-table', function(hooks) {
 
     // Register a simple array helper to avoid "object is not extensible"
     // errors in some versions of Ember.
-    this.owner.register('helper:array', helper(function array(items) {
-      return [ ...items ];
-    }));
+    this.owner.register(
+      'helper:array',
+      helper(function array(items) {
+        return [...items];
+      }),
+    );
   });
 
   test('it renders all table body rows', async function(assert) {
@@ -127,22 +124,47 @@ module('Integration | Component | polaris-data-table', function(hooks) {
 
     const headingCells = findAll('thead th');
     const firstHeadingCell = headingCells[0];
-    assert.equal(firstHeadingCell.textContent.trim(), 'Product', 'first heading cell renders correct text');
+    assert.equal(
+      firstHeadingCell.textContent.trim(),
+      'Product',
+      'first heading cell renders correct text',
+    );
 
     const lastHeadingCell = headingCells[headingCells.length - 1];
-    assert.ok(lastHeadingCell.firstElementChild.classList.contains('Polaris-Badge'), 'last heading cell renders badge component');
-    assert.equal(lastHeadingCell.textContent.trim(), 'Status', 'last heading cell renders correct text');
+    assert.ok(
+      lastHeadingCell.firstElementChild.classList.contains('Polaris-Badge'),
+      'last heading cell renders badge component',
+    );
+    assert.equal(
+      lastHeadingCell.textContent.trim(),
+      'Status',
+      'last heading cell renders correct text',
+    );
 
     const rowCells = find('tbody tr.Polaris-DataTable__TableRow').children;
     const firstRowCell = rowCells[0];
-    assert.ok(firstRowCell.firstElementChild.classList.contains('Polaris-Link'), 'first row cell renders link component');
-    assert.equal(firstRowCell.textContent.trim(), 'Emerald Silk Gown', 'first row cell renders correct text');
+    assert.ok(
+      firstRowCell.firstElementChild.classList.contains('Polaris-Link'),
+      'first row cell renders link component',
+    );
+    assert.equal(
+      firstRowCell.textContent.trim(),
+      'Emerald Silk Gown',
+      'first row cell renders correct text',
+    );
 
     const lastRowCell = rowCells[rowCells.length - 1];
     assert.equal(lastRowCell.textContent.trim(), 'In stock', 'last row cell renders correct text');
 
     const footerCell = find('tfoot td.Polaris-DataTable__Cell--footer');
-    assert.ok(footerCell.firstElementChild.classList.contains('Polaris-Button'), 'footer cell renders button component');
-    assert.equal(footerCell.textContent.trim(), 'Refresh stock statuses', 'footer cell renders correct text');
+    assert.ok(
+      footerCell.firstElementChild.classList.contains('Polaris-Button'),
+      'footer cell renders button component',
+    );
+    assert.equal(
+      footerCell.textContent.trim(),
+      'Refresh stock statuses',
+      'footer cell renders correct text',
+    );
   });
 });

@@ -38,16 +38,6 @@ export default Component.extend({
   disabled: false,
 
   /**
-   * Callback when tag is removed
-   *
-   * @property onRemove
-   * @public
-   * @type {Function}
-   * @default no-op
-   */
-  onRemove() {},
-
-  /**
    * String to be used as the `remove` button's `aria-label`
    * Gets updated after rendering to always use the most up-to-date tag text
    *
@@ -60,11 +50,21 @@ export default Component.extend({
 
   handleMouseUpByBlurring,
 
+  /**
+   * Callback when tag is removed
+   *
+   * @property onRemove
+   * @public
+   * @type {Function}
+   * @default no-op
+   */
+  onRemove() {},
+
   updateButtonLabel() {
     // Set the remove button's aria-label based on the current text in the tag.
     // We access the element's `textContent` so that this still works in block usage.
     let tagText = this.get('element.textContent') || '';
-    this.set('buttonLabel', `Remove ${ tagText.trim() }`);
+    this.set('buttonLabel', `Remove ${tagText.trim()}`);
   },
 
   didRender() {

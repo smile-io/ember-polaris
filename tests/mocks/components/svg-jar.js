@@ -5,12 +5,7 @@ const SvgJar = Component.extend({
   tagName: 'svg',
 
   // Bind attributes to the element's dataset for testing.
-  attributeBindings: [
-    'source:data-icon-source',
-    'aria-label',
-    'aria-hidden',
-    'focusable'
-  ],
+  attributeBindings: ['source:data-icon-source', 'aria-label', 'aria-hidden', 'focusable'],
 
   source: null,
 });

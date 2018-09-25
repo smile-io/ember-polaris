@@ -158,7 +158,7 @@ export default Component.extend({
   }).readOnly(),
 
   checkedState: computed('isIndeterminate', 'isChecked', function() {
-    return this.get('isIndeterminate') ? 'mixed' : `${ this.get('isChecked') }`;
+    return this.get('isIndeterminate') ? 'mixed' : `${this.get('isChecked')}`;
   }).readOnly(),
 
   checkboxClasses: computed('isIndeterminate', function() {
@@ -172,7 +172,7 @@ export default Component.extend({
   }).readOnly(),
 
   _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-checkbox-${ guidFor(this) }`;
+    return this.get('inputId') || `polaris-checkbox-${guidFor(this)}`;
   }).readOnly(),
 
   describedBy: computed('error', 'helpText', '_id', function() {
@@ -180,11 +180,11 @@ export default Component.extend({
     const { error, helpText } = this.getProperties('error', 'helpText');
 
     if (typeOf(error) === 'string') {
-      describedBy.push(`${ this.get('_id') }Error`);
+      describedBy.push(`${this.get('_id')}Error`);
     }
 
     if (helpText) {
-      describedBy.push(`${ this.get('_id') }HelpText`);
+      describedBy.push(`${this.get('_id')}HelpText`);
     }
 
     return describedBy.join(' ');
@@ -202,7 +202,7 @@ export default Component.extend({
       {
         id: 'ember-polaris.polaris-checkbox.label-component',
         until: '2.0.0',
-      }
+      },
     );
   },
 });

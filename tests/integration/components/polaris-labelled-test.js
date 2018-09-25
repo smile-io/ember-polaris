@@ -9,9 +9,12 @@ module('Integration | Component | polaris-labelled', function(hooks) {
 
   hooks.beforeEach(function() {
     // Register a simple component to test rendering with.
-    this.owner.register('component:my-component', Component.extend({
-      classNames: ['my-component'],
-    }));
+    this.owner.register(
+      'component:my-component',
+      Component.extend({
+        classNames: ['my-component'],
+      }),
+    );
   });
 
   test('passes relevant attrs along to the label', async function(assert) {

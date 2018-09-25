@@ -6,7 +6,7 @@ import {
   weekdaysArray,
   getWeeksForMonth,
   getNewRange,
-  abbreviationForWeekday
+  abbreviationForWeekday,
 } from '../../utils/dates';
 
 export default Component.extend({
@@ -79,6 +79,8 @@ export default Component.extend({
    */
   allowRange: false,
 
+  role: 'grid',
+
   /**
    * @property onChange
    * @public
@@ -119,8 +121,6 @@ export default Component.extend({
    */
   weekdayName(/* weekday */) {},
 
-  role: 'grid',
-
   current: computed('month', 'year', function() {
     let date = new Date();
     let thisMonth = date.getMonth();
@@ -146,8 +146,8 @@ export default Component.extend({
     return weekdaysArray.map((weekday, i) => {
       return {
         title: abbreviationForWeekday(weekday),
-        current: (current && day === i),
-        label: weekday
+        current: current && day === i,
+        label: weekday,
       };
     });
   }).readOnly(),
@@ -157,6 +157,6 @@ export default Component.extend({
       let range = getNewRange(this.get('selected'), day);
 
       this.get('onChange')(range);
-    }
-  }
+    },
+  },
 });

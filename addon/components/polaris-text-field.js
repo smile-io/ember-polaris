@@ -23,7 +23,7 @@ const allowedTypes = [
   'month',
   'time',
   'week',
-  'currency'
+  'currency',
 ];
 
 // Returns the length of decimal places in a number
@@ -345,57 +345,72 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
    */
   onBlur() {},
 
-  textFieldClasses: computed('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus', function() {
-    let { value, disabled, readOnly, error, multiline, focus } = this.getProperties('value', 'disabled', 'readOnly', 'error', 'multiline', 'focus');
-    let classes = ['Polaris-TextField'];
+  ariaInvalid: bool('error').readOnly(),
 
-    if (value) {
-      classes.push('Polaris-TextField--hasValue');
-    }
+  textFieldClasses: computed(
+    'value',
+    'disabled',
+    'readOnly',
+    'error',
+    'multiline',
+    'focus',
+    function() {
+      let { value, disabled, readOnly, error, multiline, focus } = this.getProperties(
+        'value',
+        'disabled',
+        'readOnly',
+        'error',
+        'multiline',
+        'focus',
+      );
+      let classes = ['Polaris-TextField'];
 
-    if (disabled) {
-      classes.push('Polaris-TextField--disabled');
-    }
+      if (value) {
+        classes.push('Polaris-TextField--hasValue');
+      }
 
-    if (readOnly) {
-      classes.push('Polaris-TextField--readOnly');
-    }
+      if (disabled) {
+        classes.push('Polaris-TextField--disabled');
+      }
 
-    if (error) {
-      classes.push('Polaris-TextField--error');
-    }
+      if (readOnly) {
+        classes.push('Polaris-TextField--readOnly');
+      }
 
-    if (multiline) {
-      classes.push('Polaris-TextField--multiline');
-    }
+      if (error) {
+        classes.push('Polaris-TextField--error');
+      }
 
-    if (focus) {
-      classes.push('Polaris-TextField--focus');
-    }
+      if (multiline) {
+        classes.push('Polaris-TextField--multiline');
+      }
 
-    return classes.join(' ');
-  }).readOnly(),
+      if (focus) {
+        classes.push('Polaris-TextField--focus');
+      }
+
+      return classes.join(' ');
+    },
+  ).readOnly(),
 
   ariaDescribedBy: computed('error', 'helpText', 'id', function() {
     let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
     let describedBy = [];
 
     if (error) {
-      describedBy.push(`${ id }Error`);
+      describedBy.push(`${id}Error`);
     }
 
     if (helpText) {
-      describedBy.push(`${ id }HelpText`);
+      describedBy.push(`${id}HelpText`);
     }
 
     return describedBy.join(' ');
   }).readOnly(),
 
   ariaLabelledBy: computed('id', function() {
-    return `${ this.get('id') }Label`;
+    return `${this.get('id')}Label`;
   }).readOnly(),
-
-  ariaInvalid: bool('error').readOnly(),
 
   inputType: computed('type', function() {
     let type = this.get('type');
@@ -406,19 +421,19 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
   minimumLines: computed('multiline', function() {
     let multiline = this.get('multiline');
 
-    return (typeOf(multiline) === 'number') ? multiline : 1;
+    return typeOf(multiline) === 'number' ? multiline : 1;
   }).readOnly(),
 
   heightStyle: computed('height', 'multiline', function() {
     let { height, multiline } = this.getProperties('height', 'multiline');
 
-    return (height && multiline) ? htmlSafe(`height: ${ height }px`) : null;
+    return height && multiline ? htmlSafe(`height: ${height}px`) : null;
   }).readOnly(),
 
   shouldShowSpinner: computed('disabled', 'inputType', function() {
     let { inputType, disabled } = this.getProperties('inputType', 'disabled');
 
-    return (inputType === 'number') && !disabled;
+    return inputType === 'number' && !disabled;
   }).readOnly(),
 
   addValueListener() {
@@ -432,28 +447,37 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     this.set('value', field.value);
   },
 
-  init() {
-    this._super(...arguments);
-
-    let { id, type } = this.getProperties('id', 'type');
-
-    assert(`ember-polaris::polaris-text-field - ${ type } is not a valid type.`, allowedTypes.indexOf(type) > -1);
-
-    id = id || `TextField-${ guidFor(this) }`;
-
-    this.setProperties({
-      height: null,
-      focus: false,
-      id
-    });
-  },
-
   checkFocus() {
     let { fieldElement, focused } = this.getProperties('fieldElement', 'focused');
 
     if (fieldElement && focused) {
       fieldElement.focus();
     }
+  },
+
+  init() {
+    this._super(...arguments);
+
+    let { id, type } = this.getProperties('id', 'type');
+
+    assert(
+      `ember-polaris::polaris-text-field - ${type} is not a valid type.`,
+      allowedTypes.indexOf(type) > -1,
+    );
+
+    id = id || `TextField-${guidFor(this)}`;
+
+    this.setProperties({
+      height: null,
+      focus: false,
+      id,
+    });
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    this.checkFocus();
   },
 
   didInsertElement() {
@@ -464,22 +488,16 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     this.checkFocus();
   },
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-
-    this.checkFocus();
-  },
-
   actions: {
     handleNumberChange(steps) {
-      let {
-        id,
-        onChange,
-        value,
-        step,
-        min,
-        max,
-      } = this.getProperties('id', 'onChange', 'value', 'step', 'min', 'max');
+      let { id, onChange, value, step, min, max } = this.getProperties(
+        'id',
+        'onChange',
+        'value',
+        'step',
+        'min',
+        'max',
+      );
 
       step = step || 1;
       min = isPresent(min) ? min : -Infinity;
@@ -518,6 +536,6 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     handleClick() {
       let field = this.get('fieldElement');
       field.focus();
-    }
-  }
+    },
+  },
 });

@@ -132,7 +132,11 @@ export default Component.extend({
    * @private
    */
   isSorted: computed('isSortable', 'sortedColumnIndex', 'index', function() {
-    let { isSortable, sortedColumnIndex, index } = this.getProperties('isSortable', 'sortedColumnIndex', 'index');
+    let { isSortable, sortedColumnIndex, index } = this.getProperties(
+      'isSortable',
+      'sortedColumnIndex',
+      'index',
+    );
     return isSortable && sortedColumnIndex === index;
   }).readOnly(),
 

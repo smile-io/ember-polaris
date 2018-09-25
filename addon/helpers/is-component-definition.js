@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 import { typeOf } from '@ember/utils';
 
-export function isComponentDefinition([ content ]) {
+export function isComponentDefinition([content]) {
   if (typeOf(content) !== 'object') {
     return false;
   }

@@ -23,22 +23,6 @@ export default Component.extend({
   ],
 
   /*
-   * Computed properties.
-   */
-  sizeClass: computed('size', function() {
-    switch (this.get('size')) {
-      case 'slim':
-        return 'Polaris-Button--sizeSlim';
-
-      case 'large':
-        return 'Polaris-Button--sizeLarge';
-
-      default:
-        return null;
-    }
-  }).readOnly(),
-
-  /*
    * When we have an icon and no text.
    *
    * @private
@@ -54,4 +38,20 @@ export default Component.extend({
   click: mapEventToAction('onClick'),
   focusIn: mapEventToAction('onFocus'),
   focusOut: mapEventToAction('onBlur'),
+
+  /*
+   * Computed properties.
+   */
+  sizeClass: computed('size', function() {
+    switch (this.get('size')) {
+      case 'slim':
+        return 'Polaris-Button--sizeSlim';
+
+      case 'large':
+        return 'Polaris-Button--sizeLarge';
+
+      default:
+        return null;
+    }
+  }).readOnly(),
 });

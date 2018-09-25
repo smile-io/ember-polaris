@@ -31,7 +31,7 @@ const StubbedRoutingService = Service.extend({
 
 export default function(registry, availableRoutes) {
   StubbedRoutingService.reopenClass({
-    _availableRoutes: availableRoutes
+    _availableRoutes: availableRoutes,
   });
 
   registry.register('service:-routing', StubbedRoutingService);

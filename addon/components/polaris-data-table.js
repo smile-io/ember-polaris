@@ -25,25 +25,12 @@ function measureColumn(tableData) {
     let width = column.offsetWidth;
     let leftEdge = column.offsetLeft - fixedColumnWidth;
     let rightEdge = leftEdge + width;
-    let leftEdgeIsVisible = isEdgeVisible(
-      leftEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge,
-    );
-    let rightEdgeIsVisible = isEdgeVisible(
-      rightEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge,
-    );
-    let isCompletelyVisible =
-      leftEdge < tableLeftVisibleEdge && rightEdge > tableRightVisibleEdge;
-    let isVisible =
-      isCompletelyVisible || leftEdgeIsVisible || rightEdgeIsVisible;
+    let leftEdgeIsVisible = isEdgeVisible(leftEdge, tableLeftVisibleEdge, tableRightVisibleEdge);
+    let rightEdgeIsVisible = isEdgeVisible(rightEdge, tableLeftVisibleEdge, tableRightVisibleEdge);
+    let isCompletelyVisible = leftEdge < tableLeftVisibleEdge && rightEdge > tableRightVisibleEdge;
+    let isVisible = isCompletelyVisible || leftEdgeIsVisible || rightEdgeIsVisible;
     if (isVisible) {
-      tableData.firstVisibleColumnIndex = Math.min(
-        firstVisibleColumnIndex,
-        index,
-      );
+      tableData.firstVisibleColumnIndex = Math.min(firstVisibleColumnIndex, index);
     }
     return { leftEdge, rightEdge, isVisible };
   };
@@ -55,22 +42,17 @@ function isEdgeVisible(target, start, end) {
 }
 
 function getPrevAndCurrentColumns(tableData, columnData) {
-  let {
-    tableRightVisibleEdge,
-    tableLeftVisibleEdge,
-    firstVisibleColumnIndex,
-  } = tableData;
+  let { tableRightVisibleEdge, tableLeftVisibleEdge, firstVisibleColumnIndex } = tableData;
   let previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
   let previousColumn = columnData[previousColumnIndex];
   let lastColumnIndex = columnData.length - 1;
   let lastColumn = columnData[lastColumnIndex];
   let currentColumn = assign(
     {
-      isScrolledFarthestLeft:
-        firstVisibleColumnIndex === 0 && tableLeftVisibleEdge === 0,
+      isScrolledFarthestLeft: firstVisibleColumnIndex === 0 && tableLeftVisibleEdge === 0,
       isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
     },
-    columnData[firstVisibleColumnIndex]
+    columnData[firstVisibleColumnIndex],
   );
   return { previousColumn, currentColumn };
 }
@@ -174,16 +156,6 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
   initialSortColumnIndex: 0,
 
   /**
-   * Callback fired on click or keypress of a sortable column heading.
-   *
-   * @property onSort
-   * @type {function}
-   * @default no-op
-   * @public
-   */
-  onSort(/* headingIndex, direction */) {},
-
-  /**
    * @property collapsed
    * @type {boolean}
    * @default false
@@ -263,6 +235,16 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
   totalsRowHeading: 'Totals',
 
   /**
+   * Callback fired on click or keypress of a sortable column heading.
+   *
+   * @property onSort
+   * @type {function}
+   * @default no-op
+   * @public
+   */
+  onSort(/* headingIndex, direction */) {},
+
+  /**
    * @property dataTable
    * @type {HTMLElement}
    * @private
@@ -292,7 +274,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
     let columnContentTypes = this.get('columnContentTypes');
     let fixedCellType = columnContentTypes[0];
 
-    return [ fixedCellType, ...columnContentTypes ];
+    return [fixedCellType, ...columnContentTypes];
   }).readOnly(),
 
   /**
@@ -305,7 +287,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
       return null;
     }
 
-    return htmlSafe(`margin-bottom: ${ this.get('heights.lastObject') }px;`);
+    return htmlSafe(`margin-bottom: ${this.get('heights.lastObject')}px;`);
   }).readOnly(),
 
   resetScrollPosition() {
@@ -339,15 +321,13 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
           this.get('scrollContainer').scrollLeft +
           (this.get('dataTable').offsetWidth - fixedColumnWidth),
       };
-      let columnVisibilityData = collapsedHeaderCells.map(
-        measureColumn(tableData),
-      );
+      let columnVisibilityData = collapsedHeaderCells.map(measureColumn(tableData));
 
       return assign(
         {
           columnVisibilityData,
         },
-        getPrevAndCurrentColumns(tableData, columnVisibilityData)
+        getPrevAndCurrentColumns(tableData, columnVisibilityData),
       );
     }
 
@@ -368,13 +348,15 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
     let collapsed = this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
 
     this.get('scrollContainer').scrollLeft = 0;
-    this.setProperties(assign(
-      {
-        collapsed,
-        heights: [],
-      },
-      this.calculateColumnVisibilityData(collapsed),
-    ));
+    this.setProperties(
+      assign(
+        {
+          collapsed,
+          heights: [],
+        },
+        this.calculateColumnVisibilityData(collapsed),
+      ),
+    );
 
     scheduleOnce('afterRender', () => {
       if (footerContent || !truncate) {
@@ -392,7 +374,11 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
   },
 
   tallestCellHeights() {
-    let { footerContent, truncate, heights } = this.getProperties('footerContent', 'truncate', 'heights');
+    let { footerContent, truncate, heights } = this.getProperties(
+      'footerContent',
+      'truncate',
+      'heights',
+    );
     let rows = Array.from(this.get('table').getElementsByTagName('tr'));
 
     if (!truncate) {
@@ -450,13 +436,16 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
 
   actions: {
     navigateTable(direction) {
-      let { scrollContainer, currentColumn, previousColumn } = this.getProperties('scrollContainer', 'currentColumn', 'previousColumn');
+      let { scrollContainer, currentColumn, previousColumn } = this.getProperties(
+        'scrollContainer',
+        'currentColumn',
+        'previousColumn',
+      );
 
       if (direction === 'right' && currentColumn) {
         scrollContainer.scrollLeft = currentColumn.rightEdge;
       } else if (previousColumn) {
-        scrollContainer.scrollLeft =
-          previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+        scrollContainer.scrollLeft = previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
       }
 
       // TODO: use run loop instead of `requestAnimationFrame` here?
@@ -477,7 +466,14 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
         initialSortColumnIndex,
         sortDirection,
         sortedColumnIndex,
-      } = this.getProperties('onSort', 'truncate', 'defaultSortDirection', 'initialSortColumnIndex', 'sortDirection', 'sortedColumnIndex');
+      } = this.getProperties(
+        'onSort',
+        'truncate',
+        'defaultSortDirection',
+        'initialSortColumnIndex',
+        'sortDirection',
+        'sortedColumnIndex',
+      );
       sortedColumnIndex = isNone(sortedColumnIndex) ? initialSortColumnIndex : sortedColumnIndex;
       let newSortDirection = defaultSortDirection;
       if (sortedColumnIndex === headingIndex) {
@@ -504,5 +500,5 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
         }
       });
     },
-  }
+  },
 });

@@ -24,5 +24,5 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onClick() {}
+  onClick() {},
 });

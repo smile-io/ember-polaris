@@ -3,10 +3,10 @@ import hbs from 'htmlbars-inline-precompile';
 import { find } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-caption', 'Integration | Component | polaris caption', {
-  integration: true
+  integration: true,
 });
 
-const caption = 'Received April 21, 2017'
+const caption = 'Received April 21, 2017';
 const componentSelector = 'p.Polaris-Caption';
 
 test('it renders the correct HTML with inline usage', function(assert) {

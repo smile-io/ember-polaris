@@ -14,12 +14,14 @@ export default LinkComponent.extend({
 
   breadcrumb: null,
 
+  mouseUp: handleMouseUpByBlurring,
+
   params: computed('breadcrumb.{content,route,models.[]}', function() {
     // Because we extend LinkComponent and don't yield, hasBlock is false
     // so LinkComponent expects the link title as the first parameter.
     let { content, route, models = [] } = this.get('breadcrumb');
 
-    let params = [ content, route ];
+    let params = [content, route];
     if (isArray(models)) {
       params.push(...models);
     } else {
@@ -28,6 +30,4 @@ export default LinkComponent.extend({
 
     return params;
   }).readOnly(),
-
-  mouseUp: handleMouseUpByBlurring,
 });

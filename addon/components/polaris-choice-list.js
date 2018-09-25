@@ -153,10 +153,10 @@ export default Component.extend({
           updatedSelectedChoices = selected.filter((selectedChoice) => selectedChoice !== value);
         }
       } else {
-        updatedSelectedChoices = [ value ];
+        updatedSelectedChoices = [value];
       }
 
       return this.get('onChange')(updatedSelectedChoices, this.get('name'));
     },
-  }
+  },
 });

@@ -14,6 +14,6 @@ export default Component.extend({
   }).readOnly(),
 
   style: computed('width', function() {
-    return htmlSafe(`width: ${ this.get('width') }px;`);
+    return htmlSafe(`width: ${this.get('width')}px;`);
   }).readOnly(),
 });

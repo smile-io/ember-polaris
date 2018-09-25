@@ -56,18 +56,6 @@ export default Component.extend({
   labelHidden: false,
 
   /**
-   * A unique identifier for the label
-   * Note that we default this to Ember's GUID for this component instance,
-   * but the value can be overridden by the outside world.
-   *
-   * @type {String}
-   * @public
-   */
-  id: computed(function() {
-    return guidFor(this);
-  }),
-
-  /**
    * ID for the error message div
    *
    * @type {String}
@@ -82,4 +70,16 @@ export default Component.extend({
    * @private
    */
   helpTextId: computedHelpTextId('id').readOnly(),
+
+  /**
+   * A unique identifier for the label
+   * Note that we default this to Ember's GUID for this component instance,
+   * but the value can be overridden by the outside world.
+   *
+   * @type {String}
+   * @public
+   */
+  id: computed(function() {
+    return guidFor(this);
+  }),
 });

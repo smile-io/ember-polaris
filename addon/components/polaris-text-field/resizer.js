@@ -70,9 +70,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
   finalContents: computed('contents', function() {
     let contents = this.get('contents');
 
-    contents = contents
-      ? `${ contents.replace(REPLACE_REGEX, replaceEntity) }<br>`
-      : '<br>';
+    contents = contents ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>` : '<br>';
 
     return htmlSafe(contents);
   }).readOnly(),
@@ -82,14 +80,16 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
     let content = '';
 
     for (let line = 0; line < minimumLines; line++) {
-      content = `${ content }<br>`;
+      content = `${content}<br>`;
     }
 
     return htmlSafe(content);
   }).readOnly(),
 
   handleHeightCheck() {
-    let [ contentNode, minimumLinesNode ] = this.element.querySelectorAll('.Polaris-TextField__DummyInput');
+    let [contentNode, minimumLinesNode] = this.element.querySelectorAll(
+      '.Polaris-TextField__DummyInput',
+    );
 
     if (!contentNode || !minimumLinesNode) {
       return;
@@ -123,5 +123,5 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
   didUpdateAttrs() {
     this._super(...arguments);
     this.handleHeightCheck();
-  }
+  },
 });

@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 
 moduleForComponent('polaris-link', 'Integration | Component | polaris link', {
-  integration: true
+  integration: true,
 });
 
 const linkSelector = 'a.Polaris-Link';
@@ -65,7 +65,11 @@ test('it renders the correct HTML in basic inline usage without a URL', function
   assert.equal(linkButtons.length, 1, 'renders one link button');
 
   const linkButton = linkButtons[0];
-  assert.equal(linkButton.textContent.trim(), 'This is an inline link button', 'renders the correct link text');
+  assert.equal(
+    linkButton.textContent.trim(),
+    'This is an inline link button',
+    'renders the correct link text',
+  );
 });
 
 test('it renders the correct HTML in basic block usage without a URL', function(assert) {
@@ -75,11 +79,15 @@ test('it renders the correct HTML in basic block usage without a URL', function(
     {{/polaris-link}}
   `);
 
-    const linkButtons = findAll(linkButtonSelector);
-    assert.equal(linkButtons.length, 1, 'renders one link button');
+  const linkButtons = findAll(linkButtonSelector);
+  assert.equal(linkButtons.length, 1, 'renders one link button');
 
-    const linkButton = linkButtons[0];
-    assert.equal(linkButton.textContent.trim(), 'This is a block link button', 'renders the correct link text');
+  const linkButton = linkButtons[0];
+  assert.equal(
+    linkButton.textContent.trim(),
+    'This is a block link button',
+    'renders the correct link text',
+  );
 });
 
 test('it handles click events correctly', function(assert) {
