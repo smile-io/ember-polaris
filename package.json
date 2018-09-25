@@ -32,11 +32,13 @@
   },
   "scripts": {
     "build": "ember build",
-    "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",
-    "lint:hbs": "./node_modules/.bin/ember-template-lint app/templates/**/*",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:hbs": "ember-template-lint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "prettier": "prettier --write '{addon,addon-test-support,blueprints,app,tests,mirage}/**/*.js' *.js"
   },
   "dependencies": {
     "@shopify/polaris": "2.2.0",
@@ -54,6 +56,7 @@
     "rsvp": "^4.8.2"
   },
   "devDependencies": {
+    "@smile-io/ember-styleguide": "^4.0.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-array-helper": "^3.0.0",
     "ember-cli": "~3.1.4",
@@ -67,7 +70,7 @@
     "ember-cli-sass": "^7.1.7",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.0",
-    "ember-cli-template-lint": "^0.7.6",
+    "ember-cli-template-lint": "^1.0.0-beta.2",
     "ember-cli-uglify": "^2.0.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-lifeline": "^3.0.3",
@@ -78,9 +81,14 @@
     "ember-source": "~3.1.0",
     "ember-source-channel-url": "^1.0.1",
     "ember-try": "^0.2.23",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "husky": "^1.0.0-rc.15",
     "loader.js": "^4.2.3",
+    "precise-commits": "^1.0.2",
+    "prettier": "^1.14.3",
     "qunit-dom": "^0.6.2"
   },
   "engines": {
@@ -88,5 +96,13 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "precise-commits"
+    }
+  },
+  "resolutions": {
+    "eslint": "5.6.0"
   }
 }
