@@ -32,13 +32,13 @@
   },
   "scripts": {
     "build": "ember build",
+    "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
-    "lint:hbs": "ember-template-lint .",
+    "prettier": "prettier --write '{addon,app,blueprints,config,lib,tests,mirage}/**/*.js' *.js",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each",
-    "prettier": "prettier --write '{addon,addon-test-support,blueprints,app,tests,mirage}/**/*.js' *.js"
+    "test:all": "ember try:each"
   },
   "dependencies": {
     "@shopify/polaris": "2.2.0",
@@ -56,7 +56,7 @@
     "rsvp": "^4.8.2"
   },
   "devDependencies": {
-    "@smile-io/ember-styleguide": "^4.0.2",
+    "@smile-io/ember-styleguide": "^7.0.1",
     "broccoli-asset-rev": "^2.4.5",
     "ember-array-helper": "^3.0.0",
     "ember-cli": "~3.1.4",
@@ -81,11 +81,8 @@
     "ember-source": "~3.1.0",
     "ember-source-channel-url": "^1.0.1",
     "ember-try": "^0.2.23",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-ember": "^5.0.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-prettier": "^2.6.2",
-    "husky": "^1.0.0-rc.15",
+    "eslint-plugin-smile-ember": "^1.0.0",
+    "husky": "^1.1.0",
     "loader.js": "^4.2.3",
     "precise-commits": "^1.0.2",
     "prettier": "^1.14.3",
@@ -101,8 +98,5 @@
     "hooks": {
       "pre-commit": "precise-commits"
     }
-  },
-  "resolutions": {
-    "eslint": "5.6.0"
   }
 }
