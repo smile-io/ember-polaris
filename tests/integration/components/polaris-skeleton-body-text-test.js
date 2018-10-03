@@ -8,7 +8,7 @@ moduleForComponent(
   'Integration | Component | polaris skeleton body text',
   {
     integration: true,
-  },
+  }
 );
 
 const containerSelector = 'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer';

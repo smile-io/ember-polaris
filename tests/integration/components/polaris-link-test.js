@@ -68,7 +68,7 @@ test('it renders the correct HTML in basic inline usage without a URL', function
   assert.equal(
     linkButton.textContent.trim(),
     'This is an inline link button',
-    'renders the correct link text',
+    'renders the correct link text'
   );
 });
 
@@ -86,7 +86,7 @@ test('it renders the correct HTML in basic block usage without a URL', function(
   assert.equal(
     linkButton.textContent.trim(),
     'This is a block link button',
-    'renders the correct link text',
+    'renders the correct link text'
   );
 });
 

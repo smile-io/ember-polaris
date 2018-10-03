@@ -12,14 +12,14 @@ moduleForComponent('polaris-resource-list', 'Integration | Component | polaris r
 const resourceListSelector = 'ul.Polaris-ResourceList';
 const resourceListItemSelector = buildNestedSelector(
   resourceListSelector,
-  'li.Polaris-ResourceList__ItemWrapper',
+  'li.Polaris-ResourceList__ItemWrapper'
 );
 const resourceListItemAttributesSelector = buildNestedSelector(
   resourceListItemSelector,
   'div.Polaris-ResourceList__Item',
   'div.Polaris-ResourceList__Container',
   'div.Polaris-ResourceList__Content',
-  'div.Polaris-ResourceList__Attributes',
+  'div.Polaris-ResourceList__Attributes'
 );
 
 const attributeOneSelector = 'p.Polaris-ResourceList__AttributeOne';
@@ -64,7 +64,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     resourceListItemAttributes.length,
     4,
-    'renders four resource list item attribute wrappers',
+    'renders four resource list item attribute wrappers'
   );
 
   // Check the first item's attributes.
@@ -74,7 +74,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeOne.textContent.trim(),
     'Item 1 attribute one',
-    'item one - renders the correct content for attribute one',
+    'item one - renders the correct content for attribute one'
   );
 
   let attributeTwo = find(attributeTwoSelector, itemAttributes);
@@ -90,7 +90,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeOne.textContent.trim(),
     '',
-    'item two - renders empty content for attribute one',
+    'item two - renders empty content for attribute one'
   );
 
   attributeTwo = find(attributeTwoSelector, itemAttributes);
@@ -98,7 +98,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeTwo.textContent.trim(),
     'Item 2 attribute two',
-    'item two - renders the correct content for attribute two',
+    'item two - renders the correct content for attribute two'
   );
 
   attributeThree = find(attributeThreeSelector, itemAttributes);
@@ -111,7 +111,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeOne.textContent.trim(),
     '',
-    'item three - renders empty content for attribute one',
+    'item three - renders empty content for attribute one'
   );
 
   attributeTwo = find(attributeTwoSelector, itemAttributes);
@@ -122,7 +122,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeThree.textContent.trim(),
     'Item 3 attribute three',
-    'item three - renders the correct content for attribute three',
+    'item three - renders the correct content for attribute three'
   );
 
   // Check the fourth item's attributes.
@@ -132,7 +132,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeOne.textContent.trim(),
     'Item 4 attribute one',
-    'item four - renders the correct content for attribute one',
+    'item four - renders the correct content for attribute one'
   );
 
   attributeTwo = find(attributeTwoSelector, itemAttributes);
@@ -140,7 +140,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeTwo.textContent.trim(),
     'Item 4 attribute two',
-    'item four - renders the correct content for attribute two',
+    'item four - renders the correct content for attribute two'
   );
 
   attributeThree = find(attributeThreeSelector, itemAttributes);
@@ -148,7 +148,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   assert.equal(
     attributeThree.textContent.trim(),
     'Item 4 attribute three',
-    'item four - renders the correct content for attribute three',
+    'item four - renders the correct content for attribute three'
   );
 });
 
@@ -192,7 +192,7 @@ test('it renders the correct HTML when using itemComponent', function(assert) {
   assert.equal(
     item.textContent.trim(),
     'This is item 0',
-    'first item - renders the correct content',
+    'first item - renders the correct content'
   );
 
   // Check the second item.
@@ -200,11 +200,11 @@ test('it renders the correct HTML when using itemComponent', function(assert) {
   assert.equal(
     item.href,
     'http://www.somewhere-else.com/item-2',
-    'second item - has the correct href',
+    'second item - has the correct href'
   );
   assert.equal(
     item.textContent.trim(),
     'This is item 1',
-    'second item - renders the correct content',
+    'second item - renders the correct content'
   );
 });

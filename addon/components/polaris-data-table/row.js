@@ -68,7 +68,7 @@ export default Component.extend({
     let { totals, heights, footerContent } = this.getProperties(
       'totals',
       'heights',
-      'footerContent',
+      'footerContent'
     );
     let bodyCellHeights = isPresent(totals) ? heights.slice(2) : heights.slice(1);
 

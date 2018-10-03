@@ -22,31 +22,31 @@ test('it renders correctly', function(assert) {
   assert.ok(pagination, 'inline-mode - renders correctly');
   assert.notOk(
     pagination.classList.contains('Polaris-Pagination--plain'),
-    `inline-mode - doesn't have 'plain' class`,
+    `inline-mode - doesn't have 'plain' class`
   );
 
   assert.ok(
     find('button.Polaris-Pagination__Button[aria-label="Previous"][disabled]'),
-    'inline-mode - has previous button disabled',
+    'inline-mode - has previous button disabled'
   );
   assert.ok(
     find('button.Polaris-Pagination__Button > span.Polaris-Icon'),
-    'inline-mode - previous button has icon',
+    'inline-mode - previous button has icon'
   );
 
   assert.ok(
     find('button.Polaris-Pagination__Button[aria-label="Next"][disabled] > span.Polaris-Icon'),
-    'inline-mode - has next button disabled',
+    'inline-mode - has next button disabled'
   );
   assert.ok(
     find('button.Polaris-Pagination__Button > span.Polaris-Icon'),
-    'inline-mode - next button has icon',
+    'inline-mode - next button has icon'
   );
 
   assert.equal(
     pagination.attributes['aria-label'].value,
     'Pagination',
-    'inline mode - has correct default aria-label attribute',
+    'inline mode - has correct default aria-label attribute'
   );
 
   // Pagination in plain mode
@@ -55,7 +55,7 @@ test('it renders correctly', function(assert) {
   pagination = find(paginationSelector);
   assert.ok(
     pagination.classList.contains('Polaris-Pagination--plain'),
-    'plain pagination - has `Polaris-Pagination--plain` class',
+    'plain pagination - has `Polaris-Pagination--plain` class'
   );
 
   // Pagination with previous / next buttons enabled
@@ -66,11 +66,11 @@ test('it renders correctly', function(assert) {
 
   assert.ok(
     find('button.Polaris-Pagination__Button[aria-label="Previous"]:not([disabled])'),
-    'inline-mode - has previous button enabled',
+    'inline-mode - has previous button enabled'
   );
   assert.ok(
     find('button.Polaris-Pagination__Button[aria-label="Next"]:not([disabled])'),
-    'inline-mode - has next button enabled',
+    'inline-mode - has next button enabled'
   );
 
   // Pagination with accessibility label
@@ -80,7 +80,7 @@ test('it renders correctly', function(assert) {
   assert.equal(
     pagination.attributes['aria-label'].value,
     'Accessible to all',
-    'accessibility label - sets aria-label attribute',
+    'accessibility label - sets aria-label attribute'
   );
 });
 

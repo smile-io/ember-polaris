@@ -16,13 +16,13 @@ const pageActionsSelector = 'div.Polaris-PageActions';
 const pageActionsStackSelector = buildNestedSelector(pageActionsSelector, 'div.Polaris-Stack');
 const pageActionsStackItemSelector = buildNestedSelector(
   pageActionsStackSelector,
-  'div.Polaris-Stack__Item',
+  'div.Polaris-Stack__Item'
 );
 const secondaryButtonSelector = buildNestedSelector(
   pageActionsStackItemSelector,
   'div.Polaris-ButtonGroup',
   'div.Polaris-ButtonGroup__Item',
-  'button.Polaris-Button',
+  'button.Polaris-Button'
 );
 const iconSelector = buildNestedSelector('span.Polaris-Icon', 'svg');
 
@@ -51,11 +51,11 @@ test('it renders the correct HTML when primary and secondary actions are supplie
   const pageActionsStack = pageActionsStacks[0];
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--spacingTight'),
-    'stack has tight spacing',
+    'stack has tight spacing'
   );
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
-    'stack has equal distribution',
+    'stack has equal distribution'
   );
 
   const pageActionsStackItems = findAll(pageActionsStackItemSelector);
@@ -63,14 +63,14 @@ test('it renders the correct HTML when primary and secondary actions are supplie
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButtons = findAll(primaryButtonSelector);
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
   assert.equal(
     primaryButtons[0].textContent.trim(),
     'Primary button here',
-    'primary button - renders the correct content',
+    'primary button - renders the correct content'
   );
 
   const secondaryButtons = findAll(secondaryButtonSelector);
@@ -78,12 +78,12 @@ test('it renders the correct HTML when primary and secondary actions are supplie
   assert.equal(
     secondaryButtons[0].textContent.trim(),
     'This is a secondary button',
-    'first secondary button - renders the correct content',
+    'first secondary button - renders the correct content'
   );
   assert.equal(
     secondaryButtons[1].textContent.trim(),
     'This is another secondary button',
-    'second secondary button - renders the correct content',
+    'second secondary button - renders the correct content'
   );
 });
 
@@ -105,11 +105,11 @@ test('it renders the correct HTML when primary action is supplied with empty sec
   const pageActionsStack = pageActionsStacks[0];
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--spacingTight'),
-    'stack has tight spacing',
+    'stack has tight spacing'
   );
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
-    'stack has equal distribution',
+    'stack has equal distribution'
   );
 
   const pageActionsStackItems = findAll(pageActionsStackItemSelector);
@@ -117,21 +117,21 @@ test('it renders the correct HTML when primary action is supplied with empty sec
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButtons = findAll(primaryButtonSelector);
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
   assert.equal(
     primaryButtons[0].textContent.trim(),
     'Primary button here',
-    'primary button - renders the correct content',
+    'primary button - renders the correct content'
   );
 
   const secondaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
     'div.Polaris-ButtonGroup',
     'div.Polaris-ButtonGroup__Item',
-    'button.Polaris-Button',
+    'button.Polaris-Button'
   );
   const secondaryButtons = findAll(secondaryButtonSelector);
   assert.equal(secondaryButtons.length, 0, 'does not render any secondary buttons');
@@ -154,11 +154,11 @@ test('it renders the correct HTML when only a primary action is supplied', funct
   const pageActionsStack = pageActionsStacks[0];
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--spacingTight'),
-    'stack has tight spacing',
+    'stack has tight spacing'
   );
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--distributionTrailing'),
-    'stack has trailing distribution',
+    'stack has trailing distribution'
   );
 
   const pageActionsStackItems = findAll(pageActionsStackItemSelector);
@@ -166,19 +166,19 @@ test('it renders the correct HTML when only a primary action is supplied', funct
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButtons = findAll(primaryButtonSelector);
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
   assert.equal(
     primaryButtons[0].textContent.trim(),
     "I'm the only button here",
-    'primary button - renders the correct content',
+    'primary button - renders the correct content'
   );
 
   const secondaryButtonGroupSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'div.Polaris-ButtonGroup',
+    'div.Polaris-ButtonGroup'
   );
   const secondaryButtons = findAll(secondaryButtonGroupSelector);
   assert.equal(secondaryButtons.length, 0, 'does not render a secondary button group');
@@ -201,11 +201,11 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
   const pageActionsStack = pageActionsStacks[0];
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--spacingTight'),
-    'stack has tight spacing',
+    'stack has tight spacing'
   );
   assert.ok(
     pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
-    'stack has equal spacing distribution',
+    'stack has equal spacing distribution'
   );
 
   const pageActionsStackItems = findAll(pageActionsStackItemSelector);
@@ -213,7 +213,7 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButtons = findAll(primaryButtonSelector);
   assert.equal(primaryButtons.length, 0, 'does not render a primary button');
@@ -222,14 +222,14 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
     pageActionsStackItemSelector,
     'div.Polaris-ButtonGroup',
     'div.Polaris-ButtonGroup__Item',
-    'button.Polaris-Button',
+    'button.Polaris-Button'
   );
   const secondaryButtons = findAll(secondaryButtonGroupSelector);
   assert.equal(secondaryButtons.length, 1, 'renders one secondary button group');
   assert.equal(
     secondaryButtons[0].textContent.trim(),
     "I'm the only button here",
-    'primary button - renders the correct content',
+    'primary button - renders the correct content'
   );
 });
 
@@ -245,7 +245,7 @@ test('it renders the correct HTML when the primary action is disabled', function
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButton = find(primaryButtonSelector);
   assert.ok(primaryButton, 'renders primary button');
@@ -264,14 +264,14 @@ test('it renders the correct HTML when the primary action is loading', function(
 
   const primaryButtonSelector = buildNestedSelector(
     pageActionsStackItemSelector,
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
   const primaryButton = find(primaryButtonSelector);
   assert.ok(primaryButton, 'renders primary button');
   assert.ok(primaryButton.disabled, 'primary button is disabled');
   assert.ok(
     primaryButton.classList.contains('Polaris-Button--loading'),
-    'primary button is in loading state',
+    'primary button is in loading state'
   );
 });
 
@@ -307,19 +307,19 @@ test('it renders the correct HTML when secondary actions have complex properties
   assert.ok(secondaryButton.disabled, 'disabled secondary button is disabled');
   assert.ok(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
-    'disabled secondary button has disabled class',
+    'disabled secondary button has disabled class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--loading'),
-    'disabled secondary button does not have loading class',
+    'disabled secondary button does not have loading class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--destructive'),
-    'disabled secondary button does not have destructive class',
+    'disabled secondary button does not have destructive class'
   );
   assert.notOk(
     find(iconSelector, secondaryButton),
-    'disabled secondary button does not have an icon',
+    'disabled secondary button does not have an icon'
   );
 
   // Check the second (loading) button.
@@ -327,19 +327,19 @@ test('it renders the correct HTML when secondary actions have complex properties
   assert.ok(secondaryButton.disabled, 'loading secondary button is disabled');
   assert.ok(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
-    'loading secondary button has disabled class',
+    'loading secondary button has disabled class'
   );
   assert.ok(
     secondaryButton.classList.contains('Polaris-Button--loading'),
-    'loading secondary button has loading class',
+    'loading secondary button has loading class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--destructive'),
-    'disabled secondary button does not have destructive class',
+    'disabled secondary button does not have destructive class'
   );
   assert.notOk(
     find(iconSelector, secondaryButton),
-    'disabled secondary button does not have an icon',
+    'disabled secondary button does not have an icon'
   );
 
   // Check the third (destructive) button.
@@ -347,19 +347,19 @@ test('it renders the correct HTML when secondary actions have complex properties
   assert.notOk(secondaryButton.disabled, 'destructive secondary button is not disabled');
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
-    'destructive secondary button does not have disabled class',
+    'destructive secondary button does not have disabled class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--loading'),
-    'destructive secondary button does not have loading class',
+    'destructive secondary button does not have loading class'
   );
   assert.ok(
     secondaryButton.classList.contains('Polaris-Button--destructive'),
-    'destructive secondary button has destructive class',
+    'destructive secondary button has destructive class'
   );
   assert.notOk(
     find(iconSelector, secondaryButton),
-    'destructive secondary button does not have an icon',
+    'destructive secondary button does not have an icon'
   );
 
   // Check the fourth (iconed) button.
@@ -367,15 +367,15 @@ test('it renders the correct HTML when secondary actions have complex properties
   assert.notOk(secondaryButton.disabled, 'iconed secondary button is not disabled');
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
-    'iconed secondary button does not have disabled class',
+    'iconed secondary button does not have disabled class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--loading'),
-    'iconed secondary button does not have loading class',
+    'iconed secondary button does not have loading class'
   );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--destructive'),
-    'iconed secondary button does not have destructive class',
+    'iconed secondary button does not have destructive class'
   );
 
   const icon = find(iconSelector, secondaryButton);
@@ -383,7 +383,7 @@ test('it renders the correct HTML when secondary actions have complex properties
   assert.equal(
     icon.dataset.iconSource,
     'polaris/notes',
-    'iconed secondary button has the correct icon',
+    'iconed secondary button has the correct icon'
   );
 });
 
@@ -421,15 +421,15 @@ test('it handles item actions correctly', function(assert) {
   click('button', secondaryButtonGroupItems[0]);
   assert.notOk(
     primaryActionFired,
-    'after clicking first secondary button - primary action not fired',
+    'after clicking first secondary button - primary action not fired'
   );
   assert.ok(
     this.get('secondaryAction1Fired'),
-    'after clicking first secondary button - first secondary action fired',
+    'after clicking first secondary button - first secondary action fired'
   );
   assert.notOk(
     this.get('secondaryAction2Fired'),
-    'after clicking first secondary button - second secondary action not fired',
+    'after clicking first secondary button - second secondary action not fired'
   );
 
   // Click the primary button.
@@ -437,13 +437,13 @@ test('it handles item actions correctly', function(assert) {
   assert.ok(primaryActionFired, 'after clicking primary button - primary action fired');
   assert.notOk(
     this.get('secondaryAction2Fired'),
-    'after clicking first secondary button - second secondary action not fired',
+    'after clicking first secondary button - second secondary action not fired'
   );
 
   // Click the remaining secondary button.
   click('button', secondaryButtonGroupItems[1]);
   assert.ok(
     this.get('secondaryAction2Fired'),
-    'after clicking second secondary button - second secondary action fired',
+    'after clicking second secondary button - second secondary action fired'
   );
 });

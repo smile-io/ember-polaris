@@ -34,15 +34,15 @@ const choiceSelector = 'label.Polaris-Choice';
 const radioButtonSelector = buildNestedSelector(choiceSelector, 'span.Polaris-RadioButton');
 const radioButtonInputSelector = buildNestedSelector(
   radioButtonSelector,
-  'input.Polaris-RadioButton__Input[type="radio"]',
+  'input.Polaris-RadioButton__Input[type="radio"]'
 );
 const radioButtonBackdropSelector = buildNestedSelector(
   radioButtonSelector,
-  'span.Polaris-RadioButton__Backdrop',
+  'span.Polaris-RadioButton__Backdrop'
 );
 const radioButtonIconSelector = buildNestedSelector(
   radioButtonSelector,
-  'span.Polaris-RadioButton__Icon',
+  'span.Polaris-RadioButton__Icon'
 );
 
 test('it renders the correct HTML', function(assert) {
@@ -64,22 +64,22 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     choiceData.inputId,
     'some-radio-button-id',
-    'passes inputId through to `polaris-choice` component',
+    'passes inputId through to `polaris-choice` component'
   );
   assert.equal(
     choiceData.label,
     'Radio label',
-    'passes label through to `polaris-choice` component',
+    'passes label through to `polaris-choice` component'
   );
   assert.equal(
     choiceData.labelHidden,
     'Label is hidden, yes',
-    'passes labelHidden through to `polaris-choice` component',
+    'passes labelHidden through to `polaris-choice` component'
   );
   assert.equal(
     choiceData.helpText,
     'Help!',
-    'passes helpText through to `polaris-choice` component',
+    'passes helpText through to `polaris-choice` component'
   );
 
   // Check the wrapper element.
@@ -129,13 +129,13 @@ test("it sets the input's aria-describedby attribute correctly", function(assert
   assert.equal(
     input.getAttribute('aria-describedby'),
     'described-radio-buttonHelpText',
-    'described by help text element when help text is present',
+    'described by help text element when help text is present'
   );
 
   this.set('helpText', null);
   assert.notOk(
     input.getAttribute('aria-describedby'),
-    'has no description when help text is present',
+    'has no description when help text is present'
   );
 });
 

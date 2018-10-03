@@ -54,7 +54,7 @@ export default Component.extend({
       'ariaLabel',
       this.$()
         .text()
-        .trim(),
+        .trim()
     );
   },
 });

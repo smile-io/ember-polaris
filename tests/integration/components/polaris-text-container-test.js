@@ -16,7 +16,7 @@ test('it renders the correct HTML in inline form', function(assert) {
   assert.equal(
     textContainers[0].textContent.trim(),
     'This is some inline text',
-    'renders the correct content',
+    'renders the correct content'
   );
 });
 
@@ -28,7 +28,7 @@ test('it renders the correct HTML in block form', function(assert) {
   assert.equal(
     textContainers[0].textContent.trim(),
     'This is some block text',
-    'renders the correct content',
+    'renders the correct content'
   );
 });
 
@@ -41,40 +41,40 @@ test('it handles spacing correctly', function(assert) {
   const textContainer = textContainers[0];
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingLoose'),
-    'unset spacing - does not apply loose spacing class',
+    'unset spacing - does not apply loose spacing class'
   );
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingTight'),
-    'unset spacing - does not apply tight spacing class',
+    'unset spacing - does not apply tight spacing class'
   );
 
   this.set('spacing', 'loose');
   assert.ok(
     textContainer.classList.contains('Polaris-TextContainer--spacingLoose'),
-    'loose spacing - applies loose spacing class',
+    'loose spacing - applies loose spacing class'
   );
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingTight'),
-    'loose spacing - does not apply tight spacing class',
+    'loose spacing - does not apply tight spacing class'
   );
 
   this.set('spacing', 'tight');
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingLoose'),
-    'tight spacing - does not apply loose spacing class',
+    'tight spacing - does not apply loose spacing class'
   );
   assert.ok(
     textContainer.classList.contains('Polaris-TextContainer--spacingTight'),
-    'tight spacing - applies tight spacing class',
+    'tight spacing - applies tight spacing class'
   );
 
   this.set('spacing', 'unsupported');
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingLoose'),
-    'unsupported spacing - does not apply loose spacing class',
+    'unsupported spacing - does not apply loose spacing class'
   );
   assert.notOk(
     textContainer.classList.contains('Polaris-TextContainer--spacingTight'),
-    'unsupported spacing - does not apply tight spacing class',
+    'unsupported spacing - does not apply tight spacing class'
   );
 });

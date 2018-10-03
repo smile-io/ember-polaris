@@ -30,7 +30,7 @@ test('it renders the specified icon correctly', function(assert) {
   assert.equal(
     svg.getAttribute('focusable'),
     'false',
-    'applies focusable:false to the SVG element',
+    'applies focusable:false to the SVG element'
   );
   assert.equal(svg.getAttribute('aria-hidden'), 'true', 'applies aria-hidden to the SVG element');
 });
@@ -84,11 +84,11 @@ test('it applies colors correctly', function(assert) {
   const icon = find(iconSelector);
   assert.ok(
     icon.className.indexOf('Polaris-Icon--color') === -1,
-    'icon without color does not add color class',
+    'icon without color does not add color class'
   );
   assert.notOk(
     icon.classList.contains('Polaris-Icon--isColored'),
-    'icon without color does not add isColored class',
+    'icon without color does not add isColored class'
   );
 
   // Check all the available colors are handled correctly.
@@ -98,7 +98,7 @@ test('it applies colors correctly', function(assert) {
     const colorClass = `Polaris-Icon--color${classify(color)}`;
     assert.ok(
       icon.classList.contains(colorClass),
-      `icon with ${color} color applies ${colorClass} class`,
+      `icon with ${color} color applies ${colorClass} class`
     );
 
     const colorClassNames = [...icon.classList].filter((className) => {
@@ -107,18 +107,18 @@ test('it applies colors correctly', function(assert) {
     assert.equal(
       colorClassNames.length,
       1,
-      `icon with ${color} color does not add other color classes`,
+      `icon with ${color} color does not add other color classes`
     );
 
     if (color === 'white') {
       assert.notOk(
         icon.classList.contains('Polaris-Icon--isColored'),
-        `icon with ${color} color does not add isColored class`,
+        `icon with ${color} color does not add isColored class`
       );
     } else {
       assert.ok(
         icon.classList.contains('Polaris-Icon--isColored'),
-        `icon with ${color} color adds isColored class`,
+        `icon with ${color} color adds isColored class`
       );
     }
   }
@@ -132,19 +132,19 @@ test('it handles backdrop correctly', function(assert) {
   const backdropClass = 'Polaris-Icon--hasBackdrop';
   assert.notOk(
     icon.classList.contains(backdropClass),
-    'icon without backdrop set does not apply backdrop class',
+    'icon without backdrop set does not apply backdrop class'
   );
 
   this.set('backdrop', true);
   assert.ok(
     icon.classList.contains(backdropClass),
-    `icon with backdrop=true applies backdrop class`,
+    `icon with backdrop=true applies backdrop class`
   );
 
   this.set('backdrop', false);
   assert.notOk(
     icon.classList.contains(backdropClass),
-    `icon with backdrop=false does not apply backdrop class`,
+    `icon with backdrop=false does not apply backdrop class`
   );
 });
 
@@ -155,7 +155,7 @@ test('it handles accessibilityLabel correctly', function(assert) {
   const icon = find(iconSelector);
   assert.notOk(
     icon.attributes['aria-label'],
-    'no accessibilityLabel set - does not add aria-label attribute',
+    'no accessibilityLabel set - does not add aria-label attribute'
   );
 
   this.set('accessibilityLabel', 'This is the accessibility label');
@@ -163,7 +163,7 @@ test('it handles accessibilityLabel correctly', function(assert) {
   assert.equal(
     icon.attributes['aria-label'].value,
     'This is the accessibility label',
-    'accessibilityLabel set - adds correct aria-label value',
+    'accessibilityLabel set - adds correct aria-label value'
   );
 });
 
@@ -172,7 +172,7 @@ test('it handles placeholder icons correctly', function(assert) {
 
   const iconPlaceholderSelector = buildNestedSelector(
     iconSelector,
-    'div.Polaris-Icon__Placeholder',
+    'div.Polaris-Icon__Placeholder'
   );
   const iconPlaceholders = findAll(iconPlaceholderSelector);
   assert.equal(iconPlaceholders.length, 1, 'renders one icon placeholder');

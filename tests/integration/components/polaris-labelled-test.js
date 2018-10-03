@@ -13,7 +13,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       'component:my-component',
       Component.extend({
         classNames: ['my-component'],
-      }),
+      })
     );
   });
 

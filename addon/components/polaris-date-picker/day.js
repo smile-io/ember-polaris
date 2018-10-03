@@ -100,7 +100,7 @@ export default Component.extend({
         'disabled',
         'isDateToday',
         'inHoveringRange',
-        'inRange',
+        'inRange'
       );
 
       if (selected) {
@@ -120,7 +120,7 @@ export default Component.extend({
       }
 
       return classNames.join(' ');
-    },
+    }
   ).readOnly(),
 
   date: computed('day', function() {
@@ -155,7 +155,7 @@ export default Component.extend({
     let { day, disableDatesBefore, disableDatesAfter } = this.getProperties(
       'day',
       'disableDatesBefore',
-      'disableDatesAfter',
+      'disableDatesAfter'
     );
 
     return (
@@ -180,7 +180,7 @@ export default Component.extend({
       'selected',
       'disabled',
       'date',
-      'isDateToday',
+      'isDateToday'
     );
 
     return (focused || selected || isDateToday || date === 1) && !disabled ? 0 : -1;

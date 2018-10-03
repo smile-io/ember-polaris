@@ -14,7 +14,7 @@ module.exports = {
 
   treeForStyles(tree) {
     let packageRoot = path.dirname(
-      resolve.sync('@shopify/polaris/package.json', { basedir: __dirname }),
+      resolve.sync('@shopify/polaris/package.json', { basedir: __dirname })
     );
     let polarisScssFiles = new Funnel(packageRoot, {
       include: ['styles.scss', 'styles/**/*'],

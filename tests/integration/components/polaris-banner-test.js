@@ -30,7 +30,7 @@ test('it renders correctly in basic usage', function(assert) {
   assert.equal(
     banner.getAttribute('aria-live'),
     'polite',
-    'inline-mode - has correct aria-live attribute',
+    'inline-mode - has correct aria-live attribute'
   );
 
   let bannerIcon = find(iconSelector, banner);
@@ -38,16 +38,16 @@ test('it renders correctly in basic usage', function(assert) {
   assert.ok(bannerIcon, 'inline-mode - has icon');
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--colorInkLighter'),
-    'inline-mode - icon has inkLighter color',
+    'inline-mode - icon has inkLighter color'
   );
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--hasBackdrop'),
-    'inline-mode - icon has backdrop',
+    'inline-mode - icon has backdrop'
   );
   assert.equal(
     iconSvg.dataset.iconSource,
     'polaris/flag',
-    'inline-mode - default icon is polaris/flag',
+    'inline-mode - default icon is polaris/flag'
   );
 
   // Template block usage:
@@ -62,7 +62,7 @@ test('it renders correctly in basic usage', function(assert) {
   assert.equal(
     banner.textContent.trim(),
     'template block text',
-    'block-mode - banner has correct content',
+    'block-mode - banner has correct content'
   );
 });
 
@@ -76,7 +76,7 @@ test('it renders banner heading correctly', function(assert) {
   assert.notOk(heading, 'banner without title - no heading rendered');
   assert.notOk(
     banner.getAttribute('aria-labelledby'),
-    'banner without title - no aria-labelledby for banner',
+    'banner without title - no aria-labelledby for banner'
   );
 
   this.set('title', title);
@@ -87,12 +87,12 @@ test('it renders banner heading correctly', function(assert) {
   assert.equal(headingTitle.textContent.trim(), title, 'banner with title - has correct title');
   assert.ok(
     banner.hasAttribute('aria-labelledby'),
-    'banner with title - has aria-labelledby attribute',
+    'banner with title - has aria-labelledby attribute'
   );
   assert.equal(
     banner.getAttribute('aria-labelledby'),
     heading.getAttribute('id'),
-    "banner with title - has the banner's aria-labelledby as the heading Id",
+    "banner with title - has the banner's aria-labelledby as the heading Id"
   );
 });
 
@@ -106,7 +106,7 @@ test('it handles banner content correctly', function(assert) {
   assert.notOk(content, 'banner without content - no content rendered');
   assert.notOk(
     banner.getAttribute('aria-describedby'),
-    'banner without content - no aria-describedby for banner',
+    'banner without content - no aria-describedby for banner'
   );
 
   this.set('contentText', contentText);
@@ -116,16 +116,16 @@ test('it handles banner content correctly', function(assert) {
   assert.equal(
     content.textContent.trim(),
     contentText,
-    'banner with content - has correct content',
+    'banner with content - has correct content'
   );
   assert.ok(
     banner.hasAttribute('aria-describedby'),
-    'banner with content - has aria-describedby attribute',
+    'banner with content - has aria-describedby attribute'
   );
   assert.equal(
     banner.getAttribute('aria-describedby'),
     content.getAttribute('id'),
-    "banner with content - has the banner's aria-describedby as the content Id",
+    "banner with content - has the banner's aria-describedby as the content Id"
   );
 
   // Block-mode
@@ -141,16 +141,16 @@ test('it handles banner content correctly', function(assert) {
   assert.equal(
     content.textContent.trim(),
     contentText,
-    'banner with content (block) - has correct content',
+    'banner with content (block) - has correct content'
   );
   assert.ok(
     banner.hasAttribute('aria-describedby'),
-    'banner with content (block) - has aria-describedby attribute',
+    'banner with content (block) - has aria-describedby attribute'
   );
   assert.equal(
     banner.getAttribute('aria-describedby'),
     content.getAttribute('id'),
-    "banner with content (block) - has the banner's aria-describedby as the content Id",
+    "banner with content (block) - has the banner's aria-describedby as the content Id"
   );
 });
 
@@ -161,8 +161,8 @@ test('it handles banner status correctly', function(assert) {
   banner.classList.forEach((bannerClass) =>
     assert.notOk(
       /Polaris-Banner--status/.test(bannerClass),
-      'banner without status - has no status class',
-    ),
+      'banner without status - has no status class'
+    )
   );
 
   let bannerIcon = find(iconSelector, banner);
@@ -171,81 +171,81 @@ test('it handles banner status correctly', function(assert) {
   this.set('status', 'success');
   assert.ok(
     banner.classList.contains('Polaris-Banner--statusSuccess'),
-    'banner with success status - has correct class',
+    'banner with success status - has correct class'
   );
   assert.equal(
     banner.getAttribute('role'),
     'status',
-    'banner with success status - has correct role attribute',
+    'banner with success status - has correct role attribute'
   );
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--colorGreenDark'),
-    'banner with success status - has greenDark icon color',
+    'banner with success status - has greenDark icon color'
   );
   assert.equal(
     iconSvg.dataset.iconSource,
     'polaris/circle-check-mark',
-    'banner with success status - has icon polaris/circle-check-mark',
+    'banner with success status - has icon polaris/circle-check-mark'
   );
 
   this.set('status', 'info');
   assert.ok(
     banner.classList.contains('Polaris-Banner--statusInfo'),
-    'banner with info status - has correct class',
+    'banner with info status - has correct class'
   );
   assert.equal(
     banner.getAttribute('role'),
     'status',
-    'banner with info status - has correct role attribute',
+    'banner with info status - has correct role attribute'
   );
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--colorTealDark'),
-    'banner with info status - has tealDark icon color',
+    'banner with info status - has tealDark icon color'
   );
   assert.equal(
     iconSvg.dataset.iconSource,
     'polaris/circle-information',
-    'banner with info status - has icon polaris/circle-information',
+    'banner with info status - has icon polaris/circle-information'
   );
 
   this.set('status', 'warning');
   assert.ok(
     banner.classList.contains('Polaris-Banner--statusWarning'),
-    'banner with warning status - has correct class',
+    'banner with warning status - has correct class'
   );
   assert.equal(
     banner.getAttribute('role'),
     'alert',
-    'banner with warning status - has correct role attribute',
+    'banner with warning status - has correct role attribute'
   );
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--colorYellowDark'),
-    'banner with warning status - has yellowDark icon color',
+    'banner with warning status - has yellowDark icon color'
   );
   assert.equal(
     iconSvg.dataset.iconSource,
     'polaris/circle-alert',
-    'banner with warning status - has icon polaris/circle-alert',
+    'banner with warning status - has icon polaris/circle-alert'
   );
 
   this.set('status', 'critical');
   assert.ok(
     banner.classList.contains('Polaris-Banner--statusCritical'),
-    'banner with critical status - has correct class',
+    'banner with critical status - has correct class'
   );
   assert.equal(
     banner.getAttribute('role'),
     'alert',
-    'banner with critical status - has correct role attribute',
+    'banner with critical status - has correct role attribute'
   );
   assert.ok(
     bannerIcon.classList.contains('Polaris-Icon--colorRedDark'),
-    'banner with critical status - has redDark icon color',
+    'banner with critical status - has redDark icon color'
   );
   assert.equal(
     iconSvg.dataset.iconSource,
     'polaris/circle-barred',
-    'banner with critical status - has icon polaris/circle-barred',
+    'banner with critical status - has icon polaris/circle-barred'
   );
 });
 
@@ -256,7 +256,7 @@ test('it handles dismissable banner correctly', function(assert) {
   let dismissWrapper = find(dismissSelector, banner);
   assert.notOk(
     banner.classList.contains('Polaris-Banner__hasDismiss'),
-    'banner non-dismissable - does not have dismissable class',
+    'banner non-dismissable - does not have dismissable class'
   );
   assert.notOk(dismissWrapper, 'banner non-dismissable - does not render the dismiss element');
 
@@ -269,18 +269,18 @@ test('it handles dismissable banner correctly', function(assert) {
   dismissWrapper = find(dismissSelector, banner);
   let dismissBtn = find(
     'button.Polaris-Button.Polaris-Button--plain.Polaris-Button--iconOnly',
-    dismissWrapper,
+    dismissWrapper
   );
   assert.ok(
     banner.classList.contains('Polaris-Banner__hasDismiss'),
-    'banner dismissable - has dismissable class',
+    'banner dismissable - has dismissable class'
   );
   assert.ok(dismissWrapper, 'banner dismissable - does render the dismiss element');
   assert.ok(dismissBtn, 'banner dismissable - has correct dismiss button');
   assert.equal(
     dismissBtn.getAttribute('aria-label'),
     'Dismiss notification',
-    'banner dismissable - dismiss button has correct aria-label',
+    'banner dismissable - dismiss button has correct aria-label'
   );
 
   click(dismissBtn);
@@ -311,7 +311,7 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   actions = find(actionsSelector, content);
   assert.notOk(
     actions,
-    'banner with `secondaryAction` only - does not render the actions container',
+    'banner with `secondaryAction` only - does not render the actions container'
   );
 
   this.render(hbs`{{polaris-banner
@@ -324,17 +324,17 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   let btnGroup = find('div.Polaris-ButtonGroup', actions);
   let actionBtn = find(
     'div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline',
-    btnGroup,
+    btnGroup
   );
   let secondaryActionBtn = find(
     'div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction',
-    btnGroup,
+    btnGroup
   );
   assert.ok(actions, 'banner with `action` only - renders actions container');
   assert.ok(actionBtn, 'banner with `action` only - renders `action` button');
   assert.notOk(
     secondaryActionBtn,
-    'banner with `action` only - does not render `secondaryAction` button',
+    'banner with `action` only - does not render `secondaryAction` button'
   );
 
   this.setProperties({
@@ -360,16 +360,16 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   btnGroup = find('div.Polaris-ButtonGroup', actions);
   actionBtn = find(
     'div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline',
-    btnGroup,
+    btnGroup
   );
   secondaryActionBtn = find(
     'div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction',
-    btnGroup,
+    btnGroup
   );
   assert.ok(actionBtn, 'banner with actions - renders `action` button');
   assert.ok(
     actionBtn.classList.contains('Polaris-Button--loading'),
-    'banner with actions - `action` button starts in loading state',
+    'banner with actions - `action` button starts in loading state'
   );
 
   this.setProperties({
@@ -378,20 +378,20 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   });
   assert.notOk(
     actionBtn.classList.contains('Polaris-Button--loading'),
-    'banner with actions - `action` button exits loading state',
+    'banner with actions - `action` button exits loading state'
   );
   assert.ok(actionBtn.disabled, 'banner with actions - `action` button becomes disabled');
   assert.equal(
     actionBtn.textContent.trim(),
     'Edit',
-    'banner with actions - renders correct `action` button text',
+    'banner with actions - renders correct `action` button text'
   );
 
   assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
   assert.equal(
     secondaryActionBtn.textContent.trim(),
     'View',
-    'banner with actions - renders correct `secondaryAction` button text',
+    'banner with actions - renders correct `secondaryAction` button text'
   );
 
   this.set('mainActionDisabled', false);
@@ -399,11 +399,11 @@ test('it supports `action` and `secondaryAction`', function(assert) {
 
   assert.ok(
     mainActionFired,
-    "banner with actions - clicking `action` button - trigger `action`'s action",
+    "banner with actions - clicking `action` button - trigger `action`'s action"
   );
   assert.notOk(
     secActionFired,
-    "banner with actions - clicking `action` button - does not trigger `secondaryAction`'s action",
+    "banner with actions - clicking `action` button - does not trigger `secondaryAction`'s action"
   );
 
   mainActionFired = false;
@@ -411,10 +411,10 @@ test('it supports `action` and `secondaryAction`', function(assert) {
 
   assert.ok(
     secActionFired,
-    "banner with actions - clicking `secondaryAction` button - trigger `secondaryAction`'s action",
+    "banner with actions - clicking `secondaryAction` button - trigger `secondaryAction`'s action"
   );
   assert.notOk(
     mainActionFired,
-    "banner with actions - clicking `secondaryAction` button - does not trigger `action`'s action",
+    "banner with actions - clicking `secondaryAction` button - does not trigger `action`'s action"
   );
 });

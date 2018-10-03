@@ -55,7 +55,7 @@ export default Component.extend({
     const { alpha, sliderHeight, draggerHeight } = this.getProperties(
       'alpha',
       'sliderHeight',
-      'draggerHeight',
+      'draggerHeight'
     );
     const offset = offsetForAlpha(alpha, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);

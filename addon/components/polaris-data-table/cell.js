@@ -173,7 +173,7 @@ export default Component.extend({
         'footer',
         'contentType',
         'sorted',
-        'sortable',
+        'sortable'
       );
 
       if (fixed) {
@@ -213,7 +213,7 @@ export default Component.extend({
       }
 
       return classNames.join(' ');
-    },
+    }
   ).readOnly(),
 
   /**
@@ -245,7 +245,7 @@ export default Component.extend({
         ? this.get('sortDirection')
         : this.get('defaultSortDirection');
       return `caret-${sortDirection === 'ascending' ? 'up' : 'down'}`;
-    },
+    }
   ).readOnly(),
 
   updateAccessibilityLabel() {

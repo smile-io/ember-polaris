@@ -110,7 +110,7 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.equal(
     iconPrev.dataset.iconSource,
     'polaris/arrow-left',
-    'it renders a left arrow icon as the `prev` button',
+    'it renders a left arrow icon as the `prev` button'
   );
 
   let headerNextBtnEl = find(headerNextBtnSelector);
@@ -119,7 +119,7 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.equal(
     iconNext.dataset.iconSource,
     'polaris/arrow-right',
-    'it renders a right arrow icon as the `next` button',
+    'it renders a right arrow icon as the `next` button'
   );
 
   let monthTitleEl = find(monthTitleSelector);
@@ -127,7 +127,7 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.equal(
     monthTitleEl.textContent.trim(),
     expectedTitle,
-    'it renders a title displaying the current month name and year',
+    'it renders a title displaying the current month name and year'
   );
 
   let monthsEl = findAll(monthSelector);
@@ -141,12 +141,12 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.equal(
     weekdayEls.length,
     DAYS_PER_WEEK,
-    'it renders 7 weekday labels in the weekday header',
+    'it renders 7 weekday labels in the weekday header'
   );
   assert.equal(
     sunday.textContent.trim(),
     'Su',
-    'it abbreviates the weekday names in the weekday header',
+    'it abbreviates the weekday names in the weekday header'
   );
 
   let weekEls = findAll(monthWeekSelector);
@@ -159,7 +159,7 @@ test('it renders the correct date-picker HTML', function(assert) {
   assert.equal(
     dayEmptyEls.length,
     FEB_2018_DAYS_EMPTY,
-    'it renders 6 empty days for February 2018',
+    'it renders 6 empty days for February 2018'
   );
 
   let selectedDay = find(daySelectedSelector);
@@ -235,7 +235,7 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
   click(headerPrevBtnSelector);
   assert.ok(
     this.get('onMonthChangeActionFired'),
-    'onMonthChange action is called when `prev` button is clicked',
+    'onMonthChange action is called when `prev` button is clicked'
   );
 
   this.set('onMonthChangeActionFired', false);
@@ -243,7 +243,7 @@ test('it calls a passed-in `onMonthChange` action when next or prev btn clicked'
   click(headerNextBtnSelector);
   assert.ok(
     this.get('onMonthChangeActionFired'),
-    'onMonthChange action is called when `next` button is clicked',
+    'onMonthChange action is called when `next` button is clicked'
   );
 });
 
@@ -277,7 +277,7 @@ test('it passes `month` and `year` arguments to the `onMonthChange` action', fun
   click(headerNextBtnSelector);
   assert.ok(
     this.get('onMonthChangeActionFired'),
-    '`onMonthChange` action sends up correct arguments',
+    '`onMonthChange` action sends up correct arguments'
   );
 });
 
@@ -329,13 +329,13 @@ test('it disables certain days when `disableDatesBefore` and `disableDatesAfter`
   let disabledBeforeDateEl = find(DISABLE_BEFORE_SELECTOR);
   assert.ok(
     disabledBeforeDateEl.classList.contains(DAY_DISABLED_CLASS),
-    'dates before `disableDatesBefore` have a disabled class',
+    'dates before `disableDatesBefore` have a disabled class'
   );
 
   let disabledAfterDateEl = find(DISABLE_AFTER_SELECTOR);
   assert.ok(
     disabledAfterDateEl.classList.contains(DAY_DISABLED_CLASS),
-    'dates after `disableDatesAfter` have a disabled class',
+    'dates after `disableDatesAfter` have a disabled class'
   );
 });
 
@@ -368,7 +368,7 @@ test('it does not fire actions when disabled days are clicked', function(assert)
   click(DISABLE_AFTER_SELECTOR);
   assert.notOk(
     this.get('onChangeActionFired'),
-    'clicking disabled day did not fire `onChange` action',
+    'clicking disabled day did not fire `onChange` action'
   );
 });
 
@@ -397,7 +397,7 @@ test('it applies an `inRange` class to days between the selected range', functio
   let inRangeDayEl = find(IN_RANGE_SELECTOR);
   assert.ok(
     inRangeDayEl.classList.contains(DAY_IN_RANGE_CLASS),
-    'days within the provided range contain an `inRange` class',
+    'days within the provided range contain an `inRange` class'
   );
 });
 
@@ -426,7 +426,7 @@ test('it applies a `today` class to the day representing the current day', funct
   let todayEl = find(TODAY_SELECTOR);
   assert.ok(
     todayEl.classList.contains(DAY_IS_TODAY_CLASS),
-    'the day representing today contains a `today` class',
+    'the day representing today contains a `today` class'
   );
 
   let todayEls = findAll(`.${DAY_IS_TODAY_CLASS}`);

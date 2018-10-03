@@ -132,7 +132,7 @@ export default Component.extend({
     let { accessibilityLabel, name, initials } = this.getProperties(
       'accessibilityLabel',
       'name',
-      'initials',
+      'initials'
     );
 
     if (accessibilityLabel) {

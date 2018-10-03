@@ -48,7 +48,7 @@ export default Component.extend({
       {
         id: 'ember-polaris.polaris-description-list.term-component',
         until: '2.0.0',
-      },
+      }
     );
     deprecate(
       'Passing an explicit `descriptionComponent` in `polaris-description-list` `items` is deprecated - pass the component as `description` instead',
@@ -56,7 +56,7 @@ export default Component.extend({
       {
         id: 'ember-polaris.polaris-description-list.description-component',
         until: '2.0.0',
-      },
+      }
     );
   },
 });

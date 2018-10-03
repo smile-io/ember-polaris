@@ -43,28 +43,28 @@ moduleForComponent('polaris-checkbox', 'Integration | Component | polaris checkb
 const choiceSelector = 'label.Polaris-Choice';
 const checkboxControlWrapperSelector = buildNestedSelector(
   choiceSelector,
-  'span.Polaris-Choice__Control',
+  'span.Polaris-Choice__Control'
 );
 const checkboxWrapperSelector = buildNestedSelector(
   checkboxControlWrapperSelector,
-  'span.Polaris-Checkbox',
+  'span.Polaris-Checkbox'
 );
 const checkboxInputSelector = buildNestedSelector(
   checkboxWrapperSelector,
-  'input.Polaris-Checkbox__Input[type="checkbox"]',
+  'input.Polaris-Checkbox__Input[type="checkbox"]'
 );
 const checkboxBackdropSelector = buildNestedSelector(
   checkboxWrapperSelector,
-  'span.Polaris-Checkbox__Backdrop',
+  'span.Polaris-Checkbox__Backdrop'
 );
 const checkboxIconSelector = buildNestedSelector(
   checkboxWrapperSelector,
-  'span.Polaris-Checkbox__Icon',
+  'span.Polaris-Checkbox__Icon'
 );
 const checkboxIconSvgSelector = buildNestedSelector(
   checkboxIconSelector,
   'span.Polaris-Icon',
-  'svg',
+  'svg'
 );
 const checkboxLabelSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Choice__Label');
 
@@ -91,18 +91,18 @@ test('it renders the correct HTML', function(assert) {
   const choice = choices[0];
   assert.ok(
     choice.classList.contains('Polaris-Choice--labelHidden'),
-    'sets the labelHidden class when the label is hidden',
+    'sets the labelHidden class when the label is hidden'
   );
 
   this.set('labelHidden', false);
   assert.notOk(
     choice.classList.contains('Polaris-Choice--labelHidden'),
-    'does not set the labelHidden class when the label is not hidden',
+    'does not set the labelHidden class when the label is not hidden'
   );
 
   const helpTextSelector = buildNestedSelector(
     'div.Polaris-Choice__Descriptions',
-    'div.Polaris-Choice__HelpText',
+    'div.Polaris-Choice__HelpText'
   );
   const helpTexts = findAll(helpTextSelector);
   assert.equal(helpTexts.length, 1, 'renders one help text');
@@ -110,7 +110,7 @@ test('it renders the correct HTML', function(assert) {
 
   const errorSelector = buildNestedSelector(
     'div.Polaris-Choice__Descriptions',
-    'div.Polaris-Choice__Error',
+    'div.Polaris-Choice__Error'
   );
   const errors = findAll(errorSelector);
   assert.equal(errors.length, 1, 'renders one error');
@@ -122,7 +122,7 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     labels[0].textContent.trim(),
     'Checkbox label',
-    'renders the correct checkbox label content',
+    'renders the correct checkbox label content'
   );
 
   // Check the wrapper element and its class handling.
@@ -130,13 +130,13 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(checkboxWrappers.length, 1, 'renders one checkbox wrapper');
   assert.ok(
     checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'),
-    'applies error class when error present',
+    'applies error class when error present'
   );
 
   this.set('error', null);
   assert.notOk(
     checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'),
-    'does not apply error class when error not present',
+    'does not apply error class when error not present'
   );
 
   // Check the input.
@@ -156,7 +156,7 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     icons[0].dataset.iconSource,
     'polaris/checkmark',
-    'renders the correct checkbox icon',
+    'renders the correct checkbox icon'
   );
 });
 
@@ -196,27 +196,27 @@ test("it sets the input's aria-describedby attribute correctly", function(assert
       find(checkboxInputSelector)
         .getAttribute('aria-describedby')
         .indexOf('described-checkboxHelpText') > -1,
-    'described by error and help text elements when error and help text are present',
+    'described by error and help text elements when error and help text are present'
   );
 
   this.set('error', null);
   assert.equal(
     find(checkboxInputSelector).getAttribute('aria-describedby'),
     'described-checkboxHelpText',
-    'described by help text element when help text is present',
+    'described by help text element when help text is present'
   );
 
   this.set('helpText', null);
   assert.notOk(
     find(checkboxInputSelector).getAttribute('aria-describedby'),
-    'has no description when no error or help text are present',
+    'has no description when no error or help text are present'
   );
 
   this.set('error', 'some other error');
   assert.equal(
     find(checkboxInputSelector).getAttribute('aria-describedby'),
     'described-checkboxError',
-    'described by error element when error is present',
+    'described by error element when error is present'
   );
 });
 
@@ -229,14 +229,14 @@ test("it sets the input's aria-invalid attribute correctly", function(assert) {
   assert.equal(
     find(checkboxInputSelector).getAttribute('aria-invalid'),
     'true',
-    'aria-invalid attribute set when error present',
+    'aria-invalid attribute set when error present'
   );
 
   this.set('error', null);
   assert.equal(
     find(checkboxInputSelector).getAttribute('aria-invalid'),
     'false',
-    'aria-invalid attribute not when no error',
+    'aria-invalid attribute not when no error'
   );
 });
 
@@ -281,20 +281,20 @@ test('it handles the checked state correctly', function(assert) {
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'false',
-    'checked unset - checkbox has aria-checked false',
+    'checked unset - checkbox has aria-checked false'
   );
   assert.notOk(
     checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked unset - checkbox does not have indeterminate class',
+    'checked unset - checkbox does not have indeterminate class'
   );
   assert.equal(
     checkboxIcon.dataset.iconSource,
     'polaris/checkmark',
-    'checked unset - renders the correct checkbox icon',
+    'checked unset - renders the correct checkbox icon'
   );
   assert.notOk(
     checkboxInput.hasAttribute('indeterminate'),
-    'checked unset - checkbox does not have indeterminate attribute',
+    'checked unset - checkbox does not have indeterminate attribute'
   );
 
   this.set('checked', true);
@@ -302,20 +302,20 @@ test('it handles the checked state correctly', function(assert) {
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'true',
-    'checked true - checkbox has aria-checked true',
+    'checked true - checkbox has aria-checked true'
   );
   assert.notOk(
     checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked true - checkbox does not have indeterminate class',
+    'checked true - checkbox does not have indeterminate class'
   );
   assert.equal(
     checkboxIcon.dataset.iconSource,
     'polaris/checkmark',
-    'checked true - renders the correct checkbox icon',
+    'checked true - renders the correct checkbox icon'
   );
   assert.notOk(
     checkboxInput.hasAttribute('indeterminate'),
-    'checked true - checkbox does not have indeterminate attribute',
+    'checked true - checkbox does not have indeterminate attribute'
   );
 
   this.set('checked', 'indeterminate');
@@ -323,16 +323,16 @@ test('it handles the checked state correctly', function(assert) {
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'mixed',
-    'checked indeterminate - checkbox has aria-checked mixed',
+    'checked indeterminate - checkbox has aria-checked mixed'
   );
   assert.ok(
     checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked indeterminate - checkbox has indeterminate class',
+    'checked indeterminate - checkbox has indeterminate class'
   );
   assert.equal(
     checkboxIcon.dataset.iconSource,
     'polaris/subtract',
-    'checked indeterminate - renders the correct checkbox icon',
+    'checked indeterminate - renders the correct checkbox icon'
   );
   // TODO: figure out why this attribute isn't binding...
   // assert.equal(checkboxInput.getAttribute('indeterminate'), 'true', 'checked indeterminate - checkbox has indeterminate attribute');
@@ -342,20 +342,20 @@ test('it handles the checked state correctly', function(assert) {
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'false',
-    'checked false - checkbox has aria-checked false',
+    'checked false - checkbox has aria-checked false'
   );
   assert.notOk(
     checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked false - checkbox does not have indeterminate class',
+    'checked false - checkbox does not have indeterminate class'
   );
   assert.equal(
     checkboxIcon.dataset.iconSource,
     'polaris/checkmark',
-    'checked false - renders the correct checkbox icon',
+    'checked false - renders the correct checkbox icon'
   );
   assert.notOk(
     checkboxInput.hasAttribute('indeterminate'),
-    'checked false - checkbox does not have indeterminate attribute',
+    'checked false - checkbox does not have indeterminate attribute'
   );
 
   // TODO: check icon

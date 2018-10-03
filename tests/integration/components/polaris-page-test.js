@@ -42,24 +42,24 @@ test('it renders the page correctly', function(assert) {
   const page = pages[0];
   assert.notOk(
     page.classList.contains('Polaris-Page--fullWidth'),
-    'does not apply full width class',
+    'does not apply full width class'
   );
   assert.notOk(
     page.classList.contains('Polaris-Page--singleColumn'),
-    'does not apply single column class',
+    'does not apply single column class'
   );
 
   const headers = findAll(headerSelector);
   assert.equal(headers.length, 1, 'renders one page header div');
   assert.notOk(
     headers[0].classList.contains('Polaris-Page__Header--hasSecondaryActions'),
-    'does not apply secondary actions class to header',
+    'does not apply secondary actions class to header'
   );
 
   const displayTextSelector = buildNestedSelector(
     headerSelector,
     'div.Polaris-Page__Title',
-    'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge',
+    'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge'
   );
   const displayTexts = findAll(displayTextSelector);
   assert.equal(displayTexts.length, 1, 'renders one page header display text');
@@ -79,33 +79,33 @@ test('it renders the page correctly', function(assert) {
 
   assert.notOk(
     page.classList.contains('Polaris-Page--fullWidth'),
-    'fullWidth unset - does not apply fullWidth class',
+    'fullWidth unset - does not apply fullWidth class'
   );
   this.set('fullWidth', true);
   assert.ok(
     page.classList.contains('Polaris-Page--fullWidth'),
-    'fullWidth set - applies fullWidth class',
+    'fullWidth set - applies fullWidth class'
   );
 
   assert.notOk(
     page.classList.contains('Polaris-Page--singleColumn'),
-    'singleColumn unset - does not apply singleColumn class',
+    'singleColumn unset - does not apply singleColumn class'
   );
   this.set('singleColumn', true);
   assert.ok(
     page.classList.contains('Polaris-Page--singleColumn'),
-    'singleColumn set - applies singleColumn class',
+    'singleColumn set - applies singleColumn class'
   );
 
   let header = headers[0];
   assert.notOk(
     header.classList.contains('Polaris-Page__Title--hidden'),
-    'titleHidden unset - does not apply titleHidden class',
+    'titleHidden unset - does not apply titleHidden class'
   );
   this.set('titleHidden', true);
   assert.ok(
     header.classList.contains('Polaris-Page__Title--hidden'),
-    'titleHidden set - applies titleHidden class',
+    'titleHidden set - applies titleHidden class'
   );
 });
 
@@ -138,7 +138,7 @@ test('it handles primary action correctly when supplied', function(assert) {
     'div.Polaris-Page__TitleAndActions',
     'div.Polaris-Page__Actions',
     'div.Polaris-Page__PrimaryAction',
-    'button.Polaris-Button.Polaris-Button--primary',
+    'button.Polaris-Button.Polaris-Button--primary'
   );
 
   const primaryButtons = findAll(primaryButtonSelector);
@@ -150,7 +150,7 @@ test('it handles primary action correctly when supplied', function(assert) {
   assert.ok(primaryButton.disabled, 'primary action button is initially disabled');
   assert.notOk(
     primaryButton.classList.contains('Polaris-Button--loading'),
-    'primary action button is not initially in loading state',
+    'primary action button is not initially in loading state'
   );
 
   this.setProperties({
@@ -159,7 +159,7 @@ test('it handles primary action correctly when supplied', function(assert) {
   });
   assert.ok(
     primaryButton.classList.contains('Polaris-Button--loading'),
-    'primary action button goes into loading state',
+    'primary action button goes into loading state'
   );
 
   this.set('primaryActionLoading', false);
@@ -201,18 +201,18 @@ test('it handles secondary actions correctly when supplied', function(assert) {
   const header = find(headerSelector);
   assert.ok(
     header.classList.contains('Polaris-Page__Header--hasSecondaryActions'),
-    'applies secondary actions class',
+    'applies secondary actions class'
   );
 
   const secondaryActionsWrapperSelector = buildNestedSelector(
     headerSelector,
     'div.Polaris-Page__Actions',
     'div.Polaris-Page__SecondaryActions',
-    'div.Polaris-Page__IndividualActions',
+    'div.Polaris-Page__IndividualActions'
   );
   const secondaryActionsButtonSelector = buildNestedSelector(
     secondaryActionsWrapperSelector,
-    'button.Polaris-Page__Action',
+    'button.Polaris-Page__Action'
   );
 
   const secondaryButtons = findAll(secondaryActionsButtonSelector);
@@ -221,12 +221,12 @@ test('it handles secondary actions correctly when supplied', function(assert) {
   assert.equal(
     secondaryButtons[0].textContent.trim(),
     'First secondary action',
-    'first secondary action - uses correct text on button',
+    'first secondary action - uses correct text on button'
   );
   assert.equal(
     secondaryButtons[1].textContent.trim(),
     'Second secondary action',
-    'second secondary action - uses correct text on button',
+    'second secondary action - uses correct text on button'
   );
 
   assert.notOk(secondaryAction1Fired, 'first secondary action - not fired before clicking button');
@@ -240,12 +240,12 @@ test('it handles secondary actions correctly when supplied', function(assert) {
       assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
       assert.notOk(
         secondaryAction2Fired,
-        'second secondary action - not fired after clicking first button',
+        'second secondary action - not fired after clicking first button'
       );
 
       assert.notOk(
         find(focussedSecondaryButtonSelector),
-        'no focussed buttons after clicking first secondary action',
+        'no focussed buttons after clicking first secondary action'
       );
 
       click('button:last-child', secondaryActionsWrapper);
@@ -255,7 +255,7 @@ test('it handles secondary actions correctly when supplied', function(assert) {
       assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
       assert.notOk(
         find(focussedSecondaryButtonSelector),
-        'no focussed buttons after clicking second secondary action',
+        'no focussed buttons after clicking second secondary action'
       );
     });
 });
@@ -284,7 +284,7 @@ test('it renders action icons correctly', function(assert) {
     'div.Polaris-Page__SecondaryActions',
     'div.Polaris-Page__IndividualActions',
     'button.Polaris-Page__Action',
-    'span.Polaris-Page__ActionContent',
+    'span.Polaris-Page__ActionContent'
   );
   const secondaryActions = findAll(secondaryActionsSelector);
   assert.equal(secondaryActions.length, 2, 'renders two secondary actions');
@@ -293,19 +293,19 @@ test('it renders action icons correctly', function(assert) {
     secondaryActionsSelector,
     'span.Polaris-Page__ActionIcon',
     'span.Polaris-Icon',
-    'svg',
+    'svg'
   );
   const secondaryActionIcons = findAll(secondaryActionIconSelector);
   assert.equal(secondaryActionIcons.length, 2, 'renders two secondary action icons');
   assert.equal(
     secondaryActionIcons[0].dataset.iconSource,
     'polaris/add',
-    'first secondary action icon - renders the correct icon',
+    'first secondary action icon - renders the correct icon'
   );
   assert.equal(
     secondaryActionIcons[1].dataset.iconSource,
     'polaris/cancel',
-    'second secondary action icon - renders the correct icon',
+    'second secondary action icon - renders the correct icon'
   );
 });
 
@@ -318,7 +318,7 @@ test('it handles breadcrumbs correctly', function(assert) {
   assert.ok(header, 'without breadcrumbs - renders header');
   assert.notOk(
     header.classList.contains(headerWithBreadcrumbsClass),
-    'without breadcrumbs - does not apply hasBreadcrumbs class',
+    'without breadcrumbs - does not apply hasBreadcrumbs class'
   );
 
   const navigationSelector = buildNestedSelector(headerSelector, 'div.Polaris-Page__Navigation');
@@ -340,14 +340,14 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   assert.ok(
     header.classList.contains(headerWithBreadcrumbsClass),
-    'with breadcrumbs - applies hasBreadcrumbs class',
+    'with breadcrumbs - applies hasBreadcrumbs class'
   );
 
   // Check the breadcrumbs rendered.
   const breadcrumbLinkSelector = buildNestedSelector(
     navigationSelector,
     'nav[role="navigation"]',
-    'a.Polaris-Breadcrumbs__Breadcrumb',
+    'a.Polaris-Breadcrumbs__Breadcrumb'
   );
   const breadcrumbLinks = findAll(breadcrumbLinkSelector);
   assert.equal(breadcrumbLinks.length, 1, 'with breadcrumbs - renders 1 breadcrumb');
@@ -359,12 +359,12 @@ test('it handles breadcrumbs correctly', function(assert) {
   let breadcrumbLink = breadcrumbLinks[0];
   assert.ok(
     breadcrumbLink.href.indexOf('/home/the-beginning/13/27') > -1,
-    'breadcrumb has href of last breadcrumb in list',
+    'breadcrumb has href of last breadcrumb in list'
   );
   assert.equal(
     breadcrumbLink.dataset.polarisUnstyled,
     'true',
-    'breadcrumb has data-polaris-unstyled attribute',
+    'breadcrumb has data-polaris-unstyled attribute'
   );
 
   let contents = findAll(contentSelector, breadcrumbLink);
@@ -372,7 +372,7 @@ test('it handles breadcrumbs correctly', function(assert) {
   assert.equal(
     contents[0].textContent.trim(),
     'No, really!',
-    'breadcrumb renders text from last breadcrumb in list',
+    'breadcrumb renders text from last breadcrumb in list'
   );
 
   let icons = findAll(iconSelector, breadcrumbLink);

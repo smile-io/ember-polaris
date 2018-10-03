@@ -149,7 +149,7 @@ export default Component.extend({
     let { multiMonth, showNextToNextMonth, showNextMonth } = this.getProperties(
       'multiMonth',
       'showNextToNextMonth',
-      'showNextMonth',
+      'showNextMonth'
     );
 
     return multiMonth ? monthsArray[showNextToNextMonth] : monthsArray[showNextMonth];
@@ -159,7 +159,7 @@ export default Component.extend({
     let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
       'multiMonth',
       'showNextToNextYear',
-      'showNextYear',
+      'showNextYear'
     );
 
     return multiMonth ? showNextToNextYear : showNextYear;
@@ -200,7 +200,7 @@ export default Component.extend({
       'disableDatesBefore',
       'disableDatesAfter',
       'focusDate',
-      'range',
+      'range'
     );
 
     let focusedDate = focusDate || (range && range.start);

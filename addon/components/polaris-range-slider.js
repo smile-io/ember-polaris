@@ -208,14 +208,14 @@ export default Component.extend({
       'min',
       'max',
       'value',
-      'sliderProgress',
+      'sliderProgress'
     );
     let styleProps = assign(
       { min, max, current },
       {
         progress: `${sliderProgress}%`,
         outputFactor: invertNumber((sliderProgress - 50) / 100),
-      },
+      }
     );
 
     let styleString = Object.keys(styleProps).reduce((styleString, propName) => {

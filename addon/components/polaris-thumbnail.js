@@ -57,9 +57,9 @@ export default Component.extend({
       size = defaultSize;
       warn(
         `Unsupported 'size' attribute for 'polaris-thumbnail'. Supported values: ${allowedSizes.join(
-          ', ',
+          ', '
         )}.`,
-        { id: 'ember-polaris.polaris-thumbnail.unsupported-size' },
+        { id: 'ember-polaris.polaris-thumbnail.unsupported-size' }
       );
     }
 

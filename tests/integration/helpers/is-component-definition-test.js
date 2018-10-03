@@ -14,7 +14,7 @@ module('Integration | Helper | is-component-definition', function(hooks) {
     assert.dom(this.element).hasText('no', "returns false when it's not a component definition");
 
     await render(
-      hbs`{{if (is-component-definition (component "polaris-heading" text="Text")) 'yes' 'no'}}`,
+      hbs`{{if (is-component-definition (component "polaris-heading" text="Text")) 'yes' 'no'}}`
     );
     assert.dom(this.element).hasText('yes', "returns true when it's a component definition");
   });

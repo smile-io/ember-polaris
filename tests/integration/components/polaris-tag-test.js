@@ -37,7 +37,7 @@ test('it renders the correct HTML in inline usage', function(assert) {
   assert.equal(
     tagButton.getAttribute('aria-label'),
     `Remove ${tag}`,
-    'it gives the remove button the correct aria-label',
+    'it gives the remove button the correct aria-label'
   );
 
   const tagIcon = find(tagIconSelector);
@@ -46,7 +46,7 @@ test('it renders the correct HTML in inline usage', function(assert) {
   assert.equal(
     iconSource,
     'polaris/cancel-small',
-    'it uses the correct polaris/cancel-small icon as the icon source',
+    'it uses the correct polaris/cancel-small icon as the icon source'
   );
 });
 
@@ -71,7 +71,7 @@ test('it renders the correct HTML in block usage', function(assert) {
   assert.equal(
     tagButton.getAttribute('aria-label'),
     `Remove ${tag}`,
-    'it gives the remove button the correct aria-label',
+    'it gives the remove button the correct aria-label'
   );
 
   const tagIcon = find(tagIconSelector);
@@ -80,7 +80,7 @@ test('it renders the correct HTML in block usage', function(assert) {
   assert.equal(
     iconSource,
     'polaris/cancel-small',
-    'it uses the correct polaris/cancel-small icon as the icon source',
+    'it uses the correct polaris/cancel-small icon as the icon source'
   );
 });
 
@@ -96,18 +96,18 @@ test('it handles the disabled attribute correctly', function(assert) {
   // Check the component when no value for `disabled` is given.
   assert.notOk(
     tagComponent.classList.contains('Polaris-Tag--disabled'),
-    'when disabled is not specified - does not apply disabled class to tag',
+    'when disabled is not specified - does not apply disabled class to tag'
   );
   assert.notOk(
     button.disabled,
-    'when disabled is not specified - does not disable the remove button',
+    'when disabled is not specified - does not disable the remove button'
   );
 
   // Specify that the tag's disabled and check the component again.
   this.set('disabled', true);
   assert.ok(
     tagComponent.classList.contains('Polaris-Tag--disabled'),
-    'when disabled is specified - applies disabled class to tag',
+    'when disabled is specified - applies disabled class to tag'
   );
   assert.ok(button.disabled, 'when disabled is specified - disables the remove button');
 });

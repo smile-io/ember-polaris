@@ -15,7 +15,7 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     find(headingSelector).innerText,
     'This is a heading',
-    'inline with defaults - renders correct text',
+    'inline with defaults - renders correct text'
   );
 
   // Block form with element specified.
@@ -29,11 +29,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     findAll(headingSelector).length,
     1,
-    'block with customisation - renders one emphasised heading',
+    'block with customisation - renders one emphasised heading'
   );
   assert.equal(
     find(headingSelector).innerText,
     'This is an emphasised heading',
-    'block with customisation - renders correct text',
+    'block with customisation - renders correct text'
   );
 });

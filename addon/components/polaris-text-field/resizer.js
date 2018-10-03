@@ -88,7 +88,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
 
   handleHeightCheck() {
     let [contentNode, minimumLinesNode] = this.element.querySelectorAll(
-      '.Polaris-TextField__DummyInput',
+      '.Polaris-TextField__DummyInput'
     );
 
     if (!contentNode || !minimumLinesNode) {

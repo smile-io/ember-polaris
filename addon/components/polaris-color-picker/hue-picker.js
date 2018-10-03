@@ -53,7 +53,7 @@ export default Component.extend({
     const { hue, sliderHeight, draggerHeight } = this.getProperties(
       'hue',
       'sliderHeight',
-      'draggerHeight',
+      'draggerHeight'
     );
     const offset = offsetForHue(hue, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);

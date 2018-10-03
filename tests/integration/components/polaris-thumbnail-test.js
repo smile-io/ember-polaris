@@ -28,7 +28,7 @@ test('it renders the correct HTML when all attributes are passed in', function(a
   assert.ok(thumbnailSpan, 'thumbnail container element is rendered');
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'correct size class is applied to container element',
+    'correct size class is applied to container element'
   );
 
   // Thumbnail image properties:
@@ -44,15 +44,15 @@ test('it renders a correctly-sized thumbnail', function(assert) {
 
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'no size - does not apply small size class',
+    'no size - does not apply small size class'
   );
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'),
-    'no size - applies medium size class by default',
+    'no size - applies medium size class by default'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'),
-    'no size - does not apply large size class',
+    'no size - does not apply large size class'
   );
 
   this.set('size', 'small');
@@ -62,57 +62,57 @@ test('it renders a correctly-sized thumbnail', function(assert) {
 
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'size small - applies small size class',
+    'size small - applies small size class'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'),
-    'size small - does not apply medium size class',
+    'size small - does not apply medium size class'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'),
-    'size small - does not apply large size class',
+    'size small - does not apply large size class'
   );
 
   this.set('size', 'medium');
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'size medium - does not apply small size class',
+    'size medium - does not apply small size class'
   );
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'),
-    'size medium - applies medium size class',
+    'size medium - applies medium size class'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'),
-    'size medium - does not apply large size class',
+    'size medium - does not apply large size class'
   );
 
   this.set('size', 'large');
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'size large - does not apply small size class',
+    'size large - does not apply small size class'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'),
-    'size large - does not apply medium size class',
+    'size large - does not apply medium size class'
   );
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'),
-    'size large - applies large size class',
+    'size large - applies large size class'
   );
 
   this.set('size', 'unsupported');
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeSmall'),
-    'unsupported size - does not apply small size class',
+    'unsupported size - does not apply small size class'
   );
   assert.ok(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeMedium'),
-    'unsupported size - falls back to applying medium size class',
+    'unsupported size - falls back to applying medium size class'
   );
   assert.notOk(
     thumbnailSpan.classList.contains('Polaris-Thumbnail--sizeLarge'),
-    'unsupported size - does not apply large size class',
+    'unsupported size - does not apply large size class'
   );
 });
 

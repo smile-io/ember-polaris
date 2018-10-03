@@ -15,29 +15,29 @@ moduleForComponent('polaris-choice-list', 'Integration | Component | polaris cho
 const choiceListSelector = 'fieldset.Polaris-ChoiceList';
 const choicesWrapperSelector = buildNestedSelector(
   choiceListSelector,
-  'ul.Polaris-ChoiceList__Choices',
+  'ul.Polaris-ChoiceList__Choices'
 );
 const choiceSelector = buildNestedSelector(choicesWrapperSelector, 'li', 'label.Polaris-Choice');
 const radioInputSelector = buildNestedSelector('span.Polaris-RadioButton', 'input[type="radio"]');
 const checkboxInputSelector = buildNestedSelector(
   'span.Polaris-Checkbox',
-  'input[type="checkbox"]',
+  'input[type="checkbox"]'
 );
 const titleSelector = buildNestedSelector(choiceListSelector, 'legend.Polaris-ChoiceList__Title');
 
 const choiceWithDescriptionWrapperSelector = buildNestedSelector(
   choicesWrapperSelector,
   'li',
-  'div',
+  'div'
 );
 const choiceWithDescriptionSelector = buildNestedSelector(
   choiceWithDescriptionWrapperSelector,
-  'label.Polaris-Choice',
+  'label.Polaris-Choice'
 );
 const helpTextSelector = buildNestedSelector(
   choiceWithDescriptionWrapperSelector,
   'div.Polaris-Choice__Descriptions',
-  'div.Polaris-Choice__HelpText',
+  'div.Polaris-Choice__HelpText'
 );
 
 test('it renders the correct HTML when allowMultiple is false', function(assert) {
@@ -77,7 +77,7 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.equal(
     radioInput.name,
     'test-single-choice-list',
-    'first choice - radio input has the correct name',
+    'first choice - radio input has the correct name'
   );
   assert.notOk(radioInput.checked, 'first choice - radio input is not checked');
 
@@ -85,7 +85,7 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.equal(
     choice.textContent.trim(),
     'Second option',
-    'second choice - has correct label text',
+    'second choice - has correct label text'
   );
   radioInput = find(radioInputSelector, choice);
   assert.ok(radioInput, 'second choice - renders radio input');
@@ -93,7 +93,7 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.equal(
     radioInput.name,
     'test-single-choice-list',
-    'second choice - radio input has the correct name',
+    'second choice - radio input has the correct name'
   );
   assert.ok(radioInput.checked, 'second choice - radio input is checked');
 
@@ -105,7 +105,7 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.equal(
     radioInput.name,
     'test-single-choice-list',
-    'third choice - radio input has the correct name',
+    'third choice - radio input has the correct name'
   );
   assert.notOk(radioInput.checked, 'third choice - radio input is not checked');
 });
@@ -148,7 +148,7 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   assert.equal(
     checkboxInput.name,
     'test-multiple-choice-list[]',
-    'first choice - checkbox input has the correct name',
+    'first choice - checkbox input has the correct name'
   );
   assert.notOk(checkboxInput.checked, 'first choice - checkbox input is not checked');
 
@@ -156,7 +156,7 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   assert.equal(
     choice.textContent.trim(),
     'Second option',
-    'second choice - has correct label text',
+    'second choice - has correct label text'
   );
   checkboxInput = find(checkboxInputSelector, choice);
   assert.ok(checkboxInput, 'second choice - renders checkbox input');
@@ -164,7 +164,7 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   assert.equal(
     checkboxInput.name,
     'test-multiple-choice-list[]',
-    'second choice - checkbox input has the correct name',
+    'second choice - checkbox input has the correct name'
   );
   assert.ok(checkboxInput.checked, 'second choice - checkbox input is checked');
 
@@ -176,7 +176,7 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   assert.equal(
     checkboxInput.name,
     'test-multiple-choice-list[]',
-    'third choice - checkbox input has the correct name',
+    'third choice - checkbox input has the correct name'
   );
   assert.ok(checkboxInput.checked, 'third choice - checkbox input is checked');
 });
@@ -193,7 +193,7 @@ test('it handles title and titleHidden attributes correctly', function(assert) {
   const choiceList = choiceLists[0];
   assert.notOk(
     choiceList.classList.contains('Polaris-ChoiceList--titleHidden'),
-    'with title set and unhidden - does not apply titleHidden class to choice list',
+    'with title set and unhidden - does not apply titleHidden class to choice list'
   );
 
   let titles = findAll(titleSelector);
@@ -201,13 +201,13 @@ test('it handles title and titleHidden attributes correctly', function(assert) {
   assert.equal(
     titles[0].textContent.trim(),
     'Original title',
-    'with title set and unhidden - renders the correct title text',
+    'with title set and unhidden - renders the correct title text'
   );
 
   this.set('titleHidden', true);
   assert.ok(
     choiceList.classList.contains('Polaris-ChoiceList--titleHidden'),
-    'with title set and hidden - applies titleHidden class to choice list',
+    'with title set and hidden - applies titleHidden class to choice list'
   );
 
   this.set('title', null);
@@ -253,15 +253,15 @@ test('it handles choice selection correctly when allowMultiple is false', functi
   assert.deepEqual(this.get('selected'), ['one'], 'after click - selected value updated correctly');
   assert.ok(
     radioInputs[0].checked,
-    'after clicking first radio button - first radio input is checked',
+    'after clicking first radio button - first radio input is checked'
   );
   assert.notOk(
     radioInputs[1].checked,
-    'after clicking first radio button - second radio input is not checked',
+    'after clicking first radio button - second radio input is not checked'
   );
   assert.notOk(
     radioInputs[2].checked,
-    'after clicking first radio button - third radio input is not checked',
+    'after clicking first radio button - third radio input is not checked'
   );
 });
 
@@ -303,27 +303,27 @@ test('it handles choice selection correctly when allowMultiple is true', functio
   let selected = this.get('selected');
   assert.ok(
     selected.indexOf('one') > -1,
-    "after clicking second checkbox - selected values contains 'one'",
+    "after clicking second checkbox - selected values contains 'one'"
   );
   assert.ok(
     selected.indexOf('two') > -1,
-    "after clicking second checkbox - selected values contains 'two'",
+    "after clicking second checkbox - selected values contains 'two'"
   );
   assert.ok(
     selected.indexOf('three') > -1,
-    "after clicking second checkbox - selected values contains 'three'",
+    "after clicking second checkbox - selected values contains 'three'"
   );
   assert.ok(
     checkboxInputs[0].checked,
-    'after clicking second checkbox - first checkbox input is checked',
+    'after clicking second checkbox - first checkbox input is checked'
   );
   assert.ok(
     checkboxInputs[1].checked,
-    'after clicking second checkbox - second checkbox input is checked',
+    'after clicking second checkbox - second checkbox input is checked'
   );
   assert.ok(
     checkboxInputs[2].checked,
-    'after clicking second checkbox - third checkbox input is checked',
+    'after clicking second checkbox - third checkbox input is checked'
   );
 
   // Click the third choice to deselect it.
@@ -332,27 +332,27 @@ test('it handles choice selection correctly when allowMultiple is true', functio
   selected = this.get('selected');
   assert.ok(
     selected.indexOf('one') > -1,
-    "after clicking third checkbox - selected values contains 'one'",
+    "after clicking third checkbox - selected values contains 'one'"
   );
   assert.ok(
     selected.indexOf('two') > -1,
-    "after clicking third checkbox - selected values contains 'two'",
+    "after clicking third checkbox - selected values contains 'two'"
   );
   assert.notOk(
     selected.indexOf('three') > -1,
-    "after clicking third checkbox - selected values does not contain 'three'",
+    "after clicking third checkbox - selected values does not contain 'three'"
   );
   assert.ok(
     checkboxInputs[0].checked,
-    'after clicking third checkbox - first checkbox input is checked',
+    'after clicking third checkbox - first checkbox input is checked'
   );
   assert.ok(
     checkboxInputs[1].checked,
-    'after clicking third checkbox - second checkbox input is checked',
+    'after clicking third checkbox - second checkbox input is checked'
   );
   assert.notOk(
     checkboxInputs[2].checked,
-    'after clicking third checkbox - third checkbox input is not checked',
+    'after clicking third checkbox - third checkbox input is not checked'
   );
 });
 
@@ -388,17 +388,17 @@ test('it handles choice helpText correctly when allowMultiple is false', functio
   assert.equal(
     helpTexts[0].textContent.trim(),
     'This is the first option',
-    'first choice - renders the correct help text',
+    'first choice - renders the correct help text'
   );
   assert.equal(
     helpTexts[1].textContent.trim(),
     'This is the second option',
-    'second choice - renders the correct help text',
+    'second choice - renders the correct help text'
   );
   assert.equal(
     helpTexts[2].textContent.trim(),
     'This is the third option',
-    'third choice - renders the correct help text',
+    'third choice - renders the correct help text'
   );
 });
 
@@ -434,17 +434,17 @@ test('it handles choice helpText correctly when allowMultiple is true', function
   assert.equal(
     helpTexts[0].textContent.trim(),
     'This is the first option',
-    'first choice - renders the correct help text',
+    'first choice - renders the correct help text'
   );
   assert.equal(
     helpTexts[1].textContent.trim(),
     'This is the second option',
-    'second choice - renders the correct help text',
+    'second choice - renders the correct help text'
   );
   assert.equal(
     helpTexts[2].textContent.trim(),
     'This is the third option',
-    'third choice - renders the correct help text',
+    'third choice - renders the correct help text'
   );
 });
 

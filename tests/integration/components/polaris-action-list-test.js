@@ -16,41 +16,41 @@ const actionListSelector = 'div.Polaris-ActionList';
 const actionListItemButtonSelector = buildNestedSelector(
   'ul.Polaris-ActionList__Actions',
   'li',
-  'button.Polaris-ActionList__Item',
+  'button.Polaris-ActionList__Item'
 );
 const actionListItemSelector = buildNestedSelector(
   actionListSelector,
   'div',
-  actionListItemButtonSelector,
+  actionListItemButtonSelector
 );
 const actionListItemContentSelector = buildNestedSelector(
   actionListItemSelector,
-  'div.Polaris-ActionList__Content',
+  'div.Polaris-ActionList__Content'
 );
 const actionListItemContentImageSelector = buildNestedSelector(
   actionListItemContentSelector,
-  'div.Polaris-ActionList__Image',
+  'div.Polaris-ActionList__Image'
 );
 const actionListItemContentImageIconSelector = buildNestedSelector(
   actionListItemContentImageSelector,
   'span.Polaris-Icon',
-  'svg',
+  'svg'
 );
 const actionListItemContentTextSelector = buildNestedSelector(
   actionListItemContentSelector,
-  'div.Polaris-ActionList__Text',
+  'div.Polaris-ActionList__Text'
 );
 const sectionedActionListSelector = 'ul.Polaris-ActionList';
 const sectionedActionListSectionSelector = buildNestedSelector(
   sectionedActionListSelector,
   'li.Polaris-ActionList__Section',
-  'div',
+  'div'
 );
 const actionListSectionTitleSelector = 'p.Polaris-ActionList__Title';
 const itemIconSelector = buildNestedSelector(
   'div.Polaris-ActionList__Image',
   'span.Polaris-Icon',
-  'svg',
+  'svg'
 );
 
 test('it renders the correct HTML in basic usage', function(assert) {
@@ -75,12 +75,12 @@ test('it renders the correct HTML in basic usage', function(assert) {
   assert.equal(
     actionListItems[0].textContent.trim(),
     'This is the first item',
-    'first item - renders the correct content',
+    'first item - renders the correct content'
   );
   assert.equal(
     actionListItems[1].textContent.trim(),
     'This is item number two',
-    'second item - renders the correct content',
+    'second item - renders the correct content'
   );
 });
 
@@ -113,17 +113,17 @@ test('it renders the correct HTML when using icons', function(assert) {
   assert.equal(
     actionListItemContentImageIcons.length,
     2,
-    'renders two action list item image icons',
+    'renders two action list item image icons'
   );
   assert.equal(
     actionListItemContentImageIcons[0].dataset.iconSource,
     'polaris/import',
-    'first item image icon - renders the correct icon',
+    'first item image icon - renders the correct icon'
   );
   assert.equal(
     actionListItemContentImageIcons[1].dataset.iconSource,
     'polaris/export',
-    'second item image icon - renders the correct icon',
+    'second item image icon - renders the correct icon'
   );
 
   const actionListItemContentTexts = findAll(actionListItemContentTextSelector);
@@ -131,12 +131,12 @@ test('it renders the correct HTML when using icons', function(assert) {
   assert.equal(
     actionListItemContentTexts[0].textContent.trim(),
     'Import some things',
-    'first item text - renders the correct content',
+    'first item text - renders the correct content'
   );
   assert.equal(
     actionListItemContentTexts[1].textContent.trim(),
     'Export stuff',
-    'second item text - renders the correct content',
+    'second item text - renders the correct content'
   );
 });
 
@@ -205,13 +205,13 @@ test('it does not bubble item actions', function(assert) {
   click('button', listItems[0]);
   assert.notOk(
     this.get('parentActionFired'),
-    'after pressing first button - parent action not fired',
+    'after pressing first button - parent action not fired'
   );
 
   click('button', listItems[1]);
   assert.notOk(
     this.get('parentActionFired'),
-    'after pressing second button - parent action not fired',
+    'after pressing second button - parent action not fired'
   );
 });
 
@@ -245,7 +245,7 @@ test('it handles the "any item" action correctly', function(assert) {
   assert.equal(
     this.get('anyItemActionCount'),
     1,
-    'after pressing first button - any item action fired once',
+    'after pressing first button - any item action fired once'
   );
   assert.notOk(this.get('itemActionFired'), 'after pressing first button - item action not fired');
 
@@ -253,7 +253,7 @@ test('it handles the "any item" action correctly', function(assert) {
   assert.equal(
     this.get('anyItemActionCount'),
     2,
-    'after pressing second button - any item action fired twice',
+    'after pressing second button - any item action fired twice'
   );
   assert.ok(this.get('itemActionFired'), 'after pressing second button - item action fired');
 });
@@ -296,7 +296,7 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     actionListSections.length,
     2,
-    'with no items and two sections - renders two action list sections',
+    'with no items and two sections - renders two action list sections'
   );
 
   // Add some items alongside the sections.
@@ -306,14 +306,14 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     actionListSections.length,
     3,
-    'with items and two sections - renders three action list sections',
+    'with items and two sections - renders three action list sections'
   );
 
   // First section should have no title, one item with no icon.
   let section = actionListSections[0];
   assert.ok(
     section.classList.contains('Polaris-ActionList__Section--withoutTitle'),
-    'first section has "without title" class',
+    'first section has "without title" class'
   );
 
   let sectionTitle = find(actionListSectionTitleSelector, section);
@@ -324,14 +324,14 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     items[0].textContent.trim(),
     'Section 1 item',
-    'first section item renders the correct text',
+    'first section item renders the correct text'
   );
 
   // Second section should have a title and two items, the first with an icon and the second without.
   section = actionListSections[1];
   assert.notOk(
     section.classList.contains('Polaris-ActionList__Section--withoutTitle'),
-    'second section does not have "without title" class',
+    'second section does not have "without title" class'
   );
 
   sectionTitle = find(actionListSectionTitleSelector, section);
@@ -339,7 +339,7 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     sectionTitle.textContent.trim(),
     'Section 2',
-    'second section renders the correct title text',
+    'second section renders the correct title text'
   );
 
   items = findAll(actionListItemButtonSelector, section);
@@ -347,12 +347,12 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     items[0].textContent.trim(),
     'Section 2 item 1',
-    "second section's first item renders the correct text",
+    "second section's first item renders the correct text"
   );
   assert.equal(
     items[1].textContent.trim(),
     'Section 2 item 2',
-    "second section's second item renders the correct text",
+    "second section's second item renders the correct text"
   );
 
   let itemIcon = find(itemIconSelector, items[0]);
@@ -360,7 +360,7 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     itemIcon.dataset.iconSource,
     'polaris/notes',
-    "second section's first item renders the correct icon",
+    "second section's first item renders the correct icon"
   );
 
   itemIcon = find(itemIconSelector, items[1]);
@@ -370,7 +370,7 @@ test('it renders the correct HTML when using sections', function(assert) {
   section = actionListSections[2];
   assert.ok(
     section.classList.contains('Polaris-ActionList__Section--withoutTitle'),
-    'third section has "without title" class',
+    'third section has "without title" class'
   );
 
   sectionTitle = find(actionListSectionTitleSelector, section);
@@ -381,6 +381,6 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.equal(
     items[0].textContent.trim(),
     'Section 3 item',
-    'third section item renders the correct text',
+    'third section item renders the correct text'
   );
 });

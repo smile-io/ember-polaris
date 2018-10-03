@@ -64,7 +64,7 @@ export default Component.extend({
     }
 
     const trigger = Ember$(
-      `div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`,
+      `div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`
     )[0];
     const content = Ember$(`div#ember-basic-dropdown-content-${uniqueId}`)[0];
 

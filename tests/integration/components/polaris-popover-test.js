@@ -13,13 +13,13 @@ const popoverSelector = buildNestedSelector(overlaySelector, 'div.Polaris-Popove
 const popoverChildSelector = buildNestedSelector(popoverSelector, 'div');
 const popoverContentSelector = buildNestedSelector(
   popoverChildSelector,
-  'div.Polaris-Popover__Content',
+  'div.Polaris-Popover__Content'
 );
 const popoverContentAboveSelector = '.ember-basic-dropdown-content--above';
 const popoverContentBelowSelector = '.ember-basic-dropdown-content--below';
 const popoverPaneSelector = buildNestedSelector(
   popoverContentSelector,
-  'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical',
+  'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
 );
 
 skip('it renders the correct HTML with default attributes', function(assert) {
@@ -51,7 +51,7 @@ skip('it renders the correct HTML with default attributes', function(assert) {
   assert.equal(
     popovers[0].dataset.polarisOverlay,
     'true',
-    'popover has data-polaris-overlay attribute',
+    'popover has data-polaris-overlay attribute'
   );
 
   // Check the popover renders the correct HTML.
@@ -65,19 +65,19 @@ skip('it renders the correct HTML with default attributes', function(assert) {
   child = popoverChildren[1];
   assert.ok(
     child.classList.contains('Polaris-Popover__FocusTracker'),
-    'second popover child is focus tracker',
+    'second popover child is focus tracker'
   );
 
   child = popoverChildren[2];
   assert.ok(
     child.classList.contains('Polaris-Popover__Wrapper'),
-    'third popover child is content wrapper',
+    'third popover child is content wrapper'
   );
 
   child = popoverChildren[3];
   assert.ok(
     child.classList.contains('Polaris-Popover__FocusTracker'),
-    'fourth popover child is focus tracker',
+    'fourth popover child is focus tracker'
   );
 
   // Check the content was rendered correctly.
@@ -91,12 +91,12 @@ skip('it renders the correct HTML with default attributes', function(assert) {
   assert.equal(
     popoverPane.dataset.polarisScrollable,
     'true',
-    'popover pane has data-polaris-scrollable attribute',
+    'popover pane has data-polaris-scrollable attribute'
   );
   assert.equal(
     popoverPane.textContent.trim(),
     'This is the popover content',
-    'popover pane contains the correct content',
+    'popover pane contains the correct content'
   );
 
   // Click the activator button again.
@@ -124,14 +124,14 @@ test('it renders the correct HTML with sectioned attribute', function(assert) {
 
   const popoverSectionSelector = buildNestedSelector(
     popoverPaneSelector,
-    'div.Polaris-Popover__Section',
+    'div.Polaris-Popover__Section'
   );
   const popoverSections = findAll(popoverSectionSelector);
   assert.equal(popoverSections.length, 1, 'renders one popover section');
   assert.equal(
     popoverSections[0].textContent.trim(),
     'This is some sectioned popover content',
-    'popover section contains the correct content',
+    'popover section contains the correct content'
   );
 });
 
@@ -205,6 +205,6 @@ test('it calls a passed-in onClose action when closed', function(assert) {
 
   assert.ok(
     this.get('onCloseCalled'),
-    'the passed-in onClose action is called when popover is closed',
+    'the passed-in onClose action is called when popover is closed'
   );
 });

@@ -361,7 +361,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
         'readOnly',
         'error',
         'multiline',
-        'focus',
+        'focus'
       );
       let classes = ['Polaris-TextField'];
 
@@ -390,7 +390,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
       }
 
       return classes.join(' ');
-    },
+    }
   ).readOnly(),
 
   ariaDescribedBy: computed('error', 'helpText', 'id', function() {
@@ -462,7 +462,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
 
     assert(
       `ember-polaris::polaris-text-field - ${type} is not a valid type.`,
-      allowedTypes.indexOf(type) > -1,
+      allowedTypes.indexOf(type) > -1
     );
 
     id = id || `TextField-${guidFor(this)}`;
@@ -496,7 +496,7 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
         'value',
         'step',
         'min',
-        'max',
+        'max'
       );
 
       step = step || 1;

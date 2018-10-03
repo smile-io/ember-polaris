@@ -32,7 +32,7 @@ test('it renders the correct page content', function(assert) {
   assert.equal(
     content.textContent.trim(),
     'Skeleton page - inline content',
-    'inline usage - renders the correct skeleton page content',
+    'inline usage - renders the correct skeleton page content'
   );
 
   this.render(hbs`
@@ -46,7 +46,7 @@ test('it renders the correct page content', function(assert) {
   assert.equal(
     content.textContent.trim(),
     'Skeleton page - block content',
-    'block usage - renders the correct skeleton page content',
+    'block usage - renders the correct skeleton page content'
   );
 });
 
@@ -56,19 +56,19 @@ test('it renders the page at the correct width', function(assert) {
   let page = find(pageSelector);
   assert.notOk(
     page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth unspecified - does not apply full width class',
+    'fullWidth unspecified - does not apply full width class'
   );
 
   this.set('fullWidth', true);
   assert.ok(
     page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth true - applies full width class',
+    'fullWidth true - applies full width class'
   );
 
   this.set('fullWidth', false);
   assert.notOk(
     page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth false - does not apply full width class',
+    'fullWidth false - does not apply full width class'
   );
 });
 
@@ -78,11 +78,11 @@ test('it renders the page title correctly', function(assert) {
   const titleSelector = buildNestedSelector(headerSelector, 'div.Polaris-SkeletonPage__Title');
   const skeletonTitleSelector = buildNestedSelector(
     titleSelector,
-    'div.Polaris-SkeletonDisplayText__DisplayText.Polaris-SkeletonDisplayText--sizeLarge',
+    'div.Polaris-SkeletonDisplayText__DisplayText.Polaris-SkeletonDisplayText--sizeLarge'
   );
   const realTitleSelector = buildNestedSelector(
     titleSelector,
-    'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge',
+    'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge'
   );
 
   // undefined title -> renders large skeleton display text.
@@ -113,7 +113,7 @@ test('it renders the page title correctly', function(assert) {
   assert.equal(
     realTitles[0].textContent.trim(),
     'Spooky Skeleton Page',
-    'title specified - renders the correct title',
+    'title specified - renders the correct title'
   );
 });
 
@@ -126,18 +126,18 @@ test('it renders breadcrumbs correctly', function(assert) {
   const breadcrumbSelector = buildNestedSelector(
     headerSelector,
     'div.Polaris-SkeletonPage__Actions',
-    'div.Polaris-SkeletonPage__Action',
+    'div.Polaris-SkeletonPage__Action'
   );
   const breadcrumbSkeletonTextSelector = buildNestedSelector(
     breadcrumbSelector,
     'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer',
-    'div.Polaris-SkeletonBodyText',
+    'div.Polaris-SkeletonBodyText'
   );
 
   let header = find(headerSelector);
   assert.notOk(
     header.classList.contains('Polaris-SkeletonPage__Header--hasBreadcrumbs'),
-    'breadcrumbs unspecified - does not apply breadcrumbs class',
+    'breadcrumbs unspecified - does not apply breadcrumbs class'
   );
 
   let breadcrumbs = findAll(breadcrumbSelector);
@@ -147,7 +147,7 @@ test('it renders breadcrumbs correctly', function(assert) {
   header = find(headerSelector);
   assert.ok(
     header.classList.contains('Polaris-SkeletonPage__Header--hasBreadcrumbs'),
-    'breadcrumbs specified - applies breadcrumbs class',
+    'breadcrumbs specified - applies breadcrumbs class'
   );
 
   breadcrumbs = findAll(breadcrumbSelector);
@@ -155,14 +155,14 @@ test('it renders breadcrumbs correctly', function(assert) {
   assert.equal(
     breadcrumbs[0].style.width,
     '64px',
-    'breadcrumbs specified - renders the breadcrumb with the correct width',
+    'breadcrumbs specified - renders the breadcrumb with the correct width'
   );
 
   let breadcrumbSkeletonTexts = findAll(breadcrumbSkeletonTextSelector);
   assert.equal(
     breadcrumbSkeletonTexts.length,
     1,
-    'breadcrumbs specified - renders one skeleton breadcrumb text',
+    'breadcrumbs specified - renders one skeleton breadcrumb text'
   );
 
   mathRandomStubber.restore();
@@ -177,37 +177,37 @@ test('it renders secondary actions correctly', function(assert) {
   const secondaryActionSelector = buildNestedSelector(
     headerSelector,
     'div.Polaris-SkeletonPage__Actions',
-    'div.Polaris-SkeletonPage__Action',
+    'div.Polaris-SkeletonPage__Action'
   );
   const secondaryActionSkeletonTextSelector = buildNestedSelector(
     'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer',
-    'div.Polaris-SkeletonBodyText',
+    'div.Polaris-SkeletonBodyText'
   );
 
   let header = find(headerSelector);
   assert.notOk(
     header.classList.contains('Polaris-SkeletonPage__Header--hasSecondaryActions'),
-    'secondaryActions unspecified - does not apply secondary actions class',
+    'secondaryActions unspecified - does not apply secondary actions class'
   );
 
   let secondaryActions = findAll(secondaryActionSelector);
   assert.equal(
     secondaryActions.length,
     0,
-    'secondaryActions unspecified - does not render any secondary actions',
+    'secondaryActions unspecified - does not render any secondary actions'
   );
 
   this.set('secondaryActions', 3);
   assert.ok(
     header.classList.contains('Polaris-SkeletonPage__Header--hasSecondaryActions'),
-    'secondaryActions specified - applies secondary actions class',
+    'secondaryActions specified - applies secondary actions class'
   );
 
   secondaryActions = findAll(secondaryActionSelector);
   assert.equal(
     secondaryActions.length,
     3,
-    'secondaryActions specified - renders the correct number of secondary actions',
+    'secondaryActions specified - renders the correct number of secondary actions'
   );
 
   let expectedWidths = [88, 100, 60];
@@ -215,17 +215,17 @@ test('it renders secondary actions correctly', function(assert) {
     assert.equal(
       secondaryAction.style.width,
       `${expectedWidths[index]}px`,
-      `secondary action ${index + 1} - renders the action with the correct width`,
+      `secondary action ${index + 1} - renders the action with the correct width`
     );
 
     let secondaryActionSkeletonTexts = findAll(
       secondaryActionSkeletonTextSelector,
-      secondaryAction,
+      secondaryAction
     );
     assert.equal(
       secondaryActionSkeletonTexts.length,
       1,
-      `secondary action ${index + 1} - renders one skeleton action text`,
+      `secondary action ${index + 1} - renders one skeleton action text`
     );
   });
 

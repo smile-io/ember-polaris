@@ -52,7 +52,7 @@ function getPrevAndCurrentColumns(tableData, columnData) {
       isScrolledFarthestLeft: firstVisibleColumnIndex === 0 && tableLeftVisibleEdge === 0,
       isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
     },
-    columnData[firstVisibleColumnIndex],
+    columnData[firstVisibleColumnIndex]
   );
   return { previousColumn, currentColumn };
 }
@@ -327,7 +327,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
         {
           columnVisibilityData,
         },
-        getPrevAndCurrentColumns(tableData, columnVisibilityData),
+        getPrevAndCurrentColumns(tableData, columnVisibilityData)
       );
     }
 
@@ -354,8 +354,8 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
           collapsed,
           heights: [],
         },
-        this.calculateColumnVisibilityData(collapsed),
-      ),
+        this.calculateColumnVisibilityData(collapsed)
+      )
     );
 
     scheduleOnce('afterRender', () => {
@@ -377,7 +377,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
     let { footerContent, truncate, heights } = this.getProperties(
       'footerContent',
       'truncate',
-      'heights',
+      'heights'
     );
     let rows = Array.from(this.get('table').getElementsByTagName('tr'));
 
@@ -439,7 +439,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
       let { scrollContainer, currentColumn, previousColumn } = this.getProperties(
         'scrollContainer',
         'currentColumn',
-        'previousColumn',
+        'previousColumn'
       );
 
       if (direction === 'right' && currentColumn) {
@@ -472,7 +472,7 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
         'defaultSortDirection',
         'initialSortColumnIndex',
         'sortDirection',
-        'sortedColumnIndex',
+        'sortedColumnIndex'
       );
       sortedColumnIndex = isNone(sortedColumnIndex) ? initialSortColumnIndex : sortedColumnIndex;
       let newSortDirection = defaultSortDirection;

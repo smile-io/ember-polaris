@@ -14,12 +14,12 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     findAll(displayTextSelector).length,
     1,
-    'inline with defaults - renders one display text paragraph',
+    'inline with defaults - renders one display text paragraph'
   );
   assert.equal(
     find(displayTextSelector).innerText,
     'This is some text',
-    'inline with defaults - renders correct text',
+    'inline with defaults - renders correct text'
   );
 
   // Block form with element and size specified.
@@ -33,11 +33,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     findAll(displayTextSelector).length,
     1,
-    'block with customisation - renders one display text paragraph',
+    'block with customisation - renders one display text paragraph'
   );
   assert.equal(
     find(displayTextSelector).innerText,
     'This is some BIG text',
-    'block with customisation - renders correct text',
+    'block with customisation - renders correct text'
   );
 });

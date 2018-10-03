@@ -12,26 +12,26 @@ const sectionSelector = buildNestedSelector(emptyStateSelector, 'div.Polaris-Emp
 const detailsSelector = buildNestedSelector(
   sectionSelector,
   'div.Polaris-EmptyState__DetailsContainer',
-  'div.Polaris-EmptyState__Details',
+  'div.Polaris-EmptyState__Details'
 );
 const detailsTextContainerSelector = buildNestedSelector(
   detailsSelector,
-  'div.Polaris-TextContainer',
+  'div.Polaris-TextContainer'
 );
 const headingSelector = buildNestedSelector(detailsTextContainerSelector, 'p.Polaris-DisplayText');
 const contentSelector = buildNestedSelector(
   detailsTextContainerSelector,
-  'div.Polaris-EmptyState__Content',
+  'div.Polaris-EmptyState__Content'
 );
 const actionsSelector = buildNestedSelector(
   detailsSelector,
   'div.Polaris-EmptyState__Actions',
-  'div.Polaris-ButtonGroup',
+  'div.Polaris-ButtonGroup'
 );
 const imageSelector = buildNestedSelector(
   sectionSelector,
   'div.Polaris-EmptyState__ImageContainer',
-  'img.Polaris-EmptyState__Image',
+  'img.Polaris-EmptyState__Image'
 );
 
 test('it renders the correct HTML in basic inline usage', function(assert) {
@@ -53,7 +53,7 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
   assert.ok(heading, 'renders one heading');
   assert.ok(
     heading.classList.contains('Polaris-DisplayText--sizeMedium'),
-    'renders the correct size heading',
+    'renders the correct size heading'
   );
   assert.equal(heading.textContent.trim(), 'Empty State Here', 'renders the correct heading text');
 
@@ -89,7 +89,7 @@ test('it renders the correct HTML in basic block usage', function(assert) {
   assert.ok(heading, 'renders one heading');
   assert.ok(
     heading.classList.contains('Polaris-DisplayText--sizeMedium'),
-    'renders the correct size heading',
+    'renders the correct size heading'
   );
   assert.equal(heading.textContent.trim(), 'Empty State Here', 'renders the correct heading text');
 
@@ -100,7 +100,7 @@ test('it renders the correct HTML in basic block usage', function(assert) {
   assert.equal(
     content.textContent.trim(),
     'This is some block content',
-    'renders the correct content',
+    'renders the correct content'
   );
 
   // Check the image.
@@ -139,19 +139,19 @@ test('it handles actions correctly', function(assert) {
   assert.ok(mainActionButton, 'renders primary action button');
   assert.ok(
     mainActionButton.classList.contains('Polaris-Button--sizeLarge'),
-    'renders large button for primary action',
+    'renders large button for primary action'
   );
   assert.equal(
     mainActionButton.textContent.trim(),
     'Main action',
-    'renders correct primary action button text',
+    'renders correct primary action button text'
   );
 
   const secondaryActionSelector = `${actionsSelector} button.Polaris-Button--plain`;
   let secondaryActionButton = find(secondaryActionSelector);
   assert.notOk(
     secondaryActionButton,
-    'does not render secondary action button when no secondary action supplied',
+    'does not render secondary action button when no secondary action supplied'
   );
 
   this.set('secondaryAction', {
@@ -164,25 +164,25 @@ test('it handles actions correctly', function(assert) {
   secondaryActionButton = find(secondaryActionSelector);
   assert.ok(
     secondaryActionButton,
-    'renders secondary action button when secondary action supplied',
+    'renders secondary action button when secondary action supplied'
   );
   assert.equal(
     secondaryActionButton.textContent.trim(),
     'Secondary action',
-    'renders correct secondary action text when secondary action supplied',
+    'renders correct secondary action text when secondary action supplied'
   );
 
   click(mainActionSelector);
   assert.ok(this.get('mainActionFired'), 'main action fires when main action button clicked');
   assert.notOk(
     this.get('secondaryActionFired'),
-    'secondary action does not fire when main action button clicked',
+    'secondary action does not fire when main action button clicked'
   );
 
   click(secondaryActionSelector);
   assert.ok(
     this.get('secondaryActionFired'),
-    'secondary action fires when secondary action button clicked',
+    'secondary action fires when secondary action button clicked'
   );
 });
 
@@ -207,12 +207,12 @@ test('it handles the imageContained attribute correctly', function(assert) {
   assert.ok(emptyState, 'renders empty state component');
   assert.notOk(
     emptyState.classList.contains('Polaris-EmptyState--imageContained'),
-    'empty state component does not have imageContained class when imageContained is false',
+    'empty state component does not have imageContained class when imageContained is false'
   );
 
   this.set('imageContained', true);
   assert.ok(
     emptyState.classList.contains('Polaris-EmptyState--imageContained'),
-    'empty state component has imageContained class when imageContained is true',
+    'empty state component has imageContained class when imageContained is true'
   );
 });

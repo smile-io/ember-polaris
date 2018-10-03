@@ -25,7 +25,7 @@ test('it renders the correct HTML in basic usage', function(assert) {
 
   const formLayoutItemSelector = buildNestedSelector(
     formLayoutSelector,
-    'div.Polaris-FormLayout__Item',
+    'div.Polaris-FormLayout__Item'
   );
   const formLayoutItems = findAll(formLayoutItemSelector);
   assert.equal(formLayoutItems.length, 2, 'renders the correct number of layout items');
@@ -75,7 +75,7 @@ test('it renders the correct HTML when using groups', function(assert) {
   let group = formLayoutGroups[0];
   assert.notOk(
     group.classList.contains('Polaris-FormLayout--condensed'),
-    'first group - does not have condensed class',
+    'first group - does not have condensed class'
   );
 
   const groupItemSelector = buildNestedSelector('div.Polaris-FormLayout__Items', itemSelector);
@@ -84,19 +84,19 @@ test('it renders the correct HTML when using groups', function(assert) {
   assert.equal(
     groupItems[0].textContent.trim(),
     'Default group item 1',
-    'first group item 1 - renders the correct content',
+    'first group item 1 - renders the correct content'
   );
   assert.equal(
     groupItems[1].textContent.trim(),
     'Default group item 2',
-    'first group item 2 - renders the correct content',
+    'first group item 2 - renders the correct content'
   );
 
   // Check the second group.
   group = formLayoutGroups[1];
   assert.ok(
     group.classList.contains('Polaris-FormLayout--condensed'),
-    'second group - has condensed class',
+    'second group - has condensed class'
   );
 
   groupItems = findAll(groupItemSelector, group);
@@ -104,7 +104,7 @@ test('it renders the correct HTML when using groups', function(assert) {
   assert.equal(
     groupItems[0].textContent.trim(),
     'Condensed group item',
-    'second group - renders the correct content',
+    'second group - renders the correct content'
   );
 
   // Check the ungrouped content.
@@ -114,6 +114,6 @@ test('it renders the correct HTML when using groups', function(assert) {
   assert.equal(
     ungroupedItems[0].textContent.trim(),
     'Ungrouped item',
-    'ungrouped - renders the correct content',
+    'ungrouped - renders the correct content'
   );
 });

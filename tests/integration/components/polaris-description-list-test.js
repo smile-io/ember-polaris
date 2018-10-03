@@ -27,7 +27,7 @@ moduleForComponent(
       this.register('component:stub-term-component', stubTermComponent);
       this.register('component:stub-description-component', stubDescriptionComponent);
     },
-  },
+  }
 );
 
 const items = [
@@ -66,14 +66,14 @@ test('it renders the correct HTML when items are passed in', function(assert) {
   assert.equal(
     itemsTerms.length,
     itemsLength,
-    'it renders the correct number of terms within the list',
+    'it renders the correct number of terms within the list'
   );
 
   const itemsDescriptions = findAll(listItemsDescriptionsSelector);
   assert.equal(
     itemsDescriptions.length,
     itemsLength,
-    'it renders the correct number of descriptions following terms',
+    'it renders the correct number of descriptions following terms'
   );
 });
 
@@ -96,14 +96,14 @@ test('it renders items with explicit `termComponent` and `descriptionComponent` 
   assert.equal(
     termComponent.length,
     1,
-    'it renders a component passed as a `termComponent` attribute',
+    'it renders a component passed as a `termComponent` attribute'
   );
 
   const descriptionComponent = findAll(stubDescriptionSelector);
   assert.equal(
     descriptionComponent.length,
     1,
-    'it renders a component passed as a `descriptionComponent` attribute',
+    'it renders a component passed as a `descriptionComponent` attribute'
   );
 });
 
@@ -126,13 +126,13 @@ test('it renders items with `term` and `description` components', function(asser
   assert.equal(
     termComponent.length,
     1,
-    'it renders a component passed as a `termComponent` attribute',
+    'it renders a component passed as a `termComponent` attribute'
   );
 
   const descriptionComponent = findAll(stubDescriptionSelector);
   assert.equal(
     descriptionComponent.length,
     1,
-    'it renders a component passed as a `descriptionComponent` attribute',
+    'it renders a component passed as a `descriptionComponent` attribute'
   );
 });

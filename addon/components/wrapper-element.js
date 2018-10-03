@@ -22,7 +22,7 @@ export default Component.extend({
 
     let { attrs, blacklistedAttributeBindings } = this.getProperties(
       'attrs',
-      'blacklistedAttributeBindings',
+      'blacklistedAttributeBindings'
     );
 
     let newAttributeBindings = Object.keys(attrs).filter((attr) => {

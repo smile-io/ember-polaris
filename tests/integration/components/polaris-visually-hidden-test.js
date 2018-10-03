@@ -16,7 +16,7 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
   assert.equal(
     visuallyHiddens[0].textContent.trim(),
     'Inline visually hidden content',
-    'renders correct visually hidden content',
+    'renders correct visually hidden content'
   );
 });
 
@@ -32,6 +32,6 @@ test('it renders the correct HTML in basic block usage', function(assert) {
   assert.equal(
     visuallyHiddens[0].textContent.trim(),
     'Block visually hidden content',
-    'renders correct visually hidden content',
+    'renders correct visually hidden content'
   );
 });

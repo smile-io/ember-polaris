@@ -14,17 +14,17 @@ moduleForComponent('polaris-footer-help', 'Integration | Component | polaris foo
 
 const footerHelpContentSelector = buildNestedSelector(
   'div.Polaris-FooterHelp',
-  'div.Polaris-FooterHelp__Content',
+  'div.Polaris-FooterHelp__Content'
 );
 const footerHelpIconSelector = buildNestedSelector(
   footerHelpContentSelector,
   'div.Polaris-FooterHelp__Icon',
   'span.Polaris-Icon',
-  'svg',
+  'svg'
 );
 const footerHelpTextSelector = buildNestedSelector(
   footerHelpContentSelector,
-  'div.Polaris-FooterHelp__Text',
+  'div.Polaris-FooterHelp__Text'
 );
 
 test('it renders the correct HTML in inline usage', function(assert) {
@@ -43,11 +43,11 @@ test('it renders the correct HTML in inline usage', function(assert) {
   const iconWrapper = icon.parentNode;
   assert.ok(
     iconWrapper.classList.contains('Polaris-Icon--colorTeal'),
-    'renders the icon with the correct color',
+    'renders the icon with the correct color'
   );
   assert.ok(
     iconWrapper.classList.contains('Polaris-Icon--hasBackdrop'),
-    'renders the icon with backdrop',
+    'renders the icon with backdrop'
   );
 
   // Check the text.
@@ -56,7 +56,7 @@ test('it renders the correct HTML in inline usage', function(assert) {
   assert.equal(
     footerHelpTexts[0].textContent.trim(),
     'Looking for help?',
-    'renders the correct text',
+    'renders the correct text'
   );
 });
 
@@ -80,11 +80,11 @@ test('it renders the correct HTML in block usage', function(assert) {
   const iconWrapper = icon.parentNode;
   assert.ok(
     iconWrapper.classList.contains('Polaris-Icon--colorTeal'),
-    'renders the icon with the correct color',
+    'renders the icon with the correct color'
   );
   assert.ok(
     iconWrapper.classList.contains('Polaris-Icon--hasBackdrop'),
-    'renders the icon with backdrop',
+    'renders the icon with backdrop'
   );
 
   // Check the text.
@@ -93,6 +93,6 @@ test('it renders the correct HTML in block usage', function(assert) {
   assert.equal(
     footerHelpTexts[0].textContent.trim(),
     'Looking for help?',
-    'renders the correct text',
+    'renders the correct text'
   );
 });

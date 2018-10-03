@@ -33,24 +33,24 @@ const labelContentSelector = buildNestedSelector(labelSelector, 'span.Polaris-Ch
 // both get wrapped up in one containing div.
 const withDescriptionWrapperSelector = buildNestedSelector(
   'div.choice-with-description-wrapper',
-  'div',
+  'div'
 );
 const labelWithDescriptionSelector = buildNestedSelector(
   withDescriptionWrapperSelector,
-  labelSelector,
+  labelSelector
 );
 const controlWithDescriptionSelector = buildNestedSelector(
   withDescriptionWrapperSelector,
-  controlSelector,
+  controlSelector
 );
 const labelContentWithDescriptionSelector = buildNestedSelector(
   withDescriptionWrapperSelector,
-  labelContentSelector,
+  labelContentSelector
 );
 
 const descriptionSelector = buildNestedSelector(
   withDescriptionWrapperSelector,
-  'div.Polaris-Choice__Descriptions',
+  'div.Polaris-Choice__Descriptions'
 );
 const helpTextSelector = buildNestedSelector(descriptionSelector, 'div.Polaris-Choice__HelpText');
 const errorSelector = buildNestedSelector(descriptionSelector, 'div.Polaris-Choice__Error');
@@ -58,7 +58,7 @@ const errorIconSelector = buildNestedSelector(
   errorSelector,
   'div.Polaris-Choice__ErrorIcon',
   'span.Polaris-Icon',
-  'svg',
+  'svg'
 );
 
 test('it renders the correct HTML when no error or helpText are provided', function(assert) {
@@ -73,7 +73,7 @@ test('it renders the correct HTML when no error or helpText are provided', funct
   assert.equal(
     labels[0].attributes['for'].textContent.trim(),
     'test-choice',
-    'renders the label with the correct `for` attribute',
+    'renders the label with the correct `for` attribute'
   );
 
   const testControlSelector = buildNestedSelector(controlSelector, 'span.test-control');
@@ -82,7 +82,7 @@ test('it renders the correct HTML when no error or helpText are provided', funct
   assert.equal(
     testControls[0].textContent.trim(),
     'This is a test control',
-    'renders the control correctly',
+    'renders the control correctly'
   );
 
   const labelContents = findAll(labelContentSelector);
@@ -90,7 +90,7 @@ test('it renders the correct HTML when no error or helpText are provided', funct
   assert.equal(
     labelContents[0].textContent.trim(),
     'This is my label',
-    'renders the label text correctly',
+    'renders the label text correctly'
   );
 });
 
@@ -112,19 +112,19 @@ test('it renders the correct HTML when helpText is provided', function(assert) {
   assert.equal(
     labels[0].attributes['for'].textContent.trim(),
     'helpful-test-choice',
-    'renders the label with the correct `for` attribute',
+    'renders the label with the correct `for` attribute'
   );
 
   const testControlSelector = buildNestedSelector(
     controlWithDescriptionSelector,
-    'span.helpful-test-control',
+    'span.helpful-test-control'
   );
   const testControls = findAll(testControlSelector);
   assert.equal(testControls.length, 1, 'renders one control');
   assert.equal(
     testControls[0].textContent.trim(),
     'This is a test control with help text',
-    'renders the control correctly',
+    'renders the control correctly'
   );
 
   const labelContents = findAll(labelContentWithDescriptionSelector);
@@ -132,7 +132,7 @@ test('it renders the correct HTML when helpText is provided', function(assert) {
   assert.equal(
     labelContents[0].textContent.trim(),
     'This is my label for a control with help text',
-    'renders the label text correctly',
+    'renders the label text correctly'
   );
 
   // Check the help text rendering.
@@ -142,7 +142,7 @@ test('it renders the correct HTML when helpText is provided', function(assert) {
   assert.equal(
     helpTexts[0].textContent.trim(),
     'This is some help text',
-    'renders the correct help text',
+    'renders the correct help text'
   );
 });
 
@@ -164,19 +164,19 @@ test('it renders the correct HTML when an error is provided', function(assert) {
   assert.equal(
     labels[0].attributes['for'].textContent.trim(),
     'error-test-choice',
-    'renders the label with the correct `for` attribute',
+    'renders the label with the correct `for` attribute'
   );
 
   const testControlSelector = buildNestedSelector(
     controlWithDescriptionSelector,
-    'span.error-test-control',
+    'span.error-test-control'
   );
   const testControls = findAll(testControlSelector);
   assert.equal(testControls.length, 1, 'renders one control');
   assert.equal(
     testControls[0].textContent.trim(),
     'This is a test control with an error',
-    'renders the control correctly',
+    'renders the control correctly'
   );
 
   const labelContents = findAll(labelContentWithDescriptionSelector);
@@ -184,7 +184,7 @@ test('it renders the correct HTML when an error is provided', function(assert) {
   assert.equal(
     labelContents[0].textContent.trim(),
     'This is my label for a control with an error',
-    'renders the label text correctly',
+    'renders the label text correctly'
   );
 
   // Check the error rendering.
@@ -194,7 +194,7 @@ test('it renders the correct HTML when an error is provided', function(assert) {
   assert.equal(
     errors[0].textContent.trim(),
     'This is an error message',
-    'renders the correct error text',
+    'renders the correct error text'
   );
 
   const errorIcons = findAll(errorIconSelector);
@@ -216,13 +216,13 @@ test('it handles the labelHidden attribute correctly', function(assert) {
   assert.ok(label, 'without description - renders the label');
   assert.ok(
     label.classList.contains('Polaris-Choice--labelHidden'),
-    'without description - applies labelHidden class when labelHidden true',
+    'without description - applies labelHidden class when labelHidden true'
   );
 
   this.set('labelHidden', false);
   assert.notOk(
     label.classList.contains('Polaris-Choice--labelHidden'),
-    'without description - does not apply labelHidden class when labelHidden false',
+    'without description - does not apply labelHidden class when labelHidden false'
   );
 
   this.render(hbs`
@@ -238,13 +238,13 @@ test('it handles the labelHidden attribute correctly', function(assert) {
   assert.ok(label, 'with description - renders the label');
   assert.notOk(
     label.classList.contains('Polaris-Choice--labelHidden'),
-    'with description - does not apply labelHidden class when labelHidden false',
+    'with description - does not apply labelHidden class when labelHidden false'
   );
 
   this.set('labelHidden', true);
   assert.ok(
     label.classList.contains('Polaris-Choice--labelHidden'),
-    'with description - applies labelHidden class when labelHidden true',
+    'with description - applies labelHidden class when labelHidden true'
   );
 });
 
@@ -266,28 +266,28 @@ test('it handles label components correctly when no description is present', fun
 
   const labelComponentSelector = buildNestedSelector(
     labelContentSelector,
-    'div.test-label-component',
+    'div.test-label-component'
   );
   let labelComponent = find(labelComponentSelector);
   assert.ok(labelComponent, 'with label component string - renders the label component');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
-    'with label component string - renders the correct label content',
+    'with label component string - renders the correct label content'
   );
 
   this.set('label', 'literal label');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
-    'with label component string and label - renders the correct label content',
+    'with label component string and label - renders the correct label content'
   );
 
   this.set('labelComponent', null);
   assert.equal(
     labelContent.textContent.trim(),
     'literal label',
-    'with label - renders the correct label content',
+    'with label - renders the correct label content'
   );
 
   this.setProperties({
@@ -311,21 +311,21 @@ test('it handles label components correctly when no description is present', fun
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',
-    'with label component closure - renders the correct label content',
+    'with label component closure - renders the correct label content'
   );
 
   this.set('label', 'literal label');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',
-    'with label component closure and label - renders the correct label content',
+    'with label component closure and label - renders the correct label content'
   );
 
   this.set('useLabelComponent', false);
   assert.equal(
     labelContent.textContent.trim(),
     'literal label',
-    'with label - renders the correct label content',
+    'with label - renders the correct label content'
   );
 });
 
@@ -348,28 +348,28 @@ test('it handles label components correctly when a description is supplied', fun
 
   const labelComponentSelector = buildNestedSelector(
     labelContentSelector,
-    'div.test-label-component',
+    'div.test-label-component'
   );
   let labelComponent = find(labelComponentSelector);
   assert.ok(labelComponent, 'with label component string - renders the label component');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
-    'with label component string - renders the correct label content',
+    'with label component string - renders the correct label content'
   );
 
   this.set('label', 'literal label');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
-    'with label component string and label - renders the correct label content',
+    'with label component string and label - renders the correct label content'
   );
 
   this.set('labelComponent', null);
   assert.equal(
     labelContent.textContent.trim(),
     'literal label',
-    'with label - renders the correct label content',
+    'with label - renders the correct label content'
   );
 
   this.setProperties({
@@ -393,20 +393,20 @@ test('it handles label components correctly when a description is supplied', fun
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',
-    'with label component closure - renders the correct label content',
+    'with label component closure - renders the correct label content'
   );
 
   this.set('label', 'literal label');
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',
-    'with label component closure and label - renders the correct label content',
+    'with label component closure and label - renders the correct label content'
   );
 
   this.set('useLabelComponent', false);
   assert.equal(
     labelContent.textContent.trim(),
     'literal label',
-    'with label - renders the correct label content',
+    'with label - renders the correct label content'
   );
 });

@@ -156,7 +156,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         layout: hbs`{{text}}`,
 
         text: null,
-      }),
+      })
     );
 
     await render(hbs`

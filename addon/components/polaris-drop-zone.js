@@ -296,7 +296,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'disabled',
       'onDrop',
       'onDropAccepted',
-      'onDropRejected',
+      'onDropRejected'
     );
     if (disabled) {
       return;
@@ -372,7 +372,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let { disabled, onDragLeave, dropNode } = this.getProperties(
       'disabled',
       'onDragLeave',
-      'dropNode',
+      'dropNode'
     );
     if (disabled) {
       return;
@@ -417,7 +417,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
         this.set('state.size', size);
       },
-      50,
+      50
     );
   },
 
@@ -425,7 +425,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let { accept, allowMultiple, customValidator } = this.getProperties(
       'accept',
       'allowMultiple',
-      'customValidator',
+      'customValidator'
     );
 
     let acceptedFiles = [];
@@ -485,7 +485,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'error',
       'type',
       'overlayText',
-      'errorOverlayText',
+      'errorOverlayText'
     );
 
     if (error !== this.get('error')) {

@@ -38,7 +38,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       'helper:array',
       helper(function array(items) {
         return [...items];
-      }),
+      })
     );
   });
 
@@ -127,30 +127,30 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     assert.equal(
       firstHeadingCell.textContent.trim(),
       'Product',
-      'first heading cell renders correct text',
+      'first heading cell renders correct text'
     );
 
     const lastHeadingCell = headingCells[headingCells.length - 1];
     assert.ok(
       lastHeadingCell.firstElementChild.classList.contains('Polaris-Badge'),
-      'last heading cell renders badge component',
+      'last heading cell renders badge component'
     );
     assert.equal(
       lastHeadingCell.textContent.trim(),
       'Status',
-      'last heading cell renders correct text',
+      'last heading cell renders correct text'
     );
 
     const rowCells = find('tbody tr.Polaris-DataTable__TableRow').children;
     const firstRowCell = rowCells[0];
     assert.ok(
       firstRowCell.firstElementChild.classList.contains('Polaris-Link'),
-      'first row cell renders link component',
+      'first row cell renders link component'
     );
     assert.equal(
       firstRowCell.textContent.trim(),
       'Emerald Silk Gown',
-      'first row cell renders correct text',
+      'first row cell renders correct text'
     );
 
     const lastRowCell = rowCells[rowCells.length - 1];
@@ -159,12 +159,12 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     const footerCell = find('tfoot td.Polaris-DataTable__Cell--footer');
     assert.ok(
       footerCell.firstElementChild.classList.contains('Polaris-Button'),
-      'footer cell renders button component',
+      'footer cell renders button component'
     );
     assert.equal(
       footerCell.textContent.trim(),
       'Refresh stock statuses',
-      'footer cell renders correct text',
+      'footer cell renders correct text'
     );
   });
 });

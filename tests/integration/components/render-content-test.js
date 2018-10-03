@@ -15,7 +15,7 @@ module('Integration | Component | render-content', function(hooks) {
       Component.extend({
         classNames: ['my-test-component'],
         layout: hbs`{{text}}`,
-      }),
+      })
     );
   });
 

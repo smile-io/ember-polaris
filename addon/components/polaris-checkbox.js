@@ -202,7 +202,7 @@ export default Component.extend({
       {
         id: 'ember-polaris.polaris-checkbox.label-component',
         until: '2.0.0',
-      },
+      }
     );
   },
 });

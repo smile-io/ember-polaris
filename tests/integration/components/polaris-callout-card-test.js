@@ -10,28 +10,28 @@ moduleForComponent('polaris-callout-card', 'Integration | Component | polaris ca
 const calloutCardSelector = buildNestedSelector(
   'div.Polaris-Card',
   'div.Polaris-Card__Section',
-  'div.Polaris-CalloutCard',
+  'div.Polaris-CalloutCard'
 );
 const calloutCardContentSelector = buildNestedSelector(
   calloutCardSelector,
-  'div.Polaris-CalloutCard__Content',
+  'div.Polaris-CalloutCard__Content'
 );
 const calloutCardContentHeadingSelector = buildNestedSelector(
   calloutCardContentSelector,
   'div.Polaris-CalloutCard__Title',
-  'h2.Polaris-Heading',
+  'h2.Polaris-Heading'
 );
 const calloutCardContentTextSelector = buildNestedSelector(
   calloutCardContentSelector,
-  'div.Polaris-TextContainer',
+  'div.Polaris-TextContainer'
 );
 const calloutCardButtonWrapperSelector = buildNestedSelector(
   calloutCardContentSelector,
-  'div.Polaris-CalloutCard__Buttons',
+  'div.Polaris-CalloutCard__Buttons'
 );
 const calloutCardImageSelector = buildNestedSelector(
   calloutCardSelector,
-  'img.Polaris-CalloutCard__Image',
+  'img.Polaris-CalloutCard__Image'
 );
 
 test('it renders the correct HTML in inline form without secondary action', function(assert) {
@@ -55,7 +55,7 @@ test('it renders the correct HTML in inline form without secondary action', func
   assert.equal(
     headings[0].textContent.trim(),
     'This is an inline callout card',
-    'renders the correct heading',
+    'renders the correct heading'
   );
 
   const texts = findAll(calloutCardContentTextSelector);
@@ -63,7 +63,7 @@ test('it renders the correct HTML in inline form without secondary action', func
   assert.equal(
     texts[0].textContent.trim(),
     'Without a secondary action',
-    'renders the correct text',
+    'renders the correct text'
   );
 
   const buttonWrappers = findAll(calloutCardButtonWrapperSelector);
@@ -71,14 +71,14 @@ test('it renders the correct HTML in inline form without secondary action', func
 
   const buttonSelector = buildNestedSelector(
     calloutCardButtonWrapperSelector,
-    'button.Polaris-Button',
+    'button.Polaris-Button'
   );
   const buttons = findAll(buttonSelector);
   assert.equal(buttons.length, 1, 'renders one button');
   assert.equal(
     buttons[0].textContent.trim(),
     'Primary action here',
-    'renders the correct button text',
+    'renders the correct button text'
   );
 
   const images = findAll(calloutCardImageSelector);
@@ -115,7 +115,7 @@ test('it renders the correct HTML in block form with secondary action', function
   assert.equal(
     headings[0].textContent.trim(),
     'This is a block callout card',
-    'renders the correct heading',
+    'renders the correct heading'
   );
 
   const texts = findAll(calloutCardContentTextSelector);
@@ -129,7 +129,7 @@ test('it renders the correct HTML in block form with secondary action', function
     calloutCardButtonWrapperSelector,
     'div.Polaris-ButtonGroup',
     'div.Polaris-ButtonGroup__Item',
-    'button.Polaris-Button',
+    'button.Polaris-Button'
   );
   const buttons = findAll(buttonSelector);
   assert.equal(buttons.length, 2, 'renders two buttons');
@@ -138,7 +138,7 @@ test('it renders the correct HTML in block form with secondary action', function
   assert.equal(
     button.textContent.trim(),
     'Primary action here',
-    'renders the correct primary button text',
+    'renders the correct primary button text'
   );
   assert.notOk(button.classList.contains('Polaris-Button--plain'), 'renders normal primary button');
 
@@ -146,7 +146,7 @@ test('it renders the correct HTML in block form with secondary action', function
   assert.equal(
     button.textContent.trim(),
     'Secondary action here',
-    'renders the correct secondary button text',
+    'renders the correct secondary button text'
   );
   assert.ok(button.classList.contains('Polaris-Button--plain'), 'renders plain secondary button');
 
@@ -181,16 +181,16 @@ test('it handles actions correctly', function(assert) {
   click('button.Polaris-Button:first-of-type');
   assert.ok(
     this.get('primaryActionFired'),
-    'after firing primary action - primary action has fired',
+    'after firing primary action - primary action has fired'
   );
   assert.notOk(
     this.get('secondaryActionFired'),
-    'after firing primary action - secondary action has not fired',
+    'after firing primary action - secondary action has not fired'
   );
 
   click('button.Polaris-Button.Polaris-Button--plain');
   assert.ok(
     this.get('secondaryActionFired'),
-    'after firing secondary action - secondary action has been fired',
+    'after firing secondary action - secondary action has been fired'
   );
 });

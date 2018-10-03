@@ -49,18 +49,18 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(
     listItems[1].textContent.trim(),
     'Second one (inline)',
-    'second item has correct text',
+    'second item has correct text'
   );
 
   let list = lists[0];
   assert.equal(list.nodeName, 'UL', 'unspecified type - renders unordered list');
   assert.ok(
     list.classList.contains('Polaris-List--typeBullet'),
-    'unspecified type - applies bullet class',
+    'unspecified type - applies bullet class'
   );
   assert.notOk(
     list.classList.contains('Polaris-List--typeNumber'),
-    'unspecified type - does not apply number class',
+    'unspecified type - does not apply number class'
   );
 
   this.set('type', 'number');
@@ -68,11 +68,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(list.nodeName, 'OL', 'number type - renders ordered list');
   assert.notOk(
     list.classList.contains('Polaris-List--typeBullet'),
-    'number type - does not apply bullet class',
+    'number type - does not apply bullet class'
   );
   assert.ok(
     list.classList.contains('Polaris-List--typeNumber'),
-    'number type - applies number class',
+    'number type - applies number class'
   );
 
   this.set('type', 'bullet');
@@ -80,11 +80,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(list.nodeName, 'UL', 'bullet type - renders unordered list');
   assert.ok(
     list.classList.contains('Polaris-List--typeBullet'),
-    'bullet type - applies bullet class',
+    'bullet type - applies bullet class'
   );
   assert.notOk(
     list.classList.contains('Polaris-List--typeNumber'),
-    'bullet type - does not apply number class',
+    'bullet type - does not apply number class'
   );
 
   this.set('type', 'unsupported');
@@ -92,10 +92,10 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(list.nodeName, 'UL', 'unsupported type - renders unordered list');
   assert.ok(
     list.classList.contains('Polaris-List--typeBullet'),
-    'unsupported type - applies bullet class',
+    'unsupported type - applies bullet class'
   );
   assert.notOk(
     list.classList.contains('Polaris-List--typeNumber'),
-    'unsupported type - does not apply number class',
+    'unsupported type - does not apply number class'
   );
 });
