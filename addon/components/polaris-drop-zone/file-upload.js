@@ -16,8 +16,9 @@ const fileUpload = {
 };
 
 export default Component.extend({
-  layout,
   classNames: ['Polaris-DropZone-FileUpload'],
+
+  layout,
 
   iconDragDrop,
   assetFileUpload,

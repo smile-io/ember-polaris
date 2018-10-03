@@ -81,10 +81,6 @@ export default Component.extend({
    */
   multiMonth: false,
 
-  hoverDate: null,
-
-  focusDate: null,
-
   /**
    * Callback when date is selected
    *
@@ -104,6 +100,10 @@ export default Component.extend({
    * @default noop
    */
   onMonthChange(/* month, year */) {},
+
+  hoverDate: null,
+
+  focusDate: null,
 
   allowRange: computed('selected', function() {
     let selected = this.get('selected');

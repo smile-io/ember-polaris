@@ -10,8 +10,9 @@ import {
 } from '../../utils/dates';
 
 export default Component.extend({
-  classNames: ['Polaris-DatePicker__Month'],
   attributeBindings: ['role'],
+
+  classNames: ['Polaris-DatePicker__Month'],
 
   layout,
 
@@ -79,8 +80,6 @@ export default Component.extend({
    */
   allowRange: false,
 
-  role: 'grid',
-
   /**
    * @property onChange
    * @public
@@ -120,6 +119,8 @@ export default Component.extend({
    * @default noop
    */
   weekdayName(/* weekday */) {},
+
+  role: 'grid',
 
   current: computed('month', 'year', function() {
     let date = new Date();

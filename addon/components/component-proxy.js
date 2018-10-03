@@ -20,6 +20,27 @@ export default Component.extend({
   tagName: '',
 
   /**
+   * Dynamically-generated layout to render the proxied component.
+   * @private
+   */
+  layout: computed('componentName', 'propsString', function() {
+    let { componentName, propsString } = this.getProperties('componentName', 'propsString');
+
+    // Disable linting for this line because the recommended way of importing
+    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
+    // eslint-disable-next-line ember/new-module-imports
+    return Ember.HTMLBars.compile(`
+      {{#if hasBlock}}
+        {{#component "${componentName}"${propsString}}}
+          {{yield}}
+        {{/component}}
+      {{else}}
+        {{component "${componentName}"${propsString}}}
+      {{/if}}
+    `);
+  }).readOnly(),
+
+  /**
    * The name of the component to render.
    * @type {String}
    * @public
@@ -40,27 +61,6 @@ export default Component.extend({
    * @private
    */
   propNames: null,
-
-  /**
-   * Dynamically-generated layout to render the proxied component.
-   * @private
-   */
-  layout: computed('componentName', 'propsString', function() {
-    let { componentName, propsString } = this.getProperties('componentName', 'propsString');
-
-    // Disable linting for this line because the recommended way of importing
-    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
-    // eslint-disable-next-line ember/new-module-imports
-    return Ember.HTMLBars.compile(`
-      {{#if hasBlock}}
-        {{#component "${componentName}"${propsString}}}
-          {{yield}}
-        {{/component}}
-      {{else}}
-        {{component "${componentName}"${propsString}}}
-      {{/if}}
-    `);
-  }).readOnly(),
 
   /**
    * String representing the properties to pass to the proxied component.

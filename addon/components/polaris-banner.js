@@ -38,20 +38,20 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * component `polaris-banner/content`
  */
 export default Component.extend({
-  classNames: ['Polaris-Banner'],
-
-  classNameBindings: [
-    'statusClass',
-    'hasDismiss:Polaris-Banner__hasDismiss',
-    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
-  ],
-
   attributeBindings: [
     'tabIndex',
     'role',
     'ariaLive:aria-live',
     'contentId:aria-describedby',
     'headingId:aria-labelledby',
+  ],
+
+  classNames: ['Polaris-Banner'],
+
+  classNameBindings: [
+    'statusClass',
+    'hasDismiss:Polaris-Banner__hasDismiss',
+    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
   ],
 
   layout,

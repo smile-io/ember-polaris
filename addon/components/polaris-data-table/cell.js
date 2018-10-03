@@ -109,6 +109,14 @@ export default Component.extend({
   defaultSortDirection: null,
 
   /**
+   * @property onSort
+   * @type {function}
+   * @default no-op
+   * @public
+   */
+  onSort() {},
+
+  /**
    * Accessibility label for the cell. This will get set dynamically after rendering.
    *
    * @property sortAccessibilityLabel
@@ -116,14 +124,6 @@ export default Component.extend({
    * @private
    */
   sortAccessibilityLabel: null,
-
-  /**
-   * @property onSort
-   * @type {function}
-   * @default no-op
-   * @public
-   */
-  onSort() {},
 
   /**
    * Generated unique ID to be set on the rendered SVG element.

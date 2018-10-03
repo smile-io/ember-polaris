@@ -35,6 +35,7 @@ export default Component.extend({
    * Size of avatar
    *
    * @property size
+   * @public
    * @type {String}
    * @default 'medium'
    */
@@ -44,6 +45,7 @@ export default Component.extend({
    * The name of the person
    *
    * @property name
+   * @public
    * @type {String}
    * @default null
    */

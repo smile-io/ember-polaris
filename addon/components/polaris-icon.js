@@ -9,13 +9,16 @@ import SvgHandling from '../mixins/components/svg-handling';
 // TODO: look into importing icons properly.
 export default Component.extend(SvgHandling, {
   tagName: 'span',
+
+  attributeBindings: ['accessibilityLabel:aria-label'],
+
   classNames: ['Polaris-Icon'],
+
   classNameBindings: [
     'colorClass',
     'isColored:Polaris-Icon--isColored',
     'backdrop:Polaris-Icon--hasBackdrop',
   ],
-  attributeBindings: ['accessibilityLabel:aria-label'],
 
   layout,
 

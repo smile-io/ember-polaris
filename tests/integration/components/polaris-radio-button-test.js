@@ -8,9 +8,6 @@ import buildNestedSelector from '../../helpers/build-nested-selector';
 // Mock the polaris-choice component to simplify testing what gets rendered.
 const MockPolarisChoiceComponent = Component.extend({
   tagName: 'label',
-  classNames: ['Polaris-Choice'],
-
-  layout: hbs`{{yield}}`,
 
   // Bind attributes to the element's dataset for testing.
   attributeBindings: [
@@ -19,6 +16,10 @@ const MockPolarisChoiceComponent = Component.extend({
     'labelHidden:data-label-hidden',
     'helpText:data-help-text',
   ],
+
+  classNames: ['Polaris-Choice'],
+
+  layout: hbs`{{yield}}`,
 });
 
 moduleForComponent('polaris-radio-button', 'Integration | Component | polaris radio button', {

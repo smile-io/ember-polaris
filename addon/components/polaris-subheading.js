@@ -17,8 +17,10 @@ import layout from '../templates/components/polaris-subheading';
  */
 export default Component.extend({
   tagName: 'h3',
-  classNames: ['Polaris-Subheading'],
+
   attributeBindings: ['ariaLabel:aria-label'],
+
+  classNames: ['Polaris-Subheading'],
 
   layout,
 

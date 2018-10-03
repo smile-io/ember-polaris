@@ -3,9 +3,12 @@ import layout from '../../templates/components/polaris-choice/label';
 
 export default Component.extend({
   tagName: 'label',
-  classNames: ['Polaris-Choice'],
-  classNameBindings: ['labelHidden:Polaris-Choice--labelHidden'],
+
   attributeBindings: ['inputId:for'],
+
+  classNames: ['Polaris-Choice'],
+
+  classNameBindings: ['labelHidden:Polaris-Choice--labelHidden'],
 
   layout,
 

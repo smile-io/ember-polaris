@@ -26,9 +26,9 @@ const DummyLabelComponent = Component.extend({
   tagName: 'div',
   classNames: ['dummy-label'],
 
-  text: null,
-
   layout: hbs`{{yield}}`,
+
+  text: null,
 });
 
 moduleForComponent('polaris-checkbox', 'Integration | Component | polaris checkbox', {

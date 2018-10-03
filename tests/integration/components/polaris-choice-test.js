@@ -10,9 +10,9 @@ const TestLabelComponent = Component.extend({
   tagName: 'div',
   classNames: ['test-label-component'],
 
-  text: 'test label component',
-
   layout: hbs`{{text}}`,
+
+  text: 'test label component',
 });
 
 moduleForComponent('polaris-choice', 'Integration | Component | polaris choice', {

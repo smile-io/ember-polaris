@@ -3,6 +3,13 @@ import { computed } from '@ember/object';
 import mapEventToAction from '../../utils/map-event-to-action';
 
 export default Component.extend({
+  attributeBindings: [
+    'disabled',
+    'accessibilityLabel:aria-label',
+    'ariaControls:aria-controls',
+    'ariaExpanded:aria-expanded',
+  ],
+
   classNames: ['Polaris-Button'],
   classNameBindings: [
     'primary:Polaris-Button--primary',
@@ -15,13 +22,6 @@ export default Component.extend({
     'iconOnly:Polaris-Button--iconOnly',
     'sizeClass',
   ],
-  attributeBindings: [
-    'disabled',
-    'accessibilityLabel:aria-label',
-    'ariaControls:aria-controls',
-    'ariaExpanded:aria-expanded',
-  ],
-
   /*
    * When we have an icon and no text.
    *

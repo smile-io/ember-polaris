@@ -5,8 +5,9 @@ import { handleMouseUpByBlurring } from '../../utils/focus';
 import layout from '../../templates/components/polaris-breadcrumbs/breadcrumb';
 
 export default LinkComponent.extend({
-  classNames: ['Polaris-Breadcrumbs__Breadcrumb'],
   attributeBindings: ['dataPolarisUnstyled:data-polaris-unstyled'],
+
+  classNames: ['Polaris-Breadcrumbs__Breadcrumb'],
 
   layout,
 

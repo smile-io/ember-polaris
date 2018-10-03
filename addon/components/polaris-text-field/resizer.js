@@ -19,10 +19,9 @@ function replaceEntity(entity) {
 }
 
 export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListenersMixin, {
-  classNames: ['Polaris-TextField__Resizer'],
   attributeBindings: ['ariaHidden:aria-hidden'],
 
-  ariaHidden: 'true',
+  classNames: ['Polaris-TextField__Resizer'],
 
   layout,
 
@@ -66,6 +65,8 @@ export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListene
    * @default noop
    */
   onHeightChange(/* height */) {},
+
+  ariaHidden: 'true',
 
   finalContents: computed('contents', function() {
     let contents = this.get('contents');

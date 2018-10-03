@@ -19,15 +19,18 @@ const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
 export default Component.extend(ContextBoundEventListenersMixin, {
-  layout,
+  attributeBindings: ['ariaDisabled:aria-disabled'],
+
   classNames: ['Polaris-DropZone'],
+
   classNameBindings: [
     'outline:Polaris-DropZone--hasOutline',
     'isDragging:Polaris-DropZone--isDragging',
     'state.error:Polaris-DropZone--hasError',
     'sizeClass',
   ],
-  attributeBindings: ['ariaDisabled:aria-disabled'],
+
+  layout,
 
   /**
    * Allowed file types
@@ -171,10 +174,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    */
   onClick: null,
 
-  iconDragDrop,
-
-  iconAlertCircle,
-
   /**
    * Callback triggered when one or more files entered the drag area
    * () => void
@@ -251,6 +250,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @property onFileDialogClose
    */
   onFileDialogClose() {},
+
+  iconDragDrop,
+
+  iconAlertCircle,
 
   state: computed(() => State.create()).readOnly(),
 

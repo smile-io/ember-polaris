@@ -4,8 +4,9 @@ import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/polaris-skeleton-page/action';
 
 export default Component.extend({
-  classNames: ['Polaris-SkeletonPage__Action'],
   attributeBindings: ['style'],
+
+  classNames: ['Polaris-SkeletonPage__Action'],
 
   layout,
 

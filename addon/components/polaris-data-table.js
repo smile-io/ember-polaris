@@ -156,6 +156,16 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
   initialSortColumnIndex: 0,
 
   /**
+   * Callback fired on click or keypress of a sortable column heading.
+   *
+   * @property onSort
+   * @type {function}
+   * @default no-op
+   * @public
+   */
+  onSort(/* headingIndex, direction */) {},
+
+  /**
    * @property collapsed
    * @type {boolean}
    * @default false
@@ -233,16 +243,6 @@ export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTas
    * @private
    */
   totalsRowHeading: 'Totals',
-
-  /**
-   * Callback fired on click or keypress of a sortable column heading.
-   *
-   * @property onSort
-   * @type {function}
-   * @default no-op
-   * @public
-   */
-  onSort(/* headingIndex, direction */) {},
 
   /**
    * @property dataTable

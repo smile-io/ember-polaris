@@ -5,9 +5,12 @@ import layout from '../templates/components/polaris-pagination';
 
 export default Component.extend({
   tagName: 'nav',
-  classNames: ['Polaris-Pagination'],
-  classNameBindings: ['plain:Polaris-Pagination--plain'],
+
   attributeBindings: ['accessibilityLabel:aria-label'],
+
+  classNames: ['Polaris-Pagination'],
+
+  classNameBindings: ['plain:Polaris-Pagination--plain'],
 
   layout,
 

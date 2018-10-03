@@ -156,8 +156,10 @@ test('it renders the correct HTML when using itemComponent', function(assert) {
   // Register a custom item renderer component.
   const CustomItemRendererComponent = Component.extend({
     tagName: 'a',
-    classNames: ['custom-item-renderer'],
+
     attributeBindings: ['href'],
+
+    classNames: ['custom-item-renderer'],
 
     layout: hbs`This is item {{index}}`,
 

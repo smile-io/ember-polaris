@@ -5,9 +5,12 @@ import mapEventToAction from '../../utils/map-event-to-action';
 
 export default Component.extend({
   tagName: 'button',
-  classNames: ['Polaris-Page__Action'],
-  classNameBindings: ['action.disabled:Polaris-Page--disabled'],
+
   attributeBindings: ['type', 'action.disabled:disabled', 'action.accessibilityLabel:aria-label'],
+
+  classNames: ['Polaris-Page__Action'],
+
+  classNameBindings: ['action.disabled:Polaris-Page--disabled'],
 
   layout,
 
