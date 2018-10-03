@@ -26,14 +26,8 @@ test('it renders the correct HTML', function(assert) {
   `);
 
   headingSelector = 'em.Polaris-Heading';
-  assert.equal(
-    findAll(headingSelector).length,
-    1,
-    'block with customisation - renders one emphasised heading'
-  );
-  assert.equal(
-    find(headingSelector).innerText,
-    'This is an emphasised heading',
-    'block with customisation - renders correct text'
-  );
+  assert.dom(headingSelector).exists({ count: 1 });
+  assert
+    .dom(headingSelector)
+    .hasText('This is an emphasised heading', 'block with customisation - renders correct text');
 });
