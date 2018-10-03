@@ -81,7 +81,7 @@
     "ember-source": "~3.1.0",
     "ember-source-channel-url": "^1.0.1",
     "ember-try": "^0.2.23",
-    "eslint-plugin-smile-ember": "^1.0.1",
+    "eslint-plugin-smile-ember": "^1.1.0",
     "husky": "^1.1.0",
     "loader.js": "^4.2.3",
     "precise-commits": "^1.0.2",
