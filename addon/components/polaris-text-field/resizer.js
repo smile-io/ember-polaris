@@ -120,9 +120,6 @@ export default Component.extend(
       this.addEventListener('resize', this.handleHeightCheck);
     },
 
-    /*
-   * Lifecycle hooks.
-   */
     didInsertElement() {
       this._super(...arguments);
       this.handleHeightCheck();

@@ -7,19 +7,18 @@ import layout from '../templates/components/polaris-resource-list';
  */
 export default Component.extend({
   tagName: 'ul',
+
   classNames: ['Polaris-ResourceList'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Item data; each item is rendered using the itemComponent below
    *
    * @property items
    * @type {Array}
    * @default null
+   * @public
    */
   items: null,
 
@@ -29,6 +28,7 @@ export default Component.extend({
    * @property itemComponent
    * @type {function}
    * @default 'polaris-resource-list/item'
+   * @public
    */
   itemComponent: 'polaris-resource-list/item',
 });

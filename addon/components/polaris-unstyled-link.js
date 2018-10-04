@@ -1,10 +1,11 @@
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../templates/components/polaris-unstyled-link';
 import mapEventToAction from '../utils/map-event-to-action';
 
 export default Component.extend({
   tagName: 'a',
+
   attributeBindings: [
     'url:href',
     'dataPolarisUnstyled:data-polaris-unstyled',
@@ -14,17 +15,36 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The url to link to.
    *
    * @property url
    * @type {string}
    * @default null
+   * @public
+   *
    */
   url: null,
+
+  /**
+   * Use for a links that open a different site
+   *
+   * @property external
+   * @type {boolean}
+   * @default false
+   * @public
+   */
+  external: false,
+
+  /**
+   * Callback when a link is clicked
+   *
+   * @property onClick
+   * @type {function}
+   * @default noop
+   * @public
+   */
+  onClick() {},
 
   /**
    * The content to display inside link
@@ -36,35 +56,15 @@ export default Component.extend({
   text: null,
 
   /**
-   * Use for a links that open a different site
-   *
-   * @property external
-   * @type {boolean}
-   * @default false
-   */
-  external: false,
-
-  /*
-   * Internal properties.
+   * @private
    */
   dataPolarisUnstyled: 'true',
 
-  /**
-   * Callback when a link is clicked
-   *
-   * @property onClick
-   * @type {function}
-   * @default noop
-   */
-  onClick() {},
-
-  /**
-   * Action handlers.
-   */
   click: mapEventToAction('onClick', {
     preventDefault: false,
     stopPropagation: true,
   }),
+
   target: computed('external', function() {
     return this.get('external') ? '_blank' : null;
   }).readOnly(),

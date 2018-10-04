@@ -18,9 +18,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the popover
    *
@@ -31,6 +28,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -40,36 +38,43 @@ export default Component.extend({
    * @property preferredPosition
    * @type {string}
    * @default 'below'
+   * @public
    */
   preferredPosition: BELOW,
 
   /**
    * Show or hide the Popover
    *
+   * TODO: not implemented
+   *
    * @property active
    * @type {boolean}
    * @default false
-   * TODO: not implemented
+   * @public
    */
   active: false,
 
   /**
    * The element type to wrap the activator with
    *
+   * TODO: not implemented
+   *
    * @property activatorWrapper
    * @type {string}
    * @default null
-   * TODO: not implemented
+   * @public
    */
   activatorWrapper: null,
 
   /**
    * Prevent automatic focus of the first field on activation
    *
+   * TODO: not implemented
+   *
    * @property preventAutofocus
    * @type {boolean}
    * @default false
-   * TODO: not implemented
+   * @public
    */
   preventAutofocus: false,
 
@@ -79,6 +84,7 @@ export default Component.extend({
    * @property sectioned
    * @type {boolean}
    * @default false
+   * @public
    */
   sectioned: false,
 
@@ -88,11 +94,12 @@ export default Component.extend({
    * @property onClose
    * @type {function}
    * @default noop
+   * @public
    */
   onClose() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   verticalPosition: computed('preferredPosition', {
     // If `preferredPosition` is set to `mostSpace`, the value
@@ -119,6 +126,9 @@ export default Component.extend({
     },
   }),
 
+  /**
+   * @private
+   */
   triggerStyle: computed(function() {
     return htmlSafe(`
       display: inline-block;
@@ -131,6 +141,7 @@ export default Component.extend({
    * Checks the dropdown activator's location on
    * screen to determine which vertical direction
    * has more space to open the dropdown.
+   * @private
    */
   getMostVerticalSpace() {
     let component;

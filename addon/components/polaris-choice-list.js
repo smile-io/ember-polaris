@@ -104,8 +104,8 @@ export default Component.extend({
    */
   onChange() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   controlComponent: computed('allowMultiple', function() {
     return this.get('allowMultiple')
@@ -113,6 +113,9 @@ export default Component.extend({
       : 'polaris-radio-button';
   }).readOnly(),
 
+  /**
+   * @private
+   */
   finalName: computed('name', 'allowMultiple', function() {
     let { name, allowMultiple } = this.getProperties('name', 'allowMultiple');
 
@@ -127,6 +130,9 @@ export default Component.extend({
     return name;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   checkedChoices: computed('choices.[]', function() {
     const choices = this.get('choices') || [];
     const selected = this.get('selected');
@@ -139,9 +145,6 @@ export default Component.extend({
     });
   }).readOnly(),
 
-  /*
-   * Actions.
-   */
   actions: {
     updateSelectedChoices(choice, checked) {
       const value = get(choice, 'value');

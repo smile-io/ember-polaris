@@ -6,9 +6,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Inner content of the section
    *
@@ -19,6 +16,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default: null
+   * @public
    */
   text: null,
 });

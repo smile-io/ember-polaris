@@ -47,13 +47,16 @@ export default Component.extend(SvgHandling, {
   accessibilityLabel: null,
 
   /**
-   * Internal properties.
+   * @private
    */
   normalizedColor: computed('color', function() {
     let color = this.get('color');
     return allowedColors.includes(color) ? color : defaultColor;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   normalizedSize: computed('size', 'normalizedColor', function() {
     let size = this.get('size');
     if (allowedSizes.includes(size)) {
@@ -65,10 +68,16 @@ export default Component.extend(SvgHandling, {
     return defaultSize;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   spinnerSource: computed('normalizedSize', function() {
     return `polaris/spinner-${this.get('normalizedSize')}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   spinnerClass: computed('normalizedSize', function() {
     return [
       'Polaris-Spinner',

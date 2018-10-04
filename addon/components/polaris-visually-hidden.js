@@ -11,9 +11,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to be hidden visually
    *
@@ -24,6 +21,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default: null
+   * @public
    */
   text: null,
 });

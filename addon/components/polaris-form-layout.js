@@ -10,21 +10,16 @@ export default Component.extend({
 
   layout,
 
-  /*
-  * Public attributes.
-  */
   /**
    * The content to display inside the layout
    *
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

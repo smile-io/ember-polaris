@@ -8,15 +8,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Automatically add wrap content in a section
    *
    * @property sectioned
    * @type {boolean}
    * @default false
+   * @public
    */
   sectioned: false,
 
@@ -26,6 +24,7 @@ export default Component.extend({
    * @property contentComponent
    * @type {component}
    * @default: null
+   * @public
    */
   contentComponent: null,
 
@@ -38,7 +37,8 @@ export default Component.extend({
    *
    * @property text
    * @type {string}
-   * @default: null
+   * @default null
+   * @public
    */
   text: null,
 
@@ -48,12 +48,10 @@ export default Component.extend({
    * @property uniqueId
    * @type {string}
    * @default: null
+   * @public
    */
   uniqueId: null,
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

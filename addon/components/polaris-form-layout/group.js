@@ -8,15 +8,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Elements to display inside group item
    *
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -26,17 +24,15 @@ export default Component.extend({
    * @property condensed
    * @type {boolean}
    * @default false
+   * @public
    */
   condensed: false,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   role: 'group',
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

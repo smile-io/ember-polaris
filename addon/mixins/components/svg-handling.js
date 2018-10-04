@@ -78,9 +78,6 @@ export default Mixin.create({
     }
   },
 
-  /*
-   * Lifecycle hooks.
-   */
   didInsertElement() {
     this._super(...arguments);
 

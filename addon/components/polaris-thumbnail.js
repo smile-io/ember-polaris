@@ -48,8 +48,8 @@ export default Component.extend({
    */
   alt: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sizeClass: computed('size', function() {
     let size = this.get('size');

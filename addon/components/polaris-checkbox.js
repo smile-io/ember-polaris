@@ -148,19 +148,28 @@ export default Component.extend({
    */
   onBlur() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   isIndeterminate: equal('checked', 'indeterminate').readOnly(),
 
+  /**
+   * @private
+   */
   isChecked: computed('isIndeterminate', 'checked', function() {
     return !this.get('isIndeterminate') && Boolean(this.get('checked'));
   }).readOnly(),
 
+  /**
+   * @private
+   */
   checkedState: computed('isIndeterminate', 'isChecked', function() {
     return this.get('isIndeterminate') ? 'mixed' : `${this.get('isChecked')}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   checkboxClasses: computed('isIndeterminate', function() {
     let classNames = ['Polaris-Checkbox__Input'];
 
@@ -171,10 +180,16 @@ export default Component.extend({
     return classNames.join(' ');
   }).readOnly(),
 
+  /**
+   * @private
+   */
   _id: computed('inputId', function() {
     return this.get('inputId') || `polaris-checkbox-${guidFor(this)}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   describedBy: computed('error', 'helpText', '_id', function() {
     let describedBy = [];
     const { error, helpText } = this.getProperties('error', 'helpText');
@@ -190,9 +205,6 @@ export default Component.extend({
     return describedBy.join(' ');
   }).readOnly(),
 
-  /**
-   * Lifecycle hooks.
-   */
   didReceiveAttrs() {
     this._super(...arguments);
 

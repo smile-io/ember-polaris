@@ -24,9 +24,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the heading
    *
@@ -37,17 +34,15 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 
   /**
-   * Internal properties.
+   * @private
    */
   ariaLabel: null,
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

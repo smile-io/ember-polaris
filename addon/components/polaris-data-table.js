@@ -273,6 +273,13 @@ export default Component.extend(
     dataTable: elementLookup('.Polaris-DataTable').readOnly(),
 
     /**
+     * @property table
+     * @type {HTMLElement}
+     * @private
+     */
+    table: elementLookup('.Polaris-DataTable__Table').readOnly(),
+
+    /**
      * @property scrollContainer
      * @type {HTMLElement}
      * @private
@@ -280,13 +287,6 @@ export default Component.extend(
     scrollContainer: elementLookup(
       '.Polaris-DataTable__ScrollContainer'
     ).readOnly(),
-
-    /**
-     * @property table
-     * @type {HTMLElement}
-     * @private
-     */
-    table: elementLookup('.Polaris-DataTable__Table').readOnly(),
 
     /**
      * @property contentTypes
@@ -434,9 +434,6 @@ export default Component.extend(
       });
     },
 
-    /*
-   * Lifecycle hooks.
-   */
     init() {
       this._super(...arguments);
 

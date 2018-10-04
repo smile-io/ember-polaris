@@ -15,15 +15,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The currently selected color
    *
    * @property color
    * @type {Object}
    * @default null
+   * @public
    */
   color: null,
 
@@ -33,6 +31,7 @@ export default Component.extend({
    * @property allowAlpha
    * @type {boolean}
    * @default false
+   * @public
    */
   allowAlpha: false,
 
@@ -42,14 +41,18 @@ export default Component.extend({
    * @property onChange
    * @type {function}
    * @default null
+   * @public
    */
   onChange: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   pickerSize: null,
 
+  /**
+   * @private
+   */
   colorLayerStyle: computed('color.{hue,alpha}', function() {
     const { hue, alpha = 1 } = this.get('color');
     const { red, green, blue } = hsbaToRgba({
@@ -62,6 +65,9 @@ export default Component.extend({
     return htmlSafe(`background-color: ${backgroundColor};`);
   }).readOnly(),
 
+  /**
+   * @private
+   */
   draggerX: computed('color.saturation', 'pickerSize', function() {
     const {
       color: { saturation },
@@ -70,6 +76,9 @@ export default Component.extend({
     return clamp(saturation * pickerSize, 0, pickerSize);
   }).readOnly(),
 
+  /**
+   * @private
+   */
   draggerY: computed('color.brightness', 'pickerSize', function() {
     const {
       color: { brightness },
@@ -78,9 +87,6 @@ export default Component.extend({
     return clamp(pickerSize - brightness * pickerSize, 0, pickerSize);
   }).readOnly(),
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

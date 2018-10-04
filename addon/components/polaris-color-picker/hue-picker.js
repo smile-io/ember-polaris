@@ -26,15 +26,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The current hue value
    *
    * @property hue
    * @type {Number}
    * @default 0
+   * @public
    */
   hue: 0,
 
@@ -44,15 +42,23 @@ export default Component.extend({
    * @property onChange
    * @type {function}
    * @default null
+   * @public
    */
   onChange: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sliderHeight: null,
+
+  /**
+   * @private
+   */
   draggerHeight: null,
 
+  /**
+   * @private
+   */
   draggerY: computed('hue', 'sliderHeight', function() {
     const { hue, sliderHeight, draggerHeight } = this.getProperties(
       'hue',
@@ -63,9 +69,6 @@ export default Component.extend({
     return clamp(offset, 0, sliderHeight);
   }).readOnly(),
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

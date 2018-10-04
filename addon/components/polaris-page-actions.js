@@ -13,15 +13,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The primary action for the page
    *
    * @property primaryAction
    * @type {Object}
    * @default null
+   * @public
    */
   primaryAction: null,
 
@@ -31,11 +29,12 @@ export default Component.extend({
    * @property secondaryActions
    * @type {Array}
    * @default null
+   * @public
    */
   secondaryActions: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   showSecondaryActions: computed('secondaryActions', function() {
     return isArray(this.get('secondaryActions'));

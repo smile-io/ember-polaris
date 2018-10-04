@@ -8,9 +8,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Item to render.
    * Available properties:
@@ -27,11 +24,12 @@ export default Component.extend({
    * @property item
    * @type {Object}
    * @default null
+   * @public
    */
   item: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   itemId: computed(function() {
     return guidFor(this);

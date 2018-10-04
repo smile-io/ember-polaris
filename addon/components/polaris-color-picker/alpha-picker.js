@@ -28,9 +28,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The current alpha value
    *
@@ -40,12 +37,19 @@ export default Component.extend({
    */
   alpha: 1,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sliderHeight: null,
+
+  /**
+   * @private
+   */
   draggerHeight: null,
 
+  /**
+   * @private
+   */
   colorLayerStyle: computed('color.{hue,saturation,brightness}', function() {
     const color = this.get('color');
     const { red, green, blue } = hsbaToRgba(color);
@@ -55,6 +59,9 @@ export default Component.extend({
     return htmlSafe(`background: ${background};`);
   }).readOnly(),
 
+  /**
+   * @private
+   */
   draggerY: computed('alpha', 'sliderHeight', function() {
     const { alpha, sliderHeight, draggerHeight } = this.getProperties(
       'alpha',
@@ -65,9 +72,6 @@ export default Component.extend({
     return clamp(offset, 0, sliderHeight);
   }).readOnly(),
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

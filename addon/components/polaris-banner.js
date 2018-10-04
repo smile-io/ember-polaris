@@ -175,9 +175,6 @@ export default Component.extend({
     return `Polaris-Banner--status${capitalize(status)}`;
   }).readOnly(),
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

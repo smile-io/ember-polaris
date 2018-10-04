@@ -295,9 +295,6 @@ export default Component.extend({
     }
   },
 
-  /**
-   * Actions
-   */
   actions: {
     handleDateSelection(dateRange) {
       let { end: endDate } = dateRange;

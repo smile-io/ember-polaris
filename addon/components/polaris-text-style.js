@@ -40,8 +40,8 @@ export default Component.extend({
    */
   text: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   variationClass: computed('variation', function() {
     const variation = this.get('variation');

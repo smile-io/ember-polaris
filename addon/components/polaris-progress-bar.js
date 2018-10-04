@@ -36,8 +36,8 @@ export default Component.extend({
    */
   size: defaultSize,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sizeClass: computed('size', function() {
     let size = this.get('size');
@@ -48,6 +48,9 @@ export default Component.extend({
     return `Polaris-ProgressBar--size${classify(size)}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   parsedProgress: computed('progress', function() {
     let progress = this.get('progress');
     let parsedProgress;
@@ -63,6 +66,9 @@ export default Component.extend({
     return parsedProgress;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   progressStyle: computed('parsedProgress', function() {
     return htmlSafe(`width: ${this.get('parsedProgress')}%;`);
   }).readOnly(),
