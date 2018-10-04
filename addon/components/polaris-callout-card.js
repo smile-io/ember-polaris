@@ -6,7 +6,7 @@ import layout from '../templates/components/polaris-callout-card';
  * See https://polaris.shopify.com/components/structure/callout-card
  */
 export default Component.extend({
-  tagName: '',
+  classNames: ['Polaris-Card'],
 
   layout,
 

@@ -64,14 +64,25 @@ export default Component.extend({
    * @type {Number[]}
    * @private
    */
-  bodyCellHeights: computed('totals.[]', 'heights.[]', 'footerContent', function() {
-    let { totals, heights, footerContent } = this.getProperties('totals', 'heights', 'footerContent');
-    let bodyCellHeights = isPresent(totals) ? heights.slice(2) : heights.slice(1);
+  bodyCellHeights: computed(
+    'totals.[]',
+    'heights.[]',
+    'footerContent',
+    function() {
+      let { totals, heights, footerContent } = this.getProperties(
+        'totals',
+        'heights',
+        'footerContent'
+      );
+      let bodyCellHeights = isPresent(totals)
+        ? heights.slice(2)
+        : heights.slice(1);
 
-    if (footerContent) {
-      bodyCellHeights.pop();
+      if (footerContent) {
+        bodyCellHeights.pop();
+      }
+
+      return bodyCellHeights;
     }
-
-    return bodyCellHeights;
-  }).readOnly(),
+  ).readOnly(),
 });

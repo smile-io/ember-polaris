@@ -12,15 +12,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The url to link to.
    *
    * @property url
    * @type {string}
    * @default null
+   * @public
    */
   url: null,
 
@@ -30,6 +28,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -39,6 +38,7 @@ export default Component.extend({
    * @property external
    * @type {boolean}
    * @default false
+   * @public
    */
   external: false,
 
@@ -48,11 +48,12 @@ export default Component.extend({
    * @property onClick
    * @type {function}
    * @default noop
+   * @public
    */
   onClick() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   linkClass: computed('class', function() {
     let linkClass = 'Polaris-Link';

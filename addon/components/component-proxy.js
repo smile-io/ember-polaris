@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 // import { compileTemplate } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
-import Ember from 'ember'
+import Ember from 'ember';
 
 // Renders a named component with a passed-in hash of properties.
 // This effectively allows us to spread/splat a props hash onto
@@ -18,6 +18,30 @@ import Ember from 'ember'
 //   }}
 export default Component.extend({
   tagName: '',
+
+  /**
+   * Dynamically-generated layout to render the proxied component.
+   * @private
+   */
+  layout: computed('componentName', 'propsString', function() {
+    let { componentName, propsString } = this.getProperties(
+      'componentName',
+      'propsString'
+    );
+
+    // Disable linting for this line because the recommended way of importing
+    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
+    // eslint-disable-next-line ember/new-module-imports
+    return Ember.HTMLBars.compile(`
+      {{#if hasBlock}}
+        {{#component "${componentName}"${propsString}}}
+          {{yield}}
+        {{/component}}
+      {{else}}
+        {{component "${componentName}"${propsString}}}
+      {{/if}}
+    `);
+  }).readOnly(),
 
   /**
    * The name of the component to render.
@@ -42,27 +66,6 @@ export default Component.extend({
   propNames: null,
 
   /**
-   * Dynamically-generated layout to render the proxied component.
-   * @private
-   */
-  layout: computed('componentName', 'propsString', function() {
-    let { componentName, propsString } = this.getProperties('componentName', 'propsString');
-
-    // Disable linting for this line because the recommended way of importing
-    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
-    // eslint-disable-next-line ember/new-module-imports
-    return Ember.HTMLBars.compile(`
-      {{#if hasBlock}}
-        {{#component "${ componentName }"${ propsString }}}
-          {{yield}}
-        {{/component}}
-      {{else}}
-        {{component "${ componentName }"${ propsString }}}
-      {{/if}}
-    `);
-  }).readOnly(),
-
-  /**
    * String representing the properties to pass to the proxied component.
    * @type {String}
    * @private
@@ -70,7 +73,7 @@ export default Component.extend({
   propsString: computed('propNames.[]', function() {
     let propNames = this.get('propNames') || [];
     return propNames.reduce((propsString, propName) => {
-      return `${propsString} ${ propName }=${ propName }`;
+      return `${propsString} ${propName}=${propName}`;
     }, '');
   }).readOnly(),
 
@@ -86,7 +89,7 @@ export default Component.extend({
       propsToUnset[propName] = undefined;
     }, {});
 
-    let newProps = assign(propsToUnset, props, { propNames })
+    let newProps = assign(propsToUnset, props, { propNames });
     this.setProperties(newProps);
   },
 

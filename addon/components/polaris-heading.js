@@ -17,13 +17,11 @@ import layout from '../templates/components/polaris-heading';
  */
 export default Component.extend({
   tagName: 'h2',
+
   classNames: ['Polaris-Heading'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the heading
    *
@@ -34,6 +32,7 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 });

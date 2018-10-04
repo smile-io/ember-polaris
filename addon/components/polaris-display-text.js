@@ -25,14 +25,12 @@ export default Component.extend({
   layout,
 
   /**
-   * Public attributes.
-   */
-  /**
    * Size of the text
    *
    * @property size
    * @type {String}
    * @default medium
+   * @public
    */
   size: 'medium',
 
@@ -46,11 +44,12 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 
   /**
-   * Computed properties.
+   * @private
    */
   sizeClassName: computed('size', function() {
     const size = this.get('size');

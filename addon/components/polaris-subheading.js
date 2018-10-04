@@ -17,14 +17,13 @@ import layout from '../templates/components/polaris-subheading';
  */
 export default Component.extend({
   tagName: 'h3',
-  classNames: ['Polaris-Subheading'],
+
   attributeBindings: ['ariaLabel:aria-label'],
+
+  classNames: ['Polaris-Subheading'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the heading
    *
@@ -35,21 +34,24 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 
   /**
-   * Internal properties.
+   * @private
    */
   ariaLabel: null,
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 
     // Update ariaLabel with the new content.
-    this.set('ariaLabel', this.$().text().trim());
+    this.set(
+      'ariaLabel',
+      this.$()
+        .text()
+        .trim()
+    );
   },
 });

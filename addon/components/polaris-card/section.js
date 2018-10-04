@@ -5,7 +5,7 @@ export default Component.extend({
   classNames: ['Polaris-Card__Section'],
   classNameBindings: [
     'subdued:Polaris-Card__Section--subdued',
-    'fullWidth:Polaris-Card__Section--fullWidth'
+    'fullWidth:Polaris-Card__Section--fullWidth',
   ],
 
   layout,

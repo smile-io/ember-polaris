@@ -6,32 +6,28 @@ import layout from '../templates/components/polaris-form-layout';
  * See https://polaris.shopify.com/components/forms/form-layout
  */
 export default Component.extend({
- classNames: ['Polaris-FormLayout'],
+  classNames: ['Polaris-FormLayout'],
 
- layout,
+  layout,
 
- /*
-  * Public attributes.
-  */
- /**
-  * The content to display inside the layout
-  *
-  * @property text
-  * @type {string}
-  * @default null
-  */
- text: null,
+  /**
+   * The content to display inside the layout
+   *
+   * @property text
+   * @type {string}
+   * @default null
+   * @public
+   */
+  text: null,
 
- /**
-  * Lifecycle hooks.
-  */
- didRender() {
-   this._super(...arguments);
+  didRender() {
+    this._super(...arguments);
 
-   // Wrap each child element that isn't already a group or an item.
-   this.$().children()
-     .not('div[role="group"]')
-     .not('div.Polaris-FormLayout__Item')
-     .wrap('<div class="Polaris-FormLayout__Item"></div>');
- },
+    // Wrap each child element that isn't already a group or an item.
+    this.$()
+      .children()
+      .not('div[role="group"]')
+      .not('div.Polaris-FormLayout__Item')
+      .wrap('<div class="Polaris-FormLayout__Item"></div>');
+  },
 });

@@ -5,11 +5,7 @@ import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-avatar';
 
-const allowedSizes = [
-  'small',
-  'medium',
-  'large'
-];
+const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
 
 // TODO currently we don't need these...recheck when icons are properly handled
@@ -22,29 +18,16 @@ const avatarImages = [
   'avatarSix',
   'avatarSeven',
   'avatarEight',
-  'avatarNine'
+  'avatarNine',
 ];
 
-const styleClasses = [
-  'one',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six'
-];
+const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 export default Component.extend({
   tagName: 'span',
-  attributeBindings: [
-    'role',
-    'label:aria-label'
-  ],
+  attributeBindings: ['role', 'label:aria-label'],
   classNames: ['Polaris-Avatar'],
-  classNameBindings: [
-    'styleClass',
-    'sizeClass'
-  ],
+  classNameBindings: ['styleClass', 'sizeClass'],
 
   layout,
 
@@ -52,6 +35,7 @@ export default Component.extend({
    * Size of avatar
    *
    * @property size
+   * @public
    * @type {String}
    * @default 'medium'
    */
@@ -61,6 +45,7 @@ export default Component.extend({
    * The name of the person
    *
    * @property name
+   * @public
    * @type {String}
    * @default null
    */
@@ -146,7 +131,11 @@ export default Component.extend({
    * @type {String}
    */
   label: computed('accessibilityLabel', 'name', 'initials', function() {
-    let { accessibilityLabel, name, initials } = this.getProperties('accessibilityLabel', 'name', 'initials');
+    let { accessibilityLabel, name, initials } = this.getProperties(
+      'accessibilityLabel',
+      'name',
+      'initials'
+    );
 
     if (accessibilityLabel) {
       return accessibilityLabel;
@@ -157,7 +146,7 @@ export default Component.extend({
     }
 
     if (initials) {
-      return `Avatar with initials ${ initials.split('').join(' ') }`;
+      return `Avatar with initials ${initials.split('').join(' ')}`;
     }
 
     return 'Avatar';
@@ -171,10 +160,12 @@ export default Component.extend({
    */
   styleClass: computed('finalName', function() {
     let finalName = this.get('finalName');
-    let styleIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % styleClasses.length;
+    let styleIndex = isEmpty(finalName)
+      ? 0
+      : finalName.charCodeAt(0) % styleClasses.length;
     let style = styleClasses[styleIndex];
 
-    return `Polaris-Avatar--style${ classify(style) }`;
+    return `Polaris-Avatar--style${classify(style)}`;
   }).readOnly(),
 
   /**
@@ -189,7 +180,7 @@ export default Component.extend({
       size = defaultSize;
     }
 
-    return `Polaris-Avatar--size${ classify(size) }`;
+    return `Polaris-Avatar--size${classify(size)}`;
   }).readOnly(),
 
   /**
@@ -204,7 +195,9 @@ export default Component.extend({
     }
 
     let finalName = this.get('finalName');
-    let avatarIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % avatarImages.length;
-    return `${ this.get('avatarSourcePath') }/avatar-${ ++avatarIndex }.svg`;
+    let avatarIndex = isEmpty(finalName)
+      ? 0
+      : finalName.charCodeAt(0) % avatarImages.length;
+    return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
   }).readOnly(),
 });

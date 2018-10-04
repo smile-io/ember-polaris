@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { computedErrorId, computedHelpTextId } from '@smile-io/ember-polaris/utils/id';
+import {
+  computedErrorId,
+  computedHelpTextId,
+} from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-labelled';
 
 /**
@@ -14,6 +17,17 @@ export default Component.extend({
 
   layout,
 
+  /**
+   * A unique identifier for the label
+   * Note that we default this to Ember's GUID for this component instance,
+   * but the value can be overridden by the outside world.
+   *
+   * @type {String}
+   * @public
+   */
+  id: computed(function() {
+    return guidFor(this);
+  }),
   /**
    * Text for the label
    *
@@ -54,18 +68,6 @@ export default Component.extend({
    * @public
    */
   labelHidden: false,
-
-  /**
-   * A unique identifier for the label
-   * Note that we default this to Ember's GUID for this component instance,
-   * but the value can be overridden by the outside world.
-   *
-   * @type {String}
-   * @public
-   */
-  id: computed(function() {
-    return guidFor(this);
-  }),
 
   /**
    * ID for the error message div

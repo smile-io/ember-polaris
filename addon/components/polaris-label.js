@@ -13,6 +13,14 @@ export default Component.extend({
   layout,
 
   /**
+   * A unique identifier for the label
+   *
+   * @type {String}
+   * @public
+   */
+  id: null,
+
+  /**
    * Label content
    *
    * This component can be used in block form,
@@ -23,14 +31,6 @@ export default Component.extend({
    * @public
    */
   text: null,
-
-  /**
-   * A unique identifier for the label
-   *
-   * @type {String}
-   * @public
-   */
-  id: null,
 
   /**
    * Visually hide the label

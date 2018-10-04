@@ -5,7 +5,7 @@ export default Component.extend({
   classNames: ['Polaris-ButtonGroup__Item'],
   classNameBindings: [
     'plain:Polaris-ButtonGroup__Item--plain',
-    'focused:Polaris-ButtonGroup__Item--focused'
+    'focused:Polaris-ButtonGroup__Item--focused',
   ],
 
   layout,

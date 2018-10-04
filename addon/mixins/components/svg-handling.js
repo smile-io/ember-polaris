@@ -31,7 +31,7 @@ export default Mixin.create({
     // We append '-svg' to the component's Ember-generated GUID,
     // because Ember will automatically use that GUID as the ID
     // for the root element of non-tagless components.
-    return `${ guidFor(this) }-svg`;
+    return `${guidFor(this)}-svg`;
   }).readOnly(),
 
   /**
@@ -47,7 +47,7 @@ export default Mixin.create({
    * @type {DOMNode}
    */
   svgElement: computed(function() {
-    return document.querySelector(`#${ this.get('svgElementId') }`);
+    return document.querySelector(`#${this.get('svgElementId')}`);
   }).volatile(),
 
   removeFillsFromSvgElement() {
@@ -78,9 +78,6 @@ export default Mixin.create({
     }
   },
 
-  /*
-   * Lifecycle hooks.
-   */
   didInsertElement() {
     this._super(...arguments);
 

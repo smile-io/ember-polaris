@@ -6,12 +6,13 @@ import {
   weekdaysArray,
   getWeeksForMonth,
   getNewRange,
-  abbreviationForWeekday
+  abbreviationForWeekday,
 } from '../../utils/dates';
 
 export default Component.extend({
-  classNames: ['Polaris-DatePicker__Month'],
   attributeBindings: ['role'],
+
+  classNames: ['Polaris-DatePicker__Month'],
 
   layout,
 
@@ -146,8 +147,8 @@ export default Component.extend({
     return weekdaysArray.map((weekday, i) => {
       return {
         title: abbreviationForWeekday(weekday),
-        current: (current && day === i),
-        label: weekday
+        current: current && day === i,
+        label: weekday,
       };
     });
   }).readOnly(),
@@ -157,6 +158,6 @@ export default Component.extend({
       let range = getNewRange(this.get('selected'), day);
 
       this.get('onChange')(range);
-    }
-  }
+    },
+  },
 });

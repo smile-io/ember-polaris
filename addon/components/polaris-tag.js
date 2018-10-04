@@ -64,7 +64,7 @@ export default Component.extend({
     // Set the remove button's aria-label based on the current text in the tag.
     // We access the element's `textContent` so that this still works in block usage.
     let tagText = this.get('element.textContent') || '';
-    this.set('buttonLabel', `Remove ${ tagText.trim() }`);
+    this.set('buttonLabel', `Remove ${tagText.trim()}`);
   },
 
   didRender() {

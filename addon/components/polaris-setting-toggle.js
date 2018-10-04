@@ -12,9 +12,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Inner content of the card
    *
@@ -25,6 +22,7 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 
@@ -34,7 +32,8 @@ export default Component.extend({
    * @property action
    * @type {Object}
    * @default null
-  */
+   * @public
+   */
   action: null,
 
   /**
@@ -43,15 +42,13 @@ export default Component.extend({
    * @property enabled
    * @type {boolean}
    * @default null
+   * @public
    */
   enabled: null,
 
-  /*
-   * Internal properties.
-   */
-   actions: {
-     fireAction(action) {
-       invokeAction(action, 'onAction');
-     }
-   }
+  actions: {
+    fireAction(action) {
+      invokeAction(action, 'onAction');
+    },
+  },
 });

@@ -1,4 +1,4 @@
-{{#polaris-card sectioned=true}}
+{{#polaris-card/section}}
   <div class="Polaris-CalloutCard">
     <div class="Polaris-CalloutCard__Content">
       <div class="Polaris-CalloutCard__Title">
@@ -14,7 +14,7 @@
       {{/polaris-text-container}}
 
       <div class="Polaris-CalloutCard__Buttons">
-        {{!-- template-lint-disable attribute-indentation --}}
+        {{! template-lint-disable attribute-indentation }}
         {{!-- TODO remove rule above once linter handles this correctly --}}
         {{#with
           (component "polaris-button"
@@ -42,4 +42,4 @@
 
     <img src={{illustration}} alt="" class="Polaris-CalloutCard__Image">
   </div>
-{{/polaris-card}}
+{{/polaris-card/section}}

@@ -3,6 +3,13 @@ import { computed } from '@ember/object';
 import mapEventToAction from '../../utils/map-event-to-action';
 
 export default Component.extend({
+  attributeBindings: [
+    'disabled',
+    'accessibilityLabel:aria-label',
+    'ariaControls:aria-controls',
+    'ariaExpanded:aria-expanded',
+  ],
+
   classNames: ['Polaris-Button'],
   classNameBindings: [
     'primary:Polaris-Button--primary',
@@ -15,29 +22,6 @@ export default Component.extend({
     'iconOnly:Polaris-Button--iconOnly',
     'sizeClass',
   ],
-  attributeBindings: [
-    'disabled',
-    'accessibilityLabel:aria-label',
-    'ariaControls:aria-controls',
-    'ariaExpanded:aria-expanded',
-  ],
-
-  /*
-   * Computed properties.
-   */
-  sizeClass: computed('size', function() {
-    switch (this.get('size')) {
-      case 'slim':
-        return 'Polaris-Button--sizeSlim';
-
-      case 'large':
-        return 'Polaris-Button--sizeLarge';
-
-      default:
-        return null;
-    }
-  }).readOnly(),
-
   /*
    * When we have an icon and no text.
    *
@@ -54,4 +38,20 @@ export default Component.extend({
   click: mapEventToAction('onClick'),
   focusIn: mapEventToAction('onFocus'),
   focusOut: mapEventToAction('onBlur'),
+
+  /*
+   * Computed properties.
+   */
+  sizeClass: computed('size', function() {
+    switch (this.get('size')) {
+      case 'slim':
+        return 'Polaris-Button--sizeSlim';
+
+      case 'large':
+        return 'Polaris-Button--sizeLarge';
+
+      default:
+        return null;
+    }
+  }).readOnly(),
 });

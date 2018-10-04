@@ -11,10 +11,10 @@ module('Unit | Utility | color');
 
 test('rgbaString() correctly converts an RGB(a) object color to string', function(assert) {
   let result = rgbaString({ red: 194, green: 204, blue: 143 });
-  assert.equal(result, "rgb(194, 204, 143)");
+  assert.equal(result, 'rgb(194, 204, 143)');
 
   result = rgbaString({ red: 194, green: 204, blue: 143, alpha: 0.75 });
-  assert.equal(result, "rgba(194, 204, 143, 0.75)");
+  assert.equal(result, 'rgba(194, 204, 143, 0.75)');
 });
 
 test('hsbaToRgba() correctly converts HSB(a) colors to RGB(a)', function(assert) {

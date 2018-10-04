@@ -35,9 +35,6 @@ export default Component.extend({
    */
   items: null,
 
-  /**
-   * Lifecycle hooks.
-   */
   didReceiveAttrs() {
     this._super(...arguments);
 

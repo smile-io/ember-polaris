@@ -8,7 +8,7 @@ export default Component.extend({
     'focused:Polaris-Connected__Item--focused',
     'left:Polaris-Connected__Item--connection',
     'right:Polaris-Connected__Item--connection',
-    'primary:Polaris-Connected__Item--primary'
+    'primary:Polaris-Connected__Item--primary',
   ],
 
   layout,
@@ -45,5 +45,5 @@ export default Component.extend({
 
   focusOut() {
     this.set('focused', false);
-  }
+  },
 });

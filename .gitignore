@@ -24,3 +24,5 @@
 
 .DS_Store
 package-lock.json
+jsconfig.json
+.vscode

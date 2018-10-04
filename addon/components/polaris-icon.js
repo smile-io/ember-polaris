@@ -9,14 +9,15 @@ import SvgHandling from '../mixins/components/svg-handling';
 // TODO: look into importing icons properly.
 export default Component.extend(SvgHandling, {
   tagName: 'span',
+
+  attributeBindings: ['accessibilityLabel:aria-label'],
+
   classNames: ['Polaris-Icon'],
+
   classNameBindings: [
     'colorClass',
     'isColored:Polaris-Icon--isColored',
-    'backdrop:Polaris-Icon--hasBackdrop'
-  ],
-  attributeBindings: [
-    'accessibilityLabel:aria-label',
+    'backdrop:Polaris-Icon--hasBackdrop',
   ],
 
   layout,
@@ -125,7 +126,10 @@ export default Component.extend(SvgHandling, {
    */
   iconSource: computed('sourcePath', 'source', function() {
     let source = this.get('source');
-    source = source.indexOf('/') === -1 ? `${ this.get('sourcePath') }/${ source }` : source;
+    source =
+      source.indexOf('/') === -1
+        ? `${this.get('sourcePath')}/${source}`
+        : source;
 
     return source;
   }).readOnly(),

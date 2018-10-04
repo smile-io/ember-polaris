@@ -3,23 +3,18 @@ import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-text-container';
 
-const allowedSpacings = [
-  'tight',
-  'loose'
-];
+const allowedSpacings = ['tight', 'loose'];
 
 /**
  * Undocumented Polaris text container component.
  */
 export default Component.extend({
   classNames: ['Polaris-TextContainer'],
+
   classNameBindings: ['spacingClass'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The text to display.
    *
@@ -30,6 +25,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -39,16 +35,17 @@ export default Component.extend({
    * @property spacing
    * @type {string}
    * @default null
+   * @public
    */
   spacing: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   spacingClass: computed('spacing', function() {
     let spacing = this.get('spacing');
     if (allowedSpacings.indexOf(spacing) > -1) {
-      return `Polaris-TextContainer--spacing${ classify(spacing) }`;
+      return `Polaris-TextContainer--spacing${classify(spacing)}`;
     }
 
     return null;

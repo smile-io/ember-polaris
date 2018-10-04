@@ -8,15 +8,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Automatically add wrap content in a section
    *
    * @property sectioned
    * @type {boolean}
    * @default false
+   * @public
    */
   sectioned: false,
 
@@ -26,6 +24,7 @@ export default Component.extend({
    * @property contentComponent
    * @type {component}
    * @default: null
+   * @public
    */
   contentComponent: null,
 
@@ -38,7 +37,8 @@ export default Component.extend({
    *
    * @property text
    * @type {string}
-   * @default: null
+   * @default null
+   * @public
    */
   text: null,
 
@@ -48,12 +48,10 @@ export default Component.extend({
    * @property uniqueId
    * @type {string}
    * @default: null
+   * @public
    */
   uniqueId: null,
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 
@@ -63,15 +61,19 @@ export default Component.extend({
       return;
     }
 
-    const trigger = Ember$(`div.ember-basic-dropdown-trigger[data-ebd-id="${ uniqueId }-trigger"]`)[0];
-    const content = Ember$(`div#ember-basic-dropdown-content-${ uniqueId }`)[0];
+    const trigger = Ember$(
+      `div.ember-basic-dropdown-trigger[data-ebd-id="${uniqueId}-trigger"]`
+    )[0];
+    const content = Ember$(`div#ember-basic-dropdown-content-${uniqueId}`)[0];
 
     if (isNone(trigger) || isNone(content)) {
       return;
     }
 
     const triggerRect = trigger.getBoundingClientRect();
-    const left = (triggerRect.width / 2) + (triggerRect.left - content.getBoundingClientRect().left);
+    const left =
+      triggerRect.width / 2 +
+      (triggerRect.left - content.getBoundingClientRect().left);
     Ember$('div.Polaris-Popover__Tip', content).css({ left });
 
     // Set the height explicitly so the popover displays on Safari.
@@ -81,6 +83,8 @@ export default Component.extend({
     }
     const paneContent = pane.firstElementChild;
     const paneContentRect = paneContent.getBoundingClientRect();
-    Ember$('div.Polaris-Popover__Content', content).css({ height: paneContentRect.height });
+    Ember$('div.Polaris-Popover__Content', content).css({
+      height: paneContentRect.height,
+    });
   },
 });

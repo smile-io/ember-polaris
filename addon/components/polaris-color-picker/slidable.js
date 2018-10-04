@@ -10,12 +10,22 @@ function startDrag(event) {
   this.handleMove(event);
 
   // Set up global event listeners to handle dragging outside the slidable area.
-  $Ember(window).on('mousemove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('mouseup', () => { this.handleDragEnd(); });
+  $Ember(window).on('mousemove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('mouseup', () => {
+    this.handleDragEnd();
+  });
 
-  $Ember(window).on('touchmove', (...moveArgs) => { this.handleMove(...moveArgs); });
-  $Ember(window).on('touchend', () => { this.handleDragEnd(); });
-  $Ember(window).on('touchcancel', () => { this.handleDragEnd(); });
+  $Ember(window).on('touchmove', (...moveArgs) => {
+    this.handleMove(...moveArgs);
+  });
+  $Ember(window).on('touchend', () => {
+    this.handleDragEnd();
+  });
+  $Ember(window).on('touchcancel', () => {
+    this.handleDragEnd();
+  });
 }
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
@@ -24,15 +34,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The current x position of the dragger
    *
    * @property draggerX
    * @type {Number}
    * @default 0
+   * @public
    */
   draggerX: 0,
 
@@ -42,6 +50,7 @@ export default Component.extend({
    * @property draggerY
    * @type {Number}
    * @default 0
+   * @public
    */
   draggerY: 0,
 
@@ -51,22 +60,36 @@ export default Component.extend({
    * @property onDraggerHeightChanged
    * @type {function}
    * @default null
+   * @public
    */
   onDraggerHeightChanged: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   isDragging: false,
 
+  /**
+   * @private
+   */
+  mouseDown: startDrag,
+
+  /**
+   * @private
+   */
+  touchStart: startDrag,
+
+  /**
+   * @private
+   */
   draggerStyle: computed('draggerX', 'draggerY', function() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
-    const transform = `translate3d(${ draggerX }px, ${ draggerY }px, 0)`;
-    return htmlSafe(`transform: ${ transform };`);
+    const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
+    return htmlSafe(`transform: ${transform};`);
   }).readOnly(),
 
-  /*
-   * Internal methods.
+  /**
+   * @private
    */
   handleMove(event) {
     if (!this.get('isDragging')) {
@@ -78,13 +101,19 @@ export default Component.extend({
     event.preventDefault();
 
     if (event.touches && event.touches.length) {
-      this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
+      this.handleDraggerMove(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
       return;
     }
 
     this.handleDraggerMove(event.clientX, event.clientY);
   },
 
+  /**
+   * @private
+   */
   handleDragEnd() {
     this.set('isDragging', false);
 
@@ -97,9 +126,12 @@ export default Component.extend({
     $Ember(window).off('touchcancel');
   },
 
+  /**
+   * @private
+   */
   handleDraggerMove(clientX, clientY) {
     const moveHandler = this.get('onChange');
-    if (typeof(moveHandler) !== 'function') {
+    if (typeof moveHandler !== 'function') {
       return;
     }
 
@@ -115,15 +147,6 @@ export default Component.extend({
     });
   },
 
-  /*
-   * Action handlers.
-   */
-  mouseDown: startDrag,
-  touchStart: startDrag,
-
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 

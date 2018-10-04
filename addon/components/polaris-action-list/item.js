@@ -40,6 +40,6 @@ export default Component.extend({
 
   imageBackgroundStyle: computed('item.image', function() {
     let url = this.get('item.image');
-    return url ? htmlSafe(`background-image: url(${ url })`) : '';
+    return url ? htmlSafe(`background-image: url(${url})`) : '';
   }).readOnly(),
 });

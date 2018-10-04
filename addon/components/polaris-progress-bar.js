@@ -3,11 +3,7 @@ import { computed } from '@ember/object';
 import { classify, htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-progress-bar';
 
-const allowedSizes = [
-  'small',
-  'medium',
-  'large'
-];
+const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
 
 /**
@@ -40,8 +36,8 @@ export default Component.extend({
    */
   size: defaultSize,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sizeClass: computed('size', function() {
     let size = this.get('size');
@@ -49,9 +45,12 @@ export default Component.extend({
       size = defaultSize;
     }
 
-    return `Polaris-ProgressBar--size${ classify(size) }`;
+    return `Polaris-ProgressBar--size${classify(size)}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   parsedProgress: computed('progress', function() {
     let progress = this.get('progress');
     let parsedProgress;
@@ -67,7 +66,10 @@ export default Component.extend({
     return parsedProgress;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   progressStyle: computed('parsedProgress', function() {
-    return htmlSafe(`width: ${ this.get('parsedProgress') }%;`);
-  }).readOnly()
+    return htmlSafe(`width: ${this.get('parsedProgress')}%;`);
+  }).readOnly(),
 });

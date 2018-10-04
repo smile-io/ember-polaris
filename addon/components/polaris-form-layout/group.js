@@ -2,20 +2,19 @@ import Component from '@ember/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 
 export default Component.extend({
-  classNameBindings: ['condensed:Polaris-FormLayout--condensed'],
   attributeBindings: ['role'],
+
+  classNameBindings: ['condensed:Polaris-FormLayout--condensed'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Elements to display inside group item
    *
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -25,23 +24,22 @@ export default Component.extend({
    * @property condensed
    * @type {boolean}
    * @default false
+   * @public
    */
   condensed: false,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   role: 'group',
 
-   /**
-    * Lifecycle hooks.
-    */
-   didRender() {
-     this._super(...arguments);
+  didRender() {
+    this._super(...arguments);
 
-     // Wrap each element that isn't already an item.
-     this.$('div.Polaris-FormLayout__Items').children()
-       .not('div.Polaris-FormLayout__Item')
-       .wrap('<div class="Polaris-FormLayout__Item"></div>');
-   },
+    // Wrap each element that isn't already an item.
+    this.$('div.Polaris-FormLayout__Items')
+      .children()
+      .not('div.Polaris-FormLayout__Item')
+      .wrap('<div class="Polaris-FormLayout__Item"></div>');
+  },
 });

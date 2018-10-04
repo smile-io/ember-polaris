@@ -17,7 +17,9 @@ module('Integration | Component | wrapper-element', function(hooks) {
   });
 
   test('it passes arbitrary attributes to the rendered element', async function(assert) {
-    await render(hbs`{{wrapper-element tagName="my-element" my-attribute="hello"}}`);
+    await render(
+      hbs`{{wrapper-element tagName="my-element" my-attribute="hello"}}`
+    );
 
     assert.dom('my-element').hasAttribute('my-attribute', 'hello');
   });

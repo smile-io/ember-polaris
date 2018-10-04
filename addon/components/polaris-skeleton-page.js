@@ -4,12 +4,11 @@ import { notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/polaris-skeleton-page';
 
 export default Component.extend({
+  attributeBindings: ['role', 'ariaLabel:aria-label'],
+
   classNames: ['Polaris-SkeletonPage__Page'],
+
   classNameBindings: ['fullWidth:Polaris-SkeletonPage--fullWidth'],
-  attributeBindings: [
-    'role',
-    'ariaLabel:aria-label'
-  ],
 
   layout,
 
@@ -86,6 +85,15 @@ export default Component.extend({
   ariaLabel: 'Page loading',
 
   /**
+   * Whether the page has an actual text title to display
+   *
+   * @property hasTitleText
+   * @private
+   * @type {boolean}
+   */
+  hasTitleText: notEmpty('title').readOnly(),
+
+  /**
    * Whether the page should display any kind of title
    *
    * @property hasTitle
@@ -95,15 +103,6 @@ export default Component.extend({
   hasTitle: computed('title', function() {
     return this.get('title') !== null;
   }).readOnly(),
-
-  /**
-   * Whether the page has an actual text title to display
-   *
-   * @property hasTitleText
-   * @private
-   * @type {boolean}
-   */
-  hasTitleText: notEmpty('title').readOnly(),
 
   /**
    * Array of dummy secondary actions to iterate over in template

@@ -14,6 +14,7 @@ export default Component.extend({
   tagName: '',
 
   layout,
+
   /**
    * Collection of actions for list
    *
@@ -44,8 +45,13 @@ export default Component.extend({
    */
   onActionAnyItem() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
+   */
+  hasMultipleSections: gt('finalSections.length', 1).readOnly(),
+
+  /**
+   * @private
    */
   finalSections: computed('items', 'sections.[]', function() {
     let finalSections = [];
@@ -56,11 +62,12 @@ export default Component.extend({
     }
 
     let sections = this.get('sections') || [];
-    assert(`ember-polaris::polaris-action-list - sections must be an array, you passed ${ sections }`, isArray(sections));
+    assert(
+      `ember-polaris::polaris-action-list - sections must be an array, you passed ${sections}`,
+      isArray(sections)
+    );
     finalSections.push(...sections);
 
     return finalSections;
   }).readOnly(),
-
-  hasMultipleSections: gt('finalSections.length', 1).readOnly(),
 });
