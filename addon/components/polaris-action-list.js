@@ -14,6 +14,7 @@ export default Component.extend({
   tagName: '',
 
   layout,
+
   /**
    * Collection of actions for list
    *
@@ -44,10 +45,13 @@ export default Component.extend({
    */
   onActionAnyItem() {},
 
+  /**
+   * @private
+   */
   hasMultipleSections: gt('finalSections.length', 1).readOnly(),
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   finalSections: computed('items', 'sections.[]', function() {
     let finalSections = [];
