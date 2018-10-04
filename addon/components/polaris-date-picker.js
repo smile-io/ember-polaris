@@ -253,7 +253,9 @@ export default Component.extend({
   keyDown(e) {
     let { key } = e;
 
-    if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
+    let directionKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+
+    if (directionKeys.includes(key)) {
       e.preventDefault();
       e.stopPropagation();
     }
