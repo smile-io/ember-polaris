@@ -20,26 +20,29 @@ export default Component.extend({
    * @property plain
    * @type {Boolean}
    * @default false
+   * @public
    */
   plain: false,
 
   /**
    * The URL of the next page
    *
+   * TODO not implemented
    * @property nextUrl
    * @type {String}
    * @default null
-   * TODO not implemented
+   * @public
    */
   nextUrl: null,
 
   /**
    * The URL of the previous page
    *
+   * TODO not implemented
    * @property previousUrl
    * @type {String}
    * @default null
-   * TODO not implemented
+   * @public
    */
   previousUrl: null,
 
@@ -49,6 +52,7 @@ export default Component.extend({
    * @property hasNext
    * @type {Boolean}
    * @default false
+   * @public
    */
   hasNext: false,
 
@@ -58,6 +62,7 @@ export default Component.extend({
    * @property hasPrevious
    * @type {Boolean}
    * @default false
+   * @public
    */
   hasPrevious: false,
 
@@ -67,10 +72,9 @@ export default Component.extend({
    * @property accessibilityLabel
    * @type {string}
    * @default 'Pagination'
+   * @public
    */
   accessibilityLabel: 'Pagination',
-
-  handleMouseUpByBlurring,
 
   /**
    * Callback when next button is clicked
@@ -78,6 +82,7 @@ export default Component.extend({
    * @property onNext
    * @type {function}
    * @default no-op
+   * @public
    */
   onNext() {},
 
@@ -87,9 +92,22 @@ export default Component.extend({
    * @property onPrevious
    * @type {function}
    * @default no-op
+   * @public
    */
   onPrevious() {},
 
+  /**
+   * @private
+   */
+  handleMouseUpByBlurring,
+
+  /**
+   * @private
+   */
   isPreviousDisabled: not('hasPrevious').readOnly(),
+
+  /**
+   * @private
+   */
   isNextDisabled: not('hasNext').readOnly(),
 });
