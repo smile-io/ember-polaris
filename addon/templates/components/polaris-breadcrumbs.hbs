@@ -5,10 +5,10 @@
     class="Polaris-Breadcrumbs__Breadcrumb"
     mouseUp=handleMouseUpByBlurring
   }}
-    <span class="Polaris-Breadcrumbs__Icon">
+    <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
       {{polaris-icon source="chevron-left"}}
     </span>
-    <span class="Polaris-Breadcrumbs__Content">
+    <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
       {{breadcrumb.content}}
     </span>
   {{/polaris-unstyled-link}}
@@ -20,10 +20,10 @@
     onmouseup={{handleMouseUpByBlurring}}
     type="button"
   >
-    <span class="Polaris-Breadcrumbs__Icon">
+    <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
       {{polaris-icon source="chevron-left"}}
     </span>
-    <span class="Polaris-Breadcrumbs__Content">
+    <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
       {{breadcrumb.content}}
     </span>
   </button>

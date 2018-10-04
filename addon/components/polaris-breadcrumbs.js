@@ -29,6 +29,8 @@ export default Component.extend({
    */
   role: 'navigation',
 
+  'data-test-breadcrumbs': true,
+
   /**
    * The breadcrumb to render (the last of the list)
    * We're not always guaranteed to get an Ember array,
