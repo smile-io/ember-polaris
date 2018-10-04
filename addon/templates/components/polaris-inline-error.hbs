@@ -1,0 +1,16 @@
+{{#if message}}
+  <div
+    class="Polaris-InlineError"
+    id={{concat fieldID "Error"}}
+    data-test-inline-error={{data-test-inline-error}}
+  >
+    <div
+      class="Polaris-InlineError__Icon"
+      data-test-inline-error-icon={{data-test-inline-error-icon}}
+    >
+      {{polaris-icon source="alert"}}
+    </div>
+
+    {{message}}
+  </div>
+{{/if}}
