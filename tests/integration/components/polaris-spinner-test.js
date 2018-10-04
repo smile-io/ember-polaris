@@ -5,18 +5,22 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const spinnerSelector = 'svg.Polaris-Spinner';
 
-moduleForComponent('polaris-spinner', 'Integration | Component | polaris spinner', {
-  integration: true,
+moduleForComponent(
+  'polaris-spinner',
+  'Integration | Component | polaris spinner',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register(
-      'component:svg-jar',
-      MockSvgJarComponent.extend({
-        attributeBindings: ['role'],
-      })
-    );
-  },
-});
+    beforeEach() {
+      this.register(
+        'component:svg-jar',
+        MockSvgJarComponent.extend({
+          attributeBindings: ['role'],
+        })
+      );
+    },
+  }
+);
 
 test('renders the correct HTML with default attributes', function(assert) {
   this.render(hbs`{{polaris-spinner}}`);
@@ -25,7 +29,11 @@ test('renders the correct HTML with default attributes', function(assert) {
   assert.equal(spinners.length, 1, 'renders one spinner');
 
   let spinner = spinners[0];
-  assert.equal(spinner.dataset.iconSource, 'polaris/spinner-large', 'renders spinner-large SVG');
+  assert.equal(
+    spinner.dataset.iconSource,
+    'polaris/spinner-large',
+    'renders spinner-large SVG'
+  );
   assert.ok(
     spinner.classList.contains('Polaris-Spinner--sizeLarge'),
     'spinner size defaults to large'
@@ -34,7 +42,11 @@ test('renders the correct HTML with default attributes', function(assert) {
     spinner.classList.contains('Polaris-Spinner--colorTeal'),
     'spinner color defaults to teal'
   );
-  assert.equal(spinner.getAttribute('role'), 'status', 'has correct role attribute');
+  assert.equal(
+    spinner.getAttribute('role'),
+    'status',
+    'has correct role attribute'
+  );
 });
 
 test('handles size and color correctly', function(assert) {
@@ -112,5 +124,9 @@ test('handles `accessibilityLabel` correctly', function(assert) {
   assert.equal(spinners.length, 1, 'renders one spinner');
 
   let spinner = spinners[0];
-  assert.equal(spinner.getAttribute('aria-label'), 'access granted', 'sets the correct aria-label');
+  assert.equal(
+    spinner.getAttribute('aria-label'),
+    'access granted',
+    'sets the correct aria-label'
+  );
 });

@@ -1,7 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { computedErrorId, computedHelpTextId } from '@smile-io/ember-polaris/utils/id';
+import {
+  computedErrorId,
+  computedHelpTextId,
+} from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-labelled';
 
 /**

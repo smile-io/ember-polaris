@@ -82,7 +82,9 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     `);
     const firstHeadingCell = findAll('th.Polaris-DataTable__Cell')[0];
 
-    assert.ok(firstHeadingCell.classList.contains('Polaris-DataTable__Cell--sorted'));
+    assert.ok(
+      firstHeadingCell.classList.contains('Polaris-DataTable__Cell--sorted')
+    );
   });
 
   test('it sets specified initial sort column', async function(assert) {
@@ -98,7 +100,9 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     `);
     const fifthHeadingCell = findAll('th.Polaris-DataTable__Cell')[5];
 
-    assert.ok(fifthHeadingCell.classList.contains('Polaris-DataTable__Cell--sorted'));
+    assert.ok(
+      fifthHeadingCell.classList.contains('Polaris-DataTable__Cell--sorted')
+    );
   });
 
   test('it accepts both text and component definitions as cell contents', async function(assert) {
@@ -154,7 +158,11 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     );
 
     const lastRowCell = rowCells[rowCells.length - 1];
-    assert.equal(lastRowCell.textContent.trim(), 'In stock', 'last row cell renders correct text');
+    assert.equal(
+      lastRowCell.textContent.trim(),
+      'In stock',
+      'last row cell renders correct text'
+    );
 
     const footerCell = find('tfoot td.Polaris-DataTable__Cell--footer');
     assert.ok(

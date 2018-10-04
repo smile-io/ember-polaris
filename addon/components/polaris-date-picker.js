@@ -122,7 +122,10 @@ export default Component.extend({
   }).readOnly(),
 
   showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
-    let { showNextMonth, showNextYear } = this.getProperties('showNextMonth', 'showNextYear');
+    let { showNextMonth, showNextYear } = this.getProperties(
+      'showNextMonth',
+      'showNextYear'
+    );
 
     return getNextDisplayYear(showNextMonth, showNextYear);
   }).readOnly(),
@@ -145,25 +148,41 @@ export default Component.extend({
     return monthsArray[this.get('showPreviousMonth')];
   }).readOnly(),
 
-  nextMonth: computed('multiMonth', 'showNextToNextMonth', 'showNextMonth', function() {
-    let { multiMonth, showNextToNextMonth, showNextMonth } = this.getProperties(
-      'multiMonth',
-      'showNextToNextMonth',
-      'showNextMonth'
-    );
+  nextMonth: computed(
+    'multiMonth',
+    'showNextToNextMonth',
+    'showNextMonth',
+    function() {
+      let {
+        multiMonth,
+        showNextToNextMonth,
+        showNextMonth,
+      } = this.getProperties(
+        'multiMonth',
+        'showNextToNextMonth',
+        'showNextMonth'
+      );
 
-    return multiMonth ? monthsArray[showNextToNextMonth] : monthsArray[showNextMonth];
-  }).readOnly(),
+      return multiMonth
+        ? monthsArray[showNextToNextMonth]
+        : monthsArray[showNextMonth];
+    }
+  ).readOnly(),
 
-  nextYear: computed('multiMonth', 'showNextToNextYear', 'showNextYear', function() {
-    let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
-      'multiMonth',
-      'showNextToNextYear',
-      'showNextYear'
-    );
+  nextYear: computed(
+    'multiMonth',
+    'showNextToNextYear',
+    'showNextYear',
+    function() {
+      let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
+        'multiMonth',
+        'showNextToNextYear',
+        'showNextYear'
+      );
 
-    return multiMonth ? showNextToNextYear : showNextYear;
-  }).readOnly(),
+      return multiMonth ? showNextToNextYear : showNextYear;
+    }
+  ).readOnly(),
 
   range: computed('selected', function() {
     let selected = this.get('selected');
@@ -175,9 +194,15 @@ export default Component.extend({
     return selected;
   }).readOnly(),
 
-  previousMonthLabel: computed('previousMonthName', 'showPreviousYear', function() {
-    return `Show previous month, ${this.get('previousMonthName')} ${this.get('showPreviousYear')}`;
-  }).readOnly(),
+  previousMonthLabel: computed(
+    'previousMonthName',
+    'showPreviousYear',
+    function() {
+      return `Show previous month, ${this.get('previousMonthName')} ${this.get(
+        'showPreviousYear'
+      )}`;
+    }
+  ).readOnly(),
 
   nextMonthLabel: computed('nextMonth', 'nextYear', function() {
     return `Show next month, ${this.get('nextMonth')} ${this.get('nextYear')}`;
@@ -196,7 +221,12 @@ export default Component.extend({
    * Events
    */
   keyUp({ key }) {
-    let { disableDatesBefore, disableDatesAfter, focusDate, range } = this.getProperties(
+    let {
+      disableDatesBefore,
+      disableDatesAfter,
+      focusDate,
+      range,
+    } = this.getProperties(
       'disableDatesBefore',
       'disableDatesAfter',
       'focusDate',
@@ -214,7 +244,9 @@ export default Component.extend({
 
       previousWeek.setDate(focusedDate.getDate() - 7);
 
-      if (!(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore))) {
+      if (
+        !(disableDatesBefore && isDateBefore(previousWeek, disableDatesBefore))
+      ) {
         this.setFocusDateAndHandleMonthChange(previousWeek);
       }
     }
@@ -244,7 +276,9 @@ export default Component.extend({
 
       yesterday.setDate(focusedDate.getDate() - 1);
 
-      if (!(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore))) {
+      if (
+        !(disableDatesBefore && isDateBefore(yesterday, disableDatesBefore))
+      ) {
         this.setFocusDateAndHandleMonthChange(yesterday);
       }
     }

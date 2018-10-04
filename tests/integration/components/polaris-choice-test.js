@@ -15,18 +15,28 @@ const TestLabelComponent = Component.extend({
   text: 'test label component',
 });
 
-moduleForComponent('polaris-choice', 'Integration | Component | polaris choice', {
-  integration: true,
+moduleForComponent(
+  'polaris-choice',
+  'Integration | Component | polaris choice',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-    this.register('component:test-label', TestLabelComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+      this.register('component:test-label', TestLabelComponent);
+    },
+  }
+);
 
 const labelSelector = 'label.Polaris-Choice';
-const controlSelector = buildNestedSelector(labelSelector, 'span.Polaris-Choice__Control');
-const labelContentSelector = buildNestedSelector(labelSelector, 'span.Polaris-Choice__Label');
+const controlSelector = buildNestedSelector(
+  labelSelector,
+  'span.Polaris-Choice__Control'
+);
+const labelContentSelector = buildNestedSelector(
+  labelSelector,
+  'span.Polaris-Choice__Label'
+);
 
 // When an error or help text are passed into the choice component,
 // they get rendered in a description div alongside the label;
@@ -52,8 +62,14 @@ const descriptionSelector = buildNestedSelector(
   withDescriptionWrapperSelector,
   'div.Polaris-Choice__Descriptions'
 );
-const helpTextSelector = buildNestedSelector(descriptionSelector, 'div.Polaris-Choice__HelpText');
-const errorSelector = buildNestedSelector(descriptionSelector, 'div.Polaris-Choice__Error');
+const helpTextSelector = buildNestedSelector(
+  descriptionSelector,
+  'div.Polaris-Choice__HelpText'
+);
+const errorSelector = buildNestedSelector(
+  descriptionSelector,
+  'div.Polaris-Choice__Error'
+);
 const errorIconSelector = buildNestedSelector(
   errorSelector,
   'div.Polaris-Choice__ErrorIcon',
@@ -76,7 +92,10 @@ test('it renders the correct HTML when no error or helpText are provided', funct
     'renders the label with the correct `for` attribute'
   );
 
-  const testControlSelector = buildNestedSelector(controlSelector, 'span.test-control');
+  const testControlSelector = buildNestedSelector(
+    controlSelector,
+    'span.test-control'
+  );
   const testControls = findAll(testControlSelector);
   assert.equal(testControls.length, 1, 'renders one control');
   assert.equal(
@@ -199,7 +218,11 @@ test('it renders the correct HTML when an error is provided', function(assert) {
 
   const errorIcons = findAll(errorIconSelector);
   assert.equal(errorIcons.length, 1, 'renders one error icon');
-  assert.equal(errorIcons[0].dataset.iconSource, 'polaris/alert', 'renders the correct error icon');
+  assert.equal(
+    errorIcons[0].dataset.iconSource,
+    'polaris/alert',
+    'renders the correct error icon'
+  );
 });
 
 test('it handles the labelHidden attribute correctly', function(assert) {
@@ -269,7 +292,10 @@ test('it handles label components correctly when no description is present', fun
     'div.test-label-component'
   );
   let labelComponent = find(labelComponentSelector);
-  assert.ok(labelComponent, 'with label component string - renders the label component');
+  assert.ok(
+    labelComponent,
+    'with label component string - renders the label component'
+  );
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
@@ -307,7 +333,10 @@ test('it handles label components correctly when no description is present', fun
   assert.ok(labelContent, 'renders the label');
 
   labelComponent = find(labelComponentSelector);
-  assert.ok(labelComponent, 'with label component closure - renders the label component');
+  assert.ok(
+    labelComponent,
+    'with label component closure - renders the label component'
+  );
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',
@@ -351,7 +380,10 @@ test('it handles label components correctly when a description is supplied', fun
     'div.test-label-component'
   );
   let labelComponent = find(labelComponentSelector);
-  assert.ok(labelComponent, 'with label component string - renders the label component');
+  assert.ok(
+    labelComponent,
+    'with label component string - renders the label component'
+  );
   assert.equal(
     labelContent.textContent.trim(),
     'test label component',
@@ -389,7 +421,10 @@ test('it handles label components correctly when a description is supplied', fun
   assert.ok(labelContent, 'renders the label');
 
   labelComponent = find(labelComponentSelector);
-  assert.ok(labelComponent, 'with label component closure - renders the label component');
+  assert.ok(
+    labelComponent,
+    'with label component closure - renders the label component'
+  );
   assert.equal(
     labelContent.textContent.trim(),
     'test label component from component closure',

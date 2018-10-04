@@ -4,13 +4,17 @@ import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-date-picker', 'Integration | Component | polaris date picker', {
-  integration: true,
+moduleForComponent(
+  'polaris-date-picker',
+  'Integration | Component | polaris date picker',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const DAY_SELECTED_CLASS = 'Polaris-DatePicker__Day--selected';
 const DAY_DISABLED_CLASS = 'Polaris-DatePicker__Day--disabled';
@@ -61,9 +65,18 @@ const monthSelector = buildNestedSelector(container, monthContainer);
 
 const monthBodySelector = buildNestedSelector(monthContainer, monthBody);
 
-const monthTitleSelector = buildNestedSelector(monthContainer, monthBody, monthTitle);
+const monthTitleSelector = buildNestedSelector(
+  monthContainer,
+  monthBody,
+  monthTitle
+);
 
-const weekdaySelector = buildNestedSelector(monthContainer, monthBody, weekdaysHeader, weekday);
+const weekdaySelector = buildNestedSelector(
+  monthContainer,
+  monthBody,
+  weekdaysHeader,
+  weekday
+);
 
 const monthWeekSelector = buildNestedSelector(monthContainer, monthBody, week);
 
@@ -150,10 +163,18 @@ test('it renders the correct date-picker HTML', function(assert) {
   );
 
   let weekEls = findAll(monthWeekSelector);
-  assert.equal(weekEls.length, FEB_2018_WEEKS, 'it renders 5 weeks for February 2018');
+  assert.equal(
+    weekEls.length,
+    FEB_2018_WEEKS,
+    'it renders 5 weeks for February 2018'
+  );
 
   let dayEls = findAll(daySelector);
-  assert.equal(dayEls.length, FEB_2018_DAYS, 'it renders 28 days for February 2018');
+  assert.equal(
+    dayEls.length,
+    FEB_2018_DAYS,
+    'it renders 28 days for February 2018'
+  );
 
   let dayEmptyEls = findAll(dayEmptySelector);
   assert.equal(
@@ -163,7 +184,11 @@ test('it renders the correct date-picker HTML', function(assert) {
   );
 
   let selectedDay = find(daySelectedSelector);
-  assert.equal(selectedDay.textContent.trim(), '7', 'it renders February 7th as the selected date');
+  assert.equal(
+    selectedDay.textContent.trim(),
+    '7',
+    'it renders February 7th as the selected date'
+  );
 });
 
 test('it calls a passed-in `onChange` action when a new date is chosen', function(assert) {
@@ -184,7 +209,10 @@ test('it calls a passed-in `onChange` action when a new date is chosen', functio
   `);
 
   click(daySelector);
-  assert.ok(this.get('onChangeActionFired'), 'onChange action is called when a day is clicked');
+  assert.ok(
+    this.get('onChangeActionFired'),
+    'onChange action is called when a day is clicked'
+  );
 });
 
 test('it passes a `selected` range argument to the `onChange` action', function(assert) {
@@ -196,8 +224,14 @@ test('it passes a `selected` range argument to the `onChange` action', function(
     selected: null,
     onChangeActionFired: false,
     onChange: (selected) => {
-      assert.ok(selected.start, '`onChange` receives a range with a `start` attribute');
-      assert.ok(selected.end, '`onChange` receives a range with an `end` attribute');
+      assert.ok(
+        selected.start,
+        '`onChange` receives a range with a `start` attribute'
+      );
+      assert.ok(
+        selected.end,
+        '`onChange` receives a range with an `end` attribute'
+      );
       this.set('onChangeActionFired', true);
     },
   });
@@ -212,7 +246,10 @@ test('it passes a `selected` range argument to the `onChange` action', function(
   `);
 
   click(daySelector);
-  assert.ok(this.get('onChangeActionFired'), '`onChange` action sends up correct arguments');
+  assert.ok(
+    this.get('onChangeActionFired'),
+    '`onChange` action sends up correct arguments'
+  );
 });
 
 test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', function(assert) {
@@ -259,8 +296,16 @@ test('it passes `month` and `year` arguments to the `onMonthChange` action', fun
     selected: null,
     onMonthChangeActionFired: false,
     onMonthChange: (month, year) => {
-      assert.equal(month, expectedMonth, '`onMonthChange` receives the correct `month` argument');
-      assert.equal(year, expectedYear, '`onMonthChange` receives the correct `year` argument');
+      assert.equal(
+        month,
+        expectedMonth,
+        '`onMonthChange` receives the correct `month` argument'
+      );
+      assert.equal(
+        year,
+        expectedYear,
+        '`onMonthChange` receives the correct `year` argument'
+      );
       this.set('onMonthChangeActionFired', true);
     },
   });
@@ -299,7 +344,11 @@ test('it displays two months at a time when `multiMonth` is true', function(asse
   `);
 
   let monthBodyEls = findAll(monthBodySelector);
-  assert.equal(monthBodyEls.length, 2, 'it renders 2 months when `multiMonth` is true');
+  assert.equal(
+    monthBodyEls.length,
+    2,
+    'it renders 2 months when `multiMonth` is true'
+  );
 });
 
 test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
@@ -430,5 +479,9 @@ test('it applies a `today` class to the day representing the current day', funct
   );
 
   let todayEls = findAll(`.${DAY_IS_TODAY_CLASS}`);
-  assert.ok(todayEls.length, 1, 'only a single day element contains a `today` class');
+  assert.ok(
+    todayEls.length,
+    1,
+    'only a single day element contains a `today` class'
+  );
 });

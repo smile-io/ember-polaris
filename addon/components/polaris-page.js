@@ -145,5 +145,10 @@ export default Component.extend({
   /**
    * Computed properties.
    */
-  hasHeaderContent: or('title', 'primaryAction', 'secondaryActions', 'breadcrumbs').readOnly(),
+  hasHeaderContent: or(
+    'title',
+    'primaryAction',
+    'secondaryActions',
+    'breadcrumbs'
+  ).readOnly(),
 });

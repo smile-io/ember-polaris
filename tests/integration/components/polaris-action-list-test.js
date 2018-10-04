@@ -4,13 +4,17 @@ import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-action-list', 'Integration | Component | polaris action list', {
-  integration: true,
+moduleForComponent(
+  'polaris-action-list',
+  'Integration | Component | polaris action list',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const actionListSelector = 'div.Polaris-ActionList';
 const actionListItemButtonSelector = buildNestedSelector(
@@ -104,12 +108,24 @@ test('it renders the correct HTML when using icons', function(assert) {
   assert.equal(actionLists.length, 1, 'renders one action list');
 
   const actionListItemContents = findAll(actionListItemContentSelector);
-  assert.equal(actionListItemContents.length, 2, 'renders two action list items');
+  assert.equal(
+    actionListItemContents.length,
+    2,
+    'renders two action list items'
+  );
 
-  const actionListItemContentImages = findAll(actionListItemContentImageSelector);
-  assert.equal(actionListItemContentImages.length, 2, 'renders two action list item images');
+  const actionListItemContentImages = findAll(
+    actionListItemContentImageSelector
+  );
+  assert.equal(
+    actionListItemContentImages.length,
+    2,
+    'renders two action list item images'
+  );
 
-  const actionListItemContentImageIcons = findAll(actionListItemContentImageIconSelector);
+  const actionListItemContentImageIcons = findAll(
+    actionListItemContentImageIconSelector
+  );
   assert.equal(
     actionListItemContentImageIcons.length,
     2,
@@ -127,7 +143,11 @@ test('it renders the correct HTML when using icons', function(assert) {
   );
 
   const actionListItemContentTexts = findAll(actionListItemContentTextSelector);
-  assert.equal(actionListItemContentTexts.length, 2, 'renders two action list item texts');
+  assert.equal(
+    actionListItemContentTexts.length,
+    2,
+    'renders two action list item texts'
+  );
   assert.equal(
     actionListItemContentTexts[0].textContent.trim(),
     'Import some things',
@@ -168,10 +188,16 @@ test('it handles item actions correctly', function(assert) {
   const listItems = findAll('li');
   click('button', listItems[0]);
   assert.ok(action1Fired, 'after pressing first button - first action fired');
-  assert.notOk(this.get('action2Fired'), 'after pressing first button - second action not fired');
+  assert.notOk(
+    this.get('action2Fired'),
+    'after pressing first button - second action not fired'
+  );
 
   click('button', listItems[1]);
-  assert.ok(this.get('action2Fired'), 'after pressing second button - second action fired');
+  assert.ok(
+    this.get('action2Fired'),
+    'after pressing second button - second action fired'
+  );
 });
 
 test('it does not bubble item actions', function(assert) {
@@ -247,7 +273,10 @@ test('it handles the "any item" action correctly', function(assert) {
     1,
     'after pressing first button - any item action fired once'
   );
-  assert.notOk(this.get('itemActionFired'), 'after pressing first button - item action not fired');
+  assert.notOk(
+    this.get('itemActionFired'),
+    'after pressing first button - item action not fired'
+  );
 
   click('button', listItems[1]);
   assert.equal(
@@ -255,7 +284,10 @@ test('it handles the "any item" action correctly', function(assert) {
     2,
     'after pressing second button - any item action fired twice'
   );
-  assert.ok(this.get('itemActionFired'), 'after pressing second button - item action fired');
+  assert.ok(
+    this.get('itemActionFired'),
+    'after pressing second button - item action fired'
+  );
 });
 
 test('it renders the correct HTML when using sections', function(assert) {
@@ -364,7 +396,10 @@ test('it renders the correct HTML when using sections', function(assert) {
   );
 
   itemIcon = find(itemIconSelector, items[1]);
-  assert.notOk(itemIcon, "second section's second item does not render an icon");
+  assert.notOk(
+    itemIcon,
+    "second section's second item does not render an icon"
+  );
 
   // Third section should have no title, one item with no icon.
   section = actionListSections[2];

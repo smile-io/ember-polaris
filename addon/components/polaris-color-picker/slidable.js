@@ -94,7 +94,10 @@ export default Component.extend({
     event.preventDefault();
 
     if (event.touches && event.touches.length) {
-      this.handleDraggerMove(event.touches[0].clientX, event.touches[0].clientY);
+      this.handleDraggerMove(
+        event.touches[0].clientX,
+        event.touches[0].clientY
+      );
       return;
     }
 

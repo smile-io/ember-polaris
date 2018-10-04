@@ -24,7 +24,10 @@ export default Component.extend({
    * @private
    */
   layout: computed('componentName', 'propsString', function() {
-    let { componentName, propsString } = this.getProperties('componentName', 'propsString');
+    let { componentName, propsString } = this.getProperties(
+      'componentName',
+      'propsString'
+    );
 
     // Disable linting for this line because the recommended way of importing
     // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯

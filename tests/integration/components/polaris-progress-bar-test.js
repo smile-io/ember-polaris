@@ -3,9 +3,13 @@ import { find } from 'ember-native-dom-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-progress-bar', 'Integration | Component | polaris progress bar', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-progress-bar',
+  'Integration | Component | polaris progress bar',
+  {
+    integration: true,
+  }
+);
 
 const BAR_SELECTOR = 'div.Polaris-ProgressBar';
 const PROGRESS_SELECTOR = 'progress.Polaris-ProgressBar__Progress';
@@ -18,13 +22,18 @@ test('it renders the correct HTML when progress and size are set', function(asse
 
   let barNode = find(BAR_SELECTOR);
   let progressNode = find(buildNestedSelector(BAR_SELECTOR, PROGRESS_SELECTOR));
-  let indicatorNode = find(buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR));
+  let indicatorNode = find(
+    buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR)
+  );
   let labelNode = find(buildNestedSelector(INDICATOR_SELECTOR, LABEL_SELECTOR));
 
   // Component renders correctly
   assert.ok(barNode, 'the progress bar container is rendered');
   assert.ok(progressNode, 'the progress node is rendered inside the container');
-  assert.ok(indicatorNode, 'the indicator node is rendered inside the container');
+  assert.ok(
+    indicatorNode,
+    'the indicator node is rendered inside the container'
+  );
   assert.ok(labelNode, 'the label node is rendered inside the indicator');
 
   // Bar attributes
@@ -34,7 +43,11 @@ test('it renders the correct HTML when progress and size are set', function(asse
   );
 
   // Progress attributes
-  assert.equal(progressNode.getAttribute('value'), PROGRESS, 'progress value attribute is correct');
+  assert.equal(
+    progressNode.getAttribute('value'),
+    PROGRESS,
+    'progress value attribute is correct'
+  );
 
   // Indicator attributes
   let percentStyle = `width: ${PROGRESS}%;`;
@@ -48,7 +61,11 @@ test('it renders the correct HTML when progress and size are set', function(asse
   // Label attributes
   let percentLabel = `${PROGRESS}%`;
 
-  assert.equal(labelNode.textContent.trim(), percentLabel, 'progress label is correct');
+  assert.equal(
+    labelNode.textContent.trim(),
+    percentLabel,
+    'progress label is correct'
+  );
 });
 
 test('it renders a correctly-sized progress bar', function(assert) {
@@ -133,7 +150,9 @@ test('it correctly handles out-of-bounds progress numbers', function(assert) {
   this.render(hbs`{{polaris-progress-bar progress=progress}}`);
 
   let progressNode = find(buildNestedSelector(BAR_SELECTOR, PROGRESS_SELECTOR));
-  let indicatorNode = find(buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR));
+  let indicatorNode = find(
+    buildNestedSelector(BAR_SELECTOR, INDICATOR_SELECTOR)
+  );
   let labelNode = find(buildNestedSelector(INDICATOR_SELECTOR, LABEL_SELECTOR));
 
   assert.equal(

@@ -126,7 +126,10 @@ export default Component.extend(SvgHandling, {
    */
   iconSource: computed('sourcePath', 'source', function() {
     let source = this.get('source');
-    source = source.indexOf('/') === -1 ? `${this.get('sourcePath')}/${source}` : source;
+    source =
+      source.indexOf('/') === -1
+        ? `${this.get('sourcePath')}/${source}`
+        : source;
 
     return source;
   }).readOnly(),

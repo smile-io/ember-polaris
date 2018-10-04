@@ -8,7 +8,11 @@ const VERTICAL_PADDING = 13;
 
 function offsetForHue(hue, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
-  return clamp((hue / 360) * slidableArea + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+  return clamp(
+    (hue / 360) * slidableArea + VERTICAL_PADDING,
+    0,
+    sliderHeight - draggerHeight
+  );
 }
 
 function hueForOffset(offset, sliderHeight) {
@@ -72,7 +76,10 @@ export default Component.extend({
 
   actions: {
     handleChange({ y }) {
-      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+      const { sliderHeight, onChange } = this.getProperties(
+        'sliderHeight',
+        'onChange'
+      );
       if (typeOf(onChange) !== 'function') {
         return;
       }

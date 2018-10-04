@@ -250,7 +250,10 @@ export default Component.extend({
 
   updateAccessibilityLabel() {
     let cellElement = document.querySelector(`#${this.get('cellElementId')}`);
-    this.set('sortAccessibilityLabel', `sort by ${cellElement.textContent.trim().toLowerCase()}`);
+    this.set(
+      'sortAccessibilityLabel',
+      `sort by ${cellElement.textContent.trim().toLowerCase()}`
+    );
   },
 
   didRender() {

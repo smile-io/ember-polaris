@@ -111,7 +111,10 @@ export function dateIsSelected(day, range) {
 
   const { start, end } = range;
 
-  return (isPresent(start) && isSameDay(start, day)) || (isPresent(end) && isSameDay(end, day));
+  return (
+    (isPresent(start) && isSameDay(start, day)) ||
+    (isPresent(end) && isSameDay(end, day))
+  );
 }
 
 export function isSameDay(day1, day2) {

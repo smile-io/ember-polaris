@@ -3,12 +3,19 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-avatar', 'Integration | Component | polaris avatar', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-avatar',
+  'Integration | Component | polaris avatar',
+  {
+    integration: true,
+  }
+);
 
 const avatarSelector = 'span.Polaris-Avatar[role="img"]';
-const initialsSelector = buildNestedSelector(avatarSelector, 'span.Polaris-Avatar__Initials');
+const initialsSelector = buildNestedSelector(
+  avatarSelector,
+  'span.Polaris-Avatar__Initials'
+);
 const initialsTextSelector = buildNestedSelector(
   initialsSelector,
   'svg.Polaris-Avatar__Svg[viewbox="0 0 48 48"]',
@@ -185,7 +192,10 @@ test('it renders the correct initials markup', function(assert) {
   assert.ok(initials, 'with initials - renders initials element');
 
   let initialsText = find(initialsTextSelector);
-  assert.ok(initialsText, 'with initials - renders the correct initials markup');
+  assert.ok(
+    initialsText,
+    'with initials - renders the correct initials markup'
+  );
   assert.equal(
     initialsText.textContent.trim(),
     'EPD',

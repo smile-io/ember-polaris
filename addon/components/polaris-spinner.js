@@ -57,7 +57,9 @@ export default Component.extend(SvgHandling, {
   normalizedSize: computed('size', 'normalizedColor', function() {
     let size = this.get('size');
     if (allowedSizes.includes(size)) {
-      return colorsForLargeSpinner.includes(this.get('normalizedColor')) ? size : 'small';
+      return colorsForLargeSpinner.includes(this.get('normalizedColor'))
+        ? size
+        : 'small';
     }
 
     return defaultSize;

@@ -9,7 +9,10 @@ const labelSelector = buildNestedSelector(
   '.Polaris-Label',
   'label'
 );
-const labelActionButtonSelector = buildNestedSelector('.Polaris-Labelled__LabelWrapper', 'button');
+const labelActionButtonSelector = buildNestedSelector(
+  '.Polaris-Labelled__LabelWrapper',
+  'button'
+);
 const connectedContainerSelector = '.Polaris-Connected';
 const textFieldSelector = '.Polaris-TextField';
 const textFieldPrefixSelector = buildNestedSelector(
@@ -20,7 +23,10 @@ const textFieldSuffixSelector = buildNestedSelector(
   textFieldSelector,
   '.Polaris-TextField__Suffix'
 );
-const textFieldMultilineSelector = buildNestedSelector(textFieldSelector, 'textarea');
+const textFieldMultilineSelector = buildNestedSelector(
+  textFieldSelector,
+  'textarea'
+);
 const textFieldInputSelector = buildNestedSelector(textFieldSelector, 'input');
 const connectedLeftSelector = buildNestedSelector(
   connectedContainerSelector,
@@ -68,7 +74,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     `);
 
     assert.ok(find(textFieldInputSelector), 'it renders a text input');
-    assert.equal(find(labelSelector).textContent.trim(), label, 'it renders the passed-in label');
+    assert.equal(
+      find(labelSelector).textContent.trim(),
+      label,
+      'it renders the passed-in label'
+    );
   });
 
   test('when `type` is numeric, it renders a spinner which passes up new values when clicked', async function(assert) {
@@ -117,7 +127,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       }}
     `);
 
-    assert.equal(findAll(textFieldMultilineSelector).length, 1, 'it renders a textarea');
+    assert.equal(
+      findAll(textFieldMultilineSelector).length,
+      1,
+      'it renders a textarea'
+    );
   });
 
   test('it renders an actionable link when a `labelAction` hash is present', async function(assert) {
@@ -166,7 +180,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     const helpTextNode = find(helpTextSelector);
     assert.ok(helpTextNode, 'it renders help text element');
-    assert.equal(helpTextNode.textContent.trim(), helpText, 'help text value is correct');
+    assert.equal(
+      helpTextNode.textContent.trim(),
+      helpText,
+      'help text value is correct'
+    );
   });
 
   test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function(assert) {
@@ -184,11 +202,19 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     let prefixNode = find(textFieldPrefixSelector);
     assert.ok(prefixNode, 'it renders the prefix element');
-    assert.equal(prefixNode.textContent.trim(), prefix, 'prefix value is correct');
+    assert.equal(
+      prefixNode.textContent.trim(),
+      prefix,
+      'prefix value is correct'
+    );
 
     let suffixNode = find(textFieldSuffixSelector);
     assert.ok(suffixNode, 'it renders the suffix element');
-    assert.equal(suffixNode.textContent.trim(), suffix, 'suffix value is correct');
+    assert.equal(
+      suffixNode.textContent.trim(),
+      suffix,
+      'suffix value is correct'
+    );
   });
 
   test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
@@ -211,11 +237,19 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     let leftNode = find(connectedLeftSelector);
     assert.ok(leftNode, 'it renders the connected left element');
-    assert.equal(leftNode.textContent.trim(), left, 'connected left value is correct');
+    assert.equal(
+      leftNode.textContent.trim(),
+      left,
+      'connected left value is correct'
+    );
 
     let rightNode = find(connectedRightSelector);
     assert.ok(rightNode, 'it renders the connected right element');
-    assert.equal(rightNode.textContent.trim(), right, 'connected right value is correct');
+    assert.equal(
+      rightNode.textContent.trim(),
+      right,
+      'connected right value is correct'
+    );
 
     assert.ok(
       find(connectedPrimaryInputSelector),
@@ -234,7 +268,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     const errorNode = find(errorSelector);
     assert.ok(errorNode, 'it renders the error message element');
-    assert.equal(errorNode.textContent.trim(), error, 'the error message value is correct');
+    assert.equal(
+      errorNode.textContent.trim(),
+      error,
+      'the error message value is correct'
+    );
   });
 
   test('it calls `onChange`, `onFocus`, and `onBlur` when events are triggered', async function(assert) {
@@ -262,12 +300,21 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     `);
 
     await triggerEvent(textFieldInputSelector, 'change');
-    assert.ok(this.get('changeCalled'), 'onChange action is called on textfield change event');
+    assert.ok(
+      this.get('changeCalled'),
+      'onChange action is called on textfield change event'
+    );
 
     await triggerEvent(textFieldInputSelector, 'focus');
-    assert.ok(this.get('focusCalled'), 'onFocus action is called on textfield focus event');
+    assert.ok(
+      this.get('focusCalled'),
+      'onFocus action is called on textfield focus event'
+    );
 
     await triggerEvent(textFieldInputSelector, 'blur');
-    assert.ok(this.get('blurCalled'), 'onBlur action is called on textfield blur event');
+    assert.ok(
+      this.get('blurCalled'),
+      'onBlur action is called on textfield blur event'
+    );
   });
 });

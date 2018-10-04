@@ -144,12 +144,17 @@ export default Component.extend({
       component = this._renderNode.contextualElement;
     }
 
-    let activators = component.querySelectorAll('.ember-basic-dropdown-trigger');
+    let activators = component.querySelectorAll(
+      '.ember-basic-dropdown-trigger'
+    );
 
     if (activators.length > 1) {
-      warn('Multiple popover activators found. Defaulting to `preferredPosition` of `below`', {
-        id: 'ember-polaris.polaris-popover.multiple-popover-activators',
-      });
+      warn(
+        'Multiple popover activators found. Defaulting to `preferredPosition` of `below`',
+        {
+          id: 'ember-polaris.polaris-popover.multiple-popover-activators',
+        }
+      );
 
       return BELOW;
     }

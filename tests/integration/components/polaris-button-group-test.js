@@ -3,16 +3,23 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, focus, blur } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-button-group', 'Integration | Component | polaris button group', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-button-group',
+  'Integration | Component | polaris button group',
+  {
+    integration: true,
+  }
+);
 
 const buttonGroupSelector = 'div.Polaris-ButtonGroup';
 const buttonGroupItemSelector = buildNestedSelector(
   buttonGroupSelector,
   'div.Polaris-ButtonGroup__Item'
 );
-const buttonSelector = buildNestedSelector(buttonGroupItemSelector, 'button.Polaris-Button');
+const buttonSelector = buildNestedSelector(
+  buttonGroupItemSelector,
+  'button.Polaris-Button'
+);
 
 test('it renders the correct HTML with default attributes', function(assert) {
   this.render(hbs`
@@ -26,7 +33,11 @@ test('it renders the correct HTML with default attributes', function(assert) {
   assert.equal(buttonGroups.length, 1, 'renders one button group');
 
   const buttons = findAll(buttonSelector);
-  assert.equal(buttons.length, 2, 'renders the correct number of wrapped buttons');
+  assert.equal(
+    buttons.length,
+    2,
+    'renders the correct number of wrapped buttons'
+  );
 });
 
 test('it renders the correct HTML with segmented attribute', function(assert) {
@@ -60,7 +71,11 @@ test('it renders the correct HTML in block usage', function(assert) {
   `);
 
   const buttonGroupItems = findAll(buttonGroupItemSelector);
-  assert.equal(buttonGroupItems.length, 3, 'renders the correct number of button group items');
+  assert.equal(
+    buttonGroupItems.length,
+    3,
+    'renders the correct number of button group items'
+  );
 
   // Check the first item.
   let buttonGroupItem = buttonGroupItems[0];

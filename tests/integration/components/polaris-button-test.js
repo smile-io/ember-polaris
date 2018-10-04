@@ -13,13 +13,17 @@ const buttonIconSelector = buildNestedSelector(
   'span.Polaris-Button__Icon'
 );
 
-moduleForComponent('polaris-button', 'Integration | Component | polaris button', {
-  integration: true,
+moduleForComponent(
+  'polaris-button',
+  'Integration | Component | polaris button',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 test('renders the correct HTML', function(assert) {
   // Basic button, no text.
@@ -43,13 +47,21 @@ test('renders the correct HTML', function(assert) {
 
   button = buttons[0];
   let buttonText = find(buttonTextSelector, button).innerText;
-  assert.equal(buttonText, 'Look at my text', 'basic button with text attribute - text');
+  assert.equal(
+    buttonText,
+    'Look at my text',
+    'basic button with text attribute - text'
+  );
 
   // Basic button, block form, no content.
   this.render(hbs`{{#polaris-button}}{{/polaris-button}}`);
 
   buttons = findAll('button[type="button"].Polaris-Button');
-  assert.equal(buttons.length, 1, 'basic button in block form with no text - renders');
+  assert.equal(
+    buttons.length,
+    1,
+    'basic button in block form with no text - renders'
+  );
 
   // TODO: prevent rendering empty span.
   // button = buttons[0];
@@ -57,14 +69,20 @@ test('renders the correct HTML', function(assert) {
   // assert.notOk(buttonTextElement, 'basic button in block form with no text - does not render text content element');
 
   // Basic button, block form.
-  this.render(hbs`{{#polaris-button}}Does this look blocky to you?{{/polaris-button}}`);
+  this.render(
+    hbs`{{#polaris-button}}Does this look blocky to you?{{/polaris-button}}`
+  );
 
   buttons = findAll('button[type="button"].Polaris-Button');
   assert.equal(buttons.length, 1, 'basic button in block form - renders');
 
   button = buttons[0];
   buttonText = find(buttonTextSelector, button).innerText;
-  assert.equal(buttonText, 'Does this look blocky to you?', 'basic button in block form - text');
+  assert.equal(
+    buttonText,
+    'Does this look blocky to you?',
+    'basic button in block form - text'
+  );
 
   // With a URL.
   this.render(
@@ -79,10 +97,18 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttonText, 'Links zwei drei vier', 'link button - text');
 
   let linkHref = button.href;
-  assert.equal(linkHref, 'http://www.somewhere.com/lets-go/', 'link button - href');
+  assert.equal(
+    linkHref,
+    'http://www.somewhere.com/lets-go/',
+    'link button - href'
+  );
 
   let dataPolarisUnstyled = button.dataset.polarisUnstyled;
-  assert.equal(dataPolarisUnstyled, 'true', 'link button - data-polaris-unstyled');
+  assert.equal(
+    dataPolarisUnstyled,
+    'true',
+    'link button - data-polaris-unstyled'
+  );
 
   let linkTarget = button.target;
   assert.equal(linkTarget, '', 'link button - target');
@@ -100,13 +126,25 @@ test('renders the correct HTML', function(assert) {
 
   button = buttons[0];
   buttonText = find(buttonTextSelector, button).innerText;
-  assert.equal(buttonText, 'Links zwei drei vier', 'external link button - text');
+  assert.equal(
+    buttonText,
+    'Links zwei drei vier',
+    'external link button - text'
+  );
 
   linkHref = button.href;
-  assert.equal(linkHref, 'http://www.somewhere.com/lets-go/', 'external link button - href');
+  assert.equal(
+    linkHref,
+    'http://www.somewhere.com/lets-go/',
+    'external link button - href'
+  );
 
   dataPolarisUnstyled = button.dataset.polarisUnstyled;
-  assert.equal(dataPolarisUnstyled, 'true', 'external link button - data-polaris-unstyled');
+  assert.equal(
+    dataPolarisUnstyled,
+    'true',
+    'external link button - data-polaris-unstyled'
+  );
 
   linkTarget = button.target;
   assert.equal(linkTarget, '_blank', 'external link button - target');
@@ -121,7 +159,10 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'primary button - renders');
 
   button = buttons[0];
-  assert.ok(button.classList.contains('Polaris-Button--primary'), 'primary button - primary class');
+  assert.ok(
+    button.classList.contains('Polaris-Button--primary'),
+    'primary button - primary class'
+  );
 
   // Button with destructive flag set.
   this.render(hbs`{{polaris-button destructive=true}}`);
@@ -149,7 +190,9 @@ test('renders the correct HTML', function(assert) {
   assert.ok(button.disabled, 'disabled button - disabled attribute');
 
   // Link button with disabled flag set.
-  this.render(hbs`{{polaris-button url="http://www.somewhere.com/lets-go/" disabled=true}}`);
+  this.render(
+    hbs`{{polaris-button url="http://www.somewhere.com/lets-go/" disabled=true}}`
+  );
 
   buttons = findAll('a.Polaris-Button');
   assert.equal(buttons.length, 1, 'disabled link button - renders');
@@ -159,7 +202,10 @@ test('renders the correct HTML', function(assert) {
     button.classList.contains('Polaris-Button--disabled'),
     'disabled link button - disabled class'
   );
-  assert.ok(button.attributes['disabled'], 'disabled link button - disabled attribute');
+  assert.ok(
+    button.attributes['disabled'],
+    'disabled link button - disabled attribute'
+  );
 
   // Slim button.
   this.render(hbs`{{polaris-button size="slim"}}`);
@@ -168,7 +214,10 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'slim button - renders');
 
   button = buttons[0];
-  assert.ok(button.classList.contains('Polaris-Button--sizeSlim'), 'slim button - slim class');
+  assert.ok(
+    button.classList.contains('Polaris-Button--sizeSlim'),
+    'slim button - slim class'
+  );
   assert.notOk(
     button.classList.contains('Polaris-Button--sizeLarge'),
     'slim button - no large class'
@@ -181,7 +230,10 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'large button - renders');
 
   button = buttons[0];
-  assert.ok(button.classList.contains('Polaris-Button--sizeLarge'), 'large button - large class');
+  assert.ok(
+    button.classList.contains('Polaris-Button--sizeLarge'),
+    'large button - large class'
+  );
   assert.notOk(
     button.classList.contains('Polaris-Button--sizeSlim'),
     'large button - no slim class'
@@ -194,7 +246,10 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'outline button - renders');
 
   button = buttons[0];
-  assert.ok(button.classList.contains('Polaris-Button--outline'), 'outline button - outline class');
+  assert.ok(
+    button.classList.contains('Polaris-Button--outline'),
+    'outline button - outline class'
+  );
 
   // Button with fullWidth flag set.
   this.render(hbs`{{polaris-button fullWidth=true}}`);
@@ -221,7 +276,10 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'plain button - renders');
 
   button = buttons[0];
-  assert.ok(button.classList.contains('Polaris-Button--plain'), 'plain button - plain class');
+  assert.ok(
+    button.classList.contains('Polaris-Button--plain'),
+    'plain button - plain class'
+  );
 
   // Button with accessibility label.
   this.render(hbs`{{polaris-button accessibilityLabel="You can't see me!"}}`);
@@ -309,7 +367,10 @@ test('it supports `disclosure`', function(assert) {
 
   let button = find('button.Polaris-Button');
   let disclosureIcon = find(buttonIconSelector, button);
-  assert.notOk(disclosureIcon, 'button without disclosure - no disclosure icon rendered');
+  assert.notOk(
+    disclosureIcon,
+    'button without disclosure - no disclosure icon rendered'
+  );
 
   this.set('disclosure', true);
 
@@ -401,7 +462,9 @@ test('it applies passed-in classes to the rendered element when rendering a butt
 
 test('it applies passed-in classes to the rendered element when rendering a link', function(assert) {
   this.set('class', 'my-link click-me');
-  this.render(hbs`{{polaris-button class=class url="http://www.somewhere.com/lets-go/"}}`);
+  this.render(
+    hbs`{{polaris-button class=class url="http://www.somewhere.com/lets-go/"}}`
+  );
 
   let linkButton = find('a.Polaris-Button.my-link.click-me');
   assert.ok(linkButton, 'renders link button with input classes');
@@ -448,7 +511,11 @@ test('handles the loading flag correctly', function(assert) {
     'svg.Polaris-Icon__Svg'
   );
   let buttonIconSvgs = findAll(iconSvgSelector, button);
-  assert.equal(buttonIconSvgs.length, 2, 'loading unset - renders icon and disclosure icon');
+  assert.equal(
+    buttonIconSvgs.length,
+    2,
+    'loading unset - renders icon and disclosure icon'
+  );
 
   const spinnerSelector = buildNestedSelector(
     'span.Polaris-Button__Content',

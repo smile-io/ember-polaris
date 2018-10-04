@@ -10,7 +10,11 @@ const VERTICAL_PADDING = 13;
 
 function offsetForAlpha(alpha, sliderHeight, draggerHeight) {
   const slidableArea = sliderHeight - (draggerHeight + VERTICAL_PADDING);
-  return clamp((1 - alpha) * slidableArea + VERTICAL_PADDING, 0, sliderHeight - draggerHeight);
+  return clamp(
+    (1 - alpha) * slidableArea + VERTICAL_PADDING,
+    0,
+    sliderHeight - draggerHeight
+  );
 }
 
 function alphaForOffset(offset, sliderHeight) {
@@ -74,7 +78,10 @@ export default Component.extend({
 
   actions: {
     handleChange({ y }) {
-      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+      const { sliderHeight, onChange } = this.getProperties(
+        'sliderHeight',
+        'onChange'
+      );
       if (typeOf(onChange) !== 'function') {
         return;
       }

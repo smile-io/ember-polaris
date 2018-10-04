@@ -3,9 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-thumbnail', 'Integration | Component | polaris thumbnail', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-thumbnail',
+  'Integration | Component | polaris thumbnail',
+  {
+    integration: true,
+  }
+);
 
 const SRC = 'image.jpg';
 const ALT = 'Polaris thumbnail component';
@@ -21,7 +25,10 @@ test('it renders the correct HTML when all attributes are passed in', function(a
   this.render(hbs`{{polaris-thumbnail size=size source=src alt=alt}}`);
 
   let thumbnailSpan = find(THUMB_SELECTOR);
-  let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
+  let imageSelector = buildNestedSelector(
+    THUMB_SELECTOR,
+    '.Polaris-Thumbnail__Image'
+  );
   let image = find(imageSelector);
 
   // Container properties:
@@ -33,8 +40,16 @@ test('it renders the correct HTML when all attributes are passed in', function(a
 
   // Thumbnail image properties:
   assert.ok(image, 'image element is rendered');
-  assert.equal(image.getAttribute('src'), SRC, 'correct source attribute is applied to image node');
-  assert.equal(image.getAttribute('alt'), ALT, 'correct alt text is applied to image node');
+  assert.equal(
+    image.getAttribute('src'),
+    SRC,
+    'correct source attribute is applied to image node'
+  );
+  assert.equal(
+    image.getAttribute('alt'),
+    ALT,
+    'correct alt text is applied to image node'
+  );
 });
 
 test('it renders a correctly-sized thumbnail', function(assert) {
@@ -119,17 +134,31 @@ test('it renders a correctly-sized thumbnail', function(assert) {
 test('it does not apply alt text if `alt` is not passed in', function(assert) {
   this.render(hbs`{{polaris-thumbnail}}`);
 
-  let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
+  let imageSelector = buildNestedSelector(
+    THUMB_SELECTOR,
+    '.Polaris-Thumbnail__Image'
+  );
   let image = find(imageSelector);
 
-  assert.equal(image.getAttribute('alt'), null, 'no alt text - alt text is not applied to image');
+  assert.equal(
+    image.getAttribute('alt'),
+    null,
+    'no alt text - alt text is not applied to image'
+  );
 });
 
 test('it does not apply src if `source` is not passed in', function(assert) {
   this.render(hbs`{{polaris-thumbnail}}`);
 
-  let imageSelector = buildNestedSelector(THUMB_SELECTOR, '.Polaris-Thumbnail__Image');
+  let imageSelector = buildNestedSelector(
+    THUMB_SELECTOR,
+    '.Polaris-Thumbnail__Image'
+  );
   let image = find(imageSelector);
 
-  assert.equal(image.getAttribute('src'), null, 'no source - src is not applied to image');
+  assert.equal(
+    image.getAttribute('src'),
+    null,
+    'no source - src is not applied to image'
+  );
 });

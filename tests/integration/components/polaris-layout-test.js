@@ -3,12 +3,19 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-layout', 'Integration | Component | polaris layout', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-layout',
+  'Integration | Component | polaris layout',
+  {
+    integration: true,
+  }
+);
 
 const layoutSelector = 'div.Polaris-Layout';
-const layoutSectionSelector = buildNestedSelector(layoutSelector, 'div.Polaris-Layout__Section');
+const layoutSectionSelector = buildNestedSelector(
+  layoutSelector,
+  'div.Polaris-Layout__Section'
+);
 const layoutAnnotationWrapperSelector = buildNestedSelector(
   layoutSelector,
   'div.Polaris-Layout__AnnotatedSection',
@@ -20,10 +27,18 @@ test('it renders the correct HTML in basic usage', function(assert) {
   this.render(hbs`{{polaris-layout text="This is an inline layout"}}`);
 
   let layouts = findAll(layoutSelector);
-  assert.equal(layouts.length, 1, 'inline without sectioned flag - renders one layout');
+  assert.equal(
+    layouts.length,
+    1,
+    'inline without sectioned flag - renders one layout'
+  );
 
   let layout = layouts[0];
-  assert.equal(layout.children.length, 0, 'inline without sectioned flag - layout has no children');
+  assert.equal(
+    layout.children.length,
+    0,
+    'inline without sectioned flag - layout has no children'
+  );
   assert.equal(
     layout.textContent.trim(),
     'This is an inline layout',
@@ -31,13 +46,23 @@ test('it renders the correct HTML in basic usage', function(assert) {
   );
 
   // Test block form.
-  this.render(hbs`{{#polaris-layout}}This is a block layout{{/polaris-layout}}`);
+  this.render(
+    hbs`{{#polaris-layout}}This is a block layout{{/polaris-layout}}`
+  );
 
   layouts = findAll(layoutSelector);
-  assert.equal(layouts.length, 1, 'block without sectioned flag - renders one layout');
+  assert.equal(
+    layouts.length,
+    1,
+    'block without sectioned flag - renders one layout'
+  );
 
   layout = layouts[0];
-  assert.equal(layout.children.length, 0, 'block without sectioned flag - layout has no children');
+  assert.equal(
+    layout.children.length,
+    0,
+    'block without sectioned flag - layout has no children'
+  );
   assert.equal(
     layout.textContent.trim(),
     'This is a block layout',
@@ -45,14 +70,28 @@ test('it renders the correct HTML in basic usage', function(assert) {
   );
 
   // Test inline form with sectioned flag.
-  this.render(hbs`{{polaris-layout text="This is a sectioned inline layout" sectioned=true}}`);
+  this.render(
+    hbs`{{polaris-layout text="This is a sectioned inline layout" sectioned=true}}`
+  );
 
   layouts = findAll(layoutSelector);
-  assert.equal(layouts.length, 1, 'inline with sectioned flag - renders one layout');
-  assert.equal(layouts[0].children.length, 1, 'inline with sectioned flag - layout has one child');
+  assert.equal(
+    layouts.length,
+    1,
+    'inline with sectioned flag - renders one layout'
+  );
+  assert.equal(
+    layouts[0].children.length,
+    1,
+    'inline with sectioned flag - layout has one child'
+  );
 
   let layoutSections = findAll(layoutSectionSelector);
-  assert.equal(layoutSections.length, 1, 'inline with sectioned flag - renders layout section');
+  assert.equal(
+    layoutSections.length,
+    1,
+    'inline with sectioned flag - renders layout section'
+  );
   assert.equal(
     layoutSections[0].textContent.trim(),
     'This is a sectioned inline layout',
@@ -65,11 +104,23 @@ test('it renders the correct HTML in basic usage', function(assert) {
   );
 
   layouts = findAll(layoutSelector);
-  assert.equal(layouts.length, 1, 'block with sectioned flag - renders one layout');
-  assert.equal(layouts[0].children.length, 1, 'block with sectioned flag - layout has one child');
+  assert.equal(
+    layouts.length,
+    1,
+    'block with sectioned flag - renders one layout'
+  );
+  assert.equal(
+    layouts[0].children.length,
+    1,
+    'block with sectioned flag - layout has one child'
+  );
 
   layoutSections = findAll(layoutSectionSelector);
-  assert.equal(layoutSections.length, 1, 'inline with sectioned flag - renders layout section');
+  assert.equal(
+    layoutSections.length,
+    1,
+    'inline with sectioned flag - renders layout section'
+  );
   assert.equal(
     layoutSections[0].textContent.trim(),
     'This is a sectioned block layout',
@@ -188,13 +239,20 @@ test('it renders the correct HTML when using annotated sections in inline form',
   `);
 
   const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
-  assert.equal(annotationWrappers.length, 5, 'renders five annotation wrappers');
+  assert.equal(
+    annotationWrappers.length,
+    5,
+    'renders five annotation wrappers'
+  );
 
   const textContainerSelector = buildNestedSelector(
     'div.Polaris-Layout__Annotation',
     'div.Polaris-TextContainer'
   );
-  const headerSelector = buildNestedSelector(textContainerSelector, 'h2.Polaris-Heading');
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
+  );
   const descriptionSelector = buildNestedSelector(
     textContainerSelector,
     'span.Polaris-TextStyle--variationSubdued',
@@ -207,7 +265,11 @@ test('it renders the correct HTML when using annotated sections in inline form',
 
   let headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'first annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'first annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'first annotation - renders header correctly'
+  );
 
   let descriptions = findAll(descriptionSelector, annotationWrapper);
   assert.equal(
@@ -218,14 +280,22 @@ test('it renders the correct HTML when using annotated sections in inline form',
 
   let contents = findAll(contentSelector, annotationWrapper);
   assert.equal(contents.length, 1, 'first annotation - renders content');
-  assert.equal(contents[0].textContent.trim(), '', 'first annotation - renders correct content');
+  assert.equal(
+    contents[0].textContent.trim(),
+    '',
+    'first annotation - renders correct content'
+  );
 
   // Check the second annotation.
   annotationWrapper = annotationWrappers[1];
 
   headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'second annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'second annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'second annotation - renders header correctly'
+  );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
   assert.equal(
@@ -273,10 +343,18 @@ test('it renders the correct HTML when using annotated sections in inline form',
 
   headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'fourth annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'fourth annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'fourth annotation - renders header correctly'
+  );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(descriptions.length, 1, 'fourth annotation - renders description paragraph');
+  assert.equal(
+    descriptions.length,
+    1,
+    'fourth annotation - renders description paragraph'
+  );
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',
@@ -303,7 +381,11 @@ test('it renders the correct HTML when using annotated sections in inline form',
   );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(descriptions.length, 1, 'fifth annotation - renders description paragraph');
+  assert.equal(
+    descriptions.length,
+    1,
+    'fifth annotation - renders description paragraph'
+  );
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',
@@ -350,13 +432,20 @@ test('it renders the correct HTML when using annotated sections in block form', 
   `);
 
   const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
-  assert.equal(annotationWrappers.length, 5, 'renders five annotation wrappers');
+  assert.equal(
+    annotationWrappers.length,
+    5,
+    'renders five annotation wrappers'
+  );
 
   const textContainerSelector = buildNestedSelector(
     'div.Polaris-Layout__Annotation',
     'div.Polaris-TextContainer'
   );
-  const headerSelector = buildNestedSelector(textContainerSelector, 'h2.Polaris-Heading');
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
+  );
   const descriptionSelector = buildNestedSelector(
     textContainerSelector,
     'span.Polaris-TextStyle--variationSubdued',
@@ -369,7 +458,11 @@ test('it renders the correct HTML when using annotated sections in block form', 
 
   let headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'first annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'first annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'first annotation - renders header correctly'
+  );
 
   let descriptions = findAll(descriptionSelector, annotationWrapper);
   assert.equal(
@@ -380,14 +473,22 @@ test('it renders the correct HTML when using annotated sections in block form', 
 
   let contents = findAll(contentSelector, annotationWrapper);
   assert.equal(contents.length, 1, 'first annotation - renders content');
-  assert.equal(contents[0].textContent.trim(), '', 'first annotation - renders correct content');
+  assert.equal(
+    contents[0].textContent.trim(),
+    '',
+    'first annotation - renders correct content'
+  );
 
   // Check the second annotation.
   annotationWrapper = annotationWrappers[1];
 
   headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'second annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'second annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'second annotation - renders header correctly'
+  );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
   assert.equal(
@@ -435,10 +536,18 @@ test('it renders the correct HTML when using annotated sections in block form', 
 
   headers = findAll(headerSelector, annotationWrapper);
   assert.equal(headers.length, 1, 'fourth annotation - renders header');
-  assert.equal(headers[0].textContent.trim(), '', 'fourth annotation - renders header correctly');
+  assert.equal(
+    headers[0].textContent.trim(),
+    '',
+    'fourth annotation - renders header correctly'
+  );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(descriptions.length, 1, 'fourth annotation - renders description paragraph');
+  assert.equal(
+    descriptions.length,
+    1,
+    'fourth annotation - renders description paragraph'
+  );
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',
@@ -465,7 +574,11 @@ test('it renders the correct HTML when using annotated sections in block form', 
   );
 
   descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(descriptions.length, 1, 'fifth annotation - renders description paragraph');
+  assert.equal(
+    descriptions.length,
+    1,
+    'fifth annotation - renders description paragraph'
+  );
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',

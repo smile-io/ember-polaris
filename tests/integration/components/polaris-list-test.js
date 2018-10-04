@@ -8,7 +8,10 @@ moduleForComponent('polaris-list', 'Integration | Component | polaris list', {
 });
 
 const listSelector = '.Polaris-List';
-const listItemSelector = buildNestedSelector(listSelector, 'li.Polaris-List__Item');
+const listItemSelector = buildNestedSelector(
+  listSelector,
+  'li.Polaris-List__Item'
+);
 
 test('it renders the correct HTML', function(assert) {
   this.render(hbs`
@@ -29,7 +32,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(lists.length, 1, 'renders one bulleted list');
 
   let listItems = findAll(listItemSelector);
-  assert.equal(listItems.length, 0, 'no items - does not render any list items');
+  assert.equal(
+    listItems.length,
+    0,
+    'no items - does not render any list items'
+  );
 
   this.set('items', [
     {
@@ -45,7 +52,11 @@ test('it renders the correct HTML', function(assert) {
   listItems = findAll(listItemSelector);
   assert.equal(listItems.length, 2, 'with items - renders two list items');
 
-  assert.equal(listItems[0].textContent.trim(), 'Item one (block)', 'first item has correct text');
+  assert.equal(
+    listItems[0].textContent.trim(),
+    'Item one (block)',
+    'first item has correct text'
+  );
   assert.equal(
     listItems[1].textContent.trim(),
     'Second one (inline)',
@@ -53,7 +64,11 @@ test('it renders the correct HTML', function(assert) {
   );
 
   let list = lists[0];
-  assert.equal(list.nodeName, 'UL', 'unspecified type - renders unordered list');
+  assert.equal(
+    list.nodeName,
+    'UL',
+    'unspecified type - renders unordered list'
+  );
   assert.ok(
     list.classList.contains('Polaris-List--typeBullet'),
     'unspecified type - applies bullet class'
@@ -89,7 +104,11 @@ test('it renders the correct HTML', function(assert) {
 
   this.set('type', 'unsupported');
   list = find(listSelector);
-  assert.equal(list.nodeName, 'UL', 'unsupported type - renders unordered list');
+  assert.equal(
+    list.nodeName,
+    'UL',
+    'unsupported type - renders unordered list'
+  );
   assert.ok(
     list.classList.contains('Polaris-List--typeBullet'),
     'unsupported type - applies bullet class'

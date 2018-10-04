@@ -203,27 +203,38 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  rangeInputWrapperStyle: computed('min', 'max', 'value', 'sliderProgress', function() {
-    let { min, max, value: current, sliderProgress } = this.getProperties(
-      'min',
-      'max',
-      'value',
-      'sliderProgress'
-    );
-    let styleProps = assign(
-      { min, max, current },
-      {
-        progress: `${sliderProgress}%`,
-        outputFactor: invertNumber((sliderProgress - 50) / 100),
-      }
-    );
+  rangeInputWrapperStyle: computed(
+    'min',
+    'max',
+    'value',
+    'sliderProgress',
+    function() {
+      let { min, max, value: current, sliderProgress } = this.getProperties(
+        'min',
+        'max',
+        'value',
+        'sliderProgress'
+      );
+      let styleProps = assign(
+        { min, max, current },
+        {
+          progress: `${sliderProgress}%`,
+          outputFactor: invertNumber((sliderProgress - 50) / 100),
+        }
+      );
 
-    let styleString = Object.keys(styleProps).reduce((styleString, propName) => {
-      return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${styleProps[propName]};`;
-    }, '');
+      let styleString = Object.keys(styleProps).reduce(
+        (styleString, propName) => {
+          return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
+            styleProps[propName]
+          };`;
+        },
+        ''
+      );
 
-    return htmlSafe(styleString.trim());
-  }).readOnly(),
+      return htmlSafe(styleString.trim());
+    }
+  ).readOnly(),
 
   /**
    * Slider progress percentage
@@ -284,7 +295,10 @@ export default Component.extend({
 
   actions: {
     handleChange(event) {
-      this.get('onChange')(parseFloat(event.currentTarget.value), this.get('id'));
+      this.get('onChange')(
+        parseFloat(event.currentTarget.value),
+        this.get('id')
+      );
     },
   },
 });

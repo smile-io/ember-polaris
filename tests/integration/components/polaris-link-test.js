@@ -10,15 +10,29 @@ const linkSelector = 'a.Polaris-Link';
 const linkButtonSelector = 'button.Polaris-Link';
 
 test('it renders the correct HTML in basic inline usage with a URL', function(assert) {
-  this.render(hbs`{{polaris-link url="http://www.somewhere.com/" text="This is an inline link"}}`);
+  this.render(
+    hbs`{{polaris-link url="http://www.somewhere.com/" text="This is an inline link"}}`
+  );
 
   const links = findAll(linkSelector);
   assert.equal(links.length, 1, 'renders one link');
 
   const link = links[0];
-  assert.equal(link.href, 'http://www.somewhere.com/', 'renders the correct href');
-  assert.equal(link.textContent.trim(), 'This is an inline link', 'renders the correct link text');
-  assert.equal(link.dataset.polarisUnstyled, 'true', 'applies data-polaris-unstyled to the link');
+  assert.equal(
+    link.href,
+    'http://www.somewhere.com/',
+    'renders the correct href'
+  );
+  assert.equal(
+    link.textContent.trim(),
+    'This is an inline link',
+    'renders the correct link text'
+  );
+  assert.equal(
+    link.dataset.polarisUnstyled,
+    'true',
+    'applies data-polaris-unstyled to the link'
+  );
   assert.notOk(link.target, 'does not set a target attribute on the link');
   assert.notOk(link.rel, 'does not set a rel attribute on the link');
 });
@@ -34,9 +48,21 @@ test('it renders the correct HTML in basic block usage with a URL', function(ass
   assert.equal(links.length, 1, 'renders one link');
 
   const link = links[0];
-  assert.equal(link.href, 'http://www.somewhere.com/', 'renders the correct href');
-  assert.equal(link.textContent.trim(), 'This is a block link', 'renders the correct link text');
-  assert.equal(link.dataset.polarisUnstyled, 'true', 'applies data-polaris-unstyled to the link');
+  assert.equal(
+    link.href,
+    'http://www.somewhere.com/',
+    'renders the correct href'
+  );
+  assert.equal(
+    link.textContent.trim(),
+    'This is a block link',
+    'renders the correct link text'
+  );
+  assert.equal(
+    link.dataset.polarisUnstyled,
+    'true',
+    'applies data-polaris-unstyled to the link'
+  );
   assert.notOk(link.target, 'does not set a target attribute on the link');
   assert.notOk(link.rel, 'does not set a rel attribute on the link');
 });
@@ -54,8 +80,16 @@ test('it renders the correct HTML with external attribute', function(assert) {
   assert.equal(links.length, 1, 'renders one link');
 
   const link = links[0];
-  assert.equal(link.target, '_blank', 'sets the correct target attribute on the link');
-  assert.equal(link.rel, 'noopener noreferrer', 'sets the correct rel attribute on the link');
+  assert.equal(
+    link.target,
+    '_blank',
+    'sets the correct target attribute on the link'
+  );
+  assert.equal(
+    link.rel,
+    'noopener noreferrer',
+    'sets the correct rel attribute on the link'
+  );
 });
 
 test('it renders the correct HTML in basic inline usage without a URL', function(assert) {
@@ -182,7 +216,9 @@ test('clicking a link button performs the button action but does not bubble to t
 
 test('it applies passed-in classes to the rendered element when rendering a link', function(assert) {
   this.set('class', 'my-link click-me');
-  this.render(hbs`{{polaris-link class=class url="http://www.somewhere.com/"}}`);
+  this.render(
+    hbs`{{polaris-link class=class url="http://www.somewhere.com/"}}`
+  );
 
   let link = find(`${linkSelector}.my-link.click-me`);
   assert.ok(link, 'renders link with input classes');

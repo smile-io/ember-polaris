@@ -160,7 +160,9 @@ export default Component.extend({
    */
   styleClass: computed('finalName', function() {
     let finalName = this.get('finalName');
-    let styleIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % styleClasses.length;
+    let styleIndex = isEmpty(finalName)
+      ? 0
+      : finalName.charCodeAt(0) % styleClasses.length;
     let style = styleClasses[styleIndex];
 
     return `Polaris-Avatar--style${classify(style)}`;
@@ -193,7 +195,9 @@ export default Component.extend({
     }
 
     let finalName = this.get('finalName');
-    let avatarIndex = isEmpty(finalName) ? 0 : finalName.charCodeAt(0) % avatarImages.length;
+    let avatarIndex = isEmpty(finalName)
+      ? 0
+      : finalName.charCodeAt(0) % avatarImages.length;
     return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
   }).readOnly(),
 });

@@ -31,14 +31,18 @@ const DummyLabelComponent = Component.extend({
   text: null,
 });
 
-moduleForComponent('polaris-checkbox', 'Integration | Component | polaris checkbox', {
-  integration: true,
+moduleForComponent(
+  'polaris-checkbox',
+  'Integration | Component | polaris checkbox',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-    this.register('component:dummy-label', DummyLabelComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+      this.register('component:dummy-label', DummyLabelComponent);
+    },
+  }
+);
 
 const choiceSelector = 'label.Polaris-Choice';
 const checkboxControlWrapperSelector = buildNestedSelector(
@@ -66,7 +70,10 @@ const checkboxIconSvgSelector = buildNestedSelector(
   'span.Polaris-Icon',
   'svg'
 );
-const checkboxLabelSelector = buildNestedSelector(choiceSelector, 'span.Polaris-Choice__Label');
+const checkboxLabelSelector = buildNestedSelector(
+  choiceSelector,
+  'span.Polaris-Choice__Label'
+);
 
 test('it renders the correct HTML', function(assert) {
   this.setProperties({
@@ -106,7 +113,11 @@ test('it renders the correct HTML', function(assert) {
   );
   const helpTexts = findAll(helpTextSelector);
   assert.equal(helpTexts.length, 1, 'renders one help text');
-  assert.equal(helpTexts[0].textContent.trim(), 'Help!', 'renders the correct help text');
+  assert.equal(
+    helpTexts[0].textContent.trim(),
+    'Help!',
+    'renders the correct help text'
+  );
 
   const errorSelector = buildNestedSelector(
     'div.Polaris-Choice__Descriptions',
@@ -114,7 +125,11 @@ test('it renders the correct HTML', function(assert) {
   );
   const errors = findAll(errorSelector);
   assert.equal(errors.length, 1, 'renders one error');
-  assert.equal(errors[0].textContent.trim(), "I've got an error", 'renders the correct error text');
+  assert.equal(
+    errors[0].textContent.trim(),
+    "I've got an error",
+    'renders the correct error text'
+  );
 
   // Check the label.
   const labels = findAll(checkboxLabelSelector);
@@ -169,7 +184,10 @@ test('it handles the disabled attribute correctly', function(assert) {
   assert.ok(input.disabled, 'checkbox input is disabled when disabled is true');
 
   this.set('disabled', false);
-  assert.notOk(input.disabled, 'checkbox input is not disabled when disabled is false');
+  assert.notOk(
+    input.disabled,
+    'checkbox input is not disabled when disabled is false'
+  );
 });
 
 test("it sets the input's aria-describedby attribute correctly", function(assert) {
@@ -277,7 +295,10 @@ test('it handles the checked state correctly', function(assert) {
   assert.ok(checkboxIcon, 'renders the checkbox icon');
 
   // `checked` should default to false.
-  assert.notOk(checkboxInput.checked, 'checked unset - checkbox is not checked');
+  assert.notOk(
+    checkboxInput.checked,
+    'checked unset - checkbox is not checked'
+  );
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'false',
@@ -319,7 +340,10 @@ test('it handles the checked state correctly', function(assert) {
   );
 
   this.set('checked', 'indeterminate');
-  assert.notOk(checkboxInput.checked, 'checked indeterminate - checkbox is not checked');
+  assert.notOk(
+    checkboxInput.checked,
+    'checked indeterminate - checkbox is not checked'
+  );
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'mixed',
@@ -338,7 +362,10 @@ test('it handles the checked state correctly', function(assert) {
   // assert.equal(checkboxInput.getAttribute('indeterminate'), 'true', 'checked indeterminate - checkbox has indeterminate attribute');
 
   this.set('checked', false);
-  assert.notOk(checkboxInput.checked, 'checked false - checkbox is not checked');
+  assert.notOk(
+    checkboxInput.checked,
+    'checked false - checkbox is not checked'
+  );
   assert.equal(
     checkboxInput.getAttribute('aria-checked'),
     'false',
@@ -364,7 +391,10 @@ test('it handles the checked state correctly', function(assert) {
 test('it handles explicit label components correctly', function(assert) {
   this.render(hbs`{{polaris-checkbox labelComponent="dummy-label"}}`);
 
-  const dummyLabelSelector = buildNestedSelector(checkboxLabelSelector, 'div.dummy-label');
+  const dummyLabelSelector = buildNestedSelector(
+    checkboxLabelSelector,
+    'div.dummy-label'
+  );
   const dummyLabels = findAll(dummyLabelSelector);
   assert.equal(dummyLabels.length, 1, 'renders one label component');
 });
@@ -372,7 +402,10 @@ test('it handles explicit label components correctly', function(assert) {
 test('it handles label components correctly', function(assert) {
   this.render(hbs`{{polaris-checkbox label=(component "dummy-label")}}`);
 
-  const dummyLabelSelector = buildNestedSelector(checkboxLabelSelector, 'div.dummy-label');
+  const dummyLabelSelector = buildNestedSelector(
+    checkboxLabelSelector,
+    'div.dummy-label'
+  );
   const dummyLabels = findAll(dummyLabelSelector);
   assert.equal(dummyLabels.length, 1, 'renders one label component');
 });

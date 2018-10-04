@@ -38,9 +38,16 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
   ];
 
   const dropZoneSelector = '.Polaris-DropZone';
-  const containerSelector = buildNestedSelector(dropZoneSelector, '.Polaris-DropZone__Container');
+  const containerSelector = buildNestedSelector(
+    dropZoneSelector,
+    '.Polaris-DropZone__Container'
+  );
   // Hidden dropzone input element
-  const inputSelector = buildNestedSelector(dropZoneSelector, '.Polaris-VisuallyHidden', 'input');
+  const inputSelector = buildNestedSelector(
+    dropZoneSelector,
+    '.Polaris-VisuallyHidden',
+    'input'
+  );
 
   // Overlays
   const dropZoneOverlaySelector = buildNestedSelector(
@@ -59,7 +66,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     dropZoneOverlayStackItemSelector,
     '.Polaris-Icon'
   );
-  const dropZoneOverlayIconSVGSelector = buildNestedSelector(dropZoneOverlayIconSelector, 'svg');
+  const dropZoneOverlayIconSVGSelector = buildNestedSelector(
+    dropZoneOverlayIconSelector,
+    'svg'
+  );
   const dropZoneOverlayTextSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
     '.Polaris-DisplayText'
@@ -76,18 +86,29 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     // Defaults
     assert.dom(dropZoneSelector).exists('has Polaris-DropZone class');
-    assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--hasOutline', 'has outline class');
     assert
       .dom(dropZoneSelector)
-      .hasClass('Polaris-DropZone--sizeExtraLarge', 'has extra large size class');
+      .hasClass('Polaris-DropZone--hasOutline', 'has outline class');
+    assert
+      .dom(dropZoneSelector)
+      .hasClass(
+        'Polaris-DropZone--sizeExtraLarge',
+        'has extra large size class'
+      );
 
     assert.dom(containerSelector).exists('has the DropZone container element');
 
     assert.dom(inputSelector).exists('has the input element hidden');
     assert
       .dom(inputSelector)
-      .hasAttribute('autocomplete', 'off', 'input element has attribute autocomplete `off`');
-    assert.dom(inputSelector).hasAttribute('multiple', '', 'input element has attribute multiple');
+      .hasAttribute(
+        'autocomplete',
+        'off',
+        'input element has attribute autocomplete `off`'
+      );
+    assert
+      .dom(inputSelector)
+      .hasAttribute('multiple', '', 'input element has attribute multiple');
     assert
       .dom(inputSelector)
       .hasAttribute('type', 'file', 'input element has attribute type `file`');
@@ -100,7 +121,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     await render(hbs`{{polaris-drop-zone outline=outline}}`);
 
-    assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--hasOutline', 'has outline class');
+    assert
+      .dom(dropZoneSelector)
+      .hasClass('Polaris-DropZone--hasOutline', 'has outline class');
 
     this.set('outline', false);
     assert
@@ -124,7 +147,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       );
     assert
       .dom(inputSelector)
-      .isNotDisabled('if `disabled` is not provided, input does not have `disabled` attribute');
+      .isNotDisabled(
+        'if `disabled` is not provided, input does not have `disabled` attribute'
+      );
 
     this.set('disabled', true);
     assert
@@ -134,7 +159,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         'true',
         '`aria-disabled` attribute set, if `disabled` is true'
       );
-    assert.dom(inputSelector).isDisabled('if `disabled` is true, input is disabled');
+    assert
+      .dom(inputSelector)
+      .isDisabled('if `disabled` is true, input is disabled');
   });
 
   test('it supports `accept` property', async function(assert) {
@@ -150,14 +177,18 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       );
 
     this.set('accept', 'image/*');
-    assert.dom(inputSelector).hasAttribute('accept', 'image/*', '`accept` attribute properly set');
+    assert
+      .dom(inputSelector)
+      .hasAttribute('accept', 'image/*', '`accept` attribute properly set');
   });
 
   test('it supports `error` && `errorOverlayText` properties', async function(assert) {
     assert.expect(3);
 
     let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
-    await render(hbs`{{polaris-drop-zone error=error errorOverlayText=errorOverlayText}}`);
+    await render(
+      hbs`{{polaris-drop-zone error=error errorOverlayText=errorOverlayText}}`
+    );
     await triggerEvent(dropZoneSelector, 'dragenter', event);
 
     assert
@@ -173,10 +204,16 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
     assert
       .dom(dropZoneSelector)
-      .hasClass('Polaris-DropZone--hasError', 'if `error` is true, dropzone has error class');
+      .hasClass(
+        'Polaris-DropZone--hasError',
+        'if `error` is true, dropzone has error class'
+      );
     assert
       .dom(dropZoneOverlayTextSelector)
-      .hasText('Something went haywire!', 'dropzone error overlay has proper text');
+      .hasText(
+        'Something went haywire!',
+        'dropzone error overlay has proper text'
+      );
   });
 
   test('it supports `overlayText` property', async function(assert) {
@@ -184,7 +221,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     this.set('overlay', true);
     let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
-    await render(hbs`{{polaris-drop-zone overlay=overlay overlayText=overlayText}}`);
+    await render(
+      hbs`{{polaris-drop-zone overlay=overlay overlayText=overlayText}}`
+    );
     await triggerEvent(dropZoneSelector, 'dragenter', event);
 
     this.set('overlayText', 'Something draggin here!');
@@ -212,17 +251,23 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     this.set('style', htmlSafe(`width: ${largeWidth}px;`));
     await triggerEvent(window, 'resize');
     await settled();
-    assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeLarge', 'has large class');
+    assert
+      .dom(dropZoneSelector)
+      .hasClass('Polaris-DropZone--sizeLarge', 'has large class');
 
     this.set('style', htmlSafe(`width: ${mediumWidth}px;`));
     await triggerEvent(window, 'resize');
     await settled();
-    assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeMedium', 'has medium class');
+    assert
+      .dom(dropZoneSelector)
+      .hasClass('Polaris-DropZone--sizeMedium', 'has medium class');
 
     this.set('style', htmlSafe(`width: ${smallWidth}px;`));
     await triggerEvent(window, 'resize');
     await settled();
-    assert.dom(dropZoneSelector).hasClass('Polaris-DropZone--sizeSmall', 'has small class');
+    assert
+      .dom(dropZoneSelector)
+      .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
   });
 
   module('rendering', function() {
@@ -236,26 +281,43 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       assert
         .dom(dropZoneSelector)
-        .hasClass('Polaris-DropZone--isDragging', 'has isDragging class when dragging');
+        .hasClass(
+          'Polaris-DropZone--isDragging',
+          'has isDragging class when dragging'
+        );
       assert
         .dom(dropZoneSelector)
         .doesNotHaveClass(
           'Polaris-DropZone--hasError',
           'does not have hasError class when dragging and no rejected files'
         );
-      assert.dom(dropZoneOverlayStackSelector).exists('dropzone overlay wraps content in a stack');
       assert
         .dom(dropZoneOverlayStackSelector)
-        .hasClass('Polaris-Stack--vertical', 'dropzone overlay stack is vertically aligned');
+        .exists('dropzone overlay wraps content in a stack');
       assert
         .dom(dropZoneOverlayStackSelector)
-        .hasClass('Polaris-Stack--spacingTight', 'dropzone overlay stack has tight spacing');
+        .hasClass(
+          'Polaris-Stack--vertical',
+          'dropzone overlay stack is vertically aligned'
+        );
+      assert
+        .dom(dropZoneOverlayStackSelector)
+        .hasClass(
+          'Polaris-Stack--spacingTight',
+          'dropzone overlay stack has tight spacing'
+        );
       assert
         .dom(dropZoneOverlayIconSelector)
-        .hasClass('Polaris-Icon--colorIndigo', 'dropzone overlay icon has colorIndigo class');
+        .hasClass(
+          'Polaris-Icon--colorIndigo',
+          'dropzone overlay icon has colorIndigo class'
+        );
       assert
         .dom(dropZoneOverlayIconSelector)
-        .hasClass('Polaris-Icon--isColored', 'dropzone overlay icon has isColored class');
+        .hasClass(
+          'Polaris-Icon--isColored',
+          'dropzone overlay icon has isColored class'
+        );
       assert
         .dom(dropZoneOverlayIconSVGSelector)
         .hasAttribute(
@@ -265,7 +327,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         );
       assert
         .dom(dropZoneOverlayTextSelector)
-        .hasClass('Polaris-DisplayText--sizeSmall', 'dropzone overlay text has sizeSmall class');
+        .hasClass(
+          'Polaris-DisplayText--sizeSmall',
+          'dropzone overlay text has sizeSmall class'
+        );
       assert
         .dom(dropZoneOverlayTextSelector)
         .hasText('Drop file to upload', 'dropzone overlay has proper text');
@@ -298,7 +363,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       assert
         .dom(dropZoneSelector)
-        .hasClass('Polaris-DropZone--isDragging', 'has isDragging class when dragging');
+        .hasClass(
+          'Polaris-DropZone--isDragging',
+          'has isDragging class when dragging'
+        );
       assert
         .dom(dropZoneSelector)
         .hasClass(
@@ -310,16 +378,28 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         .exists('dropzone error overlay wraps content in a stack');
       assert
         .dom(dropZoneOverlayStackSelector)
-        .hasClass('Polaris-Stack--vertical', 'dropzone error overlay stack is vertically aligned');
+        .hasClass(
+          'Polaris-Stack--vertical',
+          'dropzone error overlay stack is vertically aligned'
+        );
       assert
         .dom(dropZoneOverlayStackSelector)
-        .hasClass('Polaris-Stack--spacingTight', 'dropzone error overlay stack has tight spacing');
+        .hasClass(
+          'Polaris-Stack--spacingTight',
+          'dropzone error overlay stack has tight spacing'
+        );
       assert
         .dom(dropZoneOverlayIconSelector)
-        .hasClass('Polaris-Icon--colorRed', 'dropzone error overlay icon has colorRed class');
+        .hasClass(
+          'Polaris-Icon--colorRed',
+          'dropzone error overlay icon has colorRed class'
+        );
       assert
         .dom(dropZoneOverlayIconSelector)
-        .hasClass('Polaris-Icon--isColored', 'dropzone error overlay icon has isColored class');
+        .hasClass(
+          'Polaris-Icon--isColored',
+          'dropzone error overlay icon has isColored class'
+        );
       assert
         .dom(dropZoneOverlayIconSVGSelector)
         .hasAttribute(
@@ -335,7 +415,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         );
       assert
         .dom(dropZoneOverlayTextSelector)
-        .hasText('File type is not valid', 'dropzone error overlay has proper text');
+        .hasText(
+          'File type is not valid',
+          'dropzone error overlay has proper text'
+        );
       assert
         .dom(dropZoneOverlayCaptionSelector)
         .doesNotExist('dropzone error overlay does not have caption text');
@@ -367,7 +450,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         containerSelector,
         '.Polaris-DropZone-FileUpload'
       );
-      const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack');
+      const fileUploadStackSelector = buildNestedSelector(
+        fileUploadSelector,
+        '.Polaris-Stack'
+      );
       const fileUploadStackItemSelector = buildNestedSelector(
         fileUploadStackSelector,
         '.Polaris-Stack__Item'
@@ -397,11 +483,18 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         `);
 
         assert.dom(fileUploadSelector).exists('renders FileUpload component');
-        assert.dom(fileUploadStackSelector).exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
-        assert.dom(fileUploadImageSelector).exists('fileUpload image is rendered');
+          .exists('fileUpload wraps content in a stack');
+        assert
+          .dom(fileUploadStackSelector)
+          .hasClass(
+            'Polaris-Stack--vertical',
+            'fileUpload stack is vertically aligned'
+          );
+        assert
+          .dom(fileUploadImageSelector)
+          .exists('fileUpload image is rendered');
         assert.equal(
           find(fileUploadImageSelector).dataset.iconSource,
           'file-upload',
@@ -437,7 +530,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
         assert
           .dom(fileUploadButtonTextSelector)
-          .hasText('Add image', 'fileUpload button has correct text when image-type dropzone');
+          .hasText(
+            'Add image',
+            'fileUpload button has correct text when image-type dropzone'
+          );
         assert
           .dom(fileUploadTextSelector)
           .hasText(
@@ -452,7 +548,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         containerSelector,
         '.Polaris-DropZone-FileUpload'
       );
-      const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack');
+      const fileUploadStackSelector = buildNestedSelector(
+        fileUploadSelector,
+        '.Polaris-Stack'
+      );
       const fileUploadStackItemSelector = buildNestedSelector(
         fileUploadStackSelector,
         '.Polaris-Stack__Item'
@@ -486,14 +585,24 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         `);
 
         assert.dom(fileUploadSelector).exists('renders FileUpload component');
-        assert.dom(fileUploadStackSelector).exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
+          .exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--spacingTight', 'fileUpload stack has tight spacing');
-        assert.dom(fileUploadImageSelector).exists('fileUpload image is rendered');
+          .hasClass(
+            'Polaris-Stack--vertical',
+            'fileUpload stack is vertically aligned'
+          );
+        assert
+          .dom(fileUploadStackSelector)
+          .hasClass(
+            'Polaris-Stack--spacingTight',
+            'fileUpload stack has tight spacing'
+          );
+        assert
+          .dom(fileUploadImageSelector)
+          .exists('fileUpload image is rendered');
         assert.equal(
           find(fileUploadImageSelector).dataset.iconSource,
           'file-upload',
@@ -501,7 +610,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         );
         assert
           .dom(fileUploadImageSelector)
-          .hasClass('Polaris-DropZone-FileUpload--sizeLarge', '', 'fileUpload has large class');
+          .hasClass(
+            'Polaris-DropZone-FileUpload--sizeLarge',
+            '',
+            'fileUpload has large class'
+          );
         assert
           .dom(fileUploadButtonTextSelector)
           .hasText('Add file', 'fileUpload button has correct text');
@@ -510,7 +623,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .hasClass('Polaris-Button--sizeSlim', 'fileUpload button is slim');
         assert
           .dom(fileUploadCaptionSelector)
-          .hasText('or drop files to upload', 'fileUpload caption has correct text');
+          .hasText(
+            'or drop files to upload',
+            'fileUpload caption has correct text'
+          );
 
         this.set('type', 'image');
 
@@ -521,7 +637,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         );
         assert
           .dom(fileUploadImageSelector)
-          .hasClass('Polaris-DropZone-FileUpload--sizeLarge', '', 'fileUpload has large class');
+          .hasClass(
+            'Polaris-DropZone-FileUpload--sizeLarge',
+            '',
+            'fileUpload has large class'
+          );
         assert
           .dom(fileUploadButtonTextSelector)
           .hasText('Add image', 'fileUpload button has correct text');
@@ -554,7 +674,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .doesNotExist('dropzone overlay does not have display text');
         assert
           .dom(dropZoneOverlayCaptionSelector)
-          .hasText('Drop file to upload', 'dropzone overlay caption has proper text');
+          .hasText(
+            'Drop file to upload',
+            'dropzone overlay caption has proper text'
+          );
 
         // Test that it shows error state
         this.set('accept', 'image/*');
@@ -564,7 +687,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .doesNotExist('dropzone error overlay does not have display text');
         assert
           .dom(dropZoneOverlayCaptionSelector)
-          .hasText('Drop file to upload', 'dropzone error overlay caption has proper text');
+          .hasText(
+            'Drop file to upload',
+            'dropzone error overlay caption has proper text'
+          );
       });
     });
 
@@ -573,7 +699,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         containerSelector,
         '.Polaris-DropZone-FileUpload'
       );
-      const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack');
+      const fileUploadStackSelector = buildNestedSelector(
+        fileUploadSelector,
+        '.Polaris-Stack'
+      );
       const fileUploadStackItemSelector = buildNestedSelector(
         fileUploadStackSelector,
         '.Polaris-Stack__Item'
@@ -600,23 +729,39 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         `);
 
         assert.dom(fileUploadSelector).exists('renders FileUpload component');
-        assert.dom(fileUploadStackSelector).exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
+          .exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--spacingTight', 'fileUpload stack has tight spacing');
-        assert.dom(fileUploadLinkSelector).hasText('Add file', 'fileUpload link has correct text');
+          .hasClass(
+            'Polaris-Stack--vertical',
+            'fileUpload stack is vertically aligned'
+          );
+        assert
+          .dom(fileUploadStackSelector)
+          .hasClass(
+            'Polaris-Stack--spacingTight',
+            'fileUpload stack has tight spacing'
+          );
+        assert
+          .dom(fileUploadLinkSelector)
+          .hasText('Add file', 'fileUpload link has correct text');
         assert
           .dom(fileUploadCaptionSelector)
-          .hasText('or drop files to upload', 'fileUpload caption has correct text');
+          .hasText(
+            'or drop files to upload',
+            'fileUpload caption has correct text'
+          );
 
         this.set('type', 'image');
 
         assert
           .dom(fileUploadLinkSelector)
-          .hasText('Add image', 'fileUpload link has correct text when image-type dropzone');
+          .hasText(
+            'Add image',
+            'fileUpload link has correct text when image-type dropzone'
+          );
         assert
           .dom(fileUploadCaptionSelector)
           .hasText(
@@ -646,7 +791,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .doesNotExist('dropzone overlay does not have display text');
         assert
           .dom(dropZoneOverlayCaptionSelector)
-          .hasText('Drop file to upload', 'dropzone overlay caption has proper text');
+          .hasText(
+            'Drop file to upload',
+            'dropzone overlay caption has proper text'
+          );
 
         // Test that it shows error state
         this.set('accept', 'image/*');
@@ -656,7 +804,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .doesNotExist('dropzone error overlay does not have display text');
         assert
           .dom(dropZoneOverlayCaptionSelector)
-          .hasText('Drop file to upload', 'dropzone error overlay caption has proper text');
+          .hasText(
+            'Drop file to upload',
+            'dropzone error overlay caption has proper text'
+          );
       });
     });
 
@@ -669,7 +820,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         containerSelector,
         '.Polaris-DropZone-FileUpload'
       );
-      const fileUploadStackSelector = buildNestedSelector(fileUploadSelector, '.Polaris-Stack');
+      const fileUploadStackSelector = buildNestedSelector(
+        fileUploadSelector,
+        '.Polaris-Stack'
+      );
       const fileUploadStackItemSelector = buildNestedSelector(
         fileUploadStackSelector,
         '.Polaris-Stack__Item'
@@ -678,7 +832,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         fileUploadStackItemSelector,
         '.Polaris-Icon'
       );
-      const fileUploadIconSVGSelector = buildNestedSelector(fileUploadIconSelector, 'svg');
+      const fileUploadIconSVGSelector = buildNestedSelector(
+        fileUploadIconSelector,
+        'svg'
+      );
 
       test('it renders properly with FileUpload', async function(assert) {
         assert.expect(8);
@@ -693,20 +850,36 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         `);
 
         assert.dom(fileUploadSelector).exists('renders FileUpload component');
-        assert.dom(fileUploadStackSelector).exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--vertical', 'fileUpload stack is vertically aligned');
+          .exists('fileUpload wraps content in a stack');
         assert
           .dom(fileUploadStackSelector)
-          .hasClass('Polaris-Stack--spacingTight', 'fileUpload stack has tight spacing');
-        assert.dom(fileUploadIconSelector).exists('fileUpload icon is rendered');
+          .hasClass(
+            'Polaris-Stack--vertical',
+            'fileUpload stack is vertically aligned'
+          );
+        assert
+          .dom(fileUploadStackSelector)
+          .hasClass(
+            'Polaris-Stack--spacingTight',
+            'fileUpload stack has tight spacing'
+          );
         assert
           .dom(fileUploadIconSelector)
-          .hasClass('Polaris-Icon--colorInkLightest', 'fileUpload icon has colorInkLightest class');
+          .exists('fileUpload icon is rendered');
         assert
           .dom(fileUploadIconSelector)
-          .hasClass('Polaris-Icon--isColored', 'fileUpload icon has isColored class');
+          .hasClass(
+            'Polaris-Icon--colorInkLightest',
+            'fileUpload icon has colorInkLightest class'
+          );
+        assert
+          .dom(fileUploadIconSelector)
+          .hasClass(
+            'Polaris-Icon--isColored',
+            'fileUpload icon has isColored class'
+          );
         assert
           .dom(fileUploadIconSVGSelector)
           .hasAttribute(
@@ -763,7 +936,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.expect(6);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, expectedFiles, 'onDrop action receives correct `files`');
+        assert.deepEqual(
+          files,
+          expectedFiles,
+          'onDrop action receives correct `files`'
+        );
         assert.deepEqual(
           acceptedFiles,
           expectedAcceptedFiles,
@@ -788,7 +965,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       expectedAcceptedFiles = uploadedFiles.slice(0, 2);
       expectedRejectedFiles = uploadedFiles.slice(2, 3);
 
-      await render(hbs`{{polaris-drop-zone accept="image/*" onDrop=(action drop)}}`);
+      await render(
+        hbs`{{polaris-drop-zone accept="image/*" onDrop=(action drop)}}`
+      );
       await triggerEvent(dropZoneSelector, 'drop', event);
     });
 
@@ -796,7 +975,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.expect(9);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, expectedFiles, 'onDrop action receives correct `files`');
+        assert.deepEqual(
+          files,
+          expectedFiles,
+          'onDrop action receives correct `files`'
+        );
         assert.deepEqual(
           acceptedFiles,
           expectedAcceptedFiles,
@@ -819,7 +1002,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(document, 'drop', event);
 
       // Test that triggering callbacks on document when `dropOnPage` is true works
-      await render(hbs`{{polaris-drop-zone dropOnPage=true onDrop=(action drop)}}`);
+      await render(
+        hbs`{{polaris-drop-zone dropOnPage=true onDrop=(action drop)}}`
+      );
       await triggerEvent(document, 'drop', event);
 
       // Test that selecting files triggers onDrop
@@ -923,7 +1108,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       this.element
         .querySelector(inputSelector)
-        .addEventListener('click', () => assert.ok('input element click triggered'));
+        .addEventListener('click', () =>
+          assert.ok('input element click triggered')
+        );
 
       await triggerEvent(dropZoneSelector, 'click', event);
 
@@ -977,7 +1164,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       this.set('customValidator', (file) => file.type === 'image/jpeg');
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'drop action receives correct `files`');
+        assert.deepEqual(
+          files,
+          uploadedFiles,
+          'drop action receives correct `files`'
+        );
         assert.deepEqual(
           acceptedFiles,
           uploadedFiles.slice(0, 1),
@@ -1002,18 +1193,28 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.expect(4);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
-        assert.deepEqual(files, uploadedFiles, 'drop action receives correct `files`');
+        assert.deepEqual(
+          files,
+          uploadedFiles,
+          'drop action receives correct `files`'
+        );
         assert.deepEqual(
           acceptedFiles,
           uploadedFiles.slice(0, 1),
           'drop action receives correct `acceptedFiles`'
         );
-        assert.deepEqual(rejectedFiles, [], 'drop action receives correct `rejectedFiles`');
+        assert.deepEqual(
+          rejectedFiles,
+          [],
+          'drop action receives correct `rejectedFiles`'
+        );
       });
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
 
-      await render(hbs`{{polaris-drop-zone allowMultiple=false onDrop=(action drop)}}`);
+      await render(
+        hbs`{{polaris-drop-zone allowMultiple=false onDrop=(action drop)}}`
+      );
       await triggerEvent(dropZoneSelector, 'drop', event);
 
       assert

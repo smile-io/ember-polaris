@@ -2,15 +2,20 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 
-moduleForComponent('polaris-display-text', 'Integration | Component | polaris display text', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-display-text',
+  'Integration | Component | polaris display text',
+  {
+    integration: true,
+  }
+);
 
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
   this.render(hbs`{{polaris-display-text text="This is some text"}}`);
 
-  let displayTextSelector = 'p.Polaris-DisplayText.Polaris-DisplayText--sizeMedium';
+  let displayTextSelector =
+    'p.Polaris-DisplayText.Polaris-DisplayText--sizeMedium';
   assert.equal(
     findAll(displayTextSelector).length,
     1,
@@ -29,7 +34,8 @@ test('it renders the correct HTML', function(assert) {
     {{/polaris-display-text}}
   `);
 
-  displayTextSelector = 'h3.Polaris-DisplayText.Polaris-DisplayText--sizeExtraLarge';
+  displayTextSelector =
+    'h3.Polaris-DisplayText.Polaris-DisplayText--sizeExtraLarge';
   assert.equal(
     findAll(displayTextSelector).length,
     1,

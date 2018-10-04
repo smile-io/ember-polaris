@@ -3,9 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-form-layout', 'Integration | Component | polaris form layout', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-form-layout',
+  'Integration | Component | polaris form layout',
+  {
+    integration: true,
+  }
+);
 
 const formLayoutSelector = 'div.Polaris-FormLayout';
 
@@ -28,17 +32,29 @@ test('it renders the correct HTML in basic usage', function(assert) {
     'div.Polaris-FormLayout__Item'
   );
   const formLayoutItems = findAll(formLayoutItemSelector);
-  assert.equal(formLayoutItems.length, 2, 'renders the correct number of layout items');
+  assert.equal(
+    formLayoutItems.length,
+    2,
+    'renders the correct number of layout items'
+  );
 
   // Check the first item.
   let item = find('div.item', formLayoutItems[0]);
   assert.ok(item, 'first item - renders');
-  assert.equal(item.textContent.trim(), 'Item 1', 'first item - has the correct content');
+  assert.equal(
+    item.textContent.trim(),
+    'Item 1',
+    'first item - has the correct content'
+  );
 
   // Check the second item.
   item = find('div.item', formLayoutItems[1]);
   assert.ok(item, 'second item - renders');
-  assert.equal(item.textContent.trim(), 'Item 2', 'second item - has the correct content');
+  assert.equal(
+    item.textContent.trim(),
+    'Item 2',
+    'second item - has the correct content'
+  );
 });
 
 test('it renders the correct HTML when using groups', function(assert) {
@@ -63,13 +79,23 @@ test('it renders the correct HTML when using groups', function(assert) {
   const formLayouts = findAll(formLayoutSelector);
   assert.equal(formLayouts.length, 1, 'renders the correct number of layouts');
 
-  const itemSelector = buildNestedSelector('div.Polaris-FormLayout__Item', 'div.item');
+  const itemSelector = buildNestedSelector(
+    'div.Polaris-FormLayout__Item',
+    'div.item'
+  );
   const items = findAll(itemSelector);
   assert.equal(items.length, 4, 'renders the correct number of items');
 
-  const formLayoutGroupSelector = buildNestedSelector(formLayoutSelector, 'div[role="group"]');
+  const formLayoutGroupSelector = buildNestedSelector(
+    formLayoutSelector,
+    'div[role="group"]'
+  );
   const formLayoutGroups = findAll(formLayoutGroupSelector);
-  assert.equal(formLayoutGroups.length, 2, 'renders the correct number of groups');
+  assert.equal(
+    formLayoutGroups.length,
+    2,
+    'renders the correct number of groups'
+  );
 
   // Check the first group.
   let group = formLayoutGroups[0];
@@ -78,9 +104,16 @@ test('it renders the correct HTML when using groups', function(assert) {
     'first group - does not have condensed class'
   );
 
-  const groupItemSelector = buildNestedSelector('div.Polaris-FormLayout__Items', itemSelector);
+  const groupItemSelector = buildNestedSelector(
+    'div.Polaris-FormLayout__Items',
+    itemSelector
+  );
   let groupItems = findAll(groupItemSelector, group);
-  assert.equal(groupItems.length, 2, 'first group - renders the correct number of items');
+  assert.equal(
+    groupItems.length,
+    2,
+    'first group - renders the correct number of items'
+  );
   assert.equal(
     groupItems[0].textContent.trim(),
     'Default group item 1',
@@ -100,7 +133,11 @@ test('it renders the correct HTML when using groups', function(assert) {
   );
 
   groupItems = findAll(groupItemSelector, group);
-  assert.equal(groupItems.length, 1, 'second group - renders the correct number of items');
+  assert.equal(
+    groupItems.length,
+    1,
+    'second group - renders the correct number of items'
+  );
   assert.equal(
     groupItems[0].textContent.trim(),
     'Condensed group item',
@@ -108,9 +145,16 @@ test('it renders the correct HTML when using groups', function(assert) {
   );
 
   // Check the ungrouped content.
-  const ungroupedItemSelector = buildNestedSelector(formLayoutSelector, itemSelector);
+  const ungroupedItemSelector = buildNestedSelector(
+    formLayoutSelector,
+    itemSelector
+  );
   const ungroupedItems = findAll(ungroupedItemSelector);
-  assert.equal(ungroupedItems.length, 1, 'ungrouped - renders the correct number of items');
+  assert.equal(
+    ungroupedItems.length,
+    1,
+    'ungrouped - renders the correct number of items'
+  );
   assert.equal(
     ungroupedItems[0].textContent.trim(),
     'Ungrouped item',

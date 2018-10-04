@@ -5,9 +5,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-resource-list', 'Integration | Component | polaris resource list', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-resource-list',
+  'Integration | Component | polaris resource list',
+  {
+    integration: true,
+  }
+);
 
 const resourceListSelector = 'ul.Polaris-ResourceList';
 const resourceListItemSelector = buildNestedSelector(
@@ -31,7 +35,11 @@ test('it renders the correct HTML when the list is empty', function(assert) {
 
   const resourceLists = findAll(resourceListSelector);
   assert.equal(resourceLists.length, 1, 'renders one resource list');
-  assert.equal(resourceLists[0].children.length, 0, 'does not render any children');
+  assert.equal(
+    resourceLists[0].children.length,
+    0,
+    'does not render any children'
+  );
 });
 
 test('it renders the correct HTML when using the default item rendering', function(assert) {
@@ -60,7 +68,9 @@ test('it renders the correct HTML when using the default item rendering', functi
   const resourceListItems = findAll(resourceListItemSelector);
   assert.equal(resourceListItems.length, 4, 'renders four resource list items');
 
-  const resourceListItemAttributes = findAll(resourceListItemAttributesSelector);
+  const resourceListItemAttributes = findAll(
+    resourceListItemAttributesSelector
+  );
   assert.equal(
     resourceListItemAttributes.length,
     4,
@@ -184,13 +194,20 @@ test('it renders the correct HTML when using itemComponent', function(assert) {
     }}
   `);
 
-  const itemsSelector = buildNestedSelector(resourceListItemSelector, 'a.custom-item-renderer');
+  const itemsSelector = buildNestedSelector(
+    resourceListItemSelector,
+    'a.custom-item-renderer'
+  );
   const items = findAll(itemsSelector);
   assert.equal(items.length, 2, 'renders two items');
 
   // Check the first item.
   let item = items[0];
-  assert.equal(item.href, 'http://www.somewhere.com/item-1', 'first item - has the correct href');
+  assert.equal(
+    item.href,
+    'http://www.somewhere.com/item-1',
+    'first item - has the correct href'
+  );
   assert.equal(
     item.textContent.trim(),
     'This is item 0',

@@ -26,7 +26,9 @@ module('Integration | Component | polaris-labelled', function(hooks) {
   });
 
   test('renders error markup when provided with a value', async function(assert) {
-    await render(hbs`{{polaris-labelled id="my-labelled" label="Label" error="Error message"}}`);
+    await render(
+      hbs`{{polaris-labelled id="my-labelled" label="Label" error="Error message"}}`
+    );
 
     assert.dom('#my-labelledError').hasText('Error message');
   });
@@ -47,10 +49,14 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       accessibilityLabel: 'My action with more description',
       onAction: () => this.set('actionFired', true),
     });
-    await render(hbs`{{polaris-labelled id="MyLabelled" label="Label" action=action}}`);
+    await render(
+      hbs`{{polaris-labelled id="MyLabelled" label="Label" action=action}}`
+    );
 
     const actionButtonSelector = 'button.Polaris-Button';
-    assert.dom(actionButtonSelector).hasAttribute('aria-label', 'My action with more description');
+    assert
+      .dom(actionButtonSelector)
+      .hasAttribute('aria-label', 'My action with more description');
     assert.dom(actionButtonSelector).hasClass('Polaris-Button--plain');
     assert.dom(actionButtonSelector).hasText('My action');
 

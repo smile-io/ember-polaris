@@ -3,12 +3,19 @@ import hbs from 'htmlbars-inline-precompile';
 import { find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-empty-state', 'Integration | Component | polaris empty state', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-empty-state',
+  'Integration | Component | polaris empty state',
+  {
+    integration: true,
+  }
+);
 
 const emptyStateSelector = 'div.Polaris-EmptyState';
-const sectionSelector = buildNestedSelector(emptyStateSelector, 'div.Polaris-EmptyState__Section');
+const sectionSelector = buildNestedSelector(
+  emptyStateSelector,
+  'div.Polaris-EmptyState__Section'
+);
 const detailsSelector = buildNestedSelector(
   sectionSelector,
   'div.Polaris-EmptyState__DetailsContainer',
@@ -18,7 +25,10 @@ const detailsTextContainerSelector = buildNestedSelector(
   detailsSelector,
   'div.Polaris-TextContainer'
 );
-const headingSelector = buildNestedSelector(detailsTextContainerSelector, 'p.Polaris-DisplayText');
+const headingSelector = buildNestedSelector(
+  detailsTextContainerSelector,
+  'p.Polaris-DisplayText'
+);
 const contentSelector = buildNestedSelector(
   detailsTextContainerSelector,
   'div.Polaris-EmptyState__Content'
@@ -55,17 +65,29 @@ test('it renders the correct HTML in basic inline usage', function(assert) {
     heading.classList.contains('Polaris-DisplayText--sizeMedium'),
     'renders the correct size heading'
   );
-  assert.equal(heading.textContent.trim(), 'Empty State Here', 'renders the correct heading text');
+  assert.equal(
+    heading.textContent.trim(),
+    'Empty State Here',
+    'renders the correct heading text'
+  );
 
   // Check the content.
   let content = find(contentSelector);
   assert.ok(content, 'renders content');
-  assert.equal(content.textContent.trim(), "I'm some inline text", 'renders the correct content');
+  assert.equal(
+    content.textContent.trim(),
+    "I'm some inline text",
+    'renders the correct content'
+  );
 
   // Check the image.
   let image = find(imageSelector);
   assert.ok(content, 'renders image');
-  assert.equal(image.src, 'http://www.somewhere.com/some-image.jpg', 'renders the correct image');
+  assert.equal(
+    image.src,
+    'http://www.somewhere.com/some-image.jpg',
+    'renders the correct image'
+  );
   assert.equal(image.alt, '', 'renders an empty image title');
 });
 
@@ -91,10 +113,17 @@ test('it renders the correct HTML in basic block usage', function(assert) {
     heading.classList.contains('Polaris-DisplayText--sizeMedium'),
     'renders the correct size heading'
   );
-  assert.equal(heading.textContent.trim(), 'Empty State Here', 'renders the correct heading text');
+  assert.equal(
+    heading.textContent.trim(),
+    'Empty State Here',
+    'renders the correct heading text'
+  );
 
   // Check the content.
-  let blockContentSelector = buildNestedSelector(contentSelector, 'p.block-content');
+  let blockContentSelector = buildNestedSelector(
+    contentSelector,
+    'p.block-content'
+  );
   let content = find(blockContentSelector);
   assert.ok(content, 'renders content');
   assert.equal(
@@ -106,7 +135,11 @@ test('it renders the correct HTML in basic block usage', function(assert) {
   // Check the image.
   let image = find(imageSelector);
   assert.ok(content, 'renders image');
-  assert.equal(image.src, 'http://www.somewhere.com/some-image.jpg', 'renders the correct image');
+  assert.equal(
+    image.src,
+    'http://www.somewhere.com/some-image.jpg',
+    'renders the correct image'
+  );
   assert.equal(image.alt, '', 'renders an empty image title');
 });
 
@@ -173,7 +206,10 @@ test('it handles actions correctly', function(assert) {
   );
 
   click(mainActionSelector);
-  assert.ok(this.get('mainActionFired'), 'main action fires when main action button clicked');
+  assert.ok(
+    this.get('mainActionFired'),
+    'main action fires when main action button clicked'
+  );
   assert.notOk(
     this.get('secondaryActionFired'),
     'secondary action does not fire when main action button clicked'

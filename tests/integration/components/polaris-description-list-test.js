@@ -25,7 +25,10 @@ moduleForComponent(
 
     beforeEach() {
       this.register('component:stub-term-component', stubTermComponent);
-      this.register('component:stub-description-component', stubDescriptionComponent);
+      this.register(
+        'component:stub-description-component',
+        stubDescriptionComponent
+      );
     },
   }
 );
@@ -52,14 +55,21 @@ const listItemsTermsSelector = buildNestedSelector(componentSelector, 'dt');
  * This selector also tests that each description
  * is rendered directly after a term.
  */
-const listItemsDescriptionsSelector = buildNestedSelector(componentSelector, 'dt + dd');
+const listItemsDescriptionsSelector = buildNestedSelector(
+  componentSelector,
+  'dt + dd'
+);
 
 test('it renders the correct HTML when items are passed in', function(assert) {
   this.set('items', items);
   this.render(hbs`{{polaris-description-list items=items}}`);
 
   const descriptionListComponent = findAll(componentSelector);
-  assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
+  assert.equal(
+    descriptionListComponent.length,
+    1,
+    'it renders a description list component'
+  );
 
   const itemsTerms = findAll(listItemsTermsSelector);
   const itemsLength = items.length;
@@ -90,7 +100,11 @@ test('it renders items with explicit `termComponent` and `descriptionComponent` 
   `);
 
   const descriptionListComponent = findAll(componentSelector);
-  assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
+  assert.equal(
+    descriptionListComponent.length,
+    1,
+    'it renders a description list component'
+  );
 
   const termComponent = findAll(stubTermSelector);
   assert.equal(
@@ -120,7 +134,11 @@ test('it renders items with `term` and `description` components', function(asser
   `);
 
   const descriptionListComponent = findAll(componentSelector);
-  assert.equal(descriptionListComponent.length, 1, 'it renders a description list component');
+  assert.equal(
+    descriptionListComponent.length,
+    1,
+    'it renders a description list component'
+  );
 
   const termComponent = findAll(stubTermSelector);
   assert.equal(

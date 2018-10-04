@@ -21,18 +21,29 @@ test('it renders the specified icon correctly', function(assert) {
   const icons = findAll(iconSelector);
   assert.equal(icons.length, 1, 'renders one icon component');
 
-  const svgSelector = buildNestedSelector(iconSelector, 'svg.Polaris-Icon__Svg');
+  const svgSelector = buildNestedSelector(
+    iconSelector,
+    'svg.Polaris-Icon__Svg'
+  );
   const svgs = findAll(svgSelector);
   assert.equal(svgs.length, 1, 'renders one SVG element');
 
   const svg = svgs[0];
-  assert.equal(svg.dataset.iconSource, 'polaris/notes', 'uses the correct SVG source');
+  assert.equal(
+    svg.dataset.iconSource,
+    'polaris/notes',
+    'uses the correct SVG source'
+  );
   assert.equal(
     svg.getAttribute('focusable'),
     'false',
     'applies focusable:false to the SVG element'
   );
-  assert.equal(svg.getAttribute('aria-hidden'), 'true', 'applies aria-hidden to the SVG element');
+  assert.equal(
+    svg.getAttribute('aria-hidden'),
+    'true',
+    'applies aria-hidden to the SVG element'
+  );
 });
 
 test('it applies colors correctly', function(assert) {
@@ -149,7 +160,9 @@ test('it handles backdrop correctly', function(assert) {
 });
 
 test('it handles accessibilityLabel correctly', function(assert) {
-  this.render(hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`);
+  this.render(
+    hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`
+  );
 
   // Check default setting.
   const icon = find(iconSelector);
@@ -159,7 +172,10 @@ test('it handles accessibilityLabel correctly', function(assert) {
   );
 
   this.set('accessibilityLabel', 'This is the accessibility label');
-  assert.ok(icon.attributes['aria-label'], 'accessibilityLabel set - adds aria-label attribute');
+  assert.ok(
+    icon.attributes['aria-label'],
+    'accessibilityLabel set - adds aria-label attribute'
+  );
   assert.equal(
     icon.attributes['aria-label'].value,
     'This is the accessibility label',

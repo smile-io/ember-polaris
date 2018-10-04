@@ -2,16 +2,24 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { find, findAll } from 'ember-native-dom-helpers';
 
-moduleForComponent('polaris-subheading', 'Integration | Component | polaris subheading', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-subheading',
+  'Integration | Component | polaris subheading',
+  {
+    integration: true,
+  }
+);
 
 test('it renders the correct HTML', function(assert) {
   // Inline form with defaults.
   this.render(hbs`{{polaris-subheading text="This is a subheading"}}`);
 
   let subheadings = findAll('h3.Polaris-Subheading');
-  assert.equal(subheadings.length, 1, 'inline with defaults - renders one h3 subheading');
+  assert.equal(
+    subheadings.length,
+    1,
+    'inline with defaults - renders one h3 subheading'
+  );
 
   let subheading = subheadings[0];
   assert.equal(

@@ -18,7 +18,10 @@ moduleForComponent('polaris-page', 'Integration | Component | polaris page', {
 });
 
 const pageSelector = 'div.Polaris-Page';
-const headerSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Header');
+const headerSelector = buildNestedSelector(
+  pageSelector,
+  'div.Polaris-Page__Header'
+);
 
 test('it renders the page correctly', function(assert) {
   this.setProperties({
@@ -64,18 +67,36 @@ test('it renders the page correctly', function(assert) {
   const displayTexts = findAll(displayTextSelector);
   assert.equal(displayTexts.length, 1, 'renders one page header display text');
   const titleText = displayTexts[0].textContent.trim();
-  assert.equal(titleText, 'This is the title', 'renders correct page header display text content');
+  assert.equal(
+    titleText,
+    'This is the title',
+    'renders correct page header display text content'
+  );
 
-  const contentWrapperSelector = buildNestedSelector(pageSelector, 'div.Polaris-Page__Content');
+  const contentWrapperSelector = buildNestedSelector(
+    pageSelector,
+    'div.Polaris-Page__Content'
+  );
   const contentWrappers = findAll(contentWrapperSelector);
-  assert.equal(contentWrappers.length, 1, 'renders one page content wrapper div');
+  assert.equal(
+    contentWrappers.length,
+    1,
+    'renders one page content wrapper div'
+  );
 
-  const contentSelector = buildNestedSelector(contentWrapperSelector, 'div.test-page-content');
+  const contentSelector = buildNestedSelector(
+    contentWrapperSelector,
+    'div.test-page-content'
+  );
   const contents = findAll(contentSelector);
   assert.equal(contents.length, 1, 'renders one content div');
 
   const contentText = contents[0].textContent.trim();
-  assert.equal(contentText, 'This is some test content', 'renders correct content');
+  assert.equal(
+    contentText,
+    'This is some test content',
+    'renders correct content'
+  );
 
   assert.notOk(
     page.classList.contains('Polaris-Page--fullWidth'),
@@ -145,9 +166,16 @@ test('it handles primary action correctly when supplied', function(assert) {
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
   const primaryButton = primaryButtons[0];
   const primaryButtonText = primaryButton.textContent.trim();
-  assert.equal(primaryButtonText, 'Take action!', 'uses correct text on primary button');
+  assert.equal(
+    primaryButtonText,
+    'Take action!',
+    'uses correct text on primary button'
+  );
 
-  assert.ok(primaryButton.disabled, 'primary action button is initially disabled');
+  assert.ok(
+    primaryButton.disabled,
+    'primary action button is initially disabled'
+  );
   assert.notOk(
     primaryButton.classList.contains('Polaris-Button--loading'),
     'primary action button is not initially in loading state'
@@ -164,7 +192,10 @@ test('it handles primary action correctly when supplied', function(assert) {
 
   this.set('primaryActionLoading', false);
   assert.notOk(primaryButton.disabled, 'primary action button becomes enabled');
-  assert.notOk(primaryActionFired, "hasn't fired primary action before clicking button");
+  assert.notOk(
+    primaryActionFired,
+    "hasn't fired primary action before clicking button"
+  );
 
   click(primaryButtonSelector);
   return wait().then(() => {
@@ -229,15 +260,24 @@ test('it handles secondary actions correctly when supplied', function(assert) {
     'second secondary action - uses correct text on button'
   );
 
-  assert.notOk(secondaryAction1Fired, 'first secondary action - not fired before clicking button');
-  assert.notOk(secondaryAction2Fired, 'second secondary action - not fired before clicking button');
+  assert.notOk(
+    secondaryAction1Fired,
+    'first secondary action - not fired before clicking button'
+  );
+  assert.notOk(
+    secondaryAction2Fired,
+    'second secondary action - not fired before clicking button'
+  );
 
   const focussedSecondaryButtonSelector = `${secondaryActionsButtonSelector}:focus`;
   let secondaryActionsWrapper = find(secondaryActionsWrapperSelector);
   click('button:first-child', secondaryActionsWrapper);
   return wait()
     .then(() => {
-      assert.ok(secondaryAction1Fired, 'first secondary action - fired after clicking button');
+      assert.ok(
+        secondaryAction1Fired,
+        'first secondary action - fired after clicking button'
+      );
       assert.notOk(
         secondaryAction2Fired,
         'second secondary action - not fired after clicking first button'
@@ -252,7 +292,10 @@ test('it handles secondary actions correctly when supplied', function(assert) {
       return wait();
     })
     .then(() => {
-      assert.ok(secondaryAction2Fired, 'second secondary action - fired after clicking button');
+      assert.ok(
+        secondaryAction2Fired,
+        'second secondary action - fired after clicking button'
+      );
       assert.notOk(
         find(focussedSecondaryButtonSelector),
         'no focussed buttons after clicking second secondary action'
@@ -296,7 +339,11 @@ test('it renders action icons correctly', function(assert) {
     'svg'
   );
   const secondaryActionIcons = findAll(secondaryActionIconSelector);
-  assert.equal(secondaryActionIcons.length, 2, 'renders two secondary action icons');
+  assert.equal(
+    secondaryActionIcons.length,
+    2,
+    'renders two secondary action icons'
+  );
   assert.equal(
     secondaryActionIcons[0].dataset.iconSource,
     'polaris/add',
@@ -310,7 +357,9 @@ test('it renders action icons correctly', function(assert) {
 });
 
 test('it handles breadcrumbs correctly', function(assert) {
-  this.render(hbs`{{polaris-page title="This is a page" breadcrumbs=breadcrumbs}}`);
+  this.render(
+    hbs`{{polaris-page title="This is a page" breadcrumbs=breadcrumbs}}`
+  );
 
   // Test before setting breadcrumbs.
   const header = find(headerSelector);
@@ -321,9 +370,16 @@ test('it handles breadcrumbs correctly', function(assert) {
     'without breadcrumbs - does not apply hasBreadcrumbs class'
   );
 
-  const navigationSelector = buildNestedSelector(headerSelector, 'div.Polaris-Page__Navigation');
+  const navigationSelector = buildNestedSelector(
+    headerSelector,
+    'div.Polaris-Page__Navigation'
+  );
   const navigations = findAll(navigationSelector);
-  assert.equal(navigations.length, 0, 'without breadcrumbs - does not render navigation div');
+  assert.equal(
+    navigations.length,
+    0,
+    'without breadcrumbs - does not render navigation div'
+  );
 
   // Add the breadcrumbs.
   this.set('breadcrumbs', [
@@ -350,10 +406,17 @@ test('it handles breadcrumbs correctly', function(assert) {
     'a.Polaris-Breadcrumbs__Breadcrumb'
   );
   const breadcrumbLinks = findAll(breadcrumbLinkSelector);
-  assert.equal(breadcrumbLinks.length, 1, 'with breadcrumbs - renders 1 breadcrumb');
+  assert.equal(
+    breadcrumbLinks.length,
+    1,
+    'with breadcrumbs - renders 1 breadcrumb'
+  );
 
   // Check the last breadcrumb in the list was rendered.
-  const iconSelector = buildNestedSelector('span.Polaris-Breadcrumbs__Icon', 'span.Polaris-Icon');
+  const iconSelector = buildNestedSelector(
+    'span.Polaris-Breadcrumbs__Icon',
+    'span.Polaris-Icon'
+  );
   const contentSelector = 'span.Polaris-Breadcrumbs__Content';
 
   let breadcrumbLink = breadcrumbLinks[0];

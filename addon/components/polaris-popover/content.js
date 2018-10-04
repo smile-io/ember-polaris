@@ -73,7 +73,9 @@ export default Component.extend({
     }
 
     const triggerRect = trigger.getBoundingClientRect();
-    const left = triggerRect.width / 2 + (triggerRect.left - content.getBoundingClientRect().left);
+    const left =
+      triggerRect.width / 2 +
+      (triggerRect.left - content.getBoundingClientRect().left);
     Ember$('div.Polaris-Popover__Tip', content).css({ left });
 
     // Set the height explicitly so the popover displays on Safari.
@@ -83,6 +85,8 @@ export default Component.extend({
     }
     const paneContent = pane.firstElementChild;
     const paneContentRect = paneContent.getBoundingClientRect();
-    Ember$('div.Polaris-Popover__Content', content).css({ height: paneContentRect.height });
+    Ember$('div.Polaris-Popover__Content', content).css({
+      height: paneContentRect.height,
+    });
   },
 });

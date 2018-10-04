@@ -4,13 +4,17 @@ import { findAll } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-footer-help', 'Integration | Component | polaris footer help', {
-  integration: true,
+moduleForComponent(
+  'polaris-footer-help',
+  'Integration | Component | polaris footer help',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const footerHelpContentSelector = buildNestedSelector(
   'div.Polaris-FooterHelp',
@@ -31,14 +35,22 @@ test('it renders the correct HTML in inline usage', function(assert) {
   this.render(hbs`{{polaris-footer-help text="Looking for help?"}}`);
 
   const footerHelpContents = findAll(footerHelpContentSelector);
-  assert.equal(footerHelpContents.length, 1, 'renders one footer help component with contents');
+  assert.equal(
+    footerHelpContents.length,
+    1,
+    'renders one footer help component with contents'
+  );
 
   // Check the icon.
   const footerHelpIcons = findAll(footerHelpIconSelector);
   assert.equal(footerHelpIcons.length, 1, 'renders one footer help icon');
 
   const icon = footerHelpIcons[0];
-  assert.equal(icon.dataset.iconSource, 'polaris/help', 'renders the correct icon');
+  assert.equal(
+    icon.dataset.iconSource,
+    'polaris/help',
+    'renders the correct icon'
+  );
 
   const iconWrapper = icon.parentNode;
   assert.ok(
@@ -52,7 +64,11 @@ test('it renders the correct HTML in inline usage', function(assert) {
 
   // Check the text.
   const footerHelpTexts = findAll(footerHelpTextSelector);
-  assert.equal(footerHelpTexts.length, 1, 'renders one footer help text wrapper');
+  assert.equal(
+    footerHelpTexts.length,
+    1,
+    'renders one footer help text wrapper'
+  );
   assert.equal(
     footerHelpTexts[0].textContent.trim(),
     'Looking for help?',
@@ -68,14 +84,22 @@ test('it renders the correct HTML in block usage', function(assert) {
   `);
 
   const footerHelpContents = findAll(footerHelpContentSelector);
-  assert.equal(footerHelpContents.length, 1, 'renders one footer help component with contents');
+  assert.equal(
+    footerHelpContents.length,
+    1,
+    'renders one footer help component with contents'
+  );
 
   // Check the icon.
   const footerHelpIcons = findAll(footerHelpIconSelector);
   assert.equal(footerHelpIcons.length, 1, 'renders one footer help icon');
 
   const icon = footerHelpIcons[0];
-  assert.equal(icon.dataset.iconSource, 'polaris/help', 'renders the correct icon');
+  assert.equal(
+    icon.dataset.iconSource,
+    'polaris/help',
+    'renders the correct icon'
+  );
 
   const iconWrapper = icon.parentNode;
   assert.ok(
@@ -89,7 +113,11 @@ test('it renders the correct HTML in block usage', function(assert) {
 
   // Check the text.
   const footerHelpTexts = findAll(footerHelpTextSelector);
-  assert.equal(footerHelpTexts.length, 1, 'renders one footer help text wrapper');
+  assert.equal(
+    footerHelpTexts.length,
+    1,
+    'renders one footer help text wrapper'
+  );
   assert.equal(
     footerHelpTexts[0].textContent.trim(),
     'Looking for help?',

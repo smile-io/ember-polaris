@@ -41,7 +41,10 @@ module('Integration | Component | render-content', function(hooks) {
       }}
     `);
 
-    assert.equal(find('.my-test-component').textContent.trim(), 'component content here');
+    assert.equal(
+      find('.my-test-component').textContent.trim(),
+      'component content here'
+    );
   });
 
   test('it renders correctly when content is a component definition', async function(assert) {
@@ -49,6 +52,9 @@ module('Integration | Component | render-content', function(hooks) {
       {{render-content (component "my-component" text="component content here")}}
     `);
 
-    assert.equal(find('.my-test-component').textContent.trim(), 'component content here');
+    assert.equal(
+      find('.my-test-component').textContent.trim(),
+      'component content here'
+    );
   });
 });

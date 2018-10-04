@@ -4,7 +4,12 @@ import mapEventToAction from '../../utils/map-event-to-action';
 
 export default BaseComponent.extend({
   tagName: 'a',
-  attributeBindings: ['url:href', 'dataPolarisUnstyled:data-polaris-unstyled', 'target', 'rel'],
+  attributeBindings: [
+    'url:href',
+    'dataPolarisUnstyled:data-polaris-unstyled',
+    'target',
+    'rel',
+  ],
 
   dataPolarisUnstyled: 'true',
 

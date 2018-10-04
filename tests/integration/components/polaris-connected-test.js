@@ -44,12 +44,20 @@ module('Integration | Component | polaris-connected', function(hooks) {
     assert
       .dom(connectedContainerSelector)
       .doesNotExist('connected component container does not get rendered');
-    assert.dom(leftContentSelector).doesNotExist('left content node does not get rendered');
-    assert.dom(rightContentSelector).doesNotExist('right content node does not get rendered');
+    assert
+      .dom(leftContentSelector)
+      .doesNotExist('left content node does not get rendered');
+    assert
+      .dom(rightContentSelector)
+      .doesNotExist('right content node does not get rendered');
     assert
       .dom(primaryContentSelector)
-      .exists('the block content still renders when connected sides are not passed in');
-    assert.dom(primaryContentSelector).hasText(yieldedContent, 'block content value is correct');
+      .exists(
+        'the block content still renders when connected sides are not passed in'
+      );
+    assert
+      .dom(primaryContentSelector)
+      .hasText(yieldedContent, 'block content value is correct');
   });
 
   test('it renders yielded content inside the primary content div', async function(assert) {
@@ -70,7 +78,9 @@ module('Integration | Component | polaris-connected', function(hooks) {
       {{/polaris-connected}}
     `);
 
-    assert.dom(primaryContentSelector).exists('a primary content block is rendered');
+    assert
+      .dom(primaryContentSelector)
+      .exists('a primary content block is rendered');
     assert
       .dom(primaryContentSelector)
       .hasText(yieldedContent, 'the block content renders correctly');
@@ -91,7 +101,9 @@ module('Integration | Component | polaris-connected', function(hooks) {
     `);
 
     assert.dom(leftContentSelector).exists('a left content block is rendered');
-    assert.dom(rightContentSelector).exists('a right content block is rendered');
+    assert
+      .dom(rightContentSelector)
+      .exists('a right content block is rendered');
     assert
       .dom(leftContentSelector)
       .hasText(leftContent, 'the left block content renders correctly');

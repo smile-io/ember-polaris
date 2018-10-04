@@ -2,9 +2,13 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll } from 'ember-native-dom-helpers';
 
-moduleForComponent('polaris-text-style', 'Integration | Component | polaris text style', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-text-style',
+  'Integration | Component | polaris text style',
+  {
+    integration: true,
+  }
+);
 
 const textStyleSelector = 'span';
 
@@ -15,7 +19,11 @@ test('it renders the correct HTML in inline usage with default attributes', func
   assert.equal(textStyles.length, 1, 'renders one text style component');
 
   const textStyle = textStyles[0];
-  assert.equal(textStyle.textContent.trim(), 'Inline styled text', 'renders the correct content');
+  assert.equal(
+    textStyle.textContent.trim(),
+    'Inline styled text',
+    'renders the correct content'
+  );
   assert.notOk(
     textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
     'does not apply positive class'
@@ -35,13 +43,19 @@ test('it renders the correct HTML in inline usage with default attributes', func
 });
 
 test('it renders the correct HTML in block usage with default attributes', function(assert) {
-  this.render(hbs`{{#polaris-text-style}}Block styled text{{/polaris-text-style}}`);
+  this.render(
+    hbs`{{#polaris-text-style}}Block styled text{{/polaris-text-style}}`
+  );
 
   const textStyles = findAll(textStyleSelector);
   assert.equal(textStyles.length, 1, 'renders one text style component');
 
   const textStyle = textStyles[0];
-  assert.equal(textStyle.textContent.trim(), 'Block styled text', 'renders the correct content');
+  assert.equal(
+    textStyle.textContent.trim(),
+    'Block styled text',
+    'renders the correct content'
+  );
   assert.notOk(
     textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
     'does not apply positive class'

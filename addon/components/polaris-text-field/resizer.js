@@ -18,111 +18,120 @@ function replaceEntity(entity) {
   return ENTITIES_TO_REPLACE[entity] || entity;
 }
 
-export default Component.extend(ContextBoundTasksMixin, ContextBoundEventListenersMixin, {
-  attributeBindings: ['ariaHidden:aria-hidden'],
+export default Component.extend(
+  ContextBoundTasksMixin,
+  ContextBoundEventListenersMixin,
+  {
+    attributeBindings: ['ariaHidden:aria-hidden'],
 
-  classNames: ['Polaris-TextField__Resizer'],
+    classNames: ['Polaris-TextField__Resizer'],
 
-  layout,
+    layout,
 
-  /**
-   * The value of the textarea
-   *
-   * @property contents
-   * @public
-   * @type {String}
-   * @default null
-   */
-  contents: null,
+    /**
+     * The value of the textarea
+     *
+     * @property contents
+     * @public
+     * @type {String}
+     * @default null
+     */
+    contents: null,
 
-  /**
-   * The height (in px) of the textarea
-   *
-   * @property currentHeight
-   * @public
-   * @type {Number}
-   * @default null
-   */
-  currentHeight: null,
+    /**
+     * The height (in px) of the textarea
+     *
+     * @property currentHeight
+     * @public
+     * @type {Number}
+     * @default null
+     */
+    currentHeight: null,
 
-  /**
-   * The multiline value of the textarea if
-   * a numeric value was passed-in to the polaris-text-field
-   *
-   * @property minimumLines
-   * @public
-   * @type {Number}
-   * @default null
-   */
-  minimumLines: null,
+    /**
+     * The multiline value of the textarea if
+     * a numeric value was passed-in to the polaris-text-field
+     *
+     * @property minimumLines
+     * @public
+     * @type {Number}
+     * @default null
+     */
+    minimumLines: null,
 
-  /**
-   * Callback when the height of the resize container changes
-   *
-   * @property onHeightChange
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  onHeightChange(/* height */) {},
+    /**
+     * Callback when the height of the resize container changes
+     *
+     * @property onHeightChange
+     * @public
+     * @type {Function}
+     * @default noop
+     */
+    onHeightChange(/* height */) {},
 
-  ariaHidden: 'true',
+    ariaHidden: 'true',
 
-  finalContents: computed('contents', function() {
-    let contents = this.get('contents');
+    finalContents: computed('contents', function() {
+      let contents = this.get('contents');
 
-    contents = contents ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>` : '<br>';
+      contents = contents
+        ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
+        : '<br>';
 
-    return htmlSafe(contents);
-  }).readOnly(),
+      return htmlSafe(contents);
+    }).readOnly(),
 
-  contentsForMinimumLines: computed('minimumLines', function() {
-    let minimumLines = this.get('minimumLines');
-    let content = '';
+    contentsForMinimumLines: computed('minimumLines', function() {
+      let minimumLines = this.get('minimumLines');
+      let content = '';
 
-    for (let line = 0; line < minimumLines; line++) {
-      content = `${content}<br>`;
-    }
+      for (let line = 0; line < minimumLines; line++) {
+        content = `${content}<br>`;
+      }
 
-    return htmlSafe(content);
-  }).readOnly(),
+      return htmlSafe(content);
+    }).readOnly(),
 
-  handleHeightCheck() {
-    let [contentNode, minimumLinesNode] = this.element.querySelectorAll(
-      '.Polaris-TextField__DummyInput'
-    );
+    handleHeightCheck() {
+      let [contentNode, minimumLinesNode] = this.element.querySelectorAll(
+        '.Polaris-TextField__DummyInput'
+      );
 
-    if (!contentNode || !minimumLinesNode) {
-      return;
-    }
+      if (!contentNode || !minimumLinesNode) {
+        return;
+      }
 
-    let contentHeight = contentNode.offsetHeight;
-    let minimumHeight = minimumLinesNode.offsetHeight;
-    let newHeight = Math.max(contentHeight, minimumHeight);
-    let { currentHeight, onHeightChange } = this.getProperties('currentHeight', 'onHeightChange');
+      let contentHeight = contentNode.offsetHeight;
+      let minimumHeight = minimumLinesNode.offsetHeight;
+      let newHeight = Math.max(contentHeight, minimumHeight);
+      let { currentHeight, onHeightChange } = this.getProperties(
+        'currentHeight',
+        'onHeightChange'
+      );
 
-    if (newHeight !== currentHeight) {
-      this.scheduleTask('actions', () => {
-        onHeightChange(newHeight);
-      });
-    }
-  },
+      if (newHeight !== currentHeight) {
+        this.scheduleTask('actions', () => {
+          onHeightChange(newHeight);
+        });
+      }
+    },
 
-  addResizeHandler() {
-    this.addEventListener('resize', this.handleHeightCheck);
-  },
+    addResizeHandler() {
+      this.addEventListener('resize', this.handleHeightCheck);
+    },
 
-  /*
+    /*
    * Lifecycle hooks.
    */
-  didInsertElement() {
-    this._super(...arguments);
-    this.handleHeightCheck();
-    this.addResizeHandler();
-  },
+    didInsertElement() {
+      this._super(...arguments);
+      this.handleHeightCheck();
+      this.addResizeHandler();
+    },
 
-  didUpdateAttrs() {
-    this._super(...arguments);
-    this.handleHeightCheck();
-  },
-});
+    didUpdateAttrs() {
+      this._super(...arguments);
+      this.handleHeightCheck();
+    },
+  }
+);

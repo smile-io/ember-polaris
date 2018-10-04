@@ -23,7 +23,9 @@ module.exports = {
       annotation: 'PolarisScssFunnel',
     });
 
-    return this._super.treeForStyles(new MergeTrees([polarisScssFiles, tree], { overwrite: true }));
+    return this._super.treeForStyles(
+      new MergeTrees([polarisScssFiles, tree], { overwrite: true })
+    );
   },
 
   options: {

@@ -4,16 +4,23 @@ import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-page-actions', 'Integration | Component | polaris page actions', {
-  integration: true,
+moduleForComponent(
+  'polaris-page-actions',
+  'Integration | Component | polaris page actions',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const pageActionsSelector = 'div.Polaris-PageActions';
-const pageActionsStackSelector = buildNestedSelector(pageActionsSelector, 'div.Polaris-Stack');
+const pageActionsStackSelector = buildNestedSelector(
+  pageActionsSelector,
+  'div.Polaris-Stack'
+);
 const pageActionsStackItemSelector = buildNestedSelector(
   pageActionsStackSelector,
   'div.Polaris-Stack__Item'
@@ -54,7 +61,9 @@ test('it renders the correct HTML when primary and secondary actions are supplie
     'stack has tight spacing'
   );
   assert.ok(
-    pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
+    pageActionsStack.classList.contains(
+      'Polaris-Stack--distributionEqualSpacing'
+    ),
     'stack has equal distribution'
   );
 
@@ -108,7 +117,9 @@ test('it renders the correct HTML when primary action is supplied with empty sec
     'stack has tight spacing'
   );
   assert.ok(
-    pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
+    pageActionsStack.classList.contains(
+      'Polaris-Stack--distributionEqualSpacing'
+    ),
     'stack has equal distribution'
   );
 
@@ -134,7 +145,11 @@ test('it renders the correct HTML when primary action is supplied with empty sec
     'button.Polaris-Button'
   );
   const secondaryButtons = findAll(secondaryButtonSelector);
-  assert.equal(secondaryButtons.length, 0, 'does not render any secondary buttons');
+  assert.equal(
+    secondaryButtons.length,
+    0,
+    'does not render any secondary buttons'
+  );
 });
 
 test('it renders the correct HTML when only a primary action is supplied', function(assert) {
@@ -181,7 +196,11 @@ test('it renders the correct HTML when only a primary action is supplied', funct
     'div.Polaris-ButtonGroup'
   );
   const secondaryButtons = findAll(secondaryButtonGroupSelector);
-  assert.equal(secondaryButtons.length, 0, 'does not render a secondary button group');
+  assert.equal(
+    secondaryButtons.length,
+    0,
+    'does not render a secondary button group'
+  );
 });
 
 test('it renders the correct HTML when only a secondary action is supplied', function(assert) {
@@ -204,7 +223,9 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
     'stack has tight spacing'
   );
   assert.ok(
-    pageActionsStack.classList.contains('Polaris-Stack--distributionEqualSpacing'),
+    pageActionsStack.classList.contains(
+      'Polaris-Stack--distributionEqualSpacing'
+    ),
     'stack has equal spacing distribution'
   );
 
@@ -225,7 +246,11 @@ test('it renders the correct HTML when only a secondary action is supplied', fun
     'button.Polaris-Button'
   );
   const secondaryButtons = findAll(secondaryButtonGroupSelector);
-  assert.equal(secondaryButtons.length, 1, 'renders one secondary button group');
+  assert.equal(
+    secondaryButtons.length,
+    1,
+    'renders one secondary button group'
+  );
   assert.equal(
     secondaryButtons[0].textContent.trim(),
     "I'm the only button here",
@@ -344,7 +369,10 @@ test('it renders the correct HTML when secondary actions have complex properties
 
   // Check the third (destructive) button.
   secondaryButton = secondaryButtons[2];
-  assert.notOk(secondaryButton.disabled, 'destructive secondary button is not disabled');
+  assert.notOk(
+    secondaryButton.disabled,
+    'destructive secondary button is not disabled'
+  );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
     'destructive secondary button does not have disabled class'
@@ -364,7 +392,10 @@ test('it renders the correct HTML when secondary actions have complex properties
 
   // Check the fourth (iconed) button.
   secondaryButton = secondaryButtons[3];
-  assert.notOk(secondaryButton.disabled, 'iconed secondary button is not disabled');
+  assert.notOk(
+    secondaryButton.disabled,
+    'iconed secondary button is not disabled'
+  );
   assert.notOk(
     secondaryButton.classList.contains('Polaris-Button--disabled'),
     'iconed secondary button does not have disabled class'
@@ -415,7 +446,11 @@ test('it handles item actions correctly', function(assert) {
   `);
 
   const secondaryButtonGroupItems = findAll('div.Polaris-ButtonGroup__Item');
-  assert.equal(secondaryButtonGroupItems.length, 2, 'renders both secondary buttons');
+  assert.equal(
+    secondaryButtonGroupItems.length,
+    2,
+    'renders both secondary buttons'
+  );
 
   // Click the first secondary button.
   click('button', secondaryButtonGroupItems[0]);
@@ -434,7 +469,10 @@ test('it handles item actions correctly', function(assert) {
 
   // Click the primary button.
   click('button.Polaris-Button--primary');
-  assert.ok(primaryActionFired, 'after clicking primary button - primary action fired');
+  assert.ok(
+    primaryActionFired,
+    'after clicking primary button - primary action fired'
+  );
   assert.notOk(
     this.get('secondaryAction2Fired'),
     'after clicking first secondary button - second secondary action not fired'

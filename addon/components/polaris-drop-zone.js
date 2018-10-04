@@ -260,7 +260,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   isDragging: or('active', 'state.dragging').readOnly(),
 
   fileInputNode: computed(function() {
-    return this.element.querySelector(`input[id='${this.get('elementId')}-input']`);
+    return this.element.querySelector(
+      `input[id='${this.get('elementId')}-input']`
+    );
   }).readOnly(),
 
   ariaDisabled: computed('disabled', function() {
@@ -295,7 +297,12 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDrop, onDropAccepted, onDropRejected } = this.getProperties(
+    let {
+      disabled,
+      onDrop,
+      onDropAccepted,
+      onDropRejected,
+    } = this.getProperties(
       'disabled',
       'onDrop',
       'onDropAccepted',
@@ -305,7 +312,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       return;
     }
     let fileList = getDataTransferFiles(event);
-    let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(fileList);
+    let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(
+      fileList
+    );
 
     this.dragTargets = [];
 
@@ -329,7 +338,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter } = this.getProperties('disabled', 'onDragEnter');
+    let { disabled, onDragEnter } = this.getProperties(
+      'disabled',
+      'onDragEnter'
+    );
     if (disabled) {
       return;
     }
@@ -435,7 +447,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let rejectedFiles = [];
 
     Array.from(files).forEach((file) => {
-      if (!fileAccepted(file, accept) || (customValidator && !customValidator(file))) {
+      if (
+        !fileAccepted(file, accept) ||
+        (customValidator && !customValidator(file))
+      ) {
         rejectedFiles.push(file);
       } else {
         acceptedFiles.push(file);
@@ -484,12 +499,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   updateStateFromProps() {
-    let { error, type, overlayText, errorOverlayText } = this.get('state').getProperties(
-      'error',
-      'type',
-      'overlayText',
-      'errorOverlayText'
-    );
+    let { error, type, overlayText, errorOverlayText } = this.get(
+      'state'
+    ).getProperties('error', 'type', 'overlayText', 'errorOverlayText');
 
     if (error !== this.get('error')) {
       this.set('state.error', this.get('error'));
@@ -506,7 +518,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     let newErrorOverlayText = this.get('errorOverlayText');
-    if (isPresent(newErrorOverlayText) && newErrorOverlayText !== errorOverlayText) {
+    if (
+      isPresent(newErrorOverlayText) &&
+      newErrorOverlayText !== errorOverlayText
+    ) {
       this.set('state.errorOverlayText', newErrorOverlayText);
     }
 

@@ -24,7 +24,11 @@ test('it renders the correct HTML with default attributes', function(assert) {
   assert.equal(stacks.length, 1, 'renders the correct number of stacks');
 
   const stackItems = findAll(stackItemSelector);
-  assert.equal(stackItems.length, 2, 'renders the correct number of stack items');
+  assert.equal(
+    stackItems.length,
+    2,
+    'renders the correct number of stack items'
+  );
 
   // Check the first stack item.
   let stackItem = stackItems[0];
@@ -237,7 +241,11 @@ test('it renders the correct HTML in block usage', function(assert) {
   `);
 
   const stackItems = findAll(stackItemSelector);
-  assert.equal(stackItems.length, 3, 'renders the correct number of stack items');
+  assert.equal(
+    stackItems.length,
+    3,
+    'renders the correct number of stack items'
+  );
 
   // Check the first stack item.
   let stackItem = stackItems[0];

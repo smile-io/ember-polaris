@@ -3,13 +3,17 @@ import hbs from 'htmlbars-inline-precompile';
 import { find, click } from 'ember-native-dom-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-banner', 'Integration | Component | polaris banner', {
-  integration: true,
+moduleForComponent(
+  'polaris-banner',
+  'Integration | Component | polaris banner',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const bannerSelector = 'div.Polaris-Banner';
 const iconSelector = 'div.Polaris-Banner__Ribbon > span.Polaris-Icon';
@@ -24,9 +28,17 @@ test('it renders correctly in basic usage', function(assert) {
 
   let banner = find(bannerSelector);
   assert.ok(banner, 'inline-mode - banner exists');
-  assert.equal(banner.textContent.trim(), '', 'inline-mode - banner is empty, by default');
+  assert.equal(
+    banner.textContent.trim(),
+    '',
+    'inline-mode - banner is empty, by default'
+  );
   assert.equal(banner.tabIndex, '0', 'inline-mode - has correct tabIndex');
-  assert.equal(banner.getAttribute('role'), 'status', 'inline-mode - has correct role attribute');
+  assert.equal(
+    banner.getAttribute('role'),
+    'status',
+    'inline-mode - has correct role attribute'
+  );
   assert.equal(
     banner.getAttribute('aria-live'),
     'polite',
@@ -84,7 +96,11 @@ test('it renders banner heading correctly', function(assert) {
   heading = find(headingSelector, banner);
   let headingTitle = find(headingTitleSelector, heading);
   assert.ok(heading, 'banner with title - heading rendered');
-  assert.equal(headingTitle.textContent.trim(), title, 'banner with title - has correct title');
+  assert.equal(
+    headingTitle.textContent.trim(),
+    title,
+    'banner with title - has correct title'
+  );
   assert.ok(
     banner.hasAttribute('aria-labelledby'),
     'banner with title - has aria-labelledby attribute'
@@ -97,7 +113,8 @@ test('it renders banner heading correctly', function(assert) {
 });
 
 test('it handles banner content correctly', function(assert) {
-  let contentText = 'Use your finance report to get detailed information about your business.';
+  let contentText =
+    'Use your finance report to get detailed information about your business.';
 
   this.render(hbs`{{polaris-banner text=contentText}}`);
 
@@ -258,7 +275,10 @@ test('it handles dismissable banner correctly', function(assert) {
     banner.classList.contains('Polaris-Banner__hasDismiss'),
     'banner non-dismissable - does not have dismissable class'
   );
-  assert.notOk(dismissWrapper, 'banner non-dismissable - does not render the dismiss element');
+  assert.notOk(
+    dismissWrapper,
+    'banner non-dismissable - does not render the dismiss element'
+  );
 
   let dismissed = false;
   this.on('dismiss', () => (dismissed = true));
@@ -275,7 +295,10 @@ test('it handles dismissable banner correctly', function(assert) {
     banner.classList.contains('Polaris-Banner__hasDismiss'),
     'banner dismissable - has dismissable class'
   );
-  assert.ok(dismissWrapper, 'banner dismissable - does render the dismiss element');
+  assert.ok(
+    dismissWrapper,
+    'banner dismissable - does render the dismiss element'
+  );
   assert.ok(dismissBtn, 'banner dismissable - has correct dismiss button');
   assert.equal(
     dismissBtn.getAttribute('aria-label'),
@@ -294,7 +317,10 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   let banner = find(bannerSelector);
   let content = find(contentSelector, banner);
   let actions = find(actionsSelector, content);
-  assert.notOk(actions, 'banner without actions - does not render the actions container');
+  assert.notOk(
+    actions,
+    'banner without actions - does not render the actions container'
+  );
 
   let mainActionFired = false;
   this.on('mainAction', () => (mainActionFired = true));
@@ -380,14 +406,20 @@ test('it supports `action` and `secondaryAction`', function(assert) {
     actionBtn.classList.contains('Polaris-Button--loading'),
     'banner with actions - `action` button exits loading state'
   );
-  assert.ok(actionBtn.disabled, 'banner with actions - `action` button becomes disabled');
+  assert.ok(
+    actionBtn.disabled,
+    'banner with actions - `action` button becomes disabled'
+  );
   assert.equal(
     actionBtn.textContent.trim(),
     'Edit',
     'banner with actions - renders correct `action` button text'
   );
 
-  assert.ok(secondaryActionBtn, 'banner with actions - renders `secondaryAction` button');
+  assert.ok(
+    secondaryActionBtn,
+    'banner with actions - renders `secondaryAction` button'
+  );
   assert.equal(
     secondaryActionBtn.textContent.trim(),
     'View',

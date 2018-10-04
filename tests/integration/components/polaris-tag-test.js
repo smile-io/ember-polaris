@@ -18,7 +18,10 @@ const buttonSelector = 'button.Polaris-Tag__Button';
 const iconSelector = 'span.Polaris-Icon';
 
 const tagValueSelector = buildNestedSelector(componentSelector, 'span');
-const tagButtonSelector = buildNestedSelector(componentSelector, buttonSelector);
+const tagButtonSelector = buildNestedSelector(
+  componentSelector,
+  buttonSelector
+);
 const tagIconSelector = buildNestedSelector(buttonSelector, iconSelector);
 
 test('it renders the correct HTML in inline usage', function(assert) {
@@ -30,7 +33,11 @@ test('it renders the correct HTML in inline usage', function(assert) {
 
   const tagValue = find(tagValueSelector);
   assert.ok(tagValue, 'it renders a span to hold the `text` value');
-  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `text` value correctly');
+  assert.equal(
+    tagValue.textContent.trim(),
+    tag,
+    'it renders the `text` value correctly'
+  );
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
@@ -64,7 +71,11 @@ test('it renders the correct HTML in block usage', function(assert) {
 
   const tagValue = find(tagValueSelector);
   assert.ok(tagValue, 'it renders a span to hold the `tag` value');
-  assert.equal(tagValue.textContent.trim(), tag, 'it renders the `tag` value correctly');
+  assert.equal(
+    tagValue.textContent.trim(),
+    tag,
+    'it renders the `tag` value correctly'
+  );
 
   const tagButton = find(tagButtonSelector);
   assert.ok(tagButton, 'it renders a tag button');
@@ -109,7 +120,10 @@ test('it handles the disabled attribute correctly', function(assert) {
     tagComponent.classList.contains('Polaris-Tag--disabled'),
     'when disabled is specified - applies disabled class to tag'
   );
-  assert.ok(button.disabled, 'when disabled is specified - disables the remove button');
+  assert.ok(
+    button.disabled,
+    'when disabled is specified - disables the remove button'
+  );
 });
 
 test('it calls an `onRemove` action when the button is clicked', function(assert) {
@@ -122,5 +136,8 @@ test('it calls an `onRemove` action when the button is clicked', function(assert
   `);
 
   click(tagButtonSelector);
-  assert.ok(this.get('onRemoveActionFired'), 'button clicked - onRemove action is called');
+  assert.ok(
+    this.get('onRemoveActionFired'),
+    'button clicked - onRemove action is called'
+  );
 });

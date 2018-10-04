@@ -5,7 +5,12 @@ import mapEventToAction from '../utils/map-event-to-action';
 
 export default Component.extend({
   tagName: 'a',
-  attributeBindings: ['url:href', 'dataPolarisUnstyled:data-polaris-unstyled', 'target', 'rel'],
+  attributeBindings: [
+    'url:href',
+    'dataPolarisUnstyled:data-polaris-unstyled',
+    'target',
+    'rel',
+  ],
 
   layout,
 
@@ -56,7 +61,10 @@ export default Component.extend({
   /**
    * Action handlers.
    */
-  click: mapEventToAction('onClick', { preventDefault: false, stopPropagation: true }),
+  click: mapEventToAction('onClick', {
+    preventDefault: false,
+    stopPropagation: true,
+  }),
   target: computed('external', function() {
     return this.get('external') ? '_blank' : null;
   }).readOnly(),

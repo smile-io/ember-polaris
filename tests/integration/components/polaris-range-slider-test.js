@@ -225,6 +225,8 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-max:100;') > -1);
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-current:25;') > -1);
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-progress:25%;') > -1);
-    assert.ok(styleString.indexOf('--Polaris-RangeSlider-output-factor:0.25;') > -1);
+    assert.ok(
+      styleString.indexOf('--Polaris-RangeSlider-output-factor:0.25;') > -1
+    );
   });
 });

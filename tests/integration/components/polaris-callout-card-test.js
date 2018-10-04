@@ -3,9 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-callout-card', 'Integration | Component | polaris callout card', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-callout-card',
+  'Integration | Component | polaris callout card',
+  {
+    integration: true,
+  }
+);
 
 const calloutCardSelector = buildNestedSelector(
   'div.Polaris-Card',
@@ -85,7 +89,11 @@ test('it renders the correct HTML in inline form without secondary action', func
   assert.equal(images.length, 1, 'renders one image');
 
   const image = images[0];
-  assert.equal(image.src, 'http://www.somewhere.com/some-image.jpg', 'renders the correct image');
+  assert.equal(
+    image.src,
+    'http://www.somewhere.com/some-image.jpg',
+    'renders the correct image'
+  );
   assert.equal(image.alt, '', 'renders an empty image title');
 });
 
@@ -120,7 +128,11 @@ test('it renders the correct HTML in block form with secondary action', function
 
   const texts = findAll(calloutCardContentTextSelector);
   assert.equal(texts.length, 1, 'renders one text container');
-  assert.equal(texts[0].textContent.trim(), 'With a secondary action', 'renders the correct text');
+  assert.equal(
+    texts[0].textContent.trim(),
+    'With a secondary action',
+    'renders the correct text'
+  );
 
   const buttonWrappers = findAll(calloutCardButtonWrapperSelector);
   assert.equal(buttonWrappers.length, 1, 'renders one button wrapper');
@@ -140,7 +152,10 @@ test('it renders the correct HTML in block form with secondary action', function
     'Primary action here',
     'renders the correct primary button text'
   );
-  assert.notOk(button.classList.contains('Polaris-Button--plain'), 'renders normal primary button');
+  assert.notOk(
+    button.classList.contains('Polaris-Button--plain'),
+    'renders normal primary button'
+  );
 
   button = buttons[1];
   assert.equal(
@@ -148,13 +163,20 @@ test('it renders the correct HTML in block form with secondary action', function
     'Secondary action here',
     'renders the correct secondary button text'
   );
-  assert.ok(button.classList.contains('Polaris-Button--plain'), 'renders plain secondary button');
+  assert.ok(
+    button.classList.contains('Polaris-Button--plain'),
+    'renders plain secondary button'
+  );
 
   const images = findAll(calloutCardImageSelector);
   assert.equal(images.length, 1, 'renders one image');
 
   const image = images[0];
-  assert.equal(image.src, 'http://www.somewhere.com/some-image.jpg', 'renders the correct image');
+  assert.equal(
+    image.src,
+    'http://www.somewhere.com/some-image.jpg',
+    'renders the correct image'
+  );
   assert.equal(image.alt, '', 'renders an empty image title');
 });
 

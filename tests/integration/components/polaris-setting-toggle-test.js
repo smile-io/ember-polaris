@@ -3,9 +3,13 @@ import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent('polaris-setting-toggle', 'Integration | Component | polaris setting toggle', {
-  integration: true,
-});
+moduleForComponent(
+  'polaris-setting-toggle',
+  'Integration | Component | polaris setting toggle',
+  {
+    integration: true,
+  }
+);
 
 const settingActionSelector = buildNestedSelector(
   'div.Polaris-Card',
@@ -32,7 +36,11 @@ test('it renders the correct HTML in inline usage with default attributes', func
   assert.equal(settingActions.length, 1, 'renders one setting action');
 
   const settingActionSettings = findAll(settingActionSettingSelector);
-  assert.equal(settingActionSettings.length, 1, 'renders one setting action setting');
+  assert.equal(
+    settingActionSettings.length,
+    1,
+    'renders one setting action setting'
+  );
   assert.equal(
     settingActionSettings[0].textContent.trim(),
     'Inline setting toggle',
@@ -40,10 +48,18 @@ test('it renders the correct HTML in inline usage with default attributes', func
   );
 
   const settingActionWrappers = findAll(settingActionWrapperSelector);
-  assert.equal(settingActionWrappers.length, 1, 'renders one setting action wrapper');
+  assert.equal(
+    settingActionWrappers.length,
+    1,
+    'renders one setting action wrapper'
+  );
 
   const settingActionButtons = findAll(settingActionButtonSelector);
-  assert.equal(settingActionButtons.length, 0, 'does not render any setting action buttons');
+  assert.equal(
+    settingActionButtons.length,
+    0,
+    'does not render any setting action buttons'
+  );
 });
 
 test('it renders the correct HTML in block usage with action supplied', function(assert) {
@@ -61,7 +77,11 @@ test('it renders the correct HTML in block usage with action supplied', function
   assert.equal(settingActions.length, 1, 'renders one setting action');
 
   const settingActionSettings = findAll(settingActionSettingSelector);
-  assert.equal(settingActionSettings.length, 1, 'renders one setting action setting');
+  assert.equal(
+    settingActionSettings.length,
+    1,
+    'renders one setting action setting'
+  );
   assert.equal(
     settingActionSettings[0].textContent.trim(),
     'Block setting toggle',
@@ -69,10 +89,18 @@ test('it renders the correct HTML in block usage with action supplied', function
   );
 
   const settingActionWrappers = findAll(settingActionWrapperSelector);
-  assert.equal(settingActionWrappers.length, 1, 'renders one setting action wrapper');
+  assert.equal(
+    settingActionWrappers.length,
+    1,
+    'renders one setting action wrapper'
+  );
 
   const settingActionButtons = findAll(settingActionButtonSelector);
-  assert.equal(settingActionButtons.length, 1, 'renders one setting action button');
+  assert.equal(
+    settingActionButtons.length,
+    1,
+    'renders one setting action button'
+  );
 
   const settingActionButton = settingActionButtons[0];
   assert.equal(
