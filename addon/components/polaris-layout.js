@@ -6,15 +6,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Automatically adds sections to layout
    *
    * @property sectioned
    * @type {boolean}
    * @default false
+   * @public
    */
   sectioned: false,
 
@@ -28,6 +26,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 });

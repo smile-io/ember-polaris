@@ -2,12 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 
-const allowedSizes = [
-  'small',
-  'medium',
-  'large',
-  'extraLarge'
-];
+const allowedSizes = ['small', 'medium', 'large', 'extraLarge'];
 const defaultSize = 'medium';
 
 export default Component.extend({
@@ -37,6 +32,6 @@ export default Component.extend({
       size = defaultSize;
     }
 
-    return `Polaris-SkeletonDisplayText--size${ classify(size) }`;
+    return `Polaris-SkeletonDisplayText--size${classify(size)}`;
   }).readOnly(),
 });

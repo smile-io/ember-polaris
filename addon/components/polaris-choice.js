@@ -75,16 +75,22 @@ export default Component.extend({
    */
   helpText: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   hasDescription: or('error', 'helpText'),
 
+  /**
+   * @private
+   */
   errorId: computed('inputId', function() {
-    return `${ this.get('inputId') }Error`;
+    return `${this.get('inputId')}Error`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   helpTextId: computed('inputId', function() {
-    return `${ this.get('inputId') }HelpText`;
+    return `${this.get('inputId')}HelpText`;
   }).readOnly(),
 });

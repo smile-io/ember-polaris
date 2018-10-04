@@ -104,13 +104,18 @@ export default Component.extend({
    */
   onChange() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   controlComponent: computed('allowMultiple', function() {
-    return this.get('allowMultiple') ? 'polaris-checkbox' : 'polaris-radio-button';
+    return this.get('allowMultiple')
+      ? 'polaris-checkbox'
+      : 'polaris-radio-button';
   }).readOnly(),
 
+  /**
+   * @private
+   */
   finalName: computed('name', 'allowMultiple', function() {
     let { name, allowMultiple } = this.getProperties('name', 'allowMultiple');
 
@@ -125,6 +130,9 @@ export default Component.extend({
     return name;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   checkedChoices: computed('choices.[]', function() {
     const choices = this.get('choices') || [];
     const selected = this.get('selected');
@@ -137,9 +145,6 @@ export default Component.extend({
     });
   }).readOnly(),
 
-  /*
-   * Actions.
-   */
   actions: {
     updateSelectedChoices(choice, checked) {
       const value = get(choice, 'value');
@@ -150,13 +155,15 @@ export default Component.extend({
         if (checked) {
           updatedSelectedChoices = [...selected, value];
         } else {
-          updatedSelectedChoices = selected.filter((selectedChoice) => selectedChoice !== value);
+          updatedSelectedChoices = selected.filter(
+            (selectedChoice) => selectedChoice !== value
+          );
         }
       } else {
-        updatedSelectedChoices = [ value ];
+        updatedSelectedChoices = [value];
       }
 
       return this.get('onChange')(updatedSelectedChoices, this.get('name'));
     },
-  }
+  },
 });

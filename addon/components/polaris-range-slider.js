@@ -26,6 +26,19 @@ export default Component.extend({
   layout,
 
   /**
+   * ID for range input
+   *
+   * Defaults to Ember's internal GUID for the component instance
+   *
+   * @property {id}
+   * @type {String}
+   * @public
+   */
+  id: computed(function() {
+    return guidFor(this);
+  }),
+
+  /**
    * Label for the range input
    *
    * @property {label}
@@ -52,19 +65,6 @@ export default Component.extend({
    * @public
    */
   labelHidden: false,
-
-  /**
-   * ID for range input
-   *
-   * Defaults to Ember's internal GUID for the component instance
-   *
-   * @property {id}
-   * @type {String}
-   * @public
-   */
-  id: computed(function() {
-    return guidFor(this);
-  }),
 
   /**
    * Initial value for range input
@@ -144,7 +144,7 @@ export default Component.extend({
    */
   disabled: false,
 
-   /**
+  /**
    * Callback when the range input is changed
    *
    * @property {onChange}
@@ -203,19 +203,38 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  rangeInputWrapperStyle: computed('min', 'max', 'value', 'sliderProgress', function() {
-    let { min, max, value: current, sliderProgress } = this.getProperties('min', 'max', 'value', 'sliderProgress');
-    let styleProps = assign({ min, max, current }, {
-      progress: `${ sliderProgress }%`,
-      outputFactor: invertNumber((sliderProgress - 50) / 100),
-    });
+  rangeInputWrapperStyle: computed(
+    'min',
+    'max',
+    'value',
+    'sliderProgress',
+    function() {
+      let { min, max, value: current, sliderProgress } = this.getProperties(
+        'min',
+        'max',
+        'value',
+        'sliderProgress'
+      );
+      let styleProps = assign(
+        { min, max, current },
+        {
+          progress: `${sliderProgress}%`,
+          outputFactor: invertNumber((sliderProgress - 50) / 100),
+        }
+      );
 
-    let styleString = Object.keys(styleProps).reduce((styleString, propName) => {
-      return `${ styleString } --Polaris-RangeSlider-${ dasherize(propName) }:${ styleProps[propName] };`;
-    }, '');
+      let styleString = Object.keys(styleProps).reduce(
+        (styleString, propName) => {
+          return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
+            styleProps[propName]
+          };`;
+        },
+        ''
+      );
 
-    return htmlSafe(styleString.trim());
-  }).readOnly(),
+      return htmlSafe(styleString.trim());
+    }
+  ).readOnly(),
 
   /**
    * Slider progress percentage
@@ -276,7 +295,10 @@ export default Component.extend({
 
   actions: {
     handleChange(event) {
-      this.get('onChange')(parseFloat(event.currentTarget.value), this.get('id'));
+      this.get('onChange')(
+        parseFloat(event.currentTarget.value),
+        this.get('id')
+      );
     },
-  }
+  },
 });

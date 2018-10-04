@@ -2,9 +2,11 @@ import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/weekday';
 
 export default Component.extend({
-  classNames: ['Polaris-DatePicker__Weekday'],
-  classNameBindings: ['current:Polaris-DatePicker__Weekday--current'],
   attributeBindings: ['label:aria-label'],
+
+  classNames: ['Polaris-DatePicker__Weekday'],
+
+  classNameBindings: ['current:Polaris-DatePicker__Weekday--current'],
 
   layout,
 
@@ -30,5 +32,5 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  current: false
+  current: false,
 });

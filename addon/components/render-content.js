@@ -4,9 +4,9 @@ import { notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/render-content';
 
 export default Component.extend({
-  layout,
-
   tagName: '',
+
+  layout,
 
   content: null,
 

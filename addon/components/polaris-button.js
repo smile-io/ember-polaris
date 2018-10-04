@@ -221,6 +221,8 @@ export default Component.extend({
    */
   onBlur: null,
 
+  handleMouseUpByBlurring,
+
   /**
    * Computed properties.
    */
@@ -253,6 +255,4 @@ export default Component.extend({
     let ariaExpanded = this.get('ariaExpanded');
     return isPresent(ariaExpanded) ? ariaExpanded.toString() : null;
   }).readOnly(),
-
-  handleMouseUpByBlurring,
 });

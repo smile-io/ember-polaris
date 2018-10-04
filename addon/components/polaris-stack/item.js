@@ -7,15 +7,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Elements to display inside stack item
    *
    * @property text
    * @type {string}
    * @default null
+   * @public
    */
   text: null,
 
@@ -25,6 +23,7 @@ export default Component.extend({
    * @property fill
    * @type {boolean}
    * @default false
+   * @public
    */
   fill: false,
 });

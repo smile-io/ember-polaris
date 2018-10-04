@@ -28,12 +28,12 @@ function measureColumn(tableData) {
     let leftEdgeIsVisible = isEdgeVisible(
       leftEdge,
       tableLeftVisibleEdge,
-      tableRightVisibleEdge,
+      tableRightVisibleEdge
     );
     let rightEdgeIsVisible = isEdgeVisible(
       rightEdge,
       tableLeftVisibleEdge,
-      tableRightVisibleEdge,
+      tableRightVisibleEdge
     );
     let isCompletelyVisible =
       leftEdge < tableLeftVisibleEdge && rightEdge > tableRightVisibleEdge;
@@ -42,7 +42,7 @@ function measureColumn(tableData) {
     if (isVisible) {
       tableData.firstVisibleColumnIndex = Math.min(
         firstVisibleColumnIndex,
-        index,
+        index
       );
     }
     return { leftEdge, rightEdge, isVisible };
@@ -79,430 +79,467 @@ function getPrevAndCurrentColumns(tableData, columnData) {
  * Polaris data table component.
  * See https://polaris.shopify.com/components/lists-and-tables/data-table
  */
-export default Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin, {
-  classNameBindings: ['collapsed:Polaris-DataTable--collapsed'],
+export default Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin,
+  {
+    classNameBindings: ['collapsed:Polaris-DataTable--collapsed'],
 
-  layout,
+    layout,
 
-  /**
-   * List of data types, which determines content alignment for each column.
-   * Data types are "text," which aligns left, or "numeric," which aligns right.
-   *
-   * @property columnContentTypes
-   * @type {String[]}
-   * @public
-   */
-  columnContentTypes: null,
+    /**
+     * List of data types, which determines content alignment for each column.
+     * Data types are "text," which aligns left, or "numeric," which aligns right.
+     *
+     * @property columnContentTypes
+     * @type {String[]}
+     * @public
+     */
+    columnContentTypes: null,
 
-  /**
-   * List of column headings.
-   *
-   * @property headings
-   * @type {String[]}
-   * @public
-   */
-  headings: null,
+    /**
+     * List of column headings.
+     *
+     * @property headings
+     * @type {String[]}
+     * @public
+     */
+    headings: null,
 
-  /**
-   * List of numeric column totals, highlighted in the table’s header below column headings.
-   * Use empty strings as placeholders for columns with no total.
-   *
-   * @property totals
-   * @type {Array}
-   * @public
-   */
-  totals: null,
+    /**
+     * List of numeric column totals, highlighted in the table’s header below column headings.
+     * Use empty strings as placeholders for columns with no total.
+     *
+     * @property totals
+     * @type {Array}
+     * @public
+     */
+    totals: null,
 
-  /**
-   * Lists of data points which map to table body rows.
-   *
-   * @property rows
-   * @type {Array[]}
-   * @public
-   */
-  rows: null,
+    /**
+     * Lists of data points which map to table body rows.
+     *
+     * @property rows
+     * @type {Array[]}
+     * @public
+     */
+    rows: null,
 
-  /**
-   * Truncate content in first column instead of wrapping.
-   *
-   * @property truncate
-   * @type {boolean}
-   * @default false
-   * @public
-   */
-  truncate: false,
+    /**
+     * Truncate content in first column instead of wrapping.
+     *
+     * @property truncate
+     * @type {boolean}
+     * @default false
+     * @public
+     */
+    truncate: false,
 
-  /**
-   * Content centered in the full width cell of the table footer row.
-   *
-   * @property footerContent
-   * @type {String|Number|Component}
-   * @public
-   */
-  footerContent: null,
+    /**
+     * Content centered in the full width cell of the table footer row.
+     *
+     * @property footerContent
+     * @type {String|Number|Component}
+     * @public
+     */
+    footerContent: null,
 
-  /**
-   * List of booleans, which maps to whether sorting is enabled or not for each column.
-   * Defaults to false for all columns.
-   *
-   * @property sortable
-   * @type {boolean[]}
-   * @public
-   */
-  sortable: null,
+    /**
+     * List of booleans, which maps to whether sorting is enabled or not for each column.
+     * Defaults to false for all columns.
+     *
+     * @property sortable
+     * @type {boolean[]}
+     * @public
+     */
+    sortable: null,
 
-  /**
-   * The direction to sort the table rows on first click or keypress of a sortable column heading.
-   * Defaults to ascending.
-   *
-   * @property defaultSortDirection
-   * @type {String}
-   * @default 'ascending'
-   * @public
-   */
-  defaultSortDirection: 'ascending',
+    /**
+     * The direction to sort the table rows on first click or keypress of a sortable column heading.
+     * Defaults to ascending.
+     *
+     * @property defaultSortDirection
+     * @type {String}
+     * @default 'ascending'
+     * @public
+     */
+    defaultSortDirection: 'ascending',
 
-  /**
-   * The index of the heading that the table rows are initially sorted by.
-   * Defaults to the first column.
-   *
-   * @property initialSortColumnIndex
-   * @type {Number}
-   * @default 0
-   * @public
-   */
-  initialSortColumnIndex: 0,
+    /**
+     * The index of the heading that the table rows are initially sorted by.
+     * Defaults to the first column.
+     *
+     * @property initialSortColumnIndex
+     * @type {Number}
+     * @default 0
+     * @public
+     */
+    initialSortColumnIndex: 0,
 
-  /**
-   * Callback fired on click or keypress of a sortable column heading.
-   *
-   * @property onSort
-   * @type {function}
-   * @default no-op
-   * @public
-   */
-  onSort(/* headingIndex, direction */) {},
+    /**
+     * Callback fired on click or keypress of a sortable column heading.
+     *
+     * @property onSort
+     * @type {function}
+     * @default no-op
+     * @public
+     */
+    onSort(/* headingIndex, direction */) {},
 
-  /**
-   * @property collapsed
-   * @type {boolean}
-   * @default false
-   * @private
-   */
-  collapsed: false,
+    /**
+     * @property collapsed
+     * @type {boolean}
+     * @default false
+     * @private
+     */
+    collapsed: false,
 
-  /**
-   * @property columnVisibilityData
-   * @type {Object[]}
-   * @private
-   */
-  columnVisibilityData: null,
+    /**
+     * @property columnVisibilityData
+     * @type {Object[]}
+     * @private
+     */
+    columnVisibilityData: null,
 
-  /**
-   * @property previousColumn
-   * @type {Object}
-   * @private
-   */
-  previousColumn: null,
+    /**
+     * @property previousColumn
+     * @type {Object}
+     * @private
+     */
+    previousColumn: null,
 
-  /**
-   * @property currentColumn
-   * @type {Object}
-   * @private
-   */
-  currentColumn: null,
+    /**
+     * @property currentColumn
+     * @type {Object}
+     * @private
+     */
+    currentColumn: null,
 
-  /**
-   * @property sorted
-   * @type {boolean}
-   * @default false
-   * @private
-   */
-  sorted: false,
+    /**
+     * @property sorted
+     * @type {boolean}
+     * @default false
+     * @private
+     */
+    sorted: false,
 
-  /**
-   * @property sortedColumnIndex
-   * @type {Number}
-   * @private
-   */
-  sortedColumnIndex: null,
+    /**
+     * @property sortedColumnIndex
+     * @type {Number}
+     * @private
+     */
+    sortedColumnIndex: null,
 
-  /**
-   * @property sortDirection
-   * @type {String}
-   * @private
-   */
-  sortDirection: null,
+    /**
+     * @property sortDirection
+     * @type {String}
+     * @private
+     */
+    sortDirection: null,
 
-  /**
-   * @property heights
-   * @type {Number[]}
-   * @private
-   */
-  heights: null,
+    /**
+     * @property heights
+     * @type {Number[]}
+     * @private
+     */
+    heights: null,
 
-  /**
-   * @property preservedScrollPosition
-   * @type {Object}
-   * @private
-   */
-  preservedScrollPosition: null,
+    /**
+     * @property preservedScrollPosition
+     * @type {Object}
+     * @private
+     */
+    preservedScrollPosition: null,
 
-  /**
-   * @property previousTruncate
-   * @type {boolean}
-   * @private
-   */
-  previousTruncate: null,
+    /**
+     * @property previousTruncate
+     * @type {boolean}
+     * @private
+     */
+    previousTruncate: null,
 
-  /**
-   * @property totalsRowHeading
-   * @type {String}
-   * @private
-   */
-  totalsRowHeading: 'Totals',
+    /**
+     * @property totalsRowHeading
+     * @type {String}
+     * @private
+     */
+    totalsRowHeading: 'Totals',
 
-  /**
-   * @property dataTable
-   * @type {HTMLElement}
-   * @private
-   */
-  dataTable: elementLookup('.Polaris-DataTable').readOnly(),
+    /**
+     * @property dataTable
+     * @type {HTMLElement}
+     * @private
+     */
+    dataTable: elementLookup('.Polaris-DataTable').readOnly(),
 
-  /**
-   * @property scrollContainer
-   * @type {HTMLElement}
-   * @private
-   */
-  scrollContainer: elementLookup('.Polaris-DataTable__ScrollContainer').readOnly(),
+    /**
+     * @property table
+     * @type {HTMLElement}
+     * @private
+     */
+    table: elementLookup('.Polaris-DataTable__Table').readOnly(),
 
-  /**
-   * @property table
-   * @type {HTMLElement}
-   * @private
-   */
-  table: elementLookup('.Polaris-DataTable__Table').readOnly(),
+    /**
+     * @property scrollContainer
+     * @type {HTMLElement}
+     * @private
+     */
+    scrollContainer: elementLookup(
+      '.Polaris-DataTable__ScrollContainer'
+    ).readOnly(),
 
-  /**
-   * @property contentTypes
-   * @type {String[]}
-   * @private
-   */
-  contentTypes: computed('columnContentTypes.[]', function() {
-    let columnContentTypes = this.get('columnContentTypes');
-    let fixedCellType = columnContentTypes[0];
+    /**
+     * @property contentTypes
+     * @type {String[]}
+     * @private
+     */
+    contentTypes: computed('columnContentTypes.[]', function() {
+      let columnContentTypes = this.get('columnContentTypes');
+      let fixedCellType = columnContentTypes[0];
 
-    return [ fixedCellType, ...columnContentTypes ];
-  }).readOnly(),
+      return [fixedCellType, ...columnContentTypes];
+    }).readOnly(),
 
-  /**
-   * @property scrollContainerStyle
-   * @type {String}
-   * @private
-   */
-  scrollContainerStyle: computed('footerContent', 'heights.[]', function() {
-    if (isBlank(this.get('footerContent'))) {
-      return null;
-    }
-
-    return htmlSafe(`margin-bottom: ${ this.get('heights.lastObject') }px;`);
-  }).readOnly(),
-
-  resetScrollPosition() {
-    let { left, top } = this.get('preservedScrollPosition');
-
-    if (left) {
-      this.get('scrollContainer').scrollLeft = left;
-    }
-
-    if (top) {
-      window.scrollTo(0, top);
-    }
-  },
-
-  setHeightsAndScrollPosition() {
-    this.set('heights', this.tallestCellHeights());
-
-    scheduleOnce('afterRender', this, this.resetScrollPosition);
-  },
-
-  calculateColumnVisibilityData(collapsed) {
-    if (collapsed) {
-      let headerCells = this.get('table').querySelectorAll('[class*=header]');
-      let collapsedHeaderCells = Array.from(headerCells).slice(2);
-      let fixedColumnWidth = headerCells[0].offsetWidth;
-      let tableData = {
-        fixedColumnWidth,
-        firstVisibleColumnIndex: collapsedHeaderCells.length - 1,
-        tableLeftVisibleEdge: this.get('scrollContainer').scrollLeft,
-        tableRightVisibleEdge:
-          this.get('scrollContainer').scrollLeft +
-          (this.get('dataTable').offsetWidth - fixedColumnWidth),
-      };
-      let columnVisibilityData = collapsedHeaderCells.map(
-        measureColumn(tableData),
-      );
-
-      return assign(
-        {
-          columnVisibilityData,
-        },
-        getPrevAndCurrentColumns(tableData, columnVisibilityData)
-      );
-    }
-
-    return {
-      columnVisibilityData: [],
-      previousColumn: undefined,
-      currentColumn: undefined,
-    };
-  },
-
-  handleResize() {
-    // This is needed to replicate the React implementation's `@debounce` decorator.
-    this.debounceTask('debouncedHandleResize', 0);
-  },
-
-  debouncedHandleResize() {
-    let { footerContent, truncate } = this.getProperties('footerContent', 'truncate');
-    let collapsed = this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
-
-    this.get('scrollContainer').scrollLeft = 0;
-    this.setProperties(assign(
-      {
-        collapsed,
-        heights: [],
-      },
-      this.calculateColumnVisibilityData(collapsed),
-    ));
-
-    scheduleOnce('afterRender', () => {
-      if (footerContent || !truncate) {
-        this.setHeightsAndScrollPosition();
-      }
-    });
-  },
-
-  scrollListener() {
-    if (this.get('isDestroying') || this.get('isDestroyed')) {
-      return;
-    }
-
-    this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
-  },
-
-  tallestCellHeights() {
-    let { footerContent, truncate, heights } = this.getProperties('footerContent', 'truncate', 'heights');
-    let rows = Array.from(this.get('table').getElementsByTagName('tr'));
-
-    if (!truncate) {
-      return (heights = rows.map((row) => {
-        let fixedCell = row.children[0];
-        return Math.max(row.clientHeight, fixedCell.clientHeight);
-      }));
-    }
-
-    if (footerContent) {
-      let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
-      heights = [footerCellHeight];
-    }
-
-    return heights;
-  },
-
-  addEventHandlers() {
-    this.addEventListener(window, 'resize', this.handleResize);
-    this.addEventListener(window, 'scroll', this.scrollListener, { capture: true });
-  },
-
-  /*
-   * Lifecycle hooks.
-   */
-  init() {
-    this._super(...arguments);
-
-    this.setProperties({
-      columnVisibilityData: [],
-      sorted: isPresent(this.get('sortable')),
-      heights: [],
-      preservedScrollPosition: {},
-    });
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    this.handleResize();
-
-    this.addEventHandlers();
-  },
-
-  didUpdateAttrs() {
-    this._super(...arguments);
-
-    let truncate = this.get('truncate');
-    if (!truncate && this.get('previousTruncate')) {
-      this.handleResize();
-    }
-
-    this.set('previousTruncate', truncate);
-  },
-
-  actions: {
-    navigateTable(direction) {
-      let { scrollContainer, currentColumn, previousColumn } = this.getProperties('scrollContainer', 'currentColumn', 'previousColumn');
-
-      if (direction === 'right' && currentColumn) {
-        scrollContainer.scrollLeft = currentColumn.rightEdge;
-      } else if (previousColumn) {
-        scrollContainer.scrollLeft =
-          previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+    /**
+     * @property scrollContainerStyle
+     * @type {String}
+     * @private
+     */
+    scrollContainerStyle: computed('footerContent', 'heights.[]', function() {
+      if (isBlank(this.get('footerContent'))) {
+        return null;
       }
 
-      // TODO: use run loop instead of `requestAnimationFrame` here?
-      requestAnimationFrame(() => {
-        if (this.get('isDestroying') || this.get('isDestroyed')) {
-          return;
-        }
+      return htmlSafe(`margin-bottom: ${this.get('heights.lastObject')}px;`);
+    }).readOnly(),
 
-        this.setProperties(this.calculateColumnVisibilityData(this.get('collapsed')));
-      });
+    resetScrollPosition() {
+      let { left, top } = this.get('preservedScrollPosition');
+
+      if (left) {
+        this.get('scrollContainer').scrollLeft = left;
+      }
+
+      if (top) {
+        window.scrollTo(0, top);
+      }
     },
 
-    defaultOnSort(headingIndex) {
-      let {
-        onSort,
-        truncate,
-        defaultSortDirection = 'ascending',
-        initialSortColumnIndex,
-        sortDirection,
-        sortedColumnIndex,
-      } = this.getProperties('onSort', 'truncate', 'defaultSortDirection', 'initialSortColumnIndex', 'sortDirection', 'sortedColumnIndex');
-      sortedColumnIndex = isNone(sortedColumnIndex) ? initialSortColumnIndex : sortedColumnIndex;
-      let newSortDirection = defaultSortDirection;
-      if (sortedColumnIndex === headingIndex) {
-        newSortDirection = sortDirection === 'ascending' ? 'descending' : 'ascending';
+    setHeightsAndScrollPosition() {
+      this.set('heights', this.tallestCellHeights());
+
+      scheduleOnce('afterRender', this, this.resetScrollPosition);
+    },
+
+    calculateColumnVisibilityData(collapsed) {
+      if (collapsed) {
+        let headerCells = this.get('table').querySelectorAll('[class*=header]');
+        let collapsedHeaderCells = Array.from(headerCells).slice(2);
+        let fixedColumnWidth = headerCells[0].offsetWidth;
+        let tableData = {
+          fixedColumnWidth,
+          firstVisibleColumnIndex: collapsedHeaderCells.length - 1,
+          tableLeftVisibleEdge: this.get('scrollContainer').scrollLeft,
+          tableRightVisibleEdge:
+            this.get('scrollContainer').scrollLeft +
+            (this.get('dataTable').offsetWidth - fixedColumnWidth),
+        };
+        let columnVisibilityData = collapsedHeaderCells.map(
+          measureColumn(tableData)
+        );
+
+        return assign(
+          {
+            columnVisibilityData,
+          },
+          getPrevAndCurrentColumns(tableData, columnVisibilityData)
+        );
       }
 
-      this.setProperties({
-        sorted: true,
-        sortDirection: newSortDirection,
-        sortedColumnIndex: headingIndex,
-      });
+      return {
+        columnVisibilityData: [],
+        previousColumn: undefined,
+        currentColumn: undefined,
+      };
+    },
+
+    handleResize() {
+      // This is needed to replicate the React implementation's `@debounce` decorator.
+      this.debounceTask('debouncedHandleResize', 0);
+    },
+
+    debouncedHandleResize() {
+      let { footerContent, truncate } = this.getProperties(
+        'footerContent',
+        'truncate'
+      );
+      let collapsed =
+        this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
+
+      this.get('scrollContainer').scrollLeft = 0;
+      this.setProperties(
+        assign(
+          {
+            collapsed,
+            heights: [],
+          },
+          this.calculateColumnVisibilityData(collapsed)
+        )
+      );
 
       scheduleOnce('afterRender', () => {
-        if (onSort) {
-          onSort(headingIndex, newSortDirection);
-          if (!truncate) {
-            let preservedScrollPosition = {
-              left: this.get('scrollContainer').scrollLeft,
-              top: window.scrollY,
-            };
-            this.set('preservedScrollPosition', preservedScrollPosition);
-            this.handleResize();
-          }
+        if (footerContent || !truncate) {
+          this.setHeightsAndScrollPosition();
         }
       });
     },
+
+    scrollListener() {
+      if (this.get('isDestroying') || this.get('isDestroyed')) {
+        return;
+      }
+
+      this.setProperties(
+        this.calculateColumnVisibilityData(this.get('collapsed'))
+      );
+    },
+
+    tallestCellHeights() {
+      let { footerContent, truncate, heights } = this.getProperties(
+        'footerContent',
+        'truncate',
+        'heights'
+      );
+      let rows = Array.from(this.get('table').getElementsByTagName('tr'));
+
+      if (!truncate) {
+        return (heights = rows.map((row) => {
+          let fixedCell = row.children[0];
+          return Math.max(row.clientHeight, fixedCell.clientHeight);
+        }));
+      }
+
+      if (footerContent) {
+        let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
+        heights = [footerCellHeight];
+      }
+
+      return heights;
+    },
+
+    addEventHandlers() {
+      this.addEventListener(window, 'resize', this.handleResize);
+      this.addEventListener(window, 'scroll', this.scrollListener, {
+        capture: true,
+      });
+    },
+
+    init() {
+      this._super(...arguments);
+
+      this.setProperties({
+        columnVisibilityData: [],
+        sorted: isPresent(this.get('sortable')),
+        heights: [],
+        preservedScrollPosition: {},
+      });
+    },
+
+    didInsertElement() {
+      this._super(...arguments);
+
+      this.handleResize();
+
+      this.addEventHandlers();
+    },
+
+    didUpdateAttrs() {
+      this._super(...arguments);
+
+      let truncate = this.get('truncate');
+      if (!truncate && this.get('previousTruncate')) {
+        this.handleResize();
+      }
+
+      this.set('previousTruncate', truncate);
+    },
+
+    actions: {
+      navigateTable(direction) {
+        let {
+          scrollContainer,
+          currentColumn,
+          previousColumn,
+        } = this.getProperties(
+          'scrollContainer',
+          'currentColumn',
+          'previousColumn'
+        );
+
+        if (direction === 'right' && currentColumn) {
+          scrollContainer.scrollLeft = currentColumn.rightEdge;
+        } else if (previousColumn) {
+          scrollContainer.scrollLeft =
+            previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+        }
+
+        // TODO: use run loop instead of `requestAnimationFrame` here?
+        requestAnimationFrame(() => {
+          if (this.get('isDestroying') || this.get('isDestroyed')) {
+            return;
+          }
+
+          this.setProperties(
+            this.calculateColumnVisibilityData(this.get('collapsed'))
+          );
+        });
+      },
+
+      defaultOnSort(headingIndex) {
+        let {
+          onSort,
+          truncate,
+          defaultSortDirection = 'ascending',
+          initialSortColumnIndex,
+          sortDirection,
+          sortedColumnIndex,
+        } = this.getProperties(
+          'onSort',
+          'truncate',
+          'defaultSortDirection',
+          'initialSortColumnIndex',
+          'sortDirection',
+          'sortedColumnIndex'
+        );
+        sortedColumnIndex = isNone(sortedColumnIndex)
+          ? initialSortColumnIndex
+          : sortedColumnIndex;
+        let newSortDirection = defaultSortDirection;
+        if (sortedColumnIndex === headingIndex) {
+          newSortDirection =
+            sortDirection === 'ascending' ? 'descending' : 'ascending';
+        }
+
+        this.setProperties({
+          sorted: true,
+          sortDirection: newSortDirection,
+          sortedColumnIndex: headingIndex,
+        });
+
+        scheduleOnce('afterRender', () => {
+          if (onSort) {
+            onSort(headingIndex, newSortDirection);
+            if (!truncate) {
+              let preservedScrollPosition = {
+                left: this.get('scrollContainer').scrollLeft,
+                top: window.scrollY,
+              };
+              this.set('preservedScrollPosition', preservedScrollPosition);
+              this.handleResize();
+            }
+          }
+        });
+      },
+    },
   }
-});
+);

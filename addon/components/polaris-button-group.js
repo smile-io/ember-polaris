@@ -7,13 +7,11 @@ import layout from '../templates/components/polaris-button-group';
  */
 export default Component.extend({
   classNames: ['Polaris-ButtonGroup'],
+
   classNameBindings: ['segmented:Polaris-ButtonGroup--segmented'],
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Button components
    *
@@ -24,6 +22,7 @@ export default Component.extend({
    * @property text
    * @type {String}
    * @default null
+   * @public
    */
   text: null,
 
@@ -33,17 +32,16 @@ export default Component.extend({
    * @property segmented
    * @type {bool}
    * @default false
+   * @public
    */
   segmented: false,
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group item.
-    this.$().children()
+    this.$()
+      .children()
       .not('div.Polaris-ButtonGroup__Item')
       .wrap('<div class="Polaris-ButtonGroup__Item"></div>');
   },

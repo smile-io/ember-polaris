@@ -8,9 +8,6 @@ import buildNestedSelector from '../../helpers/build-nested-selector';
 // Mock the polaris-choice component to simplify testing what gets rendered.
 const MockPolarisChoiceComponent = Component.extend({
   tagName: 'label',
-  classNames: ['Polaris-Choice'],
-
-  layout: hbs`{{yield}}`,
 
   // Bind attributes to the element's dataset for testing.
   attributeBindings: [
@@ -19,24 +16,38 @@ const MockPolarisChoiceComponent = Component.extend({
     'labelHidden:data-label-hidden',
     'helpText:data-help-text',
   ],
+
+  classNames: ['Polaris-Choice'],
+
+  layout: hbs`{{yield}}`,
 });
 
-moduleForComponent('polaris-radio-button', 'Integration | Component | polaris radio button', {
-  integration: true,
+moduleForComponent(
+  'polaris-radio-button',
+  'Integration | Component | polaris radio button',
+  {
+    integration: true,
 
-  beforeEach() {
-    this.register('component:polaris-choice', MockPolarisChoiceComponent);
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+    beforeEach() {
+      this.register('component:polaris-choice', MockPolarisChoiceComponent);
+      this.register('component:svg-jar', MockSvgJarComponent);
+    },
+  }
+);
 
 const choiceSelector = 'label.Polaris-Choice';
-const radioButtonSelector = buildNestedSelector(choiceSelector, 'span.Polaris-RadioButton');
+const radioButtonSelector = buildNestedSelector(
+  choiceSelector,
+  'span.Polaris-RadioButton'
+);
 const radioButtonInputSelector = buildNestedSelector(
   radioButtonSelector,
   'input.Polaris-RadioButton__Input[type="radio"]'
 );
-const radioButtonBackdropSelector = buildNestedSelector(radioButtonSelector, 'span.Polaris-RadioButton__Backdrop');
+const radioButtonBackdropSelector = buildNestedSelector(
+  radioButtonSelector,
+  'span.Polaris-RadioButton__Backdrop'
+);
 const radioButtonIconSelector = buildNestedSelector(
   radioButtonSelector,
   'span.Polaris-RadioButton__Icon'
@@ -58,10 +69,26 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(choices.length, 1, 'renders one `polaris-choice` component');
 
   const choiceData = choices[0].dataset;
-  assert.equal(choiceData.inputId, 'some-radio-button-id', 'passes inputId through to `polaris-choice` component');
-  assert.equal(choiceData.label, 'Radio label', 'passes label through to `polaris-choice` component');
-  assert.equal(choiceData.labelHidden, 'Label is hidden, yes', 'passes labelHidden through to `polaris-choice` component');
-  assert.equal(choiceData.helpText, 'Help!', 'passes helpText through to `polaris-choice` component');
+  assert.equal(
+    choiceData.inputId,
+    'some-radio-button-id',
+    'passes inputId through to `polaris-choice` component'
+  );
+  assert.equal(
+    choiceData.label,
+    'Radio label',
+    'passes label through to `polaris-choice` component'
+  );
+  assert.equal(
+    choiceData.labelHidden,
+    'Label is hidden, yes',
+    'passes labelHidden through to `polaris-choice` component'
+  );
+  assert.equal(
+    choiceData.helpText,
+    'Help!',
+    'passes helpText through to `polaris-choice` component'
+  );
 
   // Check the wrapper element.
   const radioButtons = findAll(radioButtonSelector);
@@ -72,7 +99,11 @@ test('it renders the correct HTML', function(assert) {
   assert.equal(inputs.length, 1, 'renders one radio input');
 
   const input = inputs[0];
-  assert.equal(input.id, 'some-radio-button-id', 'radio input has the right id');
+  assert.equal(
+    input.id,
+    'some-radio-button-id',
+    'radio input has the right id'
+  );
   assert.equal(input.name, 'Radio', 'radio input has the right name');
   assert.equal(input.value, 'gaga', 'radio input has the right value');
 
@@ -92,10 +123,13 @@ test('it handles the disabled attribute correctly', function(assert) {
   assert.ok(input.disabled, 'radio input is disabled when disabled is true');
 
   this.set('disabled', false);
-  assert.notOk(input.disabled, 'radio input is not disabled when disabled is false');
+  assert.notOk(
+    input.disabled,
+    'radio input is not disabled when disabled is false'
+  );
 });
 
-test('it sets the input\'s aria-describedby attribute correctly', function(assert) {
+test("it sets the input's aria-describedby attribute correctly", function(assert) {
   this.set('helpText', 'some help text');
   this.render(hbs`
     {{polaris-radio-button
@@ -141,7 +175,11 @@ test('it handles events correctly', function(assert) {
 
   click(radioButtonInputSelector);
   assert.notOk(this.get('blurFired'), 'after click - onBlur not fired');
-  assert.equal(this.get('selectedValue'), 'clicked', 'after click - selected value has updated');
+  assert.equal(
+    this.get('selectedValue'),
+    'clicked',
+    'after click - selected value has updated'
+  );
 
   blur(radioButtonInputSelector);
   assert.ok(this.get('blurFired'), 'after blur - onBlur fired');

@@ -145,16 +145,19 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     const helpTextId = find('input').getAttribute('aria-describedby');
 
     assert.equal(typeof helpTextId, 'string');
-    assert.dom(`#${ helpTextId }`).hasText('Some help');
+    assert.dom(`#${helpTextId}`).hasText('Some help');
   });
 
   test('it marks the input as invalid when an error is present', async function(assert) {
-    this.owner.register('component:my-error-component', Component.extend({
-      tagName: 'span',
-      layout: hbs`{{text}}`,
+    this.owner.register(
+      'component:my-error-component',
+      Component.extend({
+        tagName: 'span',
+        layout: hbs`{{text}}`,
 
-      text: null,
-    }));
+        text: null,
+      })
+    );
 
     await render(hbs`
       {{polaris-range-slider
@@ -186,7 +189,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     const errorId = find('input').getAttribute('aria-describedby');
 
     assert.equal(typeof errorId, 'string');
-    assert.dom(`#${ errorId }`).hasText('Some error');
+    assert.dom(`#${errorId}`).hasText('Some error');
   });
 
   test('it connects the input to both an error and help text when both error and help text are present', async function(assert) {
@@ -198,11 +201,13 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         error="Some error"
       }}
     `);
-    const descriptions = find('input').getAttribute('aria-describedby').split(' ');
+    const descriptions = find('input')
+      .getAttribute('aria-describedby')
+      .split(' ');
 
     assert.equal(descriptions.length, 2);
-    assert.dom(`#${ descriptions[1] }`).hasText('Some help');
-    assert.dom(`#${ descriptions[0] }`).hasText('Some error');
+    assert.dom(`#${descriptions[1]}`).hasText('Some help');
+    assert.dom(`#${descriptions[0]}`).hasText('Some error');
   });
 
   test('it sets the correct css custom properties', async function(assert) {
@@ -220,6 +225,8 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-max:100;') > -1);
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-current:25;') > -1);
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-progress:25%;') > -1);
-    assert.ok(styleString.indexOf('--Polaris-RangeSlider-output-factor:0.25;') > -1);
+    assert.ok(
+      styleString.indexOf('--Polaris-RangeSlider-output-factor:0.25;') > -1
+    );
   });
 });

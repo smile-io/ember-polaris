@@ -6,15 +6,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Title for the section
    *
    * @property title
    * @type {string}
    * @default: null
+   * @public
    */
   title: null,
 
@@ -24,6 +22,7 @@ export default Component.extend({
    * @property description
    * @type {string}
    * @default: null
+   * @public
    */
   description: null,
 });

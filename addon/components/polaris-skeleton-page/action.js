@@ -4,8 +4,9 @@ import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/polaris-skeleton-page/action';
 
 export default Component.extend({
-  classNames: ['Polaris-SkeletonPage__Action'],
   attributeBindings: ['style'],
+
+  classNames: ['Polaris-SkeletonPage__Action'],
 
   layout,
 
@@ -14,6 +15,6 @@ export default Component.extend({
   }).readOnly(),
 
   style: computed('width', function() {
-    return htmlSafe(`width: ${ this.get('width') }px;`);
+    return htmlSafe(`width: ${this.get('width')}px;`);
   }).readOnly(),
 });

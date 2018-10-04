@@ -5,7 +5,7 @@ export default Component.extend({
   classNames: ['Polaris-Layout__Section'],
   classNameBindings: [
     'secondary:Polaris-Layout__Section--secondary',
-    'fullWidth:Polaris-Layout__Section--fullWidth'
+    'fullWidth:Polaris-Layout__Section--fullWidth',
   ],
 
   layout,

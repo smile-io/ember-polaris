@@ -13,15 +13,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * Label for the radio button
    *
    * @property label
    * @type {String|Component}
    * @default null
+   * @public
    */
   label: null,
 
@@ -31,6 +29,7 @@ export default Component.extend({
    * @property labelHidden
    * @type {boolean}
    * @default false
+   * @public
    */
   labelHidden: false,
 
@@ -40,6 +39,7 @@ export default Component.extend({
    * @property checked
    * @type {boolean}
    * @default false
+   * @public
    */
   checked: false,
 
@@ -49,15 +49,17 @@ export default Component.extend({
    * @property helpText
    * @type {string or React.ReactNode}
    * @default null
+   * @public
    */
   helpText: null,
 
   /**
-  * ID for form input
-  *
+   * ID for form input
+   *
    * @property inputId
    * @type {string}
    * @default null
+   * @public
    */
   inputId: null,
 
@@ -67,6 +69,7 @@ export default Component.extend({
    * @property name
    * @type {string}
    * @default null
+   * @public
    */
   name: null,
 
@@ -76,6 +79,7 @@ export default Component.extend({
    * @property value
    * @type {string}
    * @default null
+   * @public
    */
   value: null,
 
@@ -85,6 +89,7 @@ export default Component.extend({
    * @property disabled
    * @type {boolean}
    * @default false
+   * @public
    */
   disabled: false,
 
@@ -94,6 +99,7 @@ export default Component.extend({
    * @property onChange
    * @type {function}
    * @default noop
+   * @public
    */
   onChange() {},
 
@@ -103,6 +109,7 @@ export default Component.extend({
    * @property onFocus
    * @type {function}
    * @default noop
+   * @public
    */
   onFocus() {},
 
@@ -112,18 +119,22 @@ export default Component.extend({
    * @property onBlur
    * @type {function}
    * @default noop
+   * @public
    */
   onBlur() {},
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-radio-button-${ guidFor(this) }`;
+    return this.get('inputId') || `polaris-radio-button-${guidFor(this)}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   describedBy: computed('helpText', '_id', function() {
     const helpText = this.get('helpText');
-    return helpText ? `${ this.get('_id') }HelpText` : null;
+    return helpText ? `${this.get('_id')}HelpText` : null;
   }).readOnly(),
 });

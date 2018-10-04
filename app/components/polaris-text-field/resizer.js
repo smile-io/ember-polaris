@@ -1,1 +1,3 @@
-export { default } from '@smile-io/ember-polaris/components/polaris-text-field/resizer';
+export {
+  default,
+} from '@smile-io/ember-polaris/components/polaris-text-field/resizer';

@@ -30,9 +30,6 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The content to display inside the badge.
    *
@@ -43,6 +40,7 @@ export default Component.extend({
    * @property text
    * @type {string}
    * @default: null
+   * @public
    */
   text: null,
 
@@ -52,6 +50,7 @@ export default Component.extend({
    * @property progress
    * @type {string}
    * @default: null
+   * @public
    */
   progress: null,
 
@@ -61,15 +60,23 @@ export default Component.extend({
    * @property status
    * @type {string}
    * @default: null
+   * @public
    */
   status: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   hasProgress: notEmpty('progress'),
+
+  /**
+   * @private
+   */
   hasStatus: notEmpty('status'),
 
+  /**
+   * @private
+   */
   progressDescription: computed('progress', function() {
     const progress = this.get('progress');
     if (isBlank(progress) || progress === 'default') {
@@ -79,6 +86,9 @@ export default Component.extend({
     return PROGRESS_LABELS[progress];
   }).readOnly(),
 
+  /**
+   * @private
+   */
   progressClass: computed('progress', function() {
     const progress = this.get('progress');
     if (isBlank(progress) || progress === 'default') {
@@ -88,6 +98,9 @@ export default Component.extend({
     return `Polaris-Badge--progress${classify(progress)}`;
   }).readOnly(),
 
+  /**
+   * @private
+   */
   statusDescription: computed('status', function() {
     const status = this.get('status');
     if (isBlank(status) || status === 'default') {
@@ -97,12 +110,15 @@ export default Component.extend({
     return STATUS_LABELS[status];
   }).readOnly(),
 
+  /**
+   * @private
+   */
   statusClass: computed('status', function() {
     const status = this.get('status');
     if (isBlank(status) || status === 'default') {
       return null;
     }
 
-    return `Polaris-Badge--status${ classify(status) }`;
-  }).readOnly()
+    return `Polaris-Badge--status${classify(status)}`;
+  }).readOnly(),
 });

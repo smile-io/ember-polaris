@@ -38,20 +38,20 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * component `polaris-banner/content`
  */
 export default Component.extend({
-  classNames: ['Polaris-Banner'],
-
-  classNameBindings: [
-    'statusClass',
-    'hasDismiss:Polaris-Banner__hasDismiss',
-    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
-  ],
-
   attributeBindings: [
     'tabIndex',
     'role',
     'ariaLive:aria-live',
     'contentId:aria-describedby',
     'headingId:aria-labelledby',
+  ],
+
+  classNames: ['Polaris-Banner'],
+
+  classNameBindings: [
+    'statusClass',
+    'hasDismiss:Polaris-Banner__hasDismiss',
+    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
   ],
 
   layout,
@@ -122,6 +122,8 @@ export default Component.extend({
    */
   withinContentContainer: false,
 
+  mouseUp: handleMouseUpByBlurring,
+
   hasDismiss: bool('onDismiss').readOnly(),
 
   role: computed('status', function() {
@@ -161,7 +163,7 @@ export default Component.extend({
       return;
     }
 
-    return `${ guidFor(this) }-heading`;
+    return `${guidFor(this)}-heading`;
   }).readOnly(),
 
   statusClass: computed('status', function() {
@@ -170,21 +172,16 @@ export default Component.extend({
       return;
     }
 
-    return `Polaris-Banner--status${ capitalize(status) }`;
+    return `Polaris-Banner--status${capitalize(status)}`;
   }).readOnly(),
 
-  /**
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 
     let hasContentWrapper = this.$().find('div.Polaris-Banner__Content').length;
-    let contentId = hasContentWrapper ? `${ guidFor(this) }-content` : null;
+    let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
     this.set('contentId', contentId);
   },
-
-  mouseUp: handleMouseUpByBlurring,
 
   actions: {
     triggerAction(action, event) {
@@ -193,6 +190,6 @@ export default Component.extend({
       }
 
       return invokeAction(this, action.onAction);
-    }
-  }
+    },
+  },
 });

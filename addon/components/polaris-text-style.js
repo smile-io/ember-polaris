@@ -40,8 +40,8 @@ export default Component.extend({
    */
   text: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   variationClass: computed('variation', function() {
     const variation = this.get('variation');
@@ -49,6 +49,6 @@ export default Component.extend({
       return null;
     }
 
-    return `Polaris-TextStyle--variation${ classify(variation) }`;
+    return `Polaris-TextStyle--variation${classify(variation)}`;
   }).readOnly(),
 });

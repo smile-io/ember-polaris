@@ -4,20 +4,52 @@ import { render, find, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-const labelSelector = buildNestedSelector('.Polaris-Labelled__LabelWrapper', '.Polaris-Label', 'label');
-const labelActionButtonSelector = buildNestedSelector('.Polaris-Labelled__LabelWrapper', 'button');
+const labelSelector = buildNestedSelector(
+  '.Polaris-Labelled__LabelWrapper',
+  '.Polaris-Label',
+  'label'
+);
+const labelActionButtonSelector = buildNestedSelector(
+  '.Polaris-Labelled__LabelWrapper',
+  'button'
+);
 const connectedContainerSelector = '.Polaris-Connected';
 const textFieldSelector = '.Polaris-TextField';
-const textFieldPrefixSelector = buildNestedSelector(textFieldSelector, '.Polaris-TextField__Prefix');
-const textFieldSuffixSelector = buildNestedSelector(textFieldSelector, '.Polaris-TextField__Suffix');
-const textFieldMultilineSelector = buildNestedSelector(textFieldSelector, 'textarea');
+const textFieldPrefixSelector = buildNestedSelector(
+  textFieldSelector,
+  '.Polaris-TextField__Prefix'
+);
+const textFieldSuffixSelector = buildNestedSelector(
+  textFieldSelector,
+  '.Polaris-TextField__Suffix'
+);
+const textFieldMultilineSelector = buildNestedSelector(
+  textFieldSelector,
+  'textarea'
+);
 const textFieldInputSelector = buildNestedSelector(textFieldSelector, 'input');
-const connectedLeftSelector = buildNestedSelector(connectedContainerSelector, '.Polaris-Connected__Item--connection:first-of-type');
-const connectedRightSelector = buildNestedSelector(connectedContainerSelector, '.Polaris-Connected__Item--connection:last-of-type');
-const connectedPrimaryInputSelector = buildNestedSelector(connectedContainerSelector, '.Polaris-Connected__Item--primary', textFieldSelector);
+const connectedLeftSelector = buildNestedSelector(
+  connectedContainerSelector,
+  '.Polaris-Connected__Item--connection:first-of-type'
+);
+const connectedRightSelector = buildNestedSelector(
+  connectedContainerSelector,
+  '.Polaris-Connected__Item--connection:last-of-type'
+);
+const connectedPrimaryInputSelector = buildNestedSelector(
+  connectedContainerSelector,
+  '.Polaris-Connected__Item--primary',
+  textFieldSelector
+);
 const spinnerSelector = '.Polaris-TextField__Spinner';
-const spinnerUpButtonSelector = buildNestedSelector(spinnerSelector, '.Polaris-TextField__Segment:first-of-type');
-const spinnerDownButtonSelector = buildNestedSelector(spinnerSelector, '.Polaris-TextField__Segment:last-of-type');
+const spinnerUpButtonSelector = buildNestedSelector(
+  spinnerSelector,
+  '.Polaris-TextField__Segment:first-of-type'
+);
+const spinnerDownButtonSelector = buildNestedSelector(
+  spinnerSelector,
+  '.Polaris-TextField__Segment:last-of-type'
+);
 const errorSelector = '.Polaris-Labelled__Error';
 const helpTextSelector = '.Polaris-Labelled__HelpText';
 
@@ -42,7 +74,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     `);
 
     assert.ok(find(textFieldInputSelector), 'it renders a text input');
-    assert.equal(find(labelSelector).textContent.trim(), label, 'it renders the passed-in label');
+    assert.equal(
+      find(labelSelector).textContent.trim(),
+      label,
+      'it renders the passed-in label'
+    );
   });
 
   test('when `type` is numeric, it renders a spinner which passes up new values when clicked', async function(assert) {
@@ -50,7 +86,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       value: 1,
       handleChange(num) {
         this.set('value', num);
-      }
+      },
     });
 
     await render(hbs`
@@ -61,15 +97,27 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       }}
     `);
 
-    assert.equal(findAll(spinnerSelector).length, 1, 'it renders a polaris-text-field/spinner component');
+    assert.equal(
+      findAll(spinnerSelector).length,
+      1,
+      'it renders a polaris-text-field/spinner component'
+    );
 
     await triggerEvent(spinnerUpButtonSelector, 'click');
-    assert.equal(this.get('value'), 2, 'numeric value is incremented when the `up` icon is clicked');
+    assert.equal(
+      this.get('value'),
+      2,
+      'numeric value is incremented when the `up` icon is clicked'
+    );
 
     this.set('value', 5);
 
     await triggerEvent(spinnerDownButtonSelector, 'click');
-    assert.equal(this.get('value'), 4, 'numeric value is decremented when the `down` icon is clicked');
+    assert.equal(
+      this.get('value'),
+      4,
+      'numeric value is decremented when the `down` icon is clicked'
+    );
   });
 
   test('it renders as a textarea when `multiline` is true', async function(assert) {
@@ -79,7 +127,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       }}
     `);
 
-    assert.equal(findAll(textFieldMultilineSelector).length, 1, 'it renders a textarea');
+    assert.equal(
+      findAll(textFieldMultilineSelector).length,
+      1,
+      'it renders a textarea'
+    );
   });
 
   test('it renders an actionable link when a `labelAction` hash is present', async function(assert) {
@@ -88,7 +140,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       labelActionCalled: false,
       labelAction() {
         this.set('labelActionCalled', true);
-      }
+      },
     });
 
     await render(hbs`
@@ -103,11 +155,18 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     const labelButton = find(labelActionButtonSelector);
     assert.ok(labelButton, 'it renders a button in the label');
-    assert.equal(labelButton.textContent.trim(), label, 'the label button displays the passed-in content');
+    assert.equal(
+      labelButton.textContent.trim(),
+      label,
+      'the label button displays the passed-in content'
+    );
 
     await triggerEvent(labelButton, 'click');
 
-    assert.ok(this.get('labelActionCalled'), 'the label action is called when the label button is clicked');
+    assert.ok(
+      this.get('labelActionCalled'),
+      'the label action is called when the label button is clicked'
+    );
   });
 
   test('it renders help text when `helpText` is present', async function(assert) {
@@ -121,13 +180,17 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     const helpTextNode = find(helpTextSelector);
     assert.ok(helpTextNode, 'it renders help text element');
-    assert.equal(helpTextNode.textContent.trim(), helpText, 'help text value is correct');
+    assert.equal(
+      helpTextNode.textContent.trim(),
+      helpText,
+      'help text value is correct'
+    );
   });
 
   test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function(assert) {
     this.setProperties({
       prefix,
-      suffix
+      suffix,
     });
 
     await render(hbs`
@@ -139,17 +202,25 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     let prefixNode = find(textFieldPrefixSelector);
     assert.ok(prefixNode, 'it renders the prefix element');
-    assert.equal(prefixNode.textContent.trim(), prefix, 'prefix value is correct');
+    assert.equal(
+      prefixNode.textContent.trim(),
+      prefix,
+      'prefix value is correct'
+    );
 
     let suffixNode = find(textFieldSuffixSelector);
     assert.ok(suffixNode, 'it renders the suffix element');
-    assert.equal(suffixNode.textContent.trim(), suffix, 'suffix value is correct');
+    assert.equal(
+      suffixNode.textContent.trim(),
+      suffix,
+      'suffix value is correct'
+    );
   });
 
   test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
     this.setProperties({
       left,
-      right
+      right,
     });
 
     await render(hbs`
@@ -159,17 +230,31 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       }}
     `);
 
-    assert.ok(find(connectedContainerSelector), 'it renders a polaris-text-field/connected component');
+    assert.ok(
+      find(connectedContainerSelector),
+      'it renders a polaris-text-field/connected component'
+    );
 
     let leftNode = find(connectedLeftSelector);
     assert.ok(leftNode, 'it renders the connected left element');
-    assert.equal(leftNode.textContent.trim(), left, 'connected left value is correct');
+    assert.equal(
+      leftNode.textContent.trim(),
+      left,
+      'connected left value is correct'
+    );
 
     let rightNode = find(connectedRightSelector);
     assert.ok(rightNode, 'it renders the connected right element');
-    assert.equal(rightNode.textContent.trim(), right, 'connected right value is correct');
+    assert.equal(
+      rightNode.textContent.trim(),
+      right,
+      'connected right value is correct'
+    );
 
-    assert.ok(find(connectedPrimaryInputSelector), 'the polaris text field is rendered inside the primary connected element');
+    assert.ok(
+      find(connectedPrimaryInputSelector),
+      'the polaris text field is rendered inside the primary connected element'
+    );
   });
 
   test('it renders validation errors when `error` is present', async function(assert) {
@@ -183,7 +268,11 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     const errorNode = find(errorSelector);
     assert.ok(errorNode, 'it renders the error message element');
-    assert.equal(errorNode.textContent.trim(), error, 'the error message value is correct');
+    assert.equal(
+      errorNode.textContent.trim(),
+      error,
+      'the error message value is correct'
+    );
   });
 
   test('it calls `onChange`, `onFocus`, and `onBlur` when events are triggered', async function(assert) {
@@ -199,7 +288,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       },
       handleBlur() {
         this.set('blurCalled', true);
-      }
+      },
     });
 
     await render(hbs`
@@ -211,12 +300,21 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     `);
 
     await triggerEvent(textFieldInputSelector, 'change');
-    assert.ok(this.get('changeCalled'), 'onChange action is called on textfield change event');
+    assert.ok(
+      this.get('changeCalled'),
+      'onChange action is called on textfield change event'
+    );
 
     await triggerEvent(textFieldInputSelector, 'focus');
-    assert.ok(this.get('focusCalled'), 'onFocus action is called on textfield focus event');
+    assert.ok(
+      this.get('focusCalled'),
+      'onFocus action is called on textfield focus event'
+    );
 
     await triggerEvent(textFieldInputSelector, 'blur');
-    assert.ok(this.get('blurCalled'), 'onBlur action is called on textfield blur event');
+    assert.ok(
+      this.get('blurCalled'),
+      'onBlur action is called on textfield blur event'
+    );
   });
 });

@@ -11,7 +11,7 @@ function offsetForHue(hue, sliderHeight, draggerHeight) {
   return clamp(
     (hue / 360) * slidableArea + VERTICAL_PADDING,
     0,
-    sliderHeight - draggerHeight,
+    sliderHeight - draggerHeight
   );
 }
 
@@ -26,15 +26,13 @@ export default Component.extend({
 
   layout,
 
-  /*
-   * Public attributes.
-   */
   /**
    * The current hue value
    *
    * @property hue
    * @type {Number}
    * @default 0
+   * @public
    */
   hue: 0,
 
@@ -44,24 +42,33 @@ export default Component.extend({
    * @property onChange
    * @type {function}
    * @default null
+   * @public
    */
   onChange: null,
 
-  /*
-   * Internal properties.
+  /**
+   * @private
    */
   sliderHeight: null,
+
+  /**
+   * @private
+   */
   draggerHeight: null,
 
+  /**
+   * @private
+   */
   draggerY: computed('hue', 'sliderHeight', function() {
-    const { hue, sliderHeight, draggerHeight } = this.getProperties('hue', 'sliderHeight', 'draggerHeight');
+    const { hue, sliderHeight, draggerHeight } = this.getProperties(
+      'hue',
+      'sliderHeight',
+      'draggerHeight'
+    );
     const offset = offsetForHue(hue, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);
   }).readOnly(),
 
-  /*
-   * Lifecycle hooks.
-   */
   didRender() {
     this._super(...arguments);
 
@@ -71,8 +78,11 @@ export default Component.extend({
   },
 
   actions: {
-    handleChange({y}) {
-      const { sliderHeight, onChange } = this.getProperties('sliderHeight', 'onChange');
+    handleChange({ y }) {
+      const { sliderHeight, onChange } = this.getProperties(
+        'sliderHeight',
+        'onChange'
+      );
       if (typeOf(onChange) !== 'function') {
         return;
       }
@@ -82,5 +92,5 @@ export default Component.extend({
 
       onChange(hue);
     },
-  }
+  },
 });
