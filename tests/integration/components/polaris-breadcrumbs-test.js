@@ -23,7 +23,10 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
     assert.dom('[data-test-breadcrumbs]').exists('component renders');
     assert.dom('[data-test-breadcrumb-icon]').exists('icon renders');
     assert.dom('[data-test-breadcrumb-content]').exists('content renders');
-    assert.dom('[data-test-breadcrumb-content]').hasText(content, 'has correct content text');
+
+    assert
+      .dom('[data-test-breadcrumb-content]')
+      .hasText(content, 'has correct content text');
   });
 
   test('it renders an unstyled link when `breadcrumb.url` attribute is present', async function(assert) {
@@ -38,7 +41,9 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
     `);
 
-    assert.dom('[data-test-breadcrumbs] > a[data-polaris-unstyled]').exists('it renders an unstyled link component');
+    assert
+      .dom('[data-test-breadcrumbs] > a[data-polaris-unstyled]')
+      .exists('it renders an unstyled link component');
   });
 
   test('it renders a button when `breadcrumb.url` attribute is not present', async function(assert) {
@@ -53,6 +58,8 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
     `);
 
-    assert.dom('[data-test-breadcrumbs] > button').exists('it renders a button');
+    assert
+      .dom('[data-test-breadcrumbs] > button')
+      .exists('it renders a button');
   });
 });

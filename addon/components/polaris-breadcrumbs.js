@@ -31,6 +31,8 @@ export default Component.extend({
 
   'data-test-breadcrumbs': true,
 
+  handleMouseUpByBlurring,
+
   /**
    * The breadcrumb to render (the last of the list)
    * We're not always guaranteed to get an Ember array,
@@ -47,6 +49,4 @@ export default Component.extend({
       ? breadcrumbs[breadcrumbsCount - 1]
       : null;
   }).readOnly(),
-
-  handleMouseUpByBlurring,
 });
