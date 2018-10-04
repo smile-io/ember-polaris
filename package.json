@@ -56,7 +56,7 @@
     "rsvp": "^4.8.2"
   },
   "devDependencies": {
-    "@smile-io/ember-styleguide": "^7.0.1",
+    "@smile-io/ember-styleguide": "^8.0.0",
     "broccoli-asset-rev": "^2.4.5",
     "ember-array-helper": "^3.0.0",
     "ember-cli": "~3.1.4",

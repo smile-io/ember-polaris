@@ -128,10 +128,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@smile-io/ember-styleguide@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@smile-io/ember-styleguide/-/ember-styleguide-7.0.1.tgz#ca8104d12ab2df97cebd1c4cdd4a25a19035797d"
-  integrity sha512-u6aSVQ0/3TMxlybpLAr5dPDh/FlmXTabKWWh9XK316krsl6EmW2G5zNjuO2ok3PMe+U1g0Zm/+BGSixmCts8Hg==
+"@smile-io/ember-styleguide@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@smile-io/ember-styleguide/-/ember-styleguide-8.0.0.tgz#4c98937c842dcdd40615f127a3f4f13c36cd85f7"
+  integrity sha512-IhuIXukyiwJ1zdeeBlYpC40gU7UGDHG2CJLu0TnGgnr3Rj711KMxi50/cWqKUgBE14RxMAHveGAZR4Mslxu8qQ==
   dependencies:
     inquirer "^6.2.0"
     read-pkg "^4.0.1"
