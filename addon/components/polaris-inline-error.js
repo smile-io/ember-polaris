@@ -19,7 +19,7 @@ export default Component.extend({
   /**
    * Content briefly explaining how to resolve the invalid form field input.
    *
-   * @type {String}
+   * @type {String|Component}
    * @default null
    * @public
    */

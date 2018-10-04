@@ -29,4 +29,20 @@ module('Integration | Component | polaris-inline-error', function(hooks) {
     this.set('message', null);
     assert.dom('[data-test-inline-error]').doesNotExist('does not renders when message is not truthy');
   });
+
+  test('works with `message` being a component', async function(assert) {
+    this.setProperties({
+      message: 'Message can\'t be blank',
+      fieldID: 'uniqueID'
+    });
+
+    await render(hbs`
+      {{polaris-inline-error
+        fieldID=fieldID
+        message=(component "polaris-display-text" text=message)
+      }}
+    `);
+
+    assert.dom('[data-test-inline-error] > .Polaris-DisplayText').exists('renders `message` as a component');
+  });
 });
