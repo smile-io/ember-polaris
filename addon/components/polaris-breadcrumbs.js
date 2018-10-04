@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed, get } from '@ember/object';
+import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-breadcrumbs';
 
 export default Component.extend({
@@ -44,4 +45,6 @@ export default Component.extend({
       ? breadcrumbs[breadcrumbsCount - 1]
       : null;
   }).readOnly(),
+
+  handleMouseUpByBlurring,
 });
