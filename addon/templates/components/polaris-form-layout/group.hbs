@@ -1,8 +1,10 @@
 <div class="Polaris-FormLayout__Items">
   {{#if hasBlock}}
-    {{yield (hash
-      item=(component "polaris-form-layout/item")
-    )}}
+    {{yield
+      (hash
+        item=(component "polaris-form-layout/item")
+      )
+    }}
   {{else}}
     {{text}}
   {{/if}}

@@ -1,4 +1,7 @@
-{{#each (polaris-data-table/insert-presentational-cell row) as |cellText cellIndex|}}
+{{#each
+  (polaris-data-table/insert-presentational-cell row)
+as |cellText cellIndex|
+}}
   {{polaris-data-table/cell
     height=(get-array-item bodyCellHeights index)
     text=cellText

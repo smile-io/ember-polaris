@@ -11,8 +11,7 @@
     left=connectedLeft
     right=connectedRight
   }}
-
-    <!-- template-lint invalid-interactive=false -->
+    {{!-- template-lint-disable invalid-interactive --}}
     <div
       class={{textFieldClasses}}
       onfocus={{action "handleFocus"}}
@@ -26,6 +25,8 @@
         </div>
       {{/if}}
 
+      {{!-- template-lint-disable attribute-indentation --}}
+      {{!-- TODO remove rule above once linter handles this correctly --}}
       {{#with
         (component "wrapper-element"
           name=name
@@ -46,15 +47,18 @@
           aria-labelledby=ariaLabelledBy
           aria-invalid=ariaInvalid
           value=value
-        ) as |inputElement|
+        )
+        as |inputElement|
       }}
         {{#if multiline}}
-          {{component inputElement
+          {{component
+            inputElement
             tagName="textarea"
             style=heightStyle
           }}
         {{else}}
-          {{component inputElement
+          {{component
+            inputElement
             tagName="input"
             type=inputType
             max=max

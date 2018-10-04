@@ -1,8 +1,6 @@
-<div class="
-  Polaris-SkeletonPage__Header
-  {{if breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
-  {{if dummySecondaryActions "Polaris-SkeletonPage__Header--hasSecondaryActions"}}
-">
+<div
+  class="Polaris-SkeletonPage__Header {{if breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}} {{if dummySecondaryActions "Polaris-SkeletonPage__Header--hasSecondaryActions"}}"
+>
   {{#if breadcrumbs}}
     <div class="Polaris-SkeletonPage__Actions">
       {{polaris-skeleton-page/action}}

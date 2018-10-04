@@ -4,9 +4,11 @@
   {{/if}}
 
   {{#if hasBlock}}
-    {{yield (hash
-      header=header
-    )}}
+    {{yield
+      (hash
+        header=header
+      )
+    }}
   {{else}}
     {{text}}
   {{/if}}
