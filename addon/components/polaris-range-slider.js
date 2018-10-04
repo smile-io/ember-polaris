@@ -26,6 +26,19 @@ export default Component.extend({
   layout,
 
   /**
+   * ID for range input
+   *
+   * Defaults to Ember's internal GUID for the component instance
+   *
+   * @property {id}
+   * @type {String}
+   * @public
+   */
+  id: computed(function() {
+    return guidFor(this);
+  }),
+
+  /**
    * Label for the range input
    *
    * @property {label}
@@ -160,19 +173,6 @@ export default Component.extend({
    * @public
    */
   onBlur() {},
-
-  /**
-   * ID for range input
-   *
-   * Defaults to Ember's internal GUID for the component instance
-   *
-   * @property {id}
-   * @type {String}
-   * @public
-   */
-  id: computed(function() {
-    return guidFor(this);
-  }),
 
   /**
    * Class names for the range input wrapper div

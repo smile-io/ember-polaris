@@ -44,6 +44,16 @@ export default Component.extend(
     layout,
 
     /**
+     * ID for the input
+     *
+     * @property id
+     * @public
+     * @type {String}
+     * @default null
+     */
+    id: null,
+
+    /**
      * Text to display before value
      *
      * @property prefix
@@ -225,16 +235,6 @@ export default Component.extend(
      * @default null
      */
     name: null,
-
-    /**
-     * ID for the input
-     *
-     * @property id
-     * @public
-     * @type {String}
-     * @default null
-     */
-    id: null,
 
     /**
      * Limit increment value for numeric and date-time inputs
