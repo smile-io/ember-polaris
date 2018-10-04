@@ -1,195 +1,197 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import { classify } from '@ember/string';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent('polaris-icon', 'Integration | Component | polaris icon', {
-  integration: true,
+module('Integration | Component | polaris icon', function(hooks) {
+  setupRenderingTest(hooks);
 
-  beforeEach() {
-    this.register('component:svg-jar', MockSvgJarComponent);
-  },
-});
+  hooks.beforeEach(function() {
+    this.owner.register('component:svg-jar', MockSvgJarComponent);
+  });
 
-const iconSelector = 'span.Polaris-Icon';
+  const iconSelector = 'span.Polaris-Icon';
 
-test('it renders the specified icon correctly', function(assert) {
-  this.render(hbs`{{polaris-icon source="notes"}}`);
+  test('it renders the specified icon correctly', async function(assert) {
+    await render(hbs`{{polaris-icon source="notes"}}`);
 
-  const icons = findAll(iconSelector);
-  assert.equal(icons.length, 1, 'renders one icon component');
+    const icons = findAll(iconSelector);
+    assert.equal(icons.length, 1, 'renders one icon component');
 
-  const svgSelector = buildNestedSelector(
-    iconSelector,
-    'svg.Polaris-Icon__Svg'
-  );
-  const svgs = findAll(svgSelector);
-  assert.equal(svgs.length, 1, 'renders one SVG element');
-
-  const svg = svgs[0];
-  assert.equal(
-    svg.dataset.iconSource,
-    'polaris/notes',
-    'uses the correct SVG source'
-  );
-  assert.equal(
-    svg.getAttribute('focusable'),
-    'false',
-    'applies focusable:false to the SVG element'
-  );
-  assert.equal(
-    svg.getAttribute('aria-hidden'),
-    'true',
-    'applies aria-hidden to the SVG element'
-  );
-});
-
-test('it applies colors correctly', function(assert) {
-  // Colors lifted from shopify source.
-  const colors = [
-    'white',
-    'black',
-    'skyLighter',
-    'skyLight',
-    'sky',
-    'skyDark',
-    'inkLightest',
-    'inkLighter',
-    'inkLight',
-    'ink',
-    'blueLighter',
-    'blueLight',
-    'blue',
-    'blueDark',
-    'blueDarker',
-    'indigoLighter',
-    'indigoLight',
-    'indigo',
-    'indigoDark',
-    'indigoDarker',
-    'tealLighter',
-    'tealLight',
-    'teal',
-    'tealDark',
-    'tealDarker',
-    'greenLighter',
-    'green',
-    'greenDark',
-    'yellowLighter',
-    'yellow',
-    'yellowDark',
-    'orange',
-    'redLighter',
-    'red',
-    'redDark',
-    'purple',
-  ];
-
-  assert.expect(2 + colors.length * 3);
-
-  this.render(hbs`{{polaris-icon source="add" color=color}}`);
-
-  // Check without any color set first.
-  const icon = find(iconSelector);
-  assert.ok(
-    icon.className.indexOf('Polaris-Icon--color') === -1,
-    'icon without color does not add color class'
-  );
-  assert.notOk(
-    icon.classList.contains('Polaris-Icon--isColored'),
-    'icon without color does not add isColored class'
-  );
-
-  // Check all the available colors are handled correctly.
-  for (const color of colors) {
-    this.set('color', color);
-
-    const colorClass = `Polaris-Icon--color${classify(color)}`;
-    assert.ok(
-      icon.classList.contains(colorClass),
-      `icon with ${color} color applies ${colorClass} class`
+    const svgSelector = buildNestedSelector(
+      iconSelector,
+      'svg.Polaris-Icon__Svg'
     );
+    const svgs = findAll(svgSelector);
+    assert.equal(svgs.length, 1, 'renders one SVG element');
 
-    const colorClassNames = [...icon.classList].filter((className) => {
-      return className.indexOf('Polaris-Icon--color') === 0;
-    });
+    const svg = svgs[0];
     assert.equal(
-      colorClassNames.length,
-      1,
-      `icon with ${color} color does not add other color classes`
+      svg.dataset.iconSource,
+      'polaris/notes',
+      'uses the correct SVG source'
+    );
+    assert.equal(
+      svg.getAttribute('focusable'),
+      'false',
+      'applies focusable:false to the SVG element'
+    );
+    assert.equal(
+      svg.getAttribute('aria-hidden'),
+      'true',
+      'applies aria-hidden to the SVG element'
+    );
+  });
+
+  test('it applies colors correctly', async function(assert) {
+    // Colors lifted from shopify source.
+    const colors = [
+      'white',
+      'black',
+      'skyLighter',
+      'skyLight',
+      'sky',
+      'skyDark',
+      'inkLightest',
+      'inkLighter',
+      'inkLight',
+      'ink',
+      'blueLighter',
+      'blueLight',
+      'blue',
+      'blueDark',
+      'blueDarker',
+      'indigoLighter',
+      'indigoLight',
+      'indigo',
+      'indigoDark',
+      'indigoDarker',
+      'tealLighter',
+      'tealLight',
+      'teal',
+      'tealDark',
+      'tealDarker',
+      'greenLighter',
+      'green',
+      'greenDark',
+      'yellowLighter',
+      'yellow',
+      'yellowDark',
+      'orange',
+      'redLighter',
+      'red',
+      'redDark',
+      'purple',
+    ];
+
+    assert.expect(2 + colors.length * 3);
+
+    await render(hbs`{{polaris-icon source="add" color=color}}`);
+
+    // Check without any color set first.
+    const icon = find(iconSelector);
+    assert.ok(
+      icon.className.indexOf('Polaris-Icon--color') === -1,
+      'icon without color does not add color class'
+    );
+    assert.notOk(
+      icon.classList.contains('Polaris-Icon--isColored'),
+      'icon without color does not add isColored class'
     );
 
-    if (color === 'white') {
-      assert.notOk(
-        icon.classList.contains('Polaris-Icon--isColored'),
-        `icon with ${color} color does not add isColored class`
-      );
-    } else {
+    // Check all the available colors are handled correctly.
+    for (const color of colors) {
+      this.set('color', color);
+
+      const colorClass = `Polaris-Icon--color${classify(color)}`;
       assert.ok(
-        icon.classList.contains('Polaris-Icon--isColored'),
-        `icon with ${color} color adds isColored class`
+        icon.classList.contains(colorClass),
+        `icon with ${color} color applies ${colorClass} class`
       );
+
+      const colorClassNames = [...icon.classList].filter((className) => {
+        return className.indexOf('Polaris-Icon--color') === 0;
+      });
+      assert.equal(
+        colorClassNames.length,
+        1,
+        `icon with ${color} color does not add other color classes`
+      );
+
+      if (color === 'white') {
+        assert.notOk(
+          icon.classList.contains('Polaris-Icon--isColored'),
+          `icon with ${color} color does not add isColored class`
+        );
+      } else {
+        assert.ok(
+          icon.classList.contains('Polaris-Icon--isColored'),
+          `icon with ${color} color adds isColored class`
+        );
+      }
     }
-  }
-});
+  });
 
-test('it handles backdrop correctly', function(assert) {
-  this.render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
+  test('it handles backdrop correctly', async function(assert) {
+    await render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
 
-  // Check default setting.
-  const icon = find(iconSelector);
-  const backdropClass = 'Polaris-Icon--hasBackdrop';
-  assert.notOk(
-    icon.classList.contains(backdropClass),
-    'icon without backdrop set does not apply backdrop class'
-  );
+    // Check default setting.
+    const icon = find(iconSelector);
+    const backdropClass = 'Polaris-Icon--hasBackdrop';
+    assert.notOk(
+      icon.classList.contains(backdropClass),
+      'icon without backdrop set does not apply backdrop class'
+    );
 
-  this.set('backdrop', true);
-  assert.ok(
-    icon.classList.contains(backdropClass),
-    `icon with backdrop=true applies backdrop class`
-  );
+    this.set('backdrop', true);
+    assert.ok(
+      icon.classList.contains(backdropClass),
+      `icon with backdrop=true applies backdrop class`
+    );
 
-  this.set('backdrop', false);
-  assert.notOk(
-    icon.classList.contains(backdropClass),
-    `icon with backdrop=false does not apply backdrop class`
-  );
-});
+    this.set('backdrop', false);
+    assert.notOk(
+      icon.classList.contains(backdropClass),
+      `icon with backdrop=false does not apply backdrop class`
+    );
+  });
 
-test('it handles accessibilityLabel correctly', function(assert) {
-  this.render(
-    hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`
-  );
+  test('it handles accessibilityLabel correctly', async function(assert) {
+    await render(
+      hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`
+    );
 
-  // Check default setting.
-  const icon = find(iconSelector);
-  assert.notOk(
-    icon.attributes['aria-label'],
-    'no accessibilityLabel set - does not add aria-label attribute'
-  );
+    // Check default setting.
+    const icon = find(iconSelector);
+    assert.notOk(
+      icon.attributes['aria-label'],
+      'no accessibilityLabel set - does not add aria-label attribute'
+    );
 
-  this.set('accessibilityLabel', 'This is the accessibility label');
-  assert.ok(
-    icon.attributes['aria-label'],
-    'accessibilityLabel set - adds aria-label attribute'
-  );
-  assert.equal(
-    icon.attributes['aria-label'].value,
-    'This is the accessibility label',
-    'accessibilityLabel set - adds correct aria-label value'
-  );
-});
+    this.set('accessibilityLabel', 'This is the accessibility label');
+    assert.ok(
+      icon.attributes['aria-label'],
+      'accessibilityLabel set - adds aria-label attribute'
+    );
+    assert.equal(
+      icon.attributes['aria-label'].value,
+      'This is the accessibility label',
+      'accessibilityLabel set - adds correct aria-label value'
+    );
+  });
 
-test('it handles placeholder icons correctly', function(assert) {
-  this.render(hbs`{{polaris-icon source="placeholder"}}`);
+  test('it handles placeholder icons correctly', async function(assert) {
+    await render(hbs`{{polaris-icon source="placeholder"}}`);
 
-  const iconPlaceholderSelector = buildNestedSelector(
-    iconSelector,
-    'div.Polaris-Icon__Placeholder'
-  );
-  const iconPlaceholders = findAll(iconPlaceholderSelector);
-  assert.equal(iconPlaceholders.length, 1, 'renders one icon placeholder');
+    const iconPlaceholderSelector = buildNestedSelector(
+      iconSelector,
+      'div.Polaris-Icon__Placeholder'
+    );
+    const iconPlaceholders = findAll(iconPlaceholderSelector);
+    assert.equal(iconPlaceholders.length, 1, 'renders one icon placeholder');
+  });
 });
