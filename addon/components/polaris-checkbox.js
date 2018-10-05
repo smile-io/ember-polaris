@@ -102,7 +102,7 @@ export default Component.extend({
    * Display an error state
    *
    * @property error
-   * @type {String}
+   * @type {String|Boolean}
    * @default null
    * @public
    */
