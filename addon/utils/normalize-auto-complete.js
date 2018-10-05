@@ -1,17 +1,26 @@
 import { computed } from '@ember/object';
 
 /**
- * Normalizes a boolean property as a HTML auto-complete value
+ * Normalizes a boolean as a HTML auto-complete value
  *
- * @param {Boolean} autoCompleteProperty
+ * @param {Boolean} autoComplete
  */
-export default function normalizeAutoComplete(autoCompleteProperty) {
+export function normalizeAutoComplete(autoComplete) {
+  if (autoComplete == null) {
+    return autoComplete;
+  }
+
+  return autoComplete ? 'on' : 'off';
+}
+
+/**
+ * Takes a property name and normalizes as a HTML auto-complete value
+ *
+ * @param {String} autoCompleteProperty
+ */
+export function normalizeAutoCompleteProperty(autoCompleteProperty) {
   return computed(autoCompleteProperty, function() {
     let autoComplete = this.get(autoCompleteProperty);
-    if (autoComplete == null) {
-      return autoComplete;
-    }
-
-    return autoComplete ? 'on' : 'off';
+    return normalizeAutoComplete(autoComplete);
   }).readOnly();
 }

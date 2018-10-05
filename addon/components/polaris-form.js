@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-form';
-import normalizeAutoComplete from '../utils/normalize-auto-complete';
+import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
 export default Component.extend({
   tagName: 'form',
@@ -117,7 +117,7 @@ export default Component.extend({
 
   'data-test-form': true,
 
-  autoCompleteInputs: normalizeAutoComplete('autoComplete'),
+  autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
 
   submit(event) {
     let { preventDefault = true, onSubmit } = this;
