@@ -165,6 +165,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Choice list](./docs/choice-list.md#choice-list)
 - [Color picker](./docs/color-picker.md#color-picker)
 - [Date picker](./docs/date-picker.md#date-picker)
+- [Form](./docs/form.md#form)
 - [Form layout](./docs/form-layout.md#form-layout)
 - [Inline error](./docs/inline-error.md#inline-error)
 - [Radio button](./docs/radio-button.md#radio-button)
