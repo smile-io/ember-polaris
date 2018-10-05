@@ -159,10 +159,9 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'primary button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--primary'),
-    'primary button - primary class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--primary', 'primary button - primary class');
 
   // Button with destructive flag set.
   this.render(hbs`{{polaris-button destructive=true}}`);
@@ -171,10 +170,12 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'destructive button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--destructive'),
-    'destructive button - destructive class'
-  );
+  assert
+    .dom(button)
+    .hasClass(
+      'Polaris-Button--destructive',
+      'destructive button - destructive class'
+    );
 
   // Button with disabled flag set.
   this.render(hbs`{{polaris-button disabled=true}}`);
@@ -183,10 +184,9 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'disabled button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--disabled'),
-    'disabled button - disabled class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--disabled', 'disabled button - disabled class');
   assert.ok(button.disabled, 'disabled button - disabled attribute');
 
   // Link button with disabled flag set.
@@ -198,10 +198,12 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'disabled link button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--disabled'),
-    'disabled link button - disabled class'
-  );
+  assert
+    .dom(button)
+    .hasClass(
+      'Polaris-Button--disabled',
+      'disabled link button - disabled class'
+    );
   assert.ok(
     button.attributes['disabled'],
     'disabled link button - disabled attribute'
@@ -214,14 +216,12 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'slim button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--sizeSlim'),
-    'slim button - slim class'
-  );
-  assert.notOk(
-    button.classList.contains('Polaris-Button--sizeLarge'),
-    'slim button - no large class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--sizeSlim', 'slim button - slim class');
+  assert
+    .dom(button)
+    .hasNoClass('Polaris-Button--sizeLarge', 'slim button - no large class');
 
   // Large button.
   this.render(hbs`{{polaris-button size="large"}}`);
@@ -230,14 +230,12 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'large button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--sizeLarge'),
-    'large button - large class'
-  );
-  assert.notOk(
-    button.classList.contains('Polaris-Button--sizeSlim'),
-    'large button - no slim class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--sizeLarge', 'large button - large class');
+  assert
+    .dom(button)
+    .hasNoClass('Polaris-Button--sizeSlim', 'large button - no slim class');
 
   // Button with outline flag set.
   this.render(hbs`{{polaris-button outline=true}}`);
@@ -246,10 +244,9 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'outline button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--outline'),
-    'outline button - outline class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--outline', 'outline button - outline class');
 
   // Button with fullWidth flag set.
   this.render(hbs`{{polaris-button fullWidth=true}}`);
@@ -258,10 +255,12 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'fullWidth button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--fullWidth'),
-    'fullWidth button - fullWidth class'
-  );
+  assert
+    .dom(button)
+    .hasClass(
+      'Polaris-Button--fullWidth',
+      'fullWidth button - fullWidth class'
+    );
 
   // Button with submit flag set.
   this.render(hbs`{{polaris-button submit=true}}`);
@@ -276,10 +275,9 @@ test('renders the correct HTML', function(assert) {
   assert.equal(buttons.length, 1, 'plain button - renders');
 
   button = buttons[0];
-  assert.ok(
-    button.classList.contains('Polaris-Button--plain'),
-    'plain button - plain class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--plain', 'plain button - plain class');
 
   // Button with accessibility label.
   this.render(hbs`{{polaris-button accessibilityLabel="You can't see me!"}}`);
@@ -350,16 +348,20 @@ test('it supports `icon`', function(assert) {
     'polaris/cancel',
     'button with icon - renders correct icon SVG'
   );
-  assert.ok(
-    button.classList.contains('Polaris-Button--iconOnly'),
-    'button with icon - without text, has icon-only class'
-  );
+  assert
+    .dom(button)
+    .hasClass(
+      'Polaris-Button--iconOnly',
+      'button with icon - without text, has icon-only class'
+    );
 
   this.set('text', 'Some text');
-  assert.notOk(
-    button.classList.contains('Polaris-Button--iconOnly'),
-    'button with icon - with text, does not have icon-only class'
-  );
+  assert
+    .dom(button)
+    .hasNoClass(
+      'Polaris-Button--iconOnly',
+      'button with icon - with text, does not have icon-only class'
+    );
 });
 
 test('it supports `disclosure`', function(assert) {
@@ -382,10 +384,12 @@ test('it supports `disclosure`', function(assert) {
   );
 
   disclosureIcon = contentSpans[1];
-  assert.ok(
-    disclosureIcon.classList.contains('Polaris-Button__Icon'),
-    'button with disclosure - has disclosure icon after text'
-  );
+  assert
+    .dom(disclosureIcon)
+    .hasClass(
+      'Polaris-Button__Icon',
+      'button with disclosure - has disclosure icon after text'
+    );
   let iconSvg = find('span.Polaris-Icon > svg', disclosureIcon);
   assert.equal(
     iconSvg.dataset.iconSource,
@@ -457,7 +461,7 @@ test('it applies passed-in classes to the rendered element when rendering a butt
 
   button = find('button.Polaris-Button.press-me-to-make-something-happen');
   assert.ok(button, 'renders button with updated classes');
-  assert.notOk(button.classList.contains('my-button'));
+  assert.dom(button).hasNoClass('my-button');
 });
 
 test('it applies passed-in classes to the rendered element when rendering a link', function(assert) {
@@ -474,7 +478,7 @@ test('it applies passed-in classes to the rendered element when rendering a link
 
   linkButton = find('a.Polaris-Button.click-me-to-go-somewhere');
   assert.ok(linkButton, 'renders link button with updated classes');
-  assert.notOk(linkButton.classList.contains('my-link'));
+  assert.dom(linkButton).hasNoClass('my-link');
 });
 
 test('handles the loading flag correctly', function(assert) {
@@ -489,14 +493,18 @@ test('handles the loading flag correctly', function(assert) {
 
   // Before setting the loading flag, the button should show text, icon and disclosure icon.
   let button = find('button.Polaris-Button');
-  assert.notOk(
-    button.classList.contains('Polaris-Button--loading'),
-    'loading unset - does not have loading class'
-  );
-  assert.notOk(
-    button.classList.contains('Polaris-Button--disabled'),
-    'loading unset - does not have disabled class'
-  );
+  assert
+    .dom(button)
+    .hasNoClass(
+      'Polaris-Button--loading',
+      'loading unset - does not have loading class'
+    );
+  assert
+    .dom(button)
+    .hasNoClass(
+      'Polaris-Button--disabled',
+      'loading unset - does not have disabled class'
+    );
 
   let buttonText = find(buttonTextSelector, button).innerText;
   assert.equal(
@@ -533,14 +541,12 @@ test('handles the loading flag correctly', function(assert) {
   //  - display placeholders for the icon and disclosure icon;
   //  - render a spinner;
   //  - be disabled.
-  assert.ok(
-    button.classList.contains('Polaris-Button--loading'),
-    'loading set - has loading class'
-  );
-  assert.ok(
-    button.classList.contains('Polaris-Button--disabled'),
-    'loading set - has disabled class'
-  );
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--loading', 'loading set - has loading class');
+  assert
+    .dom(button)
+    .hasClass('Polaris-Button--disabled', 'loading set - has disabled class');
   const iconPlaceholderSelector = buildNestedSelector(
     buttonIconSelector,
     'span.Polaris-Icon',
@@ -553,42 +559,54 @@ test('handles the loading flag correctly', function(assert) {
     'loading set - renders placeholders for icon and disclosure icon'
   );
 
-  assert.ok(
-    button.classList.contains('Polaris-Button--disabled'),
-    'loading set - button has disabled class'
-  );
+  assert
+    .dom(button)
+    .hasClass(
+      'Polaris-Button--disabled',
+      'loading set - button has disabled class'
+    );
   assert.ok(button.disabled, 'loading set - button is disabled');
 
   spinners = findAll(spinnerSelector, button);
   assert.equal(spinners.length, 1, 'loading set - renders one spinner');
 
   let spinner = spinners[0];
-  assert.ok(
-    spinner.classList.contains('Polaris-Spinner--sizeSmall'),
-    'loading set - renders small spinner'
-  );
+  assert
+    .dom(spinner)
+    .hasClass(
+      'Polaris-Spinner--sizeSmall',
+      'loading set - renders small spinner'
+    );
 
   // Check the spinner color is correct for all button states.
-  assert.ok(
-    spinner.classList.contains('Polaris-Spinner--colorInkLightest'),
-    'loading set, primary and destructive unset - uses inkLightest color for spinner'
-  );
+  assert
+    .dom(spinner)
+    .hasClass(
+      'Polaris-Spinner--colorInkLightest',
+      'loading set, primary and destructive unset - uses inkLightest color for spinner'
+    );
 
   this.set('primary', true);
-  assert.ok(
-    spinner.classList.contains('Polaris-Spinner--colorWhite'),
-    'loading and primary set, destructive unset - uses white color for spinner'
-  );
+  assert
+    .dom(spinner)
+    .hasClass(
+      'Polaris-Spinner--colorWhite',
+      'loading and primary set, destructive unset - uses white color for spinner'
+    );
 
   this.set('destructive', true);
-  assert.ok(
-    spinner.classList.contains('Polaris-Spinner--colorWhite'),
-    'loading, primary and destructive set - uses white color for spinner'
-  );
+  assert
+    .dom(spinner)
+    .hasClass(
+      'Polaris-Spinner--colorWhite',
+      'loading, primary and destructive set - uses white color for spinner'
+    );
 
   this.set('primary', false);
-  assert.ok(
-    spinner.classList.contains('Polaris-Spinner--colorWhite'),
-    'loading and destructive set, primary unset - uses white color for spinner'
-  );
+  assert
+    .dom(spinner)
+    .hasClass(
+      'Polaris-Spinner--colorWhite',
+      'loading and destructive set, primary unset - uses white color for spinner'
+    );
 });
