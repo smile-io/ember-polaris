@@ -1,7 +1,10 @@
 # ember-polaris Changelog
 
-### v.1.7.5 (October 4, 2018)
-- [#173](https://github.com/smile-io/ember-polaris/pull/173) [INTERNAL] Setup eslint, prettier & ember-template-lint.
+### v.1.7.6 (october 5, 2018)
+- [#181](https://github.com/smile-io/ember-polaris/pull/181) [internal] autofix code to use our latest eslint rules.
+
+### v.1.7.5 (october 4, 2018)
+- [#173](https://github.com/smile-io/ember-polaris/pull/173) [internal] setup eslint, prettier & ember-template-lint.
 
 ### v.1.7.4 (September 17, 2018)
 - [#170](https://github.com/smile-io/ember-polaris/pull/170) [FIX] Allow class names on `polaris-callout-card`.
