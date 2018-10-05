@@ -6,6 +6,7 @@
 - [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
 - [#187](https://github.com/smile-io/ember-polaris/pull/187) [FEATURE] Add `disabled` attribute to `polaris-choice`
 - [#185](https://github.com/smile-io/ember-polaris/pull/185) [FEATURE] Update `polaris-button` to accept components for `icon` value
+- [#179](https://github.com/smile-io/ember-polaris/pull/179) [FEATURE] Upgrade `polaris-breadcrumbs` to render button if `url` not present
 
 ### v.1.7.7 (october 8, 2018)
 - [#189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
