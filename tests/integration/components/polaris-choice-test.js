@@ -72,7 +72,8 @@ const errorSelector = buildNestedSelector(
 );
 const errorIconSelector = buildNestedSelector(
   errorSelector,
-  'div.Polaris-Choice__ErrorIcon',
+  'div.Polaris-InlineError',
+  'div.Polaris-InlineError__Icon',
   'span.Polaris-Icon',
   'svg'
 );
