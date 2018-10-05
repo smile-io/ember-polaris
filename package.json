@@ -81,6 +81,7 @@
     "ember-resolver": "^5.0.1",
     "ember-source": "~3.4.0",
     "ember-source-channel-url": "^1.1.0",
+    "ember-test-selectors": "^1.0.0",
     "ember-try": "^1.0.0",
     "eslint-plugin-smile-ember": "^1.2.0",
     "husky": "^1.1.0",

@@ -1,8 +1,9 @@
 # ember-polaris Changelog
 
-### Unrelease
+### Unreleased
 - [#168](https://github.com/smile-io/ember-polaris/pull/168) [INTERNAL] Upgrade to Ember CLI `3.4.2`
-- [#144](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.9.0`
+- [#171](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.11.0`
+- [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
 
 ### v.1.7.4 (September 17, 2018)
 - [#170](https://github.com/smile-io/ember-polaris/pull/170) [FIX] Allow class names on `polaris-callout-card`.
