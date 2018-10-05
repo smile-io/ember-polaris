@@ -3738,10 +3738,10 @@ eslint-plugin-prettier@2.7.0:
     fast-diff "^1.1.1"
     jest-docblock "^21.0.0"
 
-eslint-plugin-smile-ember@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-1.2.0.tgz#b03424ea7cec15d0d4f3674740da68a037a9310d"
-  integrity sha512-4CShmS5s/NdXK7MzAT/I8X1/wVW125HS0b0n2q5Rn5RRAEB2ckt3LrX076jbzA71cfmULXXJgezruA8dXPhWZQ==
+eslint-plugin-smile-ember@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-1.3.0.tgz#ca84a1c236180b391030975523c1f17898c9fc23"
+  integrity sha512-SHLYhpj0fBIvlMjvSOh20WGc1r2oVfsp5x+nzCQ4KH+u9XakjITP7gjdpDz+hdpOkt4NaMRCn+SRBY8ab0Iafw==
   dependencies:
     deep-value "^1.0.4"
     eslint "^4.19.1"
