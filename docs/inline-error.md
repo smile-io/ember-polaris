@@ -1,6 +1,6 @@
 [< Back to Components List](../README.md#components)
 
-## Badge
+## Inline error
 
 `polaris-inline-error` implements the [Polaris Inline error component](https://polaris.shopify.com/components/forms/inline-error).
 
