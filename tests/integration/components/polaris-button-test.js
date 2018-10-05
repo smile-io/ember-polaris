@@ -8,9 +8,13 @@ const buttonTextSelector = buildNestedSelector(
   'span.Polaris-Button__Content',
   'span:not(.Polaris-Button__Icon)'
 );
-const buttonIconSelector = buildNestedSelector(
+const buttonIconWrapperSelector = buildNestedSelector(
   'span.Polaris-Button__Content',
   'span.Polaris-Button__Icon'
+);
+const buttonIconSelector = buildNestedSelector(
+  buttonIconWrapperSelector,
+  'span.Polaris-Icon'
 );
 
 moduleForComponent(
@@ -331,16 +335,16 @@ test('renders the correct HTML', function(assert) {
   );
 });
 
-test('it supports `icon`', function(assert) {
+test('it supports an icon source value for `icon`', function(assert) {
   this.render(hbs`{{polaris-button icon=icon text=text}}`);
 
   let button = find('button.Polaris-Button');
-  let icon = find(buttonIconSelector, button);
+  let icon = find(buttonIconWrapperSelector, button);
   assert.notOk(icon, 'button without icon - no icon rendered');
 
   this.set('icon', 'cancel');
 
-  icon = find(buttonIconSelector, button);
+  icon = find(buttonIconWrapperSelector, button);
   let iconSvg = find('span.Polaris-Icon > svg.Polaris-Icon__Svg', icon);
   assert.ok(icon, 'button with icon - renders icon');
   assert.equal(
@@ -364,11 +368,34 @@ test('it supports `icon`', function(assert) {
     );
 });
 
+test('it supports a component value for `icon`', function(assert) {
+  this.render(hbs`
+    {{polaris-button
+      text=""
+      icon=(component "polaris-avatar"
+        name="Tom"
+      )
+    }}
+  `);
+
+  let buttonIconComponentSelector = buildNestedSelector(
+    buttonIconWrapperSelector,
+    '.Polaris-Avatar'
+  );
+
+  assert
+    .dom(buttonIconComponentSelector)
+    .exists('component renders inside the icon wrapper');
+  assert
+    .dom(buttonIconSelector)
+    .doesNotExist('icon is not rendered inside the icon wrapper');
+});
+
 test('it supports `disclosure`', function(assert) {
   this.render(hbs`{{polaris-button text="Click me" disclosure=disclosure}}`);
 
   let button = find('button.Polaris-Button');
-  let disclosureIcon = find(buttonIconSelector, button);
+  let disclosureIcon = find(buttonIconWrapperSelector, button);
   assert.notOk(
     disclosureIcon,
     'button without disclosure - no disclosure icon rendered'
@@ -514,7 +541,7 @@ test('handles the loading flag correctly', function(assert) {
   );
 
   const iconSvgSelector = buildNestedSelector(
-    buttonIconSelector,
+    buttonIconWrapperSelector,
     'span.Polaris-Icon',
     'svg.Polaris-Icon__Svg'
   );
@@ -548,7 +575,7 @@ test('handles the loading flag correctly', function(assert) {
     .dom(button)
     .hasClass('Polaris-Button--disabled', 'loading set - has disabled class');
   const iconPlaceholderSelector = buildNestedSelector(
-    buttonIconSelector,
+    buttonIconWrapperSelector,
     'span.Polaris-Icon',
     'div.Polaris-Icon__Placeholder'
   );
