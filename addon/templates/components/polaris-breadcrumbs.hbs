@@ -1,8 +1,7 @@
 {{#if breadcrumb.url}}
   {{#polaris-unstyled-link
-    key=breadcrumb.content
-    url=breadcrumb.url
     class="Polaris-Breadcrumbs__Breadcrumb"
+    url=breadcrumb.url
     mouseUp=handleMouseUpByBlurring
   }}
     <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
@@ -14,11 +13,10 @@
   {{/polaris-unstyled-link}}
 {{else}}
   <button
-    key={{breadcrumb.content}}
     class="Polaris-Breadcrumbs__Breadcrumb"
+    type="button"
     onclick={{action breadcrumb.onAction}}
     onmouseup={{handleMouseUpByBlurring}}
-    type="button"
   >
     <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
       {{polaris-icon source="chevron-left"}}
