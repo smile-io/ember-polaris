@@ -20,13 +20,6 @@ export default Component.extend({
 
   layout,
 
-  iconDragDrop,
-  assetFileUpload,
-  assetImageUpload,
-
-  type: readOnly('context.type'),
-  size: readOnly('context.size'),
-
   /**
    * String that appears in file upload
    *
@@ -52,6 +45,16 @@ export default Component.extend({
     let type = this.get('type');
     return fileUpload[`actionHint${classify(type)}`];
   }),
+
+  iconDragDrop,
+
+  assetFileUpload,
+
+  assetImageUpload,
+
+  type: readOnly('context.type'),
+
+  size: readOnly('context.size'),
 
   imageClasses: computed('size', function() {
     let classes = ['Polaris-DropZone-FileUpload__Image'];
