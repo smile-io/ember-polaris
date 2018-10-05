@@ -3,9 +3,9 @@ import layout from '../templates/components/polaris-inline-error';
 import { assert } from '@ember/debug';
 
 export default Component.extend({
-  layout,
   tagName: '',
 
+  layout,
   /**
    * Unique identifier of the invalid form field that the message describes
    *
@@ -30,6 +30,9 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    assert('[polaris-inline-error] Missing required `fieldID` param!', this.get('fieldID'));
+    assert(
+      '[polaris-inline-error] Missing required `fieldID` param!',
+      this.get('fieldID')
+    );
   },
 });
