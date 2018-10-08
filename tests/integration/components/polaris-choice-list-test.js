@@ -56,7 +56,7 @@ const helpTextSelector = buildNestedSelector(
 const choiceErrorSelector = buildNestedSelector(
   choiceListSelector,
   'div.Polaris-ChoiceList__ChoiceError'
-)
+);
 
 test('it renders the correct HTML when allowMultiple is false', function(assert) {
   this.render(hbs`
@@ -88,7 +88,9 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
 
   // Check the choices.
   let choice = choices[0];
-  assert.dom(choice).hasText('First option', 'first choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('First option', 'first choice - has correct label text');
   let radioInput = find(radioInputSelector, choice);
   assert.ok(radioInput, 'first choice - renders radio input');
   assert.equal(
@@ -104,7 +106,9 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.notOk(radioInput.checked, 'first choice - radio input is not checked');
 
   choice = choices[1];
-  assert.dom(choice).hasText('Second option', 'second choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('Second option', 'second choice - has correct label text');
   radioInput = find(radioInputSelector, choice);
   assert.ok(radioInput, 'second choice - renders radio input');
   assert.equal(
@@ -120,7 +124,9 @@ test('it renders the correct HTML when allowMultiple is false', function(assert)
   assert.ok(radioInput.checked, 'second choice - radio input is checked');
 
   choice = choices[2];
-  assert.dom(choice).hasText('Third option', 'third choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('Third option', 'third choice - has correct label text');
   radioInput = find(radioInputSelector, choice);
   assert.ok(radioInput, 'third choice - renders radio input');
   assert.equal(
@@ -167,7 +173,9 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
 
   // Check the choices.
   let choice = choices[0];
-  assert.dom(choice).hasText('First option', 'first choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('First option', 'first choice - has correct label text');
   let checkboxInput = find(checkboxInputSelector, choice);
   assert.ok(checkboxInput, 'first choice - renders checkbox input');
   assert.equal(
@@ -186,7 +194,9 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   );
 
   choice = choices[1];
-  assert.dom(choice).hasText('Second option', 'second choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('Second option', 'second choice - has correct label text');
   checkboxInput = find(checkboxInputSelector, choice);
   assert.ok(checkboxInput, 'second choice - renders checkbox input');
   assert.equal(
@@ -202,7 +212,9 @@ test('it renders the correct HTML when allowMultiple is true', function(assert) 
   assert.ok(checkboxInput.checked, 'second choice - checkbox input is checked');
 
   choice = choices[2];
-  assert.dom(choice).hasText('Third option', 'third choice - has correct label text');
+  assert
+    .dom(choice)
+    .hasText('Third option', 'third choice - has correct label text');
   checkboxInput = find(checkboxInputSelector, choice);
   assert.ok(checkboxInput, 'third choice - renders checkbox input');
   assert.equal(
@@ -232,10 +244,12 @@ test('it handles title and titleHidden attributes correctly', function(assert) {
     'with title set and unhidden - renders one choice list'
   );
   const choiceList = choiceLists[0];
-  assert.dom(choiceList).hasNoClass(
-    'Polaris-ChoiceList--titleHidden',
-    'with title set and unhidden - does not apply titleHidden class to choice list'
-  );
+  assert
+    .dom(choiceList)
+    .hasNoClass(
+      'Polaris-ChoiceList--titleHidden',
+      'with title set and unhidden - does not apply titleHidden class to choice list'
+    );
 
   let titles = findAll(titleSelector);
   assert.equal(
@@ -243,16 +257,20 @@ test('it handles title and titleHidden attributes correctly', function(assert) {
     1,
     'with title set and unhidden - renders one title'
   );
-  assert.dom(titles[0]).hasText(
-    'Original title',
-    'with title set and unhidden - renders the correct title text'
-  );
+  assert
+    .dom(titles[0])
+    .hasText(
+      'Original title',
+      'with title set and unhidden - renders the correct title text'
+    );
 
   this.set('titleHidden', true);
-  assert.dom(choiceList).hasClass(
-    'Polaris-ChoiceList--titleHidden',
-    'with title set and hidden - applies titleHidden class to choice list'
-  );
+  assert
+    .dom(choiceList)
+    .hasClass(
+      'Polaris-ChoiceList--titleHidden',
+      'with title set and hidden - applies titleHidden class to choice list'
+    );
 
   this.set('title', null);
   titles = findAll(titleSelector);
@@ -451,12 +469,24 @@ test('it handles choice helpText correctly when allowMultiple is false', functio
 
   const helpTexts = findAll(helpTextSelector);
   assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
-  assert.dom(helpTexts[0]).hasText('This is the first option', 'first choice - renders the correct help text');
-  assert.dom(helpTexts[1]).hasText(
-    'This is the second option',
-    'second choice - renders the correct help text'
-  );
-  assert.dom(helpTexts[2]).hasText('This is the third option', 'third choice - renders the correct help text');
+  assert
+    .dom(helpTexts[0])
+    .hasText(
+      'This is the first option',
+      'first choice - renders the correct help text'
+    );
+  assert
+    .dom(helpTexts[1])
+    .hasText(
+      'This is the second option',
+      'second choice - renders the correct help text'
+    );
+  assert
+    .dom(helpTexts[2])
+    .hasText(
+      'This is the third option',
+      'third choice - renders the correct help text'
+    );
 });
 
 test('it handles choice helpText correctly when allowMultiple is true', function(assert) {
@@ -488,12 +518,24 @@ test('it handles choice helpText correctly when allowMultiple is true', function
 
   const helpTexts = findAll(helpTextSelector);
   assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
-  assert.dom(helpTexts[0]).hasText('This is the first option', 'first choice - renders the correct help text');
-  assert.dom(helpTexts[1]).hasText(
-    'This is the second option',
-    'second choice - renders the correct help text'
-  );
-  assert.dom(helpTexts[2]).hasText('This is the third option', 'third choice - renders the correct help text');
+  assert
+    .dom(helpTexts[0])
+    .hasText(
+      'This is the first option',
+      'first choice - renders the correct help text'
+    );
+  assert
+    .dom(helpTexts[1])
+    .hasText(
+      'This is the second option',
+      'second choice - renders the correct help text'
+    );
+  assert
+    .dom(helpTexts[2])
+    .hasText(
+      'This is the third option',
+      'third choice - renders the correct help text'
+    );
 });
 
 test('it handles choice disabled correctly when allowMultiple is false', function(assert) {
