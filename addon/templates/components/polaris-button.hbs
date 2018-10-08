@@ -34,7 +34,11 @@
 
     {{#if icon}}
       <span class="Polaris-Button__Icon">
-        {{polaris-icon source=iconSource}}
+        {{#if (is-component-definition icon)}}
+          {{render-content icon}}
+        {{else}}
+          {{polaris-icon source=iconSource}}
+        {{/if}}
       </span>
     {{/if}}
 

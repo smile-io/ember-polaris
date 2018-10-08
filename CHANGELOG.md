@@ -5,9 +5,10 @@
 - [#171](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.11.0`
 - [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
 - [#187](https://github.com/smile-io/ember-polaris/pull/187) [FEATURE] Add `disabled` attribute to `polaris-choice`
+- [#185](https://github.com/smile-io/ember-polaris/pull/185) [FEATURE] Update `polaris-button` to accept components for `icon` value
 
 ### v.1.7.7 (october 8, 2018)
-- [189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
+- [#189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
 
 ### v.1.7.6 (october 5, 2018)
 - [#181](https://github.com/smile-io/ember-polaris/pull/181) [internal] autofix code to use our latest eslint rules.
