@@ -26,10 +26,10 @@ const allowedTypes = [
   'currency',
 ];
 
-// Returns the length of decimal places in a number
-function dpl(num) {
-  (num.toString().split('.')[1] || []).length;
-}
+/**
+ * Returns the length of decimal places in a number
+ */
+const dpl = (num) => (num.toString().split('.')[1] || []).length;
 
 /**
  * Polaris text-field component.
