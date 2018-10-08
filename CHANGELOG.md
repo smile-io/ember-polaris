@@ -4,6 +4,7 @@
 - [#168](https://github.com/smile-io/ember-polaris/pull/168) [INTERNAL] Upgrade to Ember CLI `3.4.2`
 - [#171](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.11.0`
 - [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
+- [#187](https://github.com/smile-io/ember-polaris/pull/187) [FEATURE] Add `disabled` attribute to `polaris-choice`
 
 ### v.1.7.7 (october 8, 2018)
 - [189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
