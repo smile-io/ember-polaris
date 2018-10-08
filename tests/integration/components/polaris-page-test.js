@@ -384,13 +384,12 @@ test('it handles breadcrumbs correctly', function(assert) {
   // Add the breadcrumbs.
   this.set('breadcrumbs', [
     {
-      text: 'Go back',
-      route: 'home',
+      content: 'Go back',
+      url: '/home',
     },
     {
-      text: 'No, really!',
-      route: 'home.the-beginning',
-      models: [{ id: 13 }, 27],
+      content: 'No, really!',
+      url: '/home/the-beginning',
     },
   ]);
 
@@ -421,7 +420,7 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   let breadcrumbLink = breadcrumbLinks[0];
   assert.ok(
-    breadcrumbLink.href.indexOf('/home/the-beginning/13/27') > -1,
+    breadcrumbLink.href.indexOf('/home/the-beginning') > -1,
     'breadcrumb has href of last breadcrumb in list'
   );
   assert.equal(
