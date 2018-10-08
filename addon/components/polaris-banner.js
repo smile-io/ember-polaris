@@ -33,7 +33,7 @@ const bannerIcons = {
 
 const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 
-/*
+/**
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
