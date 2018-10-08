@@ -2,7 +2,7 @@
   {{polaris-heading text=title}}
 
   {{#if (or hasBlock description)}}
-    <div class="Polaris-Layout__AnnotationDescription">
+    <div data-test-annotation-description class="Polaris-Layout__AnnotationDescription">
       {{#if hasBlock}}
         {{yield}}
       {{else}}
