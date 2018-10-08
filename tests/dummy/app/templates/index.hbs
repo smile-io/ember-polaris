@@ -21,23 +21,16 @@
     )
   )
 }}
-  <div>
-    {{#link-to "test"}}
-      Go to test route
-    {{/link-to}}
-  </div>
 
-  <div>
-    {{#link-to "test.child"}}
-      Go to child route
-    {{/link-to}}
-  </div>
-
-  <div>
-    {{#link-to "dropzone"}}
-      Dropzone
-    {{/link-to}}
-  </div>
+  {{#polaris-list as |list|}}
+    {{#each model as |testPage|}}
+      {{#list.item}}
+        {{#link-to testPage.path}}
+          {{testPage.text}}
+        {{/link-to}}
+      {{/list.item}}
+    {{/each}}
+  {{/polaris-list}}
 
   {{polaris-link
     url="https://github.com/smile-io/ember-polaris"
