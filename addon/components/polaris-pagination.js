@@ -96,6 +96,9 @@ export default Component.extend({
    */
   onPrevious() {},
 
+  'data-test-prev-btn': true,
+  'data-test-next-btn': true,
+
   /**
    * @private
    */
