@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { get, computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isNone } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
 import layout from '../templates/components/polaris-choice-list';
 
@@ -21,6 +22,12 @@ const CheckedChoice = ObjectProxy.extend({
  */
 export default Component.extend({
   tagName: 'fieldset',
+
+  attributeBindings: [
+    'hasError:aria-invalid',
+    'finalNameError:aria-described-by',
+  ],
+
   classNames: ['Polaris-ChoiceList'],
   classNameBindings: ['titleHidden:Polaris-ChoiceList--titleHidden'],
 
@@ -85,6 +92,16 @@ export default Component.extend({
   allowMultiple: false,
 
   /**
+   * Display an error message
+   *
+   * @property error
+   * @public
+   * @type {string|component}
+   * @default false
+   */
+  error: null,
+
+  /**
    * Toggles display of the title
    *
    * @property titleHidden
@@ -103,6 +120,22 @@ export default Component.extend({
    * @default noop
    */
   onChange() {},
+
+  /**
+   * @private
+   */
+  hasError: bool('error'),
+
+  /**
+   * @private
+   */
+  finalNameError: computed('finalName', 'error', function() {
+    if (isNone(this.get('error'))) {
+      return null;
+    }
+
+    return `${this.get('finalName')}Error`;
+  }).readOnly(),
 
   /**
    * @private

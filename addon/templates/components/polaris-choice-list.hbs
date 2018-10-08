@@ -20,3 +20,12 @@
     </li>
   {{/each}}
 </ul>
+
+{{#if error}}
+  <div class="Polaris-ChoiceList__ChoiceError">
+    {{inline-error
+      message=error
+      fieldID=finalName
+    }}
+  </div>
+{{/if}}
