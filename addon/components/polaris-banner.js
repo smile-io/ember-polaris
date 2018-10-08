@@ -44,6 +44,7 @@ export default Component.extend({
     'ariaLive:aria-live',
     'contentId:aria-describedby',
     'headingId:aria-labelledby',
+    'data-test-banner',
   ],
 
   classNames: ['Polaris-Banner'],
@@ -123,6 +124,8 @@ export default Component.extend({
   withinContentContainer: false,
 
   mouseUp: handleMouseUpByBlurring,
+
+  'data-test-banner': '',
 
   hasDismiss: bool('onDismiss').readOnly(),
 
