@@ -4,7 +4,7 @@ import { guidFor } from '@ember/object/internals';
 import { isNone } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 
-/*
+/**
  * This mixin is intended for use with components that render an SVG icon
  * via the `svg-jar` helper.
  *
@@ -54,7 +54,7 @@ export default Mixin.create({
     this.removeSvgFills(this.get('svgElement'));
   },
 
-  /*
+  /**
    * Helper method to process the `fill` attribute
    * on a given SVG element and its children.
    */

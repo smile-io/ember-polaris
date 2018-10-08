@@ -1,4 +1,4 @@
-/*
+/**
  * Clamps the input `num` between the `min` and `max` values.
  *
  * Examples:
