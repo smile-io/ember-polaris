@@ -156,7 +156,7 @@ export default Component.extend({
    *
    * @property icon
    * @public
-   * @type {SVG Source|Component}
+   * @type {String|Component}
    * @default null
    */
   icon: null,
