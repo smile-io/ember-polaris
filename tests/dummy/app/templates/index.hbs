@@ -1,5 +1,11 @@
 {{#polaris-page
   title="This is the application route"
+  breadcrumbs=(array
+    (hash
+      content="Test Route"
+      url="/test"
+    )
+  )
   primaryAction=(hash
     text="Primary"
     onAction=(action (mut primaryClicked) true)
