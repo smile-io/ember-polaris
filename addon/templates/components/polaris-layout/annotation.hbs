@@ -2,7 +2,7 @@
   {{polaris-heading text=title}}
 
   {{#if (or hasBlock description)}}
-    {{#polaris-text-style variation="subdued"}}
+    <div class="Polaris-Layout__AnnotationDescription">
       {{#if hasBlock}}
         {{yield}}
       {{else}}
@@ -10,6 +10,6 @@
           {{description}}
         </p>
       {{/if}}
-    {{/polaris-text-style}}
+    </div>
   {{/if}}
 {{/polaris-text-container}}

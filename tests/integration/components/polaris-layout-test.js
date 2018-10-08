@@ -22,6 +22,13 @@ const layoutAnnotationWrapperSelector = buildNestedSelector(
   'div.Polaris-Layout__AnnotationWrapper'
 );
 
+const annotationSectionDescriptionSelector = (containerSelector) =>
+  buildNestedSelector(
+    containerSelector,
+    'div.Polaris-Layout__AnnotationDescription',
+    'p'
+  );
+
 test('it renders the correct HTML in basic usage', function(assert) {
   // Test inline form.
   this.render(hbs`{{polaris-layout text="This is an inline layout"}}`);
@@ -253,10 +260,8 @@ test('it renders the correct HTML when using annotated sections in inline form',
     textContainerSelector,
     'h2.Polaris-Heading'
   );
-  const descriptionSelector = buildNestedSelector(
-    textContainerSelector,
-    'span.Polaris-TextStyle--variationSubdued',
-    'p'
+  const descriptionSelector = annotationSectionDescriptionSelector(
+    textContainerSelector
   );
   const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
@@ -446,10 +451,8 @@ test('it renders the correct HTML when using annotated sections in block form', 
     textContainerSelector,
     'h2.Polaris-Heading'
   );
-  const descriptionSelector = buildNestedSelector(
-    textContainerSelector,
-    'span.Polaris-TextStyle--variationSubdued',
-    'p'
+  const descriptionSelector = annotationSectionDescriptionSelector(
+    textContainerSelector
   );
   const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 

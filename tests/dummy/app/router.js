@@ -13,6 +13,10 @@ Router.map(function() {
 
   this.route('dropzone');
   this.route('annotated-layout');
+
+  this.route('layout', function() {
+    this.route('annotated-layout');
+  });
 });
 
 export default Router;

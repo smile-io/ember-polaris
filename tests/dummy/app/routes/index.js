@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 
 const samplePages = [
   {
-    path: 'annotated-layout',
+    path: 'layout.annotated-layout',
     text: 'Annotated Layout',
   },
   {
