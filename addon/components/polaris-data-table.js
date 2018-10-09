@@ -254,13 +254,6 @@ export default Component.extend(
     isScrolledFarthestRight: false,
 
     /**
-     * @property previousTruncate
-     * @type {boolean}
-     * @private
-     */
-    previousTruncate: null,
-
-    /**
      * @property totalsRowHeading
      * @type {String}
      * @private
@@ -483,17 +476,6 @@ export default Component.extend(
       this.handleResize();
 
       this.addEventHandlers();
-    },
-
-    didUpdateAttrs() {
-      this._super(...arguments);
-
-      let truncate = this.get('truncate');
-      if (!truncate && this.get('previousTruncate')) {
-        this.handleResize();
-      }
-
-      this.set('previousTruncate', truncate);
     },
 
     actions: {
