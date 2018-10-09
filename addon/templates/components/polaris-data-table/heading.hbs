@@ -8,7 +8,7 @@
   presentational=isPresentational
   defaultSortDirection=(if sortable defaultSortDirection)
   sorted=(if sortable isSorted)
-  sortable=(if sortable isSortable)
+  sortable=(if sortable (get-array-item sortable headingIndex))
   sortDirection=(if sortable direction)
   onSort=(if sortable (action defaultOnSort index))
 }}

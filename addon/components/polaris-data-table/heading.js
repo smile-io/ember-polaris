@@ -88,42 +88,12 @@ export default Component.extend({
   isFixed: equal('headingIndex', 0).readOnly(),
 
   /**
-   * @property isPresentational
-   * @type {boolean}
-   * @private
-   */
-  isPresentational: equal('headingIndex', 1).readOnly(),
-
-  /**
    * @property height
    * @type {Number}
    * @private
    */
   height: computed('truncate', 'heights.[]', function() {
     return !this.get('truncate') ? this.get('heights.firstObject') : undefined;
-  }).readOnly(),
-
-  /**
-   * We account for the presentational heading cell’s index when
-   * accessing elements from arrays passed as props and when comparing
-   * a heading index with the sorted column’s index.
-   *
-   * @property index
-   * @type {Number}
-   * @private
-   */
-  index: computed('headingIndex', function() {
-    let headingIndex = this.get('headingIndex');
-    return headingIndex <= 1 ? headingIndex : headingIndex - 1;
-  }).readOnly(),
-
-  /**
-   * @property isSortable
-   * @type {boolean}
-   * @private
-   */
-  isSortable: computed('sortable.[]', 'index', function() {
-    return this.get('sortable')[this.get('index')];
   }).readOnly(),
 
   /**
