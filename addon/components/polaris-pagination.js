@@ -79,7 +79,7 @@ export default Component.extend({
   /**
    * Keyboard shortcut for the previous button
    *
-   * @property {previousKeys}
+   * @property previousKeys
    * @type {KeyEvent.code}
    * @default null
    * @public
@@ -89,7 +89,7 @@ export default Component.extend({
   /**
    * Keyboard shortcut for the next button
    *
-   * @property {nextKeys}
+   * @property nextKeys
    * @type {KeyEvent.code}
    * @default null
    * @public
