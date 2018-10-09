@@ -40,7 +40,7 @@
 
   {{key-press-listener
     key="KeyM"
-    onKeyDown=(action "toggleMagicSection")
+    onKeyDown=(action (mut application.hideMagicSection) (not application.hideMagicSection))
   }}
 
 {{/polaris-page}}
