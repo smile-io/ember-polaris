@@ -45,4 +45,28 @@ module('Integration | Component | key-event-listener', function(hooks) {
     triggerKeyPress('KeyA');
     assert.verifySteps(['key-press'], 'key press should work');
   });
+
+  test('it can handle dynamic actions', async function(assert) {
+    this.setProperties({
+      keyPressAction: (msg) => assert.step(msg),
+      isEverythingGood: false,
+    });
+    await render(hbs`{{key-event-listener
+      key="KeyA"
+      onKeyPress=(action
+        (if isEverythingGood
+          (action keyPressAction "Lookin good")
+          (action keyPressAction "Abandon ship")
+        )
+      )
+    }}`);
+
+    triggerKeyPress('KeyA');
+    assert.verifySteps(['Abandon ship']);
+
+    this.set('isEverythingGood', true);
+
+    triggerKeyPress('KeyA');
+    assert.verifySteps(['Lookin good']);
+  });
 });
