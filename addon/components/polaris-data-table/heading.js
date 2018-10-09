@@ -97,20 +97,6 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-   * @property isSorted
-   * @type {boolean}
-   * @private
-   */
-  isSorted: computed('isSortable', 'sortedColumnIndex', 'index', function() {
-    let { isSortable, sortedColumnIndex, index } = this.getProperties(
-      'isSortable',
-      'sortedColumnIndex',
-      'index'
-    );
-    return isSortable && sortedColumnIndex === index;
-  }).readOnly(),
-
-  /**
    * @property direction
    * @type {String}
    * @private

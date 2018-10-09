@@ -286,18 +286,6 @@ export default Component.extend(
     ).readOnly(),
 
     /**
-     * @property contentTypes
-     * @type {String[]}
-     * @private
-     */
-    // contentTypes: computed('columnContentTypes.[]', function() {
-    //   let columnContentTypes = this.get('columnContentTypes');
-    //   let fixedCellType = columnContentTypes[0];
-
-    //   return [fixedCellType, ...columnContentTypes];
-    // }).readOnly(),
-
-    /**
      * @property scrollContainerStyle
      * @type {String}
      * @private

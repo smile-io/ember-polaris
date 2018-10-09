@@ -98,8 +98,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         initialSortColumnIndex=4
       }}
     `);
-    const fifthHeadingCell = findAll('th.Polaris-DataTable__Cell')[5];
-
+    const fifthHeadingCell = findAll('th.Polaris-DataTable__Cell')[4];
     assert.ok(
       fifthHeadingCell.classList.contains('Polaris-DataTable__Cell--sorted')
     );

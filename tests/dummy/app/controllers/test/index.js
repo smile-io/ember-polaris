@@ -1,9 +1,3 @@
 import Controller from '@ember/controller';
 
-export default Controller.extend({
-  actions: {
-    sortData() {
-      console.log('sorting');
-    },
-  },
-});
+export default Controller.extend();
