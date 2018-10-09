@@ -47,14 +47,6 @@ export default Component.extend({
   truncate: false,
 
   /**
-   * @property presentational
-   * @type {boolean}
-   * @default false
-   * @public
-   */
-  presentational: false,
-
-  /**
    * @property header
    * @type {boolean}
    * @default false

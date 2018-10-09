@@ -42,14 +42,4 @@ export default Component.extend({
    * @public
    */
   totalsRowHeading: null,
-
-  /**
-   * @property height
-   * @type {Number}
-   * @private
-   */
-  height: computed('heights.[]', 'truncate', function() {
-    let { heights, truncate } = this.getProperties('heights', 'truncate');
-    return !truncate ? heights[1] : undefined;
-  }).readOnly(),
 });

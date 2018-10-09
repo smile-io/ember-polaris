@@ -49,29 +49,17 @@ function measureColumn(tableData) {
   };
 }
 
-function isEdgeVisible(target, start, end) {
+function isEdgeVisible(position, start, end) {
   let minVisiblePixels = 30;
-  return target >= start + minVisiblePixels && target <= end - minVisiblePixels;
+  return position >= start + minVisiblePixels && position <= end - minVisiblePixels;
 }
 
 function getPrevAndCurrentColumns(tableData, columnData) {
-  let {
-    tableRightVisibleEdge,
-    tableLeftVisibleEdge,
-    firstVisibleColumnIndex,
-  } = tableData;
-  let previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
-  let previousColumn = columnData[previousColumnIndex];
-  let lastColumnIndex = columnData.length - 1;
-  let lastColumn = columnData[lastColumnIndex];
-  let currentColumn = assign(
-    {
-      isScrolledFarthestLeft:
-        firstVisibleColumnIndex === 0 && tableLeftVisibleEdge === 0,
-      isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
-    },
-    columnData[firstVisibleColumnIndex]
-  );
+  const { firstVisibleColumnIndex } = tableData;
+  const previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
+  const previousColumn = columnData[previousColumnIndex];
+  const currentColumn = columnData[firstVisibleColumnIndex];
+
   return { previousColumn, currentColumn };
 }
 
@@ -314,14 +302,18 @@ export default Component.extend(
     }).readOnly(),
 
     resetScrollPosition() {
-      let { left, top } = this.get('preservedScrollPosition');
+      let scrollContainer = this.get('scrollContainer');
 
-      if (left) {
-        this.get('scrollContainer').scrollLeft = left;
-      }
+      if (scrollContainer) {
+        let { left, top } = this.get('preservedScrollPosition');
 
-      if (top) {
-        window.scrollTo(0, top);
+        if (left) {
+          scrollContainer.scrollLeft = left;
+        }
+
+        if (top) {
+          window.scrollTo(0, top);
+        }
       }
     },
 
@@ -332,27 +324,41 @@ export default Component.extend(
     },
 
     calculateColumnVisibilityData(collapsed) {
-      if (collapsed) {
-        let headerCells = this.get('table').querySelectorAll('[class*=header]');
-        let collapsedHeaderCells = Array.from(headerCells).slice(2);
+      let {
+        table,
+        scrollContainer,
+        dataTable,
+      } = this.getProperties('table', 'scrollContainer', 'dataTable');
+
+      if (collapsed && table && scrollContainer && dataTable) {
+        let headerCells = table.querySelectorAll('[class*=header]');
+        let collapsedHeaderCells = Array.from(headerCells).slice(1);
         let fixedColumnWidth = headerCells[0].offsetWidth;
+        let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
+        let tableLeftVisibleEdge = this.get('scrollContainer').scrollLeft + fixedColumnWidth;
+        let tableRightVisibleEdge = this.get('scrollContainer').scrollLeft + dataTable.offsetWidth;
+
         let tableData = {
           fixedColumnWidth,
-          firstVisibleColumnIndex: collapsedHeaderCells.length - 1,
-          tableLeftVisibleEdge: this.get('scrollContainer').scrollLeft,
-          tableRightVisibleEdge:
-            this.get('scrollContainer').scrollLeft +
-            (this.get('dataTable').offsetWidth - fixedColumnWidth),
+          firstVisibleColumnIndex,
+          tableLeftVisibleEdge,
+          tableRightVisibleEdge,
         };
+
         let columnVisibilityData = collapsedHeaderCells.map(
-          measureColumn(tableData)
+          measureColumn(tableData),
         );
+
+        let lastColumn = columnVisibilityData[columnVisibilityData.length - 1];
 
         return assign(
           {
+            fixedColumnWidth,
             columnVisibilityData,
+            isScrolledFarthestLeft: tableLeftVisibleEdge === fixedColumnWidth,
+            isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
           },
-          getPrevAndCurrentColumns(tableData, columnVisibilityData)
+          getPrevAndCurrentColumns(tableData, columnVisibilityData),
         );
       }
 
@@ -369,14 +375,25 @@ export default Component.extend(
     },
 
     debouncedHandleResize() {
-      let { footerContent, truncate } = this.getProperties(
+      let {
+        footerContent,
+        truncate,
+        table,
+        scrollContainer,
+      } = this.getProperties(
         'footerContent',
-        'truncate'
+        'truncate',
+        'table',
+        'scrollContainer',
       );
-      let collapsed =
-        this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
 
-      this.get('scrollContainer').scrollLeft = 0;
+      let collapsed = false;
+
+      if (table && scrollContainer) {
+        collapsed = table.scrollWidth > scrollContainer.clientWidth;
+        scrollContainer.scrollLeft = 0;
+      }
+
       this.setProperties(
         assign(
           {
@@ -405,12 +422,13 @@ export default Component.extend(
     },
 
     tallestCellHeights() {
-      let { footerContent, truncate, heights } = this.getProperties(
+      let { footerContent, truncate, heights, table } = this.getProperties(
         'footerContent',
         'truncate',
-        'heights'
+        'heights',
+        'table',
       );
-      let rows = Array.from(this.get('table').getElementsByTagName('tr'));
+      let rows = Array.from(table.getElementsByTagName('tr'));
 
       if (!truncate) {
         return (heights = rows.map((row) => {
@@ -467,32 +485,37 @@ export default Component.extend(
     actions: {
       navigateTable(direction) {
         let {
-          scrollContainer,
           currentColumn,
           previousColumn,
+          fixedColumnWidth,
+          scrollContainer,
         } = this.getProperties(
-          'scrollContainer',
           'currentColumn',
-          'previousColumn'
+          'previousColumn',
+          'fixedColumnWidth',
+          'scrollContainer',
         );
 
-        if (direction === 'right' && currentColumn) {
-          scrollContainer.scrollLeft = currentColumn.rightEdge;
-        } else if (previousColumn) {
-          scrollContainer.scrollLeft =
-            previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+        if (!currentColumn || !previousColumn || !fixedColumnWidth) {
+          return;
         }
 
-        // TODO: use run loop instead of `requestAnimationFrame` here?
-        requestAnimationFrame(() => {
-          if (this.get('isDestroying') || this.get('isDestroyed')) {
-            return;
-          }
+        if (scrollContainer) {
+          scrollContainer.scrollLeft =
+            direction === 'right'
+              ? currentColumn.rightEdge - fixedColumnWidth
+              : previousColumn.leftEdge - fixedColumnWidth;
 
-          this.setProperties(
-            this.calculateColumnVisibilityData(this.get('collapsed'))
-          );
-        });
+          requestAnimationFrame(() => {
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+              return;
+            }
+
+            this.setProperties(
+              this.calculateColumnVisibilityData(this.get('collapsed'))
+            );
+          });
+        }
       },
 
       defaultOnSort(headingIndex) {
@@ -503,13 +526,15 @@ export default Component.extend(
           initialSortColumnIndex,
           sortDirection,
           sortedColumnIndex,
+          scrollContainer,
         } = this.getProperties(
           'onSort',
           'truncate',
           'defaultSortDirection',
           'initialSortColumnIndex',
           'sortDirection',
-          'sortedColumnIndex'
+          'sortedColumnIndex',
+          'scrollContainer',
         );
         sortedColumnIndex = isNone(sortedColumnIndex)
           ? initialSortColumnIndex
@@ -529,9 +554,9 @@ export default Component.extend(
         scheduleOnce('afterRender', () => {
           if (onSort) {
             onSort(headingIndex, newSortDirection);
-            if (!truncate) {
+            if (!truncate && scrollContainer) {
               let preservedScrollPosition = {
-                left: this.get('scrollContainer').scrollLeft,
+                left: scrollContainer.scrollLeft,
                 top: window.scrollY,
               };
               this.set('preservedScrollPosition', preservedScrollPosition);

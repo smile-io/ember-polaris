@@ -14,10 +14,7 @@
     <table class="Polaris-DataTable__Table">
       <thead>
         <tr>
-          {{#each
-            (polaris-data-table/insert-presentational-cell headings)
-            as |heading headingIndex|
-          }}
+          {{#each headings as |heading headingIndex|}}
             {{polaris-data-table/heading
               heading=heading
               headingIndex=headingIndex
@@ -35,10 +32,7 @@
 
         {{#if totals}}
           <tr>
-            {{#each
-              (polaris-data-table/insert-presentational-cell totals)
-              as |total index|
-            }}
+            {{#each totals as |total index|}}
               {{polaris-data-table/total
                 total=total
                 index=index
