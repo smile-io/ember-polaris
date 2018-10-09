@@ -51,7 +51,9 @@ function measureColumn(tableData) {
 
 function isEdgeVisible(position, start, end) {
   let minVisiblePixels = 30;
-  return position >= start + minVisiblePixels && position <= end - minVisiblePixels;
+  return (
+    position >= start + minVisiblePixels && position <= end - minVisiblePixels
+  );
 }
 
 function getPrevAndCurrentColumns(tableData, columnData) {
@@ -331,19 +333,21 @@ export default Component.extend(
     },
 
     calculateColumnVisibilityData(collapsed) {
-      let {
-        table,
-        scrollContainer,
-        dataTable,
-      } = this.getProperties('table', 'scrollContainer', 'dataTable');
+      let { table, scrollContainer, dataTable } = this.getProperties(
+        'table',
+        'scrollContainer',
+        'dataTable'
+      );
 
       if (collapsed && table && scrollContainer && dataTable) {
         let headerCells = table.querySelectorAll('[class*=header]');
         let collapsedHeaderCells = Array.from(headerCells).slice(1);
         let fixedColumnWidth = headerCells[0].offsetWidth;
         let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
-        let tableLeftVisibleEdge = this.get('scrollContainer').scrollLeft + fixedColumnWidth;
-        let tableRightVisibleEdge = this.get('scrollContainer').scrollLeft + dataTable.offsetWidth;
+        let tableLeftVisibleEdge =
+          this.get('scrollContainer').scrollLeft + fixedColumnWidth;
+        let tableRightVisibleEdge =
+          this.get('scrollContainer').scrollLeft + dataTable.offsetWidth;
 
         let tableData = {
           fixedColumnWidth,
@@ -353,7 +357,7 @@ export default Component.extend(
         };
 
         let columnVisibilityData = collapsedHeaderCells.map(
-          measureColumn(tableData),
+          measureColumn(tableData)
         );
 
         let lastColumn = columnVisibilityData[columnVisibilityData.length - 1];
@@ -363,9 +367,10 @@ export default Component.extend(
             fixedColumnWidth,
             columnVisibilityData,
             isScrolledFarthestLeft: tableLeftVisibleEdge === fixedColumnWidth,
-            isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
+            isScrolledFarthestRight:
+              lastColumn.rightEdge <= tableRightVisibleEdge,
           },
-          getPrevAndCurrentColumns(tableData, columnVisibilityData),
+          getPrevAndCurrentColumns(tableData, columnVisibilityData)
         );
       }
 
@@ -391,7 +396,7 @@ export default Component.extend(
         'footerContent',
         'truncate',
         'table',
-        'scrollContainer',
+        'scrollContainer'
       );
 
       let collapsed = false;
@@ -433,7 +438,7 @@ export default Component.extend(
         'footerContent',
         'truncate',
         'heights',
-        'table',
+        'table'
       );
       let rows = Array.from(table.getElementsByTagName('tr'));
 
@@ -489,7 +494,7 @@ export default Component.extend(
           'currentColumn',
           'previousColumn',
           'fixedColumnWidth',
-          'scrollContainer',
+          'scrollContainer'
         );
 
         if (!currentColumn || !previousColumn || !fixedColumnWidth) {
@@ -530,7 +535,7 @@ export default Component.extend(
           'initialSortColumnIndex',
           'sortDirection',
           'sortedColumnIndex',
-          'scrollContainer',
+          'scrollContainer'
         );
         sortedColumnIndex = isNone(sortedColumnIndex)
           ? initialSortColumnIndex

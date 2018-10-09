@@ -224,19 +224,20 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  direction: computed('sorted', 'sortDirection', 'defaultSortDirection', function() {
-    let {
-      sorted,
-      sortDirection,
-      defaultSortDirection,
-    } = this.getProperties(
-      'sorted',
-      'sortDirection',
-      'defaultSortDirection',
-    );
+  direction: computed(
+    'sorted',
+    'sortDirection',
+    'defaultSortDirection',
+    function() {
+      let { sorted, sortDirection, defaultSortDirection } = this.getProperties(
+        'sorted',
+        'sortDirection',
+        'defaultSortDirection'
+      );
 
-    return sorted ? sortDirection : defaultSortDirection;
-  }).readOnly(),
+      return sorted ? sortDirection : defaultSortDirection;
+    }
+  ).readOnly(),
 
   /**
    * @property source
@@ -253,7 +254,9 @@ export default Component.extend({
    * @private
    */
   oppositeDirection: computed('sortDirection', function() {
-    return this.get('sortDirection') === 'ascending' ? 'descending' : 'ascending';
+    return this.get('sortDirection') === 'ascending'
+      ? 'descending'
+      : 'ascending';
   }).readOnly(),
 
   /**
@@ -261,17 +264,18 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  sortAccessibilityLabel: computed('sorted', 'oppositeDirection', 'direction', function() {
-    let {
-      sorted,
-      oppositeDirection,
-      direction,
-    } = this.getProperties(
-      'sorted',
-      'oppositeDirection',
-      'direction'
-    );
+  sortAccessibilityLabel: computed(
+    'sorted',
+    'oppositeDirection',
+    'direction',
+    function() {
+      let { sorted, oppositeDirection, direction } = this.getProperties(
+        'sorted',
+        'oppositeDirection',
+        'direction'
+      );
 
-    return `sort by ${ sorted ? oppositeDirection : direction }`;
-  }).readOnly(),
+      return `sort by ${sorted ? oppositeDirection : direction}`;
+    }
+  ).readOnly(),
 });
