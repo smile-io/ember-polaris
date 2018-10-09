@@ -1,33 +1,12 @@
-{{!--
-  {{#if (eq total "")}}
-    {{#if (eq index 0)}}
-      {{polaris-data-table/cell
-        fixed=true
-        total=true
-        height=height
-        text=totalsRowHeading
-        truncate=truncate
-      }}
-    {{else if (eq index 1)}}
-      {{polaris-data-table/cell presentational=true height=height}}
-    {{else}}
-      {{polaris-data-table/cell total=true contentType="numeric" height=height}}
-    {{/if}}
-  {{else}}
-    {{polaris-data-table/cell
-      total=true
-      height=height
-      contentType="numeric"
-      text=total
-    }}
-  {{/if}}
---}}
-
 {{polaris-data-table/cell
-  fixed=(eq index 0)
-  total=(if (or (eq total "") (not (eq index 1))) true)
-  height=heights.firstObject
-  text=totalsRowHeading
-  contentType=(if (and (not total "") (gt index 0)))
+  total=true
   truncate=truncate
+  height=heights.firstObject
+  fixed=(eq index 0)
+  text=(if
+    (eq index 0)
+    totalsRowHeading
+    total
+  )
+  contentType=contentType
 }}

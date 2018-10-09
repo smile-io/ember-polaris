@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { guidFor } from '@ember/object/internals';
+import { isNone } from '@ember/utils';
 import layout from '../../templates/components/polaris-data-table/cell';
 
 export default Component.extend({

@@ -42,4 +42,17 @@ export default Component.extend({
    * @public
    */
   totalsRowHeading: null,
+
+  /**
+   * @property contentType
+   * @type {String}
+   * @private
+   */
+  contentType: computed('total', 'index', function() {
+    let { total, index } = this.getProperties('total', 'index');
+
+    if (total !== '' && index > 0) {
+      return 'numeric';
+    }
+  }),
 });

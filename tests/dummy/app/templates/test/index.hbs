@@ -2,4 +2,21 @@
   title="Test Route"
 }}
 
+  {{#polaris-card}}
+    {{polaris-data-table
+      columnContentTypes=(array "text" "numeric" "numeric")
+      headings=(array "Product" "Remaining stock" "Price")
+      rows=(array
+        (array "Kitten" 5 "$12,345")
+        (array "Puppy" 3 "$6,789")
+      )
+      totals=(array "" 8 "$19,134")
+      sortable=(array false true false)
+      defaultSortDirection="descending"
+      initialSortColumnIndex=1
+      onSort=(action "sortData")
+      footerContent="Showing 2 of 2 results"
+    }}
+  {{/polaris-card}}
+
 {{/polaris-page}}

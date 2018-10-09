@@ -288,12 +288,12 @@ export default Component.extend(
      * @type {String[]}
      * @private
      */
-    contentTypes: computed('columnContentTypes.[]', function() {
-      let columnContentTypes = this.get('columnContentTypes');
-      let fixedCellType = columnContentTypes[0];
+    // contentTypes: computed('columnContentTypes.[]', function() {
+    //   let columnContentTypes = this.get('columnContentTypes');
+    //   let fixedCellType = columnContentTypes[0];
 
-      return [fixedCellType, ...columnContentTypes];
-    }).readOnly(),
+    //   return [fixedCellType, ...columnContentTypes];
+    // }).readOnly(),
 
     /**
      * @property scrollContainerStyle
