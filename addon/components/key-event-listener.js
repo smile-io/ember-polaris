@@ -8,12 +8,12 @@ import {
   keyUp,
   keyPress,
 } from 'ember-keyboard';
-import layout from '../templates/components/key-press-listener';
+import layout from '../templates/components/key-event-listener';
 
 /**
  * A container component that helps in handling keyboard events
  *
- * @component key-press-listener
+ * @component key-event-listener
  */
 export default Component.extend(EKMixin, EKOnInsertMixin, {
   tagName: '',
@@ -22,7 +22,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
 
   /**
    * The key (or key combination) that triggers the keyDown/keyPress/keyUp event
-   * @property {key}
+   * @property key
    * @type {KeyboardEvent.code} https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code
    * @public
    * @default null
@@ -34,10 +34,10 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyPress` event that gets
    * triggered when `key` is pressed
    *
-   * @property {onKeyPress}
+   * @property onKeyPress
    * @type {Function}
    * @public
-   * @default noop
+   * @default null
    */
   onKeyPress: null,
 
@@ -45,10 +45,10 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyDown` event that gets
    * triggered when `key` is pressed
    *
-   * @property {onKeyDown}
+   * @property onKeyDown
    * @type {Function}
    * @public
-   * @default noop
+   * @default null
    */
   onKeyDown: null,
 
@@ -56,18 +56,21 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyUp` event that gets
    * triggered when `key` is pressed
    *
-   * @property {onKeyUp}
+   * @property onKeyUp
    * @type {Function}
    * @public
-   * @default noop
+   * @default null
    */
   onKeyUp: null,
 
   init() {
     this._super(...arguments);
-    assert('`key` should be passed', isPresent(this.key));
     assert(
-      'One of `onKeyPress`, `onKeyDown` or `onKeyUp` should be passed',
+      'ember-polaris::key-event-listener `key` should be passed',
+      isPresent(this.key)
+    );
+    assert(
+      'ember-polaris::key-event-listener One of `onKeyPress`, `onKeyDown` or `onKeyUp` should be passed',
       this.onKeyUp || this.onKeyDown || this.onKeyPress
     );
   },

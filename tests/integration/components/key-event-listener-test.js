@@ -9,7 +9,7 @@ import {
   triggerKeyUp,
 } from 'ember-keyboard';
 
-module('Integration | Component | key-press-listener', function(hooks) {
+module('Integration | Component | key-event-listener', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
@@ -20,7 +20,7 @@ module('Integration | Component | key-press-listener', function(hooks) {
     this.set('onKeyDown', function() {
       assert.step('key-down');
     });
-    await render(hbs`{{key-press-listener key="KeyA" onKeyDown=onKeyDown}}`);
+    await render(hbs`{{key-event-listener key="KeyA" onKeyDown=onKeyDown}}`);
 
     triggerKeyDown('KeyA');
     assert.verifySteps(['key-down'], 'key down should work');
@@ -30,7 +30,7 @@ module('Integration | Component | key-press-listener', function(hooks) {
     this.set('onKeyUp', function() {
       assert.step('key-up');
     });
-    await render(hbs`{{key-press-listener key="KeyA" onKeyUp=onKeyUp}}`);
+    await render(hbs`{{key-event-listener key="KeyA" onKeyUp=onKeyUp}}`);
 
     triggerKeyUp('KeyA');
     assert.verifySteps(['key-up'], 'key up should work');
@@ -40,7 +40,7 @@ module('Integration | Component | key-press-listener', function(hooks) {
     this.set('onKeyPress', function() {
       assert.step('key-press');
     });
-    await render(hbs`{{key-press-listener key="KeyA" onKeyPress=onKeyPress}}`);
+    await render(hbs`{{key-event-listener key="KeyA" onKeyPress=onKeyPress}}`);
 
     triggerKeyPress('KeyA');
     assert.verifySteps(['key-press'], 'key press should work');

@@ -38,7 +38,7 @@
     text="Ember Polaris on GitHub"
   }}
 
-  {{key-press-listener
+  {{key-event-listener
     key="KeyM"
     onKeyDown=(action (mut application.hideMagicSection) (not application.hideMagicSection))
   }}

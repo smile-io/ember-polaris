@@ -21,14 +21,14 @@
 {{/polaris-button/button}}
 
 {{#if isPreviousKeyListenerEnabled}}
-  {{key-press-listener
+  {{key-event-listener
     key=previousKeys
     onKeyUp=(action onPrevious)
   }}
 {{/if}}
 
 {{#if isNextKeyListenerEnabled}}
-  {{key-press-listener
+  {{key-event-listener
     key=nextKeys
     onKeyUp=(action onNext)
   }}
