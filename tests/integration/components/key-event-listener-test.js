@@ -8,6 +8,7 @@ import {
   triggerKeyPress,
   triggerKeyUp,
 } from 'ember-keyboard';
+import { compileTemplate } from '@ember/template-compilation';
 
 module('Integration | Component | key-event-listener', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,57 +17,50 @@ module('Integration | Component | key-event-listener', function(hooks) {
     initialize();
   });
 
-  test('it can handle keyDown', async function(assert) {
-    this.set('onKeyDown', function() {
-      assert.step('key-down');
+  const interactionTriggerMap = {
+    KeyDown: triggerKeyDown,
+    KeyUp: triggerKeyUp,
+    KeyPress: triggerKeyPress,
+  };
+
+  Object.keys(interactionTriggerMap).forEach((interaction) => {
+    test(`it can handle ${interaction}`, async function(assert) {
+      this.set('onKeyInteraction', () => assert.step(interaction));
+
+      let template = compileTemplate(
+        `{{key-event-listener key="KeyA" on${interaction}=(action onKeyInteraction)}}`
+      );
+      await render(template);
+
+      interactionTriggerMap[interaction]('KeyA');
+      assert.verifySteps([interaction], `${interaction} should work`);
     });
-    await render(hbs`{{key-event-listener key="KeyA" onKeyDown=onKeyDown}}`);
 
-    triggerKeyDown('KeyA');
-    assert.verifySteps(['key-down'], 'key down should work');
-  });
+    test(`it can handle dynamic actions with ${interaction}`, async function(assert) {
+      this.setProperties({
+        onKeyInteraction: (msg) => assert.step(msg),
+        isEverythingGood: false,
+      });
 
-  test('it can handle keyUp', async function(assert) {
-    this.set('onKeyUp', function() {
-      assert.step('key-up');
-    });
-    await render(hbs`{{key-event-listener key="KeyA" onKeyUp=onKeyUp}}`);
-
-    triggerKeyUp('KeyA');
-    assert.verifySteps(['key-up'], 'key up should work');
-  });
-
-  test('it can handle keyPress', async function(assert) {
-    this.set('onKeyPress', function() {
-      assert.step('key-press');
-    });
-    await render(hbs`{{key-event-listener key="KeyA" onKeyPress=onKeyPress}}`);
-
-    triggerKeyPress('KeyA');
-    assert.verifySteps(['key-press'], 'key press should work');
-  });
-
-  test('it can handle dynamic actions', async function(assert) {
-    this.setProperties({
-      keyPressAction: (msg) => assert.step(msg),
-      isEverythingGood: false,
-    });
-    await render(hbs`{{key-event-listener
-      key="KeyA"
-      onKeyPress=(action
-        (if isEverythingGood
-          (action keyPressAction "Lookin good")
-          (action keyPressAction "Abandon ship")
+      await render(
+        compileTemplate(`{{key-event-listener
+        key="KeyA"
+        on${interaction}=(action
+          (if isEverythingGood
+            (action onKeyInteraction "Lookin good")
+            (action onKeyInteraction "Abandon ship")
+          )
         )
-      )
-    }}`);
+      }}`)
+      );
 
-    triggerKeyPress('KeyA');
-    assert.verifySteps(['Abandon ship']);
+      interactionTriggerMap[interaction]('KeyA');
+      assert.verifySteps(['Abandon ship']);
 
-    this.set('isEverythingGood', true);
+      this.set('isEverythingGood', true);
 
-    triggerKeyPress('KeyA');
-    assert.verifySteps(['Lookin good']);
+      interactionTriggerMap[interaction]('KeyA');
+      assert.verifySteps(['Lookin good']);
+    });
   });
 });
