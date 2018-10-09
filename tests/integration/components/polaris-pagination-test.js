@@ -131,41 +131,50 @@ module('Integration | Component | polaris pagination', function(hooks) {
 
   test(`it supports navigation via 'nextKeys' & 'previousKeys'`, async function(assert) {
     this.setProperties({
-      clickAction: (msg) => assert.step(msg),
+      clickAction: (msg, { code }) => assert.step(`${msg}:${code}`),
       hasPrevious: true,
       hasNext: true,
+      previousKeys: ['KeyH', 'ArrowLeft'],
+      nextKeys: ['KeyL', 'ArrowRight'],
     });
 
     await render(hbs`{{polaris-pagination
       hasPrevious=hasPrevious
       hasNext=hasNext
-      previousKeys="KeyJ"
-      nextKeys="KeyK"
+      previousKeys=previousKeys
+      nextKeys=nextKeys
       onPrevious=(action clickAction "on-previous")
       onNext=(action clickAction "on-next")
     }}`);
 
-    await keyUp('KeyJ');
+    await keyUp('KeyH');
+    await keyUp('ArrowLeft');
     assert.verifySteps(
-      ['on-previous'],
-      'pressing j triggers `onPrevious` action'
+      ['on-previous:KeyH', 'on-previous:ArrowLeft'],
+      'pressing h/← triggers `onPrevious` action'
     );
 
     this.set('hasPrevious', false);
-    await keyUp('KeyJ');
+    await keyUp('KeyH');
+    await keyUp('ArrowLeft');
     assert.verifySteps(
       [],
-      "pressing j when `hasPrevious` is `false` shouldn't trigger `onPrevious` action"
+      "pressing  h/← when `hasPrevious` is `false` shouldn't trigger `onPrevious` action"
     );
 
-    await keyUp('KeyK');
-    assert.verifySteps(['on-next'], 'pressing k triggers `onNext` action');
+    await keyUp('KeyL');
+    await keyUp('ArrowRight');
+    assert.verifySteps(
+      ['on-next:KeyL', 'on-next:ArrowRight'],
+      'pressing l/→ triggers `onNext` action'
+    );
 
     this.set('hasNext', false);
-    await keyUp('KeyK');
+    await keyUp('KeyL');
+    await keyUp('ArrowRight');
     assert.verifySteps(
       [],
-      "pressing k when `hasNext` is `false` shouldn't trigger `onNext` action"
+      "pressing l/→ when `hasNext` is `false` shouldn't trigger `onNext` action"
     );
   });
 });

@@ -1,7 +1,10 @@
 import Component from '@ember/component';
+import { isArray } from '@ember/array';
+import { computed } from '@ember/object';
 import { and, not } from '@ember/object/computed';
-import { handleMouseUpByBlurring } from '../utils/focus';
+import { isPresent } from '@ember/utils';
 import layout from '../templates/components/polaris-pagination';
+import { handleMouseUpByBlurring } from '../utils/focus';
 
 export default Component.extend({
   tagName: 'nav',
@@ -77,20 +80,20 @@ export default Component.extend({
   accessibilityLabel: 'Pagination',
 
   /**
-   * Keyboard shortcut for the previous button
+   * Keyboard shortcuts for the previous button
    *
    * @property previousKeys
-   * @type {KeyEvent.code}
+   * @type {KeyEvent.code[]}
    * @default null
    * @public
    */
   previousKeys: null,
 
   /**
-   * Keyboard shortcut for the next button
+   * Keyboard shortcuts for the next button
    *
    * @property nextKeys
-   * @type {KeyEvent.code}
+   * @type {KeyEvent.code[]}
    * @default null
    * @public
    */
@@ -116,32 +119,54 @@ export default Component.extend({
    */
   onPrevious() {},
 
-  /**
-   * @private
-   */
+  /** @private */
   handleMouseUpByBlurring,
 
-  /**
-   * @private
-   */
+  /** @private */
   isPreviousDisabled: not('hasPrevious').readOnly(),
 
-  /**
-   * @private
-   */
+  /** @private */
   isNextDisabled: not('hasNext').readOnly(),
 
-  /**
-   * @private
-   */
-  isNextKeyListenerEnabled: and('hasNext', 'nextKeys', 'onNext').readOnly(),
+  /** @private */
+  hasNextKeysConfigured: computed('nextKeys.[]', function() {
+    if (isPresent(this.nextKeys)) {
+      if (isArray(this.nextKeys)) {
+        return true;
+      } else {
+        throw new Error(
+          'ember-polaris:polaris-pagination `nextKeys` should be an array'
+        );
+      }
+    }
+    return false;
+  }).readOnly(),
 
-  /**
-   * @private
-   */
+  /** @private */
+  hasPreviousKeysConfigured: computed('previousKeys.[]', function() {
+    if (isPresent(this.previousKeys)) {
+      if (isArray(this.previousKeys)) {
+        return true;
+      } else {
+        throw new Error(
+          'ember-polaris:polaris-pagination `previousKeys` should be an array'
+        );
+      }
+    }
+    return false;
+  }).readOnly(),
+
+  /** @private */
+  isNextKeyListenerEnabled: and(
+    'hasNext',
+    'hasNextKeysConfigured',
+    'onNext'
+  ).readOnly(),
+
+  /** @private */
   isPreviousKeyListenerEnabled: and(
     'hasPrevious',
-    'previousKeys',
+    'hasPreviousKeysConfigured',
     'onPrevious'
   ).readOnly(),
 });

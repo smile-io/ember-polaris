@@ -38,8 +38,8 @@ With keyboard support:
 {{polaris-pagination
   hasPrevious=true
   hasNext=true
-  previousKeys="ArrowLeft"
-  nextKeys="ArrowRight"
+  previousKeys=(array "ArrowLeft" "KeyH")
+  nextKeys=(array "ArrowRight" "KeyL")
   onPrevious=(action "handlePreviousButton")
   onNext=(action "handleNextButton")
 }}
