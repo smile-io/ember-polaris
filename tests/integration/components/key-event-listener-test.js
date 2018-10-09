@@ -63,4 +63,26 @@ module('Integration | Component | key-event-listener', function(hooks) {
       assert.verifySteps(['Lookin good']);
     });
   });
+
+  test(`it can handle multiple event listeners`, async function(assert) {
+    this.set('onKeyInteraction', (msg) => assert.step(msg));
+
+    await render(
+      hbs`{{key-event-listener
+      key="KeyA"
+      onKeyPress=(action onKeyInteraction "key-press")
+      onKeyDown=(action onKeyInteraction "key-down")
+      onKeyUp=(action onKeyInteraction "key-up")
+    }}`
+    );
+
+    triggerKeyDown('KeyA');
+    triggerKeyUp('KeyA');
+    triggerKeyPress('KeyA');
+
+    assert.verifySteps(
+      ['key-down', 'key-up', 'key-press'],
+      'events are triggered in the correct order'
+    );
+  });
 });
