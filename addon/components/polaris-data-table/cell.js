@@ -109,26 +109,6 @@ export default Component.extend({
   onSort() {},
 
   /**
-   * Accessibility label for the cell. This will get set dynamically after rendering.
-   *
-   * @property sortAccessibilityLabel
-   * @type {String}
-   * @private
-   */
-  sortAccessibilityLabel: null,
-
-  /**
-   * Generated unique ID to be set on the rendered SVG element.
-   *
-   * @property cellElementId
-   * @type {String}
-   * @private
-   */
-  cellElementId: computed(function() {
-    return guidFor(this);
-  }).readOnly(),
-
-  /**
    * @property cellClassNames
    * @type {String}
    * @private
@@ -209,6 +189,27 @@ export default Component.extend({
   ).readOnly(),
 
   /**
+   * @property headerClassNames
+   * @type {String}
+   * @private
+   */
+  headerClassNames: computed('header', 'contentType', function() {
+    let { header, contentType } = this.getProperties('header', 'contentType');
+
+    if (isNone(header)) {
+      return;
+    }
+
+    let classNames = ['Polaris-DataTable__Heading'];
+
+    if (contentType === 'text') {
+      classNames.push('Polaris-DataTable__Heading--left');
+    }
+
+    return classNames.join(' ');
+  }).readOnly(),
+
+  /**
    * @property style
    * @type {String}
    * @private
@@ -219,48 +220,58 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-   * @property sortIconSource
+   * @property direction
    * @type {String}
    * @private
    */
-  sortIconSource: computed(
-    'sortable',
-    'sorted',
-    'sortDirection',
-    'defaultSortDirection',
-    function() {
-      if (!this.get('sortable')) {
-        return null;
-      }
-
-      let sortDirection = this.get('sorted')
-        ? this.get('sortDirection')
-        : this.get('defaultSortDirection');
-      return `caret-${sortDirection === 'ascending' ? 'up' : 'down'}`;
-    }
-  ).readOnly(),
-
-  updateAccessibilityLabel() {
-    let cellElement = document.querySelector(`#${this.get('cellElementId')}`);
-    this.set(
-      'sortAccessibilityLabel',
-      `sort by ${cellElement.textContent.trim().toLowerCase()}`
+  direction: computed('sorted', 'sortDirection', 'defaultSortDirection', function() {
+    let {
+      sorted,
+      sortDirection,
+      defaultSortDirection,
+    } = this.getProperties(
+      'sorted',
+      'sortDirection',
+      'defaultSortDirection',
     );
-  },
 
-  didRender() {
-    this._super(...arguments);
+    return sorted ? sortDirection : defaultSortDirection;
+  }).readOnly(),
 
-    this.updateAccessibilityLabel();
-  },
+  /**
+   * @property source
+   * @type {String}
+   * @private
+   */
+  source: computed('direction', function() {
+    return `caret-${this.get('direction') === 'ascending' ? 'up' : 'down'}`;
+  }).readOnly(),
 
-  actions: {
-    onKeyDown(event) {
-      let { keyCode } = event;
-      let sortFunc = this.get('onSort');
-      if (keyCode === 13 && sortFunc !== undefined) {
-        sortFunc();
-      }
-    },
-  },
+  /**
+   * @property oppositeDirection
+   * @type {String}
+   * @private
+   */
+  oppositeDirection: computed('sortDirection', function() {
+    return this.get('sortDirection') === 'ascending' ? 'descending' : 'ascending';
+  }).readOnly(),
+
+  /**
+   * @property sortAccessibilityLabel
+   * @type {String}
+   * @private
+   */
+  sortAccessibilityLabel: computed('sorted', 'oppositeDirection', 'direction', function() {
+    let {
+      sorted,
+      oppositeDirection,
+      direction,
+    } = this.getProperties(
+      'sorted',
+      'oppositeDirection',
+      'direction'
+    );
+
+    return `sort by ${ sorted ? oppositeDirection : direction }`;
+  }).readOnly(),
 });
