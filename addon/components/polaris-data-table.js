@@ -240,6 +240,20 @@ export default Component.extend(
     preservedScrollPosition: null,
 
     /**
+     * @property isScrolledFarthestLeft
+     * @type {Boolean}
+     * @private
+     */
+    isScrolledFarthestLeft: true,
+
+    /**
+     * @property isScrolledFarthestRight
+     * @type {Boolean}
+     * @private
+     */
+    isScrolledFarthestRight: false,
+
+    /**
      * @property previousTruncate
      * @type {boolean}
      * @private
