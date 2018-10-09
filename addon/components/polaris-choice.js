@@ -46,10 +46,20 @@ export default Component.extend({
   labelComponent: null,
 
   /**
+   * Whether the associated form control is disabled
+   *
+   * @property disabled
+   * @type {Boolean}
+   * @default: null
+   * @public
+   */
+  disabled: null,
+
+  /**
    * Error content for this choice
    *
    * @property error
-   * @type {String}
+   * @type {String|Boolean}
    * @default: null
    * @public
    */
@@ -83,9 +93,11 @@ export default Component.extend({
   /**
    * @private
    */
-  errorId: computed('inputId', function() {
-    return `${this.get('inputId')}Error`;
-  }).readOnly(),
+  shouldRenderError: computed('error', function() {
+    let error = this.get('error');
+
+    return error && typeof error !== 'boolean';
+  }),
 
   /**
    * @private

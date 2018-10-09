@@ -72,7 +72,8 @@ const errorSelector = buildNestedSelector(
 );
 const errorIconSelector = buildNestedSelector(
   errorSelector,
-  'div.Polaris-Choice__ErrorIcon',
+  'div.Polaris-InlineError',
+  'div.Polaris-InlineError__Icon',
   'span.Polaris-Icon',
   'svg'
 );
@@ -444,4 +445,24 @@ test('it handles label components correctly when a description is supplied', fun
     'literal label',
     'with label - renders the correct label content'
   );
+});
+
+test('it handles the disabled attribute correctly', function(assert) {
+  let disabledClass = 'Polaris-Choice--disabled';
+
+  this.set('disabled', true);
+
+  this.render(hbs`
+    {{polaris-choice
+      inputId="disabled-test"
+      label="My label"
+      disabled=disabled
+    }}
+  `);
+
+  assert.dom(labelSelector).hasClass(disabledClass);
+
+  this.set('disabled', false);
+
+  assert.dom(labelSelector).hasNoClass(disabledClass);
 });
