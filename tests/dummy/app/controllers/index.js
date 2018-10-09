@@ -5,7 +5,10 @@ export default Controller.extend({
 
   actions: {
     toggleMagicSection() {
-      this.applicationController.toggleProperty('hideMagicSection');
+      this.applicationController.set(
+        'hideMagicSection',
+        !this.applicationController.hideMagicSection
+      );
     },
   },
 });
