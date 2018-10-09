@@ -2,19 +2,21 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { initialize } from 'ember-keyboard';
+import { keyUp } from 'ember-keyboard/test-support/test-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const paginationSelector = 'nav.Polaris-Pagination';
 
-const navBtn = 'button.Polaris-Pagination__Button';
-const prevBtnSelector = `${navBtn}[aria-label="Previous"]`;
-const nextBtnSelector = `${navBtn}[aria-label="Next"]`;
+const prevBtnSelector = '[data-test-prev-btn]';
+const nextBtnSelector = '[data-test-next-btn]';
 
 module('Integration | Component | polaris pagination', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
+    initialize();
   });
 
   test('it renders defaults correctly', async function(assert) {
@@ -125,5 +127,45 @@ module('Integration | Component | polaris pagination', function(hooks) {
     assert
       .dom(nextBtnSelector)
       .isNotFocused('after clicking previous button, button is not focussed');
+  });
+
+  test(`it supports navigation via 'nextKeys' & 'previousKeys'`, async function(assert) {
+    this.setProperties({
+      clickAction: (msg) => assert.step(msg),
+      hasPrevious: true,
+      hasNext: true,
+    });
+
+    await render(hbs`{{polaris-pagination
+      hasPrevious=hasPrevious
+      hasNext=hasNext
+      previousKeys="KeyJ"
+      nextKeys="KeyK"
+      onPrevious=(action clickAction "on-previous")
+      onNext=(action clickAction "on-next")
+    }}`);
+
+    await keyUp('KeyJ');
+    assert.verifySteps(
+      ['on-previous'],
+      'pressing j triggers `onPrevious` action'
+    );
+
+    this.set('hasPrevious', false);
+    await keyUp('KeyJ');
+    assert.verifySteps(
+      [],
+      "pressing j when `hasPrevious` is `false` shouldn't trigger `onPrevious` action"
+    );
+
+    await keyUp('KeyK');
+    assert.verifySteps(['on-next'], 'pressing k triggers `onNext` action');
+
+    this.set('hasNext', false);
+    await keyUp('KeyK');
+    assert.verifySteps(
+      [],
+      "pressing k when `hasNext` is `false` shouldn't trigger `onNext` action"
+    );
   });
 });

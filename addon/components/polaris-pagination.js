@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { not } from '@ember/object/computed';
+import { and, not } from '@ember/object/computed';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-pagination';
 
@@ -77,6 +77,26 @@ export default Component.extend({
   accessibilityLabel: 'Pagination',
 
   /**
+   * Keyboard shortcut for the previous button
+   *
+   * @property {previousKeys}
+   * @type {KeyEvent.code}
+   * @default null
+   * @public
+   */
+  previousKeys: null,
+
+  /**
+   * Keyboard shortcut for the next button
+   *
+   * @property {nextKeys}
+   * @type {KeyEvent.code}
+   * @default null
+   * @public
+   */
+  nextKeys: null,
+
+  /**
    * Callback when next button is clicked
    *
    * @property onNext
@@ -96,9 +116,6 @@ export default Component.extend({
    */
   onPrevious() {},
 
-  'data-test-prev-btn': true,
-  'data-test-next-btn': true,
-
   /**
    * @private
    */
@@ -113,4 +130,18 @@ export default Component.extend({
    * @private
    */
   isNextDisabled: not('hasNext').readOnly(),
+
+  /**
+   * @private
+   */
+  isNextKeyListenerEnabled: and('hasNext', 'nextKeys', 'onNext').readOnly(),
+
+  /**
+   * @private
+   */
+  isPreviousKeyListenerEnabled: and(
+    'hasPrevious',
+    'previousKeys',
+    'onPrevious'
+  ).readOnly(),
 });
