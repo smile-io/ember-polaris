@@ -14,6 +14,7 @@ Inline usage:
   enabled=enabled
   action=(hash
     text="Toggle it!"
+    loading=isToggleSettingRunning
     onAction=(action "toggleSetting")
   )
 }}
@@ -29,6 +30,9 @@ Block usage:
     onAction=(action (mut enabled) false)
   )
 }}
-  This setting is currently <strong>{{if enabled "enabled" "disabled"}}</strong>
+  This setting is currently
+  {{polaris-text-style variation="strong"}}
+    {{if enabled "enabled" "disabled"}}
+  {{/polaris-text-style}}
 {{/polaris-setting-toggle}}
 ```
