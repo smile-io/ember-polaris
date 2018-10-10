@@ -22,7 +22,11 @@ module('Integration | Component | polaris form layout', function(hooks) {
     `);
 
     const formLayouts = findAll(formLayoutSelector);
-    assert.equal(formLayouts.length, 1, 'renders the correct number of layouts');
+    assert.equal(
+      formLayouts.length,
+      1,
+      'renders the correct number of layouts'
+    );
 
     const formLayoutItemSelector = buildNestedSelector(
       formLayoutSelector,
@@ -38,20 +42,12 @@ module('Integration | Component | polaris form layout', function(hooks) {
     // Check the first item.
     let item = find('div.item', formLayoutItems[0]);
     assert.ok(item, 'first item - renders');
-    assert.equal(
-      item.textContent.trim(),
-      'Item 1',
-      'first item - has the correct content'
-    );
+    assert.dom(item).hasText('Item 1', 'first item - has the correct content');
 
     // Check the second item.
     item = find('div.item', formLayoutItems[1]);
     assert.ok(item, 'second item - renders');
-    assert.equal(
-      item.textContent.trim(),
-      'Item 2',
-      'second item - has the correct content'
-    );
+    assert.dom(item).hasText('Item 2', 'second item - has the correct content');
   });
 
   test('it renders the correct HTML when using groups', async function(assert) {
@@ -74,7 +70,11 @@ module('Integration | Component | polaris form layout', function(hooks) {
     `);
 
     const formLayouts = findAll(formLayoutSelector);
-    assert.equal(formLayouts.length, 1, 'renders the correct number of layouts');
+    assert.equal(
+      formLayouts.length,
+      1,
+      'renders the correct number of layouts'
+    );
 
     const itemSelector = buildNestedSelector(
       'div.Polaris-FormLayout__Item',
@@ -96,8 +96,8 @@ module('Integration | Component | polaris form layout', function(hooks) {
 
     // Check the first group.
     let group = formLayoutGroups[0];
-    assert.notOk(
-      group.classList.contains('Polaris-FormLayout--condensed'),
+    assert.dom(group).hasNoClass(
+      'Polaris-FormLayout--condensed',
       'first group - does not have condensed class'
     );
 
@@ -111,23 +111,12 @@ module('Integration | Component | polaris form layout', function(hooks) {
       2,
       'first group - renders the correct number of items'
     );
-    assert.equal(
-      groupItems[0].textContent.trim(),
-      'Default group item 1',
-      'first group item 1 - renders the correct content'
-    );
-    assert.equal(
-      groupItems[1].textContent.trim(),
-      'Default group item 2',
-      'first group item 2 - renders the correct content'
-    );
+    assert.dom(groupItems[0]).hasText('Default group item 1', 'first group item 1 - renders the correct content');
+    assert.dom(groupItems[1]).hasText('Default group item 2', 'first group item 2 - renders the correct content');
 
     // Check the second group.
     group = formLayoutGroups[1];
-    assert.ok(
-      group.classList.contains('Polaris-FormLayout--condensed'),
-      'second group - has condensed class'
-    );
+    assert.dom(group).hasClass('Polaris-FormLayout--condensed', 'second group - has condensed class');
 
     groupItems = findAll(groupItemSelector, group);
     assert.equal(
@@ -135,11 +124,7 @@ module('Integration | Component | polaris form layout', function(hooks) {
       1,
       'second group - renders the correct number of items'
     );
-    assert.equal(
-      groupItems[0].textContent.trim(),
-      'Condensed group item',
-      'second group - renders the correct content'
-    );
+    assert.dom(groupItems[0]).hasText('Condensed group item', 'second group - renders the correct content');
 
     // Check the ungrouped content.
     const ungroupedItemSelector = buildNestedSelector(
@@ -152,10 +137,6 @@ module('Integration | Component | polaris form layout', function(hooks) {
       1,
       'ungrouped - renders the correct number of items'
     );
-    assert.equal(
-      ungroupedItems[0].textContent.trim(),
-      'Ungrouped item',
-      'ungrouped - renders the correct content'
-    );
+    assert.dom(ungroupedItems[0]).hasText('Ungrouped item', 'ungrouped - renders the correct content');
   });
 });
