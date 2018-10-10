@@ -14,7 +14,6 @@ Inline usage:
   enabled=enabled
   action=(hash
     text="Toggle it!"
-    loading=isToggleSettingRunning
     onAction=(action "toggleSetting")
   )
 }}
@@ -35,4 +34,18 @@ Block usage:
     {{if enabled "enabled" "disabled"}}
   {{/polaris-text-style}}
 {{/polaris-setting-toggle}}
+```
+
+The `action` hash also supports `disabled` and `loading` flags:
+
+```hbs
+{{polaris-setting-toggle
+  text="Some boolean setting"
+  action=(hash
+    disabled=isToggleSettingDisabled
+    loading=isToggleSettingRunning
+    text="Toggle the setting"
+    onAction=(action "toggleSetting")
+  )
+}}
 ```
