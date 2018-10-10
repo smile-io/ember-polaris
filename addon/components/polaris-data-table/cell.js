@@ -116,7 +116,6 @@ export default Component.extend({
   cellClassNames: computed(
     'fixed',
     'truncate',
-    'presentational',
     'header',
     'total',
     'footer',
@@ -129,7 +128,6 @@ export default Component.extend({
       let {
         fixed,
         truncate,
-        presentational,
         header,
         total,
         footer,
@@ -139,7 +137,6 @@ export default Component.extend({
       } = this.getProperties(
         'fixed',
         'truncate',
-        'presentational',
         'header',
         'total',
         'footer',
@@ -154,10 +151,6 @@ export default Component.extend({
         if (truncate) {
           classNames.push('Polaris-DataTable__Cell--truncated');
         }
-      }
-
-      if (presentational) {
-        classNames.push('Polaris-DataTable__Cell--presentational');
       }
 
       if (header) {

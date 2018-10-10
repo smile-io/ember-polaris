@@ -235,6 +235,13 @@ export default Component.extend(
     heights: null,
 
     /**
+     * @property fixedColumnWidth
+     * @type {Number}
+     * @private
+     */
+    fixedColumnWidth: null,
+
+    /**
      * @property preservedScrollPosition
      * @type {Object}
      * @private
@@ -333,9 +340,9 @@ export default Component.extend(
         let fixedColumnWidth = headerCells[0].offsetWidth;
         let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
         let tableLeftVisibleEdge =
-          this.get('scrollContainer').scrollLeft + fixedColumnWidth;
+          scrollContainer.scrollLeft + fixedColumnWidth;
         let tableRightVisibleEdge =
-          this.get('scrollContainer').scrollLeft + dataTable.offsetWidth;
+          scrollContainer.scrollLeft + dataTable.offsetWidth;
 
         let tableData = {
           fixedColumnWidth,
@@ -428,21 +435,24 @@ export default Component.extend(
         'heights',
         'table'
       );
-      let rows = Array.from(table.getElementsByTagName('tr'));
 
-      if (!truncate) {
-        return (heights = rows.map((row) => {
-          let fixedCell = row.children[0];
-          return Math.max(row.clientHeight, fixedCell.clientHeight);
-        }));
+      if (table) {
+        let rows = Array.from(table.getElementsByTagName('tr'));
+
+        if (!truncate) {
+          return (heights = rows.map((row) => {
+            let fixedCell = row.hasChildNodes() && row.childNodes;
+            return Math.max(row.clientHeight, fixedCell.clientHeight);
+          }));
+        }
+
+        if (footerContent) {
+          let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
+          heights = [footerCellHeight];
+        }
+
+        return heights;
       }
-
-      if (footerContent) {
-        let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
-        heights = [footerCellHeight];
-      }
-
-      return heights;
     },
 
     addEventHandlers() {
@@ -543,6 +553,7 @@ export default Component.extend(
         scheduleOnce('afterRender', () => {
           if (onSort) {
             onSort(headingIndex, newSortDirection);
+
             if (!truncate && scrollContainer) {
               let preservedScrollPosition = {
                 left: scrollContainer.scrollLeft,

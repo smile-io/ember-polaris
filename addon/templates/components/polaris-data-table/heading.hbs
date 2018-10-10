@@ -5,10 +5,9 @@
   contentType=(get-array-item contentTypes headingIndex)
   fixed=isFixed
   truncate=truncate
-  presentational=isPresentational
   defaultSortDirection=(if sortable defaultSortDirection)
   sorted=(if sortable (eq sortedColumnIndex headingIndex))
   sortable=(if sortable (get-array-item sortable headingIndex))
   sortDirection=(if sortable direction)
-  onSort=(if sortable (action defaultOnSort index))
+  onSort=(if sortable (action defaultOnSort headingIndex))
 }}
