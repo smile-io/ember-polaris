@@ -5,4 +5,6 @@ export default Component.extend({
   classNames: ['Polaris-FormLayout__Item'],
 
   layout,
+
+  'data-test-form-layout-item': true,
 });
