@@ -1,12 +1,15 @@
 # ember-polaris Changelog
 
-### v.1.7.7 (october 8, 2018)
+### Unreleased
+- [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
+
+### v.1.7.7 (October 8, 2018)
 - [189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
 
-### v.1.7.6 (october 5, 2018)
+### v.1.7.6 (October 5, 2018)
 - [#181](https://github.com/smile-io/ember-polaris/pull/181) [internal] autofix code to use our latest eslint rules.
 
-### v.1.7.5 (october 4, 2018)
+### v.1.7.5 (October 4, 2018)
 - [#173](https://github.com/smile-io/ember-polaris/pull/173) [internal] setup eslint, prettier & ember-template-lint.
 
 ### v.1.7.4 (September 17, 2018)
