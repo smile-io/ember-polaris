@@ -1,7 +1,11 @@
 import Component from '@ember/component';
-import { not } from '@ember/object/computed';
-import { handleMouseUpByBlurring } from '../utils/focus';
+import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import { and, not } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/polaris-pagination';
+import { handleMouseUpByBlurring } from '../utils/focus';
 
 export default Component.extend({
   tagName: 'nav',
@@ -77,6 +81,26 @@ export default Component.extend({
   accessibilityLabel: 'Pagination',
 
   /**
+   * Keyboard shortcuts for the previous button
+   *
+   * @property previousKeys
+   * @type {KeyEvent.code[]}
+   * @default null
+   * @public
+   */
+  previousKeys: null,
+
+  /**
+   * Keyboard shortcuts for the next button
+   *
+   * @property nextKeys
+   * @type {KeyEvent.code[]}
+   * @default null
+   * @public
+   */
+  nextKeys: null,
+
+  /**
    * Callback when next button is clicked
    *
    * @property onNext
@@ -96,18 +120,54 @@ export default Component.extend({
    */
   onPrevious() {},
 
-  /**
-   * @private
-   */
+  /** @private */
   handleMouseUpByBlurring,
 
-  /**
-   * @private
-   */
+  /** @private */
   isPreviousDisabled: not('hasPrevious').readOnly(),
 
-  /**
-   * @private
-   */
+  /** @private */
   isNextDisabled: not('hasNext').readOnly(),
+
+  /** @private */
+  hasNextKeysConfigured: computed('nextKeys.[]', function() {
+    if (isEmpty(this.nextKeys)) {
+      return false;
+    }
+
+    assert(
+      isArray(this.nextKeys),
+      'ember-polaris:polaris-pagination `nextKeys` should be an array'
+    );
+
+    return true;
+  }).readOnly(),
+
+  /** @private */
+  hasPreviousKeysConfigured: computed('previousKeys.[]', function() {
+    if (isEmpty(this.previousKeys)) {
+      return false;
+    }
+
+    assert(
+      isArray(this.previousKeys),
+      'ember-polaris:polaris-pagination `previousKeys` should be an array'
+    );
+
+    return true;
+  }).readOnly(),
+
+  /** @private */
+  isNextKeyListenerEnabled: and(
+    'hasNext',
+    'hasNextKeysConfigured',
+    'onNext'
+  ).readOnly(),
+
+  /** @private */
+  isPreviousKeyListenerEnabled: and(
+    'hasPrevious',
+    'hasPreviousKeysConfigured',
+    'onPrevious'
+  ).readOnly(),
 });

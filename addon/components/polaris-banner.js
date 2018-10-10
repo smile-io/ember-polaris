@@ -33,7 +33,7 @@ const bannerIcons = {
 
 const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 
-/*
+/**
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
@@ -44,6 +44,7 @@ export default Component.extend({
     'ariaLive:aria-live',
     'contentId:aria-describedby',
     'headingId:aria-labelledby',
+    'data-test-banner',
   ],
 
   classNames: ['Polaris-Banner'],
@@ -123,6 +124,8 @@ export default Component.extend({
   withinContentContainer: false,
 
   mouseUp: handleMouseUpByBlurring,
+
+  'data-test-banner': '',
 
   hasDismiss: bool('onDismiss').readOnly(),
 
