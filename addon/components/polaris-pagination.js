@@ -1,8 +1,9 @@
 import Component from '@ember/component';
 import { isArray } from '@ember/array';
+import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
 import { and, not } from '@ember/object/computed';
-import { isPresent } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import layout from '../templates/components/polaris-pagination';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
@@ -130,30 +131,30 @@ export default Component.extend({
 
   /** @private */
   hasNextKeysConfigured: computed('nextKeys.[]', function() {
-    if (isPresent(this.nextKeys)) {
-      if (isArray(this.nextKeys)) {
-        return true;
-      } else {
-        throw new Error(
-          'ember-polaris:polaris-pagination `nextKeys` should be an array'
-        );
-      }
+    if (isEmpty(this.nextKeys)) {
+      return false;
     }
-    return false;
+
+    assert(
+      isArray(this.nextKeys),
+      'ember-polaris:polaris-pagination `nextKeys` should be an array'
+    );
+
+    return true;
   }).readOnly(),
 
   /** @private */
   hasPreviousKeysConfigured: computed('previousKeys.[]', function() {
-    if (isPresent(this.previousKeys)) {
-      if (isArray(this.previousKeys)) {
-        return true;
-      } else {
-        throw new Error(
-          'ember-polaris:polaris-pagination `previousKeys` should be an array'
-        );
-      }
+    if (isEmpty(this.previousKeys)) {
+      return false;
     }
-    return false;
+
+    assert(
+      isArray(this.previousKeys),
+      'ember-polaris:polaris-pagination `previousKeys` should be an array'
+    );
+
+    return true;
   }).readOnly(),
 
   /** @private */
