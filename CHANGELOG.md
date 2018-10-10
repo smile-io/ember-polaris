@@ -8,7 +8,7 @@
 - [#187](https://github.com/smile-io/ember-polaris/pull/187) [FEATURE] Add `disabled` attribute to `polaris-choice`
 - [#185](https://github.com/smile-io/ember-polaris/pull/185) [FEATURE] Update `polaris-button` to accept components for `icon` value
 - [#191](https://github.com/smile-io/ember-polaris/pull/191) [ENHANCEMENT] Update `polaris-layout/annotated-section` styling to match Polaris v2.11.0
-
+- [#195](https://github.com/smile-io/ember-polaris/pull/195) [ENHANCEMENT] Add `nextKeys` and `previousKeys` attribute to `polaris-pagination`
 
 ### v.1.7.7 (october 8, 2018)
 - [#189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
