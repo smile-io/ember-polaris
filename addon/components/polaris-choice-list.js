@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { get, computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty, isNone } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
