@@ -7,8 +7,8 @@ export default Component.extend({
   attributeBindings: [
     'acceptCharset',
     'action',
-    'autoCompleteInputs:autoComplete',
-    'encType',
+    'autoCompleteInputs:autocomplete',
+    'encType:enctype',
     'method',
     'name',
     'noValidate:novalidate',

@@ -59,7 +59,7 @@ module('Integration | Component | polaris-form', function(hooks) {
     assert
       .dom('[data-test-form]')
       .hasAttribute(
-        'encType',
+        'enctype',
         encType,
         'renders encType attribute when provided'
       );
