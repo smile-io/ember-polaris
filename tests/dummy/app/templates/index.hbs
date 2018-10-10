@@ -37,4 +37,10 @@
     external=true
     text="Ember Polaris on GitHub"
   }}
+
+  {{key-event-listener
+    key="KeyM"
+    onKeyDown=(action (mut application.hideMagicSection) (not application.hideMagicSection))
+  }}
+
 {{/polaris-page}}
