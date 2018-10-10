@@ -4,6 +4,7 @@ import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty, isNone } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
+import { errorId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-choice-list';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
@@ -24,8 +25,9 @@ export default Component.extend({
   tagName: 'fieldset',
 
   attributeBindings: [
-    'hasError:aria-invalid',
-    'finalNameError:aria-described-by',
+    'finalName:id',
+    'ariaInvalid:aria-invalid',
+    'ariaDescribedBy:aria-describedby',
   ],
 
   classNames: ['Polaris-ChoiceList'],
@@ -38,7 +40,7 @@ export default Component.extend({
    *
    * @property title
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    */
   title: null,
@@ -76,7 +78,7 @@ export default Component.extend({
    *
    * @property name
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    */
   name: null,
@@ -86,7 +88,7 @@ export default Component.extend({
    *
    * @property allowMultiple
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   allowMultiple: false,
@@ -96,8 +98,8 @@ export default Component.extend({
    *
    * @property error
    * @public
-   * @type {string|component}
-   * @default false
+   * @type {String|Component}
+   * @default null
    */
   error: null,
 
@@ -106,7 +108,7 @@ export default Component.extend({
    *
    * @property titleHidden
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   titleHidden: false,
@@ -116,7 +118,7 @@ export default Component.extend({
    *
    * @property onChange
    * @public
-   * @type {function}
+   * @type {Function}
    * @default noop
    */
   onChange() {},
@@ -124,17 +126,19 @@ export default Component.extend({
   /**
    * @private
    */
-  hasError: bool('error'),
+  ariaInvalid: computed('error', function() {
+    return this.get('error') != null;
+  }),
 
   /**
    * @private
    */
-  finalNameError: computed('finalName', 'error', function() {
+  ariaDescribedBy: computed('finalName', 'error', function() {
     if (isNone(this.get('error'))) {
       return null;
     }
 
-    return `${this.get('finalName')}Error`;
+    return errorId(this.get('finalName'));
   }).readOnly(),
 
   /**
