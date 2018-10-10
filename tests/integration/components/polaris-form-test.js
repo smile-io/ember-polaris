@@ -93,83 +93,85 @@ module('Integration | Component | polaris-form', function(hooks) {
   });
 
   test('invokes `onSubmit` when form is submitted', async function(assert) {
-    assert.expect(1);
+    this.set('spy', (name) => assert.step(name));
 
     this.onSubmitSpy = () => {
       assert.ok('invokes `onSubmit` action');
     };
 
     await render(hbs`{{polaris-form
-      onSubmit=(action onSubmitSpy)
+      onSubmit=(action spy "onSubmit")
     }}`);
 
     await triggerEvent('[data-test-form]', 'submit');
+
+    assert.verifySteps(['onSubmit'], 'invokes `onSubmit` preventing default');
   });
 
   module('preventDefault', function() {
     test('allows default handler to handle submit event when set to false', async function(assert) {
-      assert.expect(0);
-
-      this.onSubmitSpy = () => {
-        assert.notOk('does not invoke `onSubmit`');
-      };
-      this.preventDefaultSpy = () => {
-        assert.notOk('does not prevents default');
-      };
+      this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
-        <form on-submit={{action preventDefaultSpy}}>
-          {{polaris-form
-            preventDefault=false
-            onSubmit=(action onSubmitSpy)
-          }}
-        </form>
+        {{polaris-form
+          preventDefault=false
+          onSubmit=(action spy "onSubmit")
+        }}
       `);
 
-      await triggerEvent('[data-test-form]', 'submit');
+      let self = this;
+      await triggerEvent('[data-test-form]', 'submit', {
+        preventDefault: function() {
+          self.spy('preventDefault');
+        },
+      });
+
+      assert.verifySteps([], "leaves default submit handler do it's thing");
     });
 
     test('submits the form preventing default when not provided', async function(assert) {
-      assert.expect(0);
-
-      this.onSubmitSpy = () => {
-        assert.ok('invokes `onSubmit`');
-      };
-      this.preventDefaultSpy = () => {
-        assert.ok('prevents default `submit`');
-      };
+      this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
-        <form on-submit={{action preventDefaultSpy}}>
-          {{polaris-form
-            onSubmit=(action onSubmitSpy)
-          }}
-        </form>
+        {{polaris-form
+          onSubmit=(action spy "onSubmit")
+        }}
       `);
 
-      await triggerEvent('[data-test-form]', 'submit');
+      let self = this;
+      await triggerEvent('[data-test-form]', 'submit', {
+        preventDefault: function() {
+          self.spy('preventDefault');
+        },
+      });
+
+      assert.verifySteps(
+        ['preventDefault', 'onSubmit'],
+        'invokes `onSubmit` preventing default'
+      );
     });
 
     test('submits the form preventing default when set to true', async function(assert) {
-      assert.expect(0);
-
-      this.onSubmitSpy = () => {
-        assert.ok('invokes `onSubmit`');
-      };
-      this.preventDefaultSpy = () => {
-        assert.ok('prevents default `submit`');
-      };
+      this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
-        <form on-submit={{action preventDefaultSpy}}>
-          {{polaris-form
-            preventDefault=true
-            onSubmit=(action onSubmitSpy)
-          }}
-        </form>
+        {{polaris-form
+          preventDefault=true
+          onSubmit=(action spy "onSubmit")
+        }}
       `);
 
-      await triggerEvent('[data-test-form]', 'submit');
+      let self = this;
+      await triggerEvent('[data-test-form]', 'submit', {
+        preventDefault: function() {
+          self.spy('preventDefault');
+        },
+      });
+
+      assert.verifySteps(
+        ['preventDefault', 'onSubmit'],
+        'invokes `onSubmit` preventing default'
+      );
     });
   });
 });

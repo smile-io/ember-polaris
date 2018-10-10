@@ -120,7 +120,10 @@ export default Component.extend({
   autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
 
   submit(event) {
-    let { preventDefault = true, onSubmit } = this;
+    let { preventDefault = true, onSubmit } = this.getProperties(
+      'preventDefault',
+      'onSubmit'
+    );
 
     if (!preventDefault) {
       return;
