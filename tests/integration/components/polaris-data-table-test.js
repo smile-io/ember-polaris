@@ -52,7 +52,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       }}
     `);
 
-    assert.dom('tbody tr').exists({ count: 3 });
+    assert.dom('[data-test-data-table-row]').exists({ count: 3 });
   });
 
   test('it defaults to non-sorting column headings', async function(assert) {
@@ -64,7 +64,9 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         footerContent=footerContent
       }}
     `);
-    const sortableHeadings = findAll('Polaris-DataTable__Heading--sortable');
+    const sortableHeadings = findAll(
+      '[data-test-data-table-cell-header] [data-test-data-table-cell-sortable]'
+    );
 
     assert.equal(sortableHeadings.length, 0);
   });
@@ -80,9 +82,14 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         sortable=firstColumnSortable
       }}
     `);
-    const firstHeadingCell = findAll('th.Polaris-DataTable__Cell')[0];
 
-    assert.dom(firstHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
+    const firstHeadingCell = findAll(
+      '[data-test-data-table-cell][data-test-data-table-cell-header]'
+    )[0];
+
+    assert
+      .dom(firstHeadingCell)
+      .hasAttribute('data-test-data-table-cell-sorted', 'true');
   });
 
   test('it sets specified initial sort column', async function(assert) {
@@ -96,8 +103,12 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         initialSortColumnIndex=4
       }}
     `);
-    const fifthHeadingCell = findAll('th.Polaris-DataTable__Cell')[4];
-    assert.dom(fifthHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
+    const fifthHeadingCell = findAll(
+      '[data-test-data-table-cell][data-test-data-table-cell-header]'
+    )[4];
+    assert
+      .dom(fifthHeadingCell)
+      .hasAttribute('data-test-data-table-cell-sorted', 'true');
   });
 
   test('it accepts both text and component definitions as cell contents', async function(assert) {
@@ -121,7 +132,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       }}
     `);
 
-    const headingCells = findAll('thead th');
+    const headingCells = findAll('[data-test-data-table-cell-header]');
     const firstHeadingCell = headingCells[0];
     assert
       .dom(firstHeadingCell)
@@ -135,7 +146,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       .dom(lastHeadingCell)
       .hasText('Status', 'last heading cell renders correct text');
 
-    const rowCells = find('tbody tr.Polaris-DataTable__TableRow').children;
+    const rowCells = find('[data-test-data-table-row]').children;
     const firstRowCell = rowCells[0];
     assert
       .dom(firstRowCell.firstElementChild)
@@ -149,7 +160,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       .dom(lastRowCell)
       .hasText('In stock', 'last row cell renders correct text');
 
-    const footerCell = find('tfoot td.Polaris-DataTable__Cell--footer');
+    const footerCell = find('[data-test-data-table-cell-footer="true"]');
     assert
       .dom(footerCell.firstElementChild)
       .hasClass('Polaris-Button', 'footer cell renders button component');

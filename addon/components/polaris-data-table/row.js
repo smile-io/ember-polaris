@@ -59,6 +59,8 @@ export default Component.extend({
    */
   truncate: false,
 
+  'data-test-data-table-row': true,
+
   /**
    * @property bodyCellHeights
    * @type {Number[]}
