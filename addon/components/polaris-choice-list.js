@@ -112,6 +112,8 @@ export default Component.extend({
    */
   titleHidden: false,
 
+  'data-test-choice-list': true,
+
   /**
    * Callback when the selected choices change
    *

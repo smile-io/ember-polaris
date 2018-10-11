@@ -118,6 +118,8 @@ export default Component.extend({
    */
   disabled: false,
 
+  'data-test-control-wrapper': true,
+
   /**
    * Callback when checkbox is toggled
    *

@@ -5,47 +5,23 @@ import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-const choiceListSelector = 'fieldset.Polaris-ChoiceList';
-const choicesWrapperSelector = buildNestedSelector(
-  choiceListSelector,
-  'ul.Polaris-ChoiceList__Choices'
-);
-const choiceSelector = buildNestedSelector(
-  choicesWrapperSelector,
-  'li',
-  'label.Polaris-Choice'
-);
-const radioInputSelector = buildNestedSelector(
-  'span.Polaris-RadioButton',
-  'input[type="radio"]'
-);
-const checkboxInputSelector = buildNestedSelector(
-  'span.Polaris-Checkbox',
-  'input[type="checkbox"]'
-);
-const titleSelector = buildNestedSelector(
-  choiceListSelector,
-  'legend.Polaris-ChoiceList__Title'
-);
-
+const choiceListSelector = '[data-test-choice-list]';
+const choicesWrapperSelector = '[data-test-choice-list-choices]';
+const choiceSelector = '[data-test-polaris-choice]';
+const radioInputSelector = '[data-test-radio-button-input]';
+const checkboxInputSelector = '[data-test-polaris-checkbox-input]';
+const titleSelector = '[data-test-choice-list-title]';
 const choiceWithDescriptionWrapperSelector = buildNestedSelector(
   choicesWrapperSelector,
-  'li',
+  '[data-test-choice-list-item]',
   'div'
 );
 const choiceWithDescriptionSelector = buildNestedSelector(
   choiceWithDescriptionWrapperSelector,
-  'label.Polaris-Choice'
+  choiceSelector
 );
-const helpTextSelector = buildNestedSelector(
-  choiceWithDescriptionWrapperSelector,
-  'div.Polaris-Choice__Descriptions',
-  'div.Polaris-Choice__HelpText'
-);
-const choiceErrorSelector = buildNestedSelector(
-  choiceListSelector,
-  'div.Polaris-ChoiceList__ChoiceError'
-);
+const helpTextSelector = '[data-test-polaris-choice-help-text]';
+const choiceErrorSelector = '[data-test-polaris-choice-list-error]';
 
 module('Integration | Component | polaris-choice-list', function(hooks) {
   setupRenderingTest(hooks);
