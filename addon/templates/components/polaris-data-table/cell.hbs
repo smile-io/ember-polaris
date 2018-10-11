@@ -1,6 +1,7 @@
 {{#if (or header fixed)}}
   {{#if header}}
     <th
+      {{!-- template-lint-disable --}}
       data-test-data-table-cell
       data-test-data-table-cell-header
       data-test-data-table-cell-sorted="{{sorted}}"
@@ -40,6 +41,7 @@
   {{/if}}
 {{else}}
   <td
+    {{!-- template-lint-disable --}}
     data-test-data-table-cell
     data-test-data-table-cell-footer="{{footer}}"
     class={{cellClassNames}}
