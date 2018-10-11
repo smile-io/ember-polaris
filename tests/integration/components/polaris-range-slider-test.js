@@ -40,7 +40,6 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    await this.pauseTest();
     assert
       .dom(
         buildNestedSelector(
