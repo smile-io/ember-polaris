@@ -18,15 +18,6 @@ module('Integration | Component | polaris tag', function(hooks) {
   const tagTextSelector = '[data-test-tag-text]';
   const tagButtonSelector = '[data-test-tag-button]';
   const tagButtonIconSelector = '[data-test-tag-button-icon]';
-  // const buttonSelector = 'button.Polaris-Tag__Button';
-  // const iconSelector = 'span.Polaris-Icon';
-
-  // const tagValueSelector = buildNestedSelector(componentSelector, 'span');
-  // const tagButtonSelector = buildNestedSelector(
-  //   componentSelector,
-  //   buttonSelector
-  // );
-  // const tagIconSelector = buildNestedSelector(buttonSelector, iconSelector);
 
   const usageTests = {
     inline: hbs`{{polaris-tag text=text}}`,
