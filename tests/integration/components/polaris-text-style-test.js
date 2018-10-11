@@ -1,155 +1,159 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll } from 'ember-native-dom-helpers';
 
-moduleForComponent(
-  'polaris-text-style',
-  'Integration | Component | polaris text style',
-  {
-    integration: true,
-  }
-);
+module('Integration | Component | polaris text style', function(hooks) {
+  setupRenderingTest(hooks);
 
-const textStyleSelector = 'span';
+  const textStyleSelector = '[data-test-text-style]';
 
-test('it renders the correct HTML in inline usage with default attributes', function(assert) {
-  this.render(hbs`{{polaris-text-style text="Inline styled text"}}`);
+  test('it renders the correct HTML in inline usage with default attributes', async function(assert) {
+    await render(hbs`{{polaris-text-style text="Inline styled text"}}`);
 
-  const textStyles = findAll(textStyleSelector);
-  assert.equal(textStyles.length, 1, 'renders one text style component');
+    assert
+      .dom(textStyleSelector)
+      .hasText('Inline styled text', 'renders the correct content');
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationPositive',
+        'does not apply positive class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationNegative',
+        'does not apply negative class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationStrong',
+        'does not apply strong class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationSubdued',
+        'does not apply subdued class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationCode',
+        'does not apply code class'
+      );
+  });
 
-  const textStyle = textStyles[0];
-  assert.equal(
-    textStyle.textContent.trim(),
-    'Inline styled text',
-    'renders the correct content'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'does not apply positive class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'does not apply negative class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'does not apply strong class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'does not apply subdued class'
-  );
-});
+  test('it renders the correct HTML in block usage with default attributes', async function(assert) {
+    await render(
+      hbs`{{#polaris-text-style}}Block styled text{{/polaris-text-style}}`
+    );
 
-test('it renders the correct HTML in block usage with default attributes', function(assert) {
-  this.render(
-    hbs`{{#polaris-text-style}}Block styled text{{/polaris-text-style}}`
-  );
+    assert
+      .dom(textStyleSelector)
+      .hasText('Block styled text', 'renders the correct content');
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationPositive',
+        'does not apply positive class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationNegative',
+        'does not apply negative class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationStrong',
+        'does not apply strong class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationSubdued',
+        'does not apply subdued class'
+      );
+    assert
+      .dom(textStyleSelector)
+      .hasNoClass(
+        'Polaris-TextStyle--variationCode',
+        'does not apply code class'
+      );
+  });
 
-  const textStyles = findAll(textStyleSelector);
-  assert.equal(textStyles.length, 1, 'renders one text style component');
+  test('it handles the variation attribute correctly', async function(assert) {
+    this.set('variation', 'positive');
 
-  const textStyle = textStyles[0];
-  assert.equal(
-    textStyle.textContent.trim(),
-    'Block styled text',
-    'renders the correct content'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'does not apply positive class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'does not apply negative class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'does not apply strong class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'does not apply subdued class'
-  );
-});
+    await render(hbs`{{polaris-text-style variation=variation}}`);
 
-test('it handles the variation attribute correctly', function(assert) {
-  this.set('variation', 'positive');
-  this.render(hbs`{{polaris-text-style variation=variation}}`);
+    let elementTag = find(textStyleSelector).tagName;
+    assert
+      .dom(textStyleSelector)
+      .hasClass(
+        'Polaris-TextStyle--variationPositive',
+        'positive variation - applies positive class'
+      );
+    assert.equal(
+      elementTag,
+      'SPAN',
+      'positive variation - is rendered as a span tag'
+    );
 
-  const textStyles = findAll(textStyleSelector);
-  assert.equal(textStyles.length, 1, 'renders one text style component');
+    this.set('variation', 'negative');
+    assert
+      .dom(textStyleSelector)
+      .hasClass(
+        'Polaris-TextStyle--variationNegative',
+        'negative variation - applies negative class'
+      );
+    assert.equal(
+      elementTag,
+      'SPAN',
+      'negative variation - is rendered as a span tag'
+    );
 
-  const textStyle = textStyles[0];
-  assert.ok(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'positive variation - applies positive class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'positive variation - does not apply negative class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'positive variation - does not apply strong class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'positive variation - does not apply subdued class'
-  );
+    this.set('variation', 'strong');
+    assert
+      .dom(textStyleSelector)
+      .hasClass(
+        'Polaris-TextStyle--variationStrong',
+        'strong variation - applies strong class'
+      );
+    assert.equal(
+      find(textStyleSelector).tagName,
+      'B',
+      'strong variation - is rendered as a b tag'
+    );
 
-  this.set('variation', 'negative');
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'negative variation - does not apply positive class'
-  );
-  assert.ok(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'negative variation - applies negative class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'negative variation - does not apply strong class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'negative variation - does not apply subdued class'
-  );
+    this.set('variation', 'subdued');
+    assert
+      .dom(textStyleSelector)
+      .hasClass(
+        'Polaris-TextStyle--variationSubdued',
+        'subdued variation - applies subdued class'
+      );
+    assert.equal(
+      find(textStyleSelector).tagName,
+      'SPAN',
+      'subdued variation - is rendered as a span tag'
+    );
 
-  this.set('variation', 'strong');
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'strong variation - does not apply positive class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'strong variation - does not apply negative class'
-  );
-  assert.ok(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'strong variation - applies strong class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'strong variation - does not apply subdued class'
-  );
-
-  this.set('variation', 'subdued');
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationPositive'),
-    'subdued variation - does not apply positive class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationNegative'),
-    'subdued variation - does not apply negative class'
-  );
-  assert.notOk(
-    textStyle.classList.contains('Polaris-TextStyle--variationStrong'),
-    'subdued variation - does not apply strong class'
-  );
-  assert.ok(
-    textStyle.classList.contains('Polaris-TextStyle--variationSubdued'),
-    'subdued variation - applies subdued class'
-  );
+    this.set('variation', 'code');
+    assert
+      .dom(textStyleSelector)
+      .hasClass(
+        'Polaris-TextStyle--variationCode',
+        'code variation - applies code class'
+      );
+    assert.equal(
+      find(textStyleSelector).tagName,
+      'CODE',
+      'code variation - is rendered as a code tag'
+    );
+  });
 });
