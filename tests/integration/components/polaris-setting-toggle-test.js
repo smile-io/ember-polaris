@@ -145,7 +145,7 @@ test('it handles the enabled attribute correctly', function(assert) {
   );
 });
 
-test('it handles the suppied action correctly', function(assert) {
+test('it handles the supplied action correctly', function(assert) {
   this.set('actionFired', false);
   this.render(hbs`
     {{polaris-setting-toggle
@@ -159,4 +159,42 @@ test('it handles the suppied action correctly', function(assert) {
 
   click(settingActionButtonSelector);
   assert.ok(this.get('actionFired'), 'fires the action when button clicked');
+});
+
+test("it obeys the passed-in action hash's loading and disabled flags", function(assert) {
+  this.setProperties({
+    isLoading: true,
+    isDisabled: false,
+  });
+
+  this.render(hbs`
+    {{polaris-setting-toggle
+      action=(hash
+        text="Toggle"
+        loading=isLoading
+        disabled=isDisabled
+        onAction=(action (mut dummy))
+      )
+    }}
+  `);
+
+  let button = find(settingActionButtonSelector);
+  assert.ok(
+    button.classList.contains('Polaris-Button--loading'),
+    'button is in loading state when loading is true'
+  );
+
+  this.setProperties({
+    isLoading: false,
+    isDisabled: true,
+  });
+
+  assert.ok(
+    button.classList.contains('Polaris-Button--disabled'),
+    'button is in disabled state when disabled is true'
+  );
+  assert.notOk(
+    button.classList.contains('Polaris-Button--loading'),
+    'button is not in loading state when loading is false'
+  );
 });

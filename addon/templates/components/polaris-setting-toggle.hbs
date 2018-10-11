@@ -12,6 +12,8 @@
       {{#if action}}
         {{polaris-button
           text=action.text
+          disabled=action.disabled
+          loading=action.loading
           primary=enabled
           onClick=(action "fireAction" action)
         }}

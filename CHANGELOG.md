@@ -10,29 +10,32 @@
 - [#191](https://github.com/smile-io/ember-polaris/pull/191) [ENHANCEMENT] Update `polaris-layout/annotated-section` styling to match Polaris v2.11.0
 - [#195](https://github.com/smile-io/ember-polaris/pull/195) [ENHANCEMENT] Add `nextKeys` and `previousKeys` attribute to `polaris-pagination`
 
-### v.1.7.7 (october 8, 2018)
-- [#189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
+### v1.7.8 (October 10, 2018)
+- [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
 
-### v.1.7.6 (october 5, 2018)
+### v1.7.7 (October 8, 2018)
+- [189](https://github.com/smile-io/ember-polaris/pull/189) [FIX] Detect length of decimal places in number as per expectations.
+
+### v1.7.6 (October 5, 2018)
 - [#181](https://github.com/smile-io/ember-polaris/pull/181) [internal] autofix code to use our latest eslint rules.
 
-### v.1.7.5 (october 4, 2018)
+### v1.7.5 (October 4, 2018)
 - [#173](https://github.com/smile-io/ember-polaris/pull/173) [internal] setup eslint, prettier & ember-template-lint.
 
-### v.1.7.4 (September 17, 2018)
+### v1.7.4 (September 17, 2018)
 - [#170](https://github.com/smile-io/ember-polaris/pull/170) [FIX] Allow class names on `polaris-callout-card`.
 
-### v.1.7.3 (August 21, 2018)
+### v1.7.3 (August 21, 2018)
 - [#163](https://github.com/smile-io/ember-polaris/pull/163) [ENHANCEMENT] Add `image` property to `polaris-action-list/item` component.
 
-### v.1.7.2 (July 27, 2018)
+### v1.7.2 (July 27, 2018)
 - [#159](https://github.com/smile-io/ember-polaris/pull/159) [DOCUMENTATION] Add notes about avoiding Glimmer error under dynamic usages of auto-wrapping components (`polaris-button-group`, `polaris-form-layout`, `polaris-form-layout/group` and `polaris-stack`).
 - [#160](https://github.com/smile-io/ember-polaris/pull/160) [FIX] Replace img tag with `svg-jar` usage in `polaris-drop-zone` component to load images. `svg-jar` configuration in the host app isn't required to use this addon anymore.
 
-### v.1.7.1 (July 9, 2018)
+### v1.7.1 (July 9, 2018)
 - [#158](https://github.com/smile-io/ember-polaris/pull/158) [FIX] Pass textfield selectors to `polaris-text-field` event listener.
 
-### v.1.7.0 (July 9, 2018)
+### v1.7.0 (July 9, 2018)
 - [#144](https://github.com/smile-io/ember-polaris/pull/144) [UPDATE] Shopify Polaris `v2.2.0`
 - [#146](https://github.com/smile-io/ember-polaris/pull/146) [ENHANCEMENT] Add `new` status to the Badge component
 - [#148](https://github.com/smile-io/ember-polaris/pull/148) [FEATURE] Add `polaris-label` and `polaris-labelled` components.
@@ -44,7 +47,7 @@
 - [#155](https://github.com/smile-io/ember-polaris/pull/155) [ENHANCEMENT] Add support for extra large dropzone
 - [#157](https://github.com/smile-io/ember-polaris/pull/157) [ENHANCEMENT] Add withinContentContainer property to the banner component
 
-### v.1.6.3 (July 5, 2018)
+### v1.6.3 (July 5, 2018)
 - [#145](https://github.com/smile-io/ember-polaris/pull/145) [FEATURE] Add `polaris-text-field` component.
 
 ### v1.6.2 (July 4, 2018)
