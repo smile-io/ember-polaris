@@ -254,6 +254,12 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       .dom(buildNestedSelector(sliderWrapperSelector, sliderPrefixSelector))
       .exists('renders the prefix element correctly');
     assert.dom(sliderPrefixSelector).hasText(this.text, 'renders prefix text');
+    assert
+      .dom(sliderPrefixSelector)
+      .hasClass(
+        'Polaris-RangeSlider__Prefix',
+        'prefix has correct class applied'
+      );
   });
 
   test('it support suffix', async function(assert) {
@@ -271,6 +277,12 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       .dom(buildNestedSelector(sliderWrapperSelector, sliderSuffixSelector))
       .exists('renders the suffix element correctly');
     assert.dom(sliderSuffixSelector).hasText(this.text, 'renders suffix text');
+    assert
+      .dom(sliderSuffixSelector)
+      .hasClass(
+        'Polaris-RangeSlider__Suffix',
+        'suffix has correct class applied'
+      );
   });
 
   test('it sets the correct css custom properties', async function(assert) {
