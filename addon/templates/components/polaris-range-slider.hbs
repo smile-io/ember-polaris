@@ -14,7 +14,7 @@
   >
     {{#if prefix}}
       <div data-test-range-slider-prefix class="Polaris-RangeSlider__Prefix">
-        {{prefix}}
+        {{render-content prefix}}
       </div>
     {{/if}}
 
@@ -55,7 +55,7 @@
 
     {{#if suffix}}
       <div data-test-range-slider-suffix class="Polaris-RangeSlider__Suffix">
-        {{suffix}}
+        {{render-content suffix}}
       </div>
     {{/if}}
   </div>
