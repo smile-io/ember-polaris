@@ -14,7 +14,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
   const titleTextSelector = '[data-test-skeleton-page-title-text]';
   const breadcrumbsSelector = '[data-test-skeleton-page-breadcrumbs]';
   const breadcrumbSelector = '[data-test-skeleton-page-breadcrumb]';
-  const breadcrumbTextSelector = '[data-test-skeleton-page-breadcrumb-text]';
+  const breadcrumbTextSelector = '[data-test-skeleton-page-action-text]';
   const secondaryActionsSelector = '[data-test-skeleton-page-actions]';
   const secondaryActionSelector = '[data-test-skeleton-page-action]';
 
