@@ -1,4 +1,5 @@
 <progress
+  data-test-progress-bar-progress
   class="Polaris-ProgressBar__Progress"
   max="100"
   value={{parsedProgress}}
@@ -6,12 +7,11 @@
 </progress>
 
 <div
+  data-test-progress-bar-indicator
   class="Polaris-ProgressBar__Indicator"
-  role="progressbar"
-  aria-hidden="true"
   style={{progressStyle}}
 >
-  <span class="Polaris-ProgressBar__Label">
+  <span data-test-progress-bar-indicator-label class="Polaris-ProgressBar__Label">
     {{parsedProgress}}%
   </span>
 </div>
