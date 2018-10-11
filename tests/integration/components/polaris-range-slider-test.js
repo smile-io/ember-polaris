@@ -1,35 +1,68 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, triggerEvent } from '@ember/test-helpers';
+import { render, find, triggerEvent, fillIn } from '@ember/test-helpers';
 import Component from '@ember/component';
 import hbs from 'htmlbars-inline-precompile';
+import buildNestedSelector from '../../helpers/build-nested-selector';
 
 module('Integration | Component | polaris-range-slider', function(hooks) {
   setupRenderingTest(hooks);
 
+  const dataTestRangeSlider = 'range-slider';
+  const sliderSelector = `[data-test-labelled="${dataTestRangeSlider}"]`;
+  const sliderWrapperSelector = '[data-test-range-slider-wrapper]';
+  const sliderInputWrapperSelector = '[data-test-range-slider-input-wrapper]';
+  const sliderInputSelector = '[data-test-range-slider-input]';
+  const sliderOutputSelector = '[data-test-range-slider-output]';
+  const sliderPrefixSelector = '[data-test-range-slider-prefix]';
+  const sliderSuffixSelector = '[data-test-range-slider-suffix]';
+
   test('it allows specific props to pass through properties on the input', async function(assert) {
+    this.setProperties({
+      label: 'RangeSlider',
+      value: '15',
+      min: '10',
+      max: '20',
+      step: '0.5',
+      disabled: true,
+      dataTestRangeSlider: dataTestRangeSlider,
+    });
+
     await render(hbs`
       {{polaris-range-slider
-        label="RangeSlider"
-        value=15
-        min=10
-        max=20
-        step=0.5
-        disabled=true
+        dataTestRangeSlider=dataTestRangeSlider
+        label=label
+        value=value
+        min=min
+        max=max
+        step=step
+        disabled=disabled
       }}
     `);
 
+    await this.pauseTest();
+    assert
+      .dom(
+        buildNestedSelector(
+          sliderSelector,
+          sliderWrapperSelector,
+          sliderInputWrapperSelector,
+          sliderInputSelector
+        )
+      )
+      .exists('renders the input element correctly');
+
     // TODO: Ember doesn't seem to be binding the `value` attribute on the input element...
-    // assert.dom('input').hasAttribute('value', '15');
-    assert.dom('input').hasAttribute('min', '10');
-    assert.dom('input').hasAttribute('max', '20');
-    assert.dom('input').hasAttribute('step', '0.5');
-    assert.dom('input').hasAttribute('disabled');
+    // assert.dom(sliderInputSelector).hasAttribute('value', this.value);
+    assert.dom(sliderInputSelector).hasAttribute('min', this.min);
+    assert.dom(sliderInputSelector).hasAttribute('max', this.max);
+    assert.dom(sliderInputSelector).hasAttribute('step', this.step);
+    assert.dom(sliderInputSelector).hasAttribute('aria-valuemin', this.min);
+    assert.dom(sliderInputSelector).hasAttribute('aria-valuemax', this.max);
+    assert.dom(sliderInputSelector).hasAttribute('aria-valuenow', this.value);
   });
 
   test('it calls `onChange` with the new value when the value is changed', async function(assert) {
-    assert.expect(2);
-
     this.set('valueChanged', (newValue, inputId) => {
       assert.equal(newValue, 40);
       assert.equal(inputId, 'MyRangeSlider');
@@ -44,13 +77,10 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    find('input').value = '40';
-    await triggerEvent('input', 'input');
+    await fillIn(sliderInputSelector, 40);
   });
 
   test('`onFocus` is called when the input is focused', async function(assert) {
-    assert.expect(1);
-
     this.set('inputFocused', () => {
       assert.ok(true);
     });
@@ -63,12 +93,10 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    await triggerEvent('input', 'focus');
+    await triggerEvent(sliderInputSelector, 'focus');
   });
 
   test('`onBlur` is called when the input is blurred', async function(assert) {
-    assert.expect(1);
-
     this.set('inputBlurred', () => {
       assert.ok(true);
     });
@@ -81,7 +109,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    await triggerEvent('input', 'blur');
+    await triggerEvent(sliderInputSelector, 'blur');
   });
 
   test('it sets the id on the input when an ID is passed', async function(assert) {
@@ -93,7 +121,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    assert.dom('input').hasAttribute('id', 'MyRangeSlider');
+    assert.dom(sliderInputSelector).hasAttribute('id', 'MyRangeSlider');
   });
 
   test('it sets a random id on the input when none is passed', async function(assert) {
@@ -104,7 +132,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    assert.dom('input').hasAttribute('id');
+    assert.dom(sliderInputSelector).hasAttribute('id');
   });
 
   test('it connects the input to the output when output is rendered', async function(assert) {
@@ -117,9 +145,9 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    const inputId = find('input').getAttribute('id');
+    const inputId = find(sliderInputSelector).getAttribute('id');
     assert.equal(typeof inputId, 'string');
-    assert.dom('output').hasAttribute('for', inputId);
+    assert.dom(sliderOutputSelector).hasAttribute('for', inputId);
   });
 
   test('output contains correct value text when output is rendered', async function(assert) {
@@ -131,7 +159,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    assert.dom('output span').hasText('50');
+    assert.dom(sliderOutputSelector).hasText('50');
   });
 
   test('it connects the input to the help text when help text is supplied', async function(assert) {
@@ -142,7 +170,9 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         helpText="Some help"
       }}
     `);
-    const helpTextId = find('input').getAttribute('aria-describedby');
+    const helpTextId = find(sliderInputSelector).getAttribute(
+      'aria-describedby'
+    );
 
     assert.equal(typeof helpTextId, 'string');
     assert.dom(`#${helpTextId}`).hasText('Some help');
@@ -166,7 +196,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         error=(component "my-error-component" text="Invalid")
       }}
     `);
-    assert.dom('input').hasAttribute('aria-invalid', 'true');
+    assert.dom(sliderInputSelector).hasAttribute('aria-invalid', 'true');
 
     await render(hbs`
       {{polaris-range-slider
@@ -175,7 +205,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         error="Some error"
       }}
     `);
-    assert.dom('input').hasAttribute('aria-invalid', 'true');
+    assert.dom(sliderInputSelector).hasAttribute('aria-invalid', 'true');
   });
 
   test('it connects the input to the error when an error is present', async function(assert) {
@@ -186,7 +216,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         error="Some error"
       }}
     `);
-    const errorId = find('input').getAttribute('aria-describedby');
+    const errorId = find(sliderInputSelector).getAttribute('aria-describedby');
 
     assert.equal(typeof errorId, 'string');
     assert.dom(`#${errorId}`).hasText('Some error');
@@ -201,13 +231,47 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
         error="Some error"
       }}
     `);
-    const descriptions = find('input')
+    const descriptions = find(sliderInputSelector)
       .getAttribute('aria-describedby')
       .split(' ');
 
     assert.equal(descriptions.length, 2);
     assert.dom(`#${descriptions[1]}`).hasText('Some help');
     assert.dom(`#${descriptions[0]}`).hasText('Some error');
+  });
+
+  test('it support prefix', async function(assert) {
+    this.set('text', 'prefix text');
+
+    await render(hbs`
+      {{polaris-range-slider
+        label="RangeSlider"
+        value=50
+        prefix=(component "polaris-badge" text=text)
+      }}
+    `);
+
+    assert
+      .dom(buildNestedSelector(sliderWrapperSelector, sliderPrefixSelector))
+      .exists('renders the prefix element correctly');
+    assert.dom(sliderPrefixSelector).hasText(this.text, 'renders prefix text');
+  });
+
+  test('it support suffix', async function(assert) {
+    this.set('text', 'suffix text');
+
+    await render(hbs`
+      {{polaris-range-slider
+        label="RangeSlider"
+        value=50
+        suffix=(component "polaris-badge" text=text)
+      }}
+    `);
+
+    assert
+      .dom(buildNestedSelector(sliderWrapperSelector, sliderSuffixSelector))
+      .exists('renders the suffix element correctly');
+    assert.dom(sliderSuffixSelector).hasText(this.text, 'renders suffix text');
   });
 
   test('it sets the correct css custom properties', async function(assert) {
@@ -219,7 +283,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       }}
     `);
 
-    const styleString = find('input').parentElement.getAttribute('style');
+    const styleString = find(sliderWrapperSelector).getAttribute('style');
 
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-min:0;') > -1);
     assert.ok(styleString.indexOf('--Polaris-RangeSlider-max:100;') > -1);
