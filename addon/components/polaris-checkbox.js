@@ -118,8 +118,6 @@ export default Component.extend({
    */
   disabled: false,
 
-  'data-test-control-wrapper': true,
-
   /**
    * Callback when checkbox is toggled
    *
@@ -149,6 +147,8 @@ export default Component.extend({
    * @public
    */
   onBlur() {},
+
+  'data-test-control-wrapper': true,
 
   /**
    * @private

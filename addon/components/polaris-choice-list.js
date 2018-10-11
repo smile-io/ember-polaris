@@ -112,8 +112,6 @@ export default Component.extend({
    */
   titleHidden: false,
 
-  'data-test-choice-list': true,
-
   /**
    * Callback when the selected choices change
    *
@@ -123,6 +121,8 @@ export default Component.extend({
    * @default noop
    */
   onChange() {},
+
+  'data-test-choice-list': true,
 
   /**
    * @private
