@@ -79,6 +79,8 @@ export default Component.extend({
    */
   text: null,
 
+  'data-test-skeleton-page': true,
+
   /**
    * The role of this component, for accessibility purposes
    *
