@@ -9,17 +9,17 @@ function makeComputedIdGenerator(idGenerator) {
 }
 
 export function labelId(id) {
-  return `${id}Label`;
+  return idVariation(id, 'Label');
 }
 export const computedLabelId = makeComputedIdGenerator(labelId);
 
 export function errorId(id) {
-  return `${id}Error`;
+  return idVariation(id, 'Error');
 }
 export const computedErrorId = makeComputedIdGenerator(errorId);
 
 export function helpTextId(id) {
-  return `${id}HelpText`;
+  return idVariation(id, 'HelpText');
 }
 export const computedHelpTextId = makeComputedIdGenerator(helpTextId);
 
