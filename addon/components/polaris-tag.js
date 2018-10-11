@@ -1,6 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-tag';
 import { computed } from '@ember/object';
+import layout from '../templates/components/polaris-tag';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
 /**
@@ -82,7 +82,7 @@ export default Component.extend({
     // Read the tag text so we can use this for the aria-label.
     // We access the element's `textContent` so that this still works in block usage.
     let tagText = this.get('element.textContent') || '';
-    this.set('tagText', `${tagText.trim()}`);
+    this.set('tagText', tagText.trim());
   },
 
   didRender() {
