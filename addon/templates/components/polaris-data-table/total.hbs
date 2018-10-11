@@ -1,7 +1,7 @@
 {{polaris-data-table/cell
   total=true
   truncate=truncate
-  height=heights.firstObject
+  height=(get-array-item heights 1)
   fixed=(eq index 0)
   text=(if
     (eq index 0)

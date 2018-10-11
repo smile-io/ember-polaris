@@ -447,7 +447,8 @@ export default Component.extend(
         }
 
         if (footerContent) {
-          let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
+          let footerCellHeight =
+            rows[rows.length - 1].childNodes[0].clientHeight;
           heights = [footerCellHeight];
         }
 
@@ -505,6 +506,7 @@ export default Component.extend(
               ? currentColumn.rightEdge - fixedColumnWidth
               : previousColumn.leftEdge - fixedColumnWidth;
 
+          // TODO: use run loop instead of `requestAnimationFrame` here?
           requestAnimationFrame(() => {
             if (this.get('isDestroying') || this.get('isDestroyed')) {
               return;
