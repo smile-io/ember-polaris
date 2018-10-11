@@ -1,10 +1,13 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-tag';
+import { computed } from '@ember/object';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
 /**
  * Polaris tag component.
  * See https://polaris.shopify.com/components/forms/tag
+ *
+ * @component polaris-tag
  */
 export default Component.extend({
   tagName: 'span',
@@ -48,6 +51,21 @@ export default Component.extend({
   onRemove() {},
 
   /**
+   * The tag text. When inline-form, will match `text`, otherwise will read the
+   * block for this.
+   *
+   * @property tagText
+   * @private
+   * @type {String}
+   * @default null
+   */
+  tagText: null,
+
+  handleMouseUpByBlurring,
+
+  'data-test-tag': true,
+
+  /**
    * String to be used as the `remove` button's `aria-label`
    * Gets updated after rendering to always use the most up-to-date tag text
    *
@@ -56,19 +74,19 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  buttonLabel: null,
+  buttonLabel: computed('tagText', function() {
+    return `Remove ${this.get('tagText')}`;
+  }).readOnly(),
 
-  handleMouseUpByBlurring,
-
-  updateButtonLabel() {
-    // Set the remove button's aria-label based on the current text in the tag.
+  updateTagText() {
+    // Read the tag text so we can use this for the aria-label.
     // We access the element's `textContent` so that this still works in block usage.
     let tagText = this.get('element.textContent') || '';
-    this.set('buttonLabel', `Remove ${tagText.trim()}`);
+    this.set('tagText', `${tagText.trim()}`);
   },
 
   didRender() {
     this._super(...arguments);
-    this.updateButtonLabel();
+    this.updateTagText();
   },
 });
