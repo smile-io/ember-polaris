@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { get, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { isEmpty, isNone } from '@ember/utils';
+import { isEmpty } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
 import { errorId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-choice-list';
@@ -132,11 +132,7 @@ export default Component.extend({
   /**
    * @private
    */
-  ariaDescribedBy: computed('finalName', 'error', function() {
-    if (isNone(this.get('error'))) {
-      return null;
-    }
-
+  ariaDescribedBy: computed('finalName', function() {
     return errorId(this.get('finalName'));
   }).readOnly(),
 
