@@ -1,4 +1,10 @@
-<div class="Polaris-FormLayout__Items">
+{{#if title}}
+  <div id={{titleID}} class="Polaris-FormLayout__Title" data-test-form-layout-group-title>
+    {{title}}
+  </div>
+{{/if}}
+
+<div class="Polaris-FormLayout__Items" data-test-form-layout-group-items>
   {{#if hasBlock}}
     {{yield
       (hash
@@ -9,3 +15,9 @@
     {{text}}
   {{/if}}
 </div>
+
+{{#if helpText}}
+  <div id={{helpTextID}} class="Polaris-FormLayout__HelpText" data-test-form-layout-group-helpText>
+    {{render-content helpText}}
+  </div>
+{{/if}}
