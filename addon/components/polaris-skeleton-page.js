@@ -30,7 +30,7 @@ export default Component.extend({
    *
    * @property fullwidth
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   fullwidth: false,
@@ -40,7 +40,7 @@ export default Component.extend({
    *
    * @property singleColumn
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   singleColumn: false,
@@ -60,7 +60,7 @@ export default Component.extend({
    *
    * @property breadcrumbs
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default null
    */
   breadcrumbs: null,
@@ -104,7 +104,7 @@ export default Component.extend({
    *
    * @property hasTitleText
    * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
   hasTitleText: notEmpty('title').readOnly(),
 
@@ -113,7 +113,7 @@ export default Component.extend({
    *
    * @property hasTitle
    * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
   hasTitle: computed('title', function() {
     return this.get('title') !== null;
