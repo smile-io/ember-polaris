@@ -77,10 +77,7 @@ export default Component.extend({
    */
   variationClass: computed('variation', function() {
     const variation = this.get('variation');
-    if (
-      isEmpty(variation) ||
-      !Object.keys(variationValue).includes(variation)
-    ) {
+    if (!Object.keys(variationValue).includes(variation)) {
       return null;
     }
 
