@@ -81,6 +81,14 @@ export default Component.extend({
   allowRange: false,
 
   /**
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default null
+   */
+  weekStartsOn: null,
+
+  /**
    * @property onChange
    * @public
    * @type {Function}
@@ -134,10 +142,14 @@ export default Component.extend({
     return monthsArray[this.get('month')];
   }).readOnly(),
 
-  weeks: computed('month', 'year', function() {
-    let { month, year } = this.getProperties('month', 'year');
+  weeks: computed('month', 'year', 'weekStartsOn', function() {
+    let { month, year, weekStartsOn } = this.getProperties(
+      'month',
+      'year',
+      'weekStartsOn'
+    );
 
-    return getWeeksForMonth(month, year);
+    return getWeeksForMonth(month, year, weekStartsOn);
   }).readOnly(),
 
   weekdays: computed('current', function() {

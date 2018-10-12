@@ -18,12 +18,13 @@
   {{polaris-date-picker/month
     month=month
     year=year
-    selected=range
+    selected=(derive-range selected)
     disableDatesBefore=disableDatesBefore
     disableDatesAfter=disableDatesAfter
     allowRange=allowRange
     hoverDate=hoverDate
     focusedDate=focusDate
+    weekStartsOn=weekStartsOn
     onChange=(action "handleDateSelection")
     onFocus=(action (mut focusDate))
     onHover=(action (mut hoverDate))
@@ -33,12 +34,13 @@
     {{polaris-date-picker/month
       month=showNextMonth
       year=showNextYear
-      selected=range
+      selected=(derive-range selected)
       disableDatesBefore=disableDatesBefore
       disableDatesAfter=disableDatesAfter
       allowRange=allowRange
       hoverDate=hoverDate
       focusedDate=focusDate
+      weekStartsOn=weekStartsOn
       onChange=(action "handleDateSelection")
       onFocus=(action (mut focusDate))
       onHover=(action (mut hoverDate))
