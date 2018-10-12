@@ -1,12 +1,12 @@
 {{#if title}}
-  <legend class="Polaris-ChoiceList__Title">
+  <legend data-test-choice-list-title class="Polaris-ChoiceList__Title">
     {{title}}
   </legend>
 {{/if}}
 
-<ul class="Polaris-ChoiceList__Choices">
+<ul data-test-choice-list-choices class="Polaris-ChoiceList__Choices">
   {{#each checkedChoices as |choice|}}
-    <li>
+    <li data-test-choice-list-item>
       {{component
         controlComponent
         label=choice.label
@@ -20,3 +20,12 @@
     </li>
   {{/each}}
 </ul>
+
+{{#if error}}
+  <div data-test-choice-list-error class="Polaris-ChoiceList__ChoiceError">
+    {{polaris-inline-error
+      message=error
+      fieldID=finalName
+    }}
+  </div>
+{{/if}}

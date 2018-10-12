@@ -66,4 +66,6 @@ export default Component.extend({
    * @public
    */
   disabled: null,
+
+  'data-test-choice': true,
 });
