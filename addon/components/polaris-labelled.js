@@ -28,6 +28,7 @@ export default Component.extend({
   id: computed(function() {
     return guidFor(this);
   }),
+
   /**
    * Text for the label
    *
@@ -68,6 +69,8 @@ export default Component.extend({
    * @public
    */
   labelHidden: false,
+
+  dataTestLabelled: true,
 
   /**
    * ID for the error message div
