@@ -1,5 +1,26 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
+{{!-- NOTE: This is a bit hacky, but needed to support dynamically rendering different tag based on variation --}}
+{{#if (eq elementTagName "span")}}
+  <span data-test-text-style={{dataTestTextStyle}} class={{variationClass}}>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </span>
+{{else if (eq elementTagName "b")}}
+  <b data-test-text-style={{dataTestTextStyle}} class={{variationClass}}>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </b>
+{{else if (eq elementTagName "code")}}
+  <code data-test-text-style={{dataTestTextStyle}} class={{variationClass}}>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{text}}
+    {{/if}}
+  </code>
 {{/if}}
