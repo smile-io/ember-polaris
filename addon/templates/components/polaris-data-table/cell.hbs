@@ -1,10 +1,6 @@
 {{#if (or header fixed)}}
   {{#if header}}
     <th
-      {{!-- template-lint-disable --}}
-      data-test-data-table-cell
-      data-test-data-table-cell-header
-      data-test-data-table-cell-sorted="{{sorted}}"
       scope="col"
       class={{cellClassNames}}
       aria-sort={{sortDirection}}
@@ -12,7 +8,6 @@
     >
       {{#if sortable}}
         <button
-          data-test-data-table-cell-sortable
           class={{headerClassNames}}
           onclick={{action onSort}}
         >
@@ -31,7 +26,6 @@
     </th>
   {{else}}
     <th
-      data-test-data-table-cell
       scope="row"
       class={{cellClassNames}}
       style={{style}}
@@ -41,9 +35,6 @@
   {{/if}}
 {{else}}
   <td
-    {{!-- template-lint-disable --}}
-    data-test-data-table-cell
-    data-test-data-table-cell-footer="{{footer}}"
     class={{cellClassNames}}
     style={{style}}
   >

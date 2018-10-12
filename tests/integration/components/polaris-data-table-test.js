@@ -64,9 +64,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         footerContent=footerContent
       }}
     `);
-    const sortableHeadings = findAll(
-      '[data-test-data-table-cell-header] [data-test-data-table-cell-sortable]'
-    );
+    const sortableHeadings = findAll('.Polaris-DataTable__Heading--sortable');
 
     assert.equal(sortableHeadings.length, 0);
   });
@@ -83,13 +81,9 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       }}
     `);
 
-    const firstHeadingCell = findAll(
-      '[data-test-data-table-cell][data-test-data-table-cell-header]'
-    )[0];
+    const firstHeadingCell = findAll('th.Polaris-DataTable__Cell')[0];
 
-    assert
-      .dom(firstHeadingCell)
-      .hasAttribute('data-test-data-table-cell-sorted', 'true');
+    assert.dom(firstHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
   });
 
   test('it sets specified initial sort column', async function(assert) {
@@ -103,12 +97,8 @@ module('Integration | Component | polaris-data-table', function(hooks) {
         initialSortColumnIndex=4
       }}
     `);
-    const fifthHeadingCell = findAll(
-      '[data-test-data-table-cell][data-test-data-table-cell-header]'
-    )[4];
-    assert
-      .dom(fifthHeadingCell)
-      .hasAttribute('data-test-data-table-cell-sorted', 'true');
+    const fifthHeadingCell = findAll('.Polaris-DataTable__Cell--header')[4];
+    assert.dom(fifthHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
   });
 
   test('it accepts both text and component definitions as cell contents', async function(assert) {
@@ -132,7 +122,8 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       }}
     `);
 
-    const headingCells = findAll('[data-test-data-table-cell-header]');
+    const headingCells = findAll('.Polaris-DataTable__Cell--header');
+
     const firstHeadingCell = headingCells[0];
     assert
       .dom(firstHeadingCell)
@@ -160,7 +151,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
       .dom(lastRowCell)
       .hasText('In stock', 'last row cell renders correct text');
 
-    const footerCell = find('[data-test-data-table-cell-footer="true"]');
+    const footerCell = find('tfoot td.Polaris-DataTable__Cell--footer');
     assert
       .dom(footerCell.firstElementChild)
       .hasClass('Polaris-Button', 'footer cell renders button component');
