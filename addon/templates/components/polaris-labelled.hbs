@@ -1,7 +1,10 @@
 <div class={{if labelHidden "Polaris-Labelled--hidden"}} data-test-labelled={{dataTestLabelled}}>
   {{#if label}}
     <div class="Polaris-Labelled__LabelWrapper">
-      {{#polaris-label id=id hidden=false}}
+      {{#polaris-label
+        id=id
+        hidden=false
+      }}
         {{label}}
       {{/polaris-label}}
 
@@ -21,13 +24,13 @@
   {{yield}}
 
   {{#if shouldRenderError}}
-    <div class="Polaris-Labelled__Error">
+    <div data-test-labelled-error class="Polaris-Labelled__Error">
       {{polaris-inline-error message=error fieldID=id}}
     </div>
   {{/if}}
 
   {{#if helpText}}
-    <div id={{helpTextId}} class="Polaris-Labelled__HelpText">
+    <div data-test-label-help-text id={{helpTextId}} class="Polaris-Labelled__HelpText">
       {{render-content helpText}}
     </div>
   {{/if}}

@@ -9,6 +9,7 @@ import { isPresent } from '@ember/utils';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../templates/components/polaris-text-field';
+import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
 const allowedTypes = [
   'text',
@@ -39,7 +40,7 @@ export default Component.extend(
   ContextBoundTasksMixin,
   ContextBoundEventListenersMixin,
   {
-    classNameBindings: ['labelHidden:Polaris-Labelled--hidden'],
+    tagName: '',
 
     layout,
 
@@ -191,7 +192,7 @@ export default Component.extend(
      *
      * @property error
      * @public
-     * @type {String|Component}
+     * @type {String|Component|Boolean|(String|Component)[]}
      * @default null
      */
     error: null,
@@ -235,6 +236,16 @@ export default Component.extend(
      * @default null
      */
     name: null,
+
+    /**
+     * Defines a specific role attribute for the input
+     *
+     * @property role
+     * @public
+     * @type {String}
+     * @default null
+     */
+    role: null,
 
     /**
      * Limit increment value for numeric and date-time inputs
@@ -319,6 +330,46 @@ export default Component.extend(
     spellCheck: null,
 
     /**
+     * Indicates the id of a component owned by the input
+     *
+     * @property ariaOwns
+     * @public
+     * @type {String}
+     * @default null
+     */
+    ariaOwns: null,
+
+    /**
+     * Indicates the id of a component controlled by the input
+     *
+     * @property ariaControls
+     * @public
+     * @type {String}
+     * @default null
+     */
+    ariaControls: null,
+
+    /**
+     * Indicates the id of a related component's visually focused element ot the input
+     *
+     * @property ariaActiveDescendant
+     * @public
+     * @type {String}
+     * @default null
+     */
+    ariaActiveDescendant: null,
+
+    /**
+     * Indicates what kind of user input completion suggestions are provided
+     *
+     * @property ariaAutocomplete
+     * @public
+     * @type {String}
+     * @default null
+     */
+    ariaAutocomplete: null,
+
+    /**
      * Callback when value is changed
      *
      * @property onChange
@@ -348,7 +399,15 @@ export default Component.extend(
      */
     onBlur() {},
 
+    /**
+     * @private
+     */
+    focus: false,
+
+    dataTestTextField: 'text-field',
+
     ariaInvalid: bool('error').readOnly(),
+    autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
 
     textFieldClasses: computed(
       'value',
@@ -403,6 +462,15 @@ export default Component.extend(
       }
     ).readOnly(),
 
+    inputClassName: computed('suffix', function() {
+      let classes = ['Polaris-TextField__Input'];
+      if (this.get('suffix')) {
+        classes.push('Polaris-TextField__Input--suffixed');
+      }
+
+      return classes.join(' ');
+    }).readOnly(),
+
     ariaDescribedBy: computed('error', 'helpText', 'id', function() {
       let { error, helpText, id } = this.getProperties(
         'error',
@@ -423,7 +491,18 @@ export default Component.extend(
     }).readOnly(),
 
     ariaLabelledBy: computed('id', function() {
-      return `${this.get('id')}Label`;
+      let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
+      let labelledBy = [`${id}Label`];
+
+      if (prefix) {
+        labelledBy.push(`${id}Prefix`);
+      }
+
+      if (suffix) {
+        labelledBy.push(`${id}Suffix`);
+      }
+
+      return labelledBy.join(' ');
     }).readOnly(),
 
     inputType: computed('type', function() {
@@ -451,25 +530,29 @@ export default Component.extend(
     }).readOnly(),
 
     addValueListener() {
-      this.addEventListener('input, textarea', 'keyup', () => {
+      this.addEventListener(this.get('input'), 'keyup', () => {
         this.debounceTask('debouncedUpdateValue', 250);
       });
     },
 
     debouncedUpdateValue() {
-      let field = this.get('fieldElement');
+      let field = this.get('input');
       this.set('value', field.value);
     },
 
     checkFocus() {
-      let { fieldElement, focused } = this.getProperties(
-        'fieldElement',
-        'focused'
-      );
+      let { input, focused } = this.getProperties('input', 'focused');
 
-      if (fieldElement && focused) {
-        fieldElement.focus();
+      if (input && focused) {
+        // TODO this _seems_ to work in Polaris without the row below, but not for us (it does not apply focus class)
+        // look what's here....though this seems to do the job for now
+        this.set('focus', true);
+        input.focus();
       }
+    },
+
+    setInput() {
+      this.set('input', document.querySelector(`[id='${this.get('id')}']`));
     },
 
     init() {
@@ -493,14 +576,13 @@ export default Component.extend(
 
     didReceiveAttrs() {
       this._super(...arguments);
-
       this.checkFocus();
     },
 
     didInsertElement() {
       this._super(...arguments);
 
-      this.set('fieldElement', this.element.querySelector('input, textarea'));
+      this.setInput();
       this.addValueListener();
       this.checkFocus();
     },
@@ -541,8 +623,9 @@ export default Component.extend(
         this.set('height', height);
       },
 
-      handleChange(e) {
-        this.get('onChange')(e.target.value, this.get('id'));
+      handleChange(event) {
+        // event.preventDefault();
+        this.get('onChange')(event.target.value, this.get('id'));
       },
 
       handleFocus() {
@@ -554,8 +637,24 @@ export default Component.extend(
       },
 
       handleClick() {
-        let field = this.get('fieldElement');
-        field.focus();
+        let input = this.get('input');
+        input.focus();
+      },
+
+      handleKeyPress(event) {
+        let { key, which } = event;
+        let type = this.get('type');
+        let numbersSpec = /[\d.eE+-]$/;
+
+        if (
+          type !== 'number' ||
+          // which === Keys.ENTER ||
+          key.match(numbersSpec)
+        ) {
+          return;
+        }
+
+        // event.preventDefault();
       },
     },
   }

@@ -1,5 +1,5 @@
 {{#if hasConnection}}
-  <div class="Polaris-Connected">
+  <div class="Polaris-Connected" data-test-connected={{dataTestConnected}}>
     {{#if left}}
       {{#polaris-connected/item position="left"}}
         {{render-content left}}
