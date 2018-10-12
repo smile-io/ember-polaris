@@ -67,5 +67,5 @@ export default Component.extend({
    */
   disabled: null,
 
-  'data-test-polaris-choice': true,
+  'data-test-choice': true,
 });

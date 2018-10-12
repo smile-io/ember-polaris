@@ -148,8 +148,6 @@ export default Component.extend({
    */
   onBlur() {},
 
-  'data-test-control-wrapper': true,
-
   /**
    * @private
    */

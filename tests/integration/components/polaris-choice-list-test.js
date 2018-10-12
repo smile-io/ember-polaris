@@ -7,9 +7,9 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const choiceListSelector = '[data-test-choice-list]';
 const choicesWrapperSelector = '[data-test-choice-list-choices]';
-const choiceSelector = '[data-test-polaris-choice]';
+const choiceSelector = '[data-test-choice]';
 const radioInputSelector = '[data-test-radio-button-input]';
-const checkboxInputSelector = '[data-test-polaris-checkbox-input]';
+const checkboxInputSelector = '[data-test-checkbox-input]';
 const titleSelector = '[data-test-choice-list-title]';
 const choiceWithDescriptionWrapperSelector = buildNestedSelector(
   choicesWrapperSelector,
@@ -20,8 +20,8 @@ const choiceWithDescriptionSelector = buildNestedSelector(
   choiceWithDescriptionWrapperSelector,
   choiceSelector
 );
-const helpTextSelector = '[data-test-polaris-choice-help-text]';
-const choiceErrorSelector = '[data-test-polaris-choice-list-error]';
+const helpTextSelector = '[data-test-choice-help-text]';
+const choiceErrorSelector = '[data-test-choice-list-error]';
 
 module('Integration | Component | polaris-choice-list', function(hooks) {
   setupRenderingTest(hooks);
@@ -55,9 +55,10 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert.dom(choiceSelector).exists({ count: 3 }, 'renders three choices');
+
     const choices = findAll(choiceSelector);
     const radioInputs = findAll(radioInputSelector);
-    assert.equal(choices.length, 3, 'renders three choices');
 
     // Check the choices.
     let choice = choices[0];
@@ -148,9 +149,10 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert.dom(choiceSelector).exists({ count: 3 }, 'renders three choices');
+
     const choices = findAll(choiceSelector);
     const checkboxInputs = findAll(checkboxInputSelector);
-    assert.equal(choices.length, 3, 'renders three choices');
 
     // Check the choices.
     let choice = choices[0];
@@ -295,8 +297,11 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert
+      .dom(radioInputSelector)
+      .exists({ count: 3 }, 'renders three radio inputs');
+
     const radioInputs = findAll(radioInputSelector);
-    assert.equal(radioInputs.length, 3, 'renders three radio inputs');
 
     assert.notOk(
       radioInputs[0].checked,
@@ -358,8 +363,11 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert
+      .dom(checkboxInputSelector)
+      .exists({ count: 3 }, 'renders three checkboxes');
+
     const checkboxInputs = findAll(checkboxInputSelector);
-    assert.equal(checkboxInputs.length, 3, 'renders three checkbox inputs');
 
     assert.ok(
       checkboxInputs[0].checked,
@@ -457,11 +465,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
-    const choices = findAll(choiceWithDescriptionSelector);
-    assert.equal(choices.length, 3, 'renders three choices with descriptions');
+    assert
+      .dom(choiceWithDescriptionSelector)
+      .exists({ count: 3 }, 'renders three choices with descriptions');
+    assert
+      .dom(helpTextSelector)
+      .exists({ count: 3 }, 'renders three help text descriptions');
 
     const helpTexts = findAll(helpTextSelector);
-    assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
+
     assert
       .dom(helpTexts[0])
       .hasText(
@@ -506,11 +518,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
-    const choices = findAll(choiceWithDescriptionSelector);
-    assert.equal(choices.length, 3, 'renders three choices with descriptions');
+    assert
+      .dom(choiceWithDescriptionSelector)
+      .exists({ count: 3 }, 'renders three choices with descriptions');
+    assert
+      .dom(helpTextSelector)
+      .exists({ count: 3 }, 'renders three help text descriptions');
 
     const helpTexts = findAll(helpTextSelector);
-    assert.equal(helpTexts.length, 3, 'renders three help text descriptions');
+
     assert
       .dom(helpTexts[0])
       .hasText(
@@ -550,8 +566,10 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert.dom(radioInputSelector).exists({ count: 2 }, 'renders two choices');
+
     const choiceControls = findAll(radioInputSelector);
-    assert.equal(choiceControls.length, 2, 'renders two choices');
+
     assert.ok(choiceControls[0].disabled, 'first choice is disabled');
     assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
   });
@@ -575,8 +593,12 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       }}
     `);
 
+    assert
+      .dom(checkboxInputSelector)
+      .exists({ count: 2 }, 'renders two choices');
+
     const choiceControls = findAll(checkboxInputSelector);
-    assert.equal(choiceControls.length, 2, 'renders two choices');
+
     assert.ok(choiceControls[0].disabled, 'first choice is disabled');
     assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
   });
