@@ -49,29 +49,19 @@ function measureColumn(tableData) {
   };
 }
 
-function isEdgeVisible(target, start, end) {
+function isEdgeVisible(position, start, end) {
   let minVisiblePixels = 30;
-  return target >= start + minVisiblePixels && target <= end - minVisiblePixels;
+  return (
+    position >= start + minVisiblePixels && position <= end - minVisiblePixels
+  );
 }
 
 function getPrevAndCurrentColumns(tableData, columnData) {
-  let {
-    tableRightVisibleEdge,
-    tableLeftVisibleEdge,
-    firstVisibleColumnIndex,
-  } = tableData;
-  let previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
-  let previousColumn = columnData[previousColumnIndex];
-  let lastColumnIndex = columnData.length - 1;
-  let lastColumn = columnData[lastColumnIndex];
-  let currentColumn = assign(
-    {
-      isScrolledFarthestLeft:
-        firstVisibleColumnIndex === 0 && tableLeftVisibleEdge === 0,
-      isScrolledFarthestRight: lastColumn.rightEdge <= tableRightVisibleEdge,
-    },
-    columnData[firstVisibleColumnIndex]
-  );
+  const { firstVisibleColumnIndex } = tableData;
+  const previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
+  const previousColumn = columnData[previousColumnIndex];
+  const currentColumn = columnData[firstVisibleColumnIndex];
+
   return { previousColumn, currentColumn };
 }
 
@@ -245,6 +235,13 @@ export default Component.extend(
     heights: null,
 
     /**
+     * @property fixedColumnWidth
+     * @type {Number}
+     * @private
+     */
+    fixedColumnWidth: null,
+
+    /**
      * @property preservedScrollPosition
      * @type {Object}
      * @private
@@ -252,11 +249,18 @@ export default Component.extend(
     preservedScrollPosition: null,
 
     /**
-     * @property previousTruncate
-     * @type {boolean}
+     * @property isScrolledFarthestLeft
+     * @type {Boolean}
      * @private
      */
-    previousTruncate: null,
+    isScrolledFarthestLeft: true,
+
+    /**
+     * @property isScrolledFarthestRight
+     * @type {Boolean}
+     * @private
+     */
+    isScrolledFarthestRight: false,
 
     /**
      * @property totalsRowHeading
@@ -289,18 +293,6 @@ export default Component.extend(
     ).readOnly(),
 
     /**
-     * @property contentTypes
-     * @type {String[]}
-     * @private
-     */
-    contentTypes: computed('columnContentTypes.[]', function() {
-      let columnContentTypes = this.get('columnContentTypes');
-      let fixedCellType = columnContentTypes[0];
-
-      return [fixedCellType, ...columnContentTypes];
-    }).readOnly(),
-
-    /**
      * @property scrollContainerStyle
      * @type {String}
      * @private
@@ -314,14 +306,18 @@ export default Component.extend(
     }).readOnly(),
 
     resetScrollPosition() {
-      let { left, top } = this.get('preservedScrollPosition');
+      let scrollContainer = this.get('scrollContainer');
 
-      if (left) {
-        this.get('scrollContainer').scrollLeft = left;
-      }
+      if (scrollContainer) {
+        let { left, top } = this.get('preservedScrollPosition');
 
-      if (top) {
-        window.scrollTo(0, top);
+        if (left) {
+          scrollContainer.scrollLeft = left;
+        }
+
+        if (top) {
+          window.scrollTo(0, top);
+        }
       }
     },
 
@@ -332,25 +328,42 @@ export default Component.extend(
     },
 
     calculateColumnVisibilityData(collapsed) {
-      if (collapsed) {
-        let headerCells = this.get('table').querySelectorAll('[class*=header]');
-        let collapsedHeaderCells = Array.from(headerCells).slice(2);
+      let { table, scrollContainer, dataTable } = this.getProperties(
+        'table',
+        'scrollContainer',
+        'dataTable'
+      );
+
+      if (collapsed && table && scrollContainer && dataTable) {
+        let headerCells = table.querySelectorAll('[class*=header]');
+        let collapsedHeaderCells = Array.from(headerCells).slice(1);
         let fixedColumnWidth = headerCells[0].offsetWidth;
+        let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
+        let tableLeftVisibleEdge =
+          scrollContainer.scrollLeft + fixedColumnWidth;
+        let tableRightVisibleEdge =
+          scrollContainer.scrollLeft + dataTable.offsetWidth;
+
         let tableData = {
           fixedColumnWidth,
-          firstVisibleColumnIndex: collapsedHeaderCells.length - 1,
-          tableLeftVisibleEdge: this.get('scrollContainer').scrollLeft,
-          tableRightVisibleEdge:
-            this.get('scrollContainer').scrollLeft +
-            (this.get('dataTable').offsetWidth - fixedColumnWidth),
+          firstVisibleColumnIndex,
+          tableLeftVisibleEdge,
+          tableRightVisibleEdge,
         };
+
         let columnVisibilityData = collapsedHeaderCells.map(
           measureColumn(tableData)
         );
 
+        let lastColumn = columnVisibilityData[columnVisibilityData.length - 1];
+
         return assign(
           {
+            fixedColumnWidth,
             columnVisibilityData,
+            isScrolledFarthestLeft: tableLeftVisibleEdge === fixedColumnWidth,
+            isScrolledFarthestRight:
+              lastColumn.rightEdge <= tableRightVisibleEdge,
           },
           getPrevAndCurrentColumns(tableData, columnVisibilityData)
         );
@@ -369,14 +382,25 @@ export default Component.extend(
     },
 
     debouncedHandleResize() {
-      let { footerContent, truncate } = this.getProperties(
+      let {
+        footerContent,
+        truncate,
+        table,
+        scrollContainer,
+      } = this.getProperties(
         'footerContent',
-        'truncate'
+        'truncate',
+        'table',
+        'scrollContainer'
       );
-      let collapsed =
-        this.get('table.scrollWidth') > this.get('dataTable.offsetWidth');
 
-      this.get('scrollContainer').scrollLeft = 0;
+      let collapsed = false;
+
+      if (table && scrollContainer) {
+        collapsed = table.scrollWidth > scrollContainer.clientWidth;
+        scrollContainer.scrollLeft = 0;
+      }
+
       this.setProperties(
         assign(
           {
@@ -405,26 +429,31 @@ export default Component.extend(
     },
 
     tallestCellHeights() {
-      let { footerContent, truncate, heights } = this.getProperties(
+      let { footerContent, truncate, heights, table } = this.getProperties(
         'footerContent',
         'truncate',
-        'heights'
+        'heights',
+        'table'
       );
-      let rows = Array.from(this.get('table').getElementsByTagName('tr'));
 
-      if (!truncate) {
-        return (heights = rows.map((row) => {
-          let fixedCell = row.children[0];
-          return Math.max(row.clientHeight, fixedCell.clientHeight);
-        }));
+      if (table) {
+        let rows = Array.from(table.getElementsByTagName('tr'));
+
+        if (!truncate) {
+          return (heights = rows.map((row) => {
+            let fixedCell = row.hasChildNodes() && row.childNodes;
+            return Math.max(row.clientHeight, fixedCell.clientHeight);
+          }));
+        }
+
+        if (footerContent) {
+          let footerCellHeight =
+            rows[rows.length - 1].childNodes[0].clientHeight;
+          heights = [footerCellHeight];
+        }
+
+        return heights;
       }
-
-      if (footerContent) {
-        let footerCellHeight = rows[rows.length - 1].children[0].clientHeight;
-        heights = [footerCellHeight];
-      }
-
-      return heights;
     },
 
     addEventHandlers() {
@@ -453,46 +482,41 @@ export default Component.extend(
       this.addEventHandlers();
     },
 
-    didUpdateAttrs() {
-      this._super(...arguments);
-
-      let truncate = this.get('truncate');
-      if (!truncate && this.get('previousTruncate')) {
-        this.handleResize();
-      }
-
-      this.set('previousTruncate', truncate);
-    },
-
     actions: {
       navigateTable(direction) {
         let {
-          scrollContainer,
           currentColumn,
           previousColumn,
+          fixedColumnWidth,
+          scrollContainer,
         } = this.getProperties(
-          'scrollContainer',
           'currentColumn',
-          'previousColumn'
+          'previousColumn',
+          'fixedColumnWidth',
+          'scrollContainer'
         );
 
-        if (direction === 'right' && currentColumn) {
-          scrollContainer.scrollLeft = currentColumn.rightEdge;
-        } else if (previousColumn) {
-          scrollContainer.scrollLeft =
-            previousColumn.leftEdge < 10 ? 0 : previousColumn.leftEdge;
+        if (!currentColumn || !previousColumn || !fixedColumnWidth) {
+          return;
         }
 
-        // TODO: use run loop instead of `requestAnimationFrame` here?
-        requestAnimationFrame(() => {
-          if (this.get('isDestroying') || this.get('isDestroyed')) {
-            return;
-          }
+        if (scrollContainer) {
+          scrollContainer.scrollLeft =
+            direction === 'right'
+              ? currentColumn.rightEdge - fixedColumnWidth
+              : previousColumn.leftEdge - fixedColumnWidth;
 
-          this.setProperties(
-            this.calculateColumnVisibilityData(this.get('collapsed'))
-          );
-        });
+          // TODO: use run loop instead of `requestAnimationFrame` here?
+          requestAnimationFrame(() => {
+            if (this.get('isDestroying') || this.get('isDestroyed')) {
+              return;
+            }
+
+            this.setProperties(
+              this.calculateColumnVisibilityData(this.get('collapsed'))
+            );
+          });
+        }
       },
 
       defaultOnSort(headingIndex) {
@@ -503,13 +527,15 @@ export default Component.extend(
           initialSortColumnIndex,
           sortDirection,
           sortedColumnIndex,
+          scrollContainer,
         } = this.getProperties(
           'onSort',
           'truncate',
           'defaultSortDirection',
           'initialSortColumnIndex',
           'sortDirection',
-          'sortedColumnIndex'
+          'sortedColumnIndex',
+          'scrollContainer'
         );
         sortedColumnIndex = isNone(sortedColumnIndex)
           ? initialSortColumnIndex
@@ -529,9 +555,10 @@ export default Component.extend(
         scheduleOnce('afterRender', () => {
           if (onSort) {
             onSort(headingIndex, newSortDirection);
-            if (!truncate) {
+
+            if (!truncate && scrollContainer) {
               let preservedScrollPosition = {
-                left: this.get('scrollContainer').scrollLeft,
+                left: scrollContainer.scrollLeft,
                 top: window.scrollY,
               };
               this.set('preservedScrollPosition', preservedScrollPosition);

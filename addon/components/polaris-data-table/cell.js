@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { guidFor } from '@ember/object/internals';
+import { isNone } from '@ember/utils';
 import layout from '../../templates/components/polaris-data-table/cell';
 
 export default Component.extend({
@@ -45,14 +45,6 @@ export default Component.extend({
    * @public
    */
   truncate: false,
-
-  /**
-   * @property presentational
-   * @type {boolean}
-   * @default false
-   * @public
-   */
-  presentational: false,
 
   /**
    * @property header
@@ -117,26 +109,6 @@ export default Component.extend({
   onSort() {},
 
   /**
-   * Accessibility label for the cell. This will get set dynamically after rendering.
-   *
-   * @property sortAccessibilityLabel
-   * @type {String}
-   * @private
-   */
-  sortAccessibilityLabel: null,
-
-  /**
-   * Generated unique ID to be set on the rendered SVG element.
-   *
-   * @property cellElementId
-   * @type {String}
-   * @private
-   */
-  cellElementId: computed(function() {
-    return guidFor(this);
-  }).readOnly(),
-
-  /**
    * @property cellClassNames
    * @type {String}
    * @private
@@ -144,7 +116,6 @@ export default Component.extend({
   cellClassNames: computed(
     'fixed',
     'truncate',
-    'presentational',
     'header',
     'total',
     'footer',
@@ -157,7 +128,6 @@ export default Component.extend({
       let {
         fixed,
         truncate,
-        presentational,
         header,
         total,
         footer,
@@ -167,7 +137,6 @@ export default Component.extend({
       } = this.getProperties(
         'fixed',
         'truncate',
-        'presentational',
         'header',
         'total',
         'footer',
@@ -182,10 +151,6 @@ export default Component.extend({
         if (truncate) {
           classNames.push('Polaris-DataTable__Cell--truncated');
         }
-      }
-
-      if (presentational) {
-        classNames.push('Polaris-DataTable__Cell--presentational');
       }
 
       if (header) {
@@ -217,6 +182,27 @@ export default Component.extend({
   ).readOnly(),
 
   /**
+   * @property headerClassNames
+   * @type {String}
+   * @private
+   */
+  headerClassNames: computed('header', 'contentType', function() {
+    let { header, contentType } = this.getProperties('header', 'contentType');
+
+    if (isNone(header)) {
+      return;
+    }
+
+    let classNames = ['Polaris-DataTable__Heading'];
+
+    if (contentType === 'text') {
+      classNames.push('Polaris-DataTable__Heading--left');
+    }
+
+    return classNames.join(' ');
+  }).readOnly(),
+
+  /**
    * @property style
    * @type {String}
    * @private
@@ -227,48 +213,62 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-   * @property sortIconSource
+   * @property direction
    * @type {String}
    * @private
    */
-  sortIconSource: computed(
-    'sortable',
+  direction: computed(
     'sorted',
     'sortDirection',
     'defaultSortDirection',
     function() {
-      if (!this.get('sortable')) {
-        return null;
-      }
+      let { sorted, sortDirection, defaultSortDirection } = this.getProperties(
+        'sorted',
+        'sortDirection',
+        'defaultSortDirection'
+      );
 
-      let sortDirection = this.get('sorted')
-        ? this.get('sortDirection')
-        : this.get('defaultSortDirection');
-      return `caret-${sortDirection === 'ascending' ? 'up' : 'down'}`;
+      return sorted ? sortDirection : defaultSortDirection;
     }
   ).readOnly(),
 
-  updateAccessibilityLabel() {
-    let cellElement = document.querySelector(`#${this.get('cellElementId')}`);
-    this.set(
-      'sortAccessibilityLabel',
-      `sort by ${cellElement.textContent.trim().toLowerCase()}`
-    );
-  },
+  /**
+   * @property source
+   * @type {String}
+   * @private
+   */
+  source: computed('direction', function() {
+    return `caret-${this.get('direction') === 'ascending' ? 'up' : 'down'}`;
+  }).readOnly(),
 
-  didRender() {
-    this._super(...arguments);
+  /**
+   * @property oppositeDirection
+   * @type {String}
+   * @private
+   */
+  oppositeDirection: computed('sortDirection', function() {
+    return this.get('sortDirection') === 'ascending'
+      ? 'descending'
+      : 'ascending';
+  }).readOnly(),
 
-    this.updateAccessibilityLabel();
-  },
+  /**
+   * @property sortAccessibilityLabel
+   * @type {String}
+   * @private
+   */
+  sortAccessibilityLabel: computed(
+    'sorted',
+    'oppositeDirection',
+    'direction',
+    function() {
+      let { sorted, oppositeDirection, direction } = this.getProperties(
+        'sorted',
+        'oppositeDirection',
+        'direction'
+      );
 
-  actions: {
-    onKeyDown(event) {
-      let { keyCode } = event;
-      let sortFunc = this.get('onSort');
-      if (keyCode === 13 && sortFunc !== undefined) {
-        sortFunc();
-      }
-    },
-  },
+      return `sort by ${sorted ? oppositeDirection : direction}`;
+    }
+  ).readOnly(),
 });
