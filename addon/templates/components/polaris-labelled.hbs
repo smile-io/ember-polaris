@@ -20,7 +20,7 @@
 
   {{yield}}
 
-  {{#if error}}
+  {{#if shouldRenderError}}
     <div id={{errorId}} class="Polaris-Labelled__Error">
       <div class="Polaris-Labelled__ErrorIcon">
         {{polaris-icon source="alert"}}
