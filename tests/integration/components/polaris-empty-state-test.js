@@ -15,8 +15,6 @@ module('Integration | Component | polaris empty state', function(hooks) {
   });
 
   const emptyStateSelector = '[data-test-empty-state]';
-  const sectionSelector = '[data-test-empty-state-section]';
-  const detailsSelector = '[data-test-empty-state-details]';
   const headingSelector = '[data-test-empty-state-heading]';
   const contentSelector = '[data-test-empty-state-content]';
   const actionsSelector = '[data-test-empty-state-actions]';
