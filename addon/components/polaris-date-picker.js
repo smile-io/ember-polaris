@@ -85,16 +85,6 @@ export default Component.extend({
   multiMonth: false,
 
   /**
-   * First day of week. Sunday by default
-   *
-   * @property weekStartsOn
-   * @public
-   * @type {String}
-   * @default 'Sunday'
-   */
-  weekStartsOn: weekdays.Sunday,
-
-  /**
    * Callback when date is selected
    *
    * @property title
@@ -226,7 +216,7 @@ export default Component.extend({
     this.set('focusDate', date);
   },
 
-  resetFocus(date) {
+  resetFocus() {
     this.set('focusDate', null);
   },
 
@@ -337,7 +327,10 @@ export default Component.extend({
     let previousSelected = this.get('_previousSelected');
     let selected = this.get('selected');
 
-    if (previousSelected && !isSameSelectedDate(previousSelected, selected)) {
+    if (
+      previousSelected &&
+      !this.isSameSelectedDate(previousSelected, selected)
+    ) {
       this.resetFocus();
     }
   },
@@ -360,4 +353,14 @@ export default Component.extend({
       this.set('focusDate', null);
     },
   },
+
+  /**
+   * First day of week. Sunday by default
+   *
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default 'Sunday'
+   */
+  weekStartsOn: weekdays.Sunday,
 });

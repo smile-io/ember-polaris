@@ -10,8 +10,6 @@ export default Component.extend({
 
   layout,
 
-  'data-test-date-picker-weekday': true,
-
   /**
    * @property label
    * @public
@@ -35,4 +33,5 @@ export default Component.extend({
    * @default false
    */
   current: false,
+  'data-test-date-picker-weekday': true,
 });

@@ -3,7 +3,6 @@ import layout from '../../templates/components/polaris-date-picker/month';
 import { computed } from '@ember/object';
 import {
   monthsArray,
-  weekdaysArray,
   getWeeksForMonth,
   getNewRange,
   abbreviationForWeekday,
@@ -156,11 +155,18 @@ export default Component.extend({
   }).readOnly(),
 
   weekdays: computed('current', 'weekStartsOn', function() {
-    let { current, weekStartsOn } = this.getProperties('current', 'weekStartsOn');
+    let { current, weekStartsOn } = this.getProperties(
+      'current',
+      'weekStartsOn'
+    );
     let day = new Date().getDay();
 
     return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
-      return { title: abbreviationForWeekday(weekday), current: current && day === i, label: weekday };
+      return {
+        title: abbreviationForWeekday(weekday),
+        current: current && day === i,
+        label: weekday,
+      };
     });
   }).readOnly(),
 

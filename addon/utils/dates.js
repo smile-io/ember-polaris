@@ -74,7 +74,11 @@ export function getWeeksForMonth(month, year, weekStartsOn) {
   let currentDate = firstOfMonth;
 
   const orderedWeekday = getWeekdaysOrdered(weekStartsOn);
-  for (let i = 0; i < orderedWeekday.indexOf(weekdaysArray[firstDayOfWeek]); i++) {
+  for (
+    let i = 0;
+    i < orderedWeekday.indexOf(weekdaysArray[firstDayOfWeek]);
+    i++
+  ) {
     currentWeek.push(null);
   }
 
