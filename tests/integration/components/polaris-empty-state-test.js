@@ -13,38 +13,13 @@ module('Integration | Component | polaris empty state', function(hooks) {
     this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
-  const emptyStateSelector = 'div.Polaris-EmptyState';
-  const sectionSelector = buildNestedSelector(
-    emptyStateSelector,
-    'div.Polaris-EmptyState__Section'
-  );
-  const detailsSelector = buildNestedSelector(
-    sectionSelector,
-    'div.Polaris-EmptyState__DetailsContainer',
-    'div.Polaris-EmptyState__Details'
-  );
-  const detailsTextContainerSelector = buildNestedSelector(
-    detailsSelector,
-    'div.Polaris-TextContainer'
-  );
-  const headingSelector = buildNestedSelector(
-    detailsTextContainerSelector,
-    'p.Polaris-DisplayText'
-  );
-  const contentSelector = buildNestedSelector(
-    detailsTextContainerSelector,
-    'div.Polaris-EmptyState__Content'
-  );
-  const actionsSelector = buildNestedSelector(
-    detailsSelector,
-    'div.Polaris-EmptyState__Actions',
-    'div.Polaris-ButtonGroup'
-  );
-  const imageSelector = buildNestedSelector(
-    sectionSelector,
-    'div.Polaris-EmptyState__ImageContainer',
-    'img.Polaris-EmptyState__Image'
-  );
+  const emptyStateSelector = '[data-test-empty-state]';
+  const sectionSelector = '[data-test-empty-state-section]';
+  const detailsSelector = '[data-test-empty-state-details]';
+  const headingSelector = '[data-test-empty-state-heading]';
+  const contentSelector = '[data-test-empty-state-content]';
+  const actionsSelector = '[data-test-empty-state-actions]';
+  const imageSelector = '[data-test-empty-state-image]';
 
   test('it renders the correct HTML in basic inline usage', async function(assert) {
     this.actions.doSomething = () => {};
