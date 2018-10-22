@@ -118,6 +118,8 @@ export default Component.extend({
 
   focusDate: null,
 
+  'data-test-date-picker': true,
+
   allowRange: computed('selected', function() {
     let selected = this.get('selected');
 

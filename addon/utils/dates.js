@@ -73,8 +73,8 @@ export function getWeeksForMonth(month, year, weekStartsOn) {
   let currentWeek = weeks[0];
   let currentDate = firstOfMonth;
 
-  const orderedWeekday = getOrderedWeekdays(weekStartsOn);
-  for (let i = 0; i < orderedWeekday.indexOf(firstDayOfWeek); i++) {
+  const orderedWeekday = getWeekdaysOrdered(weekStartsOn);
+  for (let i = 0; i < orderedWeekday.indexOf(weekdaysArray[firstDayOfWeek]); i++) {
     currentWeek.push(null);
   }
 
@@ -196,7 +196,7 @@ export function isDateBefore(date, dateToCompare) {
   return date.getTime() < dateToCompare.getTime();
 }
 
-function getOrderedWeekdays(weekStartsOn) {
+export function getWeekdaysOrdered(weekStartsOn) {
   const weekDays = [...weekdaysArray];
   const restOfDays = weekDays.splice(weekStartsOn);
   return [...restOfDays, ...weekDays];

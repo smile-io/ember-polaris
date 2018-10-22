@@ -7,6 +7,7 @@ import {
   getWeeksForMonth,
   getNewRange,
   abbreviationForWeekday,
+  getWeekdaysOrdered,
 } from '../../utils/dates';
 
 export default Component.extend({
@@ -131,9 +132,9 @@ export default Component.extend({
   role: 'grid',
 
   current: computed('month', 'year', function() {
-    let date = new Date();
-    let thisMonth = date.getMonth();
-    let thisYear = date.getFullYear();
+    let now = new Date();
+    let thisMonth = now.getMonth();
+    let thisYear = now.getFullYear();
 
     return thisMonth === this.get('month') && thisYear === this.get('year');
   }).readOnly(),
@@ -152,16 +153,12 @@ export default Component.extend({
     return getWeeksForMonth(month, year, weekStartsOn);
   }).readOnly(),
 
-  weekdays: computed('current', function() {
-    let current = this.get('current');
+  weekdays: computed('current', 'weekStartsOn', function() {
+    let { current, weekStartsOn } = this.getProperties('current', 'weekStartsOn');
     let day = new Date().getDay();
 
-    return weekdaysArray.map((weekday, i) => {
-      return {
-        title: abbreviationForWeekday(weekday),
-        current: current && day === i,
-        label: weekday,
-      };
+    return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
+      return { title: abbreviationForWeekday(weekday), current: current && day === i, label: weekday };
     });
   }).readOnly(),
 
