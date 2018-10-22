@@ -44,16 +44,16 @@ const MONTH_NAME = 'February';
 const START_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
 const END_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
 
-const container = '.Polaris-DatePicker';
-const header = '.Polaris-DatePicker__Header';
-const monthContainer = '.Polaris-DatePicker__MonthContainer';
-const monthBody = '.Polaris-DatePicker__Month';
-const monthTitle = '.Polaris-DatePicker__Title';
-const weekdaysHeader = '.Polaris-DatePicker__WeekHeadings';
-const weekday = '.Polaris-DatePicker__Weekday';
-const week = '.Polaris-DatePicker__Week';
-const day = '.Polaris-DatePicker__Day';
-const dayEmpty = '.Polaris-DatePicker__EmptyDay';
+const container = '[data-test-date-picker]';
+const header = '[data-test-date-picker-header]';
+const monthContainer = '[data-test-date-picker-month-container]';
+const monthBody = '[data-test-date-picker-month]';
+const monthTitle = '[data-test-date-picker-title]';
+const weekdaysHeader = '[data-test-date-picker-week-heading]';
+const weekday = '[data-test-date-picker-weekday]';
+const week = '[data-test-date-picker-week]';
+const day = '[data-test-date-picker-day]';
+const dayEmpty = '[data-test-date-picker-day-empty]';
 
 const headerSelector = buildNestedSelector(container, header);
 

@@ -131,6 +131,8 @@ export default Component.extend({
 
   role: 'grid',
 
+  'data-test-date-picker-month': true,
+
   current: computed('month', 'year', function() {
     let now = new Date();
     let thisMonth = now.getMonth();
