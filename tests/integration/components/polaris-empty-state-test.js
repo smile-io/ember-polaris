@@ -10,7 +10,8 @@ module('Integration | Component | polaris empty state', function(hooks) {
 
   hooks.beforeEach(function() {
     this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+    this.send = (actionName, ...args) =>
+      this.actions[actionName].apply(this, args);
   });
 
   const emptyStateSelector = '[data-test-empty-state]';
@@ -38,13 +39,22 @@ module('Integration | Component | polaris empty state', function(hooks) {
     // Check the header.
     let heading = find(headingSelector);
     assert.ok(heading, 'renders one heading');
-    assert.dom(heading).hasClass('Polaris-DisplayText--sizeMedium', 'renders the correct size heading');
-    assert.dom(heading).hasText('Empty State Here', 'renders the correct heading text');
+    assert
+      .dom(heading)
+      .hasClass(
+        'Polaris-DisplayText--sizeMedium',
+        'renders the correct size heading'
+      );
+    assert
+      .dom(heading)
+      .hasText('Empty State Here', 'renders the correct heading text');
 
     // Check the content.
     let content = find(contentSelector);
     assert.ok(content, 'renders content');
-    assert.dom(content).hasText('I\'m some inline text', 'renders the correct content');
+    assert
+      .dom(content)
+      .hasText("I'm some inline text", 'renders the correct content');
 
     // Check the image.
     let image = find(imageSelector);
@@ -75,8 +85,15 @@ module('Integration | Component | polaris empty state', function(hooks) {
     // Check the header.
     let heading = find(headingSelector);
     assert.ok(heading, 'renders one heading');
-    assert.dom(heading).hasClass('Polaris-DisplayText--sizeMedium', 'renders the correct size heading');
-    assert.dom(heading).hasText('Empty State Here', 'renders the correct heading text');
+    assert
+      .dom(heading)
+      .hasClass(
+        'Polaris-DisplayText--sizeMedium',
+        'renders the correct size heading'
+      );
+    assert
+      .dom(heading)
+      .hasText('Empty State Here', 'renders the correct heading text');
 
     // Check the content.
     let blockContentSelector = buildNestedSelector(
@@ -85,7 +102,9 @@ module('Integration | Component | polaris empty state', function(hooks) {
     );
     let content = find(blockContentSelector);
     assert.ok(content, 'renders content');
-    assert.dom(content).hasText('This is some block content', 'renders the correct content');
+    assert
+      .dom(content)
+      .hasText('This is some block content', 'renders the correct content');
 
     // Check the image.
     let image = find(imageSelector);
@@ -125,8 +144,15 @@ module('Integration | Component | polaris empty state', function(hooks) {
     const mainActionSelector = `${actionsSelector} button.Polaris-Button--primary`;
     let mainActionButton = find(mainActionSelector);
     assert.ok(mainActionButton, 'renders primary action button');
-    assert.dom(mainActionButton).hasClass('Polaris-Button--sizeLarge', 'renders large button for primary action');
-    assert.dom(mainActionButton).hasText('Main action', 'renders correct primary action button text');
+    assert
+      .dom(mainActionButton)
+      .hasClass(
+        'Polaris-Button--sizeLarge',
+        'renders large button for primary action'
+      );
+    assert
+      .dom(mainActionButton)
+      .hasText('Main action', 'renders correct primary action button text');
 
     const secondaryActionSelector = `${actionsSelector} button.Polaris-Button--plain`;
     let secondaryActionButton = find(secondaryActionSelector);
@@ -147,10 +173,12 @@ module('Integration | Component | polaris empty state', function(hooks) {
       secondaryActionButton,
       'renders secondary action button when secondary action supplied'
     );
-    assert.dom(secondaryActionButton).hasText(
-      'Secondary action',
-      'renders correct secondary action text when secondary action supplied'
-    );
+    assert
+      .dom(secondaryActionButton)
+      .hasText(
+        'Secondary action',
+        'renders correct secondary action text when secondary action supplied'
+      );
 
     click(mainActionSelector);
     assert.ok(
@@ -188,15 +216,19 @@ module('Integration | Component | polaris empty state', function(hooks) {
 
     let emptyState = find(emptyStateSelector);
     assert.ok(emptyState, 'renders empty state component');
-    assert.dom(emptyState).hasNoClass(
-      'Polaris-EmptyState--imageContained',
-      'empty state component does not have imageContained class when imageContained is false'
-    );
+    assert
+      .dom(emptyState)
+      .hasNoClass(
+        'Polaris-EmptyState--imageContained',
+        'empty state component does not have imageContained class when imageContained is false'
+      );
 
     this.set('imageContained', true);
-    assert.dom(emptyState).hasClass(
-      'Polaris-EmptyState--imageContained',
-      'empty state component has imageContained class when imageContained is true'
-    );
+    assert
+      .dom(emptyState)
+      .hasClass(
+        'Polaris-EmptyState--imageContained',
+        'empty state component has imageContained class when imageContained is true'
+      );
   });
 });
