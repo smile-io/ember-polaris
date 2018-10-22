@@ -5,7 +5,7 @@
   disabled=disabled
   helpText=helpText
 }}
-  <span class="Polaris-RadioButton">
+  <span data-test-radio-button class="Polaris-RadioButton">
     <input
       data-test-radio-button-input
       type="radio"
@@ -21,7 +21,7 @@
       onblur={{action onBlur}}
     >
 
-    <span class="Polaris-RadioButton__Backdrop"></span>
-    <span class="Polaris-RadioButton__Icon"></span>
+    <span data-test-radio-button-backdrop class="Polaris-RadioButton__Backdrop"></span>
+    <span data-test-radio-button-icon class="Polaris-RadioButton__Icon"></span>
   </span>
 {{/polaris-choice}}
