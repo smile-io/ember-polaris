@@ -137,11 +137,12 @@ test('it renders the correct date-picker HTML', function(assert) {
 
   let monthTitleEl = find(monthTitleSelector);
   let expectedTitle = `${MONTH_NAME} ${YEAR}`;
-  assert.equal(
-    monthTitleEl.textContent.trim(),
-    expectedTitle,
-    'it renders a title displaying the current month name and year'
-  );
+  assert
+    .dom(monthTitleEl)
+    .hasText(
+      expectedTitle,
+      'it renders a title displaying the current month name and year'
+    );
 
   let monthsEl = findAll(monthSelector);
   assert.ok(monthsEl, 'it renders a single month container');
@@ -156,11 +157,9 @@ test('it renders the correct date-picker HTML', function(assert) {
     DAYS_PER_WEEK,
     'it renders 7 weekday labels in the weekday header'
   );
-  assert.equal(
-    sunday.textContent.trim(),
-    'Su',
-    'it abbreviates the weekday names in the weekday header'
-  );
+  assert
+    .dom(sunday)
+    .hasText('Su', 'it abbreviates the weekday names in the weekday header');
 
   let weekEls = findAll(monthWeekSelector);
   assert.equal(
@@ -184,11 +183,9 @@ test('it renders the correct date-picker HTML', function(assert) {
   );
 
   let selectedDay = find(daySelectedSelector);
-  assert.equal(
-    selectedDay.textContent.trim(),
-    '7',
-    'it renders February 7th as the selected date'
-  );
+  assert
+    .dom(selectedDay)
+    .hasText('7', 'it renders February 7th as the selected date');
 });
 
 test('it calls a passed-in `onChange` action when a new date is chosen', function(assert) {
@@ -376,16 +373,20 @@ test('it disables certain days when `disableDatesBefore` and `disableDatesAfter`
   `);
 
   let disabledBeforeDateEl = find(DISABLE_BEFORE_SELECTOR);
-  assert.ok(
-    disabledBeforeDateEl.classList.contains(DAY_DISABLED_CLASS),
-    'dates before `disableDatesBefore` have a disabled class'
-  );
+  assert
+    .dom(disabledBeforeDateEl)
+    .hasClass(
+      DAY_DISABLED_CLASS,
+      'dates before `disableDatesBefore` have a disabled class'
+    );
 
   let disabledAfterDateEl = find(DISABLE_AFTER_SELECTOR);
-  assert.ok(
-    disabledAfterDateEl.classList.contains(DAY_DISABLED_CLASS),
-    'dates after `disableDatesAfter` have a disabled class'
-  );
+  assert
+    .dom(disabledAfterDateEl)
+    .hasClass(
+      DAY_DISABLED_CLASS,
+      'dates after `disableDatesAfter` have a disabled class'
+    );
 });
 
 test('it does not fire actions when disabled days are clicked', function(assert) {
@@ -444,10 +445,12 @@ test('it applies an `inRange` class to days between the selected range', functio
   `);
 
   let inRangeDayEl = find(IN_RANGE_SELECTOR);
-  assert.ok(
-    inRangeDayEl.classList.contains(DAY_IN_RANGE_CLASS),
-    'days within the provided range contain an `inRange` class'
-  );
+  assert
+    .dom(inRangeDayEl)
+    .hasClass(
+      DAY_IN_RANGE_CLASS,
+      'days within the provided range contain an `inRange` class'
+    );
 });
 
 test('it applies a `today` class to the day representing the current day', function(assert) {
@@ -473,10 +476,12 @@ test('it applies a `today` class to the day representing the current day', funct
   `);
 
   let todayEl = find(TODAY_SELECTOR);
-  assert.ok(
-    todayEl.classList.contains(DAY_IS_TODAY_CLASS),
-    'the day representing today contains a `today` class'
-  );
+  assert
+    .dom(todayEl)
+    .hasClass(
+      DAY_IS_TODAY_CLASS,
+      'the day representing today contains a `today` class'
+    );
 
   let todayEls = findAll(`.${DAY_IS_TODAY_CLASS}`);
   assert.ok(
