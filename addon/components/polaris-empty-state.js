@@ -78,4 +78,6 @@ export default Component.extend({
    * @default null
    */
   secondaryAction: null,
+
+  'data-test-empty-state': true,
 });

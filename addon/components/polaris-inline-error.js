@@ -6,6 +6,7 @@ export default Component.extend({
   tagName: '',
 
   layout,
+
   /**
    * Unique identifier of the invalid form field that the message describes
    *

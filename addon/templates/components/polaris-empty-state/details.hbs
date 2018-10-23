@@ -1,6 +1,6 @@
 {{#polaris-text-container}}
-  {{polaris-display-text size="medium" text=heading}}
-  <div class="Polaris-EmptyState__Content">
+  {{polaris-display-text data-test-empty-state-heading=true size="medium" text=heading}}
+  <div data-test-empty-state-content class="Polaris-EmptyState__Content">
     {{#if hasBlock}}
       {{yield}}
     {{else}}
@@ -11,7 +11,7 @@
 
 {{#if action}}
   <div class="Polaris-EmptyState__Actions">
-    {{#polaris-button-group}}
+    {{#polaris-stack data-test-empty-state-actions=true alignment="center" as |stack|}}
       {{polaris-button
         primary=true
         size="large"
@@ -20,12 +20,14 @@
       }}
 
       {{#if secondaryAction}}
-        {{polaris-button
-          plain=true
-          text=secondaryAction.text
-          onClick=(action secondaryAction.onAction)
-        }}
+        {{#stack.item}}
+          {{polaris-button
+            plain=true
+            text=secondaryAction.text
+            onClick=(action secondaryAction.onAction)
+          }}
+        {{/stack.item}}
       {{/if}}
-    {{/polaris-button-group}}
+    {{/polaris-stack}}
   </div>
 {{/if}}
