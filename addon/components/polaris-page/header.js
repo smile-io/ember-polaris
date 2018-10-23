@@ -116,10 +116,15 @@ export default Component.extend({
   hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
   hasRollup: gt('secondaryActions.length', 1).readOnly(),
 
-  shouldRenderPrimaryActionAsPrimary: computed('primaryAction.primary', function() {
-    let primaryAction = this.get('primaryAction');
+  shouldRenderPrimaryActionAsPrimary: computed(
+    'primaryAction.primary',
+    function() {
+      let primaryAction = this.get('primaryAction');
 
-    return primaryAction &&
-      (primaryAction.primary === undefined ? true : primaryAction.primary);
-  }).readOnly(),
+      return (
+        primaryAction &&
+        (primaryAction.primary === undefined ? true : primaryAction.primary)
+      );
+    }
+  ).readOnly(),
 });
