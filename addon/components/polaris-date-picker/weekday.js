@@ -33,5 +33,6 @@ export default Component.extend({
    * @default false
    */
   current: false,
+
   'data-test-date-picker-weekday': true,
 });

@@ -11,13 +11,11 @@ import {
   getNextDisplayMonth,
   getPreviousDisplayYear,
   getPreviousDisplayMonth,
-  weekdays, // obj
+  weekdays,
   isSameDay,
 } from '../utils/dates';
 
-// TODO: add changes for Polaris v2.2.0
-// See https://github.com/Shopify/polaris/compare/v2.0.0...v2.2.0?diff=split#diff-31dd30c75130536eea45b3bccfbb92b9
-// (fixes https://github.com/Shopify/polaris/issues/313, if the bug's present in our Ember implementation)
+const weekStartsOn = weekdays.Sunday;
 
 export default Component.extend({
   classNames: ['Polaris-DatePicker'],
@@ -83,6 +81,16 @@ export default Component.extend({
    * @default false
    */
   multiMonth: false,
+
+  /**
+   * First day of week. Sunday by default
+   *
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default 'Sunday'
+   */
+  weekStartsOn,
 
   /**
    * Callback when date is selected
@@ -353,14 +361,4 @@ export default Component.extend({
       this.set('focusDate', null);
     },
   },
-
-  /**
-   * First day of week. Sunday by default
-   *
-   * @property weekStartsOn
-   * @public
-   * @type {String}
-   * @default 'Sunday'
-   */
-  weekStartsOn: weekdays.Sunday,
 });
