@@ -11,6 +11,7 @@
 - [#195](https://github.com/smile-io/ember-polaris/pull/195) [ENHANCEMENT] Add `nextKeys` and `previousKeys` attribute to `polaris-pagination`
 - [#193](https://github.com/smile-io/ember-polaris/pull/193) [ENHANCEMENT] Update `polaris-choice-list` to render `error` and `aria` attributes
 - [#197](https://github.com/smile-io/ember-polaris/pull/197) [ENHANCEMENT] Update `polaris-data-table` to match Polaris v2.11.0 refactor
+- [#214](https://github.com/smile-io/ember-polaris/pull/214) [ENHANCEMENT] Update `polaris-empty-state` to match Polaris v2.11.0
 
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
