@@ -305,15 +305,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       let classNames = ['Polaris-DropZone', sizeClass];
       let error = state.get('error');
 
-      if (isPresent(outline)) {
+      if (outline) {
         classNames.push('Polaris-DropZone--hasOutline');
       }
 
-      if (isPresent(isDragging)) {
+      if (isDragging) {
         classNames.push('Polaris-DropZone--isDragging');
       }
 
-      if (isPresent(error)) {
+      if (error) {
         classNames.push('Polaris-DropZone--hasError');
       }
 
