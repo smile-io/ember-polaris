@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { find, click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 module('Integration | Component | polaris empty state', function(hooks) {
@@ -178,7 +177,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
         'renders correct secondary action text when secondary action supplied'
       );
 
-    click(mainActionSelector);
+    await click(mainActionSelector);
     assert.ok(
       this.get('mainActionFired'),
       'main action fires when main action button clicked'
@@ -188,7 +187,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
       'secondary action does not fire when main action button clicked'
     );
 
-    click(secondaryActionSelector);
+    await click(secondaryActionSelector);
     assert.ok(
       this.get('secondaryActionFired'),
       'secondary action fires when secondary action button clicked'
