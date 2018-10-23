@@ -23,6 +23,16 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   layout,
 
   /**
+   * ID for file input
+   *
+   * @type {String}
+   * @default null
+   * @public
+   * @property id
+   */
+  id: null,
+
+  /**
    * Label for the file input
    *
    * @type {String}
@@ -51,16 +61,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @property labelHidden
    */
   labelHidden: false,
-
-  /**
-   * ID for file input
-   *
-   * @type {String}
-   * @default null
-   * @public
-   * @property id
-   */
-  id: null,
 
   /**
    * Allowed file types
