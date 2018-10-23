@@ -1,12 +1,12 @@
-{{#with "polaris-card/section-header" as |header|}}
+{{#with (component "polaris-card/section-header") as |headerComponent|}}
   {{#if title}}
-    {{component header title=title}}
+    {{component headerComponent title=title}}
   {{/if}}
 
   {{#if hasBlock}}
     {{yield
       (hash
-        header=header
+        header=headerComponent
       )
     }}
   {{else}}
