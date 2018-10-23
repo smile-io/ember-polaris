@@ -33,6 +33,14 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom('#my-labelledError').hasText('Error message');
   });
 
+  test('renders no error markup when provided with a boolean value', async function(assert) {
+    await render(
+      hbs`{{polaris-labelled id="my-labelled" label="Label" error=true}}`
+    );
+
+    assert.dom('.Polaris-InlineError').doesNotExist();
+  });
+
   test('renders the content as a child outside of the label', async function(assert) {
     await render(hbs`
       {{#polaris-labelled}}
