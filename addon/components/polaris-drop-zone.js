@@ -20,18 +20,47 @@ const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
 export default Component.extend(ContextBoundEventListenersMixin, {
-  attributeBindings: ['ariaDisabled:aria-disabled'],
-
-  classNames: ['Polaris-DropZone'],
-
-  classNameBindings: [
-    'outline:Polaris-DropZone--hasOutline',
-    'isDragging:Polaris-DropZone--isDragging',
-    'state.error:Polaris-DropZone--hasError',
-    'sizeClass',
-  ],
-
   layout,
+
+  /**
+   * Label for the file input
+   *
+   * @type {String}
+   * @default null
+   * @public
+   * @property label
+   */
+  label: null,
+
+  /**
+   * Adds an action to the label
+   *
+   * @type {Object}
+   * @default null
+   * @public
+   * @property labelAction
+   */
+  labelAction: null,
+
+  /**
+   * Visually hide the label
+   *
+   * @type {Boolean}
+   * @default false
+   * @public
+   * @property labelHidden
+   */
+  labelHidden: false,
+
+  /**
+   * ID for file input
+   *
+   * @type {String}
+   * @default null
+   * @public
+   * @property id
+   */
+  id: null,
 
   /**
    * Allowed file types
@@ -260,6 +289,38 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   isDragging: or('active', 'state.dragging').readOnly(),
 
+  dropZoneClasses: computed(
+    'outline',
+    'isDragging',
+    'state.error',
+    'sizeClass',
+    function() {
+      let { outline, isDragging, state, sizeClass } = this.getProperties(
+        'outline',
+        'isDragging',
+        'state',
+        'sizeClass'
+      );
+
+      let classNames = ['Polaris-DropZone', sizeClass];
+      let error = state.get('error');
+
+      if (isPresent(outline)) {
+        classNames.push('Polaris-DropZone--hasOutline');
+      }
+
+      if (isPresent(isDragging)) {
+        classNames.push('Polaris-DropZone--isDragging');
+      }
+
+      if (isPresent(error)) {
+        classNames.push('Polaris-DropZone--hasError');
+      }
+
+      return classNames.join(' ');
+    }
+  ),
+
   fileInputNode: computed(function() {
     return this.element.querySelector(
       `input[id='${this.get('elementId')}-input']`
@@ -478,31 +539,40 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       return;
     }
 
+    let dropzoneContainer = this.element.querySelector('.Polaris-DropZone');
+
     this.addEventListener(dropNode, 'drop', this.handleDrop);
     this.addEventListener(dropNode, 'dragover', this.handleDragOver);
     this.addEventListener(dropNode, 'dragenter', this.handleDragEnter);
     this.addEventListener(dropNode, 'dragleave', this.handleDragLeave);
 
-    this.addEventListener(this.element, 'click', this.handleClick);
-    this.addEventListener(this.element, 'dragStart', this.handleDragStart);
+    this.addEventListener(dropzoneContainer, 'click', this.handleClick);
+    this.addEventListener(dropzoneContainer, 'dragStart', this.handleDragStart);
 
     this.addEventListener(window, 'resize', this.adjustSize);
   },
 
   setNode() {
     let dropOnPage = this.get('dropOnPage');
+    let dropzoneContainer = this.element.querySelector('.Polaris-DropZone');
+
     this.setProperties({
-      node: this.element,
-      dropNode: dropOnPage ? document : this.element,
+      node: dropzoneContainer,
+      dropNode: dropOnPage ? document : dropzoneContainer,
     });
 
     this.adjustSize();
   },
 
-  updateStateFromProps() {
-    let { error, type, overlayText, errorOverlayText } = this.get(
+  getDerivedStateFromProps() {
+    let { id, error, type, overlayText, errorOverlayText } = this.get(
       'state'
-    ).getProperties('error', 'type', 'overlayText', 'errorOverlayText');
+    ).getProperties('id', 'error', 'type', 'overlayText', 'errorOverlayText');
+
+    let newId = this.get('id') || createUniqueIDFactory('DropZone');
+    if (id !== null && id !== newId) {
+      this.set('state.id', newId);
+    }
 
     if (error !== this.get('error')) {
       this.set('state.error', this.get('error'));
@@ -525,20 +595,26 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     ) {
       this.set('state.errorOverlayText', newErrorOverlayText);
     }
-
-    if (this.get('openFileDialog')) {
-      this.open();
-      scheduleOnce('afterRender', () => this.get('onFileDialogClose')());
-    }
   },
 
   open() {
     let fileInputNode = this.get('fileInputNode');
+
     if (isNone(fileInputNode)) {
       return;
     }
 
     fileInputNode.click();
+  },
+
+  triggerFileDialog() {
+    this.open();
+
+    let close = this.get('onFileDialogClose');
+
+    if (close) {
+      scheduleOnce('afterRender', close);
+    }
   },
 
   /**
@@ -551,7 +627,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.updateStateFromProps();
+    this.getDerivedStateFromProps();
   },
 
   didInsertElement() {
@@ -560,5 +636,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     this.setNode();
     this.set('state.error', this.get('error'));
     this.setupEvents();
+
+    if (this.get('openFileDialog')) {
+      this.triggerFileDialog();
+    }
+  },
+
+  didUpdateAttrs() {
+    if (this.get('openFileDialog')) {
+      this.triggerFileDialog();
+    }
   },
 });
