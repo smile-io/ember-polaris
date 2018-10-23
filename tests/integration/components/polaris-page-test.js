@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find, click } from 'ember-native-dom-helpers';
+import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
@@ -226,10 +226,8 @@ module('Integration | Component | polaris page', function(hooks) {
       "hasn't fired primary action before clicking button"
     );
 
-    click(primaryButtonSelector);
-    return settled().then(() => {
-      assert.ok(primaryActionFired, 'fires primary action on click');
-    });
+    await click(primaryButtonSelector);
+    assert.ok(primaryActionFired, 'fires primary action on click');
   });
 
   test('it handles secondary actions correctly when supplied', async function(assert) {
@@ -303,39 +301,36 @@ module('Integration | Component | polaris page', function(hooks) {
     );
 
     const focussedSecondaryButtonSelector = `${secondaryActionsButtonSelector}:focus`;
-    let secondaryActionsWrapper = find(secondaryActionsWrapperSelector);
-    click('button:first-child', secondaryActionsWrapper);
-    return settled()
-      .then(() => {
-        assert.ok(
-          secondaryAction1Fired,
-          'first secondary action - fired after clicking button'
-        );
-        assert.notOk(
-          secondaryAction2Fired,
-          'second secondary action - not fired after clicking first button'
-        );
+    await click(
+      buildNestedSelector(secondaryActionsWrapperSelector, 'button:first-child')
+    );
+    assert.ok(
+      secondaryAction1Fired,
+      'first secondary action - fired after clicking button'
+    );
+    assert.notOk(
+      secondaryAction2Fired,
+      'second secondary action - not fired after clicking first button'
+    );
 
-        assert
-          .dom(focussedSecondaryButtonSelector)
-          .doesNotExist(
-            'no focussed buttons after clicking first secondary action'
-          );
+    assert
+      .dom(focussedSecondaryButtonSelector)
+      .doesNotExist(
+        'no focussed buttons after clicking first secondary action'
+      );
 
-        click('button:last-child', secondaryActionsWrapper);
-        return settled();
-      })
-      .then(() => {
-        assert.ok(
-          secondaryAction2Fired,
-          'second secondary action - fired after clicking button'
-        );
-        assert
-          .dom(focussedSecondaryButtonSelector)
-          .doesNotExist(
-            'no focussed buttons after clicking second secondary action'
-          );
-      });
+    await click(
+      buildNestedSelector(secondaryActionsWrapperSelector, 'button:last-child')
+    );
+    assert.ok(
+      secondaryAction2Fired,
+      'second secondary action - fired after clicking button'
+    );
+    assert
+      .dom(focussedSecondaryButtonSelector)
+      .doesNotExist(
+        'no focussed buttons after clicking second secondary action'
+      );
   });
 
   test('it renders action icons correctly', async function(assert) {
