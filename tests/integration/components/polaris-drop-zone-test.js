@@ -68,6 +68,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     dropZoneOverlayStackItemSelector,
     '[data-test-caption]'
   );
+  const dropZoneLabelWrapperSelector = '[data-test-labelled]';
+  const dropZoneLabelButtonSelector = `${ dropZoneLabelWrapperSelector } button`;
+  const dropZoneLabelWrapperLabelSelector = `${ dropZoneLabelWrapperSelector } [data-test-label]`;
 
   test('it renders in inline form', async function(assert) {
     assert.expect(8);
@@ -1226,6 +1229,32 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent('.Polaris-Button', 'click', event);
 
       assert.notOk(this.get('openFileDialog'));
+    });
+
+    test('it supports passing `label` attributes', async function(assert) {
+      this.setProperties({
+        actionFired: false,
+        labelAction: () => {
+          this.set('actionFired', true);
+        },
+      });
+
+      await render(hbs`
+        {{polaris-drop-zone
+          label="my label"
+          labelAction=(hash
+            text="my label action"
+            onAction=labelAction
+          )
+        }}
+      `);
+
+      assert.dom(dropZoneLabelWrapperSelector).exists('A labelled component is wrapped around the dropzone');
+      assert.notOk(this.get('actionFired'), false, 'Label action has not fired');
+
+      await triggerEvent(dropZoneLabelButtonSelector, 'click');
+
+      assert.ok(this.get('actionFired'), 'Label action fired');
     });
   });
 });
