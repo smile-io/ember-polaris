@@ -124,6 +124,11 @@
     lodash "^4.17.4"
     lodash-decorators "^4.3.5"
 
+"@shopify/polaris-tokens@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-tokens/-/polaris-tokens-1.3.1.tgz#e4cd1feaa2a886867332a3829ec331ebf5a19bcb"
+  integrity sha512-f12PjjCDBxHyT063aPLnWi/PVslCfRAdhaAlFGu0IXxdZE5C6tw5P8w/uYHaPxxLpZS0K/WBFXgsRJDo20Dy8w==
+
 "@shopify/polaris@2.11.0":
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/@shopify/polaris/-/polaris-2.11.0.tgz#bbe63f1cb095ccb884f6bf0e802ff86c2ab7bb6f"
