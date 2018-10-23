@@ -13,6 +13,7 @@
 - [#197](https://github.com/smile-io/ember-polaris/pull/197) [ENHANCEMENT] Update `polaris-data-table` to match Polaris v2.11.0 refactor
 - [#214](https://github.com/smile-io/ember-polaris/pull/214) [ENHANCEMENT] Update `polaris-empty-state` to match Polaris v2.11.0
 - [#216](https://github.com/smile-io/ember-polaris/pull/216) [ENHANCEMENT] Update `polaris-labelled` to match Polaris v2.11.0
+- [#218](https://github.com/smile-io/ember-polaris/pull/218) [ENHANCEMENT] Update `polaris-page` to match Polaris v2.11.0 by adding `titleMetadata` and optional `primaryAction` button type override
 - [#219](https://github.com/smile-io/ember-polaris/pull/219) [ENHANCEMENT] Update `polaris-date-picker` components to match Polaris v2.11.0
 
 ### v1.7.8 (October 10, 2018)
