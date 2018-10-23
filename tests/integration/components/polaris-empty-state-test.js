@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, click, render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
@@ -34,34 +34,35 @@ module('Integration | Component | polaris empty state', function(hooks) {
     `);
 
     // Check the header.
-    let heading = find(headingSelector);
-    assert.ok(heading, 'renders one heading');
+    assert.dom(headingSelector).exists('renders one heading');
     assert
-      .dom(heading)
+      .dom(headingSelector)
       .hasClass(
         'Polaris-DisplayText--sizeMedium',
         'renders the correct size heading'
       );
     assert
-      .dom(heading)
+      .dom(headingSelector)
       .hasText('Empty State Here', 'renders the correct heading text');
 
     // Check the content.
-    let content = find(contentSelector);
-    assert.ok(content, 'renders content');
+    assert.dom(contentSelector).exists('renders content');
     assert
-      .dom(content)
+      .dom(contentSelector)
       .hasText("I'm some inline text", 'renders the correct content');
 
     // Check the image.
-    let image = find(imageSelector);
-    assert.ok(content, 'renders image');
-    assert.equal(
-      image.src,
-      'http://www.somewhere.com/some-image.jpg',
-      'renders the correct image'
-    );
-    assert.equal(image.alt, '', 'renders an empty image title');
+    assert.dom(imageSelector).exists('renders image');
+    assert
+      .dom(imageSelector)
+      .hasAttribute(
+        'src',
+        'http://www.somewhere.com/some-image.jpg',
+        'renders the correct image'
+      );
+    assert
+      .dom(imageSelector)
+      .hasAttribute('alt', '', 'renders an empty image title');
   });
 
   test('it renders the correct HTML in basic block usage', async function(assert) {
@@ -80,16 +81,15 @@ module('Integration | Component | polaris empty state', function(hooks) {
     `);
 
     // Check the header.
-    let heading = find(headingSelector);
-    assert.ok(heading, 'renders one heading');
+    assert.dom(headingSelector).exists('renders one heading');
     assert
-      .dom(heading)
+      .dom(headingSelector)
       .hasClass(
         'Polaris-DisplayText--sizeMedium',
         'renders the correct size heading'
       );
     assert
-      .dom(heading)
+      .dom(headingSelector)
       .hasText('Empty State Here', 'renders the correct heading text');
 
     // Check the content.
@@ -97,21 +97,23 @@ module('Integration | Component | polaris empty state', function(hooks) {
       contentSelector,
       'p.block-content'
     );
-    let content = find(blockContentSelector);
-    assert.ok(content, 'renders content');
+    assert.dom(blockContentSelector).exists('renders content');
     assert
-      .dom(content)
+      .dom(blockContentSelector)
       .hasText('This is some block content', 'renders the correct content');
 
     // Check the image.
-    let image = find(imageSelector);
-    assert.ok(content, 'renders image');
-    assert.equal(
-      image.src,
-      'http://www.somewhere.com/some-image.jpg',
-      'renders the correct image'
-    );
-    assert.equal(image.alt, '', 'renders an empty image title');
+    assert.dom(imageSelector).exists('renders image');
+    assert
+      .dom(imageSelector)
+      .hasAttribute(
+        'src',
+        'http://www.somewhere.com/some-image.jpg',
+        'renders the correct image'
+      );
+    assert
+      .dom(imageSelector)
+      .hasAttribute('alt', '', 'renders an empty image title');
   });
 
   test('it handles actions correctly', async function(assert) {
@@ -139,24 +141,23 @@ module('Integration | Component | polaris empty state', function(hooks) {
     `);
 
     const mainActionSelector = `${actionsSelector} button.Polaris-Button--primary`;
-    let mainActionButton = find(mainActionSelector);
-    assert.ok(mainActionButton, 'renders primary action button');
+    assert.dom(mainActionSelector).exists('renders primary action button');
     assert
-      .dom(mainActionButton)
+      .dom(mainActionSelector)
       .hasClass(
         'Polaris-Button--sizeLarge',
         'renders large button for primary action'
       );
     assert
-      .dom(mainActionButton)
+      .dom(mainActionSelector)
       .hasText('Main action', 'renders correct primary action button text');
 
     const secondaryActionSelector = `${actionsSelector} button.Polaris-Button--plain`;
-    let secondaryActionButton = find(secondaryActionSelector);
-    assert.notOk(
-      secondaryActionButton,
-      'does not render secondary action button when no secondary action supplied'
-    );
+    assert
+      .dom(secondaryActionSelector)
+      .doesNotExist(
+        'does not render secondary action button when no secondary action supplied'
+      );
 
     this.set('secondaryAction', {
       text: 'Secondary action',
@@ -165,13 +166,11 @@ module('Integration | Component | polaris empty state', function(hooks) {
       },
     });
 
-    secondaryActionButton = find(secondaryActionSelector);
-    assert.ok(
-      secondaryActionButton,
-      'renders secondary action button when secondary action supplied'
-    );
     assert
-      .dom(secondaryActionButton)
+      .dom(secondaryActionSelector)
+      .exists('renders secondary action button when secondary action supplied');
+    assert
+      .dom(secondaryActionSelector)
       .hasText(
         'Secondary action',
         'renders correct secondary action text when secondary action supplied'
@@ -211,10 +210,9 @@ module('Integration | Component | polaris empty state', function(hooks) {
       }}
     `);
 
-    let emptyState = find(emptyStateSelector);
-    assert.ok(emptyState, 'renders empty state component');
+    assert.dom(emptyStateSelector).exists('renders empty state component');
     assert
-      .dom(emptyState)
+      .dom(emptyStateSelector)
       .hasNoClass(
         'Polaris-EmptyState--imageContained',
         'empty state component does not have imageContained class when imageContained is false'
@@ -222,7 +220,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
 
     this.set('imageContained', true);
     assert
-      .dom(emptyState)
+      .dom(emptyStateSelector)
       .hasClass(
         'Polaris-EmptyState--imageContained',
         'empty state component has imageContained class when imageContained is true'
