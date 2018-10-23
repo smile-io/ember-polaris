@@ -1,5 +1,6 @@
 {{#if day}}
   <button
+    data-test-date-picker-day
     role="gridcell"
     class={{dayButtonClasses}}
     tabindex={{tabIndex}}
@@ -14,5 +15,5 @@
     {{date}}
   </button>
 {{else}}
-  <div class="Polaris-DatePicker__EmptyDay"></div>
+  <div data-test-date-picker-day-empty class="Polaris-DatePicker__EmptyDay"></div>
 {{/if}}

@@ -1,4 +1,4 @@
-<div class="Polaris-DatePicker__Header">
+<div data-test-date-picker-header class="Polaris-DatePicker__Header">
   {{polaris-button
     plain=true
     icon="arrow-left"
@@ -14,16 +14,17 @@
   }}
 </div>
 
-<div class="Polaris-DatePicker__MonthContainer">
+<div data-test-date-picker-month-container class="Polaris-DatePicker__MonthContainer">
   {{polaris-date-picker/month
     month=month
     year=year
-    selected=range
+    selected=(polaris-date-picker/derive-range selected)
     disableDatesBefore=disableDatesBefore
     disableDatesAfter=disableDatesAfter
     allowRange=allowRange
     hoverDate=hoverDate
     focusedDate=focusDate
+    weekStartsOn=weekStartsOn
     onChange=(action "handleDateSelection")
     onFocus=(action (mut focusDate))
     onHover=(action (mut hoverDate))
@@ -33,12 +34,13 @@
     {{polaris-date-picker/month
       month=showNextMonth
       year=showNextYear
-      selected=range
+      selected=(polaris-date-picker/derive-range selected)
       disableDatesBefore=disableDatesBefore
       disableDatesAfter=disableDatesAfter
       allowRange=allowRange
       hoverDate=hoverDate
       focusedDate=focusDate
+      weekStartsOn=weekStartsOn
       onChange=(action "handleDateSelection")
       onFocus=(action (mut focusDate))
       onHover=(action (mut hoverDate))
