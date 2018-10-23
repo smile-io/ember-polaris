@@ -95,7 +95,7 @@ export default Component.extend({
    * @private
    */
   shouldRenderError: computed('error', function() {
-    let { error } = this;
+    let error = this.get('error');
     return error && typeof error !== 'boolean';
   }).readOnly(),
 });
