@@ -37,34 +37,24 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     },
   ];
 
-  const dropZoneSelector = '.Polaris-DropZone';
-  const containerSelector = buildNestedSelector(
-    dropZoneSelector,
-    '.Polaris-DropZone__Container'
-  );
+  const dropZoneSelector = '[data-test-drop-zone]';
+  const containerSelector = '[data-test-drop-zone-container]';
   // Hidden dropzone input element
-  const inputSelector = buildNestedSelector(
-    dropZoneSelector,
-    '.Polaris-VisuallyHidden',
-    'input'
-  );
+  const inputSelector = '[data-test-drop-zone-hidden-input]';
 
   // Overlays
-  const dropZoneOverlaySelector = buildNestedSelector(
-    dropZoneSelector,
-    '.Polaris-DropZone__Overlay'
-  );
+  const dropZoneOverlaySelector = '[data-test-drop-zone-overlay]';
   const dropZoneOverlayStackSelector = buildNestedSelector(
     dropZoneOverlaySelector,
-    '.Polaris-Stack'
+    '[data-test-stack]'
   );
   const dropZoneOverlayStackItemSelector = buildNestedSelector(
     dropZoneOverlayStackSelector,
-    '.Polaris-Stack__Item'
+    '[data-test-stack-item]'
   );
   const dropZoneOverlayIconSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
-    '.Polaris-Icon'
+    '[data-test-icon]'
   );
   const dropZoneOverlayIconSVGSelector = buildNestedSelector(
     dropZoneOverlayIconSelector,
@@ -72,11 +62,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
   );
   const dropZoneOverlayTextSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
-    '.Polaris-DisplayText'
+    '[data-test-display-text]'
   );
   const dropZoneOverlayCaptionSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
-    '.Polaris-Caption'
+    '[data-test-caption]'
   );
 
   test('it renders in inline form', async function(assert) {

@@ -74,6 +74,8 @@ export default Component.extend(SvgHandling, {
    */
   sourcePath: 'polaris',
 
+  'data-test-icon': true,
+
   /**
    * Whether the component should leave space for an icon
    *

@@ -81,6 +81,8 @@ export default Component.extend({
    */
   wrap: true,
 
+  'data-test-stack': true,
+
   /**
    * @private
    */
@@ -129,6 +131,6 @@ export default Component.extend({
     this.$()
       .children()
       .not('div.Polaris-Stack__Item')
-      .wrap('<div class="Polaris-Stack__Item"></div>');
+      .wrap('<div data-test-stack-item class="Polaris-Stack__Item"></div>');
   },
 });
