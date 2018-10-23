@@ -22,6 +22,15 @@ const headerSelector = buildNestedSelector(
   pageSelector,
   'div.Polaris-Page__Header'
 );
+const primaryButtonSelector = buildNestedSelector(
+  'div.Polaris-Page',
+  'div.Polaris-Page__Header',
+  'div.Polaris-Page__MainContent',
+  'div.Polaris-Page__TitleAndActions',
+  'div.Polaris-Page__Actions',
+  'div.Polaris-Page__PrimaryAction',
+  'button.Polaris-Button'
+);
 
 test('it renders the page correctly', function(assert) {
   this.setProperties({
@@ -151,16 +160,6 @@ test('it handles primary action correctly when supplied', function(assert) {
       )
     }}
   `);
-
-  const primaryButtonSelector = buildNestedSelector(
-    'div.Polaris-Page',
-    'div.Polaris-Page__Header',
-    'div.Polaris-Page__MainContent',
-    'div.Polaris-Page__TitleAndActions',
-    'div.Polaris-Page__Actions',
-    'div.Polaris-Page__PrimaryAction',
-    'button.Polaris-Button.Polaris-Button--primary'
-  );
 
   const primaryButtons = findAll(primaryButtonSelector);
   assert.equal(primaryButtons.length, 1, 'renders one primary button');
@@ -439,4 +438,61 @@ test('it handles breadcrumbs correctly', function(assert) {
 
   let icons = findAll(iconSelector, breadcrumbLink);
   assert.equal(icons.length, 1, 'breadcrumb renders icon');
+});
+
+test('it renders title metadata', function(assert) {
+  this.render(
+    hbs`
+      {{polaris-page
+        title="Testing title metadata"
+        titleMetadata=(component "polaris-badge")
+      }}
+    `
+  );
+
+  const metadataBadgeSelector = '.Polaris-Badge';
+  let metadataBadge = find(metadataBadgeSelector);
+  assert.ok(metadataBadge, 'renders title metadata');
+});
+
+test('it allows the primary action to be rendered as not primary', function(assert) {
+  this.set('shouldRenderPrimaryActionAsPrimary', false);
+
+  this.render(
+    hbs`
+      {{polaris-page
+        title="Testing primary button"
+        primaryAction=(hash
+          text="Primary"
+          primary=shouldRenderPrimaryActionAsPrimary
+          onAction=(action (mut dummy))
+        )
+      }}
+    `
+  );
+
+  let primaryButton = find(primaryButtonSelector);
+  assert.ok(primaryButton, 'primary false - renders primary action');
+  assert.notOk(
+    primaryButton.classList.contains('Polaris-Button--primary'),
+    'primary false - button is not rendered as primary'
+  );
+
+  this.set('shouldRenderPrimaryActionAsPrimary', null);
+  assert.notOk(
+    primaryButton.classList.contains('Polaris-Button--primary'),
+    'primary null - button is not rendered as primary'
+  );
+
+  this.set('shouldRenderPrimaryActionAsPrimary', true);
+  assert.ok(
+    primaryButton.classList.contains('Polaris-Button--primary'),
+    'primary true - button is rendered as primary'
+  );
+
+  this.set('shouldRenderPrimaryActionAsPrimary', undefined);
+  assert.ok(
+    primaryButton.classList.contains('Polaris-Button--primary'),
+    'primary undefined - button is rendered as primary'
+  );
 });
