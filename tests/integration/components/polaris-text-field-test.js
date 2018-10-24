@@ -4,7 +4,6 @@ import {
   render,
   find,
   triggerEvent,
-  typeIn,
   focus,
   blur,
   click,
@@ -655,17 +654,5 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     assert
       .dom(connectedRightSelector)
       .hasText('Right connected', 'render connected right correctly');
-  });
-
-  test('it does not blocks click events on othe elements', async function(assert) {
-    await render(hbs`
-      {{polaris-text-field}}
-      {{polaris-button onClick=(action (mut value) true)}}
-    `);
-
-    await typeIn('input', 'Some text');
-    await click('.Polaris-Button');
-
-    assert.ok(this.value);
   });
 });
