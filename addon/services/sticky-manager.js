@@ -216,6 +216,12 @@ export default Service.extend(
     init() {
       this._super(...arguments);
 
+      /*
+       * The original `StickyManager` React code doesn't default this to `document`,
+       * but the React `AppProvider` *does* set it to `document` if that exists.
+       * This default value is here to recreate this behaviour without having to
+       * implement `AppProvider`.
+       */
       let container = this.get('container') || document;
       if (container) {
         this.setContainer(container);
