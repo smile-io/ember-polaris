@@ -6,6 +6,7 @@ import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import { guidFor } from '@ember/object/internals';
 import layout from '../templates/components/polaris-drop-zone';
 import State from '../-private/drop-zone-state';
 import {
@@ -321,9 +322,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  fileInputNode: computed(function() {
+  fileInputNode: computed('state.id', function() {
     return this.element.querySelector(
-      `input[id='${this.get('elementId')}-input']`
+      `input[id='${this.get('state.id')}-input']`
     );
   }).readOnly(),
 
@@ -346,15 +347,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * Event handlers
    */
-  handleClick(event) {
-    let { onClick, disabled } = this.getProperties('onClick', 'disabled');
-    if (disabled) {
-      return;
-    }
-
-    return onClick ? onClick(event) : this.open();
-  },
-
   handleDrop(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -471,11 +463,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     onDragLeave();
   },
 
-  handleDragStart(event) {
-    event.preventDefault();
-    event.stopPropagation();
-  },
-
   adjustSize() {
     throttle(
       this,
@@ -539,15 +526,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       return;
     }
 
-    let dropzoneContainer = this.element.querySelector('.Polaris-DropZone');
-
     this.addEventListener(dropNode, 'drop', this.handleDrop);
     this.addEventListener(dropNode, 'dragover', this.handleDragOver);
     this.addEventListener(dropNode, 'dragenter', this.handleDragEnter);
     this.addEventListener(dropNode, 'dragleave', this.handleDragLeave);
-
-    this.addEventListener(dropzoneContainer, 'click', this.handleClick);
-    this.addEventListener(dropzoneContainer, 'dragStart', this.handleDragStart);
 
     this.addEventListener(window, 'resize', this.adjustSize);
   },
@@ -569,7 +551,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'state'
     ).getProperties('id', 'error', 'type', 'overlayText', 'errorOverlayText');
 
-    let newId = this.get('id') || createUniqueIDFactory('DropZone');
+    let newId = this.get('id') || guidFor(this);
     if (id !== null && id !== newId) {
       this.set('state.id', newId);
     }
@@ -643,8 +625,26 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   didUpdateAttrs() {
+    this._super(...arguments);
+
     if (this.get('openFileDialog')) {
       this.triggerFileDialog();
     }
+  },
+
+  actions: {
+    handleClick(event) {
+      let { onClick, disabled } = this.getProperties('onClick', 'disabled');
+      if (disabled) {
+        return;
+      }
+
+      return onClick ? onClick(event) : this.open();
+    },
+
+    handleDragStart(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    },
   },
 });

@@ -1245,7 +1245,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           label="my label"
           labelAction=(hash
             text="my label action"
-            onAction=labelAction
+            onAction=(action labelAction)
           )
         }}
       `);
@@ -1253,11 +1253,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert
         .dom(dropZoneLabelWrapperSelector)
         .exists('A labelled component is wrapped around the dropzone');
-      assert.notOk(
-        this.get('actionFired'),
-        false,
-        'Label action has not fired'
-      );
 
       await triggerEvent(dropZoneLabelButtonSelector, 'click');
 
