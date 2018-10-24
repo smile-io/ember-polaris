@@ -16,6 +16,7 @@
 - [#218](https://github.com/smile-io/ember-polaris/pull/218) [ENHANCEMENT] Update `polaris-page` to match Polaris v2.11.0 by adding `titleMetadata` and optional `primaryAction` button type override
 - [#219](https://github.com/smile-io/ember-polaris/pull/219) [ENHANCEMENT] Update `polaris-date-picker` components to match Polaris v2.11.0
 - [#221](https://github.com/smile-io/ember-polaris/pull/221) [ENHANCEMENT] Add `disabled` attribute to `polaris-choice` in `polaris-radio-button`
+- [#230](https://github.com/smile-io/ember-polaris/pull/230) [ENHANCEMENT] Add `fullWidth` and `connectedTop` to `polaris-button-group`
 
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
