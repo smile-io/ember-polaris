@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/header';
+import { computed } from '@ember/object';
 import { gt, or } from '@ember/object/computed';
 
 export default Component.extend({
@@ -23,6 +24,16 @@ export default Component.extend({
    * @default null
    */
   title: null,
+
+  /**
+   * Important and non-interactive status information shown immediately after the title
+   *
+   * @property titleMetadata
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  titleMetadata: null,
 
   /**
    * Visually hide the title
@@ -104,4 +115,16 @@ export default Component.extend({
   hasActions: or('primaryAction', 'secondaryActions').readOnly(),
   hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
   hasRollup: gt('secondaryActions.length', 1).readOnly(),
+
+  shouldRenderPrimaryActionAsPrimary: computed(
+    'primaryAction.primary',
+    function() {
+      let primaryAction = this.get('primaryAction');
+
+      return (
+        primaryAction &&
+        (primaryAction.primary === undefined ? true : primaryAction.primary)
+      );
+    }
+  ).readOnly(),
 });

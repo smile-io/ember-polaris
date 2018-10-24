@@ -65,7 +65,7 @@ export function abbreviationForWeekday(weekday) {
 
 const WEEK_LENGTH = 7;
 
-export function getWeeksForMonth(month, year) {
+export function getWeeksForMonth(month, year, weekStartsOn) {
   const firstOfMonth = new Date(year, month, 1);
   const firstDayOfWeek = firstOfMonth.getDay();
   const weeks = [[]];
@@ -73,7 +73,12 @@ export function getWeeksForMonth(month, year) {
   let currentWeek = weeks[0];
   let currentDate = firstOfMonth;
 
-  for (let i = 0; i < firstDayOfWeek; i++) {
+  const orderedWeekday = getWeekdaysOrdered(weekStartsOn);
+  for (
+    let i = 0;
+    i < orderedWeekday.indexOf(weekdaysArray[firstDayOfWeek]);
+    i++
+  ) {
     currentWeek.push(null);
   }
 
@@ -87,7 +92,7 @@ export function getWeeksForMonth(month, year) {
     currentDate = new Date(year, month, currentDate.getDate() + 1);
   }
 
-  while (currentWeek.length < WEEK_LENGTH) {
+  while (currentWeek.length < 7) {
     currentWeek.push(null);
   }
 
@@ -193,4 +198,10 @@ export function isDateAfter(date, dateToCompare) {
 
 export function isDateBefore(date, dateToCompare) {
   return date.getTime() < dateToCompare.getTime();
+}
+
+export function getWeekdaysOrdered(weekStartsOn) {
+  const weekDays = [...weekdaysArray];
+  const restOfDays = weekDays.splice(weekStartsOn);
+  return [...restOfDays, ...weekDays];
 }
