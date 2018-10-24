@@ -6,21 +6,28 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | polaris-sticky', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`{{polaris-sticky}}`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
+  test('renders children component', async function(assert) {
     await render(hbs`
       {{#polaris-sticky}}
-        template block text
+        <h1>Hello</h1>
       {{/polaris-sticky}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.dom('h1').exists();
+  });
+
+  test('renders a function as child component with a boolean argument set to false by default', async function(assert) {
+    await render(hbs`
+      {{#polaris-sticky as |sticky|}}
+        {{#if (eq sticky.isSticky false)}}
+          <h1>it worked!</h1>
+        {{else}}
+          <h2>it didn't</h2>
+        {{/if}}
+      {{/polaris-sticky}}
+    `);
+
+    assert.dom('h1').exists();
+    assert.dom('h2').doesNotExist();
   });
 });
