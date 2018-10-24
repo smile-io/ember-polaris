@@ -646,8 +646,6 @@ export default Component.extend(
         let { key } = event;
         let type = this.get('type');
         let numbersSpec = /[\d.eE+-]$/;
-        // eslint-disable-next-line
-debugger;
 
         if (
           type !== 'number' ||
