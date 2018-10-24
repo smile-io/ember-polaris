@@ -14,6 +14,7 @@ export default Component.extend({
    * Supported properties:
    *  - content
    *  - url (not currently supported)
+   *  - destructive
    *  - disabled
    *  - icon
    *  - image
@@ -27,6 +28,22 @@ export default Component.extend({
    * @default null
    */
   item: null,
+
+  itemClasses: computed('item.{destructive,disabled}', function() {
+    let classNames = ['Polaris-ActionList__Item'];
+    let item = this.get('item');
+    let { destructive, disabled } = item;
+
+    if (destructive) {
+      classNames.push('Polaris-ActionList--destructive');
+    }
+
+    if (disabled) {
+      classNames.push('Polaris-ActionList--disabled');
+    }
+
+    return classNames.join(' ');
+  }),
 
   /**
    * Callback for the item when clicked
