@@ -625,7 +625,6 @@ export default Component.extend(
       },
 
       handleChange(event) {
-        // event.preventDefault();
         this.get('onChange')(event.target.value, this.get('id'));
       },
 
