@@ -45,6 +45,15 @@ Plain buttons:
 {{/polaris-button-group}}
 ```
 
+Full width and connected top options:
+
+```hbs
+{{#polaris-button-group fullWidth=true connectedTop=true}}
+  {{polaris-button text="Button 1" onClick=(action "doSomething")}}
+  {{polaris-button text="Button 2" onClick=(action (mut button2Clicked) true)}}
+{{/polaris-button-group}}
+```
+
 For dynamic button groups where buttons are added or removed once the button group has rendered, you must explicitly add an item component around each item to prevent a Glimmer error such as `Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node`:
 
 ```hbs
