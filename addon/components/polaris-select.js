@@ -1,4 +1,7 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
+import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-select';
 
 export default Component.extend({
@@ -132,7 +135,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onChange(),
+  onChange() {},
 
   /**
    * Callback when select is focussed
@@ -142,7 +145,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFocus(),
+  onFocus() {},
 
   /**
    * Callback when focus is removed
@@ -152,5 +155,63 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onBlur(),
+  onBlur() {},
+
+  /**
+   * Flag indicating whether an error is present
+   *
+   * @property hasError
+   * @type {Boolean}
+   * @private
+   */
+  hasError: bool('error').readOnly(),
+
+  /**
+   * Class names for select element
+   *
+   * @property className
+   * @type {String}
+   * @private
+   */
+  className: computed('error', 'disabled', function() {
+    let classNames = ['Polaris-Select'];
+
+    if (this.get('error')) {
+      classNames.push('Polaris-Select--error');
+    }
+
+    if (this.get('disabled')) {
+      classNames.push('Polaris-Select--disabled');
+    }
+
+    return classNames.join(' ');
+  }).readOnly(),
+
+  /**
+   * Aria described-by field for accessibility
+   *
+   * @property describedBy
+   * @type {String}
+   * @private
+   */
+  describedBy: computed('error', 'helpText', function() {
+    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let describedBy = [];
+
+    if (helpText) {
+      describedBy.push(helpTextId(id));
+    }
+
+    if (error) {
+      describedBy.push(errorId(id));
+    }
+
+    return describedBy.length ? describedBy.join(' ') : undefined;
+  }).readOnly(),
+
+  actions: {
+    handleChange({ value }) {
+      this.onChange(value, this.get('id'));
+    },
+  },
 });

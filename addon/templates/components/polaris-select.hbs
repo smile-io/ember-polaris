@@ -1,1 +1,37 @@
-{{yield}}
+{{#polaris-labelled
+  id=id
+  label=label
+  error=error
+  action=labelAction
+  labelHidden=labelHidden
+  helpText=helpText
+}}
+  <div class={{className}}>
+    <select
+      class="Polaris-Select__Input"
+      id={{id}}
+      name={{name}}
+      value={{value}}
+      disabled={{disabled}}
+      aria-invalid={{hasError}}
+      aria-describedby={{describedBy}}
+      onfocus={{action onFocus}}
+      onblur={{action onBlur}}
+      onchange={{action "handleChange"}}
+    >
+      {{!-- optionsMarkup --}}
+    </select>
+
+    <div class="Polaris-Select__Content" aria-hidden>
+      {{#if labelInline}}
+        <span class="Polaris-Select__InlineLabel">{{label}}</span>
+      {{/if}}
+
+      <span class="Polaris-Select__SelectedOption">{{!-- selectedOption --}}</span>
+      <span class="Polaris-Select__Icon">
+        {{polaris-icon source="arrow-up-down"}}
+      </span>
+    </div>
+    <div class="Polaris-Select__Backdrop"></div>
+  </div>
+{{/polaris-labelled}}
