@@ -60,6 +60,8 @@ export default Component.extend({
    */
   connectedTop: false,
 
+  'data-test-button-group': true,
+
   didRender() {
     this._super(...arguments);
 
@@ -67,6 +69,8 @@ export default Component.extend({
     this.$()
       .children()
       .not('div.Polaris-ButtonGroup__Item')
-      .wrap('<div class="Polaris-ButtonGroup__Item"></div>');
+      .wrap(
+        '<div data-test-button-group-item class="Polaris-ButtonGroup__Item"></div>'
+      );
   },
 });

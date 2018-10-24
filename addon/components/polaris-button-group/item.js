@@ -40,6 +40,8 @@ export default Component.extend({
    */
   focused: false,
 
+  'data-test-button-group-item': true,
+
   /**
    * Events.
    */

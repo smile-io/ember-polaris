@@ -11,11 +11,8 @@ moduleForComponent(
   }
 );
 
-const buttonGroupSelector = 'div.Polaris-ButtonGroup';
-const buttonGroupItemSelector = buildNestedSelector(
-  buttonGroupSelector,
-  'div.Polaris-ButtonGroup__Item'
-);
+const buttonGroupSelector = '[data-test-button-group]';
+const buttonGroupItemSelector = '[data-test-button-group-item]';
 const buttonSelector = buildNestedSelector(
   buttonGroupItemSelector,
   'button.Polaris-Button'
@@ -54,6 +51,40 @@ test('it renders the correct HTML with segmented attribute', function(assert) {
   assert.notOk(
     buttonGroup.classList.contains('Polaris-ButtonGroup--segmented'),
     'segmented=true - does not add the segmented class'
+  );
+});
+
+test('it renders the correct HTML with fullWidth attribute', function(assert) {
+  this.set('fullWidth', true);
+  this.render(hbs`{{polaris-button-group fullWidth=fullWidth}}`);
+
+  const buttonGroup = find(buttonGroupSelector);
+  assert.ok(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--fullWidth'),
+    'fullWidth=true - adds the fullWidth class'
+  );
+
+  this.set('fullWidth', false);
+  assert.notOk(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--fullWidth'),
+    'fullWidth=false - does not add the fullWidth class'
+  );
+});
+
+test('it renders the correct HTML with connectedTop attribute', function(assert) {
+  this.set('connectedTop', true);
+  this.render(hbs`{{polaris-button-group connectedTop=connectedTop}}`);
+
+  const buttonGroup = find(buttonGroupSelector);
+  assert.ok(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--connectedTop'),
+    'connectedTop=true - adds the connectedTop class'
+  );
+
+  this.set('connectedTop', false);
+  assert.notOk(
+    buttonGroup.classList.contains('Polaris-ButtonGroup--connectedTop'),
+    'connectedTop=false - does not add the connectedTop class'
   );
 });
 
