@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { warn } from '@ember/debug';
 import layout from '../templates/components/polaris-popover';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 const { ViewUtils } = Ember;
 const ABOVE = 'above';
@@ -171,7 +172,7 @@ export default Component.extend({
     }
 
     let [activator] = activators;
-    let { top, bottom } = activator.getBoundingClientRect();
+    let { top, bottom } = getRectForNode(activator);
     let windowHeight = window.innerHeight;
     let bottomSpace = windowHeight - bottom;
 

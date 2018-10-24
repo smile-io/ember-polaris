@@ -4,6 +4,7 @@ import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import tokens from '@shopify/polaris-tokens';
 import stackedContent from '@smile-io/ember-polaris/utils/breakpoints';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 export default Service.extend(
   ContextBoundEventListenersMixin,
@@ -11,14 +12,14 @@ export default Service.extend(
   {
     /**
      * @property stickyItems
-     * @type {Array}
+     * @type {Object[]}
      * @private
      */
     stickyItems: EmberArray(),
 
     /**
      * @property stuckItems
-     * @type {Array}
+     * @type {Object[]}
      * @private
      */
     stuckItems: EmberArray(),
@@ -73,7 +74,7 @@ export default Service.extend(
 
       let container = this.get('container');
       let scrollTop = scrollTopFor(container);
-      let containerTop = container.getBoundingClientRect().top;
+      let containerTop = getRectForNode(container).top;
 
       stickyItems.forEach((stickyItem) => {
         let { handlePositioning } = stickyItem;
@@ -88,6 +89,17 @@ export default Service.extend(
 
         handlePositioning(sticky, top, left, width);
       });
+
+      /*
+       * This call isn't in the original code, but there seems to be
+       * a difference between how the throttle implementations work
+       * between the React and Ember worlds, which meant that sticky
+       * items in Ember could end up in the wrong position after a
+       * scroll/resize event, until the next such event. This is a
+       * workaround that ensures that no sticky items will be left
+       * in the wrong positions more than 50ms after these events.
+       */
+      this.debounceTask('manageStickyItems', 50);
     },
 
     evaluateStickyItem(stickyItem, scrollTop, containerTop) {
@@ -114,19 +126,19 @@ export default Service.extend(
 
       let scrollPosition = scrollTop + stickyOffset;
       let placeHolderNodeCurrentTop =
-        placeHolderNode.getBoundingClientRect().top - containerTop + scrollTop;
+        getRectForNode(placeHolderNode).top - containerTop + scrollTop;
       let top = containerTop + stickyOffset;
-      let width = placeHolderNode.getBoundingClientRect().width;
-      let left = placeHolderNode.getBoundingClientRect().left;
+      let width = getRectForNode(placeHolderNode).width;
+      let left = getRectForNode(placeHolderNode).left;
 
       let sticky;
 
       if (boundingElement == null) {
         sticky = scrollPosition >= placeHolderNodeCurrentTop;
       } else {
-        let stickyItemHeight = stickyNode.getBoundingClientRect().height;
+        let stickyItemHeight = getRectForNode(stickyNode).height;
         let stickyItemBottomPosition =
-          boundingElement.getBoundingClientRect().bottom -
+          getRectForNode(boundingElement).bottom -
           stickyItemHeight +
           scrollTop -
           containerTop;
@@ -176,14 +188,14 @@ export default Service.extend(
       let offset = 0;
       let count = 0;
       let stuckNodesLength = stuckItemsLength;
-      let nodeRect = node.getBoundingClientRect();
+      let nodeRect = getRectForNode(node);
 
       while (count < stuckNodesLength) {
         let stuckNode = stuckItems[count].stickyNode;
         if (stuckNode !== node) {
-          let stuckNodeRect = stuckNode.getBoundingClientRect();
+          let stuckNodeRect = getRectForNode(stuckNode);
           if (!horizontallyOverlaps(nodeRect, stuckNodeRect)) {
-            offset += stuckNode.getBoundingClientRect().height;
+            offset += getRectForNode(stuckNode).height;
           }
         } else {
           break;
@@ -205,7 +217,7 @@ export default Service.extend(
     init() {
       this._super(...arguments);
 
-      let container = this.get('container');
+      let container = this.get('container') || document;
       if (container) {
         this.setContainer(container);
       }

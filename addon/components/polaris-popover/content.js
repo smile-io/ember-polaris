@@ -2,6 +2,7 @@ import Ember$ from 'jquery';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
 import layout from '../../templates/components/polaris-popover/content';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 export default Component.extend({
   tagName: '',
@@ -70,10 +71,10 @@ export default Component.extend({
       return;
     }
 
-    const triggerRect = trigger.getBoundingClientRect();
+    const triggerRect = getRectForNode(trigger);
     const left =
       triggerRect.width / 2 +
-      (triggerRect.left - content.getBoundingClientRect().left);
+      (triggerRect.left - getRectForNode(content).left);
     Ember$('div.Polaris-Popover__Tip', content).css({ left });
 
     // Set the height explicitly so the popover displays on Safari.
@@ -82,7 +83,7 @@ export default Component.extend({
       return;
     }
     const paneContent = pane.firstElementChild;
-    const paneContentRect = paneContent.getBoundingClientRect();
+    const paneContentRect = getRectForNode(paneContent);
     Ember$('div.Polaris-Popover__Content', content).css({
       height: paneContentRect.height,
     });

@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-sticky';
-import { computedIdVariation } from '../utils/id';
+import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 /**
  * Undocumented Polaris sticky component.
@@ -97,11 +99,11 @@ export default Component.extend({
 
     if ((stick && !isSticky) || (!stick && isSticky)) {
       this.adjustPlaceHolderNode(stick);
-      this.setState({ isSticky: !isSticky });
+      this.toggleProperty('isSticky');
     }
 
     let style = stick
-      ? `position: fixed; top: ${top}px; left: ${left}px; width: ${width}px;`
+      ? htmlSafe(`position: fixed; top: ${top}px; left: ${left}px; width: ${width}px;`)
       : null;
 
     this.set('style', style);
@@ -114,7 +116,7 @@ export default Component.extend({
     );
     if (placeHolderNode && stickyNode) {
       placeHolderNode.style.paddingBottom = add
-        ? `${stickyNode.getBoundingClientRect().height}px`
+        ? `${getRectForNode(stickyNode).height}px`
         : '0px';
     }
   },
@@ -124,15 +126,28 @@ export default Component.extend({
 
     let stickyManager = this.get('stickyManager');
 
+    let {
+      stickyNode,
+      placeHolderNode,
+      offset,
+      boundingElement,
+      disableWhenStacked,
+    } = this.getProperties(
+      'stickyNode',
+      'placeHolderNode',
+      'offset',
+      'boundingElement',
+      'disableWhenStacked'
+    );
     stickyManager.registerStickyItem(
-      this.getProperties(
-        'stickyNode',
-        'placeHolderNode',
-        'handlePositioning',
-        'offset',
-        'boundingElement',
-        'disableWhenStacked'
-      )
+      {
+        stickyNode,
+        placeHolderNode,
+        handlePositioning: (...positioningArgs) => this.handlePositioning(...positioningArgs),
+        offset,
+        boundingElement,
+        disableWhenStacked,
+      }
     );
   },
 
