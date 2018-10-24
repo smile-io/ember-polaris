@@ -180,14 +180,13 @@ export default Service.extend(
 
     getOffset(node) {
       let stuckItems = this.get('stuckItems');
-      let stuckItemsLength = stuckItems.get('length');
-      if (stuckItemsLength === 0) {
+      let stuckNodesLength = stuckItems.get('length');
+      if (stuckNodesLength === 0) {
         return 0;
       }
 
       let offset = 0;
       let count = 0;
-      let stuckNodesLength = stuckItemsLength;
       let nodeRect = getRectForNode(node);
 
       while (count < stuckNodesLength) {
