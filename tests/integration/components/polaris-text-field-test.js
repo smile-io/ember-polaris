@@ -16,9 +16,6 @@ const label = 'Text field label';
 const helpText = 'Text field help text';
 const prefix = 'Text field prefix';
 const suffix = 'Text field suffix';
-// const left = 'Text field connected left';
-// const right = 'Text field connected right';
-// const error = 'Text field error message';
 
 const textFieldSelector = '[data-test-labelled="text-field"]';
 const errorSelector = '[data-test-labelled-error]';
@@ -33,6 +30,9 @@ const spinnerSelector = '[data-test-text-field-spinner]';
 const spinnerIncrButtonSelector = '[data-test-text-field-spinner-incr-button]';
 const spinnerDecrButtonSelector = '[data-test-text-field-spinner-decr-button]';
 const inlineErrorSelector = '[data-test-inline-error]';
+const connectedSelector = '[data-test-connected]';
+const connectedLeftSelector = '[data-test-connected-item="left"]';
+const connectedRightSelector = '[data-test-connected-item="right"]';
 
 module('Integration | Component | polaris-text-field', function(hooks) {
   setupRenderingTest(hooks);
@@ -587,41 +587,6 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     assert.dom(inputSelector).hasAttribute('aria-controls', 'Aria controls');
   });
 
-  //   test('it renders an actionable link when a `labelAction` hash is present', async function(assert) {
-  //     this.setProperties({
-  //       labelActionText: label,
-  //       labelActionCalled: false,
-  //       labelAction() {
-  //         this.set('labelActionCalled', true);
-  //       },
-  //     });
-
-  //     await render(hbs`
-  //       {{polaris-text-field
-  //         label="label"
-  //         labelAction=(hash
-  //           text=labelActionText
-  //           onAction=(action labelAction)
-  //         )
-  //       }}
-  //     `);
-
-  //     const labelButton = find(labelActionButtonSelector);
-  //     assert.ok(labelButton, 'it renders a button in the label');
-  //     assert.equal(
-  //       labelButton.textContent.trim(),
-  //       label,
-  //       'the label button displays the passed-in content'
-  //     );
-
-  //     await triggerEvent(labelButton, 'click');
-
-  //     assert.ok(
-  //       this.get('labelActionCalled'),
-  //       'the label action is called when the label button is clicked'
-  //     );
-  //   });
-
   test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function(assert) {
     this.setProperties({
       prefix,
@@ -673,55 +638,34 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     );
   });
 
+  test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        connectedLeft=(component "polaris-text-field" label="Left connected")
+        connectedRight=(component "polaris-text-field" label="Right connected")
+      }}
+    `);
+
+    assert
+      .dom(buildNestedSelector(textFieldSelector, connectedSelector))
+      .exists('renders a connected component');
+    assert
+      .dom(connectedLeftSelector)
+      .hasText('Left connected', 'render connected left correctly');
+    assert
+      .dom(connectedRightSelector)
+      .hasText('Right connected', 'render connected right correctly');
+  });
+
   test('it does not blocks click events on othe elements', async function(assert) {
     await render(hbs`
       {{polaris-text-field}}
       {{polaris-button onClick=(action (mut value) true)}}
     `);
 
-    await typeIn(inputSelector, 'Some text');
+    await typeIn('input', 'Some text');
     await click('.Polaris-Button');
 
     assert.ok(this.value);
   });
-
-  //   test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
-  //     this.setProperties({
-  //       left,
-  //       right,
-  //     });
-
-  //     await render(hbs`
-  //       {{polaris-text-field
-  //         connectedLeft=left
-  //         connectedRight=right
-  //       }}
-  //     `);
-
-  //     assert.ok(
-  //       find(connectedContainerSelector),
-  //       'it renders a polaris-text-field/connected component'
-  //     );
-
-  //     let leftNode = find(connectedLeftSelector);
-  //     assert.ok(leftNode, 'it renders the connected left element');
-  //     assert.equal(
-  //       leftNode.textContent.trim(),
-  //       left,
-  //       'connected left value is correct'
-  //     );
-
-  //     let rightNode = find(connectedRightSelector);
-  //     assert.ok(rightNode, 'it renders the connected right element');
-  //     assert.equal(
-  //       rightNode.textContent.trim(),
-  //       right,
-  //       'connected right value is correct'
-  //     );
-
-  //     assert.ok(
-  //       find(connectedPrimaryInputSelector),
-  //       'the polaris text field is rendered inside the primary connected element'
-  //     );
-  //   });
 });
