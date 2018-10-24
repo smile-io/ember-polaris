@@ -103,7 +103,9 @@ export default Component.extend({
     }
 
     let style = stick
-      ? htmlSafe(`position: fixed; top: ${top}px; left: ${left}px; width: ${width}px;`)
+      ? htmlSafe(
+          `position: fixed; top: ${top}px; left: ${left}px; width: ${width}px;`
+        )
       : null;
 
     this.set('style', style);
@@ -139,16 +141,15 @@ export default Component.extend({
       'boundingElement',
       'disableWhenStacked'
     );
-    stickyManager.registerStickyItem(
-      {
-        stickyNode,
-        placeHolderNode,
-        handlePositioning: (...positioningArgs) => this.handlePositioning(...positioningArgs),
-        offset,
-        boundingElement,
-        disableWhenStacked,
-      }
-    );
+    stickyManager.registerStickyItem({
+      stickyNode,
+      placeHolderNode,
+      handlePositioning: (...positioningArgs) =>
+        this.handlePositioning(...positioningArgs),
+      offset,
+      boundingElement,
+      disableWhenStacked,
+    });
   },
 
   willDestroyElement() {

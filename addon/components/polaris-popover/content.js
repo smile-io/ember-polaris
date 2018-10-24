@@ -73,8 +73,7 @@ export default Component.extend({
 
     const triggerRect = getRectForNode(trigger);
     const left =
-      triggerRect.width / 2 +
-      (triggerRect.left - getRectForNode(content).left);
+      triggerRect.width / 2 + (triggerRect.left - getRectForNode(content).left);
     Ember$('div.Polaris-Popover__Tip', content).css({ left });
 
     // Set the height explicitly so the popover displays on Safari.
