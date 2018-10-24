@@ -126,19 +126,19 @@ export default Service.extend(
 
       let scrollPosition = scrollTop + stickyOffset;
       let placeHolderNodeCurrentTop =
-        getRectForNode(placeHolderNode).top - containerTop + scrollTop;
+        placeHolderNode.getBoundingClientRect().top - containerTop + scrollTop;
       let top = containerTop + stickyOffset;
-      let width = getRectForNode(placeHolderNode).width;
-      let left = getRectForNode(placeHolderNode).left;
+      let width = placeHolderNode.getBoundingClientRect().width;
+      let left = placeHolderNode.getBoundingClientRect().left;
 
       let sticky;
 
       if (boundingElement == null) {
         sticky = scrollPosition >= placeHolderNodeCurrentTop;
       } else {
-        let stickyItemHeight = getRectForNode(stickyNode).height;
+        let stickyItemHeight = stickyNode.getBoundingClientRect().height;
         let stickyItemBottomPosition =
-          getRectForNode(boundingElement).bottom -
+          boundingElement.getBoundingClientRect().bottom -
           stickyItemHeight +
           scrollTop -
           containerTop;
