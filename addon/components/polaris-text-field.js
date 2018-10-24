@@ -8,6 +8,7 @@ import { typeOf } from '@ember/utils';
 import { isPresent } from '@ember/utils';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import { getCode } from 'ember-keyboard';
 import layout from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
@@ -642,19 +643,19 @@ export default Component.extend(
       },
 
       handleKeyPress(event) {
-        let { key, which } = event;
+        let { key } = event;
         let type = this.get('type');
         let numbersSpec = /[\d.eE+-]$/;
 
         if (
           type !== 'number' ||
-          // which === Keys.ENTER ||
+          getCode(event) === 'Enter' ||
           key.match(numbersSpec)
         ) {
           return;
         }
 
-        // event.preventDefault();
+        event.preventDefault();
       },
     },
   }
