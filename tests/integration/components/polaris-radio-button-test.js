@@ -3,7 +3,6 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find, focus, click, blur } from 'ember-native-dom-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
-import buildNestedSelector from '../../helpers/build-nested-selector';
 
 // Mock the polaris-choice component to simplify testing what gets rendered.
 const MockPolarisChoiceComponent = Component.extend({
@@ -36,22 +35,10 @@ moduleForComponent(
 );
 
 const choiceSelector = 'label.Polaris-Choice';
-const radioButtonSelector = buildNestedSelector(
-  choiceSelector,
-  'span.Polaris-RadioButton'
-);
-const radioButtonInputSelector = buildNestedSelector(
-  radioButtonSelector,
-  'input.Polaris-RadioButton__Input[type="radio"]'
-);
-const radioButtonBackdropSelector = buildNestedSelector(
-  radioButtonSelector,
-  'span.Polaris-RadioButton__Backdrop'
-);
-const radioButtonIconSelector = buildNestedSelector(
-  radioButtonSelector,
-  'span.Polaris-RadioButton__Icon'
-);
+const radioButtonSelector = '[data-test-radio-button]';
+const radioButtonInputSelector = '[data-test-radio-button-input][type="radio"]';
+const radioButtonBackdropSelector = '[data-test-radio-button-backdrop]';
+const radioButtonIconSelector = '[data-test-radio-button-icon]';
 
 test('it renders the correct HTML', function(assert) {
   this.render(hbs`
