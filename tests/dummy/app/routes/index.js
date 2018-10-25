@@ -10,6 +10,10 @@ const samplePages = [
     text: 'Dropzone',
   },
   {
+    path: 'sticky',
+    text: 'Sticky',
+  },
+  {
     path: 'select',
     text: 'Select',
   },

@@ -4,6 +4,8 @@ import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
+import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-drop-zone';
 import State from '../-private/drop-zone-state';
 import {
@@ -13,7 +15,6 @@ import {
   mediumSizeWidthLimit,
   largeSizeWidthLimit,
 } from '../utils/drop-zone';
-import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
@@ -420,7 +421,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       function() {
         let node = this.get('node');
         let size = this.get('state.size');
-        let width = node.getBoundingClientRect().width;
+        let width = getRectForNode(node).width;
 
         if (width < smallSizeWidthLimit) {
           size = 'small';
