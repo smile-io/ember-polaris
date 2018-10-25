@@ -8,7 +8,11 @@ import layout from '../templates/components/polaris-button-group';
 export default Component.extend({
   classNames: ['Polaris-ButtonGroup'],
 
-  classNameBindings: ['segmented:Polaris-ButtonGroup--segmented'],
+  classNameBindings: [
+    'segmented:Polaris-ButtonGroup--segmented',
+    'fullWidth:Polaris-ButtonGroup--fullWidth',
+    'connectedTop:Polaris-ButtonGroup--connectedTop',
+  ],
 
   layout,
 
@@ -30,11 +34,33 @@ export default Component.extend({
    * Join buttons as segmented group
    *
    * @property segmented
-   * @type {bool}
+   * @type {Boolean}
    * @default false
    * @public
    */
   segmented: false,
+
+  /**
+   * Buttons will stretch/shrink to occupy the full width
+   *
+   * @property fullWidth
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  fullWidth: false,
+
+  /**
+   * Remove top left and right border radius
+   *
+   * @property connectedTop
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  connectedTop: false,
+
+  'data-test-button-group': true,
 
   didRender() {
     this._super(...arguments);
@@ -43,6 +69,8 @@ export default Component.extend({
     this.$()
       .children()
       .not('div.Polaris-ButtonGroup__Item')
-      .wrap('<div class="Polaris-ButtonGroup__Item"></div>');
+      .wrap(
+        '<div data-test-button-group-item class="Polaris-ButtonGroup__Item"></div>'
+      );
   },
 });

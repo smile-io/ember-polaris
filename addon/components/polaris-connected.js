@@ -27,6 +27,8 @@ export default Component.extend({
    */
   right: null,
 
+  dataTestConnected: true,
+
   /**
    * Whether or not a `left` or `right` connection has been passed-in
    *
