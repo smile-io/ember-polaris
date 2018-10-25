@@ -14,6 +14,7 @@ export default Component.extend({
    * Supported properties:
    *  - content
    *  - url (not currently supported)
+   *  - destructive
    *  - disabled
    *  - icon
    *  - image
@@ -37,6 +38,22 @@ export default Component.extend({
    * @default no-op
    */
   onAction() {},
+
+  itemClasses: computed('item.{destructive,disabled}', function() {
+    let classNames = ['Polaris-ActionList__Item'];
+    let item = this.get('item');
+    let { destructive, disabled } = item;
+
+    if (destructive) {
+      classNames.push('Polaris-ActionList--destructive');
+    }
+
+    if (disabled) {
+      classNames.push('Polaris-ActionList--disabled');
+    }
+
+    return classNames.join(' ');
+  }),
 
   imageBackgroundStyle: computed('item.image', function() {
     let url = this.get('item.image');

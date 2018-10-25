@@ -21,6 +21,7 @@
 - [#230](https://github.com/smile-io/ember-polaris/pull/230) [ENHANCEMENT] Add `fullWidth` and `connectedTop` to `polaris-button-group`
 - [#232](https://github.com/smile-io/ember-polaris/pull/232) [FEATURE] Add `polaris-select` component
 - [#234](https://github.com/smile-io/ember-polaris/pull/234) [UPDATE] Drop Ember 2.12 support
+- [#236](https://github.com/smile-io/ember-polaris/pull/236) [ENHANCEMENT] Add `destructive` attribute to `polaris-action-list/item`
 
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
