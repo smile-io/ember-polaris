@@ -256,7 +256,7 @@ export default Component.extend({
    * @type {Object[]}
    * @private
    */
-  normalizedOptions: computed(function() {
+  normalizedOptions: computed('options.[]', 'placeholder', function() {
     let options = this.get('options') || [];
 
     let normalizedOptions = options.map(normalizeOption);
