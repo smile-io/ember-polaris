@@ -20,16 +20,15 @@
       onchange={{action "handleChange"}}
     >
       {{#each normalizedOptions as |optionOrGroup|}}
-        {{!-- This is the same test as `isGroup` in the component's JS file. --}}
-        {{#if (not-eq optionOrGroup.options null)}}
+        {{#if (polaris-select/is-group optionOrGroup)}}
           <optgroup label={{optionOrGroup.title}}>
-            {{#each optionOrGroup.options as |option|}}
+            {{#each optionOrGroup.options as |opt|}}
               <option
-                value={{option.value}}
-                disabled={{option.disabled}}
-                hidden={{option.hidden}}
+                value={{opt.value}}
+                disabled={{opt.disabled}}
+                hidden={{opt.hidden}}
               >
-                {{option.label}}
+                {{opt.label}}
               </option>
             {{/each}}
           </optgroup>

@@ -1,7 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
+import { guidFor } from '@ember/object/internals';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
+import { isGroup } from '@smile-io/ember-polaris/helpers/polaris-select/is-group';
 import layout from '../templates/components/polaris-select';
 
 const PLACEHOLDER_VALUE = '';
@@ -111,10 +113,11 @@ export default Component.extend({
    *
    * @property id
    * @type {String}
-   * @default null
    * @public
    */
-  id: null,
+  id: computed(function() {
+    return guidFor(this);
+  }),
 
   /**
    * Name for form input
@@ -283,18 +286,14 @@ export default Component.extend({
   ).readOnly(),
 
   actions: {
-    handleChange({ value }) {
-      this.onChange(value, this.get('id'));
+    handleChange(e) {
+      this.onChange(e.target.value, this.get('id'));
     },
   },
 });
 
 function isString(option) {
   return typeof option === 'string';
-}
-
-function isGroup(option) {
-  return option.options != null;
 }
 
 function normalizeStringOption(option) {
