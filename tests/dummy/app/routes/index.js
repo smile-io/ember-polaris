@@ -14,6 +14,10 @@ const samplePages = [
     text: 'Sticky',
   },
   {
+    path: 'select',
+    text: 'Select',
+  },
+  {
     path: 'test',
     text: 'Go to test route',
   },

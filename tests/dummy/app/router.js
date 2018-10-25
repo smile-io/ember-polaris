@@ -16,8 +16,8 @@ Router.map(function() {
   });
 
   this.route('dropzone');
-
   this.route('sticky');
+  this.route('select');
 });
 
 export default Router;

@@ -9,7 +9,7 @@ import Ember from 'ember';
 // another component.
 //
 // Example - dynamically rendering a my-button component with some props:
-//   {{component-renderer
+//   {{component-proxy
 //     componentName="my-button"
 //     props=(hash
 //       buttonText="Click me"

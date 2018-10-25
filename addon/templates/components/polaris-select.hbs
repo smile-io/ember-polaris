@@ -1,0 +1,64 @@
+{{#polaris-labelled
+  id=_id
+  label=label
+  error=error
+  action=labelAction
+  labelHidden=(or labelInline labelHidden)
+  helpText=helpText
+}}
+  <div class={{className}}>
+    <select
+      class="Polaris-Select__Input"
+      id={{_id}}
+      name={{name}}
+      value={{selectedOption}}
+      disabled={{disabled}}
+      aria-invalid={{if hasError "true" "false"}}
+      aria-describedby={{describedBy}}
+      onfocus={{action onFocus}}
+      onblur={{action onBlur}}
+      onchange={{action "handleChange"}}
+    >
+      {{#each normalizedOptions as |optionOrGroup|}}
+        {{#if (polaris-select/is-group optionOrGroup)}}
+          <optgroup label={{optionOrGroup.title}}>
+            {{#each optionOrGroup.options as |opt|}}
+              <option
+                value={{opt.value}}
+                disabled={{opt.disabled}}
+                hidden={{opt.hidden}}
+              >
+                {{opt.label}}
+              </option>
+            {{/each}}
+          </optgroup>
+        {{else}}
+          <option
+            value={{optionOrGroup.value}}
+            disabled={{optionOrGroup.disabled}}
+            hidden={{optionOrGroup.hidden}}
+          >
+            {{optionOrGroup.label}}
+          </option>
+        {{/if}}
+      {{/each}}
+    </select>
+
+    <div class="Polaris-Select__Content" aria-hidden>
+      {{#if labelInline}}
+        <span class="Polaris-Select__InlineLabel">
+          {{label}}
+        </span>
+      {{/if}}
+
+      <span class="Polaris-Select__SelectedOption">
+        {{selectedOption}}
+      </span>
+
+      <span class="Polaris-Select__Icon">
+        {{polaris-icon source="arrow-up-down"}}
+      </span>
+    </div>
+    <div class="Polaris-Select__Backdrop"></div>
+  </div>
+{{/polaris-labelled}}
