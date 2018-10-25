@@ -143,7 +143,7 @@ export default Component.extend({
    * Display an error state
    *
    * @property error
-   * @type {Object|Boolean}
+   * @type {String|Component|Boolean}
    * @default null
    * @public
    */
@@ -287,7 +287,7 @@ export default Component.extend({
 
   actions: {
     handleChange(e) {
-      this.onChange(e.target.value, this.get('id'));
+      this.onChange(e.currentTarget.value, this.get('id'));
     },
   },
 });

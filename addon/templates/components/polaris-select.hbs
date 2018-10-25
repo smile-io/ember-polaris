@@ -11,9 +11,9 @@
       class="Polaris-Select__Input"
       id={{id}}
       name={{name}}
-      value={{value}}
+      value={{selectedOption}}
       disabled={{disabled}}
-      aria-invalid={{hasError}}
+      aria-invalid={{if hasError "true" "false"}}
       aria-describedby={{describedBy}}
       onfocus={{action onFocus}}
       onblur={{action onBlur}}
