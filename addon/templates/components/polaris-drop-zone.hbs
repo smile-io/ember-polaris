@@ -1,60 +1,85 @@
-{{#if showDragOverlay}}
-  <div class="Polaris-DropZone__Overlay">
-    {{#polaris-stack vertical=true spacing="tight"}}
-      {{polaris-icon color="indigo" source=iconDragDrop}}
+{{! template-lint-disable no-invalid-interactive }}
 
-      {{#if (eq state.size "extraLarge")}}
-        {{polaris-display-text
-          size="small"
-          tagName="p"
-          text=state.overlayText
-        }}
-      {{else if (or (eq state.size "medium") (eq state.size "large"))}}
-        {{polaris-caption text=state.overlayText}}
+{{#with (if label
+  (component "polaris-labelled"
+    id=id
+    label=label
+    labelHidden=labelHidden
+    action=labelAction
+  )
+  (component "wrapper-element"
+    tagName=""
+  )
+) as |wrapper|}}
+  {{#component wrapper}}
+    <div
+      data-test-drop-zone
+      class={{dropZoneClasses}}
+      aria-disabled={{ariaDisabled}}
+      onclick={{action "handleClick"}}
+      ondragstart={{action "handleDragStart"}}
+    >
+      {{#if showDragOverlay}}
+        <div data-test-drop-zone-overlay class="Polaris-DropZone__Overlay">
+          {{#polaris-stack vertical=true spacing="tight"}}
+            {{polaris-icon color="indigo" source=iconDragDrop}}
+
+            {{#if (eq state.size "extraLarge")}}
+              {{polaris-display-text
+                size="small"
+                tagName="p"
+                text=state.overlayText
+              }}
+            {{else if (or (eq state.size "medium") (eq state.size "large"))}}
+              {{polaris-caption text=state.overlayText}}
+            {{/if}}
+          {{/polaris-stack}}
+        </div>
       {{/if}}
-    {{/polaris-stack}}
-  </div>
-{{/if}}
 
-{{#if (and state.dragging state.error)}}
-  <div class="Polaris-DropZone__Overlay">
-    {{#polaris-stack vertical=true spacing="tight"}}
-      {{polaris-icon color="red" source=iconAlertCircle}}
+      {{#if (and state.dragging state.error)}}
+        <div data-test-drop-zone-overlay class="Polaris-DropZone__Overlay">
+          {{#polaris-stack vertical=true spacing="tight"}}
+            {{polaris-icon color="red" source=iconAlertCircle}}
 
-      {{#if (eq state.size "extraLarge")}}
-        {{polaris-display-text
-          size="small"
-          tagName="p"
-          text=state.errorOverlayText
-        }}
-      {{else if (or (eq state.size "medium") (eq state.size "large"))}}
-        {{polaris-caption text=state.errorOverlayText}}
+            {{#if (eq state.size "extraLarge")}}
+              {{polaris-display-text
+                size="small"
+                tagName="p"
+                text=state.errorOverlayText
+              }}
+            {{else if (or (eq state.size "medium") (eq state.size "large"))}}
+              {{polaris-caption text=state.errorOverlayText}}
+            {{/if}}
+          {{/polaris-stack}}
+        </div>
       {{/if}}
-    {{/polaris-stack}}
-  </div>
-{{/if}}
 
-<div class="Polaris-DropZone__Container">
-  {{yield
-    (hash
-      fileUpload=(component "polaris-drop-zone/file-upload"
-        context=(hash
-          type=(readonly state.type)
-          size=(readonly state.size)
-        )
-      )
-    )
-  }}
-</div>
+      <div data-test-drop-zone-container class="Polaris-DropZone__Container">
+        {{yield
+          (hash
+            fileUpload=(component "polaris-drop-zone/file-upload"
+              context=(hash
+                type=(readonly state.type)
+                size=(readonly state.size)
+              )
+            )
+          )
+        }}
+      </div>
 
-{{#polaris-visually-hidden}}
-  <input
-    id={{concat elementId "-input"}}
-    type="file"
-    autocomplete="off"
-    accept={{accept}}
-    disabled={{disabled}}
-    multiple={{allowMultiple}}
-    onchange={{action handleDrop}}
-  >
-{{/polaris-visually-hidden}}
+      {{#polaris-visually-hidden}}
+        <input
+          data-test-drop-zone-hidden-input
+          id={{concat state.id "-input"}}
+          type="file"
+          autocomplete="off"
+          accept={{accept}}
+          disabled={{disabled}}
+          multiple={{allowMultiple}}
+          onchange={{action handleDrop}}
+        >
+      {{/polaris-visually-hidden}}
+    </div>
+  {{/component}}
+{{/with}}

@@ -20,4 +20,6 @@ export default Component.extend({
    * @default: null
    */
   text: null,
+
+  'data-test-caption': true,
 });
