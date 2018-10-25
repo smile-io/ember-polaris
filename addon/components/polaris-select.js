@@ -12,8 +12,20 @@ export default Component.extend({
   /**
    * List of options or option groups to choose from
    *
+   * Options may be either simple string values, or
+   * objects with the following properties:
+   *
+   *  value: String. Machine value of the option; this is the value passed to `onChange`
+   *  label: String. Human-readable text for the option
+   *  disabled: Boolean. Option will be visible, but not selectable
+   *
+   * Groups are represented by objects with these properties:
+   *
+   *  title: String. Title for the group
+   *  options: (String|Object)[]. List of options
+   *
    * @property options
-   * @type {Object[]}
+   * @type {(String|Object)[]}
    * @default null
    * @public
    */
@@ -31,6 +43,11 @@ export default Component.extend({
 
   /**
    * Adds an action to the label
+   *
+   * Object with the following optional properties:
+   *
+   *  text: String. Content the action displays
+   *  onAction: Function. Callback when an action takes place
    *
    * @property labelAction
    * @type {Object}
