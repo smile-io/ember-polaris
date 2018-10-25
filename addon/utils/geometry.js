@@ -7,7 +7,7 @@ export function getRectForNode(node) {
       height: window.innerHeight,
     };
   }
-  var rect = node.getBoundingClientRect();
+  let rect = node.getBoundingClientRect();
   return {
     top: rect.top,
     left: rect.left,
