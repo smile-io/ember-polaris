@@ -113,11 +113,10 @@ export default Component.extend({
    *
    * @property id
    * @type {String}
+   * @default null
    * @public
    */
-  id: computed(function() {
-    return guidFor(this);
-  }),
+  id: null,
 
   /**
    * Name for form input
@@ -189,6 +188,25 @@ export default Component.extend({
   hasError: bool('error').readOnly(),
 
   /**
+   * Flag indicating whether an error is present
+   *
+   * @property hasError
+   * @type {Boolean}
+   * @private
+   */
+
+   /**
+    * Internal ID for form input, with a default value.
+    *
+    * @property id
+    * @type {String}
+    * @public
+    */
+   _id: computed('id', function() {
+     return this.get('id') || guidFor(this);
+   }).readOnly(),
+
+  /**
    * Class names for select element
    *
    * @property className
@@ -217,7 +235,7 @@ export default Component.extend({
    * @private
    */
   describedBy: computed('error', 'helpText', function() {
-    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let { error, helpText, _id: id } = this.getProperties('error', 'helpText', '_id');
     let describedBy = [];
 
     if (helpText) {
@@ -287,7 +305,7 @@ export default Component.extend({
 
   actions: {
     handleChange(e) {
-      this.onChange(e.currentTarget.value, this.get('id'));
+      this.onChange(e.currentTarget.value, this.get('_id'));
     },
   },
 });
