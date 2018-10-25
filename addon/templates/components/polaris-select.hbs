@@ -3,7 +3,7 @@
   label=label
   error=error
   action=labelAction
-  labelHidden=labelHidden
+  labelHidden=(or labelInline labelHidden)
   helpText=helpText
 }}
   <div class={{className}}>
@@ -19,15 +19,43 @@
       onblur={{action onBlur}}
       onchange={{action "handleChange"}}
     >
-      {{!-- optionsMarkup --}}
+      {{#each normalizedOptions as |optionOrGroup|}}
+        {{!-- This is the same test as `isGroup` in the component's JS file. --}}
+        {{#if (not-eq optionOrGroup.options null)}}
+          <optgroup label={{optionOrGroup.title}}>
+            {{#each optionOrGroup.options as |option|}}
+              <option
+                value={{option.value}}
+                disabled={{option.disabled}}
+                hidden={{option.hidden}}
+              >
+                {{option.label}}
+              </option>
+            {{/each}}
+          </optgroup>
+        {{else}}
+          <option
+            value={{optionOrGroup.value}}
+            disabled={{optionOrGroup.disabled}}
+            hidden={{optionOrGroup.hidden}}
+          >
+            {{optionOrGroup.label}}
+          </option>
+        {{/if}}
+      {{/each}}
     </select>
 
     <div class="Polaris-Select__Content" aria-hidden>
       {{#if labelInline}}
-        <span class="Polaris-Select__InlineLabel">{{label}}</span>
+        <span class="Polaris-Select__InlineLabel">
+          {{label}}
+        </span>
       {{/if}}
 
-      <span class="Polaris-Select__SelectedOption">{{!-- selectedOption --}}</span>
+      <span class="Polaris-Select__SelectedOption">
+        {{selectedOption}}
+      </span>
+
       <span class="Polaris-Select__Icon">
         {{polaris-icon source="arrow-up-down"}}
       </span>

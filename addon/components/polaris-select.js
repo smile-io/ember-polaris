@@ -4,6 +4,8 @@ import { bool } from '@ember/object/computed';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-select';
 
+const PLACEHOLDER_VALUE = '';
+
 export default Component.extend({
   layout,
 
@@ -209,9 +211,115 @@ export default Component.extend({
     return describedBy.length ? describedBy.join(' ') : undefined;
   }).readOnly(),
 
+  /**
+   * Options processed into a renderable state.
+   *
+   * @property normalizedOptions
+   * @type {Object[]}
+   * @private
+   */
+  normalizedOptions: computed(function() {
+    let options = this.get('options') || [];
+
+    let normalizedOptions = options.map(normalizeOption);
+
+    let placeholder = this.get('placeholder');
+    if (placeholder) {
+      normalizedOptions = [
+        {
+          label: placeholder,
+          value: PLACEHOLDER_VALUE,
+          disabled: true,
+        },
+        ...normalizedOptions,
+      ];
+    }
+
+    return normalizedOptions;
+  }).readOnly(),
+
+  /**
+   * Gets the text to display in the UI, for the currently selected option
+   *
+   * @property selectedOption
+   * @type {String}
+   * @private
+   */
+  selectedOption: computed(
+    'normalizedOptions.@each.value',
+    'value',
+    function() {
+      let { normalizedOptions: options, value } = this.getProperties(
+        'normalizedOptions',
+        'value'
+      );
+      let flatOptions = flattenOptions(options);
+      let selectedOption = flatOptions.find((option) => value === option.value);
+
+      if (selectedOption === undefined) {
+        // Get the first visible option (not the hidden placeholder)
+        selectedOption = flatOptions.find((option) => !option.hidden);
+      }
+
+      return selectedOption ? selectedOption.label : '';
+    }
+  ).readOnly(),
+
   actions: {
     handleChange({ value }) {
       this.onChange(value, this.get('id'));
     },
   },
 });
+
+function isString(option) {
+  return typeof option === 'string';
+}
+
+function isGroup(option) {
+  return option.options != null;
+}
+
+function normalizeStringOption(option) {
+  return {
+    label: option,
+    value: option,
+  };
+}
+
+/**
+ * Converts a string option (and each string option in a Group) into
+ * an Option object.
+ */
+function normalizeOption(option) {
+  if (isString(option)) {
+    return normalizeStringOption(option);
+  } else if (isGroup(option)) {
+    let { title, options } = option;
+    return {
+      title,
+      options: options.map((option) => {
+        return isString(option) ? normalizeStringOption(option) : option;
+      }),
+    };
+  }
+
+  return option;
+}
+
+/**
+ * Ungroups an options array
+ */
+function flattenOptions(options) {
+  let flatOptions = [];
+
+  options.forEach((optionOrGroup) => {
+    if (isGroup(optionOrGroup)) {
+      flatOptions = flatOptions.concat(optionOrGroup.options);
+    } else {
+      flatOptions.push(optionOrGroup);
+    }
+  });
+
+  return flatOptions;
+}
