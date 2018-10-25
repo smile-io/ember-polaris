@@ -29,6 +29,16 @@ export default Component.extend({
    */
   item: null,
 
+  /**
+   * Callback for the item when clicked
+   *
+   * @property onAction
+   * @public
+   * @type {function}
+   * @default no-op
+   */
+  onAction() {},
+
   itemClasses: computed('item.{destructive,disabled}', function() {
     let classNames = ['Polaris-ActionList__Item'];
     let item = this.get('item');
@@ -44,16 +54,6 @@ export default Component.extend({
 
     return classNames.join(' ');
   }),
-
-  /**
-   * Callback for the item when clicked
-   *
-   * @property onAction
-   * @public
-   * @type {function}
-   * @default no-op
-   */
-  onAction() {},
 
   imageBackgroundStyle: computed('item.image', function() {
     let url = this.get('item.image');
