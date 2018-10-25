@@ -71,6 +71,8 @@ export default Component.extend(
 
     ariaHidden: 'true',
 
+    'data-test-text-field-resizer': true,
+
     finalContents: computed('contents', function() {
       let contents = this.get('contents');
 
