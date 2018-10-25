@@ -108,6 +108,7 @@ export default Component.extend({
    */
   placeholder: null,
 
+  /* eslint smile-ember/order-in-components: 'off' */
   /**
    * ID for form input
    *
@@ -192,8 +193,9 @@ export default Component.extend({
    *
    * @property id
    * @type {String}
-   * @public
+   * @private
    */
+  // eslint disable smile-ember/order-in-components
   _id: computed('id', function() {
     return this.get('id') || guidFor(this);
   }).readOnly(),
