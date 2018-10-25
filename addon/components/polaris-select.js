@@ -9,6 +9,8 @@ import layout from '../templates/components/polaris-select';
 const PLACEHOLDER_VALUE = '';
 
 export default Component.extend({
+  tagName: '',
+
   layout,
 
   /**
