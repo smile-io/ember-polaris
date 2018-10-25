@@ -3,6 +3,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 
 function startDrag(event) {
@@ -140,7 +141,7 @@ export default Component.extend({
       return;
     }
 
-    const rect = element.getBoundingClientRect();
+    const rect = getRectForNode(element);
     moveHandler({
       x: clientX - rect.left,
       y: clientY - rect.top,

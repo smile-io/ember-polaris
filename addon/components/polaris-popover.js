@@ -3,6 +3,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { warn } from '@ember/debug';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-popover';
 
 const { ViewUtils } = Ember;
@@ -171,7 +172,7 @@ export default Component.extend({
     }
 
     let [activator] = activators;
-    let { top, bottom } = activator.getBoundingClientRect();
+    let { top, bottom } = getRectForNode(activator);
     let windowHeight = window.innerHeight;
     let bottomSpace = windowHeight - bottom;
 
