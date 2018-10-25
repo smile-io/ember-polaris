@@ -10,6 +10,10 @@ const samplePages = [
     text: 'Dropzone',
   },
   {
+    path: 'select',
+    text: 'Select',
+  },
+  {
     path: 'test',
     text: 'Go to test route',
   },
