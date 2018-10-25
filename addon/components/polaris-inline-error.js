@@ -26,8 +26,8 @@ export default Component.extend({
    */
   message: null,
 
-  'data-test-inline-error': true,
-  'data-test-inline-error-icon': true,
+  dataTestInlineError: true,
+  dataTestInlineErrorIcon: true,
 
   init() {
     this._super(...arguments);
