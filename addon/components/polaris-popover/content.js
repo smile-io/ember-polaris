@@ -1,8 +1,8 @@
 import Ember$ from 'jquery';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../../templates/components/polaris-popover/content';
-import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 export default Component.extend({
   tagName: '',

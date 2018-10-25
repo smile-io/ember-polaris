@@ -3,8 +3,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../../templates/components/polaris-color-picker/slidable';
-import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 function startDrag(event) {
   this.set('isDragging', true);

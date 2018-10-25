@@ -3,8 +3,8 @@ import { A as EmberArray } from '@ember/array';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import tokens from '@shopify/polaris-tokens';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import stackedContent from '@smile-io/ember-polaris/utils/breakpoints';
-import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 export default Service.extend(
   ContextBoundEventListenersMixin,

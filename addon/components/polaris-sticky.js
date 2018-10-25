@@ -2,9 +2,9 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-sticky';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
-import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 /**
  * Undocumented Polaris sticky component.

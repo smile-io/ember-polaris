@@ -3,8 +3,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { warn } from '@ember/debug';
+import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-popover';
-import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 
 const { ViewUtils } = Ember;
 const ABOVE = 'above';
