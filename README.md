@@ -170,6 +170,7 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Inline error](./docs/inline-error.md#inline-error)
 - [Radio button](./docs/radio-button.md#radio-button)
 - [Range slider](./docs/range-slider.md#range-slider)
+- [Select](./docs/select.md#select)
 - [Tag](./docs/tag.md#tag)
 - [Text field](./docs/text-field.md#text-field)
 
