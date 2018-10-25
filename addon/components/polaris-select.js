@@ -188,23 +188,15 @@ export default Component.extend({
   hasError: bool('error').readOnly(),
 
   /**
-   * Flag indicating whether an error is present
+   * Internal ID for form input, with a default value.
    *
-   * @property hasError
-   * @type {Boolean}
-   * @private
+   * @property id
+   * @type {String}
+   * @public
    */
-
-   /**
-    * Internal ID for form input, with a default value.
-    *
-    * @property id
-    * @type {String}
-    * @public
-    */
-   _id: computed('id', function() {
-     return this.get('id') || guidFor(this);
-   }).readOnly(),
+  _id: computed('id', function() {
+    return this.get('id') || guidFor(this);
+  }).readOnly(),
 
   /**
    * Class names for select element
@@ -235,7 +227,11 @@ export default Component.extend({
    * @private
    */
   describedBy: computed('error', 'helpText', function() {
-    let { error, helpText, _id: id } = this.getProperties('error', 'helpText', '_id');
+    let { error, helpText, _id: id } = this.getProperties(
+      'error',
+      'helpText',
+      '_id'
+    );
     let describedBy = [];
 
     if (helpText) {
