@@ -29,6 +29,7 @@ export default Component.extend({
 
   actions: {
     onItemAction(item, event) {
+      event.preventDefault();
       event.stopPropagation();
 
       invokeAction(item, 'onAction');
