@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const content = 'Content value';
@@ -61,5 +61,26 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
     assert
       .dom('[data-test-breadcrumbs] > button')
       .exists('it renders a button');
+  });
+
+  test('it does not append the click event to the invoked action args', async function(assert) {
+    this.set('breadcrumbs', [
+      {
+        content,
+        onAction(...invocationArgs) {
+          assert.step(`Action invoked with ${invocationArgs.length} args`);
+        },
+      },
+    ]);
+
+    await render(hbs`
+      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+    `);
+
+    await click('button');
+    assert.verifySteps(
+      ['Action invoked with 0 args'],
+      'action does not append click event to invoked action args'
+    );
   });
 });
