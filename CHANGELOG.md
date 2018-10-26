@@ -23,6 +23,7 @@
 - [#234](https://github.com/smile-io/ember-polaris/pull/234) [UPDATE] Drop Ember 2.12 support
 - [#236](https://github.com/smile-io/ember-polaris/pull/236) [ENHANCEMENT] Add `destructive` attribute to `polaris-action-list/item`
 - [#225](https://github.com/smile-io/ember-polaris/pull/225) [ENHANCEMENT] Update `polaris-drop-zone` to accept Polaris v2.11.0 labelled attributes
+- [#241](https://github.com/smile-io/ember-polaris/pull/241) [FIX] Remove click event from `polaris-breadcrumb` action invocation arguments
 
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
