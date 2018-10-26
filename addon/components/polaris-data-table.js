@@ -482,6 +482,12 @@ export default Component.extend(
       this.addEventHandlers();
     },
 
+    didUpdateAttrs() {
+      this._super(...arguments);
+
+      this.handleResize();
+    },
+
     actions: {
       navigateTable(direction) {
         let {
