@@ -425,4 +425,28 @@ module('Integration | Component | polaris action list', function(hooks) {
       .dom(items[0])
       .hasText('Section 3 item', 'third section item renders the correct text');
   });
+
+  test('item actions nested in a form do not trigger the form to submit', async function(assert) {
+    this.setProperties({
+      formSubmitted: false,
+      nestedActionFired: false,
+    });
+
+    await render(hbs`
+      <form onsubmit={{action (mut formSubmitted) true}}>
+        {{polaris-action-list
+          items=(array
+            (hash
+              text="Click me"
+              onAction=(action (mut nestedActionFired) true)
+            )
+          )
+        }}
+      </form>
+    `);
+
+    await click('li button');
+    assert.ok(this.get('nestedActionFired'), 'nested action was fired');
+    assert.notOk(this.get('formSubmitted'), 'form submit action is not fired');
+  });
 });
