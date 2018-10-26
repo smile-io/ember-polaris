@@ -49,10 +49,4 @@ export default Component.extend({
       ? breadcrumbs[breadcrumbsCount - 1]
       : null;
   }).readOnly(),
-
-  actions: {
-    fireAction(action) {
-      action();
-    },
-  },
 });

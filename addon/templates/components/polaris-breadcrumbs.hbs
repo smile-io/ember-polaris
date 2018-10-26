@@ -15,8 +15,8 @@
   <button
     class="Polaris-Breadcrumbs__Breadcrumb"
     type="button"
-    onclick={{action "fireAction" breadcrumb.onAction}}
     onmouseup={{handleMouseUpByBlurring}}
+    {{action breadcrumb.onAction}}
   >
     <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
       {{polaris-icon source="chevron-left"}}
