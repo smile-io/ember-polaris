@@ -25,6 +25,7 @@
 - [#225](https://github.com/smile-io/ember-polaris/pull/225) [ENHANCEMENT] Update `polaris-drop-zone` to accept Polaris v2.11.0 labelled attributes
 - [#241](https://github.com/smile-io/ember-polaris/pull/241) [FIX] Remove click event from `polaris-breadcrumb` action invocation arguments
 - [#237](https://github.com/smile-io/ember-polaris/pull/237) [FIX] Prevent event bubbling on `polaris-action-list/item`'s `onAction` method
+- [#244](https://github.com/smile-io/ember-polaris/pull/244) [FIX] Fix bug where `polaris-data-table` cell heights weren't calculating correctly
 
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
