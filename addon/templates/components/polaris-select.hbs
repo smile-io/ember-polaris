@@ -11,7 +11,7 @@
       class="Polaris-Select__Input"
       id={{_id}}
       name={{name}}
-      value={{selectedOption}}
+      value={{value}}
       disabled={{disabled}}
       aria-invalid={{if hasError "true" "false"}}
       aria-describedby={{describedBy}}
@@ -24,6 +24,7 @@
           <optgroup label={{optionOrGroup.title}}>
             {{#each optionOrGroup.options as |opt|}}
               <option
+                selected={{eq opt.value value}}
                 value={{opt.value}}
                 disabled={{opt.disabled}}
                 hidden={{opt.hidden}}
@@ -34,6 +35,7 @@
           </optgroup>
         {{else}}
           <option
+            selected={{eq optionOrGroup.value value}}
             value={{optionOrGroup.value}}
             disabled={{optionOrGroup.disabled}}
             hidden={{optionOrGroup.hidden}}
