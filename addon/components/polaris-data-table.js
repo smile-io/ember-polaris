@@ -441,7 +441,7 @@ export default Component.extend(
 
         if (!truncate) {
           return (heights = rows.map((row) => {
-            let fixedCell = row.hasChildNodes() && row.childNodes;
+            let fixedCell = row.hasChildNodes() && row.children[0];
             return Math.max(row.clientHeight, fixedCell.clientHeight);
           }));
         }
