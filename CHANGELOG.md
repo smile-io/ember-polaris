@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v2.0.0 (October 30, 2018)
 - [#168](https://github.com/smile-io/ember-polaris/pull/168) [INTERNAL] Upgrade to Ember CLI `3.4.2`
 - [#171](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.11.0`
 - [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
