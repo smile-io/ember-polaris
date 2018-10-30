@@ -1,4 +1,4 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -164,17 +164,12 @@ module('Integration | Component | polaris-select', function(hooks) {
   });
 
   module('value', function() {
-    /*
-     * This test is skipped for the time being as Ember and React
-     * seem to handle `select` element values slightly differently.
-     * TODO: figure out why this test fails.
-     */
-    skip('uses the passed value for the select', async function(assert) {
+    test('uses the passed value for the select', async function(assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
           value="Some value"
-          options=(array)
+          options=(array "Some other value" "Some value")
           onChange=(action (mut dummy))
         }}
       `);
