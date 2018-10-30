@@ -28,6 +28,7 @@ export default Component.extend({
   id: computed(function() {
     return guidFor(this);
   }),
+
   /**
    * Text for the label
    *
@@ -39,7 +40,7 @@ export default Component.extend({
   /**
    * Error to display beneath the label
    *
-   * @type {String|Component}
+   * @type {String|Component|Boolean}
    * @public
    */
   error: null,
@@ -69,6 +70,8 @@ export default Component.extend({
    */
   labelHidden: false,
 
+  dataTestLabelled: true,
+
   /**
    * ID for the error message div
    *
@@ -84,4 +87,15 @@ export default Component.extend({
    * @private
    */
   helpTextId: computedHelpTextId('id').readOnly(),
+
+  /**
+   * Flag indicating whether to render the error component
+   *
+   * @type {Boolean}
+   * @private
+   */
+  shouldRenderError: computed('error', function() {
+    let error = this.get('error');
+    return error && typeof error !== 'boolean';
+  }).readOnly(),
 });

@@ -3,10 +3,10 @@ import layout from '../../templates/components/polaris-date-picker/month';
 import { computed } from '@ember/object';
 import {
   monthsArray,
-  weekdaysArray,
   getWeeksForMonth,
   getNewRange,
   abbreviationForWeekday,
+  getWeekdaysOrdered,
 } from '../../utils/dates';
 
 export default Component.extend({
@@ -81,6 +81,14 @@ export default Component.extend({
   allowRange: false,
 
   /**
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default null
+   */
+  weekStartsOn: null,
+
+  /**
    * @property onChange
    * @public
    * @type {Function}
@@ -122,10 +130,12 @@ export default Component.extend({
 
   role: 'grid',
 
+  'data-test-date-picker-month': true,
+
   current: computed('month', 'year', function() {
-    let date = new Date();
-    let thisMonth = date.getMonth();
-    let thisYear = date.getFullYear();
+    let now = new Date();
+    let thisMonth = now.getMonth();
+    let thisYear = now.getFullYear();
 
     return thisMonth === this.get('month') && thisYear === this.get('year');
   }).readOnly(),
@@ -134,17 +144,24 @@ export default Component.extend({
     return monthsArray[this.get('month')];
   }).readOnly(),
 
-  weeks: computed('month', 'year', function() {
-    let { month, year } = this.getProperties('month', 'year');
+  weeks: computed('month', 'year', 'weekStartsOn', function() {
+    let { month, year, weekStartsOn } = this.getProperties(
+      'month',
+      'year',
+      'weekStartsOn'
+    );
 
-    return getWeeksForMonth(month, year);
+    return getWeeksForMonth(month, year, weekStartsOn);
   }).readOnly(),
 
-  weekdays: computed('current', function() {
-    let current = this.get('current');
+  weekdays: computed('current', 'weekStartsOn', function() {
+    let { current, weekStartsOn } = this.getProperties(
+      'current',
+      'weekStartsOn'
+    );
     let day = new Date().getDay();
 
-    return weekdaysArray.map((weekday, i) => {
+    return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
       return {
         title: abbreviationForWeekday(weekday),
         current: current && day === i,

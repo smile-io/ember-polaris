@@ -39,18 +39,22 @@
   {{#if sectioned}}
     {{#component section}}
       {{#if hasBlock}}
-        {{yield (hash
-          section=section
-        )}}
+        {{yield
+          (hash
+            section=section
+          )
+        }}
       {{else}}
         {{text}}
       {{/if}}
     {{/component}}
   {{else}}
     {{#if hasBlock}}
-      {{yield (hash
-        section=section
-      )}}
+      {{yield
+        (hash
+          section=section
+        )
+      }}
     {{else}}
       {{text}}
     {{/if}}

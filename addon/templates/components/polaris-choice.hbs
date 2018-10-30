@@ -1,9 +1,13 @@
-{{#with (component "polaris-choice/label"
-  inputId=inputId
-  label=label
-  labelComponent=labelComponent
-  labelHidden=labelHidden
-) as |choiceLabelComponent|}}
+{{#with
+  (component "polaris-choice/label"
+    inputId=inputId
+    label=label
+    labelComponent=labelComponent
+    labelHidden=labelHidden
+    disabled=disabled
+  )
+  as |choiceLabelComponent|
+}}
   {{#if hasDescription}}
     <div>
       {{#component choiceLabelComponent}}
@@ -11,17 +15,17 @@
       {{/component}}
 
       <div class="Polaris-Choice__Descriptions">
-        {{#if error}}
-          <div class="Polaris-Choice__Error" id={{errorId}}>
-            <div class="Polaris-Choice__ErrorIcon">
-              {{polaris-icon source="alert"}}
-            </div>
-            {{error}}
+        {{#if shouldRenderError}}
+          <div class="Polaris-Choice__Error">
+            {{polaris-inline-error
+              fieldID=inputId
+              message=error
+            }}
           </div>
         {{/if}}
 
         {{#if helpText}}
-          <div class="Polaris-Choice__HelpText" id={{helpTextId}}>
+          <div data-test-choice-help-text class="Polaris-Choice__HelpText" id={{helpTextId}}>
             {{helpText}}
           </div>
         {{/if}}

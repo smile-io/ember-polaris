@@ -1,163 +1,159 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-moduleForComponent(
-  'polaris-form-layout',
-  'Integration | Component | polaris form layout',
-  {
-    integration: true,
-  }
-);
+module('Integration | Component | polaris form layout', function(hooks) {
+  setupRenderingTest(hooks);
 
-const formLayoutSelector = 'div.Polaris-FormLayout';
+  const formLayoutSelector = '[data-test-form-layout]';
+  const formLayoutItemSelector = '[data-test-form-layout-item]';
+  const formLayoutGroupSelector = '[data-test-form-layout-group]';
+  const formLayoutGroupItemsSelector = '[data-test-form-layout-group-items]';
+  const formLayoutGroupTitleSelector = '[data-test-form-layout-group-title]';
+  const formLayoutGroupHelpTextSelector =
+    '[data-test-form-layout-group-helpText]';
 
-test('it renders the correct HTML in basic usage', function(assert) {
-  this.render(hbs`
-    {{#polaris-form-layout as |formLayout|}}
-      {{#formLayout.item}}
-        <div class="item">Item 1</div>
-      {{/formLayout.item}}
+  test('it renders the correct HTML in basic usage', async function(assert) {
+    await render(hbs`
+      {{#polaris-form-layout as |formLayout|}}
+        {{#formLayout.item}}
+          <div>Item 1</div>
+        {{/formLayout.item}}
 
-      <div class="item">Item 2</div>
-    {{/polaris-form-layout}}
-  `);
+        <div>Item 2</div>
+      {{/polaris-form-layout}}
+    `);
 
-  const formLayouts = findAll(formLayoutSelector);
-  assert.equal(formLayouts.length, 1, 'renders the correct number of layouts');
+    assert.dom(formLayoutSelector).exists('renders the form layout');
+    assert
+      .dom(buildNestedSelector(formLayoutSelector, formLayoutItemSelector))
+      .exists({ count: 2 }, 'renders the form layout items');
 
-  const formLayoutItemSelector = buildNestedSelector(
-    formLayoutSelector,
-    'div.Polaris-FormLayout__Item'
-  );
-  const formLayoutItems = findAll(formLayoutItemSelector);
-  assert.equal(
-    formLayoutItems.length,
-    2,
-    'renders the correct number of layout items'
-  );
+    // Check the first item.
+    assert
+      .dom(`${formLayoutItemSelector}:nth-child(1)`)
+      .hasText('Item 1', 'first item - has the correct content');
+    // Check the second item.
+    assert
+      .dom(`${formLayoutItemSelector}:nth-child(2)`)
+      .hasText('Item 2', 'second item - has the correct content');
+  });
 
-  // Check the first item.
-  let item = find('div.item', formLayoutItems[0]);
-  assert.ok(item, 'first item - renders');
-  assert.equal(
-    item.textContent.trim(),
-    'Item 1',
-    'first item - has the correct content'
-  );
+  test('it renders the correct HTML when using groups', async function(assert) {
+    this.setProperties({
+      title: 'Group title',
+      helpText: 'Group helpText',
+      firstGroupId: 'firstGroupId',
+    });
 
-  // Check the second item.
-  item = find('div.item', formLayoutItems[1]);
-  assert.ok(item, 'second item - renders');
-  assert.equal(
-    item.textContent.trim(),
-    'Item 2',
-    'second item - has the correct content'
-  );
-});
+    await render(hbs`
+      {{#polaris-form-layout as |formLayout|}}
+        {{#formLayout.group
+          id=firstGroupId
+          title=title
+          helpText=helpText
+        as |group|
+        }}
+          {{#group.item}}
+            <div>Default group item 1</div>
+          {{/group.item}}
 
-test('it renders the correct HTML when using groups', function(assert) {
-  this.render(hbs`
-    {{#polaris-form-layout as |formLayout|}}
-      {{#formLayout.group as |group|}}
-        {{#group.item}}
-          <div class="item">Default group item 1</div>
-        {{/group.item}}
+          <div>Default group item 2</div>
+        {{/formLayout.group}}
 
-        <div class="item">Default group item 2</div>
-      {{/formLayout.group}}
+        {{#formLayout.group condensed=true}}
+          <div>Condensed group item</div>
+        {{/formLayout.group}}
+      {{/polaris-form-layout}}
+    `);
 
-      {{#formLayout.group condensed=true}}
-        <div class="item">Condensed group item</div>
-      {{/formLayout.group}}
+    assert
+      .dom(formLayoutItemSelector)
+      .exists({ count: 3 }, 'renders the form layout items');
+    assert
+      .dom(formLayoutGroupSelector)
+      .exists({ count: 2 }, 'renders the form layout groups');
 
-      <div class="item">Ungrouped item</div>
-    {{/polaris-form-layout}}
-  `);
+    // Check the first group.
+    let firstGroupSelector = `${formLayoutGroupSelector}:nth-child(1)`;
+    assert
+      .dom(firstGroupSelector)
+      .hasNoClass(
+        'Polaris-FormLayout--condensed',
+        'first group - does not have condensed class'
+      );
+    assert
+      .dom(firstGroupSelector)
+      .hasAttribute(
+        'aria-describedby',
+        `${this.firstGroupId}HelpText`,
+        'first group - has correct aria-describedby'
+      );
+    assert
+      .dom(firstGroupSelector)
+      .hasAttribute(
+        'aria-labelledby',
+        `${this.firstGroupId}Title`,
+        'first group - has correct aria-labelledby'
+      );
+    assert
+      .dom(
+        buildNestedSelector(firstGroupSelector, formLayoutGroupTitleSelector)
+      )
+      .hasText(this.title, 'first group - renders group title');
+    assert
+      .dom(
+        buildNestedSelector(firstGroupSelector, formLayoutGroupHelpTextSelector)
+      )
+      .hasText(this.helpText, 'first group - renders group helpText');
 
-  const formLayouts = findAll(formLayoutSelector);
-  assert.equal(formLayouts.length, 1, 'renders the correct number of layouts');
+    let firstGroupItemSelector = buildNestedSelector(
+      firstGroupSelector,
+      formLayoutGroupItemsSelector,
+      formLayoutItemSelector
+    );
+    assert
+      .dom(firstGroupItemSelector)
+      .exists(
+        { count: 2 },
+        'first group - renders the correct number of items'
+      );
+    assert
+      .dom(`${firstGroupItemSelector}:nth-child(1)`)
+      .hasText(
+        'Default group item 1',
+        'first group item 1 - renders the correct content'
+      );
+    assert
+      .dom(`${firstGroupItemSelector}:nth-child(2)`)
+      .hasText(
+        'Default group item 2',
+        'first group item 2 - renders the correct content'
+      );
 
-  const itemSelector = buildNestedSelector(
-    'div.Polaris-FormLayout__Item',
-    'div.item'
-  );
-  const items = findAll(itemSelector);
-  assert.equal(items.length, 4, 'renders the correct number of items');
-
-  const formLayoutGroupSelector = buildNestedSelector(
-    formLayoutSelector,
-    'div[role="group"]'
-  );
-  const formLayoutGroups = findAll(formLayoutGroupSelector);
-  assert.equal(
-    formLayoutGroups.length,
-    2,
-    'renders the correct number of groups'
-  );
-
-  // Check the first group.
-  let group = formLayoutGroups[0];
-  assert.notOk(
-    group.classList.contains('Polaris-FormLayout--condensed'),
-    'first group - does not have condensed class'
-  );
-
-  const groupItemSelector = buildNestedSelector(
-    'div.Polaris-FormLayout__Items',
-    itemSelector
-  );
-  let groupItems = findAll(groupItemSelector, group);
-  assert.equal(
-    groupItems.length,
-    2,
-    'first group - renders the correct number of items'
-  );
-  assert.equal(
-    groupItems[0].textContent.trim(),
-    'Default group item 1',
-    'first group item 1 - renders the correct content'
-  );
-  assert.equal(
-    groupItems[1].textContent.trim(),
-    'Default group item 2',
-    'first group item 2 - renders the correct content'
-  );
-
-  // Check the second group.
-  group = formLayoutGroups[1];
-  assert.ok(
-    group.classList.contains('Polaris-FormLayout--condensed'),
-    'second group - has condensed class'
-  );
-
-  groupItems = findAll(groupItemSelector, group);
-  assert.equal(
-    groupItems.length,
-    1,
-    'second group - renders the correct number of items'
-  );
-  assert.equal(
-    groupItems[0].textContent.trim(),
-    'Condensed group item',
-    'second group - renders the correct content'
-  );
-
-  // Check the ungrouped content.
-  const ungroupedItemSelector = buildNestedSelector(
-    formLayoutSelector,
-    itemSelector
-  );
-  const ungroupedItems = findAll(ungroupedItemSelector);
-  assert.equal(
-    ungroupedItems.length,
-    1,
-    'ungrouped - renders the correct number of items'
-  );
-  assert.equal(
-    ungroupedItems[0].textContent.trim(),
-    'Ungrouped item',
-    'ungrouped - renders the correct content'
-  );
+    // Check the second group.
+    let secondGroupSelector = `${formLayoutGroupSelector}:nth-child(2)`;
+    assert
+      .dom(secondGroupSelector)
+      .hasClass(
+        'Polaris-FormLayout--condensed',
+        'second group - has condensed class'
+      );
+    let secondGroupItemSelector = buildNestedSelector(
+      secondGroupSelector,
+      formLayoutGroupItemsSelector,
+      formLayoutItemSelector
+    );
+    assert
+      .dom(secondGroupItemSelector)
+      .exists('second group - renders the correct number of items');
+    assert
+      .dom(`${secondGroupItemSelector}:nth-child(1)`)
+      .hasText(
+        'Condensed group item',
+        'second group item 1 - renders the correct content'
+      );
+  });
 });

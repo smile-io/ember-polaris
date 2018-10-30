@@ -5,9 +5,11 @@
   labelHidden=labelHidden
   helpText=helpText
   error=error
+  disabled=disabled
 }}
   <span class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
     <input
+      data-test-checkbox-input
       type="checkbox"
       role="checkbox"
       id={{_id}}

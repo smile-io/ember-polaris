@@ -4,6 +4,8 @@ import layout from '../templates/components/polaris-form-layout';
 /**
  * Polaris form layout component.
  * See https://polaris.shopify.com/components/forms/form-layout
+ *
+ * @component polaris-form-layout
  */
 export default Component.extend({
   classNames: ['Polaris-FormLayout'],
@@ -20,6 +22,8 @@ export default Component.extend({
    */
   text: null,
 
+  'data-test-form-layout': true,
+
   didRender() {
     this._super(...arguments);
 
@@ -28,6 +32,8 @@ export default Component.extend({
       .children()
       .not('div[role="group"]')
       .not('div.Polaris-FormLayout__Item')
-      .wrap('<div class="Polaris-FormLayout__Item"></div>');
+      .wrap(
+        '<div class="Polaris-FormLayout__Item" data-test-form-layout-item></div>'
+      );
   },
 });

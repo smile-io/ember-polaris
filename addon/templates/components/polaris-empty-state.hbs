@@ -1,11 +1,16 @@
-<div class="Polaris-EmptyState__Section">
+<div data-test-empty-state-section class="Polaris-EmptyState__Section">
   <div class="Polaris-EmptyState__DetailsContainer">
-    {{#with (component "polaris-empty-state/details"
-      heading=heading
-      text=text
-      action=action
-      secondaryAction=secondaryAction
-    ) as |detailsComponent|}}
+    {{! template-lint-disable attribute-indentation}}
+    {{!-- TODO remove rule above once linter handles this correctly --}}
+    {{#with
+      (component "polaris-empty-state/details"
+        heading=heading
+        text=text
+        action=action
+        secondaryAction=secondaryAction
+      )
+      as |detailsComponent|
+    }}
       {{#if hasBlock}}
         {{#component detailsComponent}}
           {{yield}}
@@ -18,6 +23,12 @@
 
   <div class="Polaris-EmptyState__ImageContainer">
     {{!-- TODO: replace this with polaris-image when implemented. --}}
-    <img src={{image}} role="presentation" alt="" class="Polaris-EmptyState__Image">
+    <img
+      data-test-empty-state-image
+      role="presentation"
+      alt=""
+      class="Polaris-EmptyState__Image"
+      src={{image}}
+    >
   </div>
 </div>

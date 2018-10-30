@@ -1,17 +1,21 @@
 {{polaris-data-table/navigation
-  currentColumn=currentColumn
   columnVisibilityData=columnVisibilityData
+  isScrolledFarthestLeft=isScrolledFarthestLeft
+  isScrolledFarthestRight=isScrolledFarthestRight
   navigateTableLeft=(action "navigateTable" "left")
   navigateTableRight=(action "navigateTable" "right")
 }}
-
-{{! template-lint-disable table-groups }}
-<div class="Polaris-DataTable {{if collapsed "Polaris-DataTable--collapsed"}} {{if footerContent "Polaris-DataTable--hasFooter"}}">
+{{! template-lint-disable attribute-indentation }}
+{{!-- TODO remove rule above once linter handles this correctly --}}
+<div
+  class="Polaris-DataTable {{if collapsed "Polaris-DataTable--collapsed"}} {{if footerContent "Polaris-DataTable--hasFooter"}}"
+>
   <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
+    {{! template-lint-disable table-groups }}
     <table class="Polaris-DataTable__Table">
       <thead>
         <tr>
-          {{#each (polaris-data-table/insert-presentational-cell headings) as |heading headingIndex|}}
+          {{#each headings as |heading headingIndex|}}
             {{polaris-data-table/heading
               heading=heading
               headingIndex=headingIndex
@@ -20,7 +24,7 @@
               sortable=sortable
               sortedColumnIndex=(or sortedColumnIndex initialSortColumnIndex)
               sortDirection=sortDirection
-              contentTypes=contentTypes
+              contentTypes=columnContentTypes
               defaultSortDirection=defaultSortDirection
               defaultOnSort=(action "defaultOnSort")
             }}
@@ -29,7 +33,7 @@
 
         {{#if totals}}
           <tr>
-            {{#each (polaris-data-table/insert-presentational-cell totals) as |total index|}}
+            {{#each totals as |total index|}}
               {{polaris-data-table/total
                 total=total
                 index=index
@@ -50,7 +54,7 @@
             totals=totals
             heights=heights
             footerContent=footerContent
-            contentTypes=contentTypes
+            contentTypes=columnContentTypes
             truncate=truncate
           }}
         {{/each}}

@@ -1,0 +1,45 @@
+{{!--
+  Ember port of the React test at https://codesandbox.io/s/pmonqjp3q7
+--}}
+
+{{#polaris-page title="Sticky testing"}}
+  {{#polaris-layout as |layout|}}
+    {{#layout.section}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+      {{#polaris-card title="Order details" sectioned=true}}
+        <p>View a summary of your order.</p>
+      {{/polaris-card}}
+    {{/layout.section}}
+
+    {{#layout.section secondary=true}}
+      {{#polaris-sticky}}
+        {{#polaris-card title="Tags" sectioned=true subdued=true}}
+          <p>Add tags to your order.</p>
+        {{/polaris-card}}
+      {{/polaris-sticky}}
+    {{/layout.section}}
+  {{/polaris-layout}}
+{{/polaris-page}}

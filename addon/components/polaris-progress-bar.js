@@ -9,6 +9,8 @@ const defaultSize = 'medium';
 /**
  * Polaris progress bar component.
  * See https://polaris.shopify.com/components/feedback-indicators/progress-bar
+ *
+ * @component polaris-progress-bar
  */
 export default Component.extend({
   classNames: ['Polaris-ProgressBar'],
@@ -35,6 +37,8 @@ export default Component.extend({
    * @default: 'medium'
    */
   size: defaultSize,
+
+  'data-test-progress-bar': true,
 
   /**
    * @private

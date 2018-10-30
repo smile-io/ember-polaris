@@ -14,9 +14,13 @@
       {{/polaris-text-container}}
 
       <div class="Polaris-CalloutCard__Buttons">
-        {{#with (component "polaris-button"
-          text=primaryAction.text
-          onClick=(action primaryAction.onAction))
+        {{! template-lint-disable attribute-indentation }}
+        {{!-- TODO remove rule above once linter handles this correctly --}}
+        {{#with
+          (component "polaris-button"
+            text=primaryAction.text
+            onClick=(action primaryAction.onAction)
+          )
           as |primaryButton|
         }}
           {{#if secondaryAction}}

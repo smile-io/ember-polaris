@@ -17,15 +17,20 @@
     Note that we do not pass the `onClick` action in here because it causes
     the template to blow up if no primary action is supplied.
   --}}
-  {{#with (if primaryAction
-    (component "polaris-button"
-      primary=true
-      text=primaryAction.text
-      disabled=primaryAction.disabled
-      loading=primaryAction.loading
+  {{! template-lint-disable attribute-indentation }}
+  {{!-- TODO remove rule above once linter handles this correctly --}}
+  {{#with
+    (if primaryAction
+      (component "polaris-button"
+        primary=shouldRenderPrimaryActionAsPrimary
+        text=primaryAction.text
+        disabled=primaryAction.disabled
+        loading=primaryAction.loading
+      )
+      (component "wrapper-element" tagName="")
     )
-    (component "wrapper-element" tagName="")
-  ) as |primaryActionButton|}}
+    as |primaryActionButton|
+  }}
     {{!-- Add a "title and actions" wrapper div if we have a primary action. --}}
     {{#wrapper-element
       tagName=(if primaryAction "div" "")
@@ -35,6 +40,10 @@
         {{#polaris-display-text tagName="h1" size="large"}}
           {{title}}
         {{/polaris-display-text}}
+
+        {{#if titleMetadata}}
+          {{render-content titleMetadata}}
+        {{/if}}
       </div>
 
       <div class="Polaris-Page__Actions">

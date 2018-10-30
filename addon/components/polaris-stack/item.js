@@ -26,4 +26,6 @@ export default Component.extend({
    * @public
    */
   fill: false,
+
+  'data-test-stack-item': true,
 });

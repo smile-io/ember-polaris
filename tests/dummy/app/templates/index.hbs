@@ -1,5 +1,11 @@
 {{#polaris-page
   title="This is the application route"
+  breadcrumbs=(array
+    (hash
+      content="Test Route"
+      url="/test"
+    )
+  )
   primaryAction=(hash
     text="Primary"
     onAction=(action (mut primaryClicked) true)
@@ -15,27 +21,26 @@
     )
   )
 }}
-  <div>
-    {{#link-to "test"}}
-      Go to test route
-    {{/link-to}}
-  </div>
 
-  <div>
-    {{#link-to "test.child"}}
-      Go to child route
-    {{/link-to}}
-  </div>
-
-  <div>
-    {{#link-to "dropzone"}}
-      Dropzone
-    {{/link-to}}
-  </div>
+  {{#polaris-list as |list|}}
+    {{#each model as |testPage|}}
+      {{#list.item}}
+        {{#link-to testPage.path}}
+          {{testPage.text}}
+        {{/link-to}}
+      {{/list.item}}
+    {{/each}}
+  {{/polaris-list}}
 
   {{polaris-link
     url="https://github.com/smile-io/ember-polaris"
     external=true
     text="Ember Polaris on GitHub"
   }}
+
+  {{key-event-listener
+    key="KeyM"
+    onKeyDown=(action (mut application.hideMagicSection) (not application.hideMagicSection))
+  }}
+
 {{/polaris-page}}

@@ -1,5 +1,5 @@
 <button
-  class="Polaris-ActionList__Item"
+  class={{itemClasses}}
   disabled={{item.disabled}}
   onclick={{action onAction}}
 >
@@ -13,7 +13,8 @@
         role="presentation"
         class="Polaris-ActionList__Image"
         style={{imageBackgroundStyle}}
-      ></div>
+      >
+      </div>
     {{/if}}
 
     <div class="Polaris-ActionList__Text">

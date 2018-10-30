@@ -8,7 +8,10 @@ export default Component.extend({
 
   classNames: ['Polaris-Choice'],
 
-  classNameBindings: ['labelHidden:Polaris-Choice--labelHidden'],
+  classNameBindings: [
+    'labelHidden:Polaris-Choice--labelHidden',
+    'disabled:Polaris-Choice--disabled',
+  ],
 
   layout,
 
@@ -53,4 +56,16 @@ export default Component.extend({
    * @public
    */
   labelHidden: false,
+
+  /**
+   * Whether the associated form control is disabled
+   *
+   * @property disabled
+   * @type {Boolean}
+   * @default: null
+   * @public
+   */
+  disabled: null,
+
+  'data-test-choice': true,
 });

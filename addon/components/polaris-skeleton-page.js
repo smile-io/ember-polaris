@@ -8,7 +8,10 @@ export default Component.extend({
 
   classNames: ['Polaris-SkeletonPage__Page'],
 
-  classNameBindings: ['fullWidth:Polaris-SkeletonPage--fullWidth'],
+  classNameBindings: [
+    'fullWidth:Polaris-SkeletonPage--fullWidth',
+    'singleColumn:Polaris-SkeletonPage--singleColumn',
+  ],
 
   layout,
 
@@ -27,10 +30,20 @@ export default Component.extend({
    *
    * @property fullwidth
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   fullwidth: false,
+
+  /**
+   * Decreases the maximum layout width. Intended for single-column layouts
+   *
+   * @property singleColumn
+   * @public
+   * @type {Boolean}
+   * @default false
+   */
+  singleColumn: false,
 
   /**
    * Number of secondary page-level actions to display
@@ -47,7 +60,7 @@ export default Component.extend({
    *
    * @property breadcrumbs
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default null
    */
   breadcrumbs: null,
@@ -65,6 +78,8 @@ export default Component.extend({
    * @default null
    */
   text: null,
+
+  'data-test-skeleton-page': true,
 
   /**
    * The role of this component, for accessibility purposes
@@ -89,7 +104,7 @@ export default Component.extend({
    *
    * @property hasTitleText
    * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
   hasTitleText: notEmpty('title').readOnly(),
 
@@ -98,7 +113,7 @@ export default Component.extend({
    *
    * @property hasTitle
    * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
   hasTitle: computed('title', function() {
     return this.get('title') !== null;

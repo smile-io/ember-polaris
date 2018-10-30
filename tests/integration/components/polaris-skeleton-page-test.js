@@ -1,281 +1,219 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import stubMathRandom from '../../stubbers/math/random';
 
-moduleForComponent(
-  'polaris-skeleton-page',
-  'Integration | Component | polaris skeleton page',
-  {
-    integration: true,
-  }
-);
+module('Integration | Component | polaris skeleton page', function(hooks) {
+  setupRenderingTest(hooks);
 
-const pageSelector =
-  'div.Polaris-SkeletonPage__Page[role="status"][aria-label="Page loading"]';
-const headerSelector = buildNestedSelector(
-  pageSelector,
-  'div.Polaris-SkeletonPage__Header'
-);
-const contentSelector = buildNestedSelector(
-  pageSelector,
-  'div.Polaris-SkeletonPage__Content'
-);
+  const pageSelector = '[data-test-skeleton-page]';
+  const headerSelector = '[data-test-skeleton-page-header]';
+  const contentSelector = '[data-test-skeleton-page-content]';
+  const titleSelector = '[data-test-skeleton-page-title]';
+  const titleTextSelector = '[data-test-skeleton-page-title-text]';
+  const breadcrumbsSelector = '[data-test-skeleton-page-breadcrumbs]';
+  const breadcrumbSelector = '[data-test-skeleton-page-breadcrumb]';
+  const breadcrumbTextSelector = '[data-test-skeleton-page-action-text]';
+  const secondaryActionsSelector = '[data-test-skeleton-page-actions]';
+  const secondaryActionSelector = '[data-test-skeleton-page-action]';
 
-test('it renders a basic skeleton page', function(assert) {
-  this.render(hbs`{{polaris-skeleton-page}}`);
+  test('it renders a basic skeleton page', async function(assert) {
+    await render(hbs`{{polaris-skeleton-page}}`);
 
-  let pages = findAll(pageSelector);
-  assert.equal(pages.length, 1, 'renders one skeleton page');
-
-  let headers = findAll(headerSelector);
-  assert.equal(headers.length, 1, 'renders one skeleton page header container');
-
-  let contents = findAll(contentSelector);
-  assert.equal(contents.length, 1, 'renders one skeleton page content wrapper');
-});
-
-test('it renders the correct page content', function(assert) {
-  this.render(
-    hbs`{{polaris-skeleton-page text="Skeleton page - inline content"}}`
-  );
-
-  let content = find(contentSelector);
-  assert.equal(
-    content.textContent.trim(),
-    'Skeleton page - inline content',
-    'inline usage - renders the correct skeleton page content'
-  );
-
-  this.render(hbs`
-    {{#polaris-skeleton-page}}
-      <p id="block-content">Skeleton page - block content</p>
-    {{/polaris-skeleton-page}}
-  `);
-
-  const blockContentSelector = buildNestedSelector(
-    contentSelector,
-    'p#block-content'
-  );
-  content = find(blockContentSelector);
-  assert.equal(
-    content.textContent.trim(),
-    'Skeleton page - block content',
-    'block usage - renders the correct skeleton page content'
-  );
-});
-
-test('it renders the page at the correct width', function(assert) {
-  this.render(hbs`{{polaris-skeleton-page fullWidth=fullWidth}}`);
-
-  let page = find(pageSelector);
-  assert.notOk(
-    page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth unspecified - does not apply full width class'
-  );
-
-  this.set('fullWidth', true);
-  assert.ok(
-    page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth true - applies full width class'
-  );
-
-  this.set('fullWidth', false);
-  assert.notOk(
-    page.classList.contains('Polaris-SkeletonPage--fullWidth'),
-    'fullWidth false - does not apply full width class'
-  );
-});
-
-test('it renders the page title correctly', function(assert) {
-  this.render(hbs`{{polaris-skeleton-page title=title}}`);
-
-  const titleSelector = buildNestedSelector(
-    headerSelector,
-    'div.Polaris-SkeletonPage__Title'
-  );
-  const skeletonTitleSelector = buildNestedSelector(
-    titleSelector,
-    'div.Polaris-SkeletonDisplayText__DisplayText.Polaris-SkeletonDisplayText--sizeLarge'
-  );
-  const realTitleSelector = buildNestedSelector(
-    titleSelector,
-    'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge'
-  );
-
-  // undefined title -> renders large skeleton display text.
-  let titles = findAll(titleSelector);
-  assert.equal(titles.length, 1, 'unspecified title - renders one title');
-
-  let skeletonTitles = findAll(skeletonTitleSelector);
-  assert.equal(
-    skeletonTitles.length,
-    1,
-    'unspecified title - renders one skeleton title'
-  );
-
-  let realTitles = findAll(realTitleSelector);
-  assert.equal(
-    realTitles.length,
-    0,
-    'unspecified title - does not render any actual titles'
-  );
-
-  // null title -> renders no title.
-  this.set('title', null);
-  titles = findAll(titleSelector);
-  assert.equal(titles.length, 0, 'null title - does not render a title');
-
-  // Text title -> renders large display text.
-  this.set('title', 'Spooky Skeleton Page');
-  titles = findAll(titleSelector);
-  assert.equal(titles.length, 1, 'title specified - renders one title');
-
-  skeletonTitles = findAll(skeletonTitleSelector);
-  assert.equal(
-    skeletonTitles.length,
-    0,
-    'title specified - does not render any skeleton titles'
-  );
-
-  realTitles = findAll(realTitleSelector);
-  assert.equal(
-    realTitles.length,
-    1,
-    'title specified - renders one actual title'
-  );
-  assert.equal(
-    realTitles[0].textContent.trim(),
-    'Spooky Skeleton Page',
-    'title specified - renders the correct title'
-  );
-});
-
-test('it renders breadcrumbs correctly', function(assert) {
-  // Stub Math.random so we know what width the breadcrumb should be.
-  const mathRandomStubber = stubMathRandom(0.1);
-
-  this.render(hbs`{{polaris-skeleton-page breadcrumbs=breadcrumbs}}`);
-
-  const breadcrumbSelector = buildNestedSelector(
-    headerSelector,
-    'div.Polaris-SkeletonPage__Actions',
-    'div.Polaris-SkeletonPage__Action'
-  );
-  const breadcrumbSkeletonTextSelector = buildNestedSelector(
-    breadcrumbSelector,
-    'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer',
-    'div.Polaris-SkeletonBodyText'
-  );
-
-  let header = find(headerSelector);
-  assert.notOk(
-    header.classList.contains('Polaris-SkeletonPage__Header--hasBreadcrumbs'),
-    'breadcrumbs unspecified - does not apply breadcrumbs class'
-  );
-
-  let breadcrumbs = findAll(breadcrumbSelector);
-  assert.equal(
-    breadcrumbs.length,
-    0,
-    'breadcrumbs unspecified - does not render any breadcrumbs'
-  );
-
-  this.set('breadcrumbs', true);
-  header = find(headerSelector);
-  assert.ok(
-    header.classList.contains('Polaris-SkeletonPage__Header--hasBreadcrumbs'),
-    'breadcrumbs specified - applies breadcrumbs class'
-  );
-
-  breadcrumbs = findAll(breadcrumbSelector);
-  assert.equal(
-    breadcrumbs.length,
-    1,
-    'breadcrumbs specified - renders one breadcrumb'
-  );
-  assert.equal(
-    breadcrumbs[0].style.width,
-    '64px',
-    'breadcrumbs specified - renders the breadcrumb with the correct width'
-  );
-
-  let breadcrumbSkeletonTexts = findAll(breadcrumbSkeletonTextSelector);
-  assert.equal(
-    breadcrumbSkeletonTexts.length,
-    1,
-    'breadcrumbs specified - renders one skeleton breadcrumb text'
-  );
-
-  mathRandomStubber.restore();
-});
-
-test('it renders secondary actions correctly', function(assert) {
-  // Stub Math.random so we know what width the breadcrumb should be.
-  const mathRandomStubber = stubMathRandom(0.7, 1, 0);
-
-  this.render(hbs`{{polaris-skeleton-page secondaryActions=secondaryActions}}`);
-
-  const secondaryActionSelector = buildNestedSelector(
-    headerSelector,
-    'div.Polaris-SkeletonPage__Actions',
-    'div.Polaris-SkeletonPage__Action'
-  );
-  const secondaryActionSkeletonTextSelector = buildNestedSelector(
-    'div.Polaris-SkeletonBodyText__SkeletonBodyTextContainer',
-    'div.Polaris-SkeletonBodyText'
-  );
-
-  let header = find(headerSelector);
-  assert.notOk(
-    header.classList.contains(
-      'Polaris-SkeletonPage__Header--hasSecondaryActions'
-    ),
-    'secondaryActions unspecified - does not apply secondary actions class'
-  );
-
-  let secondaryActions = findAll(secondaryActionSelector);
-  assert.equal(
-    secondaryActions.length,
-    0,
-    'secondaryActions unspecified - does not render any secondary actions'
-  );
-
-  this.set('secondaryActions', 3);
-  assert.ok(
-    header.classList.contains(
-      'Polaris-SkeletonPage__Header--hasSecondaryActions'
-    ),
-    'secondaryActions specified - applies secondary actions class'
-  );
-
-  secondaryActions = findAll(secondaryActionSelector);
-  assert.equal(
-    secondaryActions.length,
-    3,
-    'secondaryActions specified - renders the correct number of secondary actions'
-  );
-
-  let expectedWidths = [88, 100, 60];
-  secondaryActions.forEach((secondaryAction, index) => {
-    assert.equal(
-      secondaryAction.style.width,
-      `${expectedWidths[index]}px`,
-      `secondary action ${index +
-        1} - renders the action with the correct width`
-    );
-
-    let secondaryActionSkeletonTexts = findAll(
-      secondaryActionSkeletonTextSelector,
-      secondaryAction
-    );
-    assert.equal(
-      secondaryActionSkeletonTexts.length,
-      1,
-      `secondary action ${index + 1} - renders one skeleton action text`
-    );
+    assert.dom(pageSelector).exists('renders skeleton page');
+    assert
+      .dom(buildNestedSelector(pageSelector, headerSelector))
+      .exists('renders skeleton page header');
+    assert
+      .dom(buildNestedSelector(pageSelector, contentSelector))
+      .exists('renders skeleton page content');
   });
 
-  mathRandomStubber.restore();
+  test('it renders the correct page content', async function(assert) {
+    await render(
+      hbs`{{polaris-skeleton-page text="Skeleton page - inline content"}}`
+    );
+
+    assert
+      .dom(contentSelector)
+      .hasText(
+        'Skeleton page - inline content',
+        'inline usage - renders the correct skeleton page content'
+      );
+
+    await render(hbs`
+      {{#polaris-skeleton-page}}
+        <p>Skeleton page - block content</p>
+      {{/polaris-skeleton-page}}
+    `);
+
+    assert
+      .dom(contentSelector)
+      .hasText(
+        'Skeleton page - block content',
+        'block usage - renders the correct skeleton page content'
+      );
+  });
+
+  test('it renders the page at the correct width', async function(assert) {
+    await render(
+      hbs`{{polaris-skeleton-page fullWidth=fullWidth singleColumn=singleColumn}}`
+    );
+
+    assert
+      .dom(pageSelector)
+      .hasNoClass(
+        'Polaris-SkeletonPage--fullWidth',
+        'fullWidth unspecified - does not apply full width class'
+      );
+    assert
+      .dom(pageSelector)
+      .hasNoClass(
+        'Polaris-SkeletonPage--singleColumn',
+        'fullWidth unspecified - does not apply single column class'
+      );
+
+    this.set('fullWidth', true);
+    assert
+      .dom(pageSelector)
+      .hasClass(
+        'Polaris-SkeletonPage--fullWidth',
+        'fullWidth true - applies full width class'
+      );
+
+    this.set('singleColumn', true);
+    assert
+      .dom(pageSelector)
+      .hasClass(
+        'Polaris-SkeletonPage--singleColumn',
+        'singleColumn true - applies single column class'
+      );
+  });
+
+  test('it renders the page title correctly', async function(assert) {
+    await render(hbs`{{polaris-skeleton-page title=title}}`);
+
+    // undefined title -> renders large skeleton display text.
+    assert
+      .dom(buildNestedSelector(headerSelector, titleSelector))
+      .exists('unspecified title - renders title');
+    assert
+      .dom(buildNestedSelector(titleSelector, titleTextSelector))
+      .exists('unspecified title - renders title as skeleton title');
+    assert
+      .dom(titleTextSelector)
+      .hasClass(
+        'Polaris-SkeletonDisplayText--sizeLarge',
+        'unspecified title - renders large skeleton title'
+      );
+
+    // null title -> renders no title.
+    this.set('title', null);
+    assert
+      .dom(buildNestedSelector(headerSelector, titleSelector))
+      .doesNotExist('null title - does not render title');
+
+    // Text title -> renders large display text.
+    this.set('title', 'Spooky Skeleton Page');
+    assert
+      .dom(buildNestedSelector(headerSelector, titleSelector))
+      .exists('title specified - renders title');
+    assert
+      .dom(buildNestedSelector(titleSelector, titleTextSelector))
+      .exists('title specified - renders title');
+    assert
+      .dom(titleTextSelector)
+      .hasText(
+        'Spooky Skeleton Page',
+        'title specified - renders correct title text'
+      );
+    assert
+      .dom(titleTextSelector)
+      .hasClass(
+        'Polaris-DisplayText--sizeLarge',
+        'title specified - renders title text as large display text'
+      );
+  });
+
+  test('it renders breadcrumbs correctly', async function(assert) {
+    await render(hbs`{{polaris-skeleton-page breadcrumbs=breadcrumbs}}`);
+
+    assert
+      .dom(headerSelector)
+      .hasNoClass(
+        'Polaris-SkeletonPage__Header--hasBreadcrumbs',
+        'breadcrumbs false - does not apply header breadcrumbs class'
+      );
+    assert
+      .dom(buildNestedSelector(headerSelector, breadcrumbsSelector))
+      .doesNotExist('breadcrumbs false - does not render breadcrumbs');
+
+    this.set('breadcrumbs', true);
+    assert
+      .dom(headerSelector)
+      .hasClass(
+        'Polaris-SkeletonPage__Header--hasBreadcrumbs',
+        'breadcrumbs true - applies header breadcrumbs class'
+      );
+    assert
+      .dom(buildNestedSelector(headerSelector, breadcrumbsSelector))
+      .exists('breadcrumbs true - renders breadcrumbs');
+    assert
+      .dom(buildNestedSelector(breadcrumbsSelector, breadcrumbSelector))
+      .exists('breadcrumbs true - renders one skeleton breadcrumb');
+    assert
+      .dom(breadcrumbSelector)
+      .hasClass(
+        'Polaris-SkeletonPage__Action',
+        'breadcrumbs true - skeleton breadcrumb has correct class'
+      );
+    assert
+      .dom(buildNestedSelector(breadcrumbSelector, breadcrumbTextSelector))
+      .exists('breadcrumbs true - renders breadcrumb text');
+  });
+
+  test('it renders secondary actions correctly', async function(assert) {
+    await render(
+      hbs`{{polaris-skeleton-page secondaryActions=secondaryActions}}`
+    );
+
+    assert
+      .dom(headerSelector)
+      .hasNoClass(
+        'Polaris-SkeletonPage__Header--hasSecondaryActions',
+        'secondaryActions unspecified - does not apply secondary actions class'
+      );
+    assert
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          secondaryActionsSelector,
+          secondaryActionSelector
+        )
+      )
+      .doesNotExist(
+        'secondaryActions unspecified - does not render any secondary actions'
+      );
+
+    this.set('secondaryActions', 3);
+    assert
+      .dom(headerSelector)
+      .hasClass(
+        'Polaris-SkeletonPage__Header--hasSecondaryActions',
+        'secondaryActions specified - applies secondary actions class'
+      );
+    assert
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          secondaryActionsSelector,
+          secondaryActionSelector
+        )
+      )
+      .exists(
+        { count: 3 },
+        'secondaryActions specified - renders the correct number of secondary actions'
+      );
+  });
 });

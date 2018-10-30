@@ -1,10 +1,13 @@
 {{! template-lint-disable invalid-interactive }}
 <div
+  data-test-text-field-spinner
   class="Polaris-TextField__Spinner"
   aria-hidden="true"
   onclick={{action onClick}}
 >
-  <div role="button"
+  <div
+    data-test-text-field-spinner-incr-button
+    role="button"
     class="Polaris-TextField__Segment"
     tabindex="-1"
     onclick={{action onChange 1}}
@@ -13,7 +16,10 @@
       {{polaris-icon source="caret-up"}}
     </div>
   </div>
-  <div role="button"
+
+  <div
+    data-test-text-field-spinner-decr-button
+    role="button"
     class="Polaris-TextField__Segment"
     tabindex="-1"
     onclick={{action onChange -1}}

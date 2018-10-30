@@ -7,11 +7,18 @@ export default Component.extend({
   layout,
 
   /**
-   * @property currentColumn
-   * @type {Object}
+   * @property isScrolledFarthestLeft
+   * @type {Boolean}
    * @public
    */
-  currentColumn: null,
+  isScrolledFarthestLeft: null,
+
+  /**
+   * @property isScrolledFarthestRight
+   * @type {Boolean}
+   * @public
+   */
+  isScrolledFarthestRight: null,
 
   /**
    * @property columnVisibilityData
@@ -22,7 +29,7 @@ export default Component.extend({
 
   /**
    * @property navigateTableLeft
-   * @type {function}
+   * @type {Function}
    * @default no-op
    * @public
    */
@@ -30,7 +37,7 @@ export default Component.extend({
 
   /**
    * @property navigateTableRight
-   * @type {function}
+   * @type {Function}
    * @default no-op
    * @public
    */
