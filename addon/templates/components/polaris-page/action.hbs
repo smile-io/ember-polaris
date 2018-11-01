@@ -1,12 +1,16 @@
-{{!-- TODO: support action.url --}}
-{{#if action.icon}}
+{{!-- TODO: support url --}}
+{{#if (or icon disclosure)}}
   <span class="Polaris-Page__ActionContent">
-    {{polaris-page/action-icon icon=action.icon}}
+    {{#if icon}}
+      {{polaris-page/action-icon icon=icon}}
+    {{/if}}
 
-    <span>
-      {{action.text}}
-    </span>
+    <span>{{text}}</span>
+
+    {{#if disclosure}}
+      {{polaris-page/action-icon icon="caret-down"}}
+    {{/if}}
   </span>
 {{else}}
-  {{action.text}}
+  {{text}}
 {{/if}}

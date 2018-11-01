@@ -113,11 +113,18 @@ export default Component.extend({
   /**
    * Collection of page-level groups of secondary actions
    *
+   * Properties:
+   *
+   * @property {String} title Action group title
+   * @property {String} icon Icon to display
+   * @property {Object[]} actions List of actions
+   * @property {String|Component|Object} details Action details
+   * @property {Function} onActionAnyItem Callback when any action takes place
+   *
    * @property actionGroups
    * @public
-   * @type {Array}
+   * @type {Object[]}
    * @default null
-   * TODO: not implemented yet
    */
   actionGroups: null,
 

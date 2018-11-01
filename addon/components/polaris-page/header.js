@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/header';
+import { computed } from '@ember/object';
 import { gt, or } from '@ember/object/computed';
 
 export default Component.extend({
@@ -29,7 +30,7 @@ export default Component.extend({
    *
    * @property titleHidden
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   titleHidden: false,
@@ -60,10 +61,20 @@ export default Component.extend({
    *
    * @property separator
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   separator: false,
+
+  /**
+   * Primary page-level action
+   *
+   * @property primaryAction
+   * @public
+   * @type {Object}
+   * @default null
+   */
+  primaryAction: null,
 
   /**
    * Collection of secondary page-level actions
@@ -76,14 +87,14 @@ export default Component.extend({
   secondaryActions: null,
 
   /**
-   * Primary page-level action
+   * Collection of page-level groups of secondary actions
    *
-   * @property primaryAction
+   * @property actionGroups
    * @public
-   * @type {Object}
+   * @type {Array}
    * @default null
    */
-  primaryAction: null,
+  actionGroups: null,
 
   /**
    * Page-level pagination
@@ -103,5 +114,20 @@ export default Component.extend({
   hasNavigation: or('hasBreadcrumbs', 'pagination').readOnly(),
   hasActions: or('primaryAction', 'secondaryActions').readOnly(),
   hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
-  hasRollup: gt('secondaryActions.length', 1).readOnly(),
+  hasActionGroups: gt('actionGroups.length', 0).readOnly(),
+
+  hasRollup: computed('secondaryActions.length', 'actionGroups.length', function() {
+    let  {
+      secondaryActions = [],
+      actionGroups = [],
+    } = this.getProperties('secondaryActions', 'actionGroups');
+    return secondaryActions.get('length') + actionGroups.get('length') > 1;
+  }).readOnly(),
+
+  actionGroupsAsActionListSections: computed('actionGroups.[]', function() {
+    let actionGroups = this.get('actionGroups') || [];
+    return actionGroups.map(({ title, actions }) => {
+      return { title, items: actions };
+    });
+  }).readOnly(),
 });

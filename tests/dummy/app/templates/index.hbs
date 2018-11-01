@@ -14,6 +14,39 @@
       onAction=(action (mut secondary2Clicked) true)
     )
   )
+  actionGroups=(array
+    (hash
+      title="Action group with details"
+      actions=(array
+        (hash
+          text="Group action 1.1"
+          onAction=(action (mut group1Button1Clicked) true)
+        )
+        (hash
+          text="Group action 1.2"
+          onAction=(action (mut group1Button2Clicked) true)
+        )
+      )
+      details=(component
+        "polaris-text-style"
+        variation="positive"
+        text="This is an action group with details"
+      )
+    )
+    (hash
+      title="Action group with actions"
+      actions=(array
+        (hash
+          text="Group action 2.1"
+          onAction=(action (mut group2Button1Clicked) true)
+        )
+        (hash
+          text="Group action 2.2"
+          onAction=(action (mut group2Button2Clicked) true)
+        )
+      )
+    )
+  )
 }}
   <div>
     {{#link-to "test"}}
