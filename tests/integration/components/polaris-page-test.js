@@ -311,10 +311,12 @@ test('it renders action icons correctly', function(assert) {
         (hash
           text="First secondary action"
           icon="add"
+          onAction=(action (mut dummy))
         )
         (hash
           text="Second secondary action"
           icon="cancel"
+          onAction=(action (mut dummy))
         )
       )
     }}

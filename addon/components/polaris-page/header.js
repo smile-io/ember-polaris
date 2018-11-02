@@ -117,11 +117,10 @@ export default Component.extend({
   hasActionGroups: gt('actionGroups.length', 0).readOnly(),
 
   hasRollup: computed('secondaryActions.length', 'actionGroups.length', function() {
-    let  {
-      secondaryActions = [],
-      actionGroups = [],
-    } = this.getProperties('secondaryActions', 'actionGroups');
-    return secondaryActions.get('length') + actionGroups.get('length') > 1;
+    let secondaryActions = this.get('secondaryActions') || [];
+    let actionGroups = this.get('actionGroups') || [];
+
+    return secondaryActions.length + actionGroups.length > 1;
   }).readOnly(),
 
   actionGroupsAsActionListSections: computed('actionGroups.[]', function() {

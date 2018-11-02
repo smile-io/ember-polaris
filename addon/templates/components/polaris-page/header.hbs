@@ -22,7 +22,7 @@
   {{#with
     (if primaryAction
       (component "polaris-button"
-        primary=shouldRenderPrimaryActionAsPrimary
+        primary=true
         text=primaryAction.text
         disabled=primaryAction.disabled
         loading=primaryAction.loading
