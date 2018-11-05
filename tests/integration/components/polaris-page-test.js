@@ -341,10 +341,12 @@ module('Integration | Component | polaris page', function(hooks) {
           (hash
             text="First secondary action"
             icon="add"
+            onAction=(action (mut dummy))
           )
           (hash
             text="Second secondary action"
             icon="cancel"
+            onAction=(action (mut dummy))
           )
         )
       }}

@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import layout from '../../templates/components/polaris-page/action';
 import { handleMouseUpByBlurring } from '../../utils/focus';
 import mapEventToAction from '../../utils/map-event-to-action';
@@ -8,39 +10,106 @@ export default Component.extend({
 
   attributeBindings: [
     'type',
-    'action.disabled:disabled',
-    'action.accessibilityLabel:aria-label',
+    'disabled',
+    'accessibilityLabel:aria-label',
   ],
 
   classNames: ['Polaris-Page__Action'],
-
-  classNameBindings: ['action.disabled:Polaris-Page--disabled'],
+  classNameBindings: [
+    'disabled:Polaris-Page--disabled',
+    'isIconOnly:Polaris-Page--iconOnly',
+  ],
 
   layout,
 
   /**
-   * The action to render. The following properties can be set:
-   *  - text
-   *  - icon
-   *  - accessibilityLabel
-   *  - disabled
-   *  - onAction
-   *
-   * These properties are available in the React component
-   * but are not yet implemented in `ember-polaris`:
-   *  - url
-   *  - external
-   *  - disclosure
-   *
-   * @property action
-   * @public
-   * @type {Object}
+   * @property text
+   * @type {String}
    * @default null
+   * @public
    */
-  action: null,
+  text: null,
+
+  /**
+   * @property disclosure
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  disclosure: false,
+
+  /**
+   * @property url
+   * @type {String}
+   * @default null
+   * @public
+   * TODO: not implemented
+   */
+  url: null,
+
+  /**
+   * @property external
+   * @type {Boolean}
+   * @default false
+   * @public
+   * TODO: not implemented
+   */
+  external: false,
+
+  /**
+   * @property icon
+   * @type {String}
+   * @default null
+   * @public
+   */
+  icon: null,
+
+  /**
+   * @property onAction
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onAction() {},
+
+  /**
+   * @property accessibilityLabel
+   * @type {String}
+   * @default null
+   * @public
+   */
+  accessibilityLabel: null,
+
+   /**
+   * @property disabled
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  disabled: false,
+
+  /**
+   * @property showIndicator
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  showIndicator: false,
+
+  /**
+   * @property hasIndicator
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  hasIndicator: false,
 
   type: 'button',
 
   mouseUp: handleMouseUpByBlurring,
-  click: mapEventToAction('action.onAction'),
+  click: mapEventToAction('onAction'),
+
+  isIconOnly: computed('text', 'icon', function() {
+    return this.get('icon') && isBlank(this.get('text'));
+  }).readOnly(),
 });
