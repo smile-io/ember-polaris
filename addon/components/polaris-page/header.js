@@ -138,12 +138,16 @@ export default Component.extend({
     }
   ).readOnly(),
 
-  hasRollup: computed('secondaryActions.length', 'actionGroups.length', function() {
-    let secondaryActions = this.get('secondaryActions') || [];
-    let actionGroups = this.get('actionGroups') || [];
+  hasRollup: computed(
+    'secondaryActions.length',
+    'actionGroups.length',
+    function() {
+      let secondaryActions = this.get('secondaryActions') || [];
+      let actionGroups = this.get('actionGroups') || [];
 
-    return secondaryActions.length + actionGroups.length > 1;
-  }).readOnly(),
+      return secondaryActions.length + actionGroups.length > 1;
+    }
+  ).readOnly(),
 
   actionGroupsAsActionListSections: computed('actionGroups.[]', function() {
     let actionGroups = this.get('actionGroups') || [];
