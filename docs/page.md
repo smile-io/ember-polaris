@@ -3,7 +3,7 @@
 ## Page
 `polaris-page` implements the [Polaris Page component](https://polaris.shopify.com/components/structure/page).
 
-**NOTE:** _the `icon`, `actionGroups` and `pagination` properties are currently unimplemented._
+**NOTE:** _the `icon` and `pagination` properties are currently unimplemented._
 
 ### Examples
 
@@ -17,7 +17,7 @@ Basic usage:
 {{/polaris-page}}
 ```
 
-Full-width page with disableable primary action and secondary actions (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
+Full-width page with disableable primary action, secondary actions and action groups (using [ember-array-helper](https://github.com/kellyselden/ember-array-helper)):
 
 ```hbs
 {{polaris-page
@@ -36,6 +36,26 @@ Full-width page with disableable primary action and secondary actions (using [em
     (hash
       text="Do something else"
       onAction=(action (mut secondaryAction2Fired) true)
+    )
+  )
+  actionGroups=(array
+    (hash
+      title="Action group with details"
+      actions=(array
+        (hash
+          text="Group action 1.1"
+          onAction=(action (mut group1Button1Clicked) true)
+        )
+        (hash
+          text="Group action 1.2"
+          onAction=(action (mut group1Button2Clicked) true)
+        )
+      )
+      details=(component
+        "polaris-text-style"
+        variation="positive"
+        text="This is an action group with details"
+      )
     )
   )
 }}

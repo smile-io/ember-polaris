@@ -341,10 +341,12 @@ module('Integration | Component | polaris page', function(hooks) {
           (hash
             text="First secondary action"
             icon="add"
+            onAction=(action (mut dummy))
           )
           (hash
             text="Second secondary action"
             icon="cancel"
+            onAction=(action (mut dummy))
           )
         )
       }}
@@ -359,8 +361,7 @@ module('Integration | Component | polaris page', function(hooks) {
       'button.Polaris-Page__Action',
       'span.Polaris-Page__ActionContent'
     );
-    const secondaryActions = findAll(secondaryActionsSelector);
-    assert.equal(secondaryActions.length, 2, 'renders two secondary actions');
+    assert.dom(secondaryActionsSelector).exists({ count: 2 });
 
     const secondaryActionIconSelector = buildNestedSelector(
       secondaryActionsSelector,
@@ -368,12 +369,10 @@ module('Integration | Component | polaris page', function(hooks) {
       'span.Polaris-Icon',
       'svg'
     );
+    assert.dom(secondaryActionIconSelector).exists({ count: 2 });
+
+    // TODO: target these using selectors so we can use qunit-dom assertions here.
     const secondaryActionIcons = findAll(secondaryActionIconSelector);
-    assert.equal(
-      secondaryActionIcons.length,
-      2,
-      'renders two secondary action icons'
-    );
     assert.equal(
       secondaryActionIcons[0].dataset.iconSource,
       'polaris/add',

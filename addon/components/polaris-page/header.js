@@ -40,7 +40,7 @@ export default Component.extend({
    *
    * @property titleHidden
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   titleHidden: false,
@@ -71,10 +71,20 @@ export default Component.extend({
    *
    * @property separator
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   separator: false,
+
+  /**
+   * Primary page-level action
+   *
+   * @property primaryAction
+   * @public
+   * @type {Object}
+   * @default null
+   */
+  primaryAction: null,
 
   /**
    * Collection of secondary page-level actions
@@ -87,14 +97,14 @@ export default Component.extend({
   secondaryActions: null,
 
   /**
-   * Primary page-level action
+   * Collection of page-level groups of secondary actions
    *
-   * @property primaryAction
+   * @property actionGroups
    * @public
-   * @type {Object}
+   * @type {Array}
    * @default null
    */
-  primaryAction: null,
+  actionGroups: null,
 
   /**
    * Page-level pagination
@@ -114,7 +124,7 @@ export default Component.extend({
   hasNavigation: or('hasBreadcrumbs', 'pagination').readOnly(),
   hasActions: or('primaryAction', 'secondaryActions').readOnly(),
   hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
-  hasRollup: gt('secondaryActions.length', 1).readOnly(),
+  hasActionGroups: gt('actionGroups.length', 0).readOnly(),
 
   shouldRenderPrimaryActionAsPrimary: computed(
     'primaryAction.primary',
@@ -127,4 +137,22 @@ export default Component.extend({
       );
     }
   ).readOnly(),
+
+  hasRollup: computed(
+    'secondaryActions.length',
+    'actionGroups.length',
+    function() {
+      let secondaryActions = this.get('secondaryActions') || [];
+      let actionGroups = this.get('actionGroups') || [];
+
+      return secondaryActions.length + actionGroups.length > 1;
+    }
+  ).readOnly(),
+
+  actionGroupsAsActionListSections: computed('actionGroups.[]', function() {
+    let actionGroups = this.get('actionGroups') || [];
+    return actionGroups.map(({ title, actions }) => {
+      return { title, items: actions };
+    });
+  }).readOnly(),
 });

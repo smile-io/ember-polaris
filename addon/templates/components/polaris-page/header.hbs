@@ -53,7 +53,7 @@
           </div>
         {{/if}}
 
-        {{#if hasSecondaryActions}}
+        {{#if (or hasSecondaryActions hasActionGroups)}}
           <div class="Polaris-Page__SecondaryActions">
             {{#if hasRollup}}
               <div class="Polaris-Page__Rollup">
@@ -68,6 +68,7 @@
                   {{#popover.content}}
                     {{polaris-action-list
                       items=secondaryActions
+                      sections=actionGroupsAsActionListSections
                       onActionAnyItem=(action popover.close)
                     }}
                   {{/popover.content}}
@@ -77,10 +78,51 @@
 
             <div class="Polaris-Page__IndividualActions">
               {{#each secondaryActions as |secondaryAction|}}
-                {{polaris-page/action action=secondaryAction}}
+                {{polaris-page/action
+                  text=secondaryAction.text
+                  disclosure=secondaryAction.disclosure
+                  url=secondaryAction.url
+                  external=secondaryAction.external
+                  icon=secondaryAction.icon
+                  accessibilityLabel=secondaryAction.accessibilityLabel
+                  disabled=secondaryAction.disabled
+                  showIndicator=secondaryAction.showIndicator
+                  hasIndicator=secondaryAction.hasIndicator
+                  onAction=(action secondaryAction.onAction)
+                }}
               {{/each}}
 
-              {{!-- TODO: implement action groups here. --}}
+              {{#if actionGroups}}
+                {{#each actionGroups as |actionGroup|}}
+                  <div class="Polaris-Page__ActionGroup">
+                    {{#polaris-popover as |popover|}}
+                      {{#popover.activator}}
+                        {{polaris-page/action
+                          disclosure=true
+                          icon=actionGroup.icon
+                          text=actionGroup.title
+                        }}
+                      {{/popover.activator}}
+
+                      {{#popover.content}}
+                        {{polaris-action-list
+                          items=actionGroup.actions
+                          onActionAnyItem=(action popover.close)
+                        }}
+
+                        {{#if actionGroup.details}}
+                          <div class="
+                            Polaris-Page__Details
+                            {{if actionGroup.actions "Polaris-Page--withActions"}}
+                          ">
+                            {{render-content actionGroup.details}}
+                          </div>
+                        {{/if}}
+                      {{/popover.content}}
+                    {{/polaris-popover}}
+                  </div>
+                {{/each}}
+              {{/if}}
             </div>
           </div>
         {{/if}}
