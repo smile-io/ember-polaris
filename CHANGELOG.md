@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unpublished
+### v2.0.1 (November 5, 2018)
 - [#247](https://github.com/smile-io/ember-polaris/pull/247) [ENHANCEMENT] Add `actionGroups` support to `polaris-page`
 
 ### v2.0.0 (October 30, 2018)
