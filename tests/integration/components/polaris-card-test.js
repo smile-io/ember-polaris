@@ -424,7 +424,7 @@ module('Integration | Component | polaris card', function(hooks) {
     );
   });
 
-  test('can handle primary & secondary footer actions', async function(assert) {
+  test('siva can handle primary & secondary footer actions', async function(assert) {
     this.setProperties({
       saveAction: {
         text: 'Save',
@@ -469,26 +469,22 @@ module('Integration | Component | polaris card', function(hooks) {
     assert.dom(primaryBtn).hasText('Save');
     assert.dom(secondaryBtn).hasText('Cancel');
 
-    await render(hbs`
-    {{#polaris-card
-      primaryFooterAction=saveAction
-    }}
-    {{/polaris-card}}
-    `);
+    await render(hbs`{{polaris-card primaryFooterAction=saveAction}}`);
 
     assert.dom(footerButtons).exists({ count: 1 });
     assert.dom(primaryBtn).exists();
     assert.dom(secondaryBtn).doesNotExist();
 
-    await render(hbs`
-    {{#polaris-card
-      secondaryFooterAction=cancelAction
-    }}
-    {{/polaris-card}}
-    `);
+    this.set('saveAction.loading', true);
+    assert.dom(`${primaryBtn} .Polaris-Button__Spinner`).exists();
+
+    await render(hbs`{{polaris-card secondaryFooterAction=cancelAction}}`);
 
     assert.dom(footerButtons).exists({ count: 1 });
     assert.dom(secondaryBtn).exists();
     assert.dom(primaryBtn).doesNotExist();
+
+    this.set('cancelAction.loading', true);
+    assert.dom(`${secondaryBtn} .Polaris-Button__Spinner`).exists();
   });
 });
