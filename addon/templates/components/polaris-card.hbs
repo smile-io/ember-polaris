@@ -60,3 +60,30 @@
     {{/if}}
   {{/if}}
 {{/with}}
+
+{{#if (or primaryFooterAction secondaryFooterAction)}}
+  <div class="Polaris-Card__Footer">
+    {{#polaris-button-group}}
+
+      {{#if primaryFooterAction}}
+        {{polaris-button
+          dataTestId="primaryFooterAction"
+          primary=true
+          text=primaryFooterAction.text
+          disabled=primaryFooterAction.disabled
+          onClick=(action primaryFooterAction.onAction)
+        }}
+      {{/if}}
+
+      {{#if secondaryFooterAction}}
+        {{polaris-button
+          dataTestId="secondaryFooterAction"
+          text=secondaryFooterAction.text
+          disabled=secondaryFooterAction.disabled
+          onClick=(action secondaryFooterAction.onAction)
+        }}
+      {{/if}}
+
+    {{/polaris-button-group}}
+  </div>
+{{/if}}

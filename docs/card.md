@@ -4,8 +4,6 @@
 
 `polaris-card` implements the [Polaris Card component](https://polaris.shopify.com/components/structure/card). The `actions` property on the React implementation has been renamed to `headerActions` for this Ember version.
 
-**NOTE:** _the `primaryFooterAction` and `secondaryFooterAction` properties are currently unimplemented._
-
 ### Examples
 
 Each of `{{polaris-card}}` and `{{polaris-card/section}}` can be used in both inline or block form as described in the [main documentation](../README.md#children-property), with the `text` attribute being used for their content when used inline. These examples will only show them in block form, since that is the most common use case.
