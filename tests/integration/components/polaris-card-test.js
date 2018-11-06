@@ -424,7 +424,7 @@ module('Integration | Component | polaris card', function(hooks) {
     );
   });
 
-  test('siva can handle primary & secondary footer actions', async function(assert) {
+  test('can handle primary & secondary footer actions', async function(assert) {
     this.setProperties({
       saveAction: {
         text: 'Save',
