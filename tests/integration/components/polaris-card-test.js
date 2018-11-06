@@ -441,13 +441,9 @@ module('Integration | Component | polaris card', function(hooks) {
       },
     });
 
-    await render(hbs`
-    {{#polaris-card
-      primaryFooterAction=saveAction
-      secondaryFooterAction=cancelAction
-    }}
-    {{/polaris-card}}
-    `);
+    await render(
+      hbs`{{polaris-card primaryFooterAction=saveAction secondaryFooterAction=cancelAction}}`
+    );
 
     let footerClass = '.Polaris-Card__Footer';
     let footerButtons = `${footerClass} button`;
