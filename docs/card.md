@@ -61,3 +61,21 @@ Three sections - first section with a title, second full width (without padding)
   {{/card.section}}
 {{/polaris-card}}
 ```
+
+With footer actions (the buttons support the `loading` attribute which isn't a part of the original spec)
+
+```hbs
+{{#polaris-card
+  primaryFooterAction=(hash
+    text="Save"
+    disabled=true
+    onAction=(action "successAction")
+  )
+  secondaryFooterAction=(hash
+    text="Cancel"
+    onAction=(action "cancelAction")
+  )
+}}
+  I'm a cool card 😎
+{{/polaris-card}}
+```
