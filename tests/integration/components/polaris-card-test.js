@@ -446,12 +446,12 @@ module('Integration | Component | polaris card', function(hooks) {
     );
 
     let footerClass = '.Polaris-Card__Footer';
-    let footerButtons = `${footerClass} button`;
+    let footerButton = `${footerClass} button`;
     let primaryBtn = '[data-test-id="primaryFooterAction"]';
     let secondaryBtn = '[data-test-id="secondaryFooterAction"]';
 
     assert.dom(footerClass).exists();
-    assert.dom(footerButtons).exists({ count: 2 });
+    assert.dom(footerButton).exists({ count: 2 });
 
     await click(secondaryBtn);
     assert.verifySteps(['secondary-action']);
@@ -467,16 +467,16 @@ module('Integration | Component | polaris card', function(hooks) {
 
     await render(hbs`{{polaris-card primaryFooterAction=saveAction}}`);
 
-    assert.dom(footerButtons).exists({ count: 1 });
+    assert.dom(footerButton).exists({ count: 1 });
     assert.dom(primaryBtn).exists();
     assert.dom(secondaryBtn).doesNotExist();
 
     this.set('saveAction.loading', true);
-    assert.dom(`${primaryBtn} .Polaris-Button__Spinner`).exists();
+    assert.dom(primaryBtn).hasClass('Polaris-Button--loading');
 
     await render(hbs`{{polaris-card secondaryFooterAction=cancelAction}}`);
 
-    assert.dom(footerButtons).exists({ count: 1 });
+    assert.dom(footerButton).exists({ count: 1 });
     assert.dom(secondaryBtn).exists();
     assert.dom(primaryBtn).doesNotExist();
 
