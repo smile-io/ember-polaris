@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v2.0.2 (November 7, 2018)
+- [#249](https://github.com/smile-io/ember-polaris/pull/249) [ENHANCEMENT] Add `primaryFooterAction` & `secondaryFooterAction` to `polaris-card`
+
 ### v2.0.1 (November 5, 2018)
 - [#247](https://github.com/smile-io/ember-polaris/pull/247) [ENHANCEMENT] Add `actionGroups` support to `polaris-page`
 
