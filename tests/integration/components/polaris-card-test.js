@@ -372,7 +372,7 @@ module('Integration | Component | polaris card', function(hooks) {
     );
   });
 
-  test('it allows section header customisation', async function(assert) {
+  test('it allows section header customization', async function(assert) {
     await render(hbs`
       {{#polaris-card as |card|}}
         {{#card.section as |cardSection|}}
@@ -422,5 +422,65 @@ module('Integration | Component | polaris card', function(hooks) {
       'Custom section content',
       'renders the correct custom section header content'
     );
+  });
+
+  test('can handle primary & secondary footer actions', async function(assert) {
+    this.setProperties({
+      saveAction: {
+        text: 'Save',
+        disabled: true,
+        onAction() {
+          assert.step('primary-action');
+        },
+      },
+      cancelAction: {
+        text: 'Cancel',
+        onAction() {
+          assert.step('secondary-action');
+        },
+      },
+    });
+
+    await render(
+      hbs`{{polaris-card primaryFooterAction=saveAction secondaryFooterAction=cancelAction}}`
+    );
+
+    let footerClass = '.Polaris-Card__Footer';
+    let footerButton = `${footerClass} button`;
+    let primaryBtn = '[data-test-id="primaryFooterAction"]';
+    let secondaryBtn = '[data-test-id="secondaryFooterAction"]';
+
+    assert.dom(footerClass).exists();
+    assert.dom(footerButton).exists({ count: 2 });
+
+    await click(secondaryBtn);
+    assert.verifySteps(['secondary-action']);
+    assert.dom(primaryBtn).isDisabled();
+
+    this.set('saveAction.disabled', false);
+    await click(primaryBtn);
+    assert.verifySteps(['primary-action']);
+    assert.dom(primaryBtn).isNotDisabled();
+
+    assert.dom(primaryBtn).hasText('Save');
+    assert.dom(secondaryBtn).hasText('Cancel');
+
+    await render(hbs`{{polaris-card primaryFooterAction=saveAction}}`);
+
+    assert.dom(footerButton).exists({ count: 1 });
+    assert.dom(primaryBtn).exists();
+    assert.dom(secondaryBtn).doesNotExist();
+
+    this.set('saveAction.loading', true);
+    assert.dom(primaryBtn).hasClass('Polaris-Button--loading');
+
+    await render(hbs`{{polaris-card secondaryFooterAction=cancelAction}}`);
+
+    assert.dom(footerButton).exists({ count: 1 });
+    assert.dom(secondaryBtn).exists();
+    assert.dom(primaryBtn).doesNotExist();
+
+    this.set('cancelAction.loading', true);
+    assert.dom(`${secondaryBtn} .Polaris-Button__Spinner`).exists();
   });
 });
