@@ -65,6 +65,16 @@
   <div class="Polaris-Card__Footer">
     {{#polaris-button-group}}
 
+      {{#if secondaryFooterAction}}
+        {{polaris-button
+          dataTestId="secondaryFooterAction"
+          text=secondaryFooterAction.text
+          disabled=secondaryFooterAction.disabled
+          loading=secondaryFooterAction.loading
+          onClick=(action secondaryFooterAction.onAction)
+        }}
+      {{/if}}
+
       {{#if primaryFooterAction}}
         {{polaris-button
           dataTestId="primaryFooterAction"
@@ -73,16 +83,6 @@
           disabled=primaryFooterAction.disabled
           loading=primaryFooterAction.loading
           onClick=(action primaryFooterAction.onAction)
-        }}
-      {{/if}}
-
-      {{#if secondaryFooterAction}}
-        {{polaris-button
-          dataTestId="secondaryFooterAction"
-          text=secondaryFooterAction.text
-          disabled=secondaryFooterAction.disabled
-          loading=secondaryFooterAction.loading
-          onClick=(action secondaryFooterAction.onAction)
         }}
       {{/if}}
 
