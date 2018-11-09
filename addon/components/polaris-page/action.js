@@ -61,14 +61,6 @@ export default Component.extend({
   icon: null,
 
   /**
-   * @property onAction
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onAction() {},
-
-  /**
    * @property accessibilityLabel
    * @type {String}
    * @default null
@@ -99,6 +91,14 @@ export default Component.extend({
    * @public
    */
   hasIndicator: false,
+
+  /**
+   * @property onAction
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onAction() {},
 
   type: 'button',
 
