@@ -83,6 +83,16 @@ export default Component.extend({
   multiMonth: false,
 
   /**
+   * First day of week. Sunday by default
+   *
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default 'Sunday'
+   */
+  weekStartsOn,
+
+  /**
    * Allow a range of dates to be selected
    *
    * @property allowRange
@@ -94,16 +104,6 @@ export default Component.extend({
 
     return selected !== null && !(selected instanceof Date);
   }),
-
-  /**
-   * First day of week. Sunday by default
-   *
-   * @property weekStartsOn
-   * @public
-   * @type {String}
-   * @default 'Sunday'
-   */
-  weekStartsOn,
 
   /**
    * Callback when date is selected
