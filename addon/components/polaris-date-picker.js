@@ -93,6 +93,19 @@ export default Component.extend({
   weekStartsOn,
 
   /**
+   * Allow a range of dates to be selected
+   *
+   * @property allowRange
+   * @public
+   * @type {Boolean}
+   */
+  allowRange: computed('selected', function() {
+    let selected = this.get('selected');
+
+    return selected !== null && !(selected instanceof Date);
+  }),
+
+  /**
    * Callback when date is selected
    *
    * @property title
@@ -117,12 +130,6 @@ export default Component.extend({
   focusDate: null,
 
   'data-test-date-picker': true,
-
-  allowRange: computed('selected', function() {
-    let selected = this.get('selected');
-
-    return selected !== null && !(selected instanceof Date);
-  }).readOnly(),
 
   showNextYear: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
