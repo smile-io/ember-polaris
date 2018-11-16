@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v2.0.3 (November 16, 2018)
+- [#251](https://github.com/smile-io/ember-polaris/pull/251) [ENHANCEMENT] Make `allowRange` on `polaris-date-picker` writeable
+
 ### v2.0.2 (November 7, 2018)
 - [#249](https://github.com/smile-io/ember-polaris/pull/249) [ENHANCEMENT] Add `primaryFooterAction` & `secondaryFooterAction` to `polaris-card`
 
