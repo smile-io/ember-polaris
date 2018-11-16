@@ -1,7 +1,9 @@
 {{#if hasBlock}}
-  {{yield (hash
-    item=(component "polaris-button-group/item")
-  )}}
+  {{yield
+    (hash
+      item=(component "polaris-button-group/item")
+    )
+  }}
 {{else}}
   {{text}}
 {{/if}}

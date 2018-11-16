@@ -145,6 +145,26 @@ export default Component.extend({
   disabled: false,
 
   /**
+   * Element to display before the input
+   *
+   * @property prefix
+   * @type {String|Component}
+   * @default null
+   * @public
+   */
+  prefix: null,
+
+  /**
+   * Element to display after the input
+   *
+   * @property suffix
+   * @type {String|Component}
+   * @default null
+   * @public
+   */
+  suffix: null,
+
+  /**
    * Callback when the range input is changed
    *
    * @property {onChange}
@@ -174,14 +194,16 @@ export default Component.extend({
    */
   onBlur() {},
 
+  dataTestRangeSlider: true,
+
   /**
-   * Class names for the range input wrapper div
+   * Class names for the range wrapper div
    *
-   * @property {rangeInputWrapperClassNames}
+   * @property {rangeWrapperClassNames}
    * @type {String}
    * @private
    */
-  rangeInputWrapperClassNames: computed('error', 'disabled', function() {
+  rangeWrapperClassNames: computed('error', 'disabled', function() {
     let { error, disabled } = this.getProperties('error', 'disabled');
     let classNames = ['Polaris-RangeSlider'];
 
@@ -197,13 +219,13 @@ export default Component.extend({
   }).readOnly(),
 
   /**
-   * Style for the range input wrapper div
+   * Style for the range wrapper div
    *
-   * @property {rangeInputWrapperStyle}
+   * @property {rangeWrapperStyle}
    * @type {String}
    * @private
    */
-  rangeInputWrapperStyle: computed(
+  rangeWrapperStyle: computed(
     'min',
     'max',
     'value',

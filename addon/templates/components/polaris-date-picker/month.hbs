@@ -1,8 +1,11 @@
-<div class="Polaris-DatePicker__Title {{if current "Polaris-DatePicker__Month--current"}}">
+<div
+  data-test-date-picker-title
+  class="Polaris-DatePicker__Title {{if current "Polaris-DatePicker__Month--current"}}"
+>
   {{monthDisplayName}} {{year}}
 </div>
 
-<div role="rowheader" class="Polaris-DatePicker__WeekHeadings">
+<div data-test-date-picker-week-heading role="rowheader" class="Polaris-DatePicker__WeekHeadings">
   {{#each weekdays as |weekday|}}
     {{polaris-date-picker/weekday
       title=weekday.title
@@ -13,7 +16,7 @@
 </div>
 
 {{#each weeks as |week|}}
-  <div role="row" class="Polaris-DatePicker__Week">
+  <div data-test-date-picker-week role="row" class="Polaris-DatePicker__Week">
     {{#each week as |day|}}
       {{#if day}}
         {{polaris-date-picker/day
@@ -29,7 +32,7 @@
           onHover=(action onHover)
         }}
       {{else}}
-        <div class="Polaris-DatePicker__EmptyDay"></div>
+        <div data-test-date-picker-day-empty class="Polaris-DatePicker__EmptyDay"></div>
       {{/if}}
     {{/each}}
   </div>

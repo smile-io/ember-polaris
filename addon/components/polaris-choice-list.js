@@ -3,6 +3,7 @@ import { get, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
+import { errorId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-choice-list';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
@@ -21,6 +22,13 @@ const CheckedChoice = ObjectProxy.extend({
  */
 export default Component.extend({
   tagName: 'fieldset',
+
+  attributeBindings: [
+    'finalName:id',
+    'ariaInvalid:aria-invalid',
+    'ariaDescribedBy:aria-describedby',
+  ],
+
   classNames: ['Polaris-ChoiceList'],
   classNameBindings: ['titleHidden:Polaris-ChoiceList--titleHidden'],
 
@@ -31,7 +39,7 @@ export default Component.extend({
    *
    * @property title
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    */
   title: null,
@@ -69,7 +77,7 @@ export default Component.extend({
    *
    * @property name
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    */
   name: null,
@@ -79,17 +87,27 @@ export default Component.extend({
    *
    * @property allowMultiple
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   allowMultiple: false,
+
+  /**
+   * Display an error message
+   *
+   * @property error
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  error: null,
 
   /**
    * Toggles display of the title
    *
    * @property titleHidden
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   titleHidden: false,
@@ -99,10 +117,26 @@ export default Component.extend({
    *
    * @property onChange
    * @public
-   * @type {function}
+   * @type {Function}
    * @default noop
    */
   onChange() {},
+
+  'data-test-choice-list': true,
+
+  /**
+   * @private
+   */
+  ariaInvalid: computed('error', function() {
+    return this.get('error') != null;
+  }),
+
+  /**
+   * @private
+   */
+  ariaDescribedBy: computed('finalName', function() {
+    return errorId(this.get('finalName'));
+  }).readOnly(),
 
   /**
    * @private

@@ -61,21 +61,19 @@ Full-width page with disableable primary action, secondary actions and action gr
 }}
 ```
 
-Page with title and breadcrumbs. Breadcrumbs take `text` and `route` properties, and an optional `models` property for dynamic route segments. Note that only the last breadcrumb will be rendered:
+Page with title and breadcrumbs. Breadcrumbs take `url` or `onAction` properties. Note that only the last breadcrumb will be rendered:
 
 ```hbs
 {{#polaris-page
   title="Welcome to Polaris!"
   breadcrumbs=(array
     (hash
-      text="Parent"
-      route="parent"
-      models=parent
+      content="Parent"
+      url="/home"
     )
     (hash
-      text="Child"
-      route="parent.child"
-      models=(array parent child)
+      content="Child"
+      onAction=(action "goToChildRoute")
     )
   )
 }}

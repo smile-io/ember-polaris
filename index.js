@@ -6,7 +6,7 @@ const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
-  name: '@smile-io/ember-polaris',
+  name: require('./package').name,
 
   isDevelopingAddon() {
     return process.env.SMILE_DEV;

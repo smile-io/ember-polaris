@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isNone, isPresent, typeOf } from '@ember/utils';
+import { isNone } from '@ember/utils';
+import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
 import layout from '../templates/components/polaris-date-picker';
 import {
   monthsArray,
@@ -10,11 +11,11 @@ import {
   getNextDisplayMonth,
   getPreviousDisplayYear,
   getPreviousDisplayMonth,
+  weekdays,
+  isSameDay,
 } from '../utils/dates';
 
-// TODO: add changes for Polaris v2.2.0
-// See https://github.com/Shopify/polaris/compare/v2.0.0...v2.2.0?diff=split#diff-31dd30c75130536eea45b3bccfbb92b9
-// (fixes https://github.com/Shopify/polaris/issues/313, if the bug's present in our Ember implementation)
+const weekStartsOn = weekdays.Sunday;
 
 export default Component.extend({
   classNames: ['Polaris-DatePicker'],
@@ -94,6 +95,15 @@ export default Component.extend({
     return selected !== null && !(selected instanceof Date);
   }),
 
+   * First day of week. Sunday by default
+   *
+   * @property weekStartsOn
+   * @public
+   * @type {String}
+   * @default 'Sunday'
+   */
+  weekStartsOn,
+
   /**
    * Callback when date is selected
    *
@@ -117,6 +127,8 @@ export default Component.extend({
   hoverDate: null,
 
   focusDate: null,
+
+  'data-test-date-picker': true,
 
   showNextYear: computed('month', 'year', function() {
     let { month, year } = this.getProperties('month', 'year');
@@ -191,16 +203,6 @@ export default Component.extend({
     }
   ).readOnly(),
 
-  range: computed('selected', function() {
-    let selected = this.get('selected');
-
-    if (isPresent(selected) && typeOf(selected) === 'date') {
-      return { start: selected, end: selected };
-    }
-
-    return selected;
-  }).readOnly(),
-
   previousMonthLabel: computed(
     'previousMonthName',
     'showPreviousYear',
@@ -224,6 +226,33 @@ export default Component.extend({
     });
   },
 
+  handleFocus(date) {
+    this.set('focusDate', date);
+  },
+
+  resetFocus() {
+    this.set('focusDate', null);
+  },
+
+  isSameSelectedDate(previousSelection, currentSelection) {
+    if (previousSelection == null || currentSelection == null) {
+      return previousSelection == null && currentSelection == null;
+    }
+
+    if (previousSelection instanceof Date || currentSelection instanceof Date) {
+      return (
+        previousSelection instanceof Date &&
+        currentSelection instanceof Date &&
+        isSameDay(previousSelection, currentSelection)
+      );
+    }
+
+    return (
+      isSameDay(previousSelection.start, currentSelection.start) &&
+      isSameDay(previousSelection.end, currentSelection.end)
+    );
+  },
+
   /**
    * Events
    */
@@ -232,14 +261,15 @@ export default Component.extend({
       disableDatesBefore,
       disableDatesAfter,
       focusDate,
-      range,
+      selected,
     } = this.getProperties(
       'disableDatesBefore',
       'disableDatesAfter',
       'focusDate',
-      'range'
+      'selected'
     );
 
+    let range = deriveRange(selected);
     let focusedDate = focusDate || (range && range.start);
 
     if (isNone(focusedDate)) {
@@ -302,6 +332,20 @@ export default Component.extend({
     ) {
       e.preventDefault();
       e.stopPropagation();
+    }
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    let previousSelected = this.get('_previousSelected');
+    let selected = this.get('selected');
+
+    if (
+      previousSelected &&
+      !this.isSameSelectedDate(previousSelected, selected)
+    ) {
+      this.resetFocus();
     }
   },
 

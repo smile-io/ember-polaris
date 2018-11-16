@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed, get } from '@ember/object';
+import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-breadcrumbs';
 
 export default Component.extend({
@@ -27,6 +28,10 @@ export default Component.extend({
    * @default 'navigation'
    */
   role: 'navigation',
+
+  'data-test-breadcrumbs': true,
+
+  handleMouseUpByBlurring,
 
   /**
    * The breadcrumb to render (the last of the list)

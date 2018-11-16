@@ -48,6 +48,8 @@ export default Component.extend({
    */
   text: null,
 
+  'data-test-display-text': true,
+
   /**
    * @private
    */

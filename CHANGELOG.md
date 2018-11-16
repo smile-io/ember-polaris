@@ -1,5 +1,40 @@
 # ember-polaris Changelog
 
+### v2.0.2 (November 7, 2018)
+- [#249](https://github.com/smile-io/ember-polaris/pull/249) [ENHANCEMENT] Add `primaryFooterAction` & `secondaryFooterAction` to `polaris-card`
+
+### v2.0.1 (November 5, 2018)
+- [#247](https://github.com/smile-io/ember-polaris/pull/247) [ENHANCEMENT] Add `actionGroups` support to `polaris-page`
+
+### v2.0.0 (October 30, 2018)
+- [#168](https://github.com/smile-io/ember-polaris/pull/168) [INTERNAL] Upgrade to Ember CLI `3.4.2`
+- [#171](https://github.com/smile-io/ember-polaris/pull/171) [UPDATE] Shopify Polaris `v2.11.0`
+- [#174](https://github.com/smile-io/ember-polaris/pull/174) [FEATURE] Add `polaris-inline-error` component
+- [#179](https://github.com/smile-io/ember-polaris/pull/179) [ENHANCEMENT] Upgrade `polaris-breadcrumbs` to render button if `url` not present
+- [#187](https://github.com/smile-io/ember-polaris/pull/187) [ENHANCEMENT] Add `disabled` attribute to `polaris-choice`
+- [#185](https://github.com/smile-io/ember-polaris/pull/185) [ENHANCEMENT] Update `polaris-button` to accept components for `icon` value
+- [#191](https://github.com/smile-io/ember-polaris/pull/191) [ENHANCEMENT] Update `polaris-layout/annotated-section` styling to match Polaris v2.11.0
+- [#195](https://github.com/smile-io/ember-polaris/pull/195) [ENHANCEMENT] Add `nextKeys` and `previousKeys` attribute to `polaris-pagination`
+- [#193](https://github.com/smile-io/ember-polaris/pull/193) [ENHANCEMENT] Update `polaris-choice-list` to render `error` and `aria` attributes
+- [#197](https://github.com/smile-io/ember-polaris/pull/197) [ENHANCEMENT] Update `polaris-data-table` to match Polaris v2.11.0 refactor
+- [#214](https://github.com/smile-io/ember-polaris/pull/214) [ENHANCEMENT] Update `polaris-empty-state` to match Polaris v2.11.0
+- [#216](https://github.com/smile-io/ember-polaris/pull/216) [ENHANCEMENT] Update `polaris-labelled` to match Polaris v2.11.0
+- [#218](https://github.com/smile-io/ember-polaris/pull/218) [ENHANCEMENT] Update `polaris-page` to match Polaris v2.11.0 by adding `titleMetadata` and optional `primaryAction` button type override
+- [#219](https://github.com/smile-io/ember-polaris/pull/219) [ENHANCEMENT] Update `polaris-date-picker` components to match Polaris v2.11.0
+- [#221](https://github.com/smile-io/ember-polaris/pull/221) [ENHANCEMENT] Add `disabled` attribute to `polaris-choice` in `polaris-radio-button`
+- [#225](https://github.com/smile-io/ember-polaris/pull/225) [ENHANCEMENT] Update `polaris-drop-zone` to accept Polaris v2.11.0 labelled attributes
+- [#226](https://github.com/smile-io/ember-polaris/pull/226) [FEATURE] Add `polaris-sticky` component
+- [#227](https://github.com/smile-io/ember-polaris/pull/227) [ENHANCEMENT] Update `polaris-text-field` to match Polaris v2.11.0
+- [#230](https://github.com/smile-io/ember-polaris/pull/230) [ENHANCEMENT] Add `fullWidth` and `connectedTop` to `polaris-button-group`
+- [#232](https://github.com/smile-io/ember-polaris/pull/232) [FEATURE] Add `polaris-select` component
+- [#234](https://github.com/smile-io/ember-polaris/pull/234) [UPDATE] Drop Ember 2.12 support
+- [#236](https://github.com/smile-io/ember-polaris/pull/236) [ENHANCEMENT] Add `destructive` attribute to `polaris-action-list/item`
+- [#237](https://github.com/smile-io/ember-polaris/pull/237) [FIX] Prevent event bubbling on `polaris-action-list/item`'s `onAction` method
+- [#241](https://github.com/smile-io/ember-polaris/pull/241) [FIX] Remove click event from `polaris-breadcrumb` action invocation arguments
+- [#243](https://github.com/smile-io/ember-polaris/pull/243) [FIX] Update table cell heights when attrs are updated in `polaris-data-table`
+- [#244](https://github.com/smile-io/ember-polaris/pull/244) [FIX] Fix bug where `polaris-data-table` cell heights weren't calculating correctly
+- [#245](https://github.com/smile-io/ember-polaris/pull/245) [FIX] Fix initially-selected value on `polaris-select`
+
 ### v1.7.8 (October 10, 2018)
 - [199](https://github.com/smile-io/ember-polaris/pull/199) [ENHANCEMENT] Add support for disabled and loading states to `polaris-setting-toggle`.
 

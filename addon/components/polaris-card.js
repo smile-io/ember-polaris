@@ -71,7 +71,6 @@ export default Component.extend({
    * @property primaryFooterAction
    * @type {Action}
    * @default: null
-   * TODO: not implemented
    */
   primaryFooterAction: null,
 
@@ -81,7 +80,6 @@ export default Component.extend({
    * @property secondaryFooterAction
    * @type {Action}
    * @default: null
-   * TODO: not implemented
    */
   secondaryFooterAction: null,
 });

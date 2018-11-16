@@ -20,17 +20,27 @@ export default Component.extend({
    *
    * @property title
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    */
   title: null,
+
+  /**
+   * Important and non-interactive status information shown immediately after the title
+   *
+   * @property titleMetadata
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  titleMetadata: null,
 
   /**
    * Visually hide the title
    *
    * @property titleHidden
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   titleHidden: false,
@@ -40,7 +50,7 @@ export default Component.extend({
    *
    * @property icon
    * @public
-   * @type {string}
+   * @type {String}
    * @default null
    * TODO: not implemented yet.
    */
@@ -75,7 +85,7 @@ export default Component.extend({
    *
    * @property fullWidth
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   fullWidth: false,
@@ -85,7 +95,7 @@ export default Component.extend({
    *
    * @property singleColumn
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   singleColumn: false,
@@ -95,7 +105,7 @@ export default Component.extend({
    *
    * @property separator
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   separator: false,

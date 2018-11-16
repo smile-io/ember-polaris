@@ -44,12 +44,15 @@ export default Component.extend({
   totalsRowHeading: null,
 
   /**
-   * @property height
-   * @type {Number}
+   * @property contentType
+   * @type {String}
    * @private
    */
-  height: computed('heights.[]', 'truncate', function() {
-    let { heights, truncate } = this.getProperties('heights', 'truncate');
-    return !truncate ? heights[1] : undefined;
-  }).readOnly(),
+  contentType: computed('total', 'index', function() {
+    let { total, index } = this.getProperties('total', 'index');
+
+    if (total !== '' && index > 0) {
+      return 'numeric';
+    }
+  }),
 });

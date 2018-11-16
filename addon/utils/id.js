@@ -1,24 +1,29 @@
 import { computed } from '@ember/object';
 
 function makeComputedIdGenerator(idGenerator) {
-  return function(idPath) {
+  return function(idPath, variation) {
     return computed(idPath, function() {
-      return idGenerator(this.get(idPath));
+      return idGenerator(this.get(idPath), variation);
     });
   };
 }
 
 export function labelId(id) {
-  return `${id}Label`;
+  return idVariation(id, 'Label');
 }
 export const computedLabelId = makeComputedIdGenerator(labelId);
 
 export function errorId(id) {
-  return `${id}Error`;
+  return idVariation(id, 'Error');
 }
 export const computedErrorId = makeComputedIdGenerator(errorId);
 
 export function helpTextId(id) {
-  return `${id}HelpText`;
+  return idVariation(id, 'HelpText');
 }
 export const computedHelpTextId = makeComputedIdGenerator(helpTextId);
+
+export function idVariation(id, suffix) {
+  return `${id}${suffix}`;
+}
+export const computedIdVariation = makeComputedIdGenerator(idVariation);

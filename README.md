@@ -165,9 +165,12 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 - [Choice list](./docs/choice-list.md#choice-list)
 - [Color picker](./docs/color-picker.md#color-picker)
 - [Date picker](./docs/date-picker.md#date-picker)
+- [Form](./docs/form.md#form)
 - [Form layout](./docs/form-layout.md#form-layout)
+- [Inline error](./docs/inline-error.md#inline-error)
 - [Radio button](./docs/radio-button.md#radio-button)
 - [Range slider](./docs/range-slider.md#range-slider)
+- [Select](./docs/select.md#select)
 - [Tag](./docs/tag.md#tag)
 - [Text field](./docs/text-field.md#text-field)
 
@@ -196,6 +199,7 @@ Contributing
 
 ### Linting
 
+* `yarn lint:hbs`
 * `yarn lint:js`
 * `yarn lint:js --fix`
 

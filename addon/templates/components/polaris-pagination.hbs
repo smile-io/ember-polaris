@@ -1,4 +1,5 @@
 {{#polaris-button/button
+  data-test-prev-btn=true
   class="Polaris-Pagination__Button"
   accessibilityLabel="Previous"
   disabled=isPreviousDisabled
@@ -9,6 +10,7 @@
 {{/polaris-button/button}}
 
 {{#polaris-button/button
+  data-test-next-btn=true
   class="Polaris-Pagination__Button"
   accessibilityLabel="Next"
   disabled=isNextDisabled
@@ -17,3 +19,21 @@
 }}
   {{polaris-icon source="arrow-right"}}
 {{/polaris-button/button}}
+
+{{#if isPreviousKeyListenerEnabled}}
+  {{#each previousKeys as |key|}}
+    {{key-event-listener
+      key=key
+      onKeyUp=(action onPrevious)
+    }}
+  {{/each}}
+{{/if}}
+
+{{#if isNextKeyListenerEnabled}}
+  {{#each nextKeys as |key|}}
+    {{key-event-listener
+      key=key
+      onKeyUp=(action onNext)
+    }}
+  {{/each}}
+{{/if}}

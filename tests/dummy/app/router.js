@@ -11,7 +11,13 @@ Router.map(function() {
     this.route('child', function() {});
   });
 
+  this.route('layout', function() {
+    this.route('annotated-layout');
+  });
+
   this.route('dropzone');
+  this.route('sticky');
+  this.route('select');
 });
 
 export default Router;

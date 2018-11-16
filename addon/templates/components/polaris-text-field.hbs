@@ -1,4 +1,5 @@
 {{#polaris-labelled
+  dataTestLabelled=dataTestTextField
   id=id
   label=label
   error=error
@@ -11,9 +12,9 @@
     left=connectedLeft
     right=connectedRight
   }}
-
     {{! template-lint-disable invalid-interactive }}
     <div
+      data-test-text-field-wrapper
       class={{textFieldClasses}}
       onfocus={{action "handleFocus"}}
       onblur={{action "handleBlur"}}
@@ -21,50 +22,64 @@
     >
 
       {{#if prefix}}
-        <div class="Polaris-TextField__Prefix" id="{{id}}Prefix">
+        <div data-test-text-field-prefix class="Polaris-TextField__Prefix" id="{{id}}Prefix">
           {{render-content prefix}}
         </div>
       {{/if}}
 
+      {{! template-lint-disable attribute-indentation }}
+      {{!-- TODO remove rule above once linter handles this correctly --}}
       {{#with
         (component "wrapper-element"
+          data-test-text-field-input=true
           name=name
           id=id
           disabled=disabled
           readonly=readOnly
+          role=role
           autofocus=autoFocus
           placeholder=placeholder
-          onfocus=(action onFocus)
-          onblur=(action onBlur)
-          autocomplete=(if autoComplete "on" "off")
-          class="Polaris-TextField__Input"
-          onchange=(action "handleChange")
+          autocomplete=autoCompleteInputs
+          max=max
+          min=min
           minlength=minLength
           maxlength=maxLength
           spellcheck=spellCheck
+          value=value
+          class=inputClassName
           aria-describedby=ariaDescribedBy
+          aria-label=label
           aria-labelledby=ariaLabelledBy
           aria-invalid=ariaInvalid
-          value=value
-        ) as |inputElement|
+          aria-owns=ariaOwns
+          aria-activedescendant=ariaActiveDescendant
+          aria-autocomplete=ariaAutocomplete
+          aria-controls=ariaControls
+          onchange=(action "handleChange")
+          onfocus=(action onFocus)
+          onblur=(action onBlur)
+          onkeypress=(action "handleKeyPress")
+        )
+        as |inputElement|
       }}
         {{#if multiline}}
-          {{component inputElement
+          {{component
+            inputElement
             tagName="textarea"
+            aria-multiline=true
             style=heightStyle
           }}
         {{else}}
-          {{component inputElement
+          {{component
+            inputElement
             tagName="input"
             type=inputType
-            max=max
-            min=min
           }}
         {{/if}}
       {{/with}}
 
       {{#if suffix}}
-        <div class="Polaris-TextField__Suffix" id="{{id}}Suffix">
+        <div data-test-text-field-suffix class="Polaris-TextField__Suffix" id="{{id}}Suffix">
           {{render-content suffix}}
         </div>
       {{/if}}
