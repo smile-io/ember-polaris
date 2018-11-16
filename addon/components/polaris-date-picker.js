@@ -95,6 +95,7 @@ export default Component.extend({
     return selected !== null && !(selected instanceof Date);
   }),
 
+  /**
    * First day of week. Sunday by default
    *
    * @property weekStartsOn
