@@ -8,8 +8,18 @@ const MergeTrees = require('broccoli-merge-trees');
 module.exports = {
   name: require('./package').name,
 
-  isDevelopingAddon() {
-    return process.env.SMILE_DEV;
+  options: {
+    svgJar: {
+      sourceDirs: [
+        'public',
+        'tests/dummy/public/assets/images/svg',
+        'node_modules/@smile-io/ember-polaris/public',
+      ],
+    },
+  },
+
+  included: function(/* app */) {
+    this._super.included.apply(this, arguments);
   },
 
   treeForStyles(tree) {
@@ -28,13 +38,7 @@ module.exports = {
     );
   },
 
-  options: {
-    svgJar: {
-      sourceDirs: [
-        'public',
-        'tests/dummy/public/assets/images/svg',
-        'node_modules/@smile-io/ember-polaris/public',
-      ],
-    },
+  isDevelopingAddon() {
+    return process.env.SMILE_DEV;
   },
 };
