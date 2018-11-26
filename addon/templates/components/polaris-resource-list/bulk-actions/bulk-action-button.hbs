@@ -1,0 +1,53 @@
+{{!--
+  TODO:
+   - hook up ariaLabel, onMouseUp on `polaris-unstyled-link` and `wrapper-element`
+--}}
+{{#component
+  (if url
+    (component "polaris-unstyled-link"
+      class="Polaris-ResourceList-BulkActions__Button"
+      external=external
+      url=url
+    )
+    (component "wrapper-element"
+      tagName="button"
+      type="button"
+      disabled=disabled
+      class=(concat
+        "Polaris-ResourceList-BulkActions__Button"
+        (if disabled " Polaris-ResourceList-BulkActions__Button--disabled")
+      )
+      onClick=(action onAction)
+    )
+  )
+  ariaLabel=accessibilityLabel
+  onMouseUp=handleMouseUpByBlurring
+}}
+  {{#component
+    (if disclosure
+      (component "wrapper-element"
+        tagName="span"
+        class="Polaris-ResourceList-BulkActions__ActionContent"
+      )
+      (component "wrapper-element"
+        tagName=""
+      )
+    )
+  }}
+    {{#wrapper-element
+      tagName=(if disclosure "span" "")
+    }}
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{render-content content}}
+      {{/if}}
+    {{/wrapper-element}}
+
+    {{#if disclosure}}
+      <span class="Polaris-ResourceList-BulkActions__ActionIcon">
+        {{polaris-icon source="caret-down"}}
+      </span>
+    {{/if}}
+  {{/component}}
+{{/component}}
