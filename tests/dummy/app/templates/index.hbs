@@ -54,6 +54,12 @@
     )
   )
 }}
+  {{polaris-resource-list/bulk-actions/bulk-action-button
+    content="Testing"
+    accessibilityLabel="Accessibility label"
+    disabled=dummy
+    onAction=(action (mut dummy) true)
+  }}{{if dummy "Clicked" "Not clicked"}}
 
   {{#polaris-list as |list|}}
     {{#each model as |testPage|}}

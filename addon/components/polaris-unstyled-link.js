@@ -11,6 +11,7 @@ export default Component.extend({
     'dataPolarisUnstyled:data-polaris-unstyled',
     'target',
     'rel',
+    'ariaLabel:aria-label',
   ],
 
   layout,
@@ -19,7 +20,7 @@ export default Component.extend({
    * The url to link to.
    *
    * @property url
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    *
@@ -30,7 +31,7 @@ export default Component.extend({
    * Use for a links that open a different site
    *
    * @property external
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -40,7 +41,7 @@ export default Component.extend({
    * Callback when a link is clicked
    *
    * @property onClick
-   * @type {function}
+   * @type {Function}
    * @default noop
    * @public
    */
@@ -50,10 +51,19 @@ export default Component.extend({
    * The content to display inside link
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    */
   text: null,
+
+  /**
+   * Accessibility label
+   *
+   * @property ariaLabel
+   * @type {String}
+   * @default null
+   */
+  ariaLabel: null,
 
   /**
    * @private
