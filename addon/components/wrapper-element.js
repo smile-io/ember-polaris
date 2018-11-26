@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { isBlank } from '@ember/utils';
+import { dasherize } from '@ember/string';
 import layout from '../templates/components/wrapper-element';
 
 const blacklistedAttributeBindings = ['tagName', 'class'];
@@ -27,7 +28,12 @@ export default Component.extend({
 
     let newAttributeBindings = Object.keys(attrs).filter((attr) => {
       return blacklistedAttributeBindings.indexOf(attr) === -1;
+    }).map((attr) => {
+      // Handle multi-word attributes (e.g. `ariaLabel`).
+      let dasherizedAttr = dasherize(attr);
+      return dasherizedAttr === attr ? attr : `${attr}:${dasherizedAttr}`;
     });
+
     this.set('attributeBindings', newAttributeBindings);
   },
 

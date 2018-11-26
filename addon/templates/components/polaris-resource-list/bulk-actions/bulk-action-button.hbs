@@ -1,6 +1,6 @@
 {{!--
   TODO:
-   - hook up ariaLabel, onMouseUp on `polaris-unstyled-link` and `wrapper-element`
+   - hook up onMouseUp on `polaris-unstyled-link` and `wrapper-element`
 --}}
 {{#component
   (if url
@@ -15,9 +15,9 @@
       disabled=disabled
       class=(concat
         "Polaris-ResourceList-BulkActions__Button"
-        (if disabled " Polaris-ResourceList-BulkActions__Button--disabled")
+        (if disabled " Polaris-ResourceList-BulkActions--disabled")
       )
-      onClick=(action onAction)
+      click=(action onAction)
     )
   )
   ariaLabel=accessibilityLabel
