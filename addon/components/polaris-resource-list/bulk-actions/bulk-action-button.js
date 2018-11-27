@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../../../templates/components/polaris-resource-list/bulk-actions/bulk-action-button';
+import { handleMouseUpByBlurring } from '../../../utils/focus';
 
 export default Component.extend({
   tagName: '',
@@ -82,4 +83,6 @@ export default Component.extend({
    * @public
    */
   onAction() {},
+
+  handleMouseUpByBlurring,
 });

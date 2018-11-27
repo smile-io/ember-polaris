@@ -1,7 +1,3 @@
-{{!--
-  TODO:
-   - hook up onMouseUp on `polaris-unstyled-link` and `wrapper-element`
---}}
 {{#component
   (if url
     (component "polaris-unstyled-link"
@@ -21,7 +17,7 @@
     )
   )
   ariaLabel=accessibilityLabel
-  onMouseUp=handleMouseUpByBlurring
+  mouseUp=handleMouseUpByBlurring
 }}
   {{#component
     (if disclosure
