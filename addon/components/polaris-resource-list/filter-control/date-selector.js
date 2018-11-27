@@ -226,6 +226,21 @@ export default Component.extend({
     }
   }).readOnly(),
 
+  showDatePredicate: computed('dateFilterOption', function() {
+    let dateFilterOption = this.get('dateFilterOption');
+
+    return (
+      dateFilterOption === DateFilterOption.OnOrBefore ||
+      dateFilterOption === DateFilterOption.OnOrAfter
+    );
+  }).readOnly(),
+
+  dateOptions: computed('dateOptionType', function() {
+    let dateOptionType = this.get('dateOptionType') || 'full';
+
+    return this.get(`dateOptionTypes.${dateOptionType}`);
+  }).readOnly(),
+
   init() {
     this._super(...arguments);
 

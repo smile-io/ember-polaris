@@ -1,1 +1,32 @@
-{{yield}}
+{{polaris-select
+  label="Select a value"
+  labelHidden=true
+  placeholder="YYYY-MM-DD"
+  options=dateOptions
+  value=dateFilterOption
+  onChange=(action handleDateFilterOptionsChange)
+}}
+
+{{#if showDatePredicate}}
+  <div class="Polaris-FilterControl-DateSelector__DateTextField">
+    {{polaris-text-field
+      label="Date"
+      placeholder="YYYY-MM-DD"
+      autoComplete=false
+      prefix=(component "polaris-icon" source="calendar" color="skyDark")
+      value=dateTextFieldValue
+      error=userInputDateError
+      onChange=(action handleDateFieldChange)
+      onBlur=(action handleDateBlur)
+    }}
+  </div>
+  <div class="Polaris-FilterControl-DateSelector__DatePicker">
+    {{polaris-date-picker
+      selected=selectedDate
+      month=datePickerMonth
+      year=datePickerYear
+      onChange=(action handleDatePickerChange)
+      onMonthChange=(action handleDatePickerMonthChange)
+    }}
+  </div>
+{{/if}}
