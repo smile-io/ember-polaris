@@ -130,5 +130,68 @@ module(
         );
       });
     });
+
+    module('filterValue', function() {
+      test('sets option in date filters Select', async function(assert) {
+        const dateFilterValue = DateFilterOption.PastMonth;
+        this.set('dateFilterValue', dateFilterValue);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilterValue
+          }}
+        `);
+
+        assert.dom('select').hasValue(dateFilterValue);
+      });
+
+      test('displays DatePicker when filterValue is filter with minimum date predicate (on or after)', async function(assert) {
+        this.set('dateFilterValue', DateFilterOption.OnOrAfter);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilterValue
+          }}
+        `);
+
+        assert.dom('.Polaris-DatePicker').exists();
+      });
+
+      test('displays DatePicker when filterValue is filter with maximum date predicate (on or before)', async function(assert) {
+        this.set('dateFilterValue', DateFilterOption.OnOrBefore);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilterValue
+          }}
+        `);
+
+        assert.dom('.Polaris-DatePicker').exists();
+      });
+
+      test('does not display DatePicker when filterValue is filter without date predicate', async function(assert) {
+        this.set('dateFilterValue', DateFilterOption.PastMonth);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilterValue
+          }}
+        `);
+
+        assert.dom('.Polaris-DatePicker').doesNotExist();
+      });
+    });
   }
 );

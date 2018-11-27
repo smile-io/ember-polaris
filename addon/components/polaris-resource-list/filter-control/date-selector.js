@@ -226,6 +226,33 @@ export default Component.extend({
     }
   }).readOnly(),
 
+  dateFilterOption: computed(
+    'filterValue',
+    'filterKey',
+    'filterMinKey',
+    'filterMaxKey',
+    function() {
+      let {
+        filterValue,
+        filterKey,
+        filterMinKey,
+        filterMaxKey,
+      } = this.getProperties(
+        'filterValue',
+        'filterKey',
+        'filterMinKey',
+        'filterMaxKey'
+      );
+
+      return getDateFilterOption(
+        filterValue,
+        filterKey,
+        filterMinKey,
+        filterMaxKey
+      );
+    }
+  ).readOnly(),
+
   showDatePredicate: computed('dateFilterOption', function() {
     let dateFilterOption = this.get('dateFilterOption');
 
