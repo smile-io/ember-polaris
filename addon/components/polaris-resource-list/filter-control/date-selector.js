@@ -130,17 +130,101 @@ export default Component.extend({
    */
   initialConsumerFilterKey: null,
 
-  /**
-   * Current date.
-   * Marked as volatile to match unmemoized React implementation.
-   *
-   * @property now
-   * @type {Date}
-   * @private
-   */
+  dateComparatorOptions: computed(function() {
+    return [
+      {
+        value: DateFilterOption.OnOrBefore,
+        label: 'on or before',
+      },
+      {
+        value: DateFilterOption.OnOrAfter,
+        label: 'on or after',
+      },
+    ];
+  }).readOnly(),
+
+  datePastOptions: computed(function() {
+    return [
+      {
+        value: DateFilterOption.PastWeek,
+        label: 'in the last week',
+      },
+      {
+        value: DateFilterOption.PastMonth,
+        label: 'in the last month',
+      },
+      {
+        value: DateFilterOption.PastQuarter,
+        label: 'in the last 3 months',
+      },
+      {
+        value: DateFilterOption.PastYear,
+        label: 'in the last year',
+      },
+    ];
+  }).readOnly(),
+
+  dateFutureOptions: computed(function() {
+    return [
+      {
+        value: DateFilterOption.ComingWeek,
+        label: 'next week',
+      },
+      {
+        value: DateFilterOption.ComingMonth,
+        label: 'next month',
+      },
+      {
+        value: DateFilterOption.ComingQuarter,
+        label: 'in the next 3 months',
+      },
+      {
+        value: DateFilterOption.ComingYear,
+        label: 'in the next year',
+      },
+    ];
+  }).readOnly(),
+
+  dateOptionTypes: computed(function() {
+    return {
+      past: [
+        ...this.get('datePastOptions'),
+        ...this.get('dateComparatorOptions'),
+      ],
+      future: [
+        ...this.get('dateFutureOptions'),
+        ...this.get('dateComparatorOptions'),
+      ],
+      full: [
+        ...this.get('datePastOptions'),
+        ...this.get('dateFutureOptions'),
+        ...this.get('dateComparatorOptions'),
+      ],
+    };
+  }).readOnly(),
+
   now: computed(function() {
     return new Date();
-  }).volatile(),
+  }).readOnly(),
+
+  dateTextFieldValue: computed(function() {
+    const { userInputDate, selectedDate } = this.getProperties(
+      'userInputDate',
+      'selectedDate'
+    );
+
+    if (!userInputDate && !selectedDate) {
+      return undefined;
+    }
+
+    if (userInputDate !== undefined) {
+      return userInputDate;
+    }
+
+    if (selectedDate) {
+      return formatDateValue(selectedDate);
+    }
+  }).readOnly(),
 
   init() {
     this._super(...arguments);
@@ -176,7 +260,7 @@ export default Component.extend({
     if (newOption === DateFilterOption.OnOrBefore) {
       onFilterKeyChange(filterMaxKey);
       onFilterValueChange(
-        selectedDate ? formatDateValue(selectedDate) : undefined,
+        selectedDate ? formatDateValue(selectedDate) : undefined
       );
       return;
     }
@@ -184,7 +268,7 @@ export default Component.extend({
     if (newOption === DateFilterOption.OnOrAfter) {
       onFilterKeyChange(filterMinKey);
       onFilterValueChange(
-        selectedDate ? formatDateValue(selectedDate) : undefined,
+        selectedDate ? formatDateValue(selectedDate) : undefined
       );
       return;
     }
@@ -194,10 +278,10 @@ export default Component.extend({
   },
 
   handleDateFieldChange(value) {
-    let {
-      onFilterValueChange,
-      userInputDateError,
-    } = this.getProperties('onFilterValueChange', 'userInputDateError');
+    let { onFilterValueChange, userInputDateError } = this.getProperties(
+      'onFilterValueChange',
+      'userInputDateError'
+    );
 
     if (value.length === 0) {
       this.set('selectedDate', undefined);
@@ -212,10 +296,10 @@ export default Component.extend({
   },
 
   handleDateBlur() {
-    let {
-      onFilterValueChange,
-      dateTextFieldValue,
-    } = this.getProperties('onFilterValueChange', 'dateTextFieldValue');
+    let { onFilterValueChange, dateTextFieldValue } = this.getProperties(
+      'onFilterValueChange',
+      'dateTextFieldValue'
+    );
 
     if (!dateTextFieldValue || !isValidDate(dateTextFieldValue)) {
       this.setProperties({
@@ -245,10 +329,10 @@ export default Component.extend({
   },
 
   handleDateChanged() {
-    let {
-      onFilterValueChange,
-      selectedDate,
-    } = this.getProperties('onFilterValueChange', 'selectedDate');
+    let { onFilterValueChange, selectedDate } = this.getProperties(
+      'onFilterValueChange',
+      'selectedDate'
+    );
 
     if (!selectedDate) {
       return;
@@ -257,7 +341,7 @@ export default Component.extend({
     this.onFilterValueChange(formatDateValue(selectedDate));
   },
 
-  handleDatePickerChange({end: nextDate}) {
+  handleDatePickerChange({ end: nextDate }) {
     this.setProperties({
       selectedDate: new Date(nextDate),
       userInputDate: undefined,
@@ -286,7 +370,7 @@ function getDateFilterOption(
   filterValue,
   filterKey,
   filterMinKey,
-  filterMaxKey,
+  filterMaxKey
 ) {
   if (filterKey === filterMaxKey) {
     return DateFilterOption.OnOrBefore;
