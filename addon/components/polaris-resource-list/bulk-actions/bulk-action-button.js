@@ -8,15 +8,6 @@ export default Component.extend({
   layout,
 
   /**
-   * A unique identifier for the action
-   *
-   * @type {String}
-   * @default null
-   * @public
-   */
-  // id: null,
-
-  /**
    * Content the action displays
    *
    * @type {String|Component|Object}
