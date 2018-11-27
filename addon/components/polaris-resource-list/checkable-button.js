@@ -1,8 +1,18 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { and, not } from '@ember/object/computed';
+import mapEventToAction from '@smile-io/ember-polaris/utils/map-event-to-action';
 import layout from '../../templates/components/polaris-resource-list/checkable-button';
 
 export default Component.extend({
+  classNames: ['Polaris-ResourceList-CheckableButton'],
+
+  classNameBindings: [
+    'plain:Polaris-ResourceList-CheckableButton__CheckableButton--plain',
+    'shouldApplySelectModeClass:Polaris-ResourceList-CheckableButton__CheckableButton--selectMode',
+    'shouldApplySelectedClass:Polaris-ResourceList-CheckableButton__CheckableButton--selected',
+    'shouldApplyMeasuringClass:Polaris-ResourceList-CheckableButton__CheckableButton--measuring',
+  ],
+
   layout,
 
   /**
@@ -20,6 +30,9 @@ export default Component.extend({
   label: '',
 
   /**
+   *
+   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
+   *
    * @type {Boolean|String}
    * @default null
    * @property selected
@@ -59,48 +72,10 @@ export default Component.extend({
    * @default noop
    * @property onToggleAll
    */
-  onToggleAll() {},
+  click: mapEventToAction('onToggleAll'),
 
-  checkableButtonClasses: computed(
-    'plain',
-    'selectMode',
-    'selected',
-    'measuring',
-    function() {
-      let classNames = ['Polaris-ResourceList-CheckableButton'];
-      let { plain, selectMode, selected, measuring } = this.getProperties(
-        'plain',
-        'selectMode',
-        'selected',
-        'measuring'
-      );
-
-      if (plain) {
-        classNames.push(
-          'Polaris-ResourceList-CheckableButton__CheckableButton--plain'
-        );
-        return classNames.join(' ');
-      }
-
-      if (selectMode) {
-        classNames.push(
-          'Polaris-ResourceList-CheckableButton__CheckableButton--selectMode'
-        );
-      }
-
-      if (selected) {
-        classNames.push(
-          'Polaris-ResourceList-CheckableButton__CheckableButton--selected'
-        );
-      }
-
-      if (measuring) {
-        classNames.push(
-          'Polaris-ResourceList-CheckableButton__CheckableButton--measuring'
-        );
-      }
-
-      return classNames.join(' ');
-    }
-  ),
+  isNotPlain: not('plain'),
+  shouldApplySelectModeClass: and('isNotPlain', 'selectMode'),
+  shouldApplySelectedClass: and('isNotPlain', 'selected'),
+  shouldApplyMeasuringClass: and('isNotPlain', 'measuring'),
 });
