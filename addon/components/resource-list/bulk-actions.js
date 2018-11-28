@@ -263,6 +263,10 @@ export default Component.extend({
     return actions.length === validList.length;
   },
 
+  setContainerNode() {
+    this.set('containerNode', this.element);
+  },
+
   didReceiveAttrs() {
     this._super();
 
@@ -312,5 +316,7 @@ export default Component.extend({
         `To provide a better user experience. There should only be a maximum of ${MAX_PROMOTED_ACTIONS} promoted actions.`
       );
     }
+
+    this.setContainerNode();
   },
 });
