@@ -1,10 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { throttle } from '@ember/runloop';
+import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../../templates/components/resource-list/bulk-actions';
 
 const MAX_PROMOTED_ACTIONS = 2;
 
-export default Component.extend({
+export default Component.extend(ContextBoundEventListenersMixin, {
   layout,
 
   /**
@@ -271,6 +273,42 @@ export default Component.extend({
     this.set('moreActionsNode', node);
   },
 
+  setLargeScreenButtonsNode(node) {
+    this.set('largeScreenButtonsNode', node);
+  },
+
+  handleResize() {
+    throttle(
+      this,
+      function() {
+        let {
+          smallScreenPopoverVisible,
+          largeScreenPopoverVisible,
+          containerNode,
+        } = this.getProperties(
+          'smallScreenPopoverVisible',
+          'largeScreenPopoverVisible',
+          'containerNode'
+        );
+
+        if (containerNode) {
+          const containerWidth = containerNode.getBoundingClientRect().width;
+          if (containerWidth > 0) {
+            this.set('containerWidth', containerWidth);
+          }
+        }
+
+        if (smallScreenPopoverVisible || largeScreenPopoverVisible) {
+          this.setProperties({
+            smallScreenPopoverVisible: false,
+            largeScreenPopoverVisible: false,
+          });
+        }
+      },
+      50
+    );
+  },
+
   didReceiveAttrs() {
     this._super();
 
@@ -322,6 +360,14 @@ export default Component.extend({
     }
 
     this.setContainerNode();
+
+    let largeScreenGroupNode = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
+    );
+
+    if (largeScreenGroupNode) {
+      this.addEventListener(largeScreenGroupNode, 'resize', this.handleResize);
+    }
   },
 
   didRender() {
@@ -331,8 +377,16 @@ export default Component.extend({
       '.Polaris-ResourceList-BulkActions__Popover'
     );
 
+    let largeScreenButtonsNode = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
+    );
+
     if (moreActionsNode) {
       this.setMoreActionsNode(moreActionsNode);
+    }
+
+    if (largeScreenButtonsNode) {
+      this.setLargeScreenButtonsNode(largeScreenButtonsNode);
     }
   },
 
