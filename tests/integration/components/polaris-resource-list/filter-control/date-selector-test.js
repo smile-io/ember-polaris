@@ -13,6 +13,7 @@ import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-res
 import DatePickerComponent from '@smile-io/ember-polaris/components/polaris-date-picker';
 
 const textFieldInputSelector = '.Polaris-TextField input';
+const selectedDaySelector = '.Polaris-DatePicker__Day--selected';
 
 const dateOptionType = {
   past: [
@@ -461,7 +462,7 @@ module(
       });
     });
 
-    skip('resets date in DatePicker when user removes date in TextField', async function(/* assert */) {
+    test('resets date in DatePicker when user removes date in TextField', async function(assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector
@@ -474,11 +475,15 @@ module(
 
       await triggerChangeEventWithValue(textFieldInputSelector, '');
 
-      // TODO: how do we check this?
-      // expect(wrapper.find(DatePicker).prop('selected')).toBeUndefined();
+      assert.dom(selectedDaySelector).doesNotExist();
     });
 
-    skip('updates selected date in DatePicker when user enters a valid date in TextField and field is blurred', async function(/* assert */) {
+    /**
+     * TODO: this has a timezone issue for me (@andrewpye)
+     * in my GMT+2 time zone: the date returned is the day
+     * before the one selected.
+     */
+    skip('updates selected date in DatePicker when user enters a valid date in TextField and field is blurred', async function(assert) {
       const validUserInputDate = '2020-08-30';
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
@@ -496,12 +501,15 @@ module(
       );
       await blur(textFieldInputSelector);
 
-      // TODO: how do we check this?
-      // const selectedDate = wrapper.find(DatePicker).prop('selected') as Date;
-      // expect(selectedDate.toISOString()).toContain(validUserInputDate);
+      assert
+        .dom(selectedDaySelector)
+        .hasAttribute(
+          'data-test-date-picker-date',
+          new RegExp(validUserInputDate)
+        );
     });
 
-    skip('does not update selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(/* assert */) {
+    test('does not update selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector
@@ -515,11 +523,10 @@ module(
       await triggerChangeEventWithValue(textFieldInputSelector, 'INVALID');
       await blur(textFieldInputSelector);
 
-      // TODO: how do we check this?
-      // expect(wrapper.find(DatePicker).prop('selected')).toBeUndefined();
+      assert.dom(selectedDaySelector).doesNotExist();
     });
 
-    skip('resets selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(/* assert */) {
+    test('resets selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(assert) {
       const invalidUserInputDate = '08/20/2020';
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
@@ -537,8 +544,7 @@ module(
       );
       await blur(textFieldInputSelector);
 
-      // TODO: how do we check this?
-      // expect(wrapper.find(DatePicker).prop('selected')).toBeUndefined();
+      assert.dom(selectedDaySelector).doesNotExist();
     });
 
     test('removes date field error when invalid date is replaced by valid date in TextField', async function(assert) {
