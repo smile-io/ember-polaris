@@ -207,7 +207,7 @@ export default Component.extend({
     return new Date();
   }).readOnly(),
 
-  dateTextFieldValue: computed(function() {
+  dateTextFieldValue: computed('userInputDate', 'selectedDate', function() {
     const { userInputDate, selectedDate } = this.getProperties(
       'userInputDate',
       'selectedDate'

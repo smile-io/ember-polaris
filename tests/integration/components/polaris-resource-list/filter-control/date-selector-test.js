@@ -1,8 +1,16 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import {
+  render,
+  find,
+  findAll,
+  triggerEvent,
+  click,
+  blur,
+} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
+import DatePickerComponent from '@smile-io/ember-polaris/components/polaris-date-picker';
 
 const dateOptionType = {
   past: [
@@ -43,6 +51,11 @@ function getOptionsValuesList(options) {
   return options.map((option) => {
     return typeof option === 'string' ? option : option.value;
   });
+}
+
+async function triggerSelectChangeEventWithValue(value) {
+  find('select').value = value;
+  await triggerEvent('select', 'change');
 }
 
 module(
@@ -191,6 +204,206 @@ module(
         `);
 
         assert.dom('.Polaris-DatePicker').doesNotExist();
+      });
+    });
+
+    module('onFilterValueChange', function() {
+      test('gets called with new filter value when date filter is updated to filter without date predicate', async function(assert) {
+        const newDateFilter = DateFilterOption.PastMonth;
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await triggerSelectChangeEventWithValue(newDateFilter);
+
+        assert.equal(this.get('newDateFilter'), newDateFilter);
+      });
+
+      test('gets called with undefined when date filter is updated to filter with minimum date predicate (on or after) and no current date selection', async function(assert) {
+        const newDateFilter = DateFilterOption.OnOrAfter;
+        this.set('newDateFilter', newDateFilter);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await triggerSelectChangeEventWithValue(newDateFilter);
+
+        assert.equal(this.get('newDateFilter'), undefined);
+      });
+
+      test('gets called with undefined when date filter is updated to filter with maximum date predicate (on or before) and no current date selection', async function(assert) {
+        const newDateFilter = DateFilterOption.OnOrBefore;
+        this.set('newDateFilter', newDateFilter);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await triggerSelectChangeEventWithValue(newDateFilter);
+
+        assert.equal(this.get('newDateFilter'), undefined);
+      });
+
+      test('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with minimum date predicate (on or after) and current date selection', async function(assert) {
+        const newDateFilter = DateFilterOption.OnOrAfter;
+        const date = '2019-05-28';
+        this.set('filterValue', DateFilterOption.OnOrBefore);
+
+        // Hack the date picker so we can trigger its onChange easily.
+        // TODO: find a better way of doing this.
+        DatePickerComponent.reopen({
+          click() {
+            this.get('onChange')({ end: new Date(date) });
+          },
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=filterValue
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await click('.Polaris-DatePicker');
+        await triggerSelectChangeEventWithValue(newDateFilter);
+
+        assert.equal(this.get('newDateFilter'), '2019-05-28');
+      });
+
+      test('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with maximum date predicate (on or before) and current date selection', async function(assert) {
+        const newDateFilter = DateFilterOption.OnOrBefore;
+        const date = '2019-05-28';
+        this.set('filterValue', DateFilterOption.OnOrAfter);
+
+        // Hack the date picker so we can trigger its onChange easily.
+        // TODO: find a better way of doing this.
+        DatePickerComponent.reopen({
+          click() {
+            this.get('onChange')({ end: new Date(date) });
+          },
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=filterValue
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await click('.Polaris-DatePicker');
+        await triggerSelectChangeEventWithValue(newDateFilter);
+
+        assert.equal(this.get('newDateFilter'), '2019-05-28');
+      });
+
+      test('gets called with formatted YYYY-MM-DD date when date is updated in DatePicker', async function(assert) {
+        const dateFilter = DateFilterOption.OnOrBefore;
+        const date = '2019-05-28';
+        this.set('dateFilter', dateFilter);
+
+        // Hack the date picker so we can trigger its onChange easily.
+        // TODO: find a better way of doing this.
+        DatePickerComponent.reopen({
+          click() {
+            this.get('onChange')({ end: new Date(date) });
+          },
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilter
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        await click('.Polaris-DatePicker');
+
+        assert.equal(this.get('newDateFilter'), '2019-05-28');
+      });
+
+      /**
+       * TODO: this has a timezone issue for me (@andrewpye)
+       * in my GMT+2 time zone: the date returned is the day
+       * before the one selected. However this only shows up
+       * if I'm not debugging - if I close dev tools,
+       * `this.get('newDateFilter')` returns `undefined`
+       * as if there's a timing error of some sort.
+       */
+      skip('gets called with date when date is updated in TextField with YYYY-MM-DD date and TextField is blurred', async function(assert) {
+        const dateFilter = DateFilterOption.OnOrBefore;
+        const date = '2019-08-22';
+        this.set('dateFilter', dateFilter);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilter
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        find('.Polaris-TextField input').value = date;
+        await triggerEvent('.Polaris-TextField input', 'change');
+        await blur('.Polaris-TextField input', 'blur');
+
+        assert.equal(this.get('newDateFilter'), date);
+      });
+
+      /**
+       * Skipping this test for now as well since it seems to fail
+       * for similar timing-ish reasons as the one above.
+       */
+      skip('gets called with undefined when date is updated in TextField with invalid date and TextField is blurred', async function(assert) {
+        const dateFilter = DateFilterOption.OnOrBefore;
+        const invalidDate = '2019/08/22';
+        this.setProperties({
+          dateFilter,
+          newDateFilter: dateFilter,
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=dateFilter
+            onFilterValueChange=(action (mut newDateFilter))
+          }}
+        `);
+
+        find('.Polaris-TextField input').value = invalidDate;
+        await triggerEvent('.Polaris-TextField input', 'change');
+        await blur('.Polaris-TextField input', 'blur');
+
+        assert.equal(this.get('newDateFilter'), undefined);
       });
     });
   }
