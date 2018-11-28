@@ -268,16 +268,6 @@ export default Component.extend({
     return this.get(`dateOptionTypes.${dateOptionType}`);
   }).readOnly(),
 
-  init() {
-    this._super(...arguments);
-
-    this.setProperties({
-      datePickerMonth: this.get('now').getMonth(),
-      datePickerYear: this.get('now').getYear(),
-      initialConsumerFilterKey: this.get('filterKey'),
-    });
-  },
-
   handleDateFilterOptionsChange(newOption) {
     let {
       onFilterValueChange,
@@ -380,7 +370,7 @@ export default Component.extend({
       return;
     }
 
-    this.onFilterValueChange(formatDateValue(selectedDate));
+    onFilterValueChange(formatDateValue(selectedDate));
   },
 
   handleDatePickerChange({ end: nextDate }) {
@@ -397,6 +387,16 @@ export default Component.extend({
     this.setProperties({
       datePickerMonth: month,
       datePickerYear: year,
+    });
+  },
+
+  init() {
+    this._super(...arguments);
+
+    this.setProperties({
+      datePickerMonth: this.get('now').getMonth(),
+      datePickerYear: this.get('now').getYear(),
+      initialConsumerFilterKey: this.get('filterKey'),
     });
   },
 });
