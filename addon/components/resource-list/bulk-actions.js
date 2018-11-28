@@ -343,5 +343,13 @@ export default Component.extend({
         !this.get('smallScreenPopoverVisible')
       );
     },
+
+    setSelectMode(val) {
+      let onSelectModeToggle = this.get('onSelectModeToggle');
+
+      if (onSelectModeToggle) {
+        onSelectModeToggle(val);
+      }
+    },
   },
 });

@@ -35,7 +35,12 @@
       </div>
     {{/if}}
 
-    {cancelButton}
+    <button
+      class="Polaris-ResourceList-BulkActions__Button Polaris-ResourceList-BulkActions__Button--cancel"
+      onclick={{action "setSelectMode" false}}
+    >
+      Cancel
+    </button>
   </div>
   {paginatedSelectAllMarkup}
 </div>
