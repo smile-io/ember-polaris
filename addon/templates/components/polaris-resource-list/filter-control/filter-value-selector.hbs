@@ -1,0 +1,34 @@
+{{#if (eq filter.type FilterType.Select)}}
+  {{#polaris-stack vertical=true}}
+    {{!-- TODO: implement operatorOptionsMarkup --}}
+    {{operatorOptionsMarkup}}
+    {{polaris-select
+      label=selectedFilterLabel
+      options=filter.options
+      placeholder="Select a filter\u2026"
+      value=value
+      onChange=(action onChange)
+    }}
+  {{/polaris-stack}}
+{{else if (eq filter.type FilterType.TextField)}}
+    {{#polaris-stack vertical=true}}
+    {{!-- TODO: implement operatorOptionsMarkup --}}
+    {{operatorOptionsMarkup}}
+    {{polaris-text-field
+      label=selectedFilterLabel
+      value=value
+      type=filter.textFieldType
+      onChange=(action onChange)
+    }}
+  {{/polaris-stack}}
+{{else if (eq filter.type FilterType.DateSelector)}}
+  {{polaris-resource-list/filter-control/date-selector
+    dateOptionType=filter.dateOptionType
+    filterValue=value
+    filterKey=filterKey
+    filterMinKey=filter.minKey
+    filterMaxKey=filter.maxKey
+    onFilterValueChange=(action onChange)
+    onFilterKeyChange=(action onFilterKeyChange)
+  }}
+{{/if}}
