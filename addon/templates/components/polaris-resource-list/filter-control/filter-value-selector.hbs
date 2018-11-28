@@ -1,7 +1,10 @@
 {{#if (eq filter.type FilterType.Select)}}
-  {{#polaris-stack vertical=true}}
-    {{!-- TODO: implement operatorOptionsMarkup --}}
-    {{operatorOptionsMarkup}}
+  {{#polaris-stack vertical=true as |stack|}}
+    {{#if showOperatorOptions}}
+      {{#stack.item}}
+        {{render-content operatorOptionsMarkup}}
+      {{/stack.item}}
+    {{/if}}
     {{polaris-select
       label=selectedFilterLabel
       options=filter.options
@@ -11,9 +14,12 @@
     }}
   {{/polaris-stack}}
 {{else if (eq filter.type FilterType.TextField)}}
-    {{#polaris-stack vertical=true}}
-    {{!-- TODO: implement operatorOptionsMarkup --}}
-    {{operatorOptionsMarkup}}
+    {{#polaris-stack vertical=true as |stack|}}
+    {{#if showOperatorOptions}}
+      {{#stack.item}}
+        {{render-content operatorOptionsMarkup}}
+      {{/stack.item}}
+    {{/if}}
     {{polaris-text-field
       label=selectedFilterLabel
       value=value
