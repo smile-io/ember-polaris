@@ -63,7 +63,7 @@
   {{/if}}
 </div>
 
-<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen">
+<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen {{if measuring 'Polaris-ResourceList-BulkActions__Group--largeScreen'}}">
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
       accessibilityLabel=accessibilityLabel
@@ -75,7 +75,13 @@
       onToggleAll=(action onToggleAll)
     }}
 
-    <!-- {promotedActionsMarkup} -->
+    {{#each promotedActionsToRender as |promotedAction|}}
+      {{polaris-resource-list/bulk-actions/bulk-actions-button
+        onAction=(action promotedAction)
+        handleMeasurement=(action "handleMeasurement")
+      }}
+    {{/each}}
+
     <!-- {actionsPopover} -->
   </div>
   <!-- {paginatedSelectAllMarkup} -->

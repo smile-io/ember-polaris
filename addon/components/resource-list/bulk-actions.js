@@ -164,8 +164,28 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    */
   addedMoreActionsWidthForMeasuring: 0,
 
-  numberOfPromotedActionsToRender: computed(
+  promotedActionsToRender: computed(
     'promotedActions',
+    'numberOfPromotedActionsToRender',
+    function() {
+      let {
+        promotedActions,
+        numberOfPromotedActionsToRender,
+      } = this.getProperties(
+        'promotedActions',
+        'numberOfPromotedActionsToRender'
+      );
+
+      if (promotedActions && numberOfPromotedActionsToRender > 0) {
+        return promotedActions.slice(0, numberOfPromotedActionsToRender);
+      }
+
+      return [];
+    }
+  ),
+
+  numberOfPromotedActionsToRender: computed(
+    'promotedActions.length',
     'containerWidth',
     'bulkActionsWidth',
     'measuring',
@@ -403,6 +423,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
       if (onSelectModeToggle) {
         onSelectModeToggle(val);
+      }
+    },
+
+    handleMeasurement(width) {
+      let measuring = this.get('measuring');
+
+      if (measuring) {
+        this.get('promotedActionsWidths').pushObject(width);
       }
     },
   },
