@@ -267,6 +267,10 @@ export default Component.extend({
     this.set('containerNode', this.element);
   },
 
+  setMoreActionsNode(node) {
+    this.set('moreActionsNode', node);
+  },
+
   didReceiveAttrs() {
     this._super();
 
@@ -318,5 +322,26 @@ export default Component.extend({
     }
 
     this.setContainerNode();
+  },
+
+  didRender() {
+    this._super(...arguments);
+
+    let moreActionsNode = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Popover'
+    );
+
+    if (moreActionsNode) {
+      this.setMoreActionsNode(moreActionsNode);
+    }
+  },
+
+  actions: {
+    toggleSmallScreenPopover() {
+      this.set(
+        'smallScreenPopoverVisible',
+        !this.get('smallScreenPopoverVisible')
+      );
+    },
   },
 });
