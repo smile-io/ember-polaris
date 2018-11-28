@@ -42,7 +42,25 @@
       Cancel
     </button>
   </div>
-  {paginatedSelectAllMarkup}
+
+  {{#if (or paginatedSelectAllAction (and paginatedSelectAllText paginatedSelectAllAction))}}
+    <div class="Polaris-ResourceList-BulkActions__PaginatedSelectAll">
+      {{#if (and paginatedSelectAllText paginatedSelectAllAction)}}
+        <span aria-live="polite">{{paginatedSelectAllText}}</span>
+      {{else}}
+        {{paginatedSelectAllText}}
+      {{/if}}
+
+      {{#if paginatedSelectAllAction}}
+        {{polaris-button}}
+          plain=true
+          disabled=disabled
+          text=paginatedSelectAllAction.content
+          onClick=(action paginatedSelectAllAction.onAction)
+        }}
+      {{/if}}
+    </div>
+  {{/if}}
 </div>
 
 <!-- {largeScreenGroup} -->
