@@ -1,4 +1,8 @@
-<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--smallScreen {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}">
+<div
+  class="Polaris-ResourceList-BulkActions__Group
+    Polaris-ResourceList-BulkActions__Group--smallScreen
+    {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}"
+>
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
       accessibilityLabel=accessibilityLabel
@@ -63,7 +67,12 @@
   {{/if}}
 </div>
 
-<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen {{if measuring 'Polaris-ResourceList-BulkActions__Group--measuring'}} {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}">
+<div
+  class="Polaris-ResourceList-BulkActions__Group
+  Polaris-ResourceList-BulkActions__Group--largeScreen
+  {{if measuring 'Polaris-ResourceList-BulkActions__Group--measuring'}}
+  {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}"
+>
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
       accessibilityLabel=accessibilityLabel

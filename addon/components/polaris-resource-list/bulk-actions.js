@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { throttle } from '@ember/runloop';
+import { warn } from '@ember/debug';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import layout from '../../templates/components/polaris-resource-list/bulk-actions';
 
@@ -48,7 +49,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * Actions that will be given more prominence
    *
-   * @type {Function[]}
+   * @type {Object[]}
    * @default null
    * @property promotedActions
    */
@@ -58,7 +59,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * List of actions
    *
    *
-   * @type {Function[]}
+   * @type {Object[]}
    * @default null
    * @property passedActions
    */
@@ -90,24 +91,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @property disabled
    */
   disabled: null,
-
-  /**
-   * Callback when the select all checkbox is clicked
-   *
-   * @type {Function}
-   * @default noop
-   * @property onToggleAll
-   */
-  onToggleAll() {},
-
-  /**
-   * Callback when selectable state of list is changed
-   *
-   * @type {Function}
-   * @default noop
-   * @property onSelectModeToggle
-   */
-  onSelectModeToggle(/* selectMode **/) {},
 
   /**
    * @private
@@ -149,14 +132,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   /**
    * @private
-   * {Number[]}
-   */
-  promotedActionsWidths: computed(function() {
-    return [];
-  }),
-
-  /**
-   * @private
    */
   bulkActionsWidth: 0,
 
@@ -164,6 +139,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @private
    */
   addedMoreActionsWidthForMeasuring: 0,
+
+  /**
+   * @private
+   * {Number[]}
+   */
+  promotedActionsWidths: computed(function() {
+    return [];
+  }),
 
   promotedActionsToRender: computed(
     'promotedActions',
@@ -225,7 +208,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
       while (!sufficientSpace && counter >= 0) {
         totalWidth += promotedActionsWidths[counter];
-        const widthWithRemovedAction =
+        let widthWithRemovedAction =
           bulkActionsWidth - totalWidth + addedMoreActionsWidthForMeasuring;
         if (containerWidth >= widthWithRemovedAction) {
           sufficientSpace = true;
@@ -262,7 +245,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'numberOfPromotedActionsToRender'
       );
 
-      if (promotedActions && numberOfPromotedActionsToRender < promotedActions.length) {
+      if (
+        promotedActions &&
+        numberOfPromotedActionsToRender < promotedActions.length
+      ) {
         return [...promotedActions].slice(numberOfPromotedActionsToRender);
       }
 
@@ -311,7 +297,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'measuring'
       );
 
-      return Boolean(actionSections || rolledInPromotedActions.length > 0 || measuring);
+      return Boolean(
+        actionSections || rolledInPromotedActions.length > 0 || measuring
+      );
     }
   ),
 
@@ -358,8 +346,26 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
+  /**
+   * Callback when selectable state of list is changed
+   *
+   * @type {Function}
+   * @default noop
+   * @property onSelectModeToggle
+   */
+  onSelectModeToggle(/* selectMode **/) {},
+
+  /**
+   * Callback when the select all checkbox is clicked
+   *
+   * @type {Function}
+   * @default noop
+   * @property onToggleAll
+   */
+  onToggleAll() {},
+
   instanceOfBulkActionListSectionArray(passedActions) {
-    const validList = passedActions.filter((action) => {
+    let validList = passedActions.filter((action) => {
       return action.items;
     });
 
@@ -367,7 +373,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   },
 
   instanceOfBulkActionArray(passedActions) {
-    const validList = passedActions.filter((action) => {
+    let validList = passedActions.filter((action) => {
       return !action.items;
     });
 
@@ -401,7 +407,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         );
 
         if (containerNode) {
-          const containerWidth = containerNode.getBoundingClientRect().width;
+          let containerWidth = containerNode.getBoundingClientRect().width;
           if (containerWidth > 0) {
             this.set('containerWidth', containerWidth);
           }
@@ -424,7 +430,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     let promotedActions = this.get('promotedActions');
 
     if (promotedActions && promotedActions.length > MAX_PROMOTED_ACTIONS) {
-      console.warn(
+      warn(
         `To provide a better user experience. There should only be a maximum of ${MAX_PROMOTED_ACTIONS} promoted actions.`
       );
     }
@@ -464,7 +470,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       promotedActions,
       moreActionsNode,
       addedMoreActionsWidthForMeasuring,
-      bulkActionsWidth,
       largeScreenButtonsNode,
       containerNode,
     } = this.getProperties(
@@ -472,7 +477,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'promotedActions',
       'moreActionsNode',
       'addedMoreActionsWidthForMeasuring',
-      'bulkActionsWidth',
       'largeScreenButtonsNode',
       'containerNode'
     );
@@ -482,10 +486,12 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         .width;
     }
 
-    bulkActionsWidth = largeScreenButtonsNode
+    let bulkActionsWidth = largeScreenButtonsNode
       ? largeScreenButtonsNode.getBoundingClientRect().width -
         addedMoreActionsWidthForMeasuring
       : 0;
+
+    this.set('bulkActionsWidth', bulkActionsWidth);
 
     if (containerNode) {
       this.setProperties({
