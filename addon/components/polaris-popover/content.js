@@ -13,17 +13,27 @@ export default Component.extend({
    * Automatically add wrap content in a section
    *
    * @property sectioned
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
   sectioned: false,
 
   /**
+   * Allow popover to stretch to fit content vertically
+   *
+   * @property fullHeight
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  fullHeight: false,
+
+  /**
    * Content wrapper component.
    *
    * @property contentComponent
-   * @type {component}
+   * @type {Component}
    * @default: null
    * @public
    */
@@ -37,7 +47,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -47,7 +57,7 @@ export default Component.extend({
    * `ember-basic-dropdown`'s generated ID, used to look up
    *
    * @property uniqueId
-   * @type {string}
+   * @type {String}
    * @default: null
    * @public
    */
