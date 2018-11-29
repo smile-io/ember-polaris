@@ -6,9 +6,10 @@
       {{/stack.item}}
     {{/if}}
     {{polaris-select
+      dataTestSelect="filter"
       label=selectedFilterLabel
       options=filter.options
-      placeholder="Select a filter\u2026"
+      placeholder="Select a filter..."
       value=value
       onChange=(action onChange)
     }}

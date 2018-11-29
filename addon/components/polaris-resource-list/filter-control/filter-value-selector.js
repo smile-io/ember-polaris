@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed, get } from '@ember/object';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-value-selector';
 
-const FilterType = {
+export const FilterType = {
   Select: 'select',
   TextField: 'text_field',
   DateSelector: 'date_selector',
@@ -67,7 +67,7 @@ export default Component.extend({
     );
   }).readOnly(),
 
-  operatorOptions: computed(
+  operatorOptionsMarkup: computed(
     'filter.{label,operatorText}',
     'filterKey',
     function() {
@@ -77,6 +77,7 @@ export default Component.extend({
         componentName: 'polaris-select',
         props: {
           labelHidden: true,
+          dataTestSelect: 'operator',
           label: get(filter, 'label'),
           options: buildOperatorOptions(get(filter, 'operatorText')),
           value: filterKey,
@@ -85,6 +86,11 @@ export default Component.extend({
       };
     }
   ).readOnly(),
+
+  selectedFilterLabel: computed('filter.operatorText', function() {
+    let operatorText = this.get('filter.operatorText');
+    return typeof operatorText === 'string' ? operatorText : '';
+  }).readOnly(),
 
   handleOperatorOptionChange(operatorKey) {
     let { value, onChange, onFilterKeyChange } = this.getProperties(
