@@ -1,1 +1,47 @@
-{{yield}}
+{{#polaris-popover
+  sectioned=true
+  fullHeight=true
+  as |popover|
+}}
+  {{#component (if disabled
+    (component "wrapper-element" tagName="")
+    popover.activator
+  )}}
+    {{polaris-button
+      text="Filter"
+      disclosure=true
+      disabled=disabled
+      onFocus=(action handleButtonFocus)
+    }}
+  {{/component}}
+
+  {{#popover.content}}
+    {{#polaris-form onSubmit=(action handleAddFilter)}}
+      {{#polaris-form-layout}}
+        {{polaris-select
+          placeholder="Select a filter..."
+          label=selectLabel
+          options=filterOptions
+          value=selectedFilter.key
+          onChange=(action handleFilterKeyChange)
+        }}
+
+        {{#if selectedFilter}}
+          {{polaris-resource-list/filter-control/filter-value-selector
+            filter=selectedFilter
+            filterKey=selectedFilterKey
+            value=selectedFilterValue
+            onFilterKeyChange=(action handleFilterKeyChange)
+            onChange=(action (mut selectedFilterValue))
+          }}
+
+          {{polaris-button
+            text="Add filter"
+            disabled=(not canAddFilter)
+            onClick=(action handleAddFilter)
+          }}
+        {{/if}}
+      {{/polaris-form-layout}}
+    {{/polaris-form}}
+  {{/popover.content}}
+{{/polaris-popover}}
