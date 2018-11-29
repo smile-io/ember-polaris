@@ -46,6 +46,12 @@ const selectFilter = {
   ],
 };
 
+const textFieldFilter = {
+  key: 'filterKey2',
+  label: 'Tagged with',
+  type: FilterType.TextField,
+};
+
 function getOptionsListForOperators(operators) {
   return operators.map(({ key, optionLabel }) => {
     return { value: key, label: optionLabel };
@@ -73,20 +79,20 @@ module(
         function() {
           test('renders a Select field', async function(assert) {
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
 
             assert.dom('.Polaris-Select').exists();
           });
 
           test('renders label using operatorText when it is a string', async function(assert) {
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
 
             assert
               .dom('.Polaris-Label')
@@ -96,12 +102,13 @@ module(
           test('renders a Select with options using operatorText when it is a list of operators', async function(assert) {
             this.set('filter.operatorText', operators);
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
 
             const expectedOptions = getOptionsListForOperators(operators);
+
             const operatorsSelectOptions = findAll(
               '[data-test-select="operator"] option:not([disabled])'
             ).map((option) => {
@@ -117,22 +124,22 @@ module(
             const value = 'beauty_value';
             this.set('value', value);
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-              value=value
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                value=value
+              }}
+            `);
 
             assert.dom('.Polaris-Select select').hasValue(value);
           });
 
           test('calls onChange when the Select was changed', async function(assert) {
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-              onChange=(action (mut wasOnChangeCalled) true)
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onChange=(action (mut wasOnChangeCalled) true)
+              }}
+            `);
 
             await triggerEvent('.Polaris-Select select', 'change');
             assert.ok(this.get('wasOnChangeCalled'));
@@ -143,11 +150,11 @@ module(
             this.set('filter.operatorText', operators);
 
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-              onFilterKeyChange=(action (mut wasOnFilterKeyChangeCalled) true)
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onFilterKeyChange=(action (mut wasOnFilterKeyChangeCalled) true)
+              }}
+            `);
 
             await triggerChangeEventWithValue(
               '[data-test-select="operator"]',
@@ -162,14 +169,158 @@ module(
             this.set('filter.operatorText', operators);
 
             await render(hbs`
-            {{polaris-resource-list/filter-control/filter-value-selector
-              filter=filter
-              onChange=(action (mut newFilterValue))
-            }}
-          `);
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onChange=(action (mut newFilterValue))
+              }}
+            `);
 
             await triggerChangeEventWithValue(
               '[data-test-select="filter"]',
+              newFilterValue
+            );
+
+            await triggerChangeEventWithValue(
+              '[data-test-select="operator"]',
+              operators[1].key
+            );
+
+            assert.equal(this.get('newFilterValue'), newFilterValue);
+          });
+        }
+      );
+
+      module(
+        'FilterType.TextField',
+        {
+          beforeEach() {
+            this.set('filter', JSON.parse(JSON.stringify(textFieldFilter)));
+          },
+        },
+        function() {
+          test('renders a TextField', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert.dom('.Polaris-TextField').exists();
+          });
+
+          test('does not render a label if operatorText does not exist', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert.dom('.Polaris-Label').doesNotExist();
+          });
+
+          test('renders a Select with options using operatorText when it is a list of operators', async function(assert) {
+            this.set('filter.operatorText', operators);
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            const expectedOptions = getOptionsListForOperators(operators);
+
+            const operatorsSelectOptions = findAll(
+              '[data-test-select="operator"] option:not([disabled])'
+            ).map((option) => {
+              return {
+                value: option.getAttribute('value'),
+                label: option.textContent.trim(),
+              };
+            });
+            assert.deepEqual(operatorsSelectOptions, expectedOptions);
+          });
+
+          test('renders value using the value prop', async function(assert) {
+            const value = 'test';
+            this.set('value', value);
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                value=value
+              }}
+            `);
+
+            assert.dom('.Polaris-TextField input').hasValue(value);
+          });
+
+          test('renders type using the textFieldType prop', async function(assert) {
+            const textFieldType = 'number';
+            this.set('filter.textFieldType', textFieldType);
+
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert
+              .dom('.Polaris-TextField input')
+              .hasAttribute('type', textFieldType);
+          });
+
+          test('renders undefined type when the textFieldType prop is not passed', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert.dom('.Polaris-TextField input').doesNotHaveAttribute('type');
+          });
+
+          test('calls onChange when the text field was changed', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onChange=(action (mut wasOnChangeCalled) true)
+              }}
+            `);
+
+            await triggerEvent('.Polaris-TextField input', 'change');
+            assert.ok(this.get('wasOnChangeCalled'));
+          });
+
+          test('calls onFilterKeyChange when operator is changed', async function(assert) {
+            const newOperator = operators[1].key;
+            this.set('filter.operatorText', operators);
+
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onFilterKeyChange=(action (mut newFilterKey))
+              }}
+            `);
+
+            await triggerChangeEventWithValue(
+              '.Polaris-Select select',
+              newOperator
+            );
+
+            assert.equal(this.get('newFilterKey'), newOperator);
+          });
+
+          test('calls onChange with filter value when operator is changed and filter value is set', async function(assert) {
+            const newFilterValue = 'foo';
+            this.set('filter.operatorText', operators);
+
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                onChange=(action (mut newFilterValue))
+              }}
+            `);
+
+            await triggerChangeEventWithValue(
+              '.Polaris-TextField input',
               newFilterValue
             );
 

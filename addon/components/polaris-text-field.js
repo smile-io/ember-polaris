@@ -561,11 +561,6 @@ export default Component.extend(
 
       let { id, type } = this.getProperties('id', 'type');
 
-      assert(
-        `ember-polaris::polaris-text-field - ${type} is not a valid type.`,
-        allowedTypes.indexOf(type) > -1
-      );
-
       id = id || `TextField-${guidFor(this)}`;
 
       this.setProperties({
