@@ -19,8 +19,8 @@
         }}
           {{#popover.activator}}
             {{polaris-resource-list/bulk-actions/bulk-actions-button
-              onAction=(action "toggleSmallScreenPopover")
               content="Actions"
+              onAction=(action "toggleSmallScreenPopover")
             }}
           {{/popover.activator}}
 
@@ -82,7 +82,30 @@
       }}
     {{/each}}
 
-    <!-- {actionsPopover} -->
+    {{#if shouldRenderActionsPopover}}
+      <div class="Polaris-ResourceList-BulkActions__Popover">
+        {{!-- TODO: set `active` to largeScreenPopoverVisible once implemented --}}
+        {{#polaris-popover
+          onClose=(action "toggleLargeScreenPopover")
+          as |popover|
+        }}
+          {{#popover.activator}}
+            {{polaris-resource-list/bulk-actions/bulk-actions-button
+              content=activatorLabel
+              disabled=disabled
+              onAction=(action "toggleLargeScreenPopover")
+            }}
+          {{/popover.activator}}
+
+          {{#popover.content}}
+            {{polaris-action-list
+              sections=combinedActions
+              onActionAnyItem=(action "toggleLargeScreenPopover")
+            }}
+          {{/popover.content}}
+        {{/polaris-popover}}
+      </div>
+    {{/if}}
   </div>
   <!-- {paginatedSelectAllMarkup} -->
 </div>

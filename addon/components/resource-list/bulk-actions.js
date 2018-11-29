@@ -249,11 +249,32 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     );
   }),
 
+  shouldRenderActionsPopover: computed(
+    'actionSections',
+    'rolledInPromotedActions.length',
+    'measuring',
+    function() {
+      let {
+        actionSections,
+        rolledInPromotedActions,
+        measuring,
+      } = this.getProperties(
+        'actionSections',
+        'rolledInPromotedActions',
+        'measuring'
+      );
+
+      return Boolean(
+        actionSections || rolledInPromotedActions.get('length') > 0 || measuring
+      );
+    }
+  ),
+
   actionSections: computed('actions', function() {
     let actions = this.get('actions');
 
     if (!actions || actions.length === 0) {
-      return;
+      return null;
     }
 
     if (instanceOfBulkActionListSectionArray(actions)) {
@@ -268,6 +289,34 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       ];
     }
   }),
+
+  combinedActions: computed(
+    'actionSections',
+    'rolledInPromotedActions',
+    function() {
+      let combinedActions = [];
+      let { actionSections, rolledInPromotedActions } = this.getProperties(
+        'actionSections',
+        'rolledInPromotedActions'
+      );
+
+      let rolledInPromotedActionsHasLength =
+        rolledInPromotedActions.get('length') > 0;
+
+      if (actionSections && rolledInPromotedActionsHasLength) {
+        combinedActions = [
+          { items: rolledInPromotedActions },
+          ...actionSections,
+        ];
+      } else if (actionSections) {
+        combinedActions = actionSections;
+      } else if (rolledInPromotedActionsHasLength) {
+        combinedActions = [{ items: rolledInPromotedActions }];
+      }
+
+      return combinedActions;
+    }
+  ),
 
   instanceOfBulkActionListSectionArray(actions) {
     const validList = actions.filter((action) => {
@@ -415,6 +464,13 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       this.set(
         'smallScreenPopoverVisible',
         !this.get('smallScreenPopoverVisible')
+      );
+    },
+
+    toggleLargeScreenPopover() {
+      this.set(
+        'largeScreenPopoverVisible',
+        !this.get('largeScreenPopoverVisible')
       );
     },
 
