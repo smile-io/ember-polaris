@@ -106,6 +106,24 @@ export default Component.extend({
 
     onChange(value);
   },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    let filter = this.get('filter');
+    let { operatorText, type } = filter;
+
+    if (
+      type === FilterType.DateSelector ||
+      !operatorText ||
+      typeof operatorText === 'string' ||
+      operatorText.length === 0
+    ) {
+      return;
+    }
+
+    this.handleOperatorOptionChange(operatorText[0].key);
+  },
 });
 
 function buildOperatorOptions(operatorText) {
