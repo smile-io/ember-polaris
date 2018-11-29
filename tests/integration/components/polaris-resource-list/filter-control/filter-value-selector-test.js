@@ -3,6 +3,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
+import DateSelectorComponent, {
+  DateFilterOption,
+} from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
 
 const operators = [
   {
@@ -50,6 +53,15 @@ const textFieldFilter = {
   key: 'filterKey2',
   label: 'Tagged with',
   type: FilterType.TextField,
+};
+
+const dateSelectorFilter = {
+  key: 'filterKey1',
+  minKey: 'ends_min',
+  maxKey: 'ends_max',
+  label: 'Starts',
+  type: FilterType.DateSelector,
+  dateOptionType: 'past',
 };
 
 function getOptionsListForOperators(operators) {
@@ -330,6 +342,143 @@ module(
             );
 
             assert.equal(this.get('newFilterValue'), newFilterValue);
+          });
+        }
+      );
+
+      module(
+        'FilterType.DateSelector',
+        {
+          beforeEach() {
+            this.setProperties({
+              filter: JSON.parse(JSON.stringify(dateSelectorFilter)),
+              overrideDateSelectorTemplate(layout) {
+                this.owner.register(
+                  'component:polaris-resource-list/filter-control/date-selector',
+                  DateSelectorComponent.extend({
+                    layout,
+                  })
+                );
+              },
+            });
+          },
+        },
+        function() {
+          test('renders a DateSelector', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert.dom('[data-test-select="date-selector"]').exists();
+          });
+
+          test('renders filterValue using the value prop', async function(assert) {
+            const value = DateFilterOption.PastMonth;
+            this.set('value', value);
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                value=value
+              }}
+            `);
+
+            assert.dom('[data-test-select="date-selector"]').hasValue(value);
+          });
+
+          test('renders filterKey using the filterKey prop', async function(assert) {
+            this.overrideDateSelectorTemplate(hbs`
+            <div id="filter-key" data-test-filter-key={{filterKey}}></div>
+          `);
+
+            const filterKey = 'test';
+            this.set('filterKey', filterKey);
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                filterKey=filterKey
+              }}
+            `);
+
+            assert
+              .dom('#filter-key')
+              .hasAttribute('data-test-filter-key', filterKey);
+          });
+
+          test('renders filterMinKey using the min key of filter on filter prop', async function(assert) {
+            this.overrideDateSelectorTemplate(hbs`
+            <div id="filter-min-key" data-test-filter-min-key={{filterMinKey}}></div>
+          `);
+
+            const filterMinKey = 'test';
+            this.set('filter.minKey', filterMinKey);
+
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert
+              .dom('#filter-min-key')
+              .hasAttribute('data-test-filter-min-key', filterMinKey);
+          });
+
+          test('renders filterMaxKey using the max key of filter on filter prop', async function(assert) {
+            this.overrideDateSelectorTemplate(hbs`
+            <div id="filter-max-key" data-test-filter-max-key={{filterMaxKey}}></div>
+          `);
+
+            const filterMaxKey = 'test';
+            this.set('filter.maxKey', filterMaxKey);
+
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert
+              .dom('#filter-max-key')
+              .hasAttribute('data-test-filter-max-key', filterMaxKey);
+          });
+
+          test('does not render Select with operator options', async function(assert) {
+            this.set('filter.operatorText', operators);
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+              }}
+            `);
+
+            assert.dom('[data-test-select="operator"]').doesNotExist();
+          });
+
+          test('calls onFilterKeyChange when the filter key was changed', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                filterKey="test"
+                onChange=(action (mut wasOnChangeCalled) true)
+              }}
+            `);
+
+            await triggerEvent('[data-test-select="date-selector"]', 'change');
+            assert.ok(this.get('wasOnChangeCalled'));
+          });
+
+          test('calls onFilterKeyChange when the filter key was changed', async function(assert) {
+            await render(hbs`
+              {{polaris-resource-list/filter-control/filter-value-selector
+                filter=filter
+                filterKey="test"
+                onFilterKeyChange=(action (mut wasOnFilterKeyChangeCalled) true)
+              }}
+            `);
+
+            await triggerEvent('[data-test-select="date-selector"]', 'change');
+            assert.ok(this.get('wasOnFilterKeyChangeCalled'));
           });
         }
       );
