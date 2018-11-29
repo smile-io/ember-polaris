@@ -57,6 +57,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * List of actions
    *
+   * TODO: rename this to something else so it doesn't clash with ember actions attr
+   *
    * @type {Function[]}
    * @default null
    * @property actions
@@ -208,11 +210,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'promotedActionsWidths'
       );
 
-      let promotedActionsLength = promotedActions.get('length');
-
       if (!promotedActions) {
         return 0;
       }
+
+      let promotedActionsLength = promotedActions.get('length');
 
       if (containerWidth >= bulkActionsWidth || measuring) {
         return promotedActionsLength;
@@ -248,6 +250,55 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         (actions && actions.length > 0)
     );
   }),
+
+  rolledInPromotedActions: computed(
+    'promotedActions.length',
+    'numberOfPromotedActionsToRender',
+    function() {
+      let {
+        promotedActions,
+        numberOfPromotedActionsToRender,
+      } = this.getProperties(
+        'promotedActions',
+        'numberOfPromotedActionsToRender'
+      );
+
+      if (
+        promotedActions &&
+        numberOfPromotedActionsToRender < promotedActions.get('length')
+      ) {
+        return [...promotedActions].slice(numberOfPromotedActionsToRender);
+      }
+
+      return [];
+    }
+  ),
+
+  activatorLabel: computed(
+    'promotedActions',
+    'numberOfPromotedActionsToRender',
+    'measuring',
+    function() {
+      let {
+        promotedActions,
+        numberOfPromotedActionsToRender,
+        measuring,
+      } = this.getProperties(
+        'promotedActions',
+        'numberOfPromotedActionsToRender',
+        'measuring'
+      );
+
+      if (
+        !promotedActions ||
+        (promotedActions && numberOfPromotedActionsToRender === 0 && !measuring)
+      ) {
+        return 'Actions';
+      }
+
+      return 'More actions';
+    }
+  ),
 
   shouldRenderActionsPopover: computed(
     'actionSections',
