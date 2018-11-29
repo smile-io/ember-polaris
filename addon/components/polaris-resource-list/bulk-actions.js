@@ -61,9 +61,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    *
    * @type {Object[]}
    * @default null
-   * @property passedActions
+   * @property actionsCollection
    */
-  passedActions: null,
+  actionsCollection: null,
 
   /**
    * Text to select all across pages
@@ -221,15 +221,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  hasActions: computed('promotedActions', 'passedActions', function() {
-    let { promotedActions, passedActions } = this.getProperties(
+  hasActions: computed('promotedActions', 'actionsCollection', function() {
+    let { promotedActions, actionsCollection } = this.getProperties(
       'promotedActions',
-      'passedActions'
+      'actionsCollection'
     );
 
     return Boolean(
       (promotedActions && promotedActions.length > 0) ||
-        (passedActions && passedActions.length > 0)
+        (actionsCollection && actionsCollection.length > 0)
     );
   }),
 
@@ -303,19 +303,19 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  actionSections: computed('passedActions.[]', function() {
-    let passedActions = this.get('passedActions');
+  actionSections: computed('actionsCollection.[]', function() {
+    let actionsCollection = this.get('actionsCollection');
 
-    if (!passedActions || passedActions.length === 0) {
+    if (!actionsCollection || actionsCollection.length === 0) {
       return null;
     }
 
-    if (this.instanceOfBulkActionListSectionArray(passedActions)) {
-      return passedActions;
+    if (this.instanceOfBulkActionListSectionArray(actionsCollection)) {
+      return actionsCollection;
     }
 
-    if (this.instanceOfBulkActionArray(passedActions)) {
-      return [{ items: passedActions }];
+    if (this.instanceOfBulkActionArray(actionsCollection)) {
+      return [{ items: actionsCollection }];
     }
   }),
 
@@ -364,20 +364,20 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    */
   onToggleAll() {},
 
-  instanceOfBulkActionListSectionArray(passedActions) {
-    let validList = passedActions.filter((action) => {
+  instanceOfBulkActionListSectionArray(actionsCollection) {
+    let validList = actionsCollection.filter((action) => {
       return action.items;
     });
 
-    return passedActions.length === validList.length;
+    return actionsCollection.length === validList.length;
   },
 
-  instanceOfBulkActionArray(passedActions) {
-    let validList = passedActions.filter((action) => {
+  instanceOfBulkActionArray(actionsCollection) {
+    let validList = actionsCollection.filter((action) => {
       return !action.items;
     });
 
-    return passedActions.length === validList.length;
+    return actionsCollection.length === validList.length;
   },
 
   setContainerNode() {
@@ -466,14 +466,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     let {
-      passedActions,
+      actionsCollection,
       promotedActions,
       moreActionsNode,
       addedMoreActionsWidthForMeasuring,
       largeScreenButtonsNode,
       containerNode,
     } = this.getProperties(
-      'passedActions',
+      'actionsCollection',
       'promotedActions',
       'moreActionsNode',
       'addedMoreActionsWidthForMeasuring',
@@ -481,7 +481,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'containerNode'
     );
 
-    if (promotedActions && !passedActions && moreActionsNode) {
+    if (promotedActions && !actionsCollection && moreActionsNode) {
       addedMoreActionsWidthForMeasuring = moreActionsNode.getBoundingClientRect()
         .width;
     }
