@@ -15,7 +15,7 @@
     }}
   {{/polaris-stack}}
 {{else if (eq filter.type FilterType.TextField)}}
-    {{#polaris-stack vertical=true as |stack|}}
+  {{#polaris-stack vertical=true as |stack|}}
     {{#if showOperatorOptions}}
       {{#stack.item}}
         {{render-content operatorOptionsMarkup}}

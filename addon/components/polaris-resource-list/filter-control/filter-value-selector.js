@@ -13,8 +13,6 @@ export default Component.extend({
 
   layout,
 
-  FilterType,
-
   /**
    * @property filter
    * @type {Object}
@@ -54,6 +52,8 @@ export default Component.extend({
    * @public
    */
   onFilterKeyChange() {},
+
+  FilterType,
 
   showOperatorOptions: computed('filter.{type,operatorText}', function() {
     let filter = this.get('filter');
