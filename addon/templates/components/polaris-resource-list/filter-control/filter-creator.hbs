@@ -8,6 +8,7 @@
     popover.activator
   )}}
     {{polaris-button
+      dataTestId="filter-activator"
       text="Filter"
       disclosure=true
       disabled=disabled
@@ -16,7 +17,7 @@
   {{/component}}
 
   {{#popover.content}}
-    {{#polaris-form onSubmit=(action handleAddFilter)}}
+    {{#polaris-form onSubmit=(action handleAddFilter popover)}}
       {{#polaris-form-layout}}
         {{polaris-select
           placeholder="Select a filter..."
@@ -36,9 +37,10 @@
           }}
 
           {{polaris-button
+            dataTestId="add-filter"
             text="Add filter"
             disabled=(not canAddFilter)
-            onClick=(action handleAddFilter)
+            onClick=(action handleAddFilter popover)
           }}
         {{/if}}
       {{/polaris-form-layout}}

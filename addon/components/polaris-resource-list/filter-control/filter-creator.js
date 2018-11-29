@@ -127,7 +127,7 @@ export default Component.extend({
     });
   },
 
-  handleAddFilter() {
+  handleAddFilter(popover) {
     let { onAddFilter, selectedFilterKey } = this.getProperties(
       'onAddFilter',
       'selectedFilterKey'
@@ -145,6 +145,8 @@ export default Component.extend({
       selectedFilter: undefined,
       selectedFilterValue: undefined,
     });
+
+    popover.close();
 
     let node = this.get('node');
     if (node != null) {
