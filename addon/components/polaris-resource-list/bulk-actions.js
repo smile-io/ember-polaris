@@ -213,7 +213,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         return 0;
       }
 
-      let promotedActionsLength = promotedActions.get('length');
+      let promotedActionsLength = promotedActions.length;
 
       if (containerWidth >= bulkActionsWidth || measuring) {
         return promotedActionsLength;
@@ -262,10 +262,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'numberOfPromotedActionsToRender'
       );
 
-      if (
-        promotedActions &&
-        numberOfPromotedActionsToRender < promotedActions.get('length')
-      ) {
+      if (promotedActions && numberOfPromotedActionsToRender < promotedActions.length) {
         return [...promotedActions].slice(numberOfPromotedActionsToRender);
       }
 
@@ -314,34 +311,28 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'measuring'
       );
 
-      return Boolean(
-        actionSections || rolledInPromotedActions.get('length') > 0 || measuring
-      );
+      return Boolean(actionSections || rolledInPromotedActions.length > 0 || measuring);
     }
   ),
 
-  actionSections: computed('passedActions', function() {
+  actionSections: computed('passedActions.[]', function() {
     let passedActions = this.get('passedActions');
 
     if (!passedActions || passedActions.length === 0) {
       return null;
     }
 
-    if (instanceOfBulkActionListSectionArray(passedActions)) {
+    if (this.instanceOfBulkActionListSectionArray(passedActions)) {
       return passedActions;
     }
 
-    if (instanceOfBulkActionArray(passedActions)) {
-      return [
-        {
-          items: passedActions,
-        },
-      ];
+    if (this.instanceOfBulkActionArray(passedActions)) {
+      return [{ items: passedActions }];
     }
   }),
 
   combinedActions: computed(
-    'actionSections',
+    'actionSections.[]',
     'rolledInPromotedActions',
     function() {
       let combinedActions = [];
@@ -350,8 +341,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         'rolledInPromotedActions'
       );
 
-      let rolledInPromotedActionsHasLength =
-        rolledInPromotedActions.get('length') > 0;
+      let rolledInPromotedActionsHasLength = rolledInPromotedActions.length > 0;
 
       if (actionSections && rolledInPromotedActionsHasLength) {
         combinedActions = [
@@ -428,8 +418,46 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     );
   },
 
-  didReceiveAttrs() {
-    this._super();
+  didInsertElement() {
+    this._super(...arguments);
+
+    let promotedActions = this.get('promotedActions');
+
+    if (promotedActions && promotedActions.length > MAX_PROMOTED_ACTIONS) {
+      console.warn(
+        `To provide a better user experience. There should only be a maximum of ${MAX_PROMOTED_ACTIONS} promoted actions.`
+      );
+    }
+
+    this.setContainerNode();
+
+    let largeScreenGroupNode = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
+    );
+
+    if (largeScreenGroupNode) {
+      this.addEventListener(largeScreenGroupNode, 'resize', this.handleResize);
+    }
+  },
+
+  didRender() {
+    this._super(...arguments);
+
+    let moreActionsEl = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Popover'
+    );
+
+    let largeScreenButtonsEl = this.element.querySelector(
+      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
+    );
+
+    if (moreActionsEl) {
+      this.setMoreActionsNode(moreActionsEl);
+    }
+
+    if (largeScreenButtonsEl) {
+      this.setLargeScreenButtonsNode(largeScreenButtonsEl);
+    }
 
     let {
       passedActions,
@@ -464,48 +492,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
         containerWidth: containerNode.getBoundingClientRect().width,
         measuring: false,
       });
-    }
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    let promotedActions = this.get('promotedActions');
-
-    if (promotedActions && promotedActions.length > MAX_PROMOTED_ACTIONS) {
-      console.warn(
-        `To provide a better user experience. There should only be a maximum of ${MAX_PROMOTED_ACTIONS} promoted actions.`
-      );
-    }
-
-    this.setContainerNode();
-
-    let largeScreenGroupNode = this.element.querySelector(
-      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
-    );
-
-    if (largeScreenGroupNode) {
-      this.addEventListener(largeScreenGroupNode, 'resize', this.handleResize);
-    }
-  },
-
-  didRender() {
-    this._super(...arguments);
-
-    let moreActionsNode = this.element.querySelector(
-      '.Polaris-ResourceList-BulkActions__Popover'
-    );
-
-    let largeScreenButtonsNode = this.element.querySelector(
-      '.Polaris-ResourceList-BulkActions__Group--largeScreen'
-    );
-
-    if (moreActionsNode) {
-      this.setMoreActionsNode(moreActionsNode);
-    }
-
-    if (largeScreenButtonsNode) {
-      this.setLargeScreenButtonsNode(largeScreenButtonsNode);
     }
   },
 

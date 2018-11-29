@@ -1,4 +1,4 @@
-<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--smallScreen">
+<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--smallScreen {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}">
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
       accessibilityLabel=accessibilityLabel
@@ -52,7 +52,7 @@
       {{/if}}
 
       {{#if paginatedSelectAllAction}}
-        {{polaris-button}}
+        {{polaris-button
           plain=true
           disabled=disabled
           text=paginatedSelectAllAction.content
@@ -63,7 +63,7 @@
   {{/if}}
 </div>
 
-<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen {{if measuring 'Polaris-ResourceList-BulkActions__Group--largeScreen'}}">
+<div class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen {{if measuring 'Polaris-ResourceList-BulkActions__Group--measuring'}} {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}">
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
       accessibilityLabel=accessibilityLabel
@@ -77,7 +77,8 @@
 
     {{#each promotedActionsToRender as |promotedAction|}}
       {{polaris-resource-list/bulk-actions/bulk-action-button
-        onAction=(action promotedAction)
+        content=promotedAction.content
+        onAction=(action promotedAction.onAction)
         handleMeasurement=(action "handleMeasurement")
       }}
     {{/each}}
@@ -117,7 +118,7 @@
       {{/if}}
 
       {{#if paginatedSelectAllAction}}
-        {{polaris-button}}
+        {{polaris-button
           plain=true
           disabled=disabled
           text=paginatedSelectAllAction.content

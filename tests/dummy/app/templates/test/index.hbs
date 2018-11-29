@@ -15,19 +15,22 @@
         onAction=(action "log" "edit customers")
       )
     )
-    paginatedSelectAllAction=(action "log" "paginated select all actions")
+    paginatedSelectAllAction=(hash
+      content="paginated select all action text"
+      onAction=(action "log" "paginated select all action")
+    )
     paginatedSelectAllText="paginated select all text"
     passedActions=(array
       (hash
-        content="Add tags"
+        text="Add tags"
         onAction=(action "log" "add tags")
       )
       (hash
-        content="Remove tags"
+        text="Remove tags"
         onAction=(action "log" "remove tags")
       )
       (hash
-        content="Delete customers"
+        text="Delete customers"
         onAction=(action "log" "delete customers")
       )
     )

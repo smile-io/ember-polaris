@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   selected: false,
-  selectMode: false,
+  selectMode: true,
   disabled: false,
 
   actions: {
