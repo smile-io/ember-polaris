@@ -2,4 +2,36 @@
   title="Test Route"
 }}
 
+  {{polaris-resource-list/bulk-actions
+    label="My label"
+    accessibilityLabel="My accessibility label"
+    selected=selected
+    onToggleAll=(action "log" "handle toggle all")
+    selectMode=selectMode
+    onSelectModeToggle=(action "log" "handle select mode")
+    promotedActions=(array
+      (hash
+        content="Edit customers"
+        onAction=(action "log" "edit customers")
+      )
+    )
+    paginatedSelectAllAction=(action "log" "paginated select all actions")
+    paginatedSelectAllText="paginated select all text"
+    passedActions=(array
+      (hash
+        content="Add tags"
+        onAction=(action "log" "add tags")
+      )
+      (hash
+        content="Remove tags"
+        onAction=(action "log" "remove tags")
+      )
+      (hash
+        content="Delete customers"
+        onAction=(action "log" "delete customers")
+      )
+    )
+    disabled=disabled
+  }}
+
 {{/polaris-page}}

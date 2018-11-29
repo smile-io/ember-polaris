@@ -18,7 +18,7 @@
           as |popover|
         }}
           {{#popover.activator}}
-            {{polaris-resource-list/bulk-actions/bulk-actions-button
+            {{polaris-resource-list/bulk-actions/bulk-action-button
               content="Actions"
               onAction=(action "toggleSmallScreenPopover")
             }}
@@ -76,7 +76,7 @@
     }}
 
     {{#each promotedActionsToRender as |promotedAction|}}
-      {{polaris-resource-list/bulk-actions/bulk-actions-button
+      {{polaris-resource-list/bulk-actions/bulk-action-button
         onAction=(action promotedAction)
         handleMeasurement=(action "handleMeasurement")
       }}
@@ -90,7 +90,7 @@
           as |popover|
         }}
           {{#popover.activator}}
-            {{polaris-resource-list/bulk-actions/bulk-actions-button
+            {{polaris-resource-list/bulk-actions/bulk-action-button
               content=activatorLabel
               disabled=disabled
               onAction=(action "toggleLargeScreenPopover")

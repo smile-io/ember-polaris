@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { throttle } from '@ember/runloop';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
-import layout from '../../templates/components/resource-list/bulk-actions';
+import layout from '../../templates/components/polaris-resource-list/bulk-actions';
 
 const MAX_PROMOTED_ACTIONS = 2;
 
@@ -57,13 +57,12 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * List of actions
    *
-   * TODO: rename this to something else so it doesn't clash with ember actions attr
    *
    * @type {Function[]}
    * @default null
-   * @property actions
+   * @property passedActions
    */
-  actions: null,
+  passedActions: null,
 
   /**
    * Text to select all across pages
@@ -239,15 +238,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  hasActions: computed('promotedActions', 'actions', function() {
-    let { promotedActions, actions } = this.getProperties(
+  hasActions: computed('promotedActions', 'passedActions', function() {
+    let { promotedActions, passedActions } = this.getProperties(
       'promotedActions',
-      'actions'
+      'passedActions'
     );
 
     return Boolean(
       (promotedActions && promotedActions.length > 0) ||
-        (actions && actions.length > 0)
+        (passedActions && passedActions.length > 0)
     );
   }),
 
@@ -321,21 +320,21 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  actionSections: computed('actions', function() {
-    let actions = this.get('actions');
+  actionSections: computed('passedActions', function() {
+    let passedActions = this.get('passedActions');
 
-    if (!actions || actions.length === 0) {
+    if (!passedActions || passedActions.length === 0) {
       return null;
     }
 
-    if (instanceOfBulkActionListSectionArray(actions)) {
-      return actions;
+    if (instanceOfBulkActionListSectionArray(passedActions)) {
+      return passedActions;
     }
 
-    if (instanceOfBulkActionArray(actions)) {
+    if (instanceOfBulkActionArray(passedActions)) {
       return [
         {
-          items: actions,
+          items: passedActions,
         },
       ];
     }
@@ -369,20 +368,20 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  instanceOfBulkActionListSectionArray(actions) {
-    const validList = actions.filter((action) => {
+  instanceOfBulkActionListSectionArray(passedActions) {
+    const validList = passedActions.filter((action) => {
       return action.items;
     });
 
-    return actions.length === validList.length;
+    return passedActions.length === validList.length;
   },
 
-  instanceOfBulkActionArray(actions) {
-    const validList = actions.filter((action) => {
+  instanceOfBulkActionArray(passedActions) {
+    const validList = passedActions.filter((action) => {
       return !action.items;
     });
 
-    return actions.length === validList.length;
+    return passedActions.length === validList.length;
   },
 
   setContainerNode() {
@@ -433,7 +432,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     this._super();
 
     let {
-      actions,
+      passedActions,
       promotedActions,
       moreActionsNode,
       addedMoreActionsWidthForMeasuring,
@@ -441,7 +440,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       largeScreenButtonsNode,
       containerNode,
     } = this.getProperties(
-      'actions',
+      'passedActions',
       'promotedActions',
       'moreActionsNode',
       'addedMoreActionsWidthForMeasuring',
@@ -450,7 +449,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'containerNode'
     );
 
-    if (promotedActions && !actions && moreActionsNode) {
+    if (promotedActions && !passedActions && moreActionsNode) {
       addedMoreActionsWidthForMeasuring = moreActionsNode.getBoundingClientRect()
         .width;
     }
