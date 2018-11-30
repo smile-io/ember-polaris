@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { computed, get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
@@ -7,6 +8,8 @@ export default Component.extend({
   tagName: '',
 
   layout,
+
+  context: service('polaris-resource-list/context'),
 
   /**
    * @property searchValue
@@ -90,12 +93,8 @@ export default Component.extend({
   }).readOnly(),
 
   textFieldLabel: computed(function() {
-    return `Search ${this.get('resourceName.plural').toLocaleLowerCase()}`;
+    return `Search ${this.get('context.resourceName.plural').toLocaleLowerCase()}`;
   }).readOnly(),
-
-  // TODO: figure out how to get selectMode, resourceName from context
-  selectMode: null,
-  resourceName: null,
 
   handleAddFilter(newFilter) {
     let { onFiltersChange, appliedFilters = [] } = this.getProperties(

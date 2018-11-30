@@ -4,9 +4,9 @@
     connectedLeft=(if filters
       (component
         "polaris-resource-list/filter-control/filter-creator"
-        resourceName=resourceName
+        resourceName=context.resourceName
         filters=filters
-        disabled=selectMode
+        disabled=context.selectMode
         onAddFilter=(action handleAddFilter)
       )
     )
@@ -20,7 +20,7 @@
         destructive=additionalAction.destructive
         icon=additionalAction.icon
         loading=additionalAction.loading
-        disabled=selectMode
+        disabled=context.selectMode
         onAction=(action additionalAction.onAction)
       )
     )
@@ -29,7 +29,7 @@
     prefix=(component "polaris-icon" source="search" color="skyDark")
     value=searchValue
     focused=focused
-    disabled=selectMode
+    disabled=context.selectMode
     onChange=(action onSearchChange)
     onBlur=(action onSearchBlur)
   }}
@@ -39,7 +39,7 @@
         <li class="Polaris-ResourceList-FilterControl__AppliedFilter">
           {{polaris-tag
             text=appliedFilterForRender.label
-            disabled=selectMode
+            disabled=context.selectMode
             onRemove=(action handleRemoveFilter appliedFilter)
           }}
         </li>
