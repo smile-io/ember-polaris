@@ -85,8 +85,12 @@ async function selectFilterKey(filterKey) {
   await triggerEvent('.Polaris-Select select', 'change');
 }
 
-function selectFilterValue(filterValue) {
-  filterValueSelector.onChange(filterValue);
+async function selectFilterValue(filterValue) {
+  // This can update either a select or text field value...
+  const selectFilterControlSelector =
+    '[data-test-select="filter"], [data-test-text-field-input]';
+  find(selectFilterControlSelector).value = filterValue;
+  await triggerEvent(selectFilterControlSelector, 'change');
 }
 
 async function clickAddFilter() {
@@ -173,7 +177,7 @@ module(
 
       await activatePopover();
       await selectFilterKey(filters[0].key);
-      selectFilterValue('Bundle');
+      await selectFilterValue('Bundle');
       await clickAddFilter();
 
       assert.ok(this.get('wasOnAddFilterCalled'));
@@ -198,7 +202,7 @@ module(
 
       await activatePopover();
       await selectFilterKey(filters[0].key);
-      selectFilterValue('Bundle');
+      await selectFilterValue('Bundle');
 
       assert.ok(filterValueSelector);
       await clickAddFilter();
@@ -223,7 +227,7 @@ module(
 
       await activatePopover();
       await selectFilterKey(filters[0].key);
-      selectFilterValue('Bundle');
+      await selectFilterValue('Bundle');
 
       assert.dom('[data-test-select="filter"]').hasAnyValue();
       await clickAddFilter();
@@ -364,6 +368,75 @@ module(
         filterValueSelector.onFilterKeyChange(newOperatorKey);
 
         assert.equal(filterValueSelector.get('filterKey'), newOperatorKey);
+      });
+    });
+
+    module('filter add button', function() {
+      test('is enabled when filter key and filter value are both selected', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
+
+        await activatePopover();
+        await selectFilterKey(filters[0].key);
+        await selectFilterValue('Bundle');
+
+        assert
+          .dom('[data-test-id="add-filter"]')
+          .doesNotHaveAttribute('disabled');
+      });
+
+      test('is disabled when filter key and value are not selected', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
+
+        await activatePopover();
+        await selectFilterKey(filters[0].key);
+
+        assert.dom('[data-test-id="add-filter"]').hasAttribute('disabled');
+      });
+
+      test('is disabled when filter value is an empty string', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
+
+        await activatePopover();
+        await selectFilterKey(filters[0].key);
+        await selectFilterValue('');
+
+        assert.dom('[data-test-id="add-filter"]').hasAttribute('disabled');
       });
     });
   }
