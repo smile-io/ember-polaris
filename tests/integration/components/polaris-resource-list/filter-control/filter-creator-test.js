@@ -76,10 +76,6 @@ async function activatePopover() {
   await click('.Polaris-Button[data-test-id="filter-activator"]');
 }
 
-function findFilterKeySelect() {
-  return find('.Polaris-Select select');
-}
-
 async function selectFilterKey(filterKey) {
   find('.Polaris-Select select').value = filterKey;
   await triggerEvent('.Polaris-Select select', 'change');
@@ -253,7 +249,7 @@ module(
         await activatePopover();
 
         assert.deepEqual(
-          findAll('option:not([disabled])', findFilterKeySelect()).map(
+          findAll('.Polaris-Select select option:not([disabled])').map(
             (option) => {
               return {
                 value: option.getAttribute('value'),
