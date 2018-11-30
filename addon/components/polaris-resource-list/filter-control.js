@@ -97,6 +97,55 @@ export default Component.extend({
   selectMode: null,
   resourceName: null,
 
+  handleAddFilter(newFilter) {
+    let { onFiltersChange, appliedFilters = [] } = this.getProperties(
+      'onFiltersChange',
+      'appliedFilters'
+    );
+
+    if (!onFiltersChange) {
+      return;
+    }
+
+    let foundFilter = appliedFilters.find(
+      (appliedFilter) => idFromFilter(appliedFilter) === idFromFilter(newFilter)
+    );
+
+    if (foundFilter) {
+      return;
+    }
+
+    let newAppliedFilters = [...appliedFilters, newFilter];
+
+    onFiltersChange(newAppliedFilters);
+  },
+
+  handleRemoveFilter(filter) {
+    let filterId = idFromFilter(filter);
+    let { onFiltersChange, appliedFilters = [] } = this.getProperties(
+      'onFiltersChange',
+      'appliedFilters'
+    );
+
+    if (!onFiltersChange) {
+      return;
+    }
+
+    let foundIndex = appliedFilters.findIndex(
+      (appliedFilter) => idFromFilter(appliedFilter) === filterId
+    );
+
+    let newAppliedFilters =
+      foundIndex >= 0
+        ? [
+            ...appliedFilters.slice(0, foundIndex),
+            ...appliedFilters.slice(foundIndex + 1, appliedFilters.length),
+          ]
+        : [...appliedFilters];
+
+    onFiltersChange(newAppliedFilters);
+  },
+
   getFilterLabel(appliedFilter) {
     let key = get(appliedFilter, 'key');
     let value = get(appliedFilter, 'value');
@@ -145,7 +194,7 @@ export default Component.extend({
     let appliedFilterValue = get(appliedFilter, 'value');
 
     if (get(filter, 'type') === FilterType.Select) {
-      const foundFilterOption = get(filter, 'options').find(
+      let foundFilterOption = get(filter, 'options').find(
         (option) =>
           typeof option === 'string'
             ? option === appliedFilterValue
@@ -181,6 +230,10 @@ export default Component.extend({
   },
 });
 
+function idFromFilter(appliedFilter) {
+  return `${get(appliedFilter, 'key')}-${get(appliedFilter, 'value')}`;
+}
+
 function formatDateForLabelDisplay(date) {
   if (isNaN(new Date(date).getTime())) {
     return date;
@@ -204,7 +257,7 @@ function findOperatorLabel(filter, appliedFilter) {
     return operatorText;
   }
 
-  const appliedOperator = operatorText.find((operator) => {
+  let appliedOperator = operatorText.find((operator) => {
     return get(operator, 'key') === get(appliedFilter, 'key');
   });
 

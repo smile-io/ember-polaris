@@ -37,12 +37,11 @@
     <ul class="Polaris-ResourceList-FilterControl__AppliedFilters">
       {{#each appliedFiltersForRender as |appliedFilterForRender|}}
         <li class="Polaris-ResourceList-FilterControl__AppliedFilter">
-          {{#polaris-tag
+          {{polaris-tag
+            text=appliedFilterForRender.label
             disabled=selectMode
             onRemove=(action handleRemoveFilter appliedFilter)
           }}
-            {{activeFilterLabel}}
-          {{/polaris-tag}}
         </li>
       {{/each}}
     </ul>
