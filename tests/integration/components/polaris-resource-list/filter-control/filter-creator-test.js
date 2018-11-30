@@ -172,7 +172,7 @@ module(
       `);
 
       await activatePopover();
-      await selectFilterKey(this.get('filters.0.key'));
+      await selectFilterKey(filters[0].key);
       selectFilterValue('Bundle');
       await clickAddFilter();
 
@@ -197,7 +197,7 @@ module(
       `);
 
       await activatePopover();
-      await selectFilterKey(this.get('filters.0.key'));
+      await selectFilterKey(filters[0].key);
       selectFilterValue('Bundle');
 
       assert.ok(filterValueSelector);
@@ -205,10 +205,6 @@ module(
       assert.notOk(filterValueSelector);
     });
 
-    /**
-     * Skipping this test because I've not
-     * been able to get it working yet!
-     */
     skip('renders Select with no value after add filter button was clicked', async function(assert) {
       this.setProperties({
         filters,
@@ -226,12 +222,12 @@ module(
       `);
 
       await activatePopover();
-      await selectFilterKey(this.get('filters.0.key'));
+      await selectFilterKey(filters[0].key);
       selectFilterValue('Bundle');
 
-      assert.dom('.Polaris-Select select').hasAnyValue();
+      assert.dom('[data-test-select="filter"]').hasAnyValue();
       await clickAddFilter();
-      assert.dom('.Polaris-Select select').hasNoValue();
+      assert.dom('[data-test-select="filter"]').hasNoValue();
     });
 
     module('filters', function() {
@@ -276,128 +272,98 @@ module(
             },
           ]
         );
+      });
+    });
 
-        // module('<FilterValueSelector />', function() {
-        //   test('does not render by default', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
+    module('filter value selector', function() {
+      test('does not render by default', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
 
-        //     activatePopover(wrapper);
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
 
-        //     expect(wrapper.find(FilterValueSelector).exists()).toBe(false);
-        //   });
+        await activatePopover();
 
-        //   test('updates FilterValueSelector when user selects a filter key', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
+        assert.notOk(filterValueSelector);
+      });
 
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[1].key);
+      test('updates FilterValueSelector when user selects a filter key', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
 
-        //     expect(wrapper.find(FilterValueSelector).prop('filter')).toMatchObject(
-        //       mockDefaultProps.filters[1],
-        //     );
-        //     expect(wrapper.find(FilterValueSelector).prop('value')).toBeUndefined();
-        //   });
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
 
-        //   test('updates value correctly when user selects a filter value', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
+        await activatePopover();
+        await selectFilterKey(filters[1].key);
 
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[0].key);
-        //     selectFilterValue(wrapper, 'Bundle');
+        assert.deepEqual(filterValueSelector.get('filter'), filters[1]);
+        assert.equal(filterValueSelector.get('value'), undefined);
+      });
 
-        //     expect(wrapper.find(FilterValueSelector).prop('value')).toBe('Bundle');
-        //   });
+      test('updates value correctly when user selects a filter value', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
 
-        //   test('updates FilterValueSelector when filter key is updated to existing operator key', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
 
-        //     const newOperatorKey = 'times_used_max';
+        await activatePopover();
+        await selectFilterKey(filters[0].key);
+        await selectFilterValue('Bundle');
 
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[2].key);
-        //     selectFilterValue(wrapper, 'Bundle');
+        assert.dom('[data-test-select="filter"]').hasValue('Bundle');
+      });
 
-        //     trigger(
-        //       wrapper.find(FilterValueSelector),
-        //       'onFilterKeyChange',
-        //       newOperatorKey,
-        //     );
+      test('updates FilterValueSelector when filter key is updated to existing operator key', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
 
-        //     expect(wrapper.find(FilterValueSelector).prop('filterKey')).toBe(
-        //       newOperatorKey,
-        //     );
-        //   });
-        // });
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+          }}
+        `);
 
-        // module('filter add button', function() {
-        //   test('is enabled when filter key and filter value are both selected', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
+        const newOperatorKey = 'times_used_max';
 
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[0].key);
-        //     selectFilterValue(wrapper, 'Bundle');
+        await activatePopover();
+        await selectFilterKey(filters[2].key);
+        await selectFilterValue('Bundle');
 
-        //     expect(
-        //       findByTestID(wrapper, 'FilterCreator-AddFilterButton').prop('disabled'),
-        //     ).toBe(false);
-        //   });
+        filterValueSelector.onFilterKeyChange(newOperatorKey);
 
-        //   test('is disabled when filter key and value are not selected', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
-
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[0].key);
-
-        //     expect(
-        //       findByTestID(wrapper, 'FilterCreator-AddFilterButton').prop('disabled'),
-        //     ).toBe(true);
-        //   });
-
-        //   test('is disabled when filter value is an empty string', async function(assert) {
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} />,
-        //     );
-
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[0].key);
-        //     selectFilterValue(wrapper, '');
-
-        //     expect(
-        //       findByTestID(wrapper, 'FilterCreator-AddFilterButton').prop('disabled'),
-        //     ).toBe(true);
-        //   });
-        // });
-
-        // module('onAddFilter', function() {
-        //   test('gets call with selected filter key & value when both value are valid and add filter button was clicked', async function(assert) {
-        //     const onAddFilter = jest.fn();
-        //     const wrapper = mountWithAppProvider(
-        //       <FilterCreator {...mockDefaultProps} onAddFilter={onAddFilter} />,
-        //     );
-
-        //     activatePopover(wrapper);
-        //     selectFilterKey(wrapper, mockDefaultProps.filters[0].key);
-        //     selectFilterValue(wrapper, 'Bundle');
-        //     clickAddFilter(wrapper);
-
-        //     expect(onAddFilter).toHaveBeenCalledWith({
-        //       key: mockDefaultProps.filters[0].key,
-        //       value: 'Bundle',
-        //     });
-        //   });
-        // });
+        assert.equal(filterValueSelector.get('filterKey'), newOperatorKey);
       });
     });
   }
