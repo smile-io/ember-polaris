@@ -439,5 +439,34 @@ module(
         assert.dom('[data-test-id="add-filter"]').hasAttribute('disabled');
       });
     });
+
+    module('onAddFilter', function() {
+      test('gets call with selected filter key & value when both value are valid and add filter button was clicked', async function(assert) {
+        this.setProperties({
+          filters,
+          resourceName,
+          disabled: false,
+        });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/filter-creator
+            filters=filters
+            resourceName=resourceName
+            disabled=disabled
+            onAddFilter=(action (mut addFilterArgs))
+          }}
+        `);
+
+        await activatePopover();
+        await selectFilterKey(filters[0].key);
+        await selectFilterValue('Bundle');
+        await clickAddFilter();
+
+        assert.deepEqual(this.get('addFilterArgs'), {
+          key: filters[0].key,
+          value: 'Bundle',
+        });
+      });
+    });
   }
 );
