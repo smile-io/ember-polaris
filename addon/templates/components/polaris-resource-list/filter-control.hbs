@@ -1,1 +1,50 @@
-{{yield}}
+{{#polaris-form-layout}}
+  {{polaris-text-field
+    labelHidden=true
+    connectedLeft=(if filters
+      (component
+        "polaris-resource-list/filter-control/filter-creator"
+        resourceName=resourceName
+        filters=filters
+        disabled=selectMode
+        onAddFilter=(action handleAddFilter)
+      )
+    )
+    connectedRight=(if additionalAction
+      (component
+        "polaris-button"
+        text=additionalAction.text
+        accessibilityLabel=additionalAction.accessibilityLabel
+        url=additionalAction.url
+        external=additionalAction.external
+        destructive=additionalAction.destructive
+        icon=additionalAction.icon
+        loading=additionalAction.loading
+        disabled=selectMode
+        onAction=(action additionalAction.onAction)
+      )
+    )
+    label=textFieldLabel
+    placeholder=textFieldLabel
+    prefix=(component "polaris-icon" source="search" color="skyDark")
+    value=searchValue
+    focused=focused
+    disabled=selectMode
+    onChange=(action onSearchChange)
+    onBlur=(action onSearchBlur)
+  }}
+  {{#if appliedFilters}}
+    <ul class="Polaris-ResourceList-FilterControl__AppliedFilters">
+      {{#each appliedFiltersForRender as |appliedFilterForRender|}}
+        <li class="Polaris-ResourceList-FilterControl__AppliedFilter">
+          {{#polaris-tag
+            disabled=selectMode
+            onRemove=(action handleRemoveFilter appliedFilter)
+          }}
+            {{activeFilterLabel}}
+          {{/polaris-tag}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+{{/polaris-form-layout}}

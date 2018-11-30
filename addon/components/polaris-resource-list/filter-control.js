@@ -1,5 +1,7 @@
 import Component from '@ember/component';
+import { computed, get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
+import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 
 export default Component.extend({
   tagName: '',
@@ -69,4 +71,166 @@ export default Component.extend({
    * @public
    */
   onFiltersChange() {},
+
+  /**
+   * List of appliedFilters in a format
+   * for rendering in the template
+   *
+   * @property appliedFiltersForRender
+   * @type {Object[]}
+   * @private
+   */
+  appliedFiltersForRender: computed('appliedFilters.[]', function() {
+    let appliedFilters = this.get('appliedFilters') || [];
+    return appliedFilters.map((appliedFilter) => {
+      let appliedFilterForRender = JSON.parse(JSON.stringify(appliedFilter));
+      appliedFilterForRender.label = this.getFilterLabel(appliedFilter);
+      return appliedFilterForRender;
+    });
+  }).readOnly(),
+
+  textFieldLabel: computed(function() {
+    return `Search ${this.get('resourceName.plural').toLocaleLowerCase()}`;
+  }).readOnly(),
+
+  // TODO: figure out how to get selectMode, resourceName from context
+  selectMode: null,
+  resourceName: null,
+
+  getFilterLabel(appliedFilter) {
+    let key = get(appliedFilter, 'key');
+    let value = get(appliedFilter, 'value');
+    let label = get(appliedFilter, 'label');
+    if (label) {
+      return label;
+    }
+
+    let filters = this.get('filters') || [];
+
+    let filter = filters.find((filter) => {
+      let minKey = get(filter, 'minKey');
+      let maxKey = get(filter, 'maxKey');
+      let operatorText = get(filter, 'operatorText');
+
+      if (minKey || maxKey) {
+        return get(filter, 'key') === key || minKey === key || maxKey === key;
+      }
+
+      if (operatorText && typeof operatorText !== 'string') {
+        return (
+          get(filter, 'key') === key ||
+          operatorText.filter((operator) => get(operator, 'key') === key)
+            .length === 1
+        );
+      }
+
+      return get(filter, 'key') === key;
+    });
+
+    if (!filter) {
+      return value;
+    }
+
+    let filterOperatorLabel = findOperatorLabel(filter, appliedFilter);
+    let filterLabelByType = this.findFilterLabelByType(filter, appliedFilter);
+
+    if (!filterOperatorLabel) {
+      return `${filter.label} ${filterLabelByType}`;
+    }
+
+    return `${filter.label} ${filterOperatorLabel} ${filterLabelByType}`;
+  },
+
+  findFilterLabelByType(filter, appliedFilter) {
+    let appliedFilterValue = get(appliedFilter, 'value');
+
+    if (get(filter, 'type') === FilterType.Select) {
+      const foundFilterOption = get(filter, 'options').find(
+        (option) =>
+          typeof option === 'string'
+            ? option === appliedFilterValue
+            : get(option, 'value') === appliedFilterValue
+      );
+
+      if (foundFilterOption) {
+        return typeof foundFilterOption === 'string'
+          ? foundFilterOption
+          : get(foundFilterOption, 'label');
+      }
+    }
+
+    if (get(filter, 'type') === FilterType.DateSelector) {
+      if (get(filter, 'key') === get(appliedFilter, 'key')) {
+        return getFilterLabelForValue(get(appliedFilter, 'value'));
+      }
+
+      if (get(appliedFilter, 'key') === get(filter, 'maxKey')) {
+        return `before ${formatDateForLabelDisplay(
+          get(appliedFilter, 'value')
+        )}`;
+      }
+
+      if (get(appliedFilter, 'key') === get(filter, 'minKey')) {
+        return `after ${formatDateForLabelDisplay(
+          get(appliedFilter, 'value')
+        )}`;
+      }
+    }
+
+    return appliedFilterValue;
+  },
 });
+
+function formatDateForLabelDisplay(date) {
+  if (isNaN(new Date(date).getTime())) {
+    return date;
+  }
+
+  return new Date(date.replace(/-/g, '/')).toLocaleDateString();
+}
+
+function findOperatorLabel(filter, appliedFilter) {
+  let operatorText = get(filter, 'operatorText');
+
+  if (
+    filter.type === FilterType.DateSelector &&
+    (get(appliedFilter, 'key') === get(filter, 'minKey') ||
+      get(appliedFilter, 'key') === get(filter, 'maxKey'))
+  ) {
+    return '';
+  }
+
+  if (!operatorText || typeof operatorText === 'string') {
+    return operatorText;
+  }
+
+  const appliedOperator = operatorText.find((operator) => {
+    return get(operator, 'key') === get(appliedFilter, 'key');
+  });
+
+  if (appliedOperator) {
+    return (
+      get(appliedOperator, 'filterLabel') || get(appliedOperator, 'optionLabel')
+    );
+  }
+}
+
+/**
+ * This function is a workaround for the fact that the
+ * React implementation uses the Polaris i18n service
+ * internally, which we don't have.
+ */
+function getFilterLabelForValue(value) {
+  let filterLabelKeys = {
+    past_week: 'in the last week',
+    past_month: 'in the last month',
+    past_quarter: 'in the last 3 months',
+    past_year: 'in the last year',
+    coming_week: 'next week',
+    coming_month: 'next month',
+    coming_quarter: 'in the next 3 months',
+    coming_year: 'in the next year',
+  };
+
+  return filterLabelKeys[value] || value;
+}
