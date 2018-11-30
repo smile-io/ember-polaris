@@ -40,7 +40,7 @@ export default Service.extend({
    */
   resourceName: null,
 
-   /**
+  /**
    * @property loading
    * @type {Boolean}
    * @default false

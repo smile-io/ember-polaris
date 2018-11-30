@@ -93,7 +93,9 @@ export default Component.extend({
   }).readOnly(),
 
   textFieldLabel: computed(function() {
-    return `Search ${this.get('context.resourceName.plural').toLocaleLowerCase()}`;
+    return `Search ${this.get(
+      'context.resourceName.plural'
+    ).toLocaleLowerCase()}`;
   }).readOnly(),
 
   handleAddFilter(newFilter) {
