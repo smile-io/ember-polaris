@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
-import { assert } from '@ember/debug';
 import { computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
@@ -11,22 +10,6 @@ import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getCode } from 'ember-keyboard';
 import layout from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
-
-const allowedTypes = [
-  'text',
-  'email',
-  'number',
-  'password',
-  'search',
-  'tel',
-  'url',
-  'date',
-  'datetime-local',
-  'month',
-  'time',
-  'week',
-  'currency',
-];
 
 /**
  * Returns the length of decimal places in a number
@@ -559,12 +542,7 @@ export default Component.extend(
     init() {
       this._super(...arguments);
 
-      let { id, type } = this.getProperties('id', 'type');
-
-      assert(
-        `ember-polaris::polaris-text-field - ${type} is not a valid type.`,
-        allowedTypes.indexOf(type) > -1
-      );
+      let id = this.get('id');
 
       id = id || `TextField-${guidFor(this)}`;
 
