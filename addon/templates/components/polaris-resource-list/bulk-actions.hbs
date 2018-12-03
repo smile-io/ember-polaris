@@ -1,7 +1,11 @@
 <div
   class="Polaris-ResourceList-BulkActions__Group
     Polaris-ResourceList-BulkActions__Group--smallScreen
-    {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}"
+    {{if selectMode
+      "Polaris-ResourceList-BulkActions__Group--entered"
+      "Polaris-ResourceList-BulkActions__Group--exited"
+    }}
+  "
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
@@ -16,15 +20,10 @@
 
     {{#if hasActions}}
       <div class="Polaris-ResourceList-BulkActions__Popover">
-        {{!-- TODO: set `active` to smallScreenPopoverVisible once implemented --}}
-        {{#polaris-popover
-          onClose=(action "toggleSmallScreenPopover")
-          as |popover|
-        }}
+        {{#polaris-popover as |popover|}}
           {{#popover.activator}}
             {{polaris-resource-list/bulk-actions/bulk-action-button
               content="Actions"
-              onAction=(action "toggleSmallScreenPopover")
             }}
           {{/popover.activator}}
 
@@ -32,7 +31,7 @@
             {{polaris-action-list
               items=promotedActions
               sections=actionSections
-              onActionAnyItem=(action "toggleSmallScreenPopover")
+              onActionAnyItem=(action popover.close)
             }}
           {{/popover.content}}
         {{/polaris-popover}}
@@ -69,9 +68,13 @@
 
 <div
   class="Polaris-ResourceList-BulkActions__Group
-  Polaris-ResourceList-BulkActions__Group--largeScreen
-  {{if measuring 'Polaris-ResourceList-BulkActions__Group--measuring'}}
-  {{if selectMode 'Polaris-ResourceList-BulkActions__Group--entered' 'Polaris-ResourceList-BulkActions__Group--exited'}}"
+    Polaris-ResourceList-BulkActions__Group--largeScreen
+    {{if measuring "Polaris-ResourceList-BulkActions__Group--measuring"}}
+    {{if selectMode
+      "Polaris-ResourceList-BulkActions__Group--entered"
+      "Polaris-ResourceList-BulkActions__Group--exited"
+    }}
+  "
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     {{polaris-resource-list/checkable-button
@@ -94,23 +97,21 @@
 
     {{#if shouldRenderActionsPopover}}
       <div class="Polaris-ResourceList-BulkActions__Popover">
-        {{!-- TODO: set `active` to largeScreenPopoverVisible once implemented --}}
-        {{#polaris-popover
-          onClose=(action "toggleLargeScreenPopover")
-          as |popover|
-        }}
-          {{#popover.activator}}
+        {{#polaris-popover as |popover|}}
+          {{#component (if disabled
+            (component "wrapper-element" tagName="")
+            popover.activator
+          )}}
             {{polaris-resource-list/bulk-actions/bulk-action-button
               content=activatorLabel
               disabled=disabled
-              onAction=(action "toggleLargeScreenPopover")
             }}
-          {{/popover.activator}}
+          {{/component}}
 
           {{#popover.content}}
             {{polaris-action-list
               sections=combinedActions
-              onActionAnyItem=(action "toggleLargeScreenPopover")
+              onActionAnyItem=(action popover.close)
             }}
           {{/popover.content}}
         {{/polaris-popover}}
@@ -118,7 +119,10 @@
     {{/if}}
   </div>
 
-  {{#if (or paginatedSelectAllAction (and paginatedSelectAllText paginatedSelectAllAction))}}
+  {{#if (or
+    paginatedSelectAllAction
+    (and paginatedSelectAllText paginatedSelectAllAction)
+  )}}
     <div class="Polaris-ResourceList-BulkActions__PaginatedSelectAll">
       {{#if (and paginatedSelectAllText paginatedSelectAllAction)}}
         <span aria-live="polite">{{paginatedSelectAllText}}</span>
