@@ -98,11 +98,17 @@ export default Component.extend({
         return null;
       }
 
+      let props = Object.assign({}, additionalAction, {
+        disabled: context.get('selectMode'),
+      });
+
+      // Rename onAction to onClick.
+      props.onClick = props.onAction;
+      delete props.onAction;
+
       return {
         componentName: 'polaris-button',
-        props: Object.assign({}, additionalAction, {
-          disabled: context.get('selectMode'),
-        }),
+        props,
       };
     }
   ).readOnly(),

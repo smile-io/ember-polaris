@@ -656,5 +656,31 @@ module(
         });
       }
     );
+
+    module('additionalAction', function() {
+      test('renders no connectedRight prop on TextField if there is no additionalAction', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list/filter-control}}
+        `);
+
+        assert.dom('[data-test-connected-item="right"]').doesNotExist();
+      });
+
+      test('renders Button if there is additionalAction', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list/filter-control
+            additionalAction=(hash
+              text="button label"
+              onAction=(action (mut wasAdditionalActionClicked) true)
+            )
+          }}
+        `);
+
+        assert.dom('.Polaris-Button').exists();
+
+        await click('.Polaris-Button');
+        assert.ok(this.get('wasAdditionalActionClicked'));
+      });
+    });
   }
 );
