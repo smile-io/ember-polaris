@@ -1,8 +1,9 @@
-import { module, test, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn, click, find, triggerEvent } from '@ember/test-helpers';
 import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
+import FilterCreatorComponent from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-creator';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
 import ContextService from '@smile-io/ember-polaris/services/polaris-resource-list/context';
@@ -147,20 +148,24 @@ module(
           assert.dom('[data-test-id="filter-activator"]').exists();
         });
 
-        /**
-         * Skipping this for now because there's no clean way to check the filters.
-         */
-        skip('renders <FilterCreator/> with filters', async function(/* assert */) {
+        test('renders <FilterCreator/> with filters', async function(assert) {
+          let receivedFilters = null;
+          this.owner.register(
+            'component:polaris-resource-list/filter-control/filter-creator',
+            FilterCreatorComponent.extend({
+              init() {
+                this._super(...arguments);
+                receivedFilters = this.get('filters');
+              },
+            })
+          );
           await render(hbs`
             {{polaris-resource-list/filter-control
               filters=mockFilters
             }}
           `);
 
-          // React code:
-          // expect(wrapper.find(FilterCreator).prop('filters')).toMatchObject(
-          //   mockFilters,
-          // );
+          assert.equal(receivedFilters, mockFilters);
         });
       }
     );
