@@ -10,20 +10,7 @@
         onAddFilter=(action handleAddFilter)
       )
     )
-    connectedRight=(if additionalAction
-      (component
-        "polaris-button"
-        text=additionalAction.text
-        accessibilityLabel=additionalAction.accessibilityLabel
-        url=additionalAction.url
-        external=additionalAction.external
-        destructive=additionalAction.destructive
-        icon=additionalAction.icon
-        loading=additionalAction.loading
-        disabled=context.selectMode
-        onAction=(action additionalAction.onAction)
-      )
-    )
+    connectedRight=additionalActionButton
     label=textFieldLabel
     placeholder=textFieldLabel
     prefix=(component "polaris-icon" source="search" color="skyDark")

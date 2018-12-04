@@ -76,6 +76,38 @@ export default Component.extend({
   onFiltersChange() {},
 
   /**
+   * Button details for `additionalAction`. This is here
+   * instead of in the template because handlebars
+   * always evaluates both branches of an `if`-statement
+   * so will try creating an action from `additionalAction.onAction`
+   * even if it doesn't exist, which leads to an error.
+   *
+   * @property additionalActionButton
+   * @type {Object}
+   * @private
+   */
+  additionalActionButton: computed(
+    'additionalAction.{text,accessibilityLabel,url,external,destructive,icon,loading,onAction}',
+    'context.selectMode',
+    function() {
+      let { additionalAction, context } = this.getProperties(
+        'additionalAction',
+        'context'
+      );
+      if (!additionalAction) {
+        return null;
+      }
+
+      return {
+        componentName: 'polaris-button',
+        props: Object.assign({}, additionalAction, {
+          disabled: context.get('selectMode'),
+        }),
+      };
+    }
+  ).readOnly(),
+
+  /**
    * List of appliedFilters in a format
    * for rendering in the template
    *
