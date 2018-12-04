@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -93,5 +93,49 @@ module(
         assert.equal(this.get('newSearchValue'), newSearchValue);
       });
     });
+
+    module(
+      'filters',
+      {
+        beforeEach() {
+          this.set('mockFilters', mockFilters);
+        },
+      },
+      function() {
+        test('renders no <FilterCreator /> if there are no filters', async function(assert) {
+          await render(hbs`
+            {{polaris-resource-list/filter-control}}
+          `);
+
+          assert.dom('[data-test-connected-item="left"]').doesNotExist();
+        });
+
+        test('renders <FilterCreator /> if there is filters', async function(assert) {
+          await render(hbs`
+            {{polaris-resource-list/filter-control
+              filters=mockFilters
+            }}
+          `);
+
+          assert.dom('[data-test-id="filter-activator"]').exists();
+        });
+
+        /**
+         * Skipping this for now because there's no clean way to check the filters.
+         */
+        skip('renders <FilterCreator /> with filters', async function(assert) {
+          await render(hbs`
+            {{polaris-resource-list/filter-control
+              filters=mockFilters
+            }}
+          `);
+
+          // React code:
+          // expect(wrapper.find(FilterCreator).prop('filters')).toMatchObject(
+          //   mockFilters,
+          // );
+        });
+      }
+    );
   }
 );
