@@ -389,8 +389,8 @@ module(
 
           test('renders filterKey using the filterKey prop', async function(assert) {
             this.overrideDateSelectorTemplate(hbs`
-            <div id="filter-key" data-test-filter-key={{filterKey}}></div>
-          `);
+              <div id="filter-key" data-test-filter-key={{filterKey}}></div>
+            `);
 
             const filterKey = 'test';
             this.set('filterKey', filterKey);
@@ -408,8 +408,8 @@ module(
 
           test('renders filterMinKey using the min key of filter on filter prop', async function(assert) {
             this.overrideDateSelectorTemplate(hbs`
-            <div id="filter-min-key" data-test-filter-min-key={{filterMinKey}}></div>
-          `);
+              <div id="filter-min-key" data-test-filter-min-key={{filterMinKey}}></div>
+            `);
 
             const filterMinKey = 'test';
             this.set('filter.minKey', filterMinKey);
@@ -427,8 +427,8 @@ module(
 
           test('renders filterMaxKey using the max key of filter on filter prop', async function(assert) {
             this.overrideDateSelectorTemplate(hbs`
-            <div id="filter-max-key" data-test-filter-max-key={{filterMaxKey}}></div>
-          `);
+              <div id="filter-max-key" data-test-filter-max-key={{filterMaxKey}}></div>
+            `);
 
             const filterMaxKey = 'test';
             this.set('filter.maxKey', filterMaxKey);
