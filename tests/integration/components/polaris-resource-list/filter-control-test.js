@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 import ContextService from '@smile-io/ember-polaris/services/polaris-resource-list/context';
@@ -76,6 +76,21 @@ module(
         `);
 
         assert.dom('.Polaris-TextField input').hasValue(searchValue);
+      });
+    });
+
+    module('onSearchChange()', function() {
+      test('calls onSearchChange with the new searchValue when onChange is triggered', async function(assert) {
+        const newSearchValue = 'new search value';
+        await render(hbs`
+          {{polaris-resource-list/filter-control
+            onSearchChange=(action (mut newSearchValue))
+          }}
+        `);
+
+        await fillIn('.Polaris-TextField input', newSearchValue);
+
+        assert.equal(this.get('newSearchValue'), newSearchValue);
       });
     });
   }
