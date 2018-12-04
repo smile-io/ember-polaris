@@ -1,6 +1,6 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn } from '@ember/test-helpers';
+import { render, fillIn, click, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 import ContextService from '@smile-io/ember-polaris/services/polaris-resource-list/context';
@@ -51,6 +51,29 @@ const mockAppliedFilters = [
     value: 'beauty_value',
   },
 ];
+
+async function triggerAddFilter(filter) {
+  // Open the filter creator popover.
+  await click(`[data-test-id="filter-activator"]`);
+
+  // Select a filter.
+  find('.Polaris-Select select').value = filter.key;
+  await triggerEvent('.Polaris-Select select', 'change');
+
+  // Give the filter a value.
+  const textFieldFilterControlSelector =
+    '.Polaris-Popover .Polaris-TextField input';
+  if (find(textFieldFilterControlSelector)) {
+    await fillIn(textFieldFilterControlSelector, filter.value);
+  } else {
+    const selectFilterControlSelector = '[data-test-select="filter"]';
+    find(selectFilterControlSelector).value = filter.value;
+    await triggerEvent(selectFilterControlSelector, 'change');
+  }
+
+  // Submit the filter form.
+  await triggerEvent('[data-test-form]', 'submit');
+}
 
 module(
   'Integration | Component | polaris-resource-list/filter-control',
@@ -134,6 +157,56 @@ module(
           // expect(wrapper.find(FilterCreator).prop('filters')).toMatchObject(
           //   mockFilters,
           // );
+        });
+      }
+    );
+
+    module(
+      'onFiltersChange()',
+      {
+        beforeEach() {
+          this.setProperties({
+            mockFilters,
+            mockAppliedFilters,
+          });
+        },
+      },
+      function() {
+        test('gets call with the new filter when FilterCreator.onAddFilter is triggered', async function(assert) {
+          const newFilter = {
+            key: 'filterKey2',
+            value: 'new value',
+          };
+
+          await render(hbs`
+            {{polaris-resource-list/filter-control
+              filters=mockFilters
+              appliedFilters=mockAppliedFilters
+              onFiltersChange=(action (mut newAppliedFilters))
+            }}
+          `);
+
+          await triggerAddFilter(newFilter);
+
+          assert.deepEqual(this.get('newAppliedFilters'), [
+            ...mockAppliedFilters,
+            newFilter,
+          ]);
+        });
+
+        test('does not get call if the new filter already exist when FilterCreator.onAddFilter is triggered', async function(assert) {
+          const newFilter = mockAppliedFilters[0];
+          await render(hbs`
+            {{polaris-resource-list/filter-control
+              filters=mockFilters
+              appliedFilters=mockAppliedFilters
+              onFiltersChange=(action (mut wasOnFiltersChangeCalled) true)
+            }}
+          `);
+
+          await triggerAddFilter(newFilter);
+
+          assert.notOk(this.get('wasOnFiltersChangeCalled'));
         });
       }
     );
