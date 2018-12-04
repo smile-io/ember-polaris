@@ -1,6 +1,7 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, fillIn, click, find, triggerEvent } from '@ember/test-helpers';
+import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
@@ -8,10 +9,12 @@ import ContextService from '@smile-io/ember-polaris/services/polaris-resource-li
 
 ContextService.reopen({
   selectMode: false,
-  resourceName: {
-    singular: 'item',
-    plural: 'items,',
-  },
+  resourceName: computed(function() {
+    return {
+      singular: 'item',
+      plural: 'items,',
+    };
+  }),
   selectable: false,
 });
 
@@ -131,9 +134,7 @@ module(
             {{polaris-resource-list/filter-control}}
           `);
 
-          assert
-            .dom('[data-test-connected-item="left"]')
-            .doesNotExist();
+          assert.dom('[data-test-connected-item="left"]').doesNotExist();
         });
 
         test('renders <FilterCreator/> if there is filters', async function(assert) {
@@ -149,7 +150,7 @@ module(
         /**
          * Skipping this for now because there's no clean way to check the filters.
          */
-        skip('renders <FilterCreator/> with filters', async function(assert) {
+        skip('renders <FilterCreator/> with filters', async function(/* assert */) {
           await render(hbs`
             {{polaris-resource-list/filter-control
               filters=mockFilters
@@ -311,9 +312,7 @@ module(
 
           assert
             .dom('.Polaris-Tag')
-            .hasText(
-              `${filter.label} ${filter.operatorText} ${filterValue}`
-            );
+            .hasText(`${filter.label} ${filter.operatorText} ${filterValue}`);
         });
 
         test('renders the correct applied filter string when filter value exist in FilterSelect as an option object', async function(assert) {
@@ -347,9 +346,7 @@ module(
 
           assert
             .dom('.Polaris-Tag')
-            .hasText(
-              `${filter.label} ${filter.operatorText} ${filterValue}`
-            );
+            .hasText(`${filter.label} ${filter.operatorText} ${filterValue}`);
         });
 
         test('renders the correct applied filter string when filter value cannot be found in FilterSelect options', async function(assert) {
@@ -444,9 +441,7 @@ module(
           assert
             .dom('.Polaris-Tag')
             .hasText(
-              `${filter.label} ${
-                filter.operatorText
-              } ${expectedLocalizedLabel}`
+              `${filter.label} ${filter.operatorText} ${expectedLocalizedLabel}`
             );
         });
 
