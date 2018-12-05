@@ -22,8 +22,6 @@ export default Component.extend({
 
   context: service('polaris-resource-list/context'),
 
-  'data-test-id': 'item-wrapper',
-
   /**
    * Visually hidden text for screen readers
    *
@@ -128,6 +126,14 @@ export default Component.extend({
    */
   focusedInner: false,
 
+  'data-test-id': 'item-wrapper',
+
+  selectable: readOnly('context.selectable'),
+  selectMode: readOnly('context.selectMode'),
+  loading: readOnly('context.loading'),
+
+  checkboxId: computedIdVariation('id', 'ResourceListItemCheckbox').readOnly(),
+
   click() {
     this.handleClick(...arguments);
   },
@@ -143,12 +149,6 @@ export default Component.extend({
   keyUp() {
     this.handleKeypress(...arguments);
   },
-
-  selectable: readOnly('context.selectable'),
-  selectMode: readOnly('context.selectMode'),
-  loading: readOnly('context.loading'),
-
-  checkboxId: computedIdVariation('id', 'ResourceListItemCheckbox').readOnly(),
 
   stopPropagation,
 

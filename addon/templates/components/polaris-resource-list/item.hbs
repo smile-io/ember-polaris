@@ -1,3 +1,5 @@
+{{! template-lint-disable no-invalid-interactive }}
+
 {{#if url}}
   {{!-- TODO: check focusIn/Out work here. --}}
   {{polaris-unstyled-link
@@ -74,18 +76,20 @@
         as |buttonGroup|
       }}
         {{#each shortcutActions as shortcutAction}}
-          {{polaris-button
-            size="slim"
-            plain=persistActions
-            text=shortcutAction.text
-            accessibilityLabel=shortcutAction.accessibilityLabel
-            url=shortcutAction.url
-            external=shortcutAction.external
-            destructive=shortcutAction.destructive
-            icon=shortcutAction.icon
-            loading=shortcutAction.loading
-            onClick=(action shortcutAction.onAction)
-          }}
+          {{#buttonGroup.item}}
+            {{polaris-button
+              size="slim"
+              plain=persistActions
+              text=shortcutAction.text
+              accessibilityLabel=shortcutAction.accessibilityLabel
+              url=shortcutAction.url
+              external=shortcutAction.external
+              destructive=shortcutAction.destructive
+              icon=shortcutAction.icon
+              loading=shortcutAction.loading
+              onClick=(action shortcutAction.onAction)
+            }}
+          {{/buttonGroup.item}}
         {{/each}}
       {{/polaris-button-group}}
     </div>
