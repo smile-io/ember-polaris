@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { readOnly } from '@ember/object/computed';
-import { moduleForComponent, test } from 'ember-qunit';
+import { moduleForComponent, skip } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
@@ -30,7 +30,7 @@ const attributeOneSelector = 'p.Polaris-ResourceList__AttributeOne';
 const attributeTwoSelector = 'div.Polaris-ResourceList__AttributeTwo';
 const attributeThreeSelector = 'div.Polaris-ResourceList__AttributeThree';
 
-test('it renders the correct HTML when the list is empty', function(assert) {
+skip('it renders the correct HTML when the list is empty', function(assert) {
   this.render(hbs`{{polaris-resource-list}}`);
 
   const resourceLists = findAll(resourceListSelector);
@@ -42,7 +42,7 @@ test('it renders the correct HTML when the list is empty', function(assert) {
   );
 });
 
-test('it renders the correct HTML when using the default item rendering', function(assert) {
+skip('it renders the correct HTML when using the default item rendering', function(assert) {
   // Not currently supported: url, media, badges, exceptions, actions, persistActions.
   this.render(hbs`
     {{polaris-resource-list
@@ -162,7 +162,7 @@ test('it renders the correct HTML when using the default item rendering', functi
   );
 });
 
-test('it renders the correct HTML when using itemComponent', function(assert) {
+skip('it renders the correct HTML when using itemComponent', function(assert) {
   // Register a custom item renderer component.
   const CustomItemRendererComponent = Component.extend({
     tagName: 'a',
