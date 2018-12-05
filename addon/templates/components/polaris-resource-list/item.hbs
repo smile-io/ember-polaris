@@ -29,11 +29,13 @@
   {{#if (or media selectable)}}
     <div class="Polaris-ResourceList-Item__Owned">
       {{#if selectable}}
-        <div
+        {{#wrapper-element
+          tagName="div"
           class="Polaris-ResourceList-Item__Handle"
           data-test-id="larger-selection-area"
-          {{action handleLargerSelectionArea}}
-        >
+          click=(action handleLargerSelectionArea)
+        }}
+          {{!-- TODO: check if `click` here (and elsewhere) works. --}}
           <div
             class="Polaris-ResourceList-Item__CheckboxWrapper"
             click={{action stopPropagation}}
@@ -42,12 +44,12 @@
               id=checkboxId
               label=label
               labelHidden=true
-              onChange=(action handleSelection)
-              checked=selected
+              checked=isSelected
               disabled=loading
+              onChange=(action handleSelection)
             }}
           </div>
-        </div>
+        {{/wrapper-element}}
       {{/if}}
 
       {{#if media}}

@@ -1,8 +1,8 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
-import mapEventToAction from '@smile-io/ember-polaris/utils/map-event-to-action';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 
 const SELECT_ALL_ITEMS = 'All';
@@ -128,11 +128,21 @@ export default Component.extend({
    */
   focusedInner: false,
 
-  click: mapEventToAction('handleClick'),
-  focusIn: mapEventToAction('handleFocus'),
-  focusOut: mapEventToAction('handleBlur'),
-  mouseDown: mapEventToAction('handleMouseDown'),
-  keyUp: mapEventToAction('handleKeypress'),
+  click() {
+    this.handleClick(...arguments);
+  },
+  focusIn() {
+    this.handleFocus(...arguments);
+  },
+  focusOut() {
+    this.handleBlur(...arguments);
+  },
+  mouseDown() {
+    this.handleMouseDown(...arguments);
+  },
+  keyUp() {
+    this.handleKeypress(...arguments);
+  },
 
   selectable: readOnly('context.selectable'),
   selectMode: readOnly('context.selectMode'),
@@ -177,7 +187,7 @@ export default Component.extend({
 
   handleLargerSelectionArea(event) {
     stopPropagation(event);
-    this.handleSelection(!this.isSelected());
+    this.handleSelection(!this.get('isSelected'));
   },
 
   handleSelection(value) {
@@ -230,7 +240,7 @@ export default Component.extend({
     }
   },
 
-  isSelected() {
+  isSelected: computed('id', 'context.selectedItems', function() {
     let { id, context } = this.getProperties('id', 'context');
     let selectedItems = context.get('selectedItems');
     return (
@@ -238,7 +248,7 @@ export default Component.extend({
       ((Array.isArray(selectedItems) && selectedItems.includes(id)) ||
         selectedItems === SELECT_ALL_ITEMS)
     );
-  },
+  }).readOnly(),
 
   compareEventNode(event) {
     return this.get('onClick')
