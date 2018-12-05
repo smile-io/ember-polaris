@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
 import mapEventToAction from '@smile-io/ember-polaris/utils/map-event-to-action';
 
@@ -14,6 +16,8 @@ export default Component.extend({
     'persistActions:Polaris-ResourceList-Item--persistActions',
     'focusedInner:Polaris-ResourceList-Item--focusedInner',
   ],
+
+  context: service('polaris-resource-list/context'),
 
   'data-test-id': 'item-wrapper',
 
@@ -75,7 +79,7 @@ export default Component.extend({
 
   /**
    * @property shortcutActions
-   * @type {Object}
+   * @type {Object[]}
    * @default null
    * @public
    */
@@ -134,4 +138,14 @@ export default Component.extend({
   focusOut: mapEventToAction('handleBlur'),
   mouseDown: mapEventToAction('handleMouseDown'),
   keyUp: mapEventToAction('handleKeypress'),
+
+  selectable: readOnly('context.selectable'),
+  selectMode: readOnly('context.selectMode'),
+  loading: readOnly('context.loading'),
+
+  stopPropagation,
 });
+
+function stopPropagation(event) {
+  event.stopPropagation();
+}

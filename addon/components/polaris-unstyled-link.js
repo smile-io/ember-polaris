@@ -12,6 +12,7 @@ export default Component.extend({
     'target',
     'rel',
     'ariaLabel:aria-label',
+    'ariaDescribedBy:aria-describedby',
   ],
 
   layout,
@@ -64,6 +65,13 @@ export default Component.extend({
    * @default null
    */
   ariaLabel: null,
+
+  /**
+   * @property ariaDescribedBy
+   * @type {String}
+   * @default null
+   */
+  ariaDescribedBy: null,
 
   /**
    * @private
