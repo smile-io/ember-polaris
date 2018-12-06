@@ -299,7 +299,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
       `);
         assert
           .dom('[data-test-checkbox-input]')
-          .hasAttribute('data-test-checkbox-input-checked', 'true');
+          .hasAttribute('data-test-checkbox-input-checked');
       });
 
       test("renders a disabled checked Checkbox if 'loading' context is true", async function(assert) {

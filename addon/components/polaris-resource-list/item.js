@@ -8,8 +8,6 @@ import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 const SELECT_ALL_ITEMS = 'All';
 
 export default Component.extend({
-  layout,
-
   classNames: ['Polaris-ResourceList-Item'],
   classNameBindings: [
     'focused:Polaris-ResourceList-Item--focused',
@@ -19,6 +17,18 @@ export default Component.extend({
     'persistActions:Polaris-ResourceList-Item--persistActions',
     'focusedInner:Polaris-ResourceList-Item--focusedInner',
   ],
+
+  layout,
+
+  /**
+   * Unique identifier for the item
+   *
+   * @property id
+   * @type {String}
+   * @default null
+   * @public
+   */
+  id: null,
 
   context: service('polaris-resource-list/context'),
 
@@ -51,16 +61,6 @@ export default Component.extend({
    * @public
    */
   ariaExpanded: false,
-
-  /**
-   * Unique identifier for the item
-   *
-   * @property id
-   * @type {String}
-   * @default null
-   * @public
-   */
-  id: null,
 
   /**
    * @property media
@@ -128,11 +128,23 @@ export default Component.extend({
 
   'data-test-id': 'item-wrapper',
 
+  stopPropagation,
+
   selectable: readOnly('context.selectable'),
   selectMode: readOnly('context.selectMode'),
   loading: readOnly('context.loading'),
 
   checkboxId: computedIdVariation('id', 'ResourceListItemCheckbox').readOnly(),
+
+  isSelected: computed('id', 'context.selectedItems', function() {
+    let { id, context } = this.getProperties('id', 'context');
+    let selectedItems = context.get('selectedItems');
+    return (
+      selectedItems &&
+      ((Array.isArray(selectedItems) && selectedItems.includes(id)) ||
+        selectedItems === SELECT_ALL_ITEMS)
+    );
+  }).readOnly(),
 
   click() {
     this.handleClick(...arguments);
@@ -149,8 +161,6 @@ export default Component.extend({
   keyUp() {
     this.handleKeypress(...arguments);
   },
-
-  stopPropagation,
 
   handleAnchorFocus() {
     this.setProperties({
@@ -239,16 +249,6 @@ export default Component.extend({
       onClick();
     }
   },
-
-  isSelected: computed('id', 'context.selectedItems', function() {
-    let { id, context } = this.getProperties('id', 'context');
-    let selectedItems = context.get('selectedItems');
-    return (
-      selectedItems &&
-      ((Array.isArray(selectedItems) && selectedItems.includes(id)) ||
-        selectedItems === SELECT_ALL_ITEMS)
-    );
-  }).readOnly(),
 
   compareEventNode(event) {
     return this.get('onClick')
