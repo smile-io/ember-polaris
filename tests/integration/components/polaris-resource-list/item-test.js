@@ -267,7 +267,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         assert.notOk(this.get('wasOnClickCalled'));
       });
 
-      /*
+      /**
        * Skipping this test because the React version
        * seems to be passing erroneously...
        */
