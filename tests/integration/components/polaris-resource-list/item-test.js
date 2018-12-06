@@ -268,9 +268,9 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
       });
 
       /*
-     * Skipping this test because the React version
-     * seems to be passing erroneously...
-     */
+       * Skipping this test because the React version
+       * seems to be passing erroneously...
+       */
       skip("it should call 'onSelectionChange' with the id of the item even if url or onClick is present", async function(assert) {
         setContextProperties(this, getMockSelectableContext(this));
         await render(hbs`
