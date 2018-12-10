@@ -1,0 +1,25 @@
+{{#polaris-stack
+  alignment="center"
+  vertical=true
+}}
+  {{#if withIllustration}}
+    {{!-- TODO: replace this with polaris-image when implemented. --}}
+    <img
+      src="/illustrations/empty-search.svg"
+      alt="Empty search results"
+      class="Polaris-EmptySearchResult__Image"
+    >
+  {{/if}}
+
+  {{polaris-display-text
+    size="small"
+    text=title
+  }}
+
+  {{#if description}}
+    {{polaris-text-style
+      variation="subdued"
+      text=description
+    }}
+  {{/if}}
+{{/polaris-stack}}
