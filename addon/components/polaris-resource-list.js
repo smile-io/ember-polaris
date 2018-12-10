@@ -1,13 +1,19 @@
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { computed } from '@ember/object';
 import { assert } from '@ember/debug';
 import layout from '../templates/components/polaris-resource-list';
 
 /**
  * Polaris resource list component.
- * See https://polaris.shopify.com/components/lists/resource-list
+ * See https://polaris.shopify.com/components/lists-and-tables/resource-list
  */
 export default Component.extend({
+  classNames: ['Polaris-ResourceList__ResourceListWrapper'],
+
   layout,
+
+  context: service('polaris-resource-list/context'),
 
   /**
    * Item data; each item is passed to renderItem
@@ -148,7 +154,7 @@ export default Component.extend({
    * renderItem property
    *
    * @property itemComponent
-   * @type {String|Component|Object}
+   * @type {String|Component}
    * @default null
    * @public
    * @required
@@ -208,6 +214,15 @@ export default Component.extend({
    * @private
    */
   listNode: null,
+
+  showEmptyState: computed('filterControl', 'itemsExist', function() {
+    let { filterControl, itemsExist } = this.getProperties(
+      'filterControl',
+      'itemsExist'
+    );
+
+    return filterControl && !itemsExist;
+  }).readOnly(),
 
   didReceiveAttrs() {
     this._super(...arguments);
