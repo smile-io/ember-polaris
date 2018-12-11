@@ -27,7 +27,6 @@
         {{/if}}
 
         <div class="Polaris-ResourceList__HeaderContentWrapper">
-          {{!-- TODO: implement itemCountText --}}
           <div
             class="Polaris-ResourceList__ItemCountTextWrapper"
             data-test-id="item-count-text-wrapper"
@@ -37,7 +36,7 @@
 
           {{#if selectable}}
             <div class="Polaris-ResourceList__CheckableButtonWrapper">
-              {{!-- TODO: implement bulkActionsAccessibilityLabel, handleToggleAll --}}
+              {{!-- TODO: implement handleToggleAll --}}
               {{polaris-resource-list/checkable-button
                 plain=true
                 disabled=loading
@@ -50,7 +49,6 @@
 
           {{#if sortOptions}}
             <div class="Polaris-ResourceList__SortWrapper">
-              {{!-- TODO: implement selectId --}}
               <label class="Polaris-ResourceList__SortLabel" htmlFor={{selectId}}>
                 Sort by
               </label>
@@ -68,11 +66,11 @@
 
           {{#if selectable}}
             <div class="Polaris-ResourceList__SelectButtonWrapper">
-              {{!-- TODO: implement selectIcon --}}
+              {{!-- TODO: include enable-selection icon --}}
               {{polaris-button
                 text="Select"
                 disabled=selectMode
-                icon=selectIcon
+                icon="enable-selection"
                 onClick=(action handleSelectMode true)
               }}
             </div>
@@ -103,11 +101,6 @@
   </div>
 {{/if}}
 
-{{!--
-  TODO:
-   - implement itemsExist
-   - hook up listRef
- --}}
 {{#if itemsExist}}
   {{!--
     NOTE: Polaris-ResourceList--disabledPointerEvents doesn't exist at this point,
@@ -117,12 +110,10 @@
   --}}
   <ul
     class="Polaris-ResourceList {{if loading "Polaris-ResourceList--disabledPointerEvents"}}"
-    ref=listRef
     aria-live="polite"
     aria-busy={{loading}}
   >
     {{#if loading}}
-      {{!-- TODO: implement spinnerStyle and spinnerSize --}}
       <div class="Polaris-ResourceList__SpinnerContainer" style={{spinnerStyle}}>
         {{polaris-spinner
           accessibilityLabel="Items are loading"
@@ -143,7 +134,10 @@
   </ul>
 {{else if showEmptyState}}
   <div class="Polaris-ResourceList__EmptySearchResultWrapper">
-    {{!-- TODO: use polaris-empty-search-result here once built --}}
-    <!-- <EmptySearchResult {...this.emptySearchResultText} withIllustration /> -->
+    {{polaris-empty-search-result
+      withIllustration=true
+      description="Try changing the filters or search term"
+      title=emptySearchResultTitle
+    }}
   </div>
 {{/if}}

@@ -1,8 +1,17 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
+import { gt } from '@ember/object/computed';
+import { htmlSafe } from '@ember/string';
 import { assert } from '@ember/debug';
 import layout from '../templates/components/polaris-resource-list';
+import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
+
+export const SELECT_ALL_ITEMS = 'All';
+
+const SMALL_SCREEN_WIDTH = 458;
+const SMALL_SPINNER_HEIGHT = 28;
+const LARGE_SPINNER_HEIGHT = 45;
 
 /**
  * Polaris resource list component.
@@ -215,6 +224,188 @@ export default Component.extend({
    */
   listNode: null,
 
+  /**
+   * @property defaultResourceName
+   * @type {Object}
+   * @private
+   */
+  defaultResourceName: null,
+
+  itemsExist: gt('items.length', 0).readOnly(),
+
+  selectId: computedIdVariation('id', 'Select').readOnly(),
+
+  selectable: computed(
+    'promotedBulkActions.length',
+    'bulkActions.length',
+    function() {
+      let { promotedBulkActions, bulkActions } = this.getProperties(
+        'promotedBulkActions',
+        'bulkActions'
+      );
+      return Boolean(
+        (promotedBulkActions && promotedBulkActions.length > 0) ||
+          (bulkActions && bulkActions.length > 0)
+      );
+    }
+  ).readOnly(),
+
+  bulkSelectState: computed('selectedItems.length', 'items.length', function() {
+    let { selectedItems, items } = this.getProperties('selectedItems', 'items');
+    let selectState = 'indeterminate';
+    if (
+      !selectedItems ||
+      (Array.isArray(selectedItems) && selectedItems.length === 0)
+    ) {
+      selectState = false;
+    } else if (
+      selectedItems === SELECT_ALL_ITEMS ||
+      (Array.isArray(selectedItems) && selectedItems.length === items.length)
+    ) {
+      selectState = true;
+    }
+    return selectState;
+  }).readOnly(),
+
+  itemCountText: computed(
+    'resourceName.{singular,plural}',
+    'items.length',
+    function() {
+      let {
+        resourceName = this.get('defaultResourceName'),
+        items,
+      } = this.getProperties('resourceName', 'items');
+
+      let itemsCount = items.length;
+      let resource =
+        itemsCount === 1
+          ? get(resourceName, 'singular')
+          : get(resourceName, 'plural');
+
+      return `Showing ${itemsCount} ${resource}`;
+    }
+  ).readOnly(),
+
+  bulkActionsLabel: computed(
+    'selectedItems.length',
+    'items.length',
+    function() {
+      let { selectedItems = [], items } = this.getProperties(
+        'selectedItems',
+        'items'
+      );
+
+      let selectedItemsCount =
+        selectedItems === SELECT_ALL_ITEMS
+          ? `${items.length}+`
+          : selectedItems.length;
+
+      return `${selectedItemsCount} selected`;
+    }
+  ).readOnly(),
+
+  bulkActionsAccessibilityLabel: computed(
+    'resourceName.{singular,plural}',
+    'selectedItems.length',
+    'items.length',
+    function() {
+      let {
+        resourceName = this.get('defaultResourceName'),
+        selectedItems = [],
+        items,
+      } = this.getProperties('resourceName', 'selectedItems', 'items');
+
+      let selectedItemsCount = selectedItems.length;
+      let totalItemsCount = items.length;
+      let allSelected = selectedItemsCount === totalItemsCount;
+
+      if (totalItemsCount === 1 && allSelected) {
+        return `Deselect ${get(resourceName, 'singular')}`;
+      } else if (totalItemsCount === 1) {
+        return `Select ${get(resourceName, 'singular')}`;
+      } else if (allSelected) {
+        return `Deselect all ${itemsLength} ${get(resourceName, 'plural')}`;
+      } else {
+        return `Select all ${itemsLength} ${get(resourceName, 'plural')}`;
+      }
+    }
+  ).readOnly(),
+
+  paginatedSelectAllText: computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural',
+    function() {
+      let {
+        hasMoreItems,
+        selectedItems,
+        items,
+        resourceName = this.get('defaultResourceName'),
+      } = this.getProperties(
+        'hasMoreItems',
+        'selectedItems',
+        'items',
+        'resourceName'
+      );
+
+      if (!this.get('selectable') || !hasMoreItems) {
+        return;
+      }
+
+      if (selectedItems === SELECT_ALL_ITEMS) {
+        return `All ${items.length}+ ${get(
+          resourceName,
+          'plural'
+        )} in your store are selected.`;
+      }
+    }
+  ).readOnly(),
+
+  paginatedSelectAllAction: computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural',
+    function() {
+      let {
+        hasMoreItems,
+        selectedItems,
+        items,
+        resourceName = this.get('defaultResourceName'),
+      } = this.getProperties(
+        'hasMoreItems',
+        'selectedItems',
+        'items',
+        'resourceName'
+      );
+
+      if (!this.get('selectable') || !hasMoreItems) {
+        return;
+      }
+
+      let actionText =
+        selectedItems === SELECT_ALL_ITEMS
+          ? 'Undo'
+          : `Select all ${items.length}+ ${get(
+              resourceName,
+              'plural'
+            )} in your store`;
+
+      return {
+        content: actionText,
+        onAction: () => this.handleSelectAllItemsInStore,
+      };
+    }
+  ).readOnly(),
+
+  emptySearchResultTitle: computed('resourceName.plural', function() {
+    let resourceName =
+      this.get('resourceName') || this.get('defaultResourceName');
+
+    return `No ${get(resourceName, 'plural')} found`;
+  }).readOnly(),
+
   showEmptyState: computed('filterControl', 'itemsExist', function() {
     let { filterControl, itemsExist } = this.getProperties(
       'filterControl',
@@ -224,6 +415,62 @@ export default Component.extend({
     return filterControl && !itemsExist;
   }).readOnly(),
 
+  spinnerStyle: computed('loadingPosition', function() {
+    let loadingPosition = this.get('loadingPosition');
+    let defaultTopPadding = 8;
+    let topPadding = loadingPosition > 0 ? loadingPosition : defaultTopPadding;
+    return htmlSafe(`padding-top: ${topPadding}px`);
+  }).readOnly(),
+
+  spinnerSize: computed('items.length', function() {
+    return this.get('items.length') === 1 ? 'small' : 'large';
+  }).readOnly(),
+
+  setLoadingPosition() {
+    let listNode = this.get('listNode');
+
+    if (listNode != null) {
+      if (typeof window === 'undefined') {
+        return;
+      }
+
+      let overlay = listNode.getBoundingClientRect();
+      let viewportHeight = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight || 0
+      );
+
+      let overflow = viewportHeight - overlay.height;
+
+      let spinnerHeight =
+        this.get('items.length') === 1
+          ? SMALL_SPINNER_HEIGHT
+          : LARGE_SPINNER_HEIGHT;
+
+      let spinnerPosition =
+        overflow > 0
+          ? (overlay.height - spinnerHeight) / 2
+          : (viewportHeight - overlay.top - spinnerHeight) / 2;
+
+      this.set('loadingPosition', spinnerPosition);
+    }
+  },
+
+  setListNode() {
+    let listNode =
+      this.element.querySelector('ul.Polaris-ResourceList') || null;
+    this.set('listNode', listNode);
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.set('defaultResourceName', {
+      singular: 'item',
+      plural: 'items',
+    });
+  },
+
   didReceiveAttrs() {
     this._super(...arguments);
 
@@ -231,5 +478,21 @@ export default Component.extend({
       'ember-polaris::polaris-resource-list - itemComponent must be a component name or definition',
       this.get('itemComponent')
     );
+  },
+
+  didRender() {
+    this._super(...arguments);
+
+    /*
+     * The React implementation currently caches `listNode` on first render,
+     * which leads to some buggy behaviour around whether the header gets
+     * rendered or not (see https://github.com/Shopify/polaris-react/issues/735).
+     * This is how I've chosen to fix the issue here, but we'll keep an eye
+     * on if/how the React implementation chooses to fix it and can maybe update
+     * to match their fix later if it seems better in some way.
+     */
+    this.setListNode();
+
+    this.setLoadingPosition();
   },
 });

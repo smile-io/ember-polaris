@@ -4,8 +4,7 @@ import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
-
-const SELECT_ALL_ITEMS = 'All';
+import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
 export default Component.extend({
   classNames: ['Polaris-ResourceList-Item'],
