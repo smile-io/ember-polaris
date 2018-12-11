@@ -3,10 +3,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-const containerSelector = '.Polaris-EmptySearchResult';
-const titleSelector = `${containerSelector} .Polaris-DisplayText`;
-const descriptionSelector = `${containerSelector} .Polaris-TextStyle--variationSubdued`;
-const illustrationSelector = `${containerSelector} .Polaris-EmptySearchResult__Image`;
+const titleSelector = '.Polaris-DisplayText';
+const descriptionSelector = '.Polaris-TextStyle--variationSubdued';
+const illustrationSelector = '.Polaris-EmptySearchResult__Image';
 
 module('Integration | Component | polaris-empty-search-result', function(
   hooks
