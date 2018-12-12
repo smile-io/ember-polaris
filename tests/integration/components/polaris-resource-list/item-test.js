@@ -17,7 +17,7 @@ const mockDefaultContext = {
 const itemId = 'itemId';
 const selectedItemId = 'selectedId';
 const accessibilityLabel = 'link anchor aria-label';
-const shortcutActions = [{ content: 'actions' }];
+const shortcutActions = [{ text: 'actions', onAction: () => {} }];
 
 function getMockSelectableContext(testContext) {
   return {
@@ -424,10 +424,10 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
+              persistActions=true
               id=itemId
               url=url
               shortcutActions=shortcutActions
-              persistActions=true
             }}
           {{/polaris-resource-list/provider}}
         `);

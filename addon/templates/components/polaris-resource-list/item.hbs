@@ -76,7 +76,7 @@
         data-test-id=(unless persistActions "shortcut-actions")
         as |buttonGroup|
       }}
-        {{#each shortcutActions as shortcutAction}}
+        {{#each shortcutActions as |shortcutAction|}}
           {{#buttonGroup.item}}
             {{polaris-button
               size="slim"
