@@ -1,12 +1,13 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
+import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
-export default Component.extend({
+export default Component.extend(context.ConsumerMixin, {
   classNames: ['Polaris-ResourceList-Item'],
   classNameBindings: [
     'focused:Polaris-ResourceList-Item--focused',
@@ -28,8 +29,6 @@ export default Component.extend({
    * @public
    */
   id: null,
-
-  context: service('polaris-resource-list/context'),
 
   /**
    * Visually hidden text for screen readers
@@ -137,7 +136,7 @@ export default Component.extend({
 
   isSelected: computed('id', 'context.selectedItems', function() {
     let { id, context } = this.getProperties('id', 'context');
-    let selectedItems = context.get('selectedItems');
+    let selectedItems = get(context, 'selectedItems');
     return (
       selectedItems &&
       ((Array.isArray(selectedItems) && selectedItems.includes(id)) ||
@@ -201,7 +200,7 @@ export default Component.extend({
 
   handleSelection(value) {
     let { id, context } = this.getProperties('id', 'context');
-    let onSelectionChange = context.get('onSelectionChange');
+    let onSelectionChange = get(context, 'onSelectionChange');
     if (id == null || onSelectionChange == null) {
       return;
     }

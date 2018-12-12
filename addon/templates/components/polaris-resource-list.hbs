@@ -1,143 +1,147 @@
-{{#if filterControl}}
-  <div class="Polaris-ResourceList__FiltersWrapper">
-    {{render-content filterControl}}
-  </div>
-{{/if}}
-
-{{#if (and
-  (or showHeader needsHeader)
-  listNode
-  itemsExist
-)}}
-  <div class="Polaris-ResourceList__HeaderOuterWrapper">
-    {{#polaris-sticky boundingElement=listNode as |sticky|}}
-      <div
-        data-test-id="resource-list-header"
-        class="
-          Polaris-ResourceList__HeaderWrapper
-          {{if sortOptions.length "Polaris-ResourceList__HeaderWrapper--hasSort"}}
-          {{if selectable "Polaris-ResourceList__HeaderWrapper--hasSelect"}}
-          {{if loading "Polaris-ResourceList__HeaderWrapper--disabled"}}
-          {{if (and selectable selectMode) "Polaris-ResourceList__HeaderWrapper--inSelectMode"}}
-          {{if sticky.isSticky "Polaris-ResourceList__HeaderWrapper--isSticky"}}
-        "
-      >
-        {{#if loading}}
-          <div class="Polaris-ResourceList__HeaderWrapper--overlay"></div>
-        {{/if}}
-
-        <div class="Polaris-ResourceList__HeaderContentWrapper">
-          <div
-            class="Polaris-ResourceList__ItemCountTextWrapper"
-            data-test-id="item-count-text-wrapper"
-          >
-            {{itemCountText}}
-          </div>
-
-          {{#if selectable}}
-            <div class="Polaris-ResourceList__CheckableButtonWrapper">
-              {{!-- TODO: implement handleToggleAll --}}
-              {{polaris-resource-list/checkable-button
-                plain=true
-                disabled=loading
-                accessibilityLabel=bulkActionsAccessibilityLabel
-                label=itemCountText
-                onToggleAll=(action handleToggleAll)
-              }}
-            </div>
-          {{/if}}
-
-          {{#if sortOptions}}
-            <div class="Polaris-ResourceList__SortWrapper">
-              <label class="Polaris-ResourceList__SortLabel" htmlFor={{selectId}}>
-                Sort by
-              </label>
-
-              {{polaris-select
-                label="Sort by"
-                labelHidden=true
-                options=sortOptions
-                value=sortValue
-                disabled=selectMode
-                onChange=(action onSortChange)
-              }}
-            </div>
-          {{/if}}
-
-          {{#if selectable}}
-            <div class="Polaris-ResourceList__SelectButtonWrapper">
-              {{!-- TODO: include enable-selection icon --}}
-              {{polaris-button
-                text="Select"
-                disabled=selectMode
-                icon="enable-selection"
-                onClick=(action handleSelectMode true)
-              }}
-            </div>
-          {{/if}}
-        </div>
-
-        {{#if selectable}}
-          <div class="Polaris-ResourceList__BulkActionsWrapper">
-            {{polaris-resource-list/bulk-actions
-              label=bulkActionsLabel
-              accessibilityLabel=bulkActionsAccessibilityLabel
-              selected=bulkSelectState
-              onToggleAll=(action handleToggleAll)
-              selectMode=selectMode
-              onSelectModeToggle=(action handleSelectMode)
-              promotedActions=promotedBulkActions
-              paginatedSelectAllAction=paginatedSelectAllAction
-              paginatedSelectAllText=paginatedSelectAllText
-              actions=bulkActions
-              disabled=loading
-            }}
-            {{!-- TODO: add resize listener --}}
-            {{!-- <EventListener event="resize" handler={this.handleResize} /> --}}
-          </div>
-        {{/if}}
+{{#polaris-resource-list/provider value=context}}
+  <div class="Polaris-ResourceList__ResourceListWrapper">
+    {{#if filterControl}}
+      <div class="Polaris-ResourceList__FiltersWrapper">
+        {{render-content filterControl}}
       </div>
-    {{/polaris-sticky}}
-  </div>
-{{/if}}
-
-{{#if itemsExist}}
-  {{!--
-    NOTE: Polaris-ResourceList--disabledPointerEvents doesn't exist at this point,
-    but Polaris-ResourceList__DisabledPointerEvents does. The former is probably
-    what was intended in the React source, so matching that for now as the class
-    doesn't seem to be necessary for the list's `loading` behaviour to work.
-  --}}
-  <ul
-    class="Polaris-ResourceList {{if loading "Polaris-ResourceList--disabledPointerEvents"}}"
-    aria-live="polite"
-    aria-busy={{loading}}
-  >
-    {{#if loading}}
-      <div class="Polaris-ResourceList__SpinnerContainer" style={{spinnerStyle}}>
-        {{polaris-spinner
-          accessibilityLabel="Items are loading"
-          size=spinnerSize
-        }}
-      </div>
-      <div class="Polaris-ResourceList__LoadingOverlay"></div>
     {{/if}}
 
-    {{#each items as |item|}}
-      <li
-        class="Polaris-ResourceList__ItemWrapper"
-        tabIndex={{if loading -1 0}}
+    {{#if (and
+      (or showHeader needsHeader)
+      listNode
+      itemsExist
+    )}}
+      <div class="Polaris-ResourceList__HeaderOuterWrapper">
+        {{#polaris-sticky boundingElement=listNode as |sticky|}}
+          <div
+            data-test-id="resource-list-header"
+            class="
+              Polaris-ResourceList__HeaderWrapper
+              {{if sortOptions.length "Polaris-ResourceList__HeaderWrapper--hasSort"}}
+              {{if selectable "Polaris-ResourceList__HeaderWrapper--hasSelect"}}
+              {{if loading "Polaris-ResourceList__HeaderWrapper--disabled"}}
+              {{if (and selectable selectMode) "Polaris-ResourceList__HeaderWrapper--inSelectMode"}}
+              {{if sticky.isSticky "Polaris-ResourceList__HeaderWrapper--isSticky"}}
+            "
+          >
+            {{#if loading}}
+              <div class="Polaris-ResourceList__HeaderWrapper--overlay"></div>
+            {{/if}}
+
+            <div class="Polaris-ResourceList__HeaderContentWrapper">
+              <div
+                class="Polaris-ResourceList__ItemCountTextWrapper"
+                data-test-id="item-count-text-wrapper"
+              >
+                {{itemCountText}}
+              </div>
+
+              {{#if selectable}}
+                <div class="Polaris-ResourceList__CheckableButtonWrapper">
+                  {{!-- TODO: implement handleToggleAll --}}
+                  {{polaris-resource-list/checkable-button
+                    plain=true
+                    disabled=loading
+                    accessibilityLabel=bulkActionsAccessibilityLabel
+                    label=itemCountText
+                    onToggleAll=(action handleToggleAll)
+                  }}
+                </div>
+              {{/if}}
+
+              {{#if sortOptions}}
+                <div class="Polaris-ResourceList__SortWrapper">
+                  <label class="Polaris-ResourceList__SortLabel" htmlFor={{selectId}}>
+                    Sort by
+                  </label>
+
+                  {{polaris-select
+                    label="Sort by"
+                    labelHidden=true
+                    options=sortOptions
+                    value=sortValue
+                    disabled=selectMode
+                    onChange=(action onSortChange)
+                  }}
+                </div>
+              {{/if}}
+
+              {{#if selectable}}
+                <div class="Polaris-ResourceList__SelectButtonWrapper">
+                  {{!-- TODO: include enable-selection icon --}}
+                  {{polaris-button
+                    text="Select"
+                    disabled=selectMode
+                    icon="enable-selection"
+                    onClick=(action handleSelectMode true)
+                  }}
+                </div>
+              {{/if}}
+            </div>
+
+            {{#if selectable}}
+              <div class="Polaris-ResourceList__BulkActionsWrapper">
+                {{polaris-resource-list/bulk-actions
+                  label=bulkActionsLabel
+                  accessibilityLabel=bulkActionsAccessibilityLabel
+                  selected=bulkSelectState
+                  onToggleAll=(action handleToggleAll)
+                  selectMode=selectMode
+                  onSelectModeToggle=(action handleSelectMode)
+                  promotedActions=promotedBulkActions
+                  paginatedSelectAllAction=paginatedSelectAllAction
+                  paginatedSelectAllText=paginatedSelectAllText
+                  actions=bulkActions
+                  disabled=loading
+                }}
+                {{!-- TODO: add resize listener --}}
+                {{!-- <EventListener event="resize" handler={this.handleResize} /> --}}
+              </div>
+            {{/if}}
+          </div>
+        {{/polaris-sticky}}
+      </div>
+    {{/if}}
+
+    {{#if itemsExist}}
+      {{!--
+        NOTE: Polaris-ResourceList--disabledPointerEvents doesn't exist at this point,
+        but Polaris-ResourceList__DisabledPointerEvents does. The former is probably
+        what was intended in the React source, so matching that for now as the class
+        doesn't seem to be necessary for the list's `loading` behaviour to work.
+      --}}
+      <ul
+        class="Polaris-ResourceList {{if loading "Polaris-ResourceList--disabledPointerEvents"}}"
+        aria-live="polite"
+        aria-busy={{loading}}
       >
-        {{component itemComponent item=item}}
-      </li>
-    {{/each}}
-  </ul>
-{{else if showEmptyState}}
-  <div class="Polaris-ResourceList__EmptySearchResultWrapper">
-    {{polaris-empty-search-result
-      withIllustration=true
-      description="Try changing the filters or search term"
-      title=emptySearchResultTitle
-    }}
+        {{#if loading}}
+          <div class="Polaris-ResourceList__SpinnerContainer" style={{spinnerStyle}}>
+            {{polaris-spinner
+              accessibilityLabel="Items are loading"
+              size=spinnerSize
+            }}
+          </div>
+          <div class="Polaris-ResourceList__LoadingOverlay"></div>
+        {{/if}}
+
+        {{#each items as |item|}}
+          <li
+            class="Polaris-ResourceList__ItemWrapper"
+            tabIndex={{if loading -1 0}}
+          >
+            {{component itemComponent item=item}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else if showEmptyState}}
+      <div class="Polaris-ResourceList__EmptySearchResultWrapper">
+        {{polaris-empty-search-result
+          withIllustration=true
+          description="Try changing the filters or search term"
+          title=emptySearchResultTitle
+        }}
+      </div>
+    {{/if}}
   </div>
-{{/if}}
+{{/polaris-resource-list/provider}}

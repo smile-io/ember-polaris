@@ -4,10 +4,19 @@ import { computed, get } from '@ember/object';
 import { gt } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { assert } from '@ember/debug';
+import createContext from 'ember-context';
 import layout from '../templates/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 
 export const SELECT_ALL_ITEMS = 'All';
+
+export const context = createContext({
+  selectMode: false,
+  resourceName: {
+    singular: 'item',
+    plural: 'items',
+  },
+});
 
 const SMALL_SCREEN_WIDTH = 458;
 const SMALL_SPINNER_HEIGHT = 28;
@@ -18,11 +27,9 @@ const LARGE_SPINNER_HEIGHT = 45;
  * See https://polaris.shopify.com/components/lists-and-tables/resource-list
  */
 export default Component.extend({
-  classNames: ['Polaris-ResourceList__ResourceListWrapper'],
+  tagName: '',
 
   layout,
-
-  context: service('polaris-resource-list/context'),
 
   /**
    * Item data; each item is passed to renderItem
@@ -425,6 +432,39 @@ export default Component.extend({
   spinnerSize: computed('items.length', function() {
     return this.get('items.length') === 1 ? 'small' : 'large';
   }).readOnly(),
+
+  context: computed(
+    'selectedItems.[]',
+    'resourceName',
+    'loading',
+    'selectMode',
+    'selectable',
+    function() {
+      let {
+        selectedItems,
+        resourceName = this.get('defaultResourceName'),
+        loading,
+        selectMode,
+        selectable,
+      } = this.getProperties(
+        'selectedItems',
+        'resourceName',
+        'loading',
+        'selectMode',
+        'selectable'
+      );
+      return {
+        selectable,
+        selectedItems,
+        selectMode,
+        resourceName,
+        loading,
+        onSelectionChange: (...args) => {
+          return this.handleSelectionChange(...args);
+        },
+      };
+    }
+  ).readOnly(),
 
   setLoadingPosition() {
     let listNode = this.get('listNode');

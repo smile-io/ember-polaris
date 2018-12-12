@@ -1,27 +1,18 @@
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
-import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
-import ContextService from '@smile-io/ember-polaris/services/polaris-resource-list/context';
 
-ContextService.reopen({
+const mockDefaultContext = {
   selectMode: false,
   selectable: false,
-
-  selectedItems: computed(function() {
-    return [];
-  }),
-
-  resourceName: computed(function() {
-    return {
-      singular: 'item',
-      plural: 'items,',
-    };
-  }),
-
+  selectedItems: [],
   onSelectionChange() {},
-});
+  resourceName: {
+    singular: 'item',
+    plural: 'items,',
+  },
+};
 
 const itemId = 'itemId';
 const selectedItemId = 'selectedId';
@@ -61,28 +52,32 @@ function getMockLoadingContext(testContext) {
   };
 }
 
-function setContextProperties(testContext, properties) {
-  let context = testContext.owner.lookup(
-    'service:polaris-resource-list/context'
-  );
-  context.setProperties(properties);
-}
-
 const url = '#test-link';
 const ariaLabel = 'View Item';
 
 module('Integration | Component | polaris-resource-list/item', function(hooks) {
   setupRenderingTest(hooks);
 
+  hooks.beforeEach(function() {
+    this.setProperties({
+      mockDefaultContext,
+      mockSelectableContext: getMockSelectableContext(this),
+      mockSelectModeContext: getMockSelectModeContext(this),
+      mockLoadingContext: getMockLoadingContext(this),
+    });
+  });
+
   module('accessibilityLabel', function() {
     test('is used on the UnstyledLink for the aria-label attribute', async function(assert) {
       this.setProperties({ accessibilityLabel, itemId });
       await render(hbs`
-        {{polaris-resource-list/item
-          accessibilityLabel=accessibilityLabel
-          id=itemId
-          url="https://shopify.com"
-        }}
+        {{#polaris-resource-list/provider value=mockDefaultContext}}
+          {{polaris-resource-list/item
+            accessibilityLabel=accessibilityLabel
+            id=itemId
+            url="https://shopify.com"
+          }}
+        {{/polaris-resource-list/provider}}
       `);
 
       assert
@@ -101,11 +96,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     function() {
       test('does not renders a UnstyledLink by default', async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id="itemId"
-            accessibilityLabel=ariaLabel
-            onClick=(action (mut dummy))
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id="itemId"
+              accessibilityLabel=ariaLabel
+              onClick=(action (mut dummy))
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         assert.dom('a[data-polaris-unstyled]').doesNotExist();
@@ -113,11 +110,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
 
       test('renders a UnstyledLink', async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id="itemId"
-            url=url
-            accessibilityLabel=ariaLabel
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id="itemId"
+              url=url
+              accessibilityLabel=ariaLabel
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         assert.dom('a[data-polaris-unstyled]').exists();
@@ -125,11 +124,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
 
       test('renders a UnstyledLink with url', async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id="itemId"
-            url=url
-            accessibilityLabel=ariaLabel
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id="itemId"
+              url=url
+              accessibilityLabel=ariaLabel
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         assert.dom('a[data-polaris-unstyled]').hasAttribute('href', url);
@@ -137,11 +138,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
 
       test(`renders a UnstyledLink with an aria-label of ${ariaLabel}`, async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id="itemId"
-            url=url
-            accessibilityLabel=ariaLabel
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id="itemId"
+              url=url
+              accessibilityLabel=ariaLabel
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         assert
@@ -155,11 +158,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     test('is used on the content node and for the description of a link', async function(assert) {
       this.setProperties({ itemId, ariaLabel });
       await render(hbs`
-        {{polaris-resource-list/item
-          id=itemId
-          url="https://shopify.com"
-          accessibilityLabel=ariaLabel
-        }}
+        {{#polaris-resource-list/provider value=mockDefaultContext}}
+          {{polaris-resource-list/item
+            id=itemId
+            url="https://shopify.com"
+            accessibilityLabel=ariaLabel
+          }}
+        {{/polaris-resource-list/provider}}
       `);
 
       assert.dom('[data-test-id="item-content"]').hasAttribute('id', itemId);
@@ -179,11 +184,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     function() {
       test('calls onClick when clicking on the item when onClick exist', async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id=itemId
-            accessibilityLabel=ariaLabel
-            onClick=(action (mut passedItemId))
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              accessibilityLabel=ariaLabel
+              onClick=(action (mut passedItemId))
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         await click('[data-test-id="item-wrapper"]');
@@ -192,12 +199,14 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
 
       test('calls onClick when clicking on the item when both onClick and url exist', async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id=itemId
-            url=url
-            accessibilityLabel=ariaLabel
-            onClick=(action (mut passedItemId))
-          }}
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              accessibilityLabel=ariaLabel
+              onClick=(action (mut passedItemId))
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         await click('[data-test-id="item-wrapper"]');
@@ -211,17 +220,17 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     {
       beforeEach() {
         this.setProperties({ itemId, url });
-
-        setContextProperties(this, getMockSelectableContext(this));
       },
     },
     function() {
       test("it should not call the Item 'onClick' when clicking the 'LargerSelectionArea'", async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id=itemId
-            onClick=(action (mut wasOnClickCalled) true)
-          }}
+          {{#polaris-resource-list/provider value=mockSelectableContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              onClick=(action (mut wasOnClickCalled) true)
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         await click('[data-test-id="larger-selection-area"]');
@@ -230,10 +239,12 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
 
       test("it should call 'onSelectionChange' with the id of the item when clicking the 'LargerSelectionArea'", async function(assert) {
         await render(hbs`
-          {{polaris-resource-list/item
-            id=itemId
-            url=url
-          }}
+          {{#polaris-resource-list/provider value=mockSelectableContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
         `);
 
         await click('[data-test-id="larger-selection-area"]');
@@ -254,14 +265,15 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     },
     function() {
       test("it should not call 'onClick' when clicking the item", async function(assert) {
-        setContextProperties(this, getMockSelectModeContext(this));
         await render(hbs`
-        {{polaris-resource-list/item
-          id=itemId
-          accessibilityLabel=ariaLabel
-          onClick=(action (mut wasOnClickCalled) true)
-        }}
-      `);
+          {{#polaris-resource-list/provider value=mockSelectModeContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              accessibilityLabel=ariaLabel
+              onClick=(action (mut wasOnClickCalled) true)
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
 
         await click('[data-test-id="item-wrapper"]');
         assert.notOk(this.get('wasOnClickCalled'));
@@ -272,15 +284,16 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
        * seems to be passing erroneously...
        */
       skip("it should call 'onSelectionChange' with the id of the item even if url or onClick is present", async function(assert) {
-        setContextProperties(this, getMockSelectableContext(this));
         await render(hbs`
-        {{polaris-resource-list/item
-          id=itemId
-          url=url
-          accessibilityLabel=ariaLabel
-          onClick=(action (mut dummy))
-         }}
-      `);
+          {{#polaris-resource-list/provider value=mockSelectableContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              accessibilityLabel=ariaLabel
+              onClick=(action (mut dummy))
+             }}
+           {{/polaris-resource-list/provider}}
+         `);
 
         await click('[data-test-id="item-wrapper"]');
         assert.deepEqual(this.get('passedOnSelectionChangeParams'), [
@@ -290,28 +303,32 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
       });
 
       test("should render a checked Checkbox if the item is in the 'selectedItems' context", async function(assert) {
-        setContextProperties(this, getMockSelectableContext(this));
         await render(hbs`
-        {{polaris-resource-list/item
-          id=selectedItemId
-          url=url
-        }}
-      `);
+          {{#polaris-resource-list/provider value=mockSelectableContext}}
+            {{polaris-resource-list/item
+              id=selectedItemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
         assert
           .dom('[data-test-checkbox-input]')
           .hasAttribute('data-test-checkbox-input-checked');
       });
 
       test("renders a disabled checked Checkbox if 'loading' context is true", async function(assert) {
-        setContextProperties(this, getMockLoadingContext(this));
         await render(hbs`
-        {{polaris-resource-list/item
-          id=selectedItemId
-          url=url
-        }}
-      `);
+          {{#polaris-resource-list/provider value=mockLoadingContext}}
+            {{polaris-resource-list/item
+              id=selectedItemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
         assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
       });
     }
   );
+
+  // TODO: add media and shortcutActions tests
 });
