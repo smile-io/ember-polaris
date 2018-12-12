@@ -1,0 +1,30 @@
+{{#polaris-stack
+  alignment="center"
+  vertical=true
+  as |stack|
+}}
+  {{#if withIllustration}}
+    {{#stack.item}}
+      {{!-- TODO: replace this with polaris-image when implemented. --}}
+      <img
+        src="empty-search.svg"
+        alt="Empty search results"
+        class="Polaris-EmptySearchResult__Image"
+        draggable="false"
+      >
+    {{/stack.item}}
+  {{/if}}
+
+  {{polaris-display-text
+    size="small"
+    text=title
+  }}
+
+  {{#if description}}
+    {{#stack.item}}
+      {{#polaris-text-style variation="subdued"}}
+        <p>{{description}}</p>
+      {{/polaris-text-style}}
+    {{/stack.item}}
+  {{/if}}
+{{/polaris-stack}}
