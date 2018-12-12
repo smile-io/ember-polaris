@@ -656,8 +656,7 @@ export default Component.extend(
     },
 
     setListNode() {
-      let listNode =
-        this.element.querySelector('ul.Polaris-ResourceList') || null;
+      let listNode = document.querySelector(`#${this.get('id')} ul.Polaris-ResourceList`) || null;
       this.set('listNode', listNode);
     },
 
