@@ -187,30 +187,30 @@ export default Component.extend(
      *
      * @property onSortChange
      * @type {Function}
-     * @default noop
+     * @default null
      * @public
      */
-    onSortChange() {},
+    onSortChange: null,
 
     /**
      * Callback when selection is changed
      *
      * @property onSelectionChange
      * @type {Function}
-     * @default noop
+     * @default null
      * @public
      */
-    onSelectionChange() {},
+    onSelectionChange: null,
 
     /**
      * Function to customize the unique ID for each item
      *
      * @property idForItem
      * @type {Function}
-     * @default noop
+     * @default null
      * @public
      */
-    idForItem() {},
+    idForItem: null,
 
     /**
      * @property selectMode
@@ -551,6 +551,110 @@ export default Component.extend(
       }
     },
 
+    handleSelectAllItemsInStore() {
+      let {
+        onSelectionChange,
+        selectedItems,
+        items,
+        idForItem = defaultIdForItem,
+      } = this.getProperties('onSelectionChange', 'selectedItems', 'items');
+
+      let newlySelectedItems =
+        selectedItems === SELECT_ALL_ITEMS
+          ? getAllItemsOnPage(items, idForItem)
+          : SELECT_ALL_ITEMS;
+
+      if (onSelectionChange) {
+        onSelectionChange(newlySelectedItems);
+      }
+    },
+
+    handleSelectionChange(selected, id) {
+      let {
+        onSelectionChange,
+        selectedItems,
+        items,
+        idForItem = defaultIdForItem,
+      } = this.getProperties(
+        'onSelectionChange',
+        'selectedItems',
+        'items',
+        'idForItem'
+      );
+
+      if (selectedItems == null || onSelectionChange == null) {
+        return;
+      }
+
+      let newlySelectedItems =
+        selectedItems === SELECT_ALL_ITEMS
+          ? getAllItemsOnPage(items, idForItem)
+          : [...selectedItems];
+
+      if (selected) {
+        newlySelectedItems.push(id);
+      } else {
+        newlySelectedItems.splice(newlySelectedItems.indexOf(id), 1);
+      }
+
+      if (newlySelectedItems.length === 0 && !isSmallScreen()) {
+        this.handleSelectMode(false);
+      } else if (newlySelectedItems.length > 0) {
+        this.handleSelectMode(true);
+      }
+
+      if (onSelectionChange) {
+        onSelectionChange(newlySelectedItems);
+      }
+    },
+
+    handleSelectMode(selectMode) {
+      let onSelectionChange = this.get('onSelectionChange');
+      this.set('selectMode', selectMode);
+      if (!selectMode && onSelectionChange) {
+        onSelectionChange([]);
+      }
+    },
+
+    handleToggleAll() {
+      let {
+        onSelectionChange,
+        selectedItems,
+        items,
+        idForItem = defaultIdForItem,
+      } = this.getProperties(
+        'onSelectionChange',
+        'selectedItems',
+        'items',
+        'idForItem'
+      );
+
+      let newlySelectedItems = [];
+
+      if (
+        (Array.isArray(selectedItems) &&
+          selectedItems.length === items.length) ||
+        selectedItems === SELECT_ALL_ITEMS
+      ) {
+        newlySelectedItems = [];
+      } else {
+        newlySelectedItems = items.map((item, index) => {
+          let id = idForItem(item, index);
+          return id;
+        });
+      }
+
+      if (newlySelectedItems.length === 0 && !isSmallScreen()) {
+        this.handleSelectMode(false);
+      } else if (newlySelectedItems.length > 0) {
+        this.handleSelectMode(true);
+      }
+
+      if (onSelectionChange) {
+        onSelectionChange(newlySelectedItems);
+      }
+    },
+
     setListNode() {
       let listNode =
         this.element.querySelector('ul.Polaris-ResourceList') || null;
@@ -628,6 +732,16 @@ export default Component.extend(
     },
   }
 );
+
+function getAllItemsOnPage(items, idForItem) {
+  return items.map((item, index) => {
+    return idForItem(item, index);
+  });
+}
+
+function defaultIdForItem(item, index) {
+  return item.hasOwnProperty('id') ? get(item, 'id') : index.toString();
+}
 
 function isSmallScreen() {
   return typeof window === 'undefined'
