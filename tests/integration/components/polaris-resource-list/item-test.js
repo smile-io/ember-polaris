@@ -54,6 +54,7 @@ function getMockLoadingContext(testContext) {
 
 const url = '#test-link';
 const ariaLabel = 'View Item';
+const mediaSelector = '[data-test-id="media"]';
 
 module('Integration | Component | polaris-resource-list/item', function(hooks) {
   setupRenderingTest(hooks);
@@ -315,8 +316,31 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
           .dom('[data-test-checkbox-input]')
           .hasAttribute('data-test-checkbox-input-checked');
       });
+    }
+  );
 
-      test("renders a disabled checked Checkbox if 'loading' context is true", async function(assert) {
+  module(
+    'media',
+    {
+      beforeEach() {
+        this.setProperties({ itemId, selectedItemId, url });
+      },
+    },
+    function() {
+      test('does not include media if not provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom('[data-test-id="media"]').doesNotExist();
+      });
+
+      test('renders a disabled checked Checkbox if `loading` context is true', async function(assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockLoadingContext}}
             {{polaris-resource-list/item
@@ -325,10 +349,37 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
             }}
           {{/polaris-resource-list/provider}}
         `);
+
         assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
+      });
+
+      test('includes an avatar if one is provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              media=(component "polaris-avatar")
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(`${mediaSelector} > .Polaris-Avatar`).exists();
+      });
+
+      test('includes a thumbnail if one is provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              media=(component "polaris-thumbnail")
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(`${mediaSelector} > .Polaris-Thumbnail`).exists();
       });
     }
   );
-
-  // TODO: add media and shortcutActions tests
 });
