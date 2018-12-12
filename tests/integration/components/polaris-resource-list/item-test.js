@@ -17,6 +17,7 @@ const mockDefaultContext = {
 const itemId = 'itemId';
 const selectedItemId = 'selectedId';
 const accessibilityLabel = 'link anchor aria-label';
+const shortcutActions = [{ content: 'actions' }];
 
 function getMockSelectableContext(testContext) {
   return {
@@ -55,6 +56,7 @@ function getMockLoadingContext(testContext) {
 const url = '#test-link';
 const ariaLabel = 'View Item';
 const mediaSelector = '[data-test-id="media"]';
+const shorcutActionsSelector = '.Polaris-ResourceList-Item__Actions';
 
 module('Integration | Component | polaris-resource-list/item', function(hooks) {
   setupRenderingTest(hooks);
@@ -379,6 +381,58 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         `);
 
         assert.dom(`${mediaSelector} > .Polaris-Thumbnail`).exists();
+      });
+    }
+  );
+
+  module(
+    'shortcutActions',
+    {
+      beforeEach() {
+        this.setProperties({ itemId, url, shortcutActions });
+      },
+    },
+    function() {
+      test('does not render shortcut actions if none are provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(shorcutActionsSelector).doesNotExist();
+      });
+
+      test('renders shortcut actions when some are provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              shortcutActions=shortcutActions
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(shorcutActionsSelector).exists();
+      });
+
+      test('renders persistent shortcut actions if `persistActions` is true', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              id=itemId
+              url=url
+              shortcutActions=shortcutActions
+              persistActions=true
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom('.Polaris-ResourceList-Item__Disclosure').exists();
       });
     }
   );
