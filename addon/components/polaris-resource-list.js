@@ -238,6 +238,26 @@ export default Component.extend({
    */
   defaultResourceName: null,
 
+  /**
+   * Internal property used to recreate React implementation's
+   * `componentDidUpdate` behaviour.
+   *
+   * @property previousLoading
+   * @type {Boolean}
+   * @private
+   */
+  previousLoading: null,
+
+  /**
+   * Internal property used to recreate React implementation's
+   * `componentWillReceiveProps` behaviour.
+   *
+   * @property previousSelectedItems
+   * @type {String|String[]}
+   * @private
+   */
+  previousSelectedItems: null,
+
   itemsExist: gt('items.length', 0).readOnly(),
 
   selectId: computedIdVariation('id', 'Select').readOnly(),
@@ -509,6 +529,10 @@ export default Component.extend({
       singular: 'item',
       plural: 'items',
     });
+
+    if (this.get('loading')) {
+      this.setLoadingPosition();
+    }
   },
 
   didReceiveAttrs() {
@@ -518,6 +542,38 @@ export default Component.extend({
       'ember-polaris::polaris-resource-list - itemComponent must be a component name or definition',
       this.get('itemComponent')
     );
+
+    // This logic is in the React implementation's
+    // `componentWillReceiveProps` hook.
+    let { selectedItems, previousSelectedItems } = this.getProperties(
+      'selectedItems',
+      'previousSelectedItems'
+    );
+
+    if (
+      previousSelectedItems &&
+      previousSelectedItems.length > 0 &&
+      (!selectedItems || selectedItems.length === 0) &&
+      !isSmallScreen()
+    ) {
+      this.set('selectMode', false);
+    }
+
+    // This logic is in the React implementation's
+    // `componentDidUpdate` hook.
+    let { loading, previousLoading } = this.getProperties(
+      'loading',
+      'previousLoading'
+    );
+
+    if (loading && !previousLoading) {
+      this.setLoadingPosition();
+    }
+
+    this.setProperties({
+      previousSelectedItems: selectedItems,
+      previousLoading: loading,
+    });
   },
 
   didRender() {
@@ -532,7 +588,11 @@ export default Component.extend({
      * to match their fix later if it seems better in some way.
      */
     this.setListNode();
-
-    this.setLoadingPosition();
   },
 });
+
+function isSmallScreen() {
+  return typeof window === 'undefined'
+    ? false
+    : window.innerWidth <= SMALL_SCREEN_WIDTH;
+}
