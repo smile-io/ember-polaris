@@ -419,4 +419,17 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
     });
   });
+
+  module('filterControl', function() {
+    test('renders when exist', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsNoID
+          itemComponent="shallow-item-component"
+          filterControl=(component "wrapper-element" id="test123")
+        }}
+      `);
+      assert.dom('#test123').exists();
+    });
+  });
 });
