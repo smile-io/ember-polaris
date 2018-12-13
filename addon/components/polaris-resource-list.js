@@ -275,6 +275,22 @@ export default Component.extend(
       return guidFor(this);
     }).readOnly(),
 
+    /**
+     * List of item/id tuples needed for rendering items
+     */
+    itemsWithId: computed('items.[]', 'idForItem', function() {
+      let { items, idForItem } = this.getProperties('items', 'idForItem');
+      items = items || [];
+      idForItem = idForItem || defaultIdForItem;
+
+      return items.map((item, index) => {
+        return {
+          item,
+          id: idForItem(item, index),
+        };
+      });
+    }).readOnly(),
+
     needsHeader: computed('selectable', 'sortOptions.length', function() {
       let { selectable, sortOptions } = this.getProperties(
         'selectable',

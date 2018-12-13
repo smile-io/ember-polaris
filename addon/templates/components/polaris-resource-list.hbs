@@ -122,12 +122,13 @@
           <div class="Polaris-ResourceList__LoadingOverlay"></div>
         {{/if}}
 
-        {{#each items as |item|}}
+        {{#each itemsWithId as |itemWithId|}}
           <li
             class="Polaris-ResourceList__ItemWrapper"
+            data-test-item-id={{itemWithId.id}}
             tabIndex={{if loading -1 0}}
           >
-            {{component itemComponent item=item}}
+            {{component itemComponent item=itemWithId.item id=itemWithId.id}}
           </li>
         {{/each}}
       </ul>

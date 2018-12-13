@@ -36,6 +36,10 @@ const sortOptions = [
   },
 ];
 
+function idForItem(item) {
+  return JSON.stringify(item);
+}
+
 const ShallowItemComponent = Component.extend({
   tagName: '',
   layout: hbs`{{item}}`,
@@ -74,6 +78,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       promotedBulkActions,
       bulkActions,
       sortOptions,
+      idForItem,
     });
 
     this.owner.register(
@@ -310,4 +315,33 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       });
     }
   );
+
+  module('idForItem()', function() {
+    test('generates a key using the index if there’s no idForItem prop and no ID in data', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=itemsNoID itemComponent="shallow-item-component"}}
+      `);
+      assert.dom('li:first-of-type').hasAttribute('data-test-item-id', '0');
+    });
+
+    test('generates a key using the ID if there’s no idForItem prop but there and ID key in the data', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=itemsWithID itemComponent="shallow-item-component"}}
+      `);
+      assert.dom('li:first-of-type').hasAttribute('data-test-item-id', '5');
+    });
+
+    test('generates a key using the idForItem prop callback when one is provided', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          idForItem=(action idForItem)
+          items=itemsWithID
+          itemComponent="shallow-item-component"
+        }}
+      `);
+      assert
+        .dom('li:first-of-type')
+        .hasAttribute('data-test-item-id', idForItem(itemsWithID[0]));
+    });
+  });
 });
