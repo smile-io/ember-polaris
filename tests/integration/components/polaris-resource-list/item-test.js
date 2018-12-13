@@ -17,6 +17,7 @@ const mockDefaultContext = {
 const itemId = 'itemId';
 const selectedItemId = 'selectedId';
 const accessibilityLabel = 'link anchor aria-label';
+const shortcutActions = [{ text: 'actions', onAction: () => {} }];
 
 function getMockSelectableContext(testContext) {
   return {
@@ -54,6 +55,8 @@ function getMockLoadingContext(testContext) {
 
 const url = '#test-link';
 const ariaLabel = 'View Item';
+const mediaSelector = '[data-test-id="media"]';
+const shorcutActionsSelector = '.Polaris-ResourceList-Item__Actions';
 
 module('Integration | Component | polaris-resource-list/item', function(hooks) {
   setupRenderingTest(hooks);
@@ -316,19 +319,126 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
           .hasAttribute('data-test-checkbox-input-checked');
       });
 
-      test("renders a disabled checked Checkbox if 'loading' context is true", async function(assert) {
+      test('renders a disabled checked Checkbox if `loading` context is true', async function(assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockLoadingContext}}
             {{polaris-resource-list/item
-              itemId=selectedItemId
+              id=selectedItemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
         `);
+
         assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
       });
     }
   );
 
-  // TODO: add media and shortcutActions tests
+  module(
+    'media',
+    {
+      beforeEach() {
+        this.setProperties({ itemId, selectedItemId, url });
+      },
+    },
+    function() {
+      test('does not include media if not provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              itemId=itemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom('[data-test-id="media"]').doesNotExist();
+      });
+
+      test('includes an avatar if one is provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              itemId=itemId
+              url=url
+              media=(component "polaris-avatar")
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(`${mediaSelector} > .Polaris-Avatar`).exists();
+      });
+
+      test('includes a thumbnail if one is provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              itemId=itemId
+              url=url
+              media=(component "polaris-thumbnail")
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(`${mediaSelector} > .Polaris-Thumbnail`).exists();
+      });
+    }
+  );
+
+  module(
+    'shortcutActions',
+    {
+      beforeEach() {
+        this.setProperties({ itemId, url, shortcutActions });
+      },
+    },
+    function() {
+      test('does not render shortcut actions if none are provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              itemId=itemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(shorcutActionsSelector).doesNotExist();
+      });
+
+      test('renders shortcut actions when some are provided', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              itemId=itemId
+              url=url
+              shortcutActions=shortcutActions
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom(shorcutActionsSelector).exists();
+      });
+
+      test('renders persistent shortcut actions if `persistActions` is true', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockDefaultContext}}
+            {{polaris-resource-list/item
+              persistActions=true
+              itemId=itemId
+              url=url
+              shortcutActions=shortcutActions
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        // Checking the 'Disclosure' class here because the react implementation
+        // tests for ButtonGroup in this case, but our implementation has a
+        // ButtonGroup rendered either way, whereas the 'Disclosure' class only
+        // gets applied if `persisActions` is `true` so its more accurate to
+        // check the class.
+        assert.dom('.Polaris-ResourceList-Item__Disclosure').exists();
+      });
+    }
+  );
 });
