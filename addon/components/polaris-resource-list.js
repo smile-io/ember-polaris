@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { computed, get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { gt } from '@ember/object/computed';
@@ -184,16 +183,6 @@ export default Component.extend(
     itemComponent: null,
 
     /**
-     * Callback when sort option is changed
-     *
-     * @property onSortChange
-     * @type {Function}
-     * @default noop
-     * @public
-     */
-    onSortChange() {},
-
-    /**
      * Callback when selection is changed
      *
      * @property onSelectionChange
@@ -212,6 +201,16 @@ export default Component.extend(
      * @public
      */
     idForItem: null,
+
+    /**
+     * Callback when sort option is changed
+     *
+     * @property onSortChange
+     * @type {Function}
+     * @default noop
+     * @public
+     */
+    onSortChange() {},
 
     /**
      * @property selectMode
@@ -714,16 +713,6 @@ export default Component.extend(
       });
     },
 
-    didInsertElement() {
-      this._super(...arguments);
-
-      this.addEventListener(window, 'resize', this.handleResize);
-
-      if (this.get('loading')) {
-        this.setLoadingPosition();
-      }
-    },
-
     didReceiveAttrs() {
       this._super(...arguments);
 
@@ -763,6 +752,16 @@ export default Component.extend(
         previousSelectedItems: selectedItems,
         previousLoading: loading,
       });
+    },
+
+    didInsertElement() {
+      this._super(...arguments);
+
+      this.addEventListener(window, 'resize', this.handleResize);
+
+      if (this.get('loading')) {
+        this.setLoadingPosition();
+      }
     },
 
     didRender() {

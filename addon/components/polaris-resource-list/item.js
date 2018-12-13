@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { computed, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
