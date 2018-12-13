@@ -4,6 +4,7 @@ import { render } from '@ember/test-helpers';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
+import BulkActionsComponent from '@smile-io/ember-polaris/components/polaris-resource-list/bulk-actions';
 
 const itemsNoID = [{ url: 'item 1' }, { url: 'item 2' }];
 const singleItemNoID = [{ url: 'item 1' }];
@@ -138,4 +139,50 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-bulk-actions]').exists();
     });
   });
+
+  module(
+    'hasMoreItems',
+    {
+      beforeEach() {
+        let testContext = this;
+        this.owner.register(
+          'component:polaris-resource-list/bulk-actions',
+          BulkActionsComponent.extend({
+            didReceiveAttrs() {
+              this._super(...arguments);
+
+              testContext.set(
+                'paginatedSelectAllAction',
+                this.get('paginatedSelectAllAction')
+              );
+            },
+          })
+        );
+      },
+    },
+    function() {
+      test('does not add a prop of paginatedSelectAllAction to BulkActions if omitted', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=itemsNoID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+        }}
+      `);
+        assert.notOk(this.get('paginatedSelectAllAction'));
+      });
+
+      test('adds a prop of paginatedSelectAllAction to BulkActions if included', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=itemsNoID
+          hasMoreItems=true
+          itemComponent="item-component"
+          bulkActions=bulkActions
+        }}
+      `);
+        assert.ok(this.get('paginatedSelectAllAction'));
+      });
+    }
+  );
 });
