@@ -1,7 +1,7 @@
 {{#if url}}
   {{polaris-unstyled-link
     class="Polaris-ResourceList-Item__Link"
-    ariaDescribedBy=id
+    ariaDescribedBy=itemId
     ariaLabel=accessibilityLabel
     url=url
     focusIn=(action handleAnchorFocus)
@@ -23,7 +23,7 @@
 <div
   data-test-id="item-content"
   class="Polaris-ResourceList-Item__Container"
-  id={{id}}
+  id={{itemId}}
 >
   {{#if (or media selectable)}}
     <div class="Polaris-ResourceList-Item__Owned">

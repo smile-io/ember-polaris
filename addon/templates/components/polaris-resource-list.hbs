@@ -128,7 +128,7 @@
             data-test-item-id={{itemWithId.id}}
             tabIndex={{if loading -1 0}}
           >
-            {{component itemComponent item=itemWithId.item id=itemWithId.id}}
+            {{component itemComponent item=itemWithId.item itemId=itemWithId.id}}
           </li>
         {{/each}}
       </ul>

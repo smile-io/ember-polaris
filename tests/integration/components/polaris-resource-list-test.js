@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
@@ -55,8 +55,9 @@ const ItemComponent = Component.extend({
     {{#polaris-resource-list/item
       url=item.url
       accessibilityLabel=accessibilityLabel
+      itemId=itemId
     }}
-      <div>Item {{id}}</div>
+      <div>Item {{itemId}}</div>
       <div>{{item.title}}</div>
     {{/polaris-resource-list/item}}
   `,
@@ -342,6 +343,24 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert
         .dom('li:first-of-type')
         .hasAttribute('data-test-item-id', idForItem(itemsWithID[0]));
+    });
+  });
+
+  module('onSelectionChange()', function() {
+    test('calls onSelectionChange() when an item is clicked', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          selectedItems=(array)
+          promotedBulkActions=promotedBulkActions
+          itemComponent="item-component"
+          onSelectionChange=(action (mut wasOnSelectionChangeCalled) true)
+        }}
+      `);
+      await click(
+        '.Polaris-ResourceList-Item:first-of-type [data-test-id="larger-selection-area"]'
+      );
+      assert.ok(this.get('wasOnSelectionChangeCalled'));
     });
   });
 });
