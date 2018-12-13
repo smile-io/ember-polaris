@@ -74,7 +74,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         {{#polaris-resource-list/provider value=mockDefaultContext}}
           {{polaris-resource-list/item
             accessibilityLabel=accessibilityLabel
-            id=itemId
+            itemId=itemId
             url="https://shopify.com"
           }}
         {{/polaris-resource-list/provider}}
@@ -98,7 +98,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id="itemId"
+              itemId="itemId"
               accessibilityLabel=ariaLabel
               onClick=(action (mut dummy))
             }}
@@ -112,7 +112,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id="itemId"
+              itemId="itemId"
               url=url
               accessibilityLabel=ariaLabel
             }}
@@ -126,7 +126,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id="itemId"
+              itemId="itemId"
               url=url
               accessibilityLabel=ariaLabel
             }}
@@ -140,7 +140,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id="itemId"
+              itemId="itemId"
               url=url
               accessibilityLabel=ariaLabel
             }}
@@ -154,13 +154,13 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
     }
   );
 
-  module('id', function() {
+  module('itemId', function() {
     test('is used on the content node and for the description of a link', async function(assert) {
       this.setProperties({ itemId, ariaLabel });
       await render(hbs`
         {{#polaris-resource-list/provider value=mockDefaultContext}}
           {{polaris-resource-list/item
-            id=itemId
+            itemId=itemId
             url="https://shopify.com"
             accessibilityLabel=ariaLabel
           }}
@@ -186,7 +186,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               accessibilityLabel=ariaLabel
               onClick=(action (mut passedItemId))
             }}
@@ -201,7 +201,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
               accessibilityLabel=ariaLabel
               onClick=(action (mut passedItemId))
@@ -227,7 +227,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               onClick=(action (mut wasOnClickCalled) true)
             }}
           {{/polaris-resource-list/provider}}
@@ -241,7 +241,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
@@ -268,7 +268,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectModeContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               accessibilityLabel=ariaLabel
               onClick=(action (mut wasOnClickCalled) true)
             }}
@@ -287,7 +287,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
               accessibilityLabel=ariaLabel
               onClick=(action (mut dummy))
@@ -306,7 +306,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
-              id=selectedItemId
+              itemId=selectedItemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
@@ -320,7 +320,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockLoadingContext}}
             {{polaris-resource-list/item
-              id=selectedItemId
+              itemId=selectedItemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
