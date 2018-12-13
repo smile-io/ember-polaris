@@ -432,4 +432,35 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('#test123').exists();
     });
   });
+
+  module('emptySearchResult', function() {
+    test('renders when filterControl exists and items is empty', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=(array)
+          itemComponent="shallow-item-component"
+          filterControl="wrapper-element"
+        }}
+      `);
+      assert.dom('.Polaris-EmptySearchResult').exists();
+    });
+
+    test('does not render when filterControl does not exist', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=(array) itemComponent="shallow-item-component"}}
+      `);
+      assert.dom('.Polaris-EmptySearchResult').doesNotExist();
+    });
+
+    test('does not render when items is not empty', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsNoID
+          itemComponent="shallow-item-component"
+          filterControl=(component "wrapper-element" id="test123")
+        }}
+      `);
+      assert.dom('.Polaris-EmptySearchResult').doesNotExist();
+    });
+  });
 });

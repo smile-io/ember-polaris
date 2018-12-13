@@ -705,15 +705,19 @@ export default Component.extend(
       this.set('listNode', listNode);
     },
 
-    didInsertElement() {
+    init() {
       this._super(...arguments);
-
-      this.addEventListener(window, 'resize', this.handleResize);
 
       this.set('defaultResourceName', {
         singular: 'item',
         plural: 'items',
       });
+    },
+
+    didInsertElement() {
+      this._super(...arguments);
+
+      this.addEventListener(window, 'resize', this.handleResize);
 
       if (this.get('loading')) {
         this.setLoadingPosition();
