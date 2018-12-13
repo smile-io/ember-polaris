@@ -1,10 +1,11 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render, click, find, triggerEvent } from '@ember/test-helpers';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import BulkActionsComponent from '@smile-io/ember-polaris/components/polaris-resource-list/bulk-actions';
+import SelectComponent from '@smile-io/ember-polaris/components/polaris-select';
 
 const itemsNoID = [{ url: 'item 1' }, { url: 'item 2' }];
 const singleItemNoID = [{ url: 'item 1' }];
@@ -66,6 +67,24 @@ const ItemComponent = Component.extend({
     return `View details for ${this.get('item.title')}`;
   }).readOnly(),
 });
+
+function setUpAttributeCaptureOnComponent(
+  testContext,
+  componentPath,
+  componentClass,
+  attributeName
+) {
+  testContext.owner.register(
+    `component:${componentPath}`,
+    componentClass.extend({
+      didReceiveAttrs() {
+        this._super(...arguments);
+
+        testContext.set(attributeName, this.get(attributeName));
+      },
+    })
+  );
+}
 
 module('Integration | Component | polaris-resource-list', function(hooks) {
   setupRenderingTest(hooks);
@@ -150,19 +169,11 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     'hasMoreItems',
     {
       beforeEach() {
-        let testContext = this;
-        this.owner.register(
-          'component:polaris-resource-list/bulk-actions',
-          BulkActionsComponent.extend({
-            didReceiveAttrs() {
-              this._super(...arguments);
-
-              testContext.set(
-                'paginatedSelectAllAction',
-                this.get('paginatedSelectAllAction')
-              );
-            },
-          })
+        setUpAttributeCaptureOnComponent(
+          this,
+          'polaris-resource-list/bulk-actions',
+          BulkActionsComponent,
+          'paginatedSelectAllAction'
         );
       },
     },
@@ -252,19 +263,11 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     'bulkActionsAccessibilityLabel',
     {
       beforeEach() {
-        let testContext = this;
-        this.owner.register(
-          'component:polaris-resource-list/bulk-actions',
-          BulkActionsComponent.extend({
-            didReceiveAttrs() {
-              this._super(...arguments);
-
-              testContext.set(
-                'accessibilityLabel',
-                this.get('accessibilityLabel')
-              );
-            },
-          })
+        setUpAttributeCaptureOnComponent(
+          this,
+          'polaris-resource-list/bulk-actions',
+          BulkActionsComponent,
+          'accessibilityLabel'
         );
       },
     },
@@ -461,6 +464,96 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         }}
       `);
       assert.dom('.Polaris-EmptySearchResult').doesNotExist();
+    });
+  });
+
+  module('Sorting', function() {
+    test('does not render a sort select if sortOptions aren’t provided', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
+      `);
+      assert.dom('.Polaris-Select').doesNotExist();
+    });
+
+    test('renders a sort select if sortOptions are provided', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          sortOptions=sortOptions
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('.Polaris-Select').exists();
+    });
+
+    module(
+      'sortOptions',
+      {
+        beforeEach() {
+          setUpAttributeCaptureOnComponent(
+            this,
+            'polaris-select',
+            SelectComponent,
+            'options'
+          );
+        },
+      },
+      function() {
+        test('passes a sortOptions to the Select options', async function(assert) {
+          await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            sortOptions=sortOptions
+            itemComponent="item-component"
+          }}
+        `);
+          assert.deepEqual(this.get('options'), sortOptions);
+        });
+      }
+    );
+
+    module(
+      'sortValue',
+      {
+        beforeEach() {
+          setUpAttributeCaptureOnComponent(
+            this,
+            'polaris-select',
+            SelectComponent,
+            'value'
+          );
+        },
+      },
+      function() {
+        test('passes a sortValue to the Select value', async function(assert) {
+          await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            sortOptions=sortOptions
+            sortValue="sortValue"
+            onSortChange=(action (mut dummy))
+            itemComponent="item-component"
+          }}
+        `);
+          assert.equal(this.get('value'), 'sortValue');
+        });
+      }
+    );
+
+    module('onSortChange', function() {
+      test('calls onSortChange when the Sort Select changes', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            onSortChange=(action (mut sortChangeParam))
+            sortOptions=sortOptions
+            itemComponent="item-component"
+          }}
+        `);
+        find('.Polaris-Select select').value = 'PRODUCT_TITLE_DESC';
+        await triggerEvent('.Polaris-Select select', 'change');
+        assert.equal(this.get('sortChangeParam'), 'PRODUCT_TITLE_DESC');
+      });
     });
   });
 });
