@@ -1,5 +1,5 @@
 {{#polaris-resource-list/provider value=context}}
-  <div class="Polaris-ResourceList__ResourceListWrapper">
+  <div class="Polaris-ResourceList__ResourceListWrapper" id={{wrapperId}}>
     {{#if filterControl}}
       <div class="Polaris-ResourceList__FiltersWrapper">
         {{render-content filterControl}}
@@ -90,7 +90,7 @@
                   promotedActions=promotedBulkActions
                   paginatedSelectAllAction=paginatedSelectAllAction
                   paginatedSelectAllText=paginatedSelectAllText
-                  actions=bulkActions
+                  actionsCollection=bulkActions
                   disabled=loading
                 }}
               </div>
@@ -122,12 +122,13 @@
           <div class="Polaris-ResourceList__LoadingOverlay"></div>
         {{/if}}
 
-        {{#each items as |item|}}
+        {{#each itemsWithId as |itemWithId|}}
           <li
             class="Polaris-ResourceList__ItemWrapper"
+            data-test-item-id={{itemWithId.id}}
             tabIndex={{if loading -1 0}}
           >
-            {{component itemComponent item=item}}
+            {{component itemComponent item=itemWithId.item itemId=itemWithId.id}}
           </li>
         {{/each}}
       </ul>

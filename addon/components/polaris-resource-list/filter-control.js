@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
 import { computed, get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
