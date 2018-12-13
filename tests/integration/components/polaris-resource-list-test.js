@@ -363,4 +363,60 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.ok(this.get('wasOnSelectionChangeCalled'));
     });
   });
+
+  module('header markup', function() {
+    test('renders header markup if the list isn’t selectable but the showHeader prop is true', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list showHeader=true items=itemsWithID itemComponent="item-component"}}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').exists();
+    });
+
+    test('does not render when items is empty', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=(array) itemComponent="item-component"}}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
+    });
+
+    test('renders when sort options are given', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          sortOptions=sortOptions
+          items=itemsWithID
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').exists();
+    });
+
+    test('renders when bulkActions are given', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          bulkActions=bulkActions
+          items=itemsWithID
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').exists();
+    });
+
+    test('renders when promotedBulkActions are given', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          promotedBulkActions=promotedBulkActions
+          items=itemsWithID
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').exists();
+    });
+
+    test('does not render when sort options, bulkActions and promotedBulkActions are not given', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
+    });
+  });
 });

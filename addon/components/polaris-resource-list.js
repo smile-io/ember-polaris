@@ -188,10 +188,10 @@ export default Component.extend(
      *
      * @property onSortChange
      * @type {Function}
-     * @default null
+     * @default noop
      * @public
      */
-    onSortChange: null,
+    onSortChange() {},
 
     /**
      * Callback when selection is changed
