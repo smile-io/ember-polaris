@@ -318,6 +318,19 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
           .dom('[data-test-checkbox-input]')
           .hasAttribute('data-test-checkbox-input-checked');
       });
+
+      test('renders a disabled checked Checkbox if `loading` context is true', async function(assert) {
+        await render(hbs`
+          {{#polaris-resource-list/provider value=mockLoadingContext}}
+            {{polaris-resource-list/item
+              id=selectedItemId
+              url=url
+            }}
+          {{/polaris-resource-list/provider}}
+        `);
+
+        assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
+      });
     }
   );
 
@@ -340,19 +353,6 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         `);
 
         assert.dom('[data-test-id="media"]').doesNotExist();
-      });
-
-      test('renders a disabled checked Checkbox if `loading` context is true', async function(assert) {
-        await render(hbs`
-          {{#polaris-resource-list/provider value=mockLoadingContext}}
-            {{polaris-resource-list/item
-              itemId=selectedItemId
-              url=url
-            }}
-          {{/polaris-resource-list/provider}}
-        `);
-
-        assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
       });
 
       test('includes an avatar if one is provided', async function(assert) {
@@ -432,6 +432,11 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
           {{/polaris-resource-list/provider}}
         `);
 
+        // Checking the 'Disclosure' class here because the react implementation
+        // tests for ButtonGroup in this case, but our implementation has a
+        // ButtonGroup rendered either way, whereas the 'Disclosure' class only
+        // gets applied if `persisActions` is `true` so its more accurate to
+        // check the class.
         assert.dom('.Polaris-ResourceList-Item__Disclosure').exists();
       });
     }
