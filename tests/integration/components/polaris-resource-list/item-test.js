@@ -333,7 +333,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
@@ -359,7 +359,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
               media=(component "polaris-avatar")
             }}
@@ -373,7 +373,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
               media=(component "polaris-thumbnail")
             }}
@@ -397,7 +397,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
             }}
           {{/polaris-resource-list/provider}}
@@ -410,7 +410,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
-              id=itemId
+              itemId=itemId
               url=url
               shortcutActions=shortcutActions
             }}
@@ -425,7 +425,7 @@ module('Integration | Component | polaris-resource-list/item', function(hooks) {
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               persistActions=true
-              id=itemId
+              itemId=itemId
               url=url
               shortcutActions=shortcutActions
             }}
