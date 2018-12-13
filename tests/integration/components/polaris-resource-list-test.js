@@ -185,4 +185,60 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       });
     }
   );
+
+  module('resourceName', function() {
+    module('resoureName.singular', function() {
+      test('renders default singular resource name when resourceName isn’t provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            showHeader=true
+            items=singleItemNoID
+            itemComponent="item-component"
+          }}
+        `);
+        assert
+          .dom('[data-test-id="item-count-text-wrapper"]')
+          .hasText('Showing 1 item');
+      });
+
+      test('renders the given singular resource name when resourceName is provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=singleItemNoID
+            itemComponent="item-component"
+            resourceName=(hash singular="product" plural="products")
+            showHeader=true
+          }}
+        `);
+        assert
+          .dom('[data-test-id="item-count-text-wrapper"]')
+          .hasText('Showing 1 product');
+      });
+    });
+
+    module('resoureName.plural', function() {
+      test('renders default plural resource name when resourceName isn’t provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list items=itemsNoID itemComponent="item-component" showHeader=true}}
+        `);
+        assert
+          .dom('[data-test-id="item-count-text-wrapper"]')
+          .hasText('Showing 2 items');
+      });
+
+      test('renders the given plural resource name when resourceName is provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=itemsNoID
+            itemComponent="item-component"
+            resourceName=(hash singular="product" plural="products")
+            showHeader=true
+          }}
+        `);
+        assert
+          .dom('[data-test-id="item-count-text-wrapper"]')
+          .hasText('Showing 2 products');
+      });
+    });
+  });
 });
