@@ -556,4 +556,21 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       });
     });
   });
+
+  module('loading', function() {
+    test('renders a spinner', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          sortOptions=sortOptions
+          itemComponent="item-component"
+          loading=true
+        }}
+      `);
+
+      // Checking for spinner container here because currently
+      // our tests can't render SVGs so the spinner doesn't appear.
+      assert.dom('.Polaris-ResourceList__SpinnerContainer').exists();
+    });
+  });
 });
