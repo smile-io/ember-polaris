@@ -1,5 +1,5 @@
 {{#polaris-resource-list/provider value=context}}
-  <div class="Polaris-ResourceList__ResourceListWrapper">
+  <div class="Polaris-ResourceList__ResourceListWrapper" id={{wrapperId}}>
     {{#if filterControl}}
       <div class="Polaris-ResourceList__FiltersWrapper">
         {{render-content filterControl}}
@@ -90,7 +90,7 @@
                   promotedActions=promotedBulkActions
                   paginatedSelectAllAction=paginatedSelectAllAction
                   paginatedSelectAllText=paginatedSelectAllText
-                  actions=bulkActions
+                  actionsCollection=bulkActions
                   disabled=loading
                 }}
               </div>

@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed, get } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { gt } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { assert } from '@ember/debug';
@@ -267,6 +268,21 @@ export default Component.extend(
 
     selectId: computedIdVariation('id', 'Select').readOnly(),
 
+    /**
+     * ID used to identify our wrapper element from other instances
+     */
+    wrapperId: computed(function() {
+      return guidFor(this);
+    }).readOnly(),
+
+    needsHeader: computed('selectable', 'sortOptions.length', function() {
+      let { selectable, sortOptions } = this.getProperties(
+        'selectable',
+        'sortOptions'
+      );
+      return selectable || (sortOptions && sortOptions.length > 0);
+    }).readOnly(),
+
     selectable: computed(
       'promotedBulkActions.length',
       'bulkActions.length',
@@ -311,10 +327,11 @@ export default Component.extend(
       'resourceName.{singular,plural}',
       'items.length',
       function() {
-        let {
-          resourceName = this.get('defaultResourceName'),
-          items,
-        } = this.getProperties('resourceName', 'items');
+        let { resourceName, items } = this.getProperties(
+          'resourceName',
+          'items'
+        );
+        resourceName = resourceName || this.get('defaultResourceName');
 
         let itemsCount = items.length;
         let resource =
@@ -330,10 +347,11 @@ export default Component.extend(
       'selectedItems.length',
       'items.length',
       function() {
-        let { selectedItems = [], items } = this.getProperties(
+        let { selectedItems, items } = this.getProperties(
           'selectedItems',
           'items'
         );
+        selectedItems = selectedItems || [];
 
         let selectedItemsCount =
           selectedItems === SELECT_ALL_ITEMS
@@ -349,11 +367,13 @@ export default Component.extend(
       'selectedItems.length',
       'items.length',
       function() {
-        let {
-          resourceName = this.get('defaultResourceName'),
-          selectedItems = [],
-          items,
-        } = this.getProperties('resourceName', 'selectedItems', 'items');
+        let { resourceName, selectedItems, items } = this.getProperties(
+          'resourceName',
+          'selectedItems',
+          'items'
+        );
+        resourceName = resourceName || this.get('defaultResourceName');
+        selectedItems = selectedItems || [];
 
         let selectedItemsCount = selectedItems.length;
         let totalItemsCount = items.length;
@@ -364,9 +384,9 @@ export default Component.extend(
         } else if (totalItemsCount === 1) {
           return `Select ${get(resourceName, 'singular')}`;
         } else if (allSelected) {
-          return `Deselect all ${itemsLength} ${get(resourceName, 'plural')}`;
+          return `Deselect all ${items.length} ${get(resourceName, 'plural')}`;
         } else {
-          return `Select all ${itemsLength} ${get(resourceName, 'plural')}`;
+          return `Select all ${items.length} ${get(resourceName, 'plural')}`;
         }
       }
     ).readOnly(),
@@ -381,13 +401,14 @@ export default Component.extend(
           hasMoreItems,
           selectedItems,
           items,
-          resourceName = this.get('defaultResourceName'),
+          resourceName,
         } = this.getProperties(
           'hasMoreItems',
           'selectedItems',
           'items',
           'resourceName'
         );
+        resourceName = resourceName || this.get('defaultResourceName');
 
         if (!this.get('selectable') || !hasMoreItems) {
           return;
@@ -412,13 +433,14 @@ export default Component.extend(
           hasMoreItems,
           selectedItems,
           items,
-          resourceName = this.get('defaultResourceName'),
+          resourceName,
         } = this.getProperties(
           'hasMoreItems',
           'selectedItems',
           'items',
           'resourceName'
         );
+        resourceName = resourceName || this.get('defaultResourceName');
 
         if (!this.get('selectable') || !hasMoreItems) {
           return;
@@ -476,7 +498,7 @@ export default Component.extend(
       function() {
         let {
           selectedItems,
-          resourceName = this.get('defaultResourceName'),
+          resourceName,
           loading,
           selectMode,
           selectable,
@@ -487,6 +509,7 @@ export default Component.extend(
           'selectMode',
           'selectable'
         );
+        resourceName = resourceName || this.get('defaultResourceName');
         return {
           selectable,
           selectedItems,
@@ -556,8 +579,9 @@ export default Component.extend(
         onSelectionChange,
         selectedItems,
         items,
-        idForItem = defaultIdForItem,
+        idForItem,
       } = this.getProperties('onSelectionChange', 'selectedItems', 'items');
+      idForItem = idForItem || defaultIdForItem;
 
       let newlySelectedItems =
         selectedItems === SELECT_ALL_ITEMS
@@ -574,13 +598,14 @@ export default Component.extend(
         onSelectionChange,
         selectedItems,
         items,
-        idForItem = defaultIdForItem,
+        idForItem,
       } = this.getProperties(
         'onSelectionChange',
         'selectedItems',
         'items',
         'idForItem'
       );
+      idForItem = idForItem || defaultIdForItem;
 
       if (selectedItems == null || onSelectionChange == null) {
         return;
@@ -621,13 +646,14 @@ export default Component.extend(
         onSelectionChange,
         selectedItems,
         items,
-        idForItem = defaultIdForItem,
+        idForItem,
       } = this.getProperties(
         'onSelectionChange',
         'selectedItems',
         'items',
         'idForItem'
       );
+      idForItem = idForItem || defaultIdForItem;
 
       let newlySelectedItems = [];
 
@@ -656,7 +682,10 @@ export default Component.extend(
     },
 
     setListNode() {
-      let listNode = document.querySelector(`#${this.get('id')} ul.Polaris-ResourceList`) || null;
+      let listNode =
+        document.querySelector(
+          `#${this.get('wrapperId')} ul.Polaris-ResourceList`
+        ) || null;
       this.set('listNode', listNode);
     },
 
