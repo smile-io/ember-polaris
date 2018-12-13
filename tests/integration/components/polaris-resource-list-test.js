@@ -241,4 +241,73 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       });
     });
   });
+
+  module(
+    'bulkActionsAccessibilityLabel',
+    {
+      beforeEach() {
+        let testContext = this;
+        this.owner.register(
+          'component:polaris-resource-list/bulk-actions',
+          BulkActionsComponent.extend({
+            didReceiveAttrs() {
+              this._super(...arguments);
+
+              testContext.set(
+                'accessibilityLabel',
+                this.get('accessibilityLabel')
+              );
+            },
+          })
+        );
+      },
+    },
+    function() {
+      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it isn’t selected', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=singleItemWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+        }}
+      `);
+        assert.equal(this.get('accessibilityLabel'), 'Select item');
+      });
+
+      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it is selected ', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=singleItemWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+          selectedItems=(array "1")
+        }}
+      `);
+        assert.equal(this.get('accessibilityLabel'), 'Deselect item');
+      });
+
+      test('provides the BulkActions with the right accessibilityLabel if there’s multiple items and they are all selected', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+          selectedItems=(array "5" "6" "7")
+        }}
+      `);
+        assert.equal(this.get('accessibilityLabel'), 'Deselect all 3 items');
+      });
+
+      test('provides the BulkActions with the right accessibilityLabel if there’s multiple items and some or none are selected', async function(assert) {
+        await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+        }}
+      `);
+        assert.equal(this.get('accessibilityLabel'), 'Select all 3 items');
+      });
+    }
+  );
 });
