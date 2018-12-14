@@ -23,7 +23,7 @@
           placeholder="Select a filter..."
           label=selectLabel
           options=filterOptions
-          value=selectedFilter.key
+          value=(or selectedFilter.key "")
           onChange=(action handleFilterKeyChange)
         }}
 
