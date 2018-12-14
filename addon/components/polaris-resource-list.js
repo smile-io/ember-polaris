@@ -251,7 +251,7 @@ export default Component.extend(
      * @type {Boolean}
      * @private
      */
-    previousLoading: null,
+    previousLoading: false,
 
     /**
      * Internal property used to recreate React implementation's
@@ -544,6 +544,14 @@ export default Component.extend(
     },
 
     debouncedHandleResize() {
+      // In the React implementation, the resize event listener
+      // is only rendered when `selectable` is truthy. We handle
+      // that by bombing out of this handler when that condition
+      // is met rather than dynamically managing event listeners.
+      if (!this.get('selectable')) {
+        return;
+      }
+
       let { selectedItems, selectMode } = this.getProperties(
         'selectedItems',
         'selectMode'
@@ -595,7 +603,12 @@ export default Component.extend(
         selectedItems,
         items,
         idForItem,
-      } = this.getProperties('onSelectionChange', 'selectedItems', 'items');
+      } = this.getProperties(
+        'onSelectionChange',
+        'selectedItems',
+        'items',
+        'idForItem'
+      );
       idForItem = idForItem || defaultIdForItem;
 
       let newlySelectedItems =
@@ -768,13 +781,13 @@ export default Component.extend(
       this._super(...arguments);
 
       /*
-     * The React implementation currently caches `listNode` on first render,
-     * which leads to some buggy behaviour around whether the header gets
-     * rendered or not (see https://github.com/Shopify/polaris-react/issues/735).
-     * This is how I've chosen to fix the issue here, but we'll keep an eye
-     * on if/how the React implementation chooses to fix it and can maybe update
-     * to match their fix later if it seems better in some way.
-     */
+       * The React implementation currently caches `listNode` on first render,
+       * which leads to some buggy behaviour around whether the header gets
+       * rendered or not (see https://github.com/Shopify/polaris-react/issues/735).
+       * This is how I've chosen to fix the issue here, but we'll keep an eye
+       * on if/how the React implementation chooses to fix it and can maybe update
+       * to match their fix later if it seems better in some way.
+       */
       this.setListNode();
     },
   }
