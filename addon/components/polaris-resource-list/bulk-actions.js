@@ -66,7 +66,6 @@ export default Component.extend(
     /**
      * List of actions
      *
-     *
      * @type {Object[]}
      * @default null
      * @property actionsCollection
@@ -123,6 +122,8 @@ export default Component.extend(
      * @public
      */
     onToggleAll() {},
+
+    'data-test-bulk-actions': true,
 
     containerWidth: 0,
 

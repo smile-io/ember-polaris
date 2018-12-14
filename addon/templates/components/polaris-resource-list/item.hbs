@@ -1,7 +1,7 @@
 {{#if url}}
   {{polaris-unstyled-link
     class="Polaris-ResourceList-Item__Link"
-    ariaDescribedBy=id
+    ariaDescribedBy=itemId
     ariaLabel=accessibilityLabel
     url=url
     focusIn=(action handleAnchorFocus)
@@ -23,7 +23,7 @@
 <div
   data-test-id="item-content"
   class="Polaris-ResourceList-Item__Container"
-  id={{id}}
+  id={{itemId}}
 >
   {{#if (or media selectable)}}
     <div class="Polaris-ResourceList-Item__Owned">
@@ -59,9 +59,13 @@
     </div>
   {{/if}}
 
-  {{#if children}}
+  {{#if (or hasBlock children)}}
     <div class="Polaris-ResourceList-Item__Content">
-      {{render-content children}}
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{render-content children}}
+      {{/if}}
     </div>
   {{/if}}
 
@@ -76,7 +80,7 @@
         data-test-id=(unless persistActions "shortcut-actions")
         as |buttonGroup|
       }}
-        {{#each shortcutActions as shortcutAction}}
+        {{#each shortcutActions as |shortcutAction|}}
           {{#buttonGroup.item}}
             {{polaris-button
               size="slim"
@@ -88,7 +92,9 @@
               destructive=shortcutAction.destructive
               icon=shortcutAction.icon
               loading=shortcutAction.loading
-              onClick=(action shortcutAction.onAction)
+              onClick=(action
+                (or shortcutAction.onAction (action (mut dummy)))
+              )
             }}
           {{/buttonGroup.item}}
         {{/each}}

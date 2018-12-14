@@ -1,13 +1,12 @@
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import layout from '../../templates/components/polaris-resource-list/item';
+import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
+import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
-const SELECT_ALL_ITEMS = 'All';
-
-export default Component.extend({
+export default Component.extend(context.ConsumerMixin, {
   classNames: ['Polaris-ResourceList-Item'],
   classNameBindings: [
     'focused:Polaris-ResourceList-Item--focused',
@@ -23,14 +22,12 @@ export default Component.extend({
   /**
    * Unique identifier for the item
    *
-   * @property id
+   * @property itemId
    * @type {String}
    * @default null
    * @public
    */
-  id: null,
-
-  context: service('polaris-resource-list/context'),
+  itemId: null,
 
   /**
    * Visually hidden text for screen readers
@@ -134,14 +131,17 @@ export default Component.extend({
   selectMode: readOnly('context.selectMode'),
   loading: readOnly('context.loading'),
 
-  checkboxId: computedIdVariation('id', 'ResourceListItemCheckbox').readOnly(),
+  checkboxId: computedIdVariation(
+    'itemId',
+    'ResourceListItemCheckbox'
+  ).readOnly(),
 
-  isSelected: computed('id', 'context.selectedItems', function() {
-    let { id, context } = this.getProperties('id', 'context');
-    let selectedItems = context.get('selectedItems');
+  isSelected: computed('itemId', 'context.selectedItems', function() {
+    let { itemId, context } = this.getProperties('itemId', 'context');
+    let selectedItems = get(context, 'selectedItems');
     return (
       selectedItems &&
-      ((Array.isArray(selectedItems) && selectedItems.includes(id)) ||
+      ((Array.isArray(selectedItems) && selectedItems.includes(itemId)) ||
         selectedItems === SELECT_ALL_ITEMS)
     );
   }).readOnly(),
@@ -201,21 +201,21 @@ export default Component.extend({
   },
 
   handleSelection(value) {
-    let { id, context } = this.getProperties('id', 'context');
-    let onSelectionChange = context.get('onSelectionChange');
-    if (id == null || onSelectionChange == null) {
+    let { itemId, context } = this.getProperties('itemId', 'context');
+    let onSelectionChange = get(context, 'onSelectionChange');
+    if (itemId == null || onSelectionChange == null) {
       return;
     }
     this.setProperties({
       focused: true,
       focusedInner: true,
     });
-    onSelectionChange(value, id);
+    onSelectionChange(value, itemId);
   },
 
   handleClick(event) {
-    let { id, onClick, url, selectMode, element } = this.getProperties(
-      'id',
+    let { itemId, onClick, url, selectMode, element } = this.getProperties(
+      'itemId',
       'onClick',
       'url',
       'selectMode',
@@ -233,7 +233,7 @@ export default Component.extend({
     }
 
     if (onClick) {
-      onClick(id);
+      onClick(itemId);
     }
 
     if (url && anchor) {
