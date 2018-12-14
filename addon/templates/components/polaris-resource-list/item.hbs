@@ -59,9 +59,13 @@
     </div>
   {{/if}}
 
-  {{#if children}}
+  {{#if (or hasBlock children)}}
     <div class="Polaris-ResourceList-Item__Content">
-      {{render-content children}}
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{render-content children}}
+      {{/if}}
     </div>
   {{/if}}
 

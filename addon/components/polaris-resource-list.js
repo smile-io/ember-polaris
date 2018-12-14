@@ -800,7 +800,12 @@ function getAllItemsOnPage(items, idForItem) {
 }
 
 function defaultIdForItem(item, index) {
-  return item.hasOwnProperty('id') ? get(item, 'id') : index.toString();
+  // Not calling `item.hasOwnProperty` directly here because
+  // it blows up if the passed-in item came from the `hash`
+  // helper.
+  return Object.hasOwnProperty.call(item, 'id')
+    ? get(item, 'id')
+    : index.toString();
 }
 
 function isSmallScreen() {

@@ -52,6 +52,7 @@ const CustomMarkupComponent = Component.extend({
 });
 
 const ItemComponent = Component.extend({
+  tagName: '',
   layout: hbs`
     {{#polaris-resource-list/item
       url=item.url
