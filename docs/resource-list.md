@@ -80,3 +80,5 @@ then use that component with `polaris-resource-list` to render items (using [emb
   itemComponent="my-item-component"
 }}
 ```
+
+For additional examples, refer to the source code for the [`resource-list` page](https://github.com/smile-io/ember-polaris/blob/master/tests/dummy/app/templates/resource-list.hbs) and associated [components](https://github.com/smile-io/ember-polaris/blob/master/tests/dummy/app/components/resource-list) in the dummy app.
