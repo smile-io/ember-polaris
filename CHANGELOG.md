@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v2.0.4 (November 28, 2018)
+- [#256](https://github.com/smile-io/ember-polaris/pull/256) [FIX] Move `ember-lifeline` to deps
+
 ### v2.0.3 (November 16, 2018)
 - [#251](https://github.com/smile-io/ember-polaris/pull/251) [ENHANCEMENT] Make `allowRange` on `polaris-date-picker` writeable
 
