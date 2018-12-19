@@ -231,11 +231,10 @@ export default Component.extend(context.ConsumerMixin, {
     let appliedFilterValue = get(appliedFilter, 'value');
 
     if (get(filter, 'type') === FilterType.Select) {
-      let foundFilterOption = get(filter, 'options').find(
-        (option) =>
-          typeof option === 'string'
-            ? option === appliedFilterValue
-            : get(option, 'value') === appliedFilterValue
+      let foundFilterOption = get(filter, 'options').find((option) =>
+        typeof option === 'string'
+          ? option === appliedFilterValue
+          : get(option, 'value') === appliedFilterValue
       );
 
       if (foundFilterOption) {
