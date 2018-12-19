@@ -483,14 +483,20 @@ export default Component.extend(
       return `No ${get(resourceName, 'plural')} found`;
     }).readOnly(),
 
-    showEmptyState: computed('filterControl', 'itemsExist', function() {
-      let { filterControl, itemsExist } = this.getProperties(
-        'filterControl',
-        'itemsExist'
-      );
+    showEmptyState: computed(
+      'filterControl',
+      'itemsExist',
+      'loading',
+      function() {
+        let { filterControl, itemsExist, loading } = this.getProperties(
+          'filterControl',
+          'itemsExist',
+          'loading'
+        );
 
-      return filterControl && !itemsExist;
-    }).readOnly(),
+        return filterControl && !itemsExist && !loading;
+      }
+    ).readOnly(),
 
     spinnerStyle: computed('loadingPosition', function() {
       let loadingPosition = this.get('loadingPosition');
