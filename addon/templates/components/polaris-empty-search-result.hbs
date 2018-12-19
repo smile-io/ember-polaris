@@ -6,12 +6,12 @@
   {{#if withIllustration}}
     {{#stack.item}}
       {{!-- TODO: replace this with polaris-image when implemented. --}}
-      <img
-        src="empty-search.svg"
+      {{svg-jar
+        "empty-search"
         alt="Empty search results"
         class="Polaris-EmptySearchResult__Image"
         draggable="false"
-      >
+      }}
     {{/stack.item}}
   {{/if}}
 
