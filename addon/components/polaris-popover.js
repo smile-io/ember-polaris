@@ -27,7 +27,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -37,7 +37,7 @@ export default Component.extend({
    * The preferred direction to open the popover
    *
    * @property preferredPosition
-   * @type {string}
+   * @type {String}
    * @default 'below'
    * @public
    */
@@ -49,7 +49,7 @@ export default Component.extend({
    * TODO: not implemented
    *
    * @property active
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -61,7 +61,7 @@ export default Component.extend({
    * TODO: not implemented
    *
    * @property activatorWrapper
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -73,7 +73,7 @@ export default Component.extend({
    * TODO: not implemented
    *
    * @property preventAutofocus
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -83,17 +83,27 @@ export default Component.extend({
    * Automatically add wrap content in a section
    *
    * @property sectioned
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
   sectioned: false,
 
   /**
+   * Allow popover to stretch to fit content vertically
+   *
+   * @property fullHeight
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  fullHeight: false,
+
+  /**
    * Callback when popover is closed
    *
    * @property onClose
-   * @type {function}
+   * @type {Function}
    * @default noop
    * @public
    */
