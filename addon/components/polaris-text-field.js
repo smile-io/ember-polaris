@@ -5,8 +5,6 @@ import { bool } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { typeOf } from '@ember/utils';
 import { isPresent } from '@ember/utils';
-import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
-import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getCode } from 'ember-keyboard';
 import layout from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
@@ -20,620 +18,596 @@ const dpl = (num) => (num.toString().split('.')[1] || []).length;
  * Polaris text-field component.
  * See https://polaris.shopify.com/components/forms/text-field
  */
-export default Component.extend(
-  ContextBoundTasksMixin,
-  ContextBoundEventListenersMixin,
-  {
-    tagName: '',
+export default Component.extend({
+  tagName: '',
 
-    layout,
+  layout,
 
-    /**
-     * ID for the input
-     *
-     * @property id
-     * @public
-     * @type {String}
-     * @default null
-     */
-    id: null,
+  /**
+   * ID for the input
+   *
+   * @property id
+   * @public
+   * @type {String}
+   * @default null
+   */
+  id: null,
 
-    /**
-     * Text to display before value
-     *
-     * @property prefix
-     * @public
-     * @type {String|Component}
-     * @default null
-     */
-    prefix: null,
+  /**
+   * Text to display before value
+   *
+   * @property prefix
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  prefix: null,
 
-    /**
-     * Text to display after value
-     *
-     * @property suffix
-     * @public
-     * @type {String|Component}
-     * @default null
-     */
-    suffix: null,
+  /**
+   * Text to display after value
+   *
+   * @property suffix
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  suffix: null,
 
-    /**
-     * Hint text to display
-     *
-     * @property placeholder
-     * @public
-     * @type {String}
-     * @default null
-     */
-    placeholder: null,
+  /**
+   * Hint text to display
+   *
+   * @property placeholder
+   * @public
+   * @type {String}
+   * @default null
+   */
+  placeholder: null,
 
-    /**
-     * Initial value for the input
-     *
-     * @property value
-     * @public
-     * @type {String}
-     * @default null
-     */
-    value: null,
+  /**
+   * Initial value for the input
+   *
+   * @property value
+   * @public
+   * @type {String}
+   * @default null
+   */
+  value: null,
 
-    /**
-     * Additional hint text to display
-     *
-     * @property helpText
-     * @public
-     * @type {String|Component}
-     * @default null
-     */
-    helpText: null,
+  /**
+   * Additional hint text to display
+   *
+   * @property helpText
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  helpText: null,
 
-    /**
-     * Label for the input
-     *
-     * @property label
-     * @public
-     * @type {String}
-     * @default null
-     */
-    label: null,
+  /**
+   * Label for the input
+   *
+   * @property label
+   * @public
+   * @type {String}
+   * @default null
+   */
+  label: null,
 
-    /**
-     * Adds an action to the label
-     *
-     * @property labelAction
-     * @public
-     * @type {Object}
-     * @default null
-     *
-     * Currently supports:
-     * { onAction, text, accessibilityLabel }
-     */
-    labelAction: null,
+  /**
+   * Adds an action to the label
+   *
+   * @property labelAction
+   * @public
+   * @type {Object}
+   * @default null
+   *
+   * Currently supports:
+   * { onAction, text, accessibilityLabel }
+   */
+  labelAction: null,
 
-    /**
-     * Visually hide the label
-     *
-     * @property labelHidden
-     * @public
-     * @type {Boolean}
-     * @default false
-     */
-    labelHidden: false,
+  /**
+   * Visually hide the label
+   *
+   * @property labelHidden
+   * @public
+   * @type {Boolean}
+   * @default false
+   */
+  labelHidden: false,
 
-    /**
-     * Disable the input
-     *
-     * @property disabled
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    disabled: null,
+  /**
+   * Disable the input
+   *
+   * @property disabled
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  disabled: null,
 
-    /**
-     * Disable editing of the input
-     *
-     * @property readOnly
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    readOnly: null,
+  /**
+   * Disable editing of the input
+   *
+   * @property readOnly
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  readOnly: null,
 
-    /**
-     * Automatically focus the input
-     *
-     * @property autoFocus
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    autoFocus: null,
+  /**
+   * Automatically focus the input
+   *
+   * @property autoFocus
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  autoFocus: null,
 
-    /**
-     * Force the focus state on the input
-     *
-     * @property focused
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    focused: null,
+  /**
+   * Force the focus state on the input
+   *
+   * @property focused
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  focused: null,
 
-    /**
-     * Allow for multiple lines of input
-     *
-     * @property multiline
-     * @public
-     * @type {Boolean|Number}
-     * @default null
-     */
-    multiline: null,
+  /**
+   * Allow for multiple lines of input
+   *
+   * @property multiline
+   * @public
+   * @type {Boolean|Number}
+   * @default null
+   */
+  multiline: null,
 
-    /**
-     * Error to display beneath the label
-     *
-     * @property error
-     * @public
-     * @type {String|Component|Boolean|(String|Component)[]}
-     * @default null
-     */
-    error: null,
+  /**
+   * Error to display beneath the label
+   *
+   * @property error
+   * @public
+   * @type {String|Component|Boolean|(String|Component)[]}
+   * @default null
+   */
+  error: null,
 
-    /**
-     * An element connected to the right of the input
-     *
-     * @property connectedRight
-     * @public
-     * @type {String|Component}
-     * @default null
-     */
-    connectedRight: null,
+  /**
+   * An element connected to the right of the input
+   *
+   * @property connectedRight
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  connectedRight: null,
 
-    /**
-     * An element connected to the left of the input
-     *
-     * @property connectedLeft
-     * @public
-     * @type {String|Component}
-     * @default null
-     */
-    connectedLeft: null,
+  /**
+   * An element connected to the left of the input
+   *
+   * @property connectedLeft
+   * @public
+   * @type {String|Component}
+   * @default null
+   */
+  connectedLeft: null,
 
-    /**
-     * Determine type of input
-     *
-     * @property type
-     * @public
-     * @type {String}
-     * @default text
-     */
-    type: 'text',
+  /**
+   * Determine type of input
+   *
+   * @property type
+   * @public
+   * @type {String}
+   * @default text
+   */
+  type: 'text',
 
-    /**
-     * Name of the input
-     *
-     * @property name
-     * @public
-     * @type {String}
-     * @default null
-     */
-    name: null,
+  /**
+   * Name of the input
+   *
+   * @property name
+   * @public
+   * @type {String}
+   * @default null
+   */
+  name: null,
 
-    /**
-     * Defines a specific role attribute for the input
-     *
-     * @property role
-     * @public
-     * @type {String}
-     * @default null
-     */
-    role: null,
+  /**
+   * Defines a specific role attribute for the input
+   *
+   * @property role
+   * @public
+   * @type {String}
+   * @default null
+   */
+  role: null,
 
-    /**
-     * Limit increment value for numeric and date-time inputs
-     *
-     * @property step
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    step: null,
+  /**
+   * Limit increment value for numeric and date-time inputs
+   *
+   * @property step
+   * @public
+   * @type {Number}
+   * @default null
+   */
+  step: null,
 
-    /**
-     * Enable automatic completion by the browser
-     *
-     * @property autoComplete
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    autoComplete: null,
+  /**
+   * Enable automatic completion by the browser
+   *
+   * @property autoComplete
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  autoComplete: null,
 
-    /**
-     * Mimics the behavior of the native HTML attribute,
-     * limiting how high the spinner can increment the value
-     *
-     * @property max
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    max: null,
+  /**
+   * Mimics the behavior of the native HTML attribute,
+   * limiting how high the spinner can increment the value
+   *
+   * @property max
+   * @public
+   * @type {Number}
+   * @default null
+   */
+  max: null,
 
-    /**
-     * Maximum character length for an input
-     *
-     * @property maxLength
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    maxLength: null,
+  /**
+   * Maximum character length for an input
+   *
+   * @property maxLength
+   * @public
+   * @type {Number}
+   * @default null
+   */
+  maxLength: null,
 
-    /**
-     * Mimics the behavior of the native HTML attribute,
-     * limiting how low the spinner can decrement the value
-     *
-     * @property min
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    min: null,
+  /**
+   * Mimics the behavior of the native HTML attribute,
+   * limiting how low the spinner can decrement the value
+   *
+   * @property min
+   * @public
+   * @type {Number}
+   * @default null
+   */
+  min: null,
 
-    /**
-     * Minimum character length for an input
-     *
-     * @property minLength
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    minLength: null,
+  /**
+   * Minimum character length for an input
+   *
+   * @property minLength
+   * @public
+   * @type {Number}
+   * @default null
+   */
+  minLength: null,
 
-    /**
-     * A regular expression to check the value against
-     *
-     * @property pattern
-     * @public
-     * @type {String}
-     * @default null
-     */
-    pattern: null,
+  /**
+   * A regular expression to check the value against
+   *
+   * @property pattern
+   * @public
+   * @type {String}
+   * @default null
+   */
+  pattern: null,
 
-    /**
-     * Indicate whether value should have spelling checked
-     *
-     * @property spellCheck
-     * @public
-     * @type {Boolean}
-     * @default null
-     */
-    spellCheck: null,
+  /**
+   * Indicate whether value should have spelling checked
+   *
+   * @property spellCheck
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  spellCheck: null,
 
-    /**
-     * Indicates the id of a component owned by the input
-     *
-     * @property ariaOwns
-     * @public
-     * @type {String}
-     * @default null
-     */
-    ariaOwns: null,
+  /**
+   * Indicates the id of a component owned by the input
+   *
+   * @property ariaOwns
+   * @public
+   * @type {String}
+   * @default null
+   */
+  ariaOwns: null,
 
-    /**
-     * Indicates the id of a component controlled by the input
-     *
-     * @property ariaControls
-     * @public
-     * @type {String}
-     * @default null
-     */
-    ariaControls: null,
+  /**
+   * Indicates the id of a component controlled by the input
+   *
+   * @property ariaControls
+   * @public
+   * @type {String}
+   * @default null
+   */
+  ariaControls: null,
 
-    /**
-     * Indicates the id of a related component's visually focused element ot the input
-     *
-     * @property ariaActiveDescendant
-     * @public
-     * @type {String}
-     * @default null
-     */
-    ariaActiveDescendant: null,
+  /**
+   * Indicates the id of a related component's visually focused element ot the input
+   *
+   * @property ariaActiveDescendant
+   * @public
+   * @type {String}
+   * @default null
+   */
+  ariaActiveDescendant: null,
 
-    /**
-     * Indicates what kind of user input completion suggestions are provided
-     *
-     * @property ariaAutocomplete
-     * @public
-     * @type {String}
-     * @default null
-     */
-    ariaAutocomplete: null,
+  /**
+   * Indicates what kind of user input completion suggestions are provided
+   *
+   * @property ariaAutocomplete
+   * @public
+   * @type {String}
+   * @default null
+   */
+  ariaAutocomplete: null,
 
-    /**
-     * Callback when value is changed
-     *
-     * @property onChange
-     * @public
-     * @type {Function}
-     * @default noop
-     */
-    onChange(/* value, id */) {},
+  /**
+   * Callback when value is changed
+   *
+   * @property onChange
+   * @public
+   * @type {Function}
+   * @default noop
+   */
+  onChange(/* value, id */) {},
 
-    /**
-     * Callback when input is focused
-     *
-     * @property onFocus
-     * @public
-     * @type {Function}
-     * @default noop
-     */
-    onFocus() {},
+  /**
+   * Callback when input is focused
+   *
+   * @property onFocus
+   * @public
+   * @type {Function}
+   * @default noop
+   */
+  onFocus() {},
 
-    /**
-     * Callback when focus is removed
-     *
-     * @property onBlur
-     * @public
-     * @type {Function}
-     * @default noop
-     */
-    onBlur() {},
+  /**
+   * Callback when focus is removed
+   *
+   * @property onBlur
+   * @public
+   * @type {Function}
+   * @default noop
+   */
+  onBlur() {},
 
-    /**
-     * @private
-     */
-    focus: false,
+  /**
+   * @private
+   */
+  focus: false,
 
-    dataTestTextField: 'text-field',
+  dataTestTextField: 'text-field',
 
-    ariaInvalid: bool('error').readOnly(),
-    autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
+  ariaInvalid: bool('error').readOnly(),
+  autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
 
-    textFieldClasses: computed(
-      'value',
-      'disabled',
-      'readOnly',
-      'error',
-      'multiline',
-      'focus',
-      function() {
-        let {
-          value,
-          disabled,
-          readOnly,
-          error,
-          multiline,
-          focus,
-        } = this.getProperties(
-          'value',
-          'disabled',
-          'readOnly',
-          'error',
-          'multiline',
-          'focus'
-        );
-        let classes = ['Polaris-TextField'];
+  textFieldClasses: computed(
+    'value',
+    'disabled',
+    'readOnly',
+    'error',
+    'multiline',
+    'focus',
+    function() {
+      let {
+        value,
+        disabled,
+        readOnly,
+        error,
+        multiline,
+        focus,
+      } = this.getProperties(
+        'value',
+        'disabled',
+        'readOnly',
+        'error',
+        'multiline',
+        'focus'
+      );
+      let classes = ['Polaris-TextField'];
 
-        if (value) {
-          classes.push('Polaris-TextField--hasValue');
-        }
-
-        if (disabled) {
-          classes.push('Polaris-TextField--disabled');
-        }
-
-        if (readOnly) {
-          classes.push('Polaris-TextField--readOnly');
-        }
-
-        if (error) {
-          classes.push('Polaris-TextField--error');
-        }
-
-        if (multiline) {
-          classes.push('Polaris-TextField--multiline');
-        }
-
-        if (focus) {
-          classes.push('Polaris-TextField--focus');
-        }
-
-        return classes.join(' ');
+      if (value) {
+        classes.push('Polaris-TextField--hasValue');
       }
-    ).readOnly(),
 
-    inputClassName: computed('suffix', function() {
-      let classes = ['Polaris-TextField__Input'];
-      if (this.get('suffix')) {
-        classes.push('Polaris-TextField__Input--suffixed');
+      if (disabled) {
+        classes.push('Polaris-TextField--disabled');
+      }
+
+      if (readOnly) {
+        classes.push('Polaris-TextField--readOnly');
+      }
+
+      if (error) {
+        classes.push('Polaris-TextField--error');
+      }
+
+      if (multiline) {
+        classes.push('Polaris-TextField--multiline');
+      }
+
+      if (focus) {
+        classes.push('Polaris-TextField--focus');
       }
 
       return classes.join(' ');
-    }).readOnly(),
+    }
+  ).readOnly(),
 
-    ariaDescribedBy: computed('error', 'helpText', 'id', function() {
-      let { error, helpText, id } = this.getProperties(
-        'error',
-        'helpText',
-        'id'
+  inputClassName: computed('suffix', function() {
+    let classes = ['Polaris-TextField__Input'];
+    if (this.get('suffix')) {
+      classes.push('Polaris-TextField__Input--suffixed');
+    }
+
+    return classes.join(' ');
+  }).readOnly(),
+
+  ariaDescribedBy: computed('error', 'helpText', 'id', function() {
+    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let describedBy = [];
+
+    if (error) {
+      describedBy.push(`${id}Error`);
+    }
+
+    if (helpText) {
+      describedBy.push(`${id}HelpText`);
+    }
+
+    return describedBy.join(' ');
+  }).readOnly(),
+
+  ariaLabelledBy: computed('id', function() {
+    let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
+    let labelledBy = [`${id}Label`];
+
+    if (prefix) {
+      labelledBy.push(`${id}Prefix`);
+    }
+
+    if (suffix) {
+      labelledBy.push(`${id}Suffix`);
+    }
+
+    return labelledBy.join(' ');
+  }).readOnly(),
+
+  inputType: computed('type', function() {
+    let type = this.get('type');
+
+    return type === 'currency' ? 'text' : type;
+  }).readOnly(),
+
+  minimumLines: computed('multiline', function() {
+    let multiline = this.get('multiline');
+
+    return typeOf(multiline) === 'number' ? multiline : 1;
+  }).readOnly(),
+
+  heightStyle: computed('height', 'multiline', function() {
+    let { height, multiline } = this.getProperties('height', 'multiline');
+
+    return height && multiline ? htmlSafe(`height: ${height}px`) : null;
+  }).readOnly(),
+
+  shouldShowSpinner: computed('disabled', 'inputType', function() {
+    let { inputType, disabled } = this.getProperties('inputType', 'disabled');
+
+    return inputType === 'number' && !disabled;
+  }).readOnly(),
+
+  checkFocus() {
+    let { input, focused } = this.getProperties('input', 'focused');
+
+    if (input && focused) {
+      // TODO this _seems_ to work in Polaris without the row below, but not for us (it does not apply focus class)
+      // look what's here....though this seems to do the job for now
+      this.set('focus', true);
+      input.focus();
+    }
+  },
+
+  setInput() {
+    this.set('input', document.querySelector(`[id='${this.get('id')}']`));
+  },
+
+  init() {
+    this._super(...arguments);
+
+    let id = this.get('id');
+    id = id || `TextField-${guidFor(this)}`;
+
+    this.setProperties({
+      height: null,
+      focus: false,
+      id,
+    });
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.checkFocus();
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.setInput();
+    this.checkFocus();
+  },
+
+  actions: {
+    handleNumberChange(steps) {
+      let { id, onChange, value, step, min, max } = this.getProperties(
+        'id',
+        'onChange',
+        'value',
+        'step',
+        'min',
+        'max'
       );
-      let describedBy = [];
 
-      if (error) {
-        describedBy.push(`${id}Error`);
+      step = step || 1;
+      min = isPresent(min) ? min : -Infinity;
+      max = isPresent(max) ? max : Infinity;
+
+      let numericValue = value ? parseFloat(value) : 0;
+
+      if (isNaN(numericValue)) {
+        return;
       }
 
-      if (helpText) {
-        describedBy.push(`${id}HelpText`);
-      }
+      // Making sure the new value has the same length of decimal places as the
+      // step / value has.
+      let decimalPlaces = Math.max(dpl(numericValue), dpl(step));
+      let newValue = Math.min(max, Math.max(numericValue + steps * step, min));
 
-      return describedBy.join(' ');
-    }).readOnly(),
+      onChange(String(newValue.toFixed(decimalPlaces)), id);
+    },
 
-    ariaLabelledBy: computed('id', function() {
-      let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
-      let labelledBy = [`${id}Label`];
+    handleExpandingResize(height) {
+      this.set('height', height);
+    },
 
-      if (prefix) {
-        labelledBy.push(`${id}Prefix`);
-      }
+    handleChange(event) {
+      this.get('onChange')(event.target.value, this.get('id'));
+    },
 
-      if (suffix) {
-        labelledBy.push(`${id}Suffix`);
-      }
+    handleFocus() {
+      this.set('focus', true);
+    },
 
-      return labelledBy.join(' ');
-    }).readOnly(),
+    handleBlur() {
+      this.set('focus', false);
+    },
 
-    inputType: computed('type', function() {
+    handleClick() {
+      let input = this.get('input');
+      input.focus();
+    },
+
+    handleKeyPress(event) {
+      let { key } = event;
       let type = this.get('type');
+      let numbersSpec = /[\d.eE+-]$/;
 
-      return type === 'currency' ? 'text' : type;
-    }).readOnly(),
-
-    minimumLines: computed('multiline', function() {
-      let multiline = this.get('multiline');
-
-      return typeOf(multiline) === 'number' ? multiline : 1;
-    }).readOnly(),
-
-    heightStyle: computed('height', 'multiline', function() {
-      let { height, multiline } = this.getProperties('height', 'multiline');
-
-      return height && multiline ? htmlSafe(`height: ${height}px`) : null;
-    }).readOnly(),
-
-    shouldShowSpinner: computed('disabled', 'inputType', function() {
-      let { inputType, disabled } = this.getProperties('inputType', 'disabled');
-
-      return inputType === 'number' && !disabled;
-    }).readOnly(),
-
-    addValueListener() {
-      this.addEventListener(this.get('input'), 'keyup', () => {
-        this.debounceTask('debouncedUpdateValue', 250);
-      });
-    },
-
-    debouncedUpdateValue() {
-      let field = this.get('input');
-      this.set('value', field.value);
-    },
-
-    checkFocus() {
-      let { input, focused } = this.getProperties('input', 'focused');
-
-      if (input && focused) {
-        // TODO this _seems_ to work in Polaris without the row below, but not for us (it does not apply focus class)
-        // look what's here....though this seems to do the job for now
-        this.set('focus', true);
-        input.focus();
+      if (
+        type !== 'number' ||
+        getCode(event) === 'Enter' ||
+        key.match(numbersSpec)
+      ) {
+        return;
       }
+
+      event.preventDefault();
     },
-
-    setInput() {
-      this.set('input', document.querySelector(`[id='${this.get('id')}']`));
-    },
-
-    init() {
-      this._super(...arguments);
-
-      let id = this.get('id');
-
-      id = id || `TextField-${guidFor(this)}`;
-
-      this.setProperties({
-        height: null,
-        focus: false,
-        id,
-      });
-    },
-
-    didReceiveAttrs() {
-      this._super(...arguments);
-      this.checkFocus();
-    },
-
-    didInsertElement() {
-      this._super(...arguments);
-
-      this.setInput();
-      this.addValueListener();
-      this.checkFocus();
-    },
-
-    actions: {
-      handleNumberChange(steps) {
-        let { id, onChange, value, step, min, max } = this.getProperties(
-          'id',
-          'onChange',
-          'value',
-          'step',
-          'min',
-          'max'
-        );
-
-        step = step || 1;
-        min = isPresent(min) ? min : -Infinity;
-        max = isPresent(max) ? max : Infinity;
-
-        let numericValue = value ? parseFloat(value) : 0;
-
-        if (isNaN(numericValue)) {
-          return;
-        }
-
-        // Making sure the new value has the same length of decimal places as the
-        // step / value has.
-        let decimalPlaces = Math.max(dpl(numericValue), dpl(step));
-        let newValue = Math.min(
-          max,
-          Math.max(numericValue + steps * step, min)
-        );
-
-        onChange(String(newValue.toFixed(decimalPlaces)), id);
-      },
-
-      handleExpandingResize(height) {
-        this.set('height', height);
-      },
-
-      handleChange(event) {
-        this.get('onChange')(event.target.value, this.get('id'));
-      },
-
-      handleFocus() {
-        this.set('focus', true);
-      },
-
-      handleBlur() {
-        this.set('focus', false);
-      },
-
-      handleClick() {
-        let input = this.get('input');
-        input.focus();
-      },
-
-      handleKeyPress(event) {
-        let { key } = event;
-        let type = this.get('type');
-        let numbersSpec = /[\d.eE+-]$/;
-
-        if (
-          type !== 'number' ||
-          getCode(event) === 'Enter' ||
-          key.match(numbersSpec)
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-      },
-    },
-  }
-);
+  },
+});
