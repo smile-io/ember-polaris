@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v3.0.1 (January 8, 2019)
+- [#269](https://github.com/smile-io/ember-polaris/pull/269) [FIX] Remove listener that was mutating the text-field's value and properly fire `onChange` callback
+
 ### v3.0.0 (January 7, 2019)
 - [#266](https://github.com/smile-io/ember-polaris/pull/266) [UPDATE] Overhaul `polaris-resource-list` to match Shopify Polaris implementation (breaks existing usages of `polaris-resource-list`)
 
