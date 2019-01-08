@@ -522,7 +522,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    let { id } = this.get('id');
+    let id = this.get('id');
     id = id || `TextField-${guidFor(this)}`;
 
     this.setProperties({
