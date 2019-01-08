@@ -135,10 +135,11 @@ export default Component.extend(context.ConsumerMixin, {
   }).readOnly(),
 
   handleAddFilter(newFilter) {
-    let { onFiltersChange, appliedFilters = [] } = this.getProperties(
+    let { onFiltersChange, appliedFilters } = this.getProperties(
       'onFiltersChange',
       'appliedFilters'
     );
+    appliedFilters = appliedFilters || [];
 
     if (!onFiltersChange) {
       return;
@@ -159,10 +160,11 @@ export default Component.extend(context.ConsumerMixin, {
 
   handleRemoveFilter(filter) {
     let filterId = idFromFilter(filter);
-    let { onFiltersChange, appliedFilters = [] } = this.getProperties(
+    let { onFiltersChange, appliedFilters } = this.getProperties(
       'onFiltersChange',
       'appliedFilters'
     );
+    appliedFilters = appliedFilters || [];
 
     if (!onFiltersChange) {
       return;

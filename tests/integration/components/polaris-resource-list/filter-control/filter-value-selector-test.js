@@ -70,9 +70,13 @@ function getOptionsListForOperators(operators) {
   });
 }
 
-async function triggerChangeEventWithValue(selector, value) {
+async function triggerChangeEventWithValue(
+  selector,
+  value,
+  eventName = 'change'
+) {
   find(selector).value = value;
-  await triggerEvent(selector, 'change');
+  await triggerEvent(selector, eventName);
 }
 
 module(
@@ -297,7 +301,7 @@ module(
               }}
             `);
 
-            await triggerEvent('.Polaris-TextField input', 'change');
+            await triggerEvent('.Polaris-TextField input', 'input');
             assert.ok(this.get('wasOnChangeCalled'));
           });
 
@@ -333,7 +337,8 @@ module(
 
             await triggerChangeEventWithValue(
               '.Polaris-TextField input',
-              newFilterValue
+              newFilterValue,
+              'input'
             );
 
             await triggerChangeEventWithValue(
