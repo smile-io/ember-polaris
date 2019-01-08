@@ -138,7 +138,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       }}
     `);
 
-    await triggerEvent(inputSelector, 'change', 'text');
+    await triggerEvent(inputSelector, 'input', 'text');
     await focus(inputSelector);
     await blur(inputSelector);
 
