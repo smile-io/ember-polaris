@@ -142,19 +142,19 @@ export default Component.extend({
   focused: computed('focusedDate', 'day', function() {
     let { focusedDate, day } = this.getProperties('focusedDate', 'day');
 
-    return focusedDate !== null && isSameDay(day, focusedDate);
+    return focusedDate != null && isSameDay(day, focusedDate);
   }).readOnly(),
 
   selected: computed('selectedDates', 'day', function() {
     let { selectedDates, day } = this.getProperties('selectedDates', 'day');
 
-    return selectedDates !== null && dateIsSelected(day, selectedDates);
+    return selectedDates != null && dateIsSelected(day, selectedDates);
   }).readOnly(),
 
   inRange: computed('selectedDates', 'day', function() {
     let selectedDates = this.get('selectedDates');
     let day = this.get('day');
-    return selectedDates !== null && dateIsInRange(day, selectedDates);
+    return selectedDates != null && dateIsInRange(day, selectedDates);
   }).readOnly(),
 
   disabled: computed(
@@ -224,7 +224,7 @@ export default Component.extend({
         return false;
       }
 
-      let { selectedDates, hoverDate } = this.getProperties(
+      let { selectedDates = {}, hoverDate } = this.getProperties(
         'selectedDates',
         'hoverDate'
       );
@@ -234,4 +234,8 @@ export default Component.extend({
       return start === end && day > start && day <= hoverDate;
     }
   ).readOnly(),
+
+  dataTestDatePickerDate: computed('day', function() {
+    return this.get('day').toISOString();
+  }).readOnly(),
 });

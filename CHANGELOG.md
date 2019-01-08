@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v3.0.0 (January 7, 2019)
+- [#266](https://github.com/smile-io/ember-polaris/pull/266) [UPDATE] Overhaul `polaris-resource-list` to match Shopify Polaris implementation (breaks existing usages of `polaris-resource-list`)
+
 ### v2.0.4 (November 28, 2018)
 - [#256](https://github.com/smile-io/ember-polaris/pull/256) [FIX] Move `ember-lifeline` to deps
 

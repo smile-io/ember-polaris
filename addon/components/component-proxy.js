@@ -87,6 +87,7 @@ export default Component.extend({
 
     let propsToUnset = oldPropNames.reduce((propsToUnset, propName) => {
       propsToUnset[propName] = undefined;
+      return propsToUnset;
     }, {});
 
     let newProps = assign(propsToUnset, props, { propNames });

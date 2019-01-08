@@ -27,7 +27,7 @@
           label="Single object (enabled)"
         )
       )
-      value=value
+      value=(or value "")
       placeholder="Select a value"
       helpText=(if value (concat "Selected: " value))
       onChange=(action (mut value))

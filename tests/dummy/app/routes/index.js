@@ -10,6 +10,10 @@ const samplePages = [
     text: 'Dropzone',
   },
   {
+    path: 'resource-list',
+    text: 'Resource List',
+  },
+  {
     path: 'sticky',
     text: 'Sticky',
   },
