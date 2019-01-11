@@ -51,7 +51,7 @@ export default Component.extend({
 
   classNameBindings: [
     'statusClass',
-    'hasDismiss:Polaris-Banner__hasDismiss',
+    'hasDismiss:Polaris-Banner--hasDismiss',
     'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
   ],
 
