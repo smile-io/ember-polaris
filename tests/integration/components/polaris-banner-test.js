@@ -272,7 +272,7 @@ test('it handles dismissable banner correctly', function(assert) {
   let banner = find(bannerSelector);
   let dismissWrapper = find(dismissSelector, banner);
   assert.notOk(
-    banner.classList.contains('Polaris-Banner__hasDismiss'),
+    banner.classList.contains('Polaris-Banner--hasDismiss'),
     'banner non-dismissable - does not have dismissable class'
   );
   assert.notOk(
@@ -292,7 +292,7 @@ test('it handles dismissable banner correctly', function(assert) {
     dismissWrapper
   );
   assert.ok(
-    banner.classList.contains('Polaris-Banner__hasDismiss'),
+    banner.classList.contains('Polaris-Banner--hasDismiss'),
     'banner dismissable - has dismissable class'
   );
   assert.ok(
