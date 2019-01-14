@@ -1,7 +1,10 @@
 # ember-polaris Changelog
 
-### v3.0.2 (January 14, 2019)
+### v3.0.3 (January 14, 2019)
 - [#271](https://github.com/smile-io/ember-polaris/pull/271) [FIX] Fix dismissable banner class
+
+### v3.0.2 (January 8, 2019)
+- [#270](https://github.com/smile-io/ember-polaris/pull/270) [FIX] Avoid null ref error when adding/removing resource list filters
 
 ### v3.0.1 (January 8, 2019)
 - [#269](https://github.com/smile-io/ember-polaris/pull/269) [FIX] Remove listener that was mutating the text-field's value and properly fire `onChange` callback
