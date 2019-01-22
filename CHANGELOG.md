@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### UNRELEASED
+### v3.0.4 (January 22, 2019)
 - [#272](https://github.com/smile-io/ember-polaris/pull/272) [ENHANCEMENT] Add `fullWidth` support to `polaris-popover`
 
 ### v3.0.3 (January 14, 2019)
