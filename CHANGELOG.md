@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### UNRELEASED
+- [#272](https://github.com/smile-io/ember-polaris/pull/272) [ENHANCEMENT] Add `fullWidth` support to `polaris-popover`
+
 ### v3.0.3 (January 14, 2019)
 - [#271](https://github.com/smile-io/ember-polaris/pull/271) [FIX] Fix dismissable banner class
 

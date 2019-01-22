@@ -20,6 +20,16 @@ export default Component.extend({
   sectioned: false,
 
   /**
+   * Allow popover to stretch to the full width of its activator
+   *
+   * @property fullWidth
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  fullWidth: false,
+
+  /**
    * Allow popover to stretch to fit content vertically
    *
    * @property fullHeight
