@@ -1,0 +1,50 @@
+{{!-- TODO: add Scrollable.ScrollTo here when available --}}
+
+{{#if allowMultiple}}
+  <label
+    htmlFor={{optionId}}
+    class="
+      Polaris-OptionList-Option__Label
+      {{if active "Polaris-OptionList-Option--active"}}
+    "
+  >
+    <div class="Polaris-OptionList-Option__Checkbox">
+      {{polaris-option-list/checkbox
+        checkboxId=optionId
+        value=value
+        checked=select
+        active=active
+        disabled=disabled
+        onChange=(action "handleClick")
+        role=(if (eq role "option") "presentation")
+      }}
+    </div>
+
+    {{#if media}}
+      <div class="Polaris-OptionList-Option__Media">{{render-content media}}</div>
+    {{/if}}
+
+    {{render-content label}}
+  </label>
+{{else}}
+  <button
+    type="button"
+    class="
+      Polaris-OptionList-Option__SingleSelectOption
+      {{if focused "Polaris-OptionList-Option--focused"}}
+      {{if disabled "Polaris-OptionList-Option--disabled"}}
+      {{if select "Polaris-OptionList-Option--select"}}
+      {{if active "Polaris-OptionList-Option--active"}}
+    "
+    onclick={{action "handleClick"}}
+    disabled={{disabled}}
+    onfocus={{action "toggleFocus"}}
+    onblur={{action "toggleFocus"}}
+  >
+    {{#if media}}
+      <div class="Polaris-OptionList-Option__Media">{{render-content media}}</div>
+    {{/if}}
+
+    {{render-content label}}
+  </button>
+{{/if}}

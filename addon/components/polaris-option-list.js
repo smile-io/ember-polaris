@@ -76,7 +76,7 @@ export default Component.extend({
    * Sections containing a header and related options
    * Available properties:
    *  options {Object[]} Collection of options within the section
-   *  title {string} Section title
+   *  title {String} Section title
    *
    * @property sections
    * @type {Object[]}
