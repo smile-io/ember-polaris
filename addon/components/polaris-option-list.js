@@ -37,6 +37,13 @@ export default Component.extend({
 
   /**
    * Collection of options to be listed
+   * Available properties:
+   *  value {String} Value of the option
+   *  label {String|Component|Object} Display label for the option
+   *  disabled {Boolean} Whether the option is disabled or not
+   *  active {Boolean} Whether the option is active or not
+   *  id {String} Unique identifier for the option
+   *  media {String|Component|Object} Media to display to the left of the option content
    *
    * @property options
    * @type {Object[]}
@@ -67,6 +74,9 @@ export default Component.extend({
 
   /**
    * Sections containing a header and related options
+   * Available properties:
+   *  options {Object[]} Collection of options within the section
+   *  title {string} Section title
    *
    * @property sections
    * @type {Object[]}
