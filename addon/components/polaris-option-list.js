@@ -142,6 +142,7 @@ export default Component.extend({
         'allowMultiple',
         'normalizedOptions'
       );
+      selected = selected || [];
       let selectedValue =
         normalizedOptions[sectionIndex].options[optionIndex].value;
       let foundIndex = selected.indexOf(selectedValue);
