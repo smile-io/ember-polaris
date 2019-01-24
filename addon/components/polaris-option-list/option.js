@@ -3,8 +3,8 @@ import layout from '../../templates/components/polaris-option-list/option';
 
 export default Component.extend({
   tagName: 'li',
-  classNames: ['Polaris-OptionList-Option'],
   attributeBindings: ['tabIndex', 'active:aria-selected', 'role'],
+  classNames: ['Polaris-OptionList-Option'],
 
   layout,
 
@@ -111,14 +111,6 @@ export default Component.extend({
    * @private
    */
   focused: false,
-
-  /**
-   * @property active
-   * @type {Boolean}
-   * @default false
-   * @private
-   */
-  active: false,
 
   tabIndex: -1,
 

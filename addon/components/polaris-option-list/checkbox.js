@@ -34,15 +34,6 @@ export default Component.extend({
   active: false,
 
   /**
-   * @property checkboxId
-   * @type {String}
-   * @public
-   */
-  checkboxId: computed(function() {
-    return guidFor(this);
-  }),
-
-  /**
    * @property name
    * @type {String}
    * @default null
@@ -65,6 +56,15 @@ export default Component.extend({
    * @public
    */
   role: null,
+
+  /**
+   * @property checkboxId
+   * @type {String}
+   * @public
+   */
+  checkboxId: computed(function() {
+    return guidFor(this);
+  }),
 
   /**
    * @property onChange
