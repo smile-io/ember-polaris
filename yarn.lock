@@ -4085,6 +4085,13 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+ember-array-contains-helper@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-array-contains-helper/-/ember-array-contains-helper-2.0.0.tgz#230f18c49ce7f46e14762db871dd8f087ef40127"
+  integrity sha1-Iw8YxJzn9G4Udi24cd2PCH70ASc=
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-array-helper@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ember-array-helper/-/ember-array-helper-5.0.0.tgz#d2d72f170e15d120bdaffe456d5cdfd8d335de75"
