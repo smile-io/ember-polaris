@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v3.0.5 (January 28, 2019)
+- [#273](https://github.com/smile-io/ember-polaris/pull/273) [FEATURE] Add `polaris-option-list` component
+
 ### v3.0.4 (January 22, 2019)
 - [#272](https://github.com/smile-io/ember-polaris/pull/272) [ENHANCEMENT] Add `fullWidth` support to `polaris-popover`
 
