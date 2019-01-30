@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#274](https://github.com/smile-io/ember-polaris/pull/274) [ENHANCEMENT] Add support for using a block for `render-content`
+
 ### v3.0.5 (January 28, 2019)
 - [#273](https://github.com/smile-io/ember-polaris/pull/273) [FEATURE] Add `polaris-option-list` component
 
