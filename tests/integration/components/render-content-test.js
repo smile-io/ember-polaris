@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { find } from 'ember-native-dom-helpers';
 
 module('Integration | Component | render-content', function(hooks) {
   setupRenderingTest(hooks);
@@ -13,20 +12,28 @@ module('Integration | Component | render-content', function(hooks) {
     this.owner.register(
       'component:my-component',
       Component.extend({
-        classNames: ['my-test-component'],
         layout: hbs`{{text}}`,
+        'data-test-my-component': true,
       })
     );
   });
 
   test('it renders correctly when content is a string', async function(assert) {
     await render(hbs`
-      <div id="render-content-test">
+      <div data-test-render-content>
         {{render-content "blah"}}
       </div>
     `);
 
-    assert.equal(find('#render-content-test').textContent.trim(), 'blah');
+    assert.dom('[data-test-render-content]').hasText('blah');
+
+    await render(hbs`
+      {{#render-content "blah"}}
+        {{my-component text="neat!"}}
+      {{/render-content}}
+    `);
+
+    assert.dom('[data-test-my-component]').hasText('neat!');
   });
 
   test('it renders correctly when content is a hash of component name and props', async function(assert) {
@@ -41,10 +48,7 @@ module('Integration | Component | render-content', function(hooks) {
       }}
     `);
 
-    assert.equal(
-      find('.my-test-component').textContent.trim(),
-      'component content here'
-    );
+    assert.dom('[data-test-my-component]').hasText('component content here');
   });
 
   test('it renders correctly when content is a component definition', async function(assert) {
@@ -52,9 +56,6 @@ module('Integration | Component | render-content', function(hooks) {
       {{render-content (component "my-component" text="component content here")}}
     `);
 
-    assert.equal(
-      find('.my-test-component').textContent.trim(),
-      'component content here'
-    );
+    assert.dom('[data-test-my-component]').hasText('component content here');
   });
 });

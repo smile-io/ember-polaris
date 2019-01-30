@@ -3,5 +3,9 @@
 {{else if contentIsComponentDefinition}}
   {{component content}}
 {{else}}
-  {{content}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{content}}
+  {{/if}}
 {{/if}}
