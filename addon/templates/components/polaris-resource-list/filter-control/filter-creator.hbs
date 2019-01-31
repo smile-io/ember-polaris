@@ -18,7 +18,7 @@
 
   {{#popover.content}}
     {{#polaris-form onSubmit=(action handleAddFilter popover)}}
-      {{#polaris-form-layout}}
+      {{#polaris-form-layout as |formLayout|}}
         {{polaris-select
           placeholder="Select a filter..."
           label=selectLabel
@@ -28,20 +28,24 @@
         }}
 
         {{#if selectedFilter}}
-          {{polaris-resource-list/filter-control/filter-value-selector
-            filter=selectedFilter
-            filterKey=selectedFilterKey
-            value=selectedFilterValue
-            onFilterKeyChange=(action handleFilterKeyChange)
-            onChange=(action (mut selectedFilterValue))
-          }}
+          {{#formLayout.item}}
+            {{polaris-resource-list/filter-control/filter-value-selector
+              filter=selectedFilter
+              filterKey=selectedFilterKey
+              value=selectedFilterValue
+              onFilterKeyChange=(action handleFilterKeyChange)
+              onChange=(action (mut selectedFilterValue))
+            }}
+          {{/formLayout.item}}
 
-          {{polaris-button
-            dataTestId="add-filter"
-            text="Add filter"
-            disabled=(not canAddFilter)
-            onClick=(action handleAddFilter popover)
-          }}
+          {{#formLayout.item}}
+            {{polaris-button
+              dataTestId="add-filter"
+              text="Add filter"
+              disabled=(not canAddFilter)
+              onClick=(action handleAddFilter popover)
+            }}
+          {{/formLayout.item}}
         {{/if}}
       {{/polaris-form-layout}}
     {{/polaris-form}}
