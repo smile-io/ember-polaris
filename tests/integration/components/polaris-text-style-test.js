@@ -156,4 +156,18 @@ module('Integration | Component | polaris text style', function(hooks) {
       'code variation - is rendered as a code tag'
     );
   });
+
+  test('it supports passing custom style classes', async function(assert) {
+    await render(hbs`
+      {{polaris-text-style
+        classes="custom-class"
+        variation="strong"
+        text="My text"
+      }}
+    `);
+
+    assert
+      .dom(textStyleSelector)
+      .hasClass('custom-class', 'applies custom style classes');
+  });
 });
