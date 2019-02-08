@@ -62,6 +62,13 @@ export default Component.extend({
    */
   text: null,
 
+  /**
+   * Custom style classes to apply to this element.
+   *
+   * @type {String}
+   */
+  classes: '',
+
   dataTestTextStyle: true,
 
   /**
@@ -74,12 +81,12 @@ export default Component.extend({
   /**
    * @private
    */
-  variationClass: computed('variation', function() {
-    const variation = this.get('variation');
-    if (!Object.keys(variationValue).includes(variation)) {
-      return null;
+  textStyleClasses: computed('variation', 'classes', function() {
+    let { variation, classes } = this.getProperties('variation', 'classes');
+    if (Object.keys(variationValue).includes(variation)) {
+      classes = `Polaris-TextStyle--variation${classify(variation)} ${classes}`;
     }
 
-    return `Polaris-TextStyle--variation${classify(variation)}`;
+    return classes.trim();
   }).readOnly(),
 });
