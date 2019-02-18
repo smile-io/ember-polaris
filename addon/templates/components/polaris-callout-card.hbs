@@ -19,6 +19,12 @@
         {{#with
           (component "polaris-button"
             text=primaryAction.text
+            accessibilityLabel=primaryAction.accessibilityLabel
+            disabled=primaryAction.disabled
+            primary=primaryAction.primary
+            destructive=primaryAction.destructive
+            icon=primaryAction.icon
+            loading=primaryAction.loading
             onClick=(action primaryAction.onAction)
           )
           as |primaryButton|
@@ -30,6 +36,10 @@
               {{polaris-button
                 plain=true
                 text=secondaryAction.text
+                accessibilityLabel=secondaryAction.accessibilityLabel
+                disabled=secondaryAction.disabled
+                icon=secondaryAction.icon
+                loading=secondaryAction.loading
                 onClick=(action secondaryAction.onAction)
               }}
             {{/polaris-button-group}}

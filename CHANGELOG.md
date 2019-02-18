@@ -1,7 +1,10 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#288](https://github.com/smile-io/ember-polaris/pull/288) [ENHANCEMENT] Add support for props such as `primary` etc. on `polaris-callout-card` actions
+
 ### v3.0.6 (January 31, 2019)
-- [#276](https://github.com/smile-io/ember-polaris/pull/276) [Fix] Prevent glimmer error when changing selected filter on resource list filter creator
+- [#276](https://github.com/smile-io/ember-polaris/pull/276) [FIX] Prevent glimmer error when changing selected filter on resource list filter creator
 
 ### v3.0.5 (January 28, 2019)
 - [#273](https://github.com/smile-io/ember-polaris/pull/273) [FEATURE] Add `polaris-option-list` component
