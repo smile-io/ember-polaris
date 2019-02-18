@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v3.0.7 (February 18, 2019)
 - [#288](https://github.com/smile-io/ember-polaris/pull/288) [ENHANCEMENT] Add support for props such as `primary` etc. on `polaris-callout-card` actions
 
 ### v3.0.6 (January 31, 2019)
