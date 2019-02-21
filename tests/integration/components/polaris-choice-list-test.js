@@ -301,18 +301,16 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       .dom(radioInputSelector)
       .exists({ count: 3 }, 'renders three radio inputs');
 
-    const radioInputs = findAll(radioInputSelector);
-
     assert.notOk(
-      radioInputs[0].checked,
+      findAll(radioInputSelector)[0].checked,
       'before click - first radio input is not checked'
     );
     assert.ok(
-      radioInputs[1].checked,
+      findAll(radioInputSelector)[1].checked,
       'before click - second radio input is checked'
     );
     assert.notOk(
-      radioInputs[2].checked,
+      findAll(radioInputSelector)[2].checked,
       'before click - third radio input is not checked'
     );
 
@@ -325,15 +323,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       'after click - selected value updated correctly'
     );
     assert.ok(
-      radioInputs[0].checked,
+      findAll(radioInputSelector)[0].checked,
       'after clicking first radio button - first radio input is checked'
     );
     assert.notOk(
-      radioInputs[1].checked,
+      findAll(radioInputSelector)[1].checked,
       'after clicking first radio button - second radio input is not checked'
     );
     assert.notOk(
-      radioInputs[2].checked,
+      findAll(radioInputSelector)[2].checked,
       'after clicking first radio button - third radio input is not checked'
     );
   });
@@ -367,18 +365,16 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       .dom(checkboxInputSelector)
       .exists({ count: 3 }, 'renders three checkboxes');
 
-    const checkboxInputs = findAll(checkboxInputSelector);
-
     assert.ok(
-      checkboxInputs[0].checked,
+      findAll(checkboxInputSelector)[0].checked,
       'before click - first checkbox input is checked'
     );
     assert.notOk(
-      checkboxInputs[1].checked,
+      findAll(checkboxInputSelector)[1].checked,
       'before click - second checkbox input is not checked'
     );
     assert.ok(
-      checkboxInputs[2].checked,
+      findAll(checkboxInputSelector)[2].checked,
       'before click - third checkbox input is checked'
     );
 
@@ -399,15 +395,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       "after clicking second checkbox - selected values contains 'three'"
     );
     assert.ok(
-      checkboxInputs[0].checked,
+      findAll(checkboxInputSelector)[0].checked,
       'after clicking second checkbox - first checkbox input is checked'
     );
     assert.ok(
-      checkboxInputs[1].checked,
+      findAll(checkboxInputSelector)[1].checked,
       'after clicking second checkbox - second checkbox input is checked'
     );
     assert.ok(
-      checkboxInputs[2].checked,
+      findAll(checkboxInputSelector)[2].checked,
       'after clicking second checkbox - third checkbox input is checked'
     );
 
@@ -428,15 +424,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       "after clicking third checkbox - selected values does not contain 'three'"
     );
     assert.ok(
-      checkboxInputs[0].checked,
+      findAll(checkboxInputSelector)[0].checked,
       'after clicking third checkbox - first checkbox input is checked'
     );
     assert.ok(
-      checkboxInputs[1].checked,
+      findAll(checkboxInputSelector)[1].checked,
       'after clicking third checkbox - second checkbox input is checked'
     );
     assert.notOk(
-      checkboxInputs[2].checked,
+      findAll(checkboxInputSelector)[2].checked,
       'after clicking third checkbox - third checkbox input is not checked'
     );
   });
