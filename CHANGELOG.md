@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v3.0.8
 - [#278](https://github.com/smile-io/ember-polaris/pull/278) [ENHANCEMENT] Add support for `destructive` property on `polaris-page`'s `primaryAction`
 
 ### v3.0.7 (February 18, 2019)
