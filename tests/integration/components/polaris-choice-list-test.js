@@ -618,4 +618,27 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
 
     assert.dom(choiceErrorSelector).exists();
   });
+
+  test('it updates the list of selected choices when a new `selected` array is passed in', async function(assert) {
+    this.set('selected', ['one']);
+    await render(hbs`
+      {{polaris-choice-list
+        choices=(array
+          (hash
+            label="option"
+            value="one"
+          )
+          (hash
+            label="option"
+            value="two"
+          )
+        )
+        selected=selected
+      }}
+    `);
+
+    this.set('selected', ['two']);
+
+    assert.dom('.Polaris-RadioButton__Input:checked').hasValue('two');
+  });
 });
