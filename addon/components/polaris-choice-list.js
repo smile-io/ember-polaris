@@ -167,7 +167,7 @@ export default Component.extend({
   /**
    * @private
    */
-  checkedChoices: computed('choices.[]', function() {
+  checkedChoices: computed('choices.[]', 'selected.[]', function() {
     const choices = this.get('choices') || [];
     const selected = this.get('selected');
 

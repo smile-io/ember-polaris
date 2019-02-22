@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#279](https://github.com/smile-io/ember-polaris/pull/279) [FIX] Ensure `polaris-choice-list` updates properly when the `selected` array is swapped out
+
 ### v3.0.8
 - [#278](https://github.com/smile-io/ember-polaris/pull/278) [ENHANCEMENT] Add support for `destructive` property on `polaris-page`'s `primaryAction`
 
