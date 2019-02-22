@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unpublished
+### v3.0.11 (February 22, 2019)
 - [#281](https://github.com/smile-io/ember-polaris/pull/281) [ENHANCEMENT] Handle non-numeric/non-finite `progress` values in `polaris-progress-bar`
 
 ### v3.0.10 (February 22, 2019)
