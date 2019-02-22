@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unpublished
+### v3.0.10 (February 22, 2019)
 - [#280](https://github.com/smile-io/ember-polaris/pull/280) [ENHANCEMENT] Allow passing a component as `polaris-choice`'s `helpText` property
 
 ### v3.0.9 (February 22, 2019)
