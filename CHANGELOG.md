@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unpublished
+- [#280](https://github.com/smile-io/ember-polaris/pull/280) [ENHANCEMENT] Allow passing a component as `polaris-choice`'s `helpText` property
+
 ### v3.0.9 (February 22, 2019)
 - [#279](https://github.com/smile-io/ember-polaris/pull/279) [FIX] Ensure `polaris-choice-list` updates properly when the `selected` array is swapped out
 
