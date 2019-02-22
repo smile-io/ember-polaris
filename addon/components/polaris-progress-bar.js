@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify, htmlSafe } from '@ember/string';
+import { isPresent } from '@ember/utils';
 import layout from '../templates/components/polaris-progress-bar';
 
 const allowedSizes = ['small', 'medium', 'large'];
@@ -59,6 +60,10 @@ export default Component.extend({
     let progress = this.get('progress');
     let parsedProgress;
 
+    if (typeof progress !== 'number') {
+      return null;
+    }
+
     if (progress < 0) {
       parsedProgress = 0;
     } else if (progress > 100) {
@@ -74,6 +79,11 @@ export default Component.extend({
    * @private
    */
   progressStyle: computed('parsedProgress', function() {
-    return htmlSafe(`width: ${this.get('parsedProgress')}%;`);
+    let parsedProgress = this.get('parsedProgress');
+    if (isPresent(parsedProgress)) {
+      return htmlSafe(`width: ${parsedProgress}%;`);
+    }
+
+    return null;
   }).readOnly(),
 });

@@ -130,7 +130,7 @@ module('Integration | Component | polaris progress bar', function(hooks) {
       );
   });
 
-  test('it correctly handles out-of-bounds progress numbers', async function(assert) {
+  test('it correctly handles out-of-bounds progress values', async function(assert) {
     this.set('progress', -23);
     await render(hbs`{{polaris-progress-bar progress=progress}}`);
 
@@ -142,6 +142,15 @@ module('Integration | Component | polaris progress bar', function(hooks) {
         'sets the progress element to 0 when the progress is negative'
       );
 
+    this.set('progress', -Infinity);
+    assert
+      .dom(barProgressSelector)
+      .hasAttribute(
+        'value',
+        '0',
+        'sets the progress element to 0 when the progress is negative infinity'
+      );
+
     this.set('progress', 145);
     assert
       .dom(barProgressSelector)
@@ -149,6 +158,39 @@ module('Integration | Component | polaris progress bar', function(hooks) {
         'value',
         '100',
         'sets the progress element to 100 when the progress is greater than 100'
+      );
+
+    this.set('progress', Infinity);
+    assert
+      .dom(barProgressSelector)
+      .hasAttribute(
+        'value',
+        '100',
+        'sets the progress element to 100 when the progress is infinite'
+      );
+
+    this.set('progress', null);
+    assert
+      .dom(barProgressSelector)
+      .doesNotHaveAttribute(
+        'value',
+        'does not set the progress element value when progress is null'
+      );
+
+    this.set('progress', 'a string');
+    assert
+      .dom(barProgressSelector)
+      .doesNotHaveAttribute(
+        'value',
+        'does not set the progress element value when progress is a string'
+      );
+
+    this.set('progress', undefined);
+    assert
+      .dom(barProgressSelector)
+      .doesNotHaveAttribute(
+        'value',
+        'does not set the progress element value when progress is undefined'
       );
   });
 });
