@@ -466,3 +466,14 @@ test('it handles the disabled attribute correctly', function(assert) {
 
   assert.dom(labelSelector).hasNoClass(disabledClass);
 });
+
+test('it allows passing a component as the helpText property', function(assert) {
+  this.render(hbs`
+    {{polaris-choice
+      inputId="help-text-component-test"
+      helpText=(component "polaris-icon" source="circle-check-mark")
+    }}
+  `);
+
+  assert.dom('[data-test-icon]').exists({ count: 1 });
+});

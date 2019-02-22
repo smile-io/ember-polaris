@@ -79,7 +79,7 @@ export default Component.extend({
    * Help text for this choice
    *
    * @property helpText
-   * @type {String}
+   * @type {String|Component|Object}
    * @default: null
    * @public
    */
