@@ -211,39 +211,15 @@ test('it renders the correct HTML when using sections', function(assert) {
   );
 });
 
-test('it renders the correct HTML when using annotated sections in inline form', function(assert) {
+test('it renders the correct HTML when no title, text or description are passed to annotated section', function(assert) {
   this.render(hbs`
     {{#polaris-layout as |layout|}}
       {{layout.annotatedSection}}
-
-      {{layout.annotatedSection
-        text="This is an inline annotated section without title or description"
-      }}
-
-      {{layout.annotatedSection
-        title="Inline title"
-        text="This is an inline annotated section with a title but no description"
-      }}
-
-      {{layout.annotatedSection
-        description="Inline description"
-        text="This is an inline annotated section with a description but no title"
-      }}
-
-      {{layout.annotatedSection
-        title="Inline title"
-        description="Inline description"
-        text="This is an inline annotated section with both a title and description"
-      }}
     {{/polaris-layout}}
   `);
 
   const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
-  assert.equal(
-    annotationWrappers.length,
-    5,
-    'renders five annotation wrappers'
-  );
+  assert.equal(annotationWrappers.length, 1, 'renders one annotation wrapper');
 
   const textContainerSelector = buildNestedSelector(
     'div.Polaris-Layout__Annotation',
@@ -256,15 +232,102 @@ test('it renders the correct HTML when using annotated sections in inline form',
 
   const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
-  // Check the first annotation.
-  let annotationWrapper = annotationWrappers[0];
-
+  const annotationWrapper = annotationWrappers[0];
   let headers = findAll(headerSelector, annotationWrapper);
-  assert.equal(headers.length, 1, 'first annotation - renders header');
+  assert.equal(headers.length, 1, 'renders header');
+  assert.equal(headers[0].textContent.trim(), '', 'renders header correctly');
+
+  let descriptionSelector = '[data-test-annotation-description]';
+
+  let descriptions = findAll(descriptionSelector, annotationWrapper);
+  assert.equal(
+    descriptions.length,
+    0,
+    'renders description paragraph correctly'
+  );
+
+  let contents = findAll(contentSelector, annotationWrapper);
+  assert.equal(contents.length, 1, 'renders content');
+  assert.equal(contents[0].textContent.trim(), '', 'renders correct content');
+});
+
+test('it renders the correct HTML when a title and no text or description are passed to annotated section', function(assert) {
+  this.render(hbs`
+    {{#polaris-layout as |layout|}}
+      {{layout.annotatedSection
+        text="This is an inline annotated section without title or description"
+      }}
+    {{/polaris-layout}}
+  `);
+
+  const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
+  assert.equal(annotationWrappers.length, 1, 'renders one annotation wrapper');
+
+  const textContainerSelector = buildNestedSelector(
+    'div.Polaris-Layout__Annotation',
+    'div.Polaris-TextContainer'
+  );
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
+  );
+
+  const contentSelector = 'div.Polaris-Layout__AnnotationContent';
+
+  const annotationWrapper = annotationWrappers[0];
+  let headers = findAll(headerSelector, annotationWrapper);
+  assert.equal(headers.length, 1, 'renders header');
+  assert.equal(headers[0].textContent.trim(), '', 'renders header correctly');
+
+  let descriptionSelector = '[data-test-annotation-description]';
+
+  let descriptions = findAll(descriptionSelector, annotationWrapper);
+  assert.equal(
+    descriptions.length,
+    0,
+    'renders description paragraph correctly'
+  );
+
+  let contents = findAll(contentSelector, annotationWrapper);
+  assert.equal(contents.length, 1, 'renders content');
+  assert.equal(
+    contents[0].textContent.trim(),
+    'This is an inline annotated section without title or description',
+    'renders correct content'
+  );
+});
+
+test('it renders the correct HTML when a title and text and no description are passed to annotated section', function(assert) {
+  this.render(hbs`
+    {{#polaris-layout as |layout|}}
+      {{layout.annotatedSection
+        title="Inline title"
+        text="This is an inline annotated section with a title but no description"
+      }}
+    {{/polaris-layout}}
+  `);
+
+  const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
+  assert.equal(annotationWrappers.length, 1, 'renders one annotation wrapper');
+
+  const textContainerSelector = buildNestedSelector(
+    'div.Polaris-Layout__Annotation',
+    'div.Polaris-TextContainer'
+  );
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
+  );
+
+  const contentSelector = 'div.Polaris-Layout__AnnotationContent';
+
+  const annotationWrapper = annotationWrappers[0];
+  let headers = findAll(headerSelector, annotationWrapper);
+  assert.equal(headers.length, 1, 'renders header');
   assert.equal(
     headers[0].textContent.trim(),
-    '',
-    'first annotation - renders header correctly'
+    'Inline title',
+    'renders header correctly'
   );
 
   let descriptionSelector = '[data-test-annotation-description]';
@@ -273,129 +336,116 @@ test('it renders the correct HTML when using annotated sections in inline form',
   assert.equal(
     descriptions.length,
     0,
-    'first annotation - renders description paragraph correctly'
+    'renders description paragraph correctly'
   );
 
   let contents = findAll(contentSelector, annotationWrapper);
-  assert.equal(contents.length, 1, 'first annotation - renders content');
-  assert.equal(
-    contents[0].textContent.trim(),
-    '',
-    'first annotation - renders correct content'
-  );
-
-  // Check the second annotation.
-  annotationWrapper = annotationWrappers[1];
-
-  headers = findAll(headerSelector, annotationWrapper);
-  assert.equal(headers.length, 1, 'second annotation - renders header');
-  assert.equal(
-    headers[0].textContent.trim(),
-    '',
-    'second annotation - renders header correctly'
-  );
-
-  descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(
-    descriptions.length,
-    0,
-    'second annotation - renders description paragraph correctly'
-  );
-
-  contents = findAll(contentSelector, annotationWrapper);
-  assert.equal(contents.length, 1, 'second annotation - renders content');
-  assert.equal(
-    contents[0].textContent.trim(),
-    'This is an inline annotated section without title or description',
-    'second annotation - renders correct content'
-  );
-
-  // Check the third annotation.
-  annotationWrapper = annotationWrappers[2];
-
-  headers = findAll(headerSelector, annotationWrapper);
-  assert.equal(headers.length, 1, 'third annotation - renders header');
-  assert.equal(
-    headers[0].textContent.trim(),
-    'Inline title',
-    'third annotation - renders header correctly'
-  );
-
-  descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(
-    descriptions.length,
-    0,
-    'third annotation - renders description paragraph correctly'
-  );
-
-  contents = findAll(contentSelector, annotationWrapper);
-  assert.equal(contents.length, 1, 'third annotation - renders content');
+  assert.equal(contents.length, 1, 'renders content');
   assert.equal(
     contents[0].textContent.trim(),
     'This is an inline annotated section with a title but no description',
-    'third annotation - renders correct content'
+    'renders correct content'
+  );
+});
+
+test('it renders the correct HTML when text and description string and no title are passed to annotated section', function(assert) {
+  this.render(hbs`
+    {{#polaris-layout as |layout|}}
+      {{layout.annotatedSection
+        description="Inline description"
+        text="This is an inline annotated section with a description but no title"
+      }}
+    {{/polaris-layout}}
+  `);
+
+  const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
+  assert.equal(annotationWrappers.length, 1, 'renders one annotation wrapper');
+
+  const textContainerSelector = buildNestedSelector(
+    'div.Polaris-Layout__Annotation',
+    'div.Polaris-TextContainer'
+  );
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
   );
 
-  // Check the fourth annotation.
-  annotationWrapper = annotationWrappers[3];
+  const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
-  headers = findAll(headerSelector, annotationWrapper);
-  assert.equal(headers.length, 1, 'fourth annotation - renders header');
-  assert.equal(
-    headers[0].textContent.trim(),
-    '',
-    'fourth annotation - renders header correctly'
-  );
+  const annotationWrapper = annotationWrappers[0];
+  let headers = findAll(headerSelector, annotationWrapper);
+  assert.equal(headers.length, 1, 'renders header');
+  assert.equal(headers[0].textContent.trim(), '', 'renders header correctly');
 
-  descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(
-    descriptions.length,
-    1,
-    'fourth annotation - renders description paragraph'
-  );
+  let descriptionSelector = '[data-test-annotation-description]';
+
+  let descriptions = findAll(descriptionSelector, annotationWrapper);
+  assert.equal(descriptions.length, 1, 'renders description paragraph');
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',
-    'fourth annotation - renders header correctly'
+    'renders header correctly'
   );
 
-  contents = findAll(contentSelector, annotationWrapper);
-  assert.equal(contents.length, 1, 'fourth annotation - renders content');
+  let contents = findAll(contentSelector, annotationWrapper);
+  assert.equal(contents.length, 1, 'renders content');
   assert.equal(
     contents[0].textContent.trim(),
     'This is an inline annotated section with a description but no title',
-    'fourth annotation - renders correct content'
+    'renders correct content'
+  );
+});
+
+test('it renders the correct HTML when text and description string and title are passed to annotated section', function(assert) {
+  this.render(hbs`
+    {{#polaris-layout as |layout|}}
+      {{layout.annotatedSection
+        title="Inline title"
+        description="Inline description"
+        text="This is an inline annotated section with both a title and description"
+      }}
+    {{/polaris-layout}}
+  `);
+
+  const annotationWrappers = findAll(layoutAnnotationWrapperSelector);
+  assert.equal(annotationWrappers.length, 1, 'renders one annotation wrapper');
+
+  const textContainerSelector = buildNestedSelector(
+    'div.Polaris-Layout__Annotation',
+    'div.Polaris-TextContainer'
+  );
+  const headerSelector = buildNestedSelector(
+    textContainerSelector,
+    'h2.Polaris-Heading'
   );
 
-  // Check the fifth annotation.
-  annotationWrapper = annotationWrappers[4];
+  const contentSelector = 'div.Polaris-Layout__AnnotationContent';
 
-  headers = findAll(headerSelector, annotationWrapper);
-  assert.equal(headers.length, 1, 'fifth annotation - renders header');
+  const annotationWrapper = annotationWrappers[0];
+  let headers = findAll(headerSelector, annotationWrapper);
+  assert.equal(headers.length, 1, 'renders header');
   assert.equal(
     headers[0].textContent.trim(),
     'Inline title',
-    'fifth annotation - renders header correctly'
+    'renders header correctly'
   );
 
-  descriptions = findAll(descriptionSelector, annotationWrapper);
-  assert.equal(
-    descriptions.length,
-    1,
-    'fifth annotation - renders description paragraph'
-  );
+  let descriptionSelector = '[data-test-annotation-description]';
+
+  let descriptions = findAll(descriptionSelector, annotationWrapper);
+  assert.equal(descriptions.length, 1, 'renders description paragraph');
   assert.equal(
     descriptions[0].textContent.trim(),
     'Inline description',
-    'fifth annotation - renders header correctly'
+    'renders header correctly'
   );
 
-  contents = findAll(contentSelector, annotationWrapper);
-  assert.equal(contents.length, 1, 'fifth annotation - renders content');
+  let contents = findAll(contentSelector, annotationWrapper);
+  assert.equal(contents.length, 1, 'renders content');
   assert.equal(
     contents[0].textContent.trim(),
     'This is an inline annotated section with both a title and description',
-    'fifth annotation - renders correct content'
+    'renders correct content'
   );
 });
 
