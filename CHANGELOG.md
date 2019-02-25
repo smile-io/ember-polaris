@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unpublished
+- [#282](https://github.com/smile-io/ember-polaris/pull/282) [ENHANCEMENT] Allow passing component for annotated layout section's description
+
 ### v3.0.11 (February 22, 2019)
 - [#281](https://github.com/smile-io/ember-polaris/pull/281) [ENHANCEMENT] Handle non-numeric/non-finite `progress` values in `polaris-progress-bar`
 
