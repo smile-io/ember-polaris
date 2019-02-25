@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import layout from '../../templates/components/polaris-layout/annotation';
 
 export default Component.extend({
@@ -10,8 +11,8 @@ export default Component.extend({
    * Title for the section
    *
    * @property title
-   * @type {string}
-   * @default: null
+   * @type {String}
+   * @default null
    * @public
    */
   title: null,
@@ -20,9 +21,21 @@ export default Component.extend({
    * Description for the section
    *
    * @property description
-   * @type {string}
-   * @default: null
+   * @type {String|Component|Object}
+   * @default null
    * @public
    */
   description: null,
+
+  /**
+   * Whether the `description` is a string
+   *
+   * @property hasStringDescription
+   * @type {Boolean}
+   * @private
+   */
+  hasStringDescription: computed('description', function() {
+    let description = this.get('description');
+    return typeof description === 'string';
+  }).readOnly(),
 });

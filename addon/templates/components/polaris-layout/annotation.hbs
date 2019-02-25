@@ -1,14 +1,14 @@
 {{#polaris-text-container}}
   {{polaris-heading text=title}}
 
-  {{#if (or hasBlock description)}}
+  {{#if description}}
     <div data-test-annotation-description class="Polaris-Layout__AnnotationDescription">
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
+      {{#if hasStringDescription}}
         <p>
           {{description}}
         </p>
+      {{else if description}}
+        {{render-content description}}
       {{/if}}
     </div>
   {{/if}}
