@@ -45,6 +45,7 @@ Annotated layout:
 
   {{#layout.annotatedSection
     title="Second section"
+    description=(component "my-custom-description-component")
   }}
     <p>Section 2 content here</p>
   {{/layout.annotatedSection}}
