@@ -1,6 +1,6 @@
 {
   "name": "@smile-io/ember-polaris",
-  "version": "3.0.11",
+  "version": "4.0.0",
   "description": "Ember components for Shopify's Polaris design system.",
   "keywords": [
     "component library",
