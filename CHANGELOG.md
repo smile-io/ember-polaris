@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#283](https://github.com/smile-io/ember-polaris/pull/283) [FIX] Fix height bug on multiline text field
+
 ### v4.0.0 (February 26, 2019)
 - [#282](https://github.com/smile-io/ember-polaris/pull/282) [ENHANCEMENT] Allow passing component for annotated layout section's description
 

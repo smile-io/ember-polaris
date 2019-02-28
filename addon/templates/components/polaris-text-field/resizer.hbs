@@ -1,8 +1,11 @@
-<div class="Polaris-TextField__DummyInput">
-  {{finalContents}}
-</div>
+{{!--
+  N.B. the two dummy input divs in this component MUST be one-liners.
+  If they are split onto multiple lines, they will be too big, and as a result
+  the text area control will appear a couple of lines taller than it should do.
+  This is because of the `white-space: pre-wrap` style applied by Polaris,
+  which replicates the white space/wrapping behaviour of the textarea control.
+--}}
+<div class="Polaris-TextField__DummyInput">{{finalContents}}</div>
 {{#if minimumLines}}
-  <div class="Polaris-TextField__DummyInput">
-    {{contentsForMinimumLines}}
-  </div>
+  <div class="Polaris-TextField__DummyInput">{{contentsForMinimumLines}}</div>
 {{/if}}
