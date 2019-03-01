@@ -66,7 +66,7 @@ export default Service.extend(
       this.throttleTask('manageStickyItems', 50);
     },
 
-    manageStickyItems() {
+    manageStickyItems(isFinalRun = false) {
       let stickyItems = this.get('stickyItems');
       if (stickyItems.length <= 0) {
         return;
@@ -90,16 +90,18 @@ export default Service.extend(
         handlePositioning(sticky, top, left, width);
       });
 
-      /*
-       * This call isn't in the original code, but there seems to be
-       * a difference between how the throttle implementations work
-       * between the React and Ember worlds, which meant that sticky
-       * items in Ember could end up in the wrong position after a
-       * scroll/resize event, until the next such event. This is a
-       * workaround that ensures that no sticky items will be left
-       * in the wrong positions more than 50ms after these events.
-       */
-      this.debounceTask('manageStickyItems', 50);
+      if (!isFinalRun) {
+        /*
+         * This call isn't in the original code, but there seems to be
+         * a difference between how the throttle implementations work
+         * between the React and Ember worlds, which meant that sticky
+         * items in Ember could end up in the wrong position after a
+         * scroll/resize event, until the next such event. This is a
+         * workaround that ensures that no sticky items will be left
+         * in the wrong positions more than 50ms after these events.
+         */
+        this.debounceTask('manageStickyItems', true, 50);
+      }
     },
 
     evaluateStickyItem(stickyItem, scrollTop, containerTop) {
