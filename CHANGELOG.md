@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### Unreleased
+- [#284](https://github.com/smile-io/ember-polaris/pull/284) [FIX] Fix infinite loop in `sticky-manager` service
+
 ### v4.0.1 (February 28, 2019)
 - [#283](https://github.com/smile-io/ember-polaris/pull/283) [FIX] Fix height bug on multiline text field
 
