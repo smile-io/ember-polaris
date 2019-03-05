@@ -1,6 +1,6 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v4.0.2 (March 5, 2019)
 - [#284](https://github.com/smile-io/ember-polaris/pull/284) [FIX] Fix infinite loop in `sticky-manager` service
 
 ### v4.0.1 (February 28, 2019)
