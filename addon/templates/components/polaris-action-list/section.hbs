@@ -9,10 +9,23 @@
       </p>
     {{/if}}
 
-    <ul class="Polaris-ActionList__Actions">
+    <ul
+      class="Polaris-ActionList__Actions"
+      role={{sectionRole}}
+    >
       {{#each section.items as |item|}}
         {{polaris-action-list/item
-          item=item
+          text=item.text
+          helpText=item.helpText
+          url=item.url
+          destructive=item.destructive
+          disabled=item.disabled
+          icon=item.icon
+          image=item.image
+          ellipsis=item.ellipsis
+          active=item.active
+          role=actionRole
+          badge=item.badge
           onAction=(action "onItemAction" item)
         }}
       {{/each}}

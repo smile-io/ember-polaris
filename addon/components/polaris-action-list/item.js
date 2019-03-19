@@ -11,43 +11,110 @@ export default Component.extend({
   layout,
 
   /**
-   * The item to display
-   *
-   * Supported properties:
-   *  - content
-   *  - helpText
-   *  - url (not currently supported)
-   *  - destructive
-   *  - disabled
-   *  - icon
-   *  - image
-   *  - ellipsis (not currently supported)
-   *  - active
-   *  - role
-   *  - badge (not currently supported)
-   *  - onAction
-   *
-   * @property item
+   * @property text
+   * @type {String}
+   * @default null
    * @public
+   */
+  text: null,
+
+  /**
+   * @property helpText
+   * @type {String}
+   * @default null
+   * @public
+   */
+  helpText: null,
+
+  /**
+   * Not currently supported
+   * @property url
+   * @type {String}
+   * @default null
+   * @public
+   */
+  url: null,
+
+  /**
+   * @property destructive
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  destructive: false,
+
+  /**
+   * @property disabled
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  disabled: false,
+
+  /**
+   * @property icon
+   * @type {String}
+   * @default null
+   * @public
+   */
+  icon: null,
+
+  /**
+   * @property image
+   * @type {String}
+   * @default null
+   * @public
+   */
+  image: null,
+
+  /**
+   * Not currently supported
+   * @property ellipsis
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  ellipsis: false,
+
+  /**
+   * @property active
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  active: false,
+
+  /**
+   * @property role
+   * @type {String}
+   * @default null
+   * @public
+   */
+  role: null,
+
+  /**
+   * Object with `status` and `content` properties
+   * Not currently supported
+   * @property badge
    * @type {Object}
    * @default null
+   * @public
    */
-  item: null,
+  badge: null,
 
   /**
    * Callback for the item when clicked
    *
    * @property onAction
    * @public
-   * @type {function}
+   * @type {Function}
    * @default no-op
    */
   onAction() {},
 
-  itemClasses: computed('item.{destructive,disabled,active}', function() {
+  itemClasses: computed('destructive', 'disabled', 'active', function() {
     let classNames = ['Polaris-ActionList__Item'];
-    let item = this.get('item');
-    let { destructive, disabled, active } = item;
+    let { destructive, disabled, active } = this;
 
     if (destructive) {
       classNames.push('Polaris-ActionList--destructive');
@@ -64,8 +131,8 @@ export default Component.extend({
     return classNames.join(' ');
   }),
 
-  imageBackgroundStyle: computed('item.image', function() {
-    let url = this.get('item.image');
+  imageBackgroundStyle: computed('image', function() {
+    let url = this.get('image');
     return url ? htmlSafe(`background-image: url(${url})`) : '';
   }).readOnly(),
 });
