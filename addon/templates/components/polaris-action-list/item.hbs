@@ -1,3 +1,5 @@
+{{!-- TODO: add scroll support here when `polaris-scrollable` is available. --}}
+
 <button
   class={{itemClasses}}
   disabled={{item.disabled}}
@@ -18,7 +20,14 @@
     {{/if}}
 
     <div class="Polaris-ActionList__Text">
-      {{item.text}}
+      {{#if item.helpText}}
+        <div>
+          <div>{{item.text}}</div>
+          {{polaris-text-style variation="subdued" text=item.helpText}}
+        </div>
+      {{else}}
+        {{item.text}}
+      {{/if}}
     </div>
   </div>
 </button>

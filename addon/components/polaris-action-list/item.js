@@ -6,6 +6,8 @@ import layout from '../../templates/components/polaris-action-list/item';
 export default Component.extend({
   tagName: 'li',
 
+  attributeBindings: ['role', 'active:aria-selected'],
+
   layout,
 
   /**
@@ -13,12 +15,15 @@ export default Component.extend({
    *
    * Supported properties:
    *  - content
+   *  - helpText
    *  - url (not currently supported)
    *  - destructive
    *  - disabled
    *  - icon
    *  - image
    *  - ellipsis (not currently supported)
+   *  - active
+   *  - role
    *  - badge (not currently supported)
    *  - onAction
    *
@@ -39,10 +44,10 @@ export default Component.extend({
    */
   onAction() {},
 
-  itemClasses: computed('item.{destructive,disabled}', function() {
+  itemClasses: computed('item.{destructive,disabled,active}', function() {
     let classNames = ['Polaris-ActionList__Item'];
     let item = this.get('item');
-    let { destructive, disabled } = item;
+    let { destructive, disabled, active } = item;
 
     if (destructive) {
       classNames.push('Polaris-ActionList--destructive');
@@ -50,6 +55,10 @@ export default Component.extend({
 
     if (disabled) {
       classNames.push('Polaris-ActionList--disabled');
+    }
+
+    if (active) {
+      classNames.push('Polaris-ActionList--active');
     }
 
     return classNames.join(' ');
