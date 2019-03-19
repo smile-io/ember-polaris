@@ -449,4 +449,21 @@ module('Integration | Component | polaris action list', function(hooks) {
     assert.ok(this.get('nestedActionFired'), 'nested action was fired');
     assert.notOk(this.get('formSubmitted'), 'form submit action is not fired');
   });
+
+  test('renders helpText when the helpText prop is defined', async function(assert) {
+    await render(hbs`
+      {{polaris-action-list
+        items=(array
+          (hash
+            text="I'm helpful"
+            helpText="Yay I'm helping!"
+          )
+        )
+      }}
+    `);
+
+    assert
+      .dom(`${actionListItemSelector} [data-test-text-style]`)
+      .hasText(`Yay I'm helping!`);
+  });
 });
