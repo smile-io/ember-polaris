@@ -1,4 +1,4 @@
-{{#if initials}}
+{{#if shouldShowInitials}}
   <span class="Polaris-Avatar__Initials">
     <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
       <text
@@ -15,12 +15,15 @@
   </span>
 {{/if}}
 
-{{#if finalSource}}
+{{#if shouldShowImage}}
   {{!-- TODO: replace this with polaris-image when implemented. --}}
   <img
+    {{! template-lint-disable no-invalid-interactive }}
     class="Polaris-Avatar__Image"
     src={{finalSource}}
     alt=""
     role="presentation"
+    onload={{action "handleLoad"}}
+    onerror={{action "handleError"}}
   >
 {{/if}}
