@@ -35,13 +35,16 @@
       {{#if action}}
         <div class="Polaris-Banner__Actions">
           {{#polaris-button-group}}
-            {{polaris-button
-              outline=true
-              text=action.text
-              disabled=action.disabled
-              loading=action.loading
-              onClick=(action "triggerAction" action)
-            }}
+            <div class="Polaris-Banner__PrimaryAction">
+              {{polaris-button
+                outline=true
+                size=(if withinContentContainer "slim")
+                text=action.text
+                disabled=action.disabled
+                loading=action.loading
+                onClick=(action "triggerAction" action)
+              }}
+            </div>
 
             {{#if secondaryAction}}
               <button

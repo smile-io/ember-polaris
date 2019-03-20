@@ -349,7 +349,7 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   actions = find(actionsSelector, content);
   let btnGroup = find('div.Polaris-ButtonGroup', actions);
   let actionBtn = find(
-    'div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline',
+    'div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline',
     btnGroup
   );
   let secondaryActionBtn = find(
@@ -385,7 +385,7 @@ test('it supports `action` and `secondaryAction`', function(assert) {
   actions = find(actionsSelector, content);
   btnGroup = find('div.Polaris-ButtonGroup', actions);
   actionBtn = find(
-    'div.Polaris-ButtonGroup__Item > button.Polaris-Button.Polaris-Button--outline',
+    'div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline',
     btnGroup
   );
   secondaryActionBtn = find(
