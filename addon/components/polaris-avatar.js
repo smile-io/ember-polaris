@@ -159,7 +159,7 @@ export default Component.extend({
    * @private
    * @type {Boolean}
    */
-  hasImage: computed(function() {
+  hasImage: computed('source', 'customer', 'hasError', function() {
     let { source, customer, hasError } = this;
 
     return (source || customer) && !hasError;

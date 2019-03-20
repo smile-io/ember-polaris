@@ -22,7 +22,7 @@
     src={{finalSource}}
     alt=""
     role="presentation"
-    {{action "handleLoad" on="load"}}
-    {{action "handleError" on="error"}}
+    onload={{action "handleLoad"}}
+    onerror={{action "handleError"}}
   >
 {{/if}}
