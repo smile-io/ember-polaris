@@ -58,4 +58,13 @@ export default Component.extend({
    * @default null
    */
   secondaryAction: null,
+
+  /**
+   * Callback when banner is dismissed
+   *
+   * @property onDismiss
+   * @type {Function}
+   * @default null
+   */
+  onDismiss: null,
 });
