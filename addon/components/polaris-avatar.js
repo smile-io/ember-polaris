@@ -160,7 +160,11 @@ export default Component.extend({
    * @type {Boolean}
    */
   hasImage: computed('source', 'customer', 'hasError', function() {
-    let { source, customer, hasError } = this;
+    let { source, customer, hasError } = this.getProperties(
+      'source',
+      'customer',
+      'hasError'
+    );
 
     return (source || customer) && !hasError;
   }).readOnly(),
@@ -261,7 +265,7 @@ export default Component.extend({
    * @type {Boolean}
    */
   shouldShowInitials: computed('initials', 'hasImage', function() {
-    let { initials, hasImage } = this;
+    let { initials, hasImage } = this.getProperties('initials', 'hasImage');
     return initials && !hasImage;
   }).readOnly(),
 
@@ -272,7 +276,10 @@ export default Component.extend({
    * @type {Boolean}
    */
   shouldShowImage: computed('finalSource', 'hasError', function() {
-    let { finalSource, hasError } = this;
+    let { finalSource, hasError } = this.getProperties(
+      'finalSource',
+      'hasError'
+    );
     return finalSource && !hasError;
   }).readOnly(),
 
