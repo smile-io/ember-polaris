@@ -208,9 +208,9 @@ test('renders the correct HTML', function(assert) {
       'Polaris-Button--disabled',
       'disabled link button - disabled class'
     );
-  assert.ok(
-    button.attributes['disabled'],
-    'disabled link button - disabled attribute'
+  assert.notOk(
+    button.attributes['href'],
+    'disabled link button - does not have href'
   );
 
   // Slim button.
