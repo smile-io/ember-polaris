@@ -247,7 +247,7 @@ module('Integration | Component | polaris-button', function(hooks) {
         let clickCount = 0;
         this.set('incrementClickCount', () => clickCount++);
         await render(hbs`
-          {{polaris-button onClick=(action incrementClickCount) url="http://google.com"}}
+          {{polaris-button onClick=(action incrementClickCount) url="#"}}
         `);
         await click('[data-polaris-unstyled]');
         assert.equal(clickCount, 1);
