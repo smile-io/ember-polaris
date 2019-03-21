@@ -51,12 +51,12 @@ export default Component.extend({
   /**
    * A unique identifier for the button
    *
-   * @property elementId
+   * @property id
    * @type {String}
    * @default null
    * @public
    */
-  elementId: null,
+  id: null,
 
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons

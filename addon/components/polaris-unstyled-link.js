@@ -96,7 +96,7 @@ export default Component.extend({
   dataPolarisUnstyled: 'true',
 
   click: mapEventToAction('onClick', {
-    preventDefault: false,
+    preventDefault: true,
     stopPropagation: true,
   }),
 

@@ -15,7 +15,7 @@
         Render an `<a>` so toggling disabled/enabled state changes only the
         `href` attribute instead of replacing the whole element.
       --}}
-      <a id={{elementId}} class={{classes}} aria-label={{accessibilityLabel}}>
+      <a id={{id}} class={{classes}} aria-label={{accessibilityLabel}}>
         {{#if hasBlock}}
           {{#component contentComponent}}
             {{yield}}
@@ -26,7 +26,7 @@
       </a>
     {{else}}
       {{#polaris-unstyled-link
-        id=elementId
+        id=id
         url=url
         external=external
         download=download
@@ -48,7 +48,7 @@
     {{/if}}
   {{else}}
     <button
-      id={{elementId}}
+      id={{id}}
       type={{type}}
       onclick={{action onClick}}
       onfocus={{action onFocus}}
