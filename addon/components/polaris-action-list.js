@@ -36,6 +36,16 @@ export default Component.extend({
   sections: null,
 
   /**
+   * Defines a specific role attribute for each action in the list
+   *
+   * @property actionRole
+   * @public
+   * @type {String}
+   * @default null
+   */
+  actionRole: null,
+
+  /**
    * Callback when any item is clicked or keypressed
    *
    * @property onActionAnyItem
