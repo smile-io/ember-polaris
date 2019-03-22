@@ -1,411 +1,182 @@
-import Component from '@ember/component';
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test, skip } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render, click, focus, blur, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find, focus, click, blur } from 'ember-native-dom-helpers';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
-import buildNestedSelector from '../../helpers/build-nested-selector';
 
-// Mock the polaris-choice component to simplify testing what gets rendered.
-// const MockPolarisChoiceComponent = Component.extend({
-//   tagName: 'label',
-//   classNames: ['Polaris-Choice'],
-//
-//   layout: hbs`{{yield}}`,
-//
-//   // Bind attributes to the element's dataset for testing.
-//   attributeBindings: [
-//     'inputId:data-input-id',
-//     'label:data-label',
-//     'labelHidden:data-label-hidden',
-//     'helpText:data-help-text',
-//     'error:data-error',
-//   ],
-// });
+module('Integration | Component | polaris-checkbox', function(hooks) {
+  setupRenderingTest(hooks);
 
-const DummyLabelComponent = Component.extend({
-  tagName: 'div',
-  classNames: ['dummy-label'],
+  test('sets pass through properties on the input', async function(assert) {
+    await render(hbs`
+      {{polaris-checkbox label="Checkbox" checked=true name="Checkbox" value="Some value"}}
+    `);
 
-  layout: hbs`{{yield}}`,
-
-  text: null,
-});
-
-moduleForComponent(
-  'polaris-checkbox',
-  'Integration | Component | polaris checkbox',
-  {
-    integration: true,
-
-    beforeEach() {
-      this.register('component:svg-jar', MockSvgJarComponent);
-      this.register('component:dummy-label', DummyLabelComponent);
-    },
-  }
-);
-
-const choiceSelector = 'label.Polaris-Choice';
-const checkboxControlWrapperSelector = buildNestedSelector(
-  choiceSelector,
-  'span.Polaris-Choice__Control'
-);
-const checkboxWrapperSelector = buildNestedSelector(
-  checkboxControlWrapperSelector,
-  'span.Polaris-Checkbox'
-);
-const checkboxInputSelector = buildNestedSelector(
-  checkboxWrapperSelector,
-  'input.Polaris-Checkbox__Input[type="checkbox"]'
-);
-const checkboxBackdropSelector = buildNestedSelector(
-  checkboxWrapperSelector,
-  'span.Polaris-Checkbox__Backdrop'
-);
-const checkboxIconSelector = buildNestedSelector(
-  checkboxWrapperSelector,
-  'span.Polaris-Checkbox__Icon'
-);
-const checkboxIconSvgSelector = buildNestedSelector(
-  checkboxIconSelector,
-  'span.Polaris-Icon',
-  'svg'
-);
-const checkboxLabelSelector = buildNestedSelector(
-  choiceSelector,
-  'span.Polaris-Choice__Label'
-);
-
-test('it renders the correct HTML', function(assert) {
-  this.setProperties({
-    error: "I've got an error",
-    labelHidden: true,
+    assert.dom('input').isChecked();
+    assert.dom('input').hasAttribute('name', 'Checkbox');
+    assert.dom('input').hasValue('Some value');
   });
-  this.render(hbs`
-    {{polaris-checkbox
-      inputId="some-checkbox-id"
-      name="Check me out"
-      value="Check it"
-      label="Checkbox label"
-      labelHidden=labelHidden
-      helpText="Help!"
-      error=error
-    }}
-  `);
 
-  const choices = findAll(choiceSelector);
-  assert.equal(choices.length, 1, 'renders one `polaris-choice` component');
+  module('onChange()', function() {
+    test('is called with the new checked value of the input on change', async function(assert) {
+      this.set('handleChange', (newChecked, checkboxId) =>
+        this.setProperties({ newChecked, checkboxId })
+      );
+      await render(hbs`
+        {{polaris-checkbox inputId="MyCheckbox" label="Checkbox" onChange=(action handleChange)}}
+      `);
+      await click('input');
+      assert.equal(this.get('newChecked'), true);
+      assert.equal(this.get('checkboxId'), 'MyCheckbox');
+    });
 
-  const choice = choices[0];
-  assert.ok(
-    choice.classList.contains('Polaris-Choice--labelHidden'),
-    'sets the labelHidden class when the label is hidden'
-  );
+    test('sets focus on the input when checkbox is toggled off', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox inputId="checkboxId" label="Checkbox" onChange=(action (mut dummy))}}
+      `);
+      await click('input');
 
-  this.set('labelHidden', false);
-  assert.notOk(
-    choice.classList.contains('Polaris-Choice--labelHidden'),
-    'does not set the labelHidden class when the label is not hidden'
-  );
-
-  const helpTextSelector = buildNestedSelector(
-    'div.Polaris-Choice__Descriptions',
-    'div.Polaris-Choice__HelpText'
-  );
-  const helpTexts = findAll(helpTextSelector);
-  assert.equal(helpTexts.length, 1, 'renders one help text');
-  assert.equal(
-    helpTexts[0].textContent.trim(),
-    'Help!',
-    'renders the correct help text'
-  );
-
-  const errorSelector = buildNestedSelector(
-    'div.Polaris-Choice__Descriptions',
-    'div.Polaris-Choice__Error'
-  );
-  const errors = findAll(errorSelector);
-  assert.equal(errors.length, 1, 'renders one error');
-  assert.equal(
-    errors[0].textContent.trim(),
-    "I've got an error",
-    'renders the correct error text'
-  );
-
-  // Check the label.
-  const labels = findAll(checkboxLabelSelector);
-  assert.equal(labels.length, 1, 'renders one checkbox label');
-  assert.equal(
-    labels[0].textContent.trim(),
-    'Checkbox label',
-    'renders the correct checkbox label content'
-  );
-
-  // Check the wrapper element and its class handling.
-  const checkboxWrappers = findAll(checkboxWrapperSelector);
-  assert.equal(checkboxWrappers.length, 1, 'renders one checkbox wrapper');
-  assert.ok(
-    checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'),
-    'applies error class when error present'
-  );
-
-  this.set('error', null);
-  assert.notOk(
-    checkboxWrappers[0].classList.contains('Polaris-Checkbox--error'),
-    'does not apply error class when error not present'
-  );
-
-  // Check the input.
-  const inputs = findAll(checkboxInputSelector);
-  assert.equal(inputs.length, 1, 'renders one checkbox input');
-
-  const input = inputs[0];
-  assert.equal(input.id, 'some-checkbox-id', 'checkbox input has the right id');
-  assert.equal(input.name, 'Check me out', 'checkbox input has the right name');
-  assert.equal(input.value, 'Check it', 'checkbox input has the right value');
-
-  const backdrops = findAll(checkboxBackdropSelector);
-  assert.equal(backdrops.length, 1, 'renders one checkbox backdrop');
-
-  const icons = findAll(checkboxIconSvgSelector);
-  assert.equal(icons.length, 1, 'renders one checkbox icon');
-  assert.equal(
-    icons[0].dataset.iconSource,
-    'polaris/checkmark',
-    'renders the correct checkbox icon'
-  );
-});
-
-test('it handles the disabled attribute correctly', function(assert) {
-  this.set('disabled', true);
-  this.render(hbs`{{polaris-checkbox disabled=disabled}}`);
-
-  const input = find(checkboxInputSelector);
-  assert.ok(input, 'renders the input');
-  assert.ok(input.disabled, 'checkbox input is disabled when disabled is true');
-
-  this.set('disabled', false);
-  assert.notOk(
-    input.disabled,
-    'checkbox input is not disabled when disabled is false'
-  );
-});
-
-test("it sets the input's aria-describedby attribute correctly", function(assert) {
-  this.setProperties({
-    error: 'some error',
-    helpText: 'some help text',
+      assert.dom('input').isFocused();
+    });
   });
-  this.render(hbs`
-    {{polaris-checkbox
-      inputId="described-checkbox"
-      error=error
-      helpText=helpText
-    }}
-  `);
 
-  assert.ok(find(checkboxInputSelector), 'renders the input');
+  module('onFocus()', function() {
+    test('is called when the input is focused', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" onFocus=(action (mut wasOnFocusCalled) true)}}
+      `);
+      await focus('input');
 
-  // With both an error and helpText, the checkbox input should
-  // be described by both the error and help text elements.
-  assert.ok(
-    find(checkboxInputSelector)
-      .getAttribute('aria-describedby')
-      .indexOf('described-checkboxError') > -1 &&
-      find(checkboxInputSelector)
+      assert.ok(this.get('wasOnFocusCalled'));
+    });
+  });
+
+  module('onBlur()', function() {
+    test('is called when the input is focused', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" onBlur=(action (mut wasOnBlurCalled) true)}}
+      `);
+      await focus('input');
+      await blur('input');
+
+      assert.ok(this.get('wasOnBlurCalled'));
+    });
+  });
+
+  module('id', function() {
+    test('sets the id on the input', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox inputId="MyCheckbox" label="Checkbox"}}
+      `);
+
+      assert.dom('input').hasAttribute('id', 'MyCheckbox');
+    });
+
+    test('sets a random id on the input when none is passed', async function(assert) {
+      await render(hbs`{{polaris-checkbox label="Checkbox"}}`);
+
+      assert.dom('input').hasAttribute('id');
+    });
+  });
+
+  module('disabled', function() {
+    test('sets the disabled attribute on the input', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" disabled=true}}
+      `);
+      assert.dom('input').isDisabled();
+    });
+
+    test('is only disabled when disabled is explicitly set to true', async function(assert) {
+      await render(hbs`{{polaris-checkbox label="Checkbox"}}`);
+      assert.dom('input').isNotDisabled();
+
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" disabled=false}}
+      `);
+      assert.dom('input').isNotDisabled();
+    });
+  });
+
+  module('helpText', function() {
+    test('connects the input to the help text', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" helpText="Some help"}}
+      `);
+
+      const helpTextID = find('input').getAttribute('aria-describedby');
+      assert.equal(typeof helpTextID, 'string');
+      assert.dom(`#${helpTextID}`).hasText('Some help');
+    });
+  });
+
+  module('error', function() {
+    test('marks the input as invalid', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox error=(component "wrapper-element" tagName="span") label="Checkbox"}}
+      `);
+      assert.dom('input').hasAttribute('aria-invalid', 'true');
+
+      await render(hbs`
+        {{polaris-checkbox error="Some error" label="Checkbox"}}
+      `);
+      assert.dom('input').hasAttribute('aria-invalid', 'true');
+    });
+
+    test('connects the input to the error', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox error="Some error" label="Checkbox"}}
+      `);
+      const errorID = find('input').getAttribute('aria-describedby');
+      assert.equal(typeof errorID, 'string');
+      assert.dom(`#${errorID}`).hasText('Some error');
+    });
+
+    test('marks the input as invalid but avoids rendering an error message when provided a boolean', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox error=true label="Checkbox"}}
+      `);
+      const errorID = find('input').getAttribute('aria-describedby');
+
+      assert.dom('input').hasAttribute('aria-invalid', 'true');
+      assert.equal(typeof errorID, 'string');
+      assert.dom(`#${errorID}`).doesNotExist();
+    });
+
+    test('connects the input to both an error and help text', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" error="Some error" helpText="Some help"}}
+      `);
+      const descriptions = find('input')
         .getAttribute('aria-describedby')
-        .indexOf('described-checkboxHelpText') > -1,
-    'described by error and help text elements when error and help text are present'
-  );
+        .split(' ');
 
-  this.set('error', null);
-  assert.equal(
-    find(checkboxInputSelector).getAttribute('aria-describedby'),
-    'described-checkboxHelpText',
-    'described by help text element when help text is present'
-  );
-
-  this.set('helpText', null);
-  assert.notOk(
-    find(checkboxInputSelector).getAttribute('aria-describedby'),
-    'has no description when no error or help text are present'
-  );
-
-  this.set('error', 'some other error');
-  assert.equal(
-    find(checkboxInputSelector).getAttribute('aria-describedby'),
-    'described-checkboxError',
-    'described by error element when error is present'
-  );
-});
-
-test("it sets the input's aria-invalid attribute correctly", function(assert) {
-  this.set('error', 'some error');
-  this.render(hbs`{{polaris-checkbox error=error}}`);
-
-  assert.ok(find(checkboxInputSelector), 'renders the input');
-
-  assert.equal(
-    find(checkboxInputSelector).getAttribute('aria-invalid'),
-    'true',
-    'aria-invalid attribute set when error present'
-  );
-
-  this.set('error', null);
-  assert.equal(
-    find(checkboxInputSelector).getAttribute('aria-invalid'),
-    'false',
-    'aria-invalid attribute not when no error'
-  );
-});
-
-test('it handles events correctly', function(assert) {
-  this.setProperties({
-    checked: false,
-    focusFired: false,
-    blurFired: false,
+      assert.equal(descriptions.length, 2);
+      assert.dom(`#${descriptions[0]}`).hasText('Some error');
+      assert.dom(`#${descriptions[1]}`).hasText('Some help');
+    });
   });
-  this.render(hbs`
-    {{polaris-checkbox
-      checked=checked
-      onChange=(action (mut checked))
-      onFocus=(action (mut focusFired) true)
-      onBlur=(action (mut blurFired) true)
-    }}
-  `);
 
-  focus(checkboxInputSelector);
-  assert.ok(this.get('focusFired'), 'after focus - onFocus fired');
-  assert.notOk(this.get('blurFired'), 'after focus - onBlur not fired');
+  module('indeterminate', function() {
+    // Skipping this test since the `indeterminate` attribute does not seem to be getting set on the input.
+    skip('sets the indeterminate attribute to be true on the input when checked is "indeterminate"', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" checked="indeterminate"}}
+      `);
+      assert.dom('input').hasAttribute('indeterminate', 'true');
+    });
 
-  click(checkboxInputSelector);
-  assert.notOk(this.get('blurFired'), 'after click - onBlur not fired');
-  assert.equal(this.get('checked'), true, 'after click - checked has updated');
+    test('sets the aria-checked attribute on the input as mixed when checked is "indeterminate"', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" checked="indeterminate"}}
+      `);
+      assert.dom('input').hasAttribute('aria-checked', 'mixed');
+    });
 
-  blur(checkboxInputSelector);
-  assert.ok(this.get('blurFired'), 'after blur - onBlur fired');
-});
-
-test('it handles the checked state correctly', function(assert) {
-  this.render(hbs`{{polaris-checkbox checked=checked}}`);
-
-  let checkboxInput = find(checkboxInputSelector);
-  assert.ok(checkboxInput, 'renders the checkbox input');
-
-  let checkboxIcon = find(checkboxIconSvgSelector);
-  assert.ok(checkboxIcon, 'renders the checkbox icon');
-
-  // `checked` should default to false.
-  assert.notOk(
-    checkboxInput.checked,
-    'checked unset - checkbox is not checked'
-  );
-  assert.equal(
-    checkboxInput.getAttribute('aria-checked'),
-    'false',
-    'checked unset - checkbox has aria-checked false'
-  );
-  assert.notOk(
-    checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked unset - checkbox does not have indeterminate class'
-  );
-  assert.equal(
-    checkboxIcon.dataset.iconSource,
-    'polaris/checkmark',
-    'checked unset - renders the correct checkbox icon'
-  );
-  assert.notOk(
-    checkboxInput.hasAttribute('indeterminate'),
-    'checked unset - checkbox does not have indeterminate attribute'
-  );
-
-  this.set('checked', true);
-  assert.ok(checkboxInput.checked, 'checked true - checkbox is checked');
-  assert.equal(
-    checkboxInput.getAttribute('aria-checked'),
-    'true',
-    'checked true - checkbox has aria-checked true'
-  );
-  assert.notOk(
-    checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked true - checkbox does not have indeterminate class'
-  );
-  assert.equal(
-    checkboxIcon.dataset.iconSource,
-    'polaris/checkmark',
-    'checked true - renders the correct checkbox icon'
-  );
-  assert.notOk(
-    checkboxInput.hasAttribute('indeterminate'),
-    'checked true - checkbox does not have indeterminate attribute'
-  );
-
-  this.set('checked', 'indeterminate');
-  assert.notOk(
-    checkboxInput.checked,
-    'checked indeterminate - checkbox is not checked'
-  );
-  assert.equal(
-    checkboxInput.getAttribute('aria-checked'),
-    'mixed',
-    'checked indeterminate - checkbox has aria-checked mixed'
-  );
-  assert.ok(
-    checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked indeterminate - checkbox has indeterminate class'
-  );
-  assert.equal(
-    checkboxIcon.dataset.iconSource,
-    'polaris/subtract',
-    'checked indeterminate - renders the correct checkbox icon'
-  );
-  // TODO: figure out why this attribute isn't binding...
-  // assert.equal(checkboxInput.getAttribute('indeterminate'), 'true', 'checked indeterminate - checkbox has indeterminate attribute');
-
-  this.set('checked', false);
-  assert.notOk(
-    checkboxInput.checked,
-    'checked false - checkbox is not checked'
-  );
-  assert.equal(
-    checkboxInput.getAttribute('aria-checked'),
-    'false',
-    'checked false - checkbox has aria-checked false'
-  );
-  assert.notOk(
-    checkboxInput.classList.contains('Polaris-Checkbox__Input--indeterminate'),
-    'checked false - checkbox does not have indeterminate class'
-  );
-  assert.equal(
-    checkboxIcon.dataset.iconSource,
-    'polaris/checkmark',
-    'checked false - renders the correct checkbox icon'
-  );
-  assert.notOk(
-    checkboxInput.hasAttribute('indeterminate'),
-    'checked false - checkbox does not have indeterminate attribute'
-  );
-
-  // TODO: check icon
-});
-
-test('it handles explicit label components correctly', function(assert) {
-  this.render(hbs`{{polaris-checkbox labelComponent="dummy-label"}}`);
-
-  const dummyLabelSelector = buildNestedSelector(
-    checkboxLabelSelector,
-    'div.dummy-label'
-  );
-  const dummyLabels = findAll(dummyLabelSelector);
-  assert.equal(dummyLabels.length, 1, 'renders one label component');
-});
-
-test('it handles label components correctly', function(assert) {
-  this.render(hbs`{{polaris-checkbox label=(component "dummy-label")}}`);
-
-  const dummyLabelSelector = buildNestedSelector(
-    checkboxLabelSelector,
-    'div.dummy-label'
-  );
-  const dummyLabels = findAll(dummyLabelSelector);
-  assert.equal(dummyLabels.length, 1, 'renders one label component');
+    test('sets the checked attribute on the input to false when checked is "indeterminate"', async function(assert) {
+      await render(hbs`
+        {{polaris-checkbox label="Checkbox" checked="indeterminate"}}
+      `);
+      assert.dom('input').isNotChecked();
+    });
+  });
 });
