@@ -1,5 +1,9 @@
 {{#if title}}
-  {{polaris-subheading text=title}}
+  {{#if (is-component-definition title)}}
+    {{render-content title}}
+  {{else}}
+    {{polaris-subheading text=title}}
+  {{/if}}
 {{/if}}
 
 {{#if hasBlock}}
