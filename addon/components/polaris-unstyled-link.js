@@ -25,6 +25,16 @@ export default Component.extend({
   layout,
 
   /**
+   * Content to display inside the link
+   *
+   * @property text
+   * @type {String}
+   * @default null
+   * @public
+   */
+  text: null,
+
+  /**
    * A destination to link to
    *
    * @property url
@@ -56,6 +66,24 @@ export default Component.extend({
   download: null,
 
   /**
+   * Accessibility label
+   *
+   * @property ariaLabel
+   * @type {String}
+   * @default null
+   * @public
+   */
+  ariaLabel: null,
+
+  /**
+   * @property ariaDescribedBy
+   * @type {String}
+   * @default null
+   * @public
+   */
+  ariaDescribedBy: null,
+
+  /**
    * Callback when a link is clicked
    *
    * @property onClick
@@ -66,34 +94,11 @@ export default Component.extend({
   onClick() {},
 
   /**
-   * Content to display inside the link
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   */
-  text: null,
-
-  /**
-   * Accessibility label
-   *
-   * @property ariaLabel
-   * @type {String}
-   * @default null
-   */
-  ariaLabel: null,
-
-  /**
-   * @property ariaDescribedBy
-   * @type {String}
-   * @default null
-   */
-  ariaDescribedBy: null,
-
-  /**
    * @private
    */
   dataPolarisUnstyled: 'true',
+
+  dataTestId: null,
 
   click: mapEventToAction('onClick', {
     preventDefault: false,

@@ -56,6 +56,7 @@ export default Component.extend({
    * @default null
    * @public
    */
+  // eslint-disable-next-line smile-ember/order-in-components
   id: null,
 
   /**
@@ -297,6 +298,8 @@ export default Component.extend({
    * @public
    */
   onKeyDown() {},
+
+  dataTestId: null,
 
   handleMouseUpByBlurring,
 

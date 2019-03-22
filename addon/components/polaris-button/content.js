@@ -6,8 +6,8 @@ import layout from '../../templates/components/polaris-button/content';
  * Internal component to keep rendering button content DRY.
  */
 export default Component.extend({
-  classNames: ['Polaris-Button__Content'],
   tagName: 'span',
+  classNames: ['Polaris-Button__Content'],
 
   layout,
 
