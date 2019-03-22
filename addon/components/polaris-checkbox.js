@@ -34,6 +34,7 @@ export default Component.extend({
    * @property labelComponent
    * @type {String | Component}
    * @default null
+   * @deprecated
    * @public
    */
   labelComponent: null,
@@ -216,5 +217,25 @@ export default Component.extend({
         until: '2.0.0',
       }
     );
+  },
+
+  actions: {
+    handleChange(event) {
+      let { onChange, checkboxId, checked } = this.getProperties(
+        'onChange',
+        'inputId',
+        'checked'
+      );
+      if (onChange == null) {
+        return;
+      }
+
+      let { currentTarget } = event;
+      onChange(currentTarget.checked, inputId);
+
+      if (checked && !currentTarget.checked) {
+        currentTarget.focus();
+      }
+    },
   },
 });
