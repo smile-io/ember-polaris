@@ -13,6 +13,7 @@ moduleForComponent(
 
 const calloutCardSelector = buildNestedSelector(
   'div.Polaris-Card',
+  'div.Polaris-CalloutCard__Container',
   'div.Polaris-Card__Section',
   'div.Polaris-CalloutCard'
 );
@@ -215,4 +216,21 @@ test('it handles actions correctly', function(assert) {
     this.get('secondaryActionFired'),
     'after firing secondary action - secondary action has been fired'
   );
+});
+
+test('it is dismissed', function(assert) {
+  this.render(hbs`
+    {{polaris-callout-card
+      primaryAction=(hash
+        text="Primary"
+        onAction=(action (mut primaryActionFired) true)
+      )
+      onDismiss=(action (mut wasOnDismissCalled) true)
+    }}
+  `);
+
+  assert.dom('.Polaris-Button').exists({ count: 2 });
+
+  click('.Polaris-Button');
+  assert.ok(this.get('wasOnDismissCalled'));
 });
