@@ -386,6 +386,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     if (rejectedFiles.length) {
       onDropRejected(rejectedFiles);
     }
+
+    event.target.value = '';
   },
 
   handleDragEnter(event) {
