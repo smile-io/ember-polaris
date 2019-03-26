@@ -1,4 +1,5 @@
-{{#if title}}
+{{#if (or title headerActions)}}
+  {{!-- TODO: check for children here as per the React implementation. --}}
   {{#if headerActions}}
     <div class="Polaris-Card__Header">
       {{#polaris-stack alignment="baseline" as |stack|}}
@@ -63,29 +64,31 @@
 
 {{#if (or primaryFooterAction secondaryFooterAction)}}
   <div class="Polaris-Card__Footer">
-    {{#polaris-button-group}}
-
+    {{#polaris-button-group as |buttonGroup|}}
       {{#if secondaryFooterAction}}
-        {{polaris-button
-          dataTestId="secondaryFooterAction"
-          text=secondaryFooterAction.text
-          disabled=secondaryFooterAction.disabled
-          loading=secondaryFooterAction.loading
-          onClick=(action secondaryFooterAction.onAction)
-        }}
+        {{#buttonGroup.item}}
+          {{polaris-button
+            dataTestId="secondaryFooterAction"
+            text=secondaryFooterAction.text
+            disabled=secondaryFooterAction.disabled
+            loading=secondaryFooterAction.loading
+            onClick=(action secondaryFooterAction.onAction)
+          }}
+        {{/buttonGroup.item}}
       {{/if}}
 
       {{#if primaryFooterAction}}
-        {{polaris-button
-          dataTestId="primaryFooterAction"
-          primary=true
-          text=primaryFooterAction.text
-          disabled=primaryFooterAction.disabled
-          loading=primaryFooterAction.loading
-          onClick=(action primaryFooterAction.onAction)
-        }}
+        {{#buttonGroup.item}}
+          {{polaris-button
+            dataTestId="primaryFooterAction"
+            primary=true
+            text=primaryFooterAction.text
+            disabled=primaryFooterAction.disabled
+            loading=primaryFooterAction.loading
+            onClick=(action primaryFooterAction.onAction)
+          }}
+        {{/buttonGroup.item}}
       {{/if}}
-
     {{/polaris-button-group}}
   </div>
 {{/if}}
