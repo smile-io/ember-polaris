@@ -231,7 +231,7 @@ export default Component.extend({
 
       const { start, end } = selectedDates;
 
-      return start === end && day > start && day <= hoverDate;
+      return isSameDay(start, end) && day > start && day <= hoverDate;
     }
   ).readOnly(),
 
