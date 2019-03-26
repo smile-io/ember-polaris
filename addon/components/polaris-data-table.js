@@ -335,7 +335,7 @@ export default Component.extend(
       );
 
       if (collapsed && table && scrollContainer && dataTable) {
-        let headerCells = table.querySelectorAll('[class*=header]');
+        let headerCells = table.querySelectorAll('[data-polaris-header-cell]');
         let collapsedHeaderCells = Array.from(headerCells).slice(1);
         let fixedColumnWidth = headerCells[0].offsetWidth;
         let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
