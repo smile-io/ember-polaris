@@ -37,6 +37,17 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     },
   ];
 
+  const duplicateFiles = [
+    {
+      name: 'jpegs files',
+      type: 'image/jpeg',
+    },
+    {
+      name: 'svg file',
+      type: 'image/svg',
+    },
+  ];
+
   const dropZoneSelector = '[data-test-drop-zone]';
   const containerSelector = '[data-test-drop-zone-container]';
   // Hidden dropzone input element
@@ -961,6 +972,28 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         hbs`{{polaris-drop-zone accept="image/*" onDrop=(action drop)}}`
       );
       await triggerEvent(dropZoneSelector, 'drop', event);
+    });
+
+    test('calls the onDrop callback when a drop event is fired on document twice when a duplicate file is added consecutively', async function(assert) {
+      assert.expect(6);
+
+      this.set('drop', (files, acceptedFiles, rejectedFiles) => {
+        this.setProperties({ files, acceptedFiles, rejectedFiles });
+      });
+
+      await render(hbs`{{polaris-drop-zone onDrop=(action drop)}}`);
+
+      let event1 = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event1);
+      assert.deepEqual(this.get('files'), uploadedFiles);
+      assert.deepEqual(this.get('acceptedFiles'), uploadedFiles);
+      assert.deepEqual(this.get('rejectedFiles'), []);
+
+      let event2 = new MockEvent({ dataTransfer: { files: duplicateFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event2);
+      assert.deepEqual(this.get('files'), duplicateFiles);
+      assert.deepEqual(this.get('acceptedFiles'), duplicateFiles);
+      assert.deepEqual(this.get('rejectedFiles'), []);
     });
 
     test('it calls onDrop callback when a drop event is fired on document', async function(assert) {
