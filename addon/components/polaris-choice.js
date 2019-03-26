@@ -14,7 +14,7 @@ export default Component.extend({
   layout,
 
   /**
-   * ID of the choice's input
+   * A unique identifier for the choice
    *
    * @property inputId
    * @type {String}
@@ -24,7 +24,7 @@ export default Component.extend({
   inputId: null,
 
   /**
-   * Label content for the choice
+   * Label for the choice
    *
    * @property label
    * @type {String|Component}
@@ -56,7 +56,7 @@ export default Component.extend({
   disabled: null,
 
   /**
-   * Error content for this choice
+   * Display an error message
    *
    * @property error
    * @type {String|Boolean}
@@ -66,7 +66,7 @@ export default Component.extend({
   error: null,
 
   /**
-   * Flag to hide the label for this choice
+   * Visually hide the label
    *
    * @property labelHidden
    * @type {boolean}
@@ -76,7 +76,7 @@ export default Component.extend({
   labelHidden: false,
 
   /**
-   * Help text for this choice
+   * Additional text to aide in use
    *
    * @property helpText
    * @type {String|Component|Object}
