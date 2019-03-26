@@ -11,6 +11,14 @@ ember-polaris
 
 **NOTE:** _this addon is still in development. As such, not all of the components available in the React component library have been built yet, and some features of those which have been built are currently unimplemented. Check the [component list](#components) for a list of those which are currently available._
 
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+
+
 Installation
 ------------------------------------------------------------------------------
 
@@ -192,30 +200,8 @@ Below is a categorised list of the components available in `ember-polaris`. Clic
 Contributing
 ------------------------------------------------------------------------------
 
-### Installation
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-* `git clone <repository-url>`
-* `cd ember-polaris`
-* `yarn install`
-
-### Linting
-
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
-
-### Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200)
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 License
 ------------------------------------------------------------------------------
