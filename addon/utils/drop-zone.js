@@ -10,7 +10,7 @@ export function fileAccepted(file, accept) {
 }
 
 export function getDataTransferFiles(event) {
-  if (isDragEvent(event)) {
+  if (isDragEvent(event) && event.dataTransfer) {
     const dt = event.dataTransfer;
 
     if (dt.files && dt.files.length) {
@@ -20,7 +20,7 @@ export function getDataTransferFiles(event) {
       // events and uses `items` instead of `files` in this case.
       return Array.from(dt.items);
     }
-  } else if (event.target && event.target.files) {
+  } else if (isChangeEvent(event) && event.target.files) {
     // Return files from event when a file was selected from an upload dialog
     return Array.from(event.target.files);
   }
@@ -53,4 +53,8 @@ function accepts(file, acceptedFiles) {
 
 function isDragEvent(event) {
   return dragEvents.indexOf(event.type) > 0;
+}
+
+function isChangeEvent(event) {
+  return event.hasOwnProperty('target');
 }
