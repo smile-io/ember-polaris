@@ -92,6 +92,25 @@ test('it renders the correct HTML with external attribute', function(assert) {
   );
 });
 
+test('it renders the correct HTML with monochrome attribute', function(assert) {
+  this.render(hbs`
+    {{polaris-link
+      url="http://www.somewhere.com/"
+      monochrome=true
+      text="Testing monochrome attribute"
+    }}
+  `);
+
+  const links = findAll(linkSelector);
+  assert.equal(links.length, 1, 'renders one link');
+
+  const link = links[0];
+  assert.ok(
+    link.classList.contains('Polaris-Link--monochrome'),
+    'sets the monochrome class on the link'
+  );
+});
+
 test('it renders the correct HTML in basic inline usage without a URL', function(assert) {
   this.render(hbs`{{polaris-link text="This is an inline link button"}}`);
 
@@ -104,6 +123,7 @@ test('it renders the correct HTML in basic inline usage without a URL', function
     'This is an inline link button',
     'renders the correct link text'
   );
+  assert.equal(linkButton.type, 'button', 'renders the correct button type');
 });
 
 test('it renders the correct HTML in basic block usage without a URL', function(assert) {

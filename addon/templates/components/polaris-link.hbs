@@ -12,7 +12,11 @@
     {{/if}}
   {{/polaris-unstyled-link}}
 {{else}}
-  <button class={{linkClass}} {{action (action onClick) bubbles=false}}>
+  <button
+    type="button"
+    class={{linkClass}}
+    {{action (action onClick) bubbles=false}}
+  >
     {{#if hasBlock}}
       {{yield}}
     {{else}}
