@@ -20,7 +20,7 @@ module('Integration | Component | polaris-option-list/checkbox', function(
     this.set('defaultProps', defaultProps);
   });
 
-  test('sets all pass through props for input', async function(assert) {
+  test('sets pass through props for input', async function(assert) {
     await render(hbs`
         {{polaris-option-list/checkbox
           checked=defaultProps.checked
