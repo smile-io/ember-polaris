@@ -1184,6 +1184,52 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'click', event);
     });
 
+    test('does not call callbacks when not allowed multiple and a file is uploaded', async function(assert) {
+      let expectedAcceptedFiles = uploadedFiles.slice(0, 1);
+      let expectedRejectedFiles = uploadedFiles.slice(1, 3);
+
+      this.set('onFileDropped', (files, acceptedFiles, rejectedFiles) => {
+        this.setProperties({
+          files,
+          acceptedFiles,
+          rejectedFiles,
+        });
+      });
+
+      await render(hbs`
+        {{polaris-drop-zone
+          allowMultiple=false
+          onDrop=(action
+            (if hasDroppedFile
+              (action (mut wasCallbackInvoked) true)
+              (action onFileDropped)
+            )
+          )
+          onDragEnter=(action (mut wasCallbackInvoked) true)
+          onDragLeave=(action (mut wasCallbackInvoked) true)
+          onDragOver=(action (mut wasCallbackInvoked) true)
+          accept="image/jpeg"
+        }}
+      `);
+
+      // Initial event to populate zone with data (should succeed)
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event);
+      assert.deepEqual(this.get('files'), uploadedFiles);
+      assert.deepEqual(this.get('acceptedFiles'), expectedAcceptedFiles);
+      assert.deepEqual(this.get('rejectedFiles'), expectedRejectedFiles);
+
+      // All events should now be ignored
+      await triggerEvent(dropZoneSelector, 'drop', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragleave', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragover', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+    });
+
     test('it supports `customValidator` property', async function(assert) {
       assert.expect(3);
 
