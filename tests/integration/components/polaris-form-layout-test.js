@@ -86,6 +86,12 @@ module('Integration | Component | polaris form layout', function(hooks) {
       );
     assert
       .dom(firstGroupSelector)
+      .hasClass(
+        'Polaris-FormLayout--grouped',
+        'first group - has grouped class'
+      );
+    assert
+      .dom(firstGroupSelector)
       .hasAttribute(
         'aria-describedby',
         `${this.firstGroupId}HelpText`,
@@ -140,6 +146,12 @@ module('Integration | Component | polaris form layout', function(hooks) {
       .hasClass(
         'Polaris-FormLayout--condensed',
         'second group - has condensed class'
+      );
+    assert
+      .dom(secondGroupSelector)
+      .hasNoClass(
+        'Polaris-FormLayout--grouped',
+        'second group - does not have grouped class'
       );
     let secondGroupItemSelector = buildNestedSelector(
       secondGroupSelector,
