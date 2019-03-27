@@ -140,11 +140,15 @@ test('it renders the correct HTML when using sections', function(assert) {
       {{layout.section text="This is a secondary section" secondary=true}}
 
       {{layout.section text="This is a full-width section" fullWidth=true}}
+
+      {{layout.section text="This is a half-width section" oneHalf=true}}
+
+      {{layout.section text="This is a third-width section" oneThird=true}}
     {{/polaris-layout}}
   `);
 
   const layoutSections = findAll(layoutSectionSelector);
-  assert.equal(layoutSections.length, 4, 'renders four layout sections');
+  assert.equal(layoutSections.length, 6, 'renders six layout sections');
 
   // Check the first section.
   let layoutSection = layoutSections[0];
@@ -155,6 +159,14 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.notOk(
     layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
     'first section - does not have full width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'first section - does not have half width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'first section - does not have third width class'
   );
   assert.equal(
     layoutSection.textContent.trim(),
@@ -172,6 +184,14 @@ test('it renders the correct HTML when using sections', function(assert) {
     layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
     'second section - does not have full width class'
   );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'second section - does not have half width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'second section - does not have third width class'
+  );
   assert.equal(
     layoutSection.textContent.trim(),
     'This is a block section',
@@ -187,6 +207,14 @@ test('it renders the correct HTML when using sections', function(assert) {
   assert.notOk(
     layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
     'third section - does not have full width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'third section - does not have half width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'third section - does not have third width class'
   );
   assert.equal(
     layoutSection.textContent.trim(),
@@ -204,10 +232,66 @@ test('it renders the correct HTML when using sections', function(assert) {
     layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
     'fourth section - has full width class'
   );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'fourth section - does not have half width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'fourth section - does not have third width class'
+  );
   assert.equal(
     layoutSection.textContent.trim(),
     'This is a full-width section',
-    'third section - renders text content'
+    'fourth section - renders text content'
+  );
+
+  // Check the fifth section.
+  layoutSection = layoutSections[4];
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--secondary'),
+    'fifth section - does not have secondary class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
+    'fifth section - does not have full width class'
+  );
+  assert.ok(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'fifth section - has half width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'fifth section - does not have third width class'
+  );
+  assert.equal(
+    layoutSection.textContent.trim(),
+    'This is a half-width section',
+    'fifth section - renders text content'
+  );
+
+  // Check the sixth section.
+  layoutSection = layoutSections[5];
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--secondary'),
+    'sixth section - does not have secondary class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--fullWidth'),
+    'sixth section - does not have full width class'
+  );
+  assert.notOk(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneHalf'),
+    'sixth section - does not have half width class'
+  );
+  assert.ok(
+    layoutSection.classList.contains('Polaris-Layout__Section--oneThird'),
+    'sixth section - has third width class'
+  );
+  assert.equal(
+    layoutSection.textContent.trim(),
+    'This is a third-width section',
+    'sixth section - renders text content'
   );
 });
 
