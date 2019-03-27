@@ -1,7 +1,7 @@
 {{#each normalizedOptions as |normalizedOption sectionIndex|}}
   <li>
     {{#if normalizedOption.title}}
-      <p class="Polaris-OptionList__Title" role="presentation">
+      <p class="Polaris-OptionList__Title" role={{role}}>
         {{normalizedOption.title}}
       </p>
     {{/if}}
