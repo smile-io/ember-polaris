@@ -123,6 +123,7 @@ test('it renders the correct HTML in basic inline usage without a URL', function
     'This is an inline link button',
     'renders the correct link text'
   );
+  assert.equal(linkButton.type, 'button', 'renders the correct button type');
 });
 
 test('it renders the correct HTML in basic block usage without a URL', function(assert) {
