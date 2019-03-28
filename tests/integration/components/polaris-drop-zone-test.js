@@ -19,7 +19,19 @@ const smallWidth = 2 * (smallSizeWidthLimit - 1);
 const mediumWidth = 2 * (mediumSizeWidthLimit - 1);
 const largeWidth = 2 * (largeSizeWidthLimit - 1);
 
+const origGetBoundingClientRect = Element.prototype.getBoundingClientRect;
+const widths = {
+  small: 99,
+  medium: 159,
+  large: 299,
+  extraLarge: 1024,
+};
+
 module('Integration | Component | polaris-drop-zone', function(hooks) {
+  hooks.afterEach(function() {
+    Element.prototype.getBoundingClientRect = origGetBoundingClientRect;
+  });
+
   setupRenderingTest(hooks);
 
   const uploadedFiles = [
@@ -1338,4 +1350,78 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.ok(this.get('actionFired'), 'Label action fired');
     });
   });
+
+  module('overlayText', function() {
+    const overlayText = 'overlay text';
+
+    test('does not render the overlayText on small screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('small');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').doesNotExist();
+      assert.dom('[data-test-caption]').doesNotExist();
+    });
+
+    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('medium');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(overlayText);
+    });
+
+    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('large');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(overlayText);
+    });
+
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('extraLarge');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').hasText(overlayText);
+    });
+  });
 });
+
+function setBoundingClientRect(size) {
+  Element.prototype.getBoundingClientRect = () => {
+    return {
+      width: widths[size],
+      height: 100,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    };
+  };
+}
