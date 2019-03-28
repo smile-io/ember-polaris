@@ -1411,6 +1411,62 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-display-text]').hasText(overlayText);
     });
   });
+
+  module('errorOverlayText ', function() {
+    const errorOverlayText = "can't drop this";
+    test("doesn't render the overlayText on small screens", async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('small');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').doesNotExist();
+      assert.dom('[data-test-caption]').doesNotExist();
+    });
+
+    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('medium');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(errorOverlayText);
+    });
+
+    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('large');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(errorOverlayText);
+    });
+
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('extraLarge');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').hasText(errorOverlayText);
+    });
+  });
 });
 
 function setBoundingClientRect(size) {
