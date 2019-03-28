@@ -45,7 +45,7 @@ module('Integration | Component | polaris-option-list/option', function(hooks) {
     assert.dom('button').exists();
   });
 
-  test('calls onClick with correct section and index if option is not disabled', async function(assert) {
+  test('calls onClick with section and index if option is not disabled', async function(assert) {
     assert.expect(2);
 
     this.set('onOptionClicked', (optionSection, optionIndex) => {
@@ -86,7 +86,7 @@ module('Integration | Component | polaris-option-list/option', function(hooks) {
     assert.notOk(this.get('wasOnClickCalled'));
   });
 
-  test('calls onClick with correct section and index if option is not disabled and multiple options are allowed', async function(assert) {
+  test('calls onClick with section and index if option is not disabled and multiple options are allowed', async function(assert) {
     assert.expect(2);
 
     this.set('onOptionClicked', (optionSection, optionIndex) => {
@@ -129,7 +129,7 @@ module('Integration | Component | polaris-option-list/option', function(hooks) {
     assert.notOk(this.get('wasOnClickCalled'));
   });
 
-  test('correctly sets the pass through props for Checkbox if multiple items are allowed', async function(assert) {
+  test('sets the pass through props for Checkbox if multiple items are allowed', async function(assert) {
     await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id

@@ -347,7 +347,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(newOptions, undefined) });
   });
 
-  test('calls onChange with the correct value', async function(assert) {
+  test('calls onChange with options and sections', async function(assert) {
     const { options, sections } = defaultProps;
     await render(hbs`
       {{polaris-option-list
