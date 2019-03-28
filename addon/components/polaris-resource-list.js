@@ -170,6 +170,16 @@ export default Component.extend(
     sortOptions: null,
 
     /**
+     * Component to display instead of the sort control
+     *
+     * @property alternateTool
+     * @type {Component|Object}
+     * @default null
+     * @public
+     */
+    alternateTool: null,
+
+    /**
      * Component to render each list item
      * This is in place of the React implementation's
      * renderItem property
@@ -215,7 +225,6 @@ export default Component.extend(
     /**
      * @property selectMode
      * @type {Boolean}
-     * @default false
      * @private
      */
     selectMode: false,
@@ -227,14 +236,6 @@ export default Component.extend(
      * @private
      */
     loadingPosition: 0,
-
-    /**
-     * @property listNode
-     * @type {HTMLUListElement}
-     * @default null
-     * @private
-     */
-    listNode: null,
 
     /**
      * @property defaultResourceName
@@ -275,6 +276,18 @@ export default Component.extend(
     }).readOnly(),
 
     /**
+     * Reference to the `ul` element that makes up the main list.
+     * This is used in place of the React implementation's `listRef`.
+     */
+    listNode: computed(function() {
+      return (
+        document.querySelector(
+          `#${this.get('wrapperId')} ul.Polaris-ResourceList`
+        ) || null
+      );
+    }).volatile(),
+
+    /**
      * List of item/id tuples needed for rendering items
      */
     itemsWithId: computed('items.[]', 'idForItem', function() {
@@ -290,13 +303,21 @@ export default Component.extend(
       });
     }).readOnly(),
 
-    needsHeader: computed('selectable', 'sortOptions.length', function() {
-      let { selectable, sortOptions } = this.getProperties(
-        'selectable',
-        'sortOptions'
-      );
-      return selectable || (sortOptions && sortOptions.length > 0);
-    }).readOnly(),
+    needsHeader: computed(
+      'selectable',
+      'sortOptions.length',
+      'alternateTool',
+      function() {
+        let { selectable, sortOptions, alternateTool } = this.getProperties(
+          'selectable',
+          'sortOptions',
+          'alternateTool'
+        );
+        return (
+          selectable || (sortOptions && sortOptions.length > 0) || alternateTool
+        );
+      }
+    ).readOnly(),
 
     selectable: computed(
       'promotedBulkActions.length',
@@ -338,23 +359,27 @@ export default Component.extend(
       }
     ).readOnly(),
 
-    itemCountText: computed(
+    headerTitle: computed(
       'resourceName.{singular,plural}',
       'items.length',
+      'loading',
       function() {
-        let { resourceName, items } = this.getProperties(
+        let { resourceName, items, loading } = this.getProperties(
           'resourceName',
-          'items'
+          'items',
+          'loading'
         );
         resourceName = resourceName || this.get('defaultResourceName');
 
         let itemsCount = items.length;
         let resource =
-          itemsCount === 1
+          itemsCount === 1 && !loading
             ? get(resourceName, 'singular')
             : get(resourceName, 'plural');
 
-        return `Showing ${itemsCount} ${resource}`;
+        return loading
+          ? `Loading ${resource}`
+          : `Showing ${itemsCount} ${resource}`;
       }
     ).readOnly(),
 
@@ -507,7 +532,7 @@ export default Component.extend(
     }).readOnly(),
 
     spinnerSize: computed('items.length', function() {
-      return this.get('items.length') === 1 ? 'small' : 'large';
+      return this.get('items.length') < 2 ? 'small' : 'large';
     }).readOnly(),
 
     context: computed(
@@ -583,7 +608,7 @@ export default Component.extend(
 
         let overlay = listNode.getBoundingClientRect();
         let viewportHeight = Math.max(
-          document.documentElement.clientHeight,
+          document.documentElement ? document.documentElement.clientHeight : 0,
           window.innerHeight || 0
         );
 
@@ -715,20 +740,16 @@ export default Component.extend(
       }
     },
 
-    setListNode() {
-      let listNode =
-        document.querySelector(
-          `#${this.get('wrapperId')} ul.Polaris-ResourceList`
-        ) || null;
-      this.set('listNode', listNode);
-    },
-
     init() {
       this._super(...arguments);
 
-      this.set('defaultResourceName', {
-        singular: 'item',
-        plural: 'items',
+      let selectedItems = this.get('selectedItems');
+      this.setProperties({
+        defaultResourceName: {
+          singular: 'item',
+          plural: 'items',
+        },
+        selectMode: Boolean(selectedItems && selectedItems.length > 0),
       });
     },
 
@@ -758,6 +779,16 @@ export default Component.extend(
 
       // This logic is in the React implementation's
       // `componentDidUpdate` hook.
+
+      // TODO: check if we need this that's in the React implementation.
+      // if (
+      //    this.listRef.current &&
+      //    this.itemsExist() &&
+      //    !this.itemsExist(prevItems)
+      //  ) {
+      //    this.forceUpdate(); -> triggers rerender of component.
+      //  }
+
       let { loading, previousLoading } = this.getProperties(
         'loading',
         'previousLoading'
@@ -781,20 +812,6 @@ export default Component.extend(
       if (this.get('loading')) {
         this.setLoadingPosition();
       }
-    },
-
-    didRender() {
-      this._super(...arguments);
-
-      /*
-       * The React implementation currently caches `listNode` on first render,
-       * which leads to some buggy behaviour around whether the header gets
-       * rendered or not (see https://github.com/Shopify/polaris-react/issues/735).
-       * This is how I've chosen to fix the issue here, but we'll keep an eye
-       * on if/how the React implementation chooses to fix it and can maybe update
-       * to match their fix later if it seems better in some way.
-       */
-      this.setListNode();
     },
   }
 );
