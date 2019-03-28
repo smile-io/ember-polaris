@@ -13,11 +13,11 @@
 {{else if (eq size "large")}}
   {{#polaris-stack vertical=true spacing="tight"}}
     {{#if (eq type "file")}}
-      {{svg-jar assetFileUpload class=imageClasses}}
+      {{svg-jar fileUpload class=imageClasses}}
     {{/if}}
 
     {{#if (eq type "image")}}
-      {{svg-jar assetImageUpload class=imageClasses}}
+      {{svg-jar imageUpload class=imageClasses}}
     {{/if}}
 
     {{polaris-button size="slim" text=actionTitle}}
@@ -29,11 +29,11 @@
 {{else if (eq size "extraLarge")}}
   {{#polaris-stack vertical=true}}
     {{#if (eq type "file")}}
-      {{svg-jar assetFileUpload class=imageClasses}}
+      {{svg-jar fileUpload class=imageClasses}}
     {{/if}}
 
     {{#if (eq type "image")}}
-      {{svg-jar assetImageUpload class=imageClasses}}
+      {{svg-jar imageUpload class=imageClasses}}
     {{/if}}
 
     {{polaris-button text=actionTitle}}
