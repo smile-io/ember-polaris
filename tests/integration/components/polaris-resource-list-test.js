@@ -6,6 +6,7 @@ import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import BulkActionsComponent from '@smile-io/ember-polaris/components/polaris-resource-list/bulk-actions';
 import SelectComponent from '@smile-io/ember-polaris/components/polaris-select';
+import { setUpAttributeCaptureOnComponent } from '../../helpers/component-attribute-capture';
 
 const itemsNoID = [{ url: 'item 1' }, { url: 'item 2' }];
 const singleItemNoID = [{ url: 'item 1' }];
@@ -68,24 +69,6 @@ const ItemComponent = Component.extend({
     return `View details for ${this.get('item.title')}`;
   }).readOnly(),
 });
-
-function setUpAttributeCaptureOnComponent(
-  testContext,
-  componentPath,
-  componentClass,
-  attributeName
-) {
-  testContext.owner.register(
-    `component:${componentPath}`,
-    componentClass.extend({
-      didReceiveAttrs() {
-        this._super(...arguments);
-
-        testContext.set(attributeName, this.get(attributeName));
-      },
-    })
-  );
-}
 
 module('Integration | Component | polaris-resource-list', function(hooks) {
   setupRenderingTest(hooks);
