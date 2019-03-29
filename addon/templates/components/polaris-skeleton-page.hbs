@@ -4,11 +4,11 @@
 >
   {{#if breadcrumbs}}
     <div class="Polaris-SkeletonPage__BreadcrumbAction" style="width: 60px;" data-test-skeleton-page-breadcrumbs>
-      {{polaris-skeleton-body-text lines=1}}
+      {{polaris-skeleton-body-text lines=1 data-test-skeleton-page-breadcrumb=true}}
     </div>
   {{/if}}
 
-  <div data-test-skeleton-page-title class="Polaris-SkeletonPage__TitleAndPrimaryAction">
+  <div data-test-skeleton-page-title-primary-action class="Polaris-SkeletonPage__TitleAndPrimaryAction">
     <div data-test-skeleton-page-title class="Polaris-SkeletonPage__Title">
       {{#if hasTitle}}
         {{#if hasTitleText}}
@@ -22,12 +22,12 @@
           {{polaris-skeleton-display-text data-test-skeleton-page-title-text=true size="large"}}
         {{/if}}
       {{/if}}
-      {{#if primaryAction}}
-        <div class="Polaris-SkeletonPage__PrimaryAction">
-          {{polaris-skeleton-display-text size="large"}}
-        </div>
-      {{/if}}
     </div>
+    {{#if primaryAction}}
+      <div class="Polaris-SkeletonPage__PrimaryAction" data-test-skeleton-page-primary-action>
+        {{polaris-skeleton-display-text size="large"}}
+      </div>
+    {{/if}}
   </div>
 
   {{#if dummySecondaryActions}}

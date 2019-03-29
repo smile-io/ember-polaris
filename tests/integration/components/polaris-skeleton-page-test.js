@@ -10,11 +10,13 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
   const pageSelector = '[data-test-skeleton-page]';
   const headerSelector = '[data-test-skeleton-page-header]';
   const contentSelector = '[data-test-skeleton-page-content]';
+  const titleAndPrimarySelector =
+    '[data-test-skeleton-page-title-primary-action]';
   const titleSelector = '[data-test-skeleton-page-title]';
   const titleTextSelector = '[data-test-skeleton-page-title-text]';
   const breadcrumbsSelector = '[data-test-skeleton-page-breadcrumbs]';
   const breadcrumbSelector = '[data-test-skeleton-page-breadcrumb]';
-  const breadcrumbTextSelector = '[data-test-skeleton-page-action-text]';
+  const primaryActionSelector = '[data-test-skeleton-page-primary-action]';
   const secondaryActionsSelector = '[data-test-skeleton-page-actions]';
   const secondaryActionSelector = '[data-test-skeleton-page-action]';
 
@@ -96,7 +98,13 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
 
     // undefined title -> renders large skeleton display text.
     assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          titleAndPrimarySelector,
+          titleSelector
+        )
+      )
       .exists('unspecified title - renders title');
     assert
       .dom(buildNestedSelector(titleSelector, titleTextSelector))
@@ -108,16 +116,16 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
         'unspecified title - renders large skeleton title'
       );
 
-    // null title -> renders no title.
-    this.set('title', null);
-    assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
-      .doesNotExist('null title - does not render title');
-
     // Text title -> renders large display text.
     this.set('title', 'Spooky Skeleton Page');
     assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          titleAndPrimarySelector,
+          titleSelector
+        )
+      )
       .exists('title specified - renders title');
     assert
       .dom(buildNestedSelector(titleSelector, titleTextSelector))
@@ -162,15 +170,35 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
     assert
       .dom(buildNestedSelector(breadcrumbsSelector, breadcrumbSelector))
       .exists('breadcrumbs true - renders one skeleton breadcrumb');
+  });
+
+  test('it renders primary action correctly', async function(assert) {
+    this.set('primaryAction', false);
+
+    await render(hbs`{{polaris-skeleton-page primaryAction=primaryAction}}`);
+
     assert
-      .dom(breadcrumbSelector)
-      .hasClass(
-        'Polaris-SkeletonPage__Action',
-        'breadcrumbs true - skeleton breadcrumb has correct class'
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          titleAndPrimarySelector,
+          primaryActionSelector
+        )
+      )
+      .doesNotExist(
+        'primaryAction unspecified - does not render a primary action'
       );
+
+    this.set('primaryAction', true);
     assert
-      .dom(buildNestedSelector(breadcrumbSelector, breadcrumbTextSelector))
-      .exists('breadcrumbs true - renders breadcrumb text');
+      .dom(
+        buildNestedSelector(
+          headerSelector,
+          titleAndPrimarySelector,
+          primaryActionSelector
+        )
+      )
+      .exists('primaryAction true - it renders a primary action');
   });
 
   test('it renders secondary actions correctly', async function(assert) {
