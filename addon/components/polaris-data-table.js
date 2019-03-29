@@ -4,6 +4,7 @@ import { isBlank, isPresent, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { scheduleOnce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
+import { isEqual } from '@ember/utils';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../templates/components/polaris-data-table';
@@ -435,7 +436,13 @@ export default Component.extend(
     didUpdateAttrs() {
       this._super(...arguments);
 
+      if (isEqual(this.get('oldAttrs'), this.get('attrs'))) {
+        return;
+      }
+
       this.handleResize();
+
+      this.set('oldAttrs', this.get('attrs'));
     },
 
     actions: {
