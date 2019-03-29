@@ -231,7 +231,7 @@ module(
     });
 
     module('filters', function() {
-      test('has the correct options prop when popover is active', async function(assert) {
+      test('sets the options when popover is active', async function(assert) {
         this.setProperties({
           filters,
           resourceName,
@@ -318,7 +318,7 @@ module(
         assert.equal(filterValueSelector.get('value'), undefined);
       });
 
-      test('updates value correctly when user selects a filter value', async function(assert) {
+      test('updates value with provided string when user selects a filter value', async function(assert) {
         this.setProperties({
           filters,
           resourceName,
