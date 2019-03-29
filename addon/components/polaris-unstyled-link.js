@@ -20,6 +20,7 @@ export default Component.extend({
     'rel',
     'ariaLabel:aria-label',
     'ariaDescribedBy:aria-describedby',
+    'tabIndex:tabindex',
   ],
 
   layout,
