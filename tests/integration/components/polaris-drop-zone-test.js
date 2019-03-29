@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, triggerEvent, settled } from '@ember/test-helpers';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { capitalize, htmlSafe } from '@ember/string';
 import { selectFiles } from 'ember-native-dom-helpers';
@@ -285,7 +285,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
   });
 
-  module('rendering', function() {
+  module('rendering', function(hooks) {
+    hooks.beforeEach(function() {
+      this.owner.register('component:svg-jar', MockSvgJarComponent);
+    });
+
     test('renders properly during drag events', async function(assert) {
       assert.expect(28);
 
@@ -510,11 +514,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert
           .dom(fileUploadImageSelector)
           .exists('fileUpload image is rendered');
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'file-upload',
-          'fileUpload has correct image set'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/file-upload.svg',
+            'fileUpload has correct image set'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -531,11 +537,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         this.set('type', 'image');
 
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'image-upload',
-          'fileUpload has correct image set when image-type dropzone'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/image-upload.svg',
+            'fileUpload has correct image set when image-type dropzone'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -618,11 +626,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert
           .dom(fileUploadImageSelector)
           .exists('fileUpload image is rendered');
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'file-upload',
-          'fileUpload has correct image set'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/file-upload.svg',
+            'fileUpload has correct image set'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -645,11 +655,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         this.set('type', 'image');
 
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'image-upload',
-          'fileUpload has correct image set when image-type dropzone'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/image-upload.svg',
+            'fileUpload has correct image set when image-type dropzone'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -826,11 +838,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       });
     });
 
-    module('when size is small', function(hooks) {
-      hooks.beforeEach(function() {
-        this.owner.register('component:svg-jar', MockSvgJarComponent);
-      });
-
+    module('when size is small', function() {
       const fileUploadSelector = buildNestedSelector(
         containerSelector,
         '.Polaris-DropZone-FileUpload'
@@ -943,10 +951,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
    * Event handling & callbacks
    */
   module('handles drag and drop events', function() {
-    hooks.beforeEach(function() {
-      this.owner.register('component:svg-jar', MockSvgJarComponent);
-    });
-
     test('it calls onDrop callback when a drop event is fired', async function(assert) {
       assert.expect(6);
 
