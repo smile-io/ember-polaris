@@ -356,15 +356,19 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       onDrop,
       onDropAccepted,
       onDropRejected,
+      allowMultiple,
       state,
     } = this.getProperties(
       'disabled',
       'onDrop',
       'onDropAccepted',
       'onDropRejected',
+      'allowMultiple',
       'state'
     );
-    if (disabled) {
+    let numFiles = state.get('numFiles');
+
+    if (disabled || (!allowMultiple && numFiles > 0)) {
       return;
     }
     let fileList = getDataTransferFiles(event);
@@ -377,8 +381,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     state.setProperties({
       dragging: false,
       error: rejectedFiles.length > 0,
+      numFiles: state.get('numFiles') + acceptedFiles.length,
     });
-    state.incrementProperty('numFiles', acceptedFiles.length);
 
     onDrop(files, acceptedFiles, rejectedFiles);
 
@@ -403,6 +407,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'allowMultiple',
       'state'
     );
+
     if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
@@ -436,13 +441,13 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'onDragOver',
       'allowMultiple'
     );
+
     if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
 
     onDragOver();
 
-    // Browsers are somewhat inconsistent about needing these, but they don't hurt to add.
     return false;
   },
 
@@ -456,6 +461,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       'allowMultiple',
       'dropNode'
     );
+
     if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
