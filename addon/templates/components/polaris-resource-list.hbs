@@ -57,12 +57,6 @@
                   </div>
                 {{/if}}
 
-                {{#if (and alternateTool (not sortOptions))}}
-                  <div class="Polaris-ResourceList__AlternateToolWrapper">
-                    {{render-content alternateTool}}
-                  </div>
-                {{/if}}
-
                 {{#if (and sortOptions (not alternateTool))}}
                   <div class="Polaris-ResourceList__SortWrapper">
                     <label class="Polaris-ResourceList__SortLabel" htmlFor={{selectId}}>
@@ -77,6 +71,10 @@
                       disabled=selectMode
                       onChange=(action onSortChange)
                     }}
+                  </div>
+                {{else if alternateTool}}
+                  <div class="Polaris-ResourceList__AlternateToolWrapper">
+                    {{render-content alternateTool}}
                   </div>
                 {{/if}}
 

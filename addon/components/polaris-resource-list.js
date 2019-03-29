@@ -225,6 +225,7 @@ export default Component.extend(
     /**
      * @property selectMode
      * @type {Boolean}
+     * @default false
      * @private
      */
     selectMode: false,
@@ -236,6 +237,17 @@ export default Component.extend(
      * @private
      */
     loadingPosition: 0,
+
+    /**
+     * Reference to the `ul` element that makes up the main list.
+     * This is used in place of the React implementation's `listRef`.
+     *
+     * @property listNode
+     * @type {HTMLUListElement}
+     * @default null
+     * @private
+     */
+    listNode: null,
 
     /**
      * @property defaultResourceName
@@ -274,18 +286,6 @@ export default Component.extend(
     wrapperId: computed(function() {
       return guidFor(this);
     }).readOnly(),
-
-    /**
-     * Reference to the `ul` element that makes up the main list.
-     * This is used in place of the React implementation's `listRef`.
-     */
-    listNode: computed(function() {
-      return (
-        document.querySelector(
-          `#${this.get('wrapperId')} ul.Polaris-ResourceList`
-        ) || null
-      );
-    }).volatile(),
 
     /**
      * List of item/id tuples needed for rendering items
@@ -740,6 +740,14 @@ export default Component.extend(
       }
     },
 
+    setListNode() {
+      let listNode =
+        document.querySelector(
+          `#${this.get('wrapperId')} ul.Polaris-ResourceList`
+        ) || null;
+      this.set('listNode', listNode);
+    },
+
     init() {
       this._super(...arguments);
 
@@ -812,6 +820,12 @@ export default Component.extend(
       if (this.get('loading')) {
         this.setLoadingPosition();
       }
+    },
+
+    didRender() {
+      this._super(...arguments);
+
+      this.setListNode();
     },
   }
 );
