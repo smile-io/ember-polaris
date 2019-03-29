@@ -46,6 +46,16 @@ export default Component.extend({
   singleColumn: false,
 
   /**
+   * Shows a skeleton over the primary action
+   *
+   * @property primaryAction
+   * @public
+   * @type {Boolean}
+   * @default false
+   */
+  primaryAction: false,
+
+  /**
    * Number of secondary page-level actions to display
    *
    * @property secondaryActions
