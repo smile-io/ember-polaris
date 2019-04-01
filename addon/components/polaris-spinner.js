@@ -71,8 +71,9 @@ export default Component.extend(SvgHandling, {
   /**
    * @private
    */
-  spinnerSource: computed('normalizedSize', function() {
-    return `polaris/spinner-${this.get('normalizedSize')}`;
+  spinnerSVG: computed('size', function() {
+    let size = this.get('size') === 'large' ? 'large' : 'small';
+    return `/@smile-io/ember-polaris/illustrations/spinner-${size}.svg`;
   }).readOnly(),
 
   /**
