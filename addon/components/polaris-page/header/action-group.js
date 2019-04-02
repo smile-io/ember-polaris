@@ -8,6 +8,6 @@ export default Component.extend({
 
   title: null,
   icon: null,
-  actions: null,
+  groupActions: null,
   details: null,
 });
