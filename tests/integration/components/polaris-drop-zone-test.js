@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, triggerEvent, settled } from '@ember/test-helpers';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { capitalize, htmlSafe } from '@ember/string';
 import { selectFiles } from 'ember-native-dom-helpers';
@@ -19,7 +19,19 @@ const smallWidth = 2 * (smallSizeWidthLimit - 1);
 const mediumWidth = 2 * (mediumSizeWidthLimit - 1);
 const largeWidth = 2 * (largeSizeWidthLimit - 1);
 
+const origGetBoundingClientRect = Element.prototype.getBoundingClientRect;
+const widths = {
+  small: 99,
+  medium: 159,
+  large: 299,
+  extraLarge: 1024,
+};
+
 module('Integration | Component | polaris-drop-zone', function(hooks) {
+  hooks.afterEach(function() {
+    Element.prototype.getBoundingClientRect = origGetBoundingClientRect;
+  });
+
   setupRenderingTest(hooks);
 
   const uploadedFiles = [
@@ -34,6 +46,17 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     {
       name: 'pdf file',
       type: 'application/pdf',
+    },
+  ];
+
+  const duplicateFiles = [
+    {
+      name: 'jpegs files',
+      type: 'image/jpeg',
+    },
+    {
+      name: 'svg file',
+      type: 'image/svg',
     },
   ];
 
@@ -262,7 +285,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
   });
 
-  module('rendering', function() {
+  module('rendering', function(hooks) {
+    hooks.beforeEach(function() {
+      this.owner.register('component:svg-jar', MockSvgJarComponent);
+    });
+
     test('renders properly during drag events', async function(assert) {
       assert.expect(28);
 
@@ -487,11 +514,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert
           .dom(fileUploadImageSelector)
           .exists('fileUpload image is rendered');
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'file-upload',
-          'fileUpload has correct image set'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/file-upload.svg',
+            'fileUpload has correct image set'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -508,11 +537,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         this.set('type', 'image');
 
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'image-upload',
-          'fileUpload has correct image set when image-type dropzone'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/image-upload.svg',
+            'fileUpload has correct image set when image-type dropzone'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -595,11 +626,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         assert
           .dom(fileUploadImageSelector)
           .exists('fileUpload image is rendered');
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'file-upload',
-          'fileUpload has correct image set'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/file-upload.svg',
+            'fileUpload has correct image set'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -622,11 +655,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
         this.set('type', 'image');
 
-        assert.equal(
-          find(fileUploadImageSelector).dataset.iconSource,
-          'image-upload',
-          'fileUpload has correct image set when image-type dropzone'
-        );
+        assert
+          .dom(fileUploadImageSelector)
+          .hasAttribute(
+            'src',
+            '/@smile-io/ember-polaris/images/image-upload.svg',
+            'fileUpload has correct image set when image-type dropzone'
+          );
         assert
           .dom(fileUploadImageSelector)
           .hasClass(
@@ -803,11 +838,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       });
     });
 
-    module('when size is small', function(hooks) {
-      hooks.beforeEach(function() {
-        this.owner.register('component:svg-jar', MockSvgJarComponent);
-      });
-
+    module('when size is small', function() {
       const fileUploadSelector = buildNestedSelector(
         containerSelector,
         '.Polaris-DropZone-FileUpload'
@@ -920,10 +951,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
    * Event handling & callbacks
    */
   module('handles drag and drop events', function() {
-    hooks.beforeEach(function() {
-      this.owner.register('component:svg-jar', MockSvgJarComponent);
-    });
-
     test('it calls onDrop callback when a drop event is fired', async function(assert) {
       assert.expect(6);
 
@@ -961,6 +988,28 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         hbs`{{polaris-drop-zone accept="image/*" onDrop=(action drop)}}`
       );
       await triggerEvent(dropZoneSelector, 'drop', event);
+    });
+
+    test('calls the onDrop callback when a drop event is fired on document twice when a duplicate file is added consecutively', async function(assert) {
+      assert.expect(6);
+
+      this.set('drop', (files, acceptedFiles, rejectedFiles) => {
+        this.setProperties({ files, acceptedFiles, rejectedFiles });
+      });
+
+      await render(hbs`{{polaris-drop-zone onDrop=(action drop)}}`);
+
+      let event1 = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event1);
+      assert.deepEqual(this.get('files'), uploadedFiles);
+      assert.deepEqual(this.get('acceptedFiles'), uploadedFiles);
+      assert.deepEqual(this.get('rejectedFiles'), []);
+
+      let event2 = new MockEvent({ dataTransfer: { files: duplicateFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event2);
+      assert.deepEqual(this.get('files'), duplicateFiles);
+      assert.deepEqual(this.get('acceptedFiles'), duplicateFiles);
+      assert.deepEqual(this.get('rejectedFiles'), []);
     });
 
     test('it calls onDrop callback when a drop event is fired on document', async function(assert) {
@@ -1151,6 +1200,52 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'click', event);
     });
 
+    test('does not call callbacks when not allowed multiple and a file is uploaded', async function(assert) {
+      let expectedAcceptedFiles = uploadedFiles.slice(0, 1);
+      let expectedRejectedFiles = uploadedFiles.slice(1, 3);
+
+      this.set('onFileDropped', (files, acceptedFiles, rejectedFiles) => {
+        this.setProperties({
+          files,
+          acceptedFiles,
+          rejectedFiles,
+        });
+      });
+
+      await render(hbs`
+        {{polaris-drop-zone
+          allowMultiple=false
+          onDrop=(action
+            (if hasDroppedFile
+              (action (mut wasCallbackInvoked) true)
+              (action onFileDropped)
+            )
+          )
+          onDragEnter=(action (mut wasCallbackInvoked) true)
+          onDragLeave=(action (mut wasCallbackInvoked) true)
+          onDragOver=(action (mut wasCallbackInvoked) true)
+          accept="image/jpeg"
+        }}
+      `);
+
+      // Initial event to populate zone with data (should succeed)
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'drop', event);
+      assert.deepEqual(this.get('files'), uploadedFiles);
+      assert.deepEqual(this.get('acceptedFiles'), expectedAcceptedFiles);
+      assert.deepEqual(this.get('rejectedFiles'), expectedRejectedFiles);
+
+      // All events should now be ignored
+      await triggerEvent(dropZoneSelector, 'drop', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragleave', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+      await triggerEvent(dropZoneSelector, 'dragover', event);
+      assert.notOk(this.get('wasCallbackInvoked'));
+    });
+
     test('it supports `customValidator` property', async function(assert) {
       assert.expect(3);
 
@@ -1259,4 +1354,134 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.ok(this.get('actionFired'), 'Label action fired');
     });
   });
+
+  module('overlayText', function() {
+    const overlayText = 'overlay text';
+
+    test('does not render the overlayText on small screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('small');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').doesNotExist();
+      assert.dom('[data-test-caption]').doesNotExist();
+    });
+
+    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('medium');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(overlayText);
+    });
+
+    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('large');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(overlayText);
+    });
+
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+      this.set('overlayText', overlayText);
+      setBoundingClientRect('extraLarge');
+
+      await render(hbs`
+        {{polaris-drop-zone overlayText=overlayText}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').hasText(overlayText);
+    });
+  });
+
+  module('errorOverlayText ', function() {
+    const errorOverlayText = "can't drop this";
+    test("doesn't render the overlayText on small screens", async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('small');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').doesNotExist();
+      assert.dom('[data-test-caption]').doesNotExist();
+    });
+
+    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('medium');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(errorOverlayText);
+    });
+
+    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('large');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-caption]').hasText(errorOverlayText);
+    });
+
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+      this.set('errorOverlayText', errorOverlayText);
+      setBoundingClientRect('extraLarge');
+      await render(hbs`
+        {{polaris-drop-zone errorOverlayText=errorOverlayText accept="image/gif"}}
+      `);
+
+      let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
+      await triggerEvent(dropZoneSelector, 'dragenter', event);
+
+      assert.dom('[data-test-display-text]').hasText(errorOverlayText);
+    });
+  });
 });
+
+function setBoundingClientRect(size) {
+  Element.prototype.getBoundingClientRect = () => {
+    return {
+      width: widths[size],
+      height: 100,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    };
+  };
+}

@@ -9,8 +9,8 @@ import layout from '../templates/components/polaris-option-list';
  */
 export default Component.extend({
   tagName: 'ul',
-  classNames: ['Polaris-OptionList'],
   attributeBindings: ['role'],
+  classNames: ['Polaris-OptionList'],
 
   layout,
 
