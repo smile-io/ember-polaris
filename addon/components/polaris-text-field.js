@@ -609,15 +609,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     });
   },
 
-  didUpdateAttrs() {
-    this._super(...arguments);
-    this.checkFocus();
-  },
-
   didInsertElement() {
     this._super(...arguments);
 
     this.setInput();
+    this.checkFocus();
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
     this.checkFocus();
   },
 
