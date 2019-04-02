@@ -32,6 +32,7 @@ const inlineErrorSelector = '[data-test-inline-error]';
 const connectedSelector = '[data-test-connected]';
 const connectedLeftSelector = '[data-test-connected-item="left"]';
 const connectedRightSelector = '[data-test-connected-item="right"]';
+const characterCounterSelector = '[data-test-text-field-character-count]';
 
 module('Integration | Component | polaris-text-field', function(hooks) {
   setupRenderingTest(hooks);
@@ -654,5 +655,20 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     assert
       .dom(connectedRightSelector)
       .hasText('Right connected', 'render connected right correctly');
+  });
+
+  test('it displays number of characters entered in an input field', async function(assert) {
+    await render(hbs`
+      {{polaris-text-field
+        value="test"
+        maxLength=10
+        showCharacterCount=true
+        onChange=(action (mut dummy))
+      }}
+    `);
+
+    assert
+      .dom(characterCounterSelector)
+      .hasText('4/10', 'character counter renders current count');
   });
 });

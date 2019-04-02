@@ -587,6 +587,12 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     });
   },
 
+  checkFocus() {
+    if (this.get('focused')) {
+      this.get('input').focus();
+    }
+  },
+
   handleButtonRelease() {
     clearTimeout(this.get('buttonPressTimer'));
   },
@@ -599,19 +605,20 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
     this.setProperties({
       height: null,
-      focus: false,
       id,
     });
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+    this.checkFocus();
   },
 
   didInsertElement() {
     this._super(...arguments);
 
     this.setInput();
-
-    if (this.get('focused')) {
-      this.get('input').focus();
-    }
+    this.checkFocus();
   },
 
   actions: {
