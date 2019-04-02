@@ -36,7 +36,7 @@ export default Component.extend({
   titleMetadata: null,
 
   /**
-   * Visually hide the title
+   * Visually hide the title (stand-alone app use only)
    *
    * @property titleHidden
    * @public
@@ -46,13 +46,13 @@ export default Component.extend({
   titleHidden: false,
 
   /**
-   * App icon, for pages that are part of Shopify apps
+   * Application icon for identifying embedded applications
    *
    * @property icon
    * @public
    * @type {String}
    * @default null
-   * TODO: not implemented yet.
+   * TODO: not implemented yet
    */
   icon: null,
 
@@ -65,6 +65,57 @@ export default Component.extend({
    * @default null
    */
   breadcrumbs: null,
+
+  /**
+   * Adds a border to the bottom of the page header (stand-alone app use only)
+   *
+   * @property separator
+   * @public
+   * @type {Boolean}
+   * @default false
+   */
+  separator: false,
+
+  /**
+   * Collection of secondary page-level actions
+   *
+   * @property secondaryActions
+   * @public
+   * @type {Array}
+   * @default null
+   */
+  secondaryActions: null,
+
+  /**
+   * Collection of page-level groups of secondary actions
+   *
+   * @property actionGroups
+   * @public
+   * @type {Array}
+   * @default null
+   */
+  actionGroups: null,
+
+  /**
+   * Primary page-level action
+   *
+   * @property primaryAction
+   * @public
+   * @type {Object}
+   * @default null
+   */
+  primaryAction: null,
+
+  /**
+   * Page-level pagination (stand-alone app use only)
+   *
+   * @property pagination
+   * @public
+   * @type {Object}
+   * @default null
+   * TODO: not implemented yet
+   */
+  pagination: null,
 
   /**
    * The contents of the page
@@ -101,63 +152,15 @@ export default Component.extend({
   singleColumn: false,
 
   /**
-   * Adds a border to the bottom of the page header
+   * Force render in page and do not delegate to the app bridge TitleBar action
    *
-   * @property separator
+   * @property forceRender
    * @public
    * @type {Boolean}
    * @default false
+   * TODO: not implemented yet (only for embedded apps)
    */
-  separator: false,
-
-  /**
-   * Collection of secondary page-level actions
-   *
-   * @property secondaryActions
-   * @public
-   * @type {Array}
-   * @default null
-   */
-  secondaryActions: null,
-
-  /**
-   * Collection of page-level groups of secondary actions
-   *
-   * Properties:
-   *
-   * @property {String} title Action group title
-   * @property {String} icon Icon to display
-   * @property {Object[]} actions List of actions
-   * @property {String|Component|Object} details Action details
-   * @property {Function} onActionAnyItem Callback when any action takes place
-   *
-   * @property actionGroups
-   * @public
-   * @type {Object[]}
-   * @default null
-   */
-  actionGroups: null,
-
-  /**
-   * Primary page-level action
-   *
-   * @property primaryAction
-   * @public
-   * @type {Object}
-   * @default null
-   */
-  primaryAction: null,
-
-  /**
-   * Page-level pagination
-   *
-   * @property pagination
-   * @public
-   * @type {PaginationDescriptor}
-   * @default null
-   * TODO: not implemented yet
-   */
-  pagination: null,
+  forceRender: false,
 
   /**
    * Computed properties.
