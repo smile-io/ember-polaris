@@ -84,7 +84,7 @@
         </div>
       {{/if}}
 
-      {{#showCharacterCount}}
+      {{#if showCharacterCount}}
         <div
           id={{concat id "CharacterCounter"}}
           class={{characterCountClassName}}
@@ -99,8 +99,8 @@
       {{#if shouldShowSpinner}}
         {{polaris-text-field/spinner
           onChange=(action "handleNumberChange")
-          onMouseDown=(action "handleButtonPress")
-          onMouseUp=(action "handleButtonRelease")
+          onMouseDown=(action handleButtonPress)
+          onMouseUp=(action handleButtonRelease)
         }}
       {{/if}}
 

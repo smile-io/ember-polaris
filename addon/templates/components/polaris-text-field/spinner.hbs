@@ -11,6 +11,8 @@
     class="Polaris-TextField__Segment"
     tabindex="-1"
     onclick={{action onChange 1}}
+    onmousedown={{action "handleMouseDown" (action onChange 1)}}
+    onmouseup={{action onMouseUp}}
   >
     <div class="Polaris-TextField__SpinnerIcon">
       {{polaris-icon source="caret-up"}}
@@ -23,6 +25,8 @@
     class="Polaris-TextField__Segment"
     tabindex="-1"
     onclick={{action onChange -1}}
+    onmousedown={{action "handleMouseDown" (action onChange -1)}}
+    onmouseup={{action onMouseUp}}
   >
     <div class="Polaris-TextField__SpinnerIcon">
       {{polaris-icon source="caret-down"}}
