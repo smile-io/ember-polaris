@@ -4,13 +4,13 @@ import { computed } from '@ember/object';
 import { gt, or } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['Polaris-Page__Header'],
+  classNames: ['Polaris-Page-Header'],
   classNameBindings: [
-    'titleHidden:Polaris-Page__Title--hidden',
-    'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
-    'hasRollup:Polaris-Page__Header--hasRollup',
-    'separator:Polaris-Page__Header--hasSeparator',
-    'hasSecondaryActions:Polaris-Page__Header--hasSecondaryActions',
+    'titleHidden:Polaris-Page-Header__Title--hidden',
+    'hasBreadcrumbs:Polaris-Page-Header__Header--hasBreadcrumbs',
+    'hasRollup:Polaris-Page-Header__Header--hasRollup',
+    'separator:Polaris-Page-Header__Header--hasSeparator',
+    'hasSecondaryActions:Polaris-Page-Header__Header--hasSecondaryActions',
   ],
 
   layout,
@@ -153,7 +153,7 @@ export default Component.extend({
       let secondaryActions = this.get('secondaryActions') || [];
       let actionGroups = this.get('actionGroups') || [];
 
-      return secondaryActions.length + actionGroups.length > 1;
+      return secondaryActions.length + actionGroups.length >= 1;
     }
   ).readOnly(),
 

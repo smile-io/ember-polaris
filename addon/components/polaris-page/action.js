@@ -77,22 +77,6 @@ export default Component.extend({
   disabled: false,
 
   /**
-   * @property showIndicator
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  showIndicator: false,
-
-  /**
-   * @property hasIndicator
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  hasIndicator: false,
-
-  /**
    * @property onAction
    * @type {Function}
    * @default noop
