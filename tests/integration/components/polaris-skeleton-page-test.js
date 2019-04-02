@@ -10,13 +10,33 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
   const pageSelector = '[data-test-skeleton-page]';
   const headerSelector = '[data-test-skeleton-page-header]';
   const contentSelector = '[data-test-skeleton-page-content]';
+  const titleAndPrimarySelector =
+    '[data-test-skeleton-page-title-primary-action]';
   const titleSelector = '[data-test-skeleton-page-title]';
   const titleTextSelector = '[data-test-skeleton-page-title-text]';
   const breadcrumbsSelector = '[data-test-skeleton-page-breadcrumbs]';
   const breadcrumbSelector = '[data-test-skeleton-page-breadcrumb]';
-  const breadcrumbTextSelector = '[data-test-skeleton-page-action-text]';
+  const primaryActionSelector = '[data-test-skeleton-page-primary-action]';
   const secondaryActionsSelector = '[data-test-skeleton-page-actions]';
   const secondaryActionSelector = '[data-test-skeleton-page-action]';
+
+  const pageTitleSelector = buildNestedSelector(
+    headerSelector,
+    titleAndPrimarySelector,
+    titleSelector
+  );
+
+  const pagePrimaryActionSelector = buildNestedSelector(
+    headerSelector,
+    titleAndPrimarySelector,
+    primaryActionSelector
+  );
+
+  const pageSecondaryActionSelector = buildNestedSelector(
+    headerSelector,
+    secondaryActionsSelector,
+    secondaryActionSelector
+  );
 
   test('it renders a basic skeleton page', async function(assert) {
     await render(hbs`{{polaris-skeleton-page}}`);
@@ -95,9 +115,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
     await render(hbs`{{polaris-skeleton-page title=title}}`);
 
     // undefined title -> renders large skeleton display text.
-    assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
-      .exists('unspecified title - renders title');
+    assert.dom(pageTitleSelector).exists('unspecified title - renders title');
     assert
       .dom(buildNestedSelector(titleSelector, titleTextSelector))
       .exists('unspecified title - renders title as skeleton title');
@@ -108,17 +126,9 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
         'unspecified title - renders large skeleton title'
       );
 
-    // null title -> renders no title.
-    this.set('title', null);
-    assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
-      .doesNotExist('null title - does not render title');
-
     // Text title -> renders large display text.
     this.set('title', 'Spooky Skeleton Page');
-    assert
-      .dom(buildNestedSelector(headerSelector, titleSelector))
-      .exists('title specified - renders title');
+    assert.dom(pageTitleSelector).exists('title specified - renders title');
     assert
       .dom(buildNestedSelector(titleSelector, titleTextSelector))
       .exists('title specified - renders title');
@@ -162,15 +172,23 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
     assert
       .dom(buildNestedSelector(breadcrumbsSelector, breadcrumbSelector))
       .exists('breadcrumbs true - renders one skeleton breadcrumb');
+  });
+
+  test('it renders primary action correctly', async function(assert) {
+    this.set('primaryAction', false);
+
+    await render(hbs`{{polaris-skeleton-page primaryAction=primaryAction}}`);
+
     assert
-      .dom(breadcrumbSelector)
-      .hasClass(
-        'Polaris-SkeletonPage__Action',
-        'breadcrumbs true - skeleton breadcrumb has correct class'
+      .dom(pagePrimaryActionSelector)
+      .doesNotExist(
+        'primaryAction unspecified - does not render a primary action'
       );
+
+    this.set('primaryAction', true);
     assert
-      .dom(buildNestedSelector(breadcrumbSelector, breadcrumbTextSelector))
-      .exists('breadcrumbs true - renders breadcrumb text');
+      .dom(pagePrimaryActionSelector)
+      .exists('primaryAction true - it renders a primary action');
   });
 
   test('it renders secondary actions correctly', async function(assert) {
@@ -185,13 +203,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
         'secondaryActions unspecified - does not apply secondary actions class'
       );
     assert
-      .dom(
-        buildNestedSelector(
-          headerSelector,
-          secondaryActionsSelector,
-          secondaryActionSelector
-        )
-      )
+      .dom(pageSecondaryActionSelector)
       .doesNotExist(
         'secondaryActions unspecified - does not render any secondary actions'
       );
@@ -204,13 +216,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
         'secondaryActions specified - applies secondary actions class'
       );
     assert
-      .dom(
-        buildNestedSelector(
-          headerSelector,
-          secondaryActionsSelector,
-          secondaryActionSelector
-        )
-      )
+      .dom(pageSecondaryActionSelector)
       .exists(
         { count: 3 },
         'secondaryActions specified - renders the correct number of secondary actions'
