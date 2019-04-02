@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-const spinnerSelector = '[data-test-polaris-spinner]';
+const spinnerSelector = '[data-test-spinner]';
 
 module('Integration | Component | polaris spinner', function(hooks) {
   setupRenderingTest(hooks);
