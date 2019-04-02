@@ -169,6 +169,7 @@ export default Component.extend({
     'title',
     'primaryAction',
     'secondaryActions',
+    'actionGroups',
     'breadcrumbs'
   ).readOnly(),
 });
