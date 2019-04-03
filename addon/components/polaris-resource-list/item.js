@@ -7,6 +7,7 @@ import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
 export default Component.extend(context.ConsumerMixin, {
+  attributeBindings: ['url:data-href'],
   classNames: ['Polaris-ResourceList-Item'],
   classNameBindings: [
     'focused:Polaris-ResourceList-Item--focused',
@@ -16,7 +17,6 @@ export default Component.extend(context.ConsumerMixin, {
     'persistActions:Polaris-ResourceList-Item--persistActions',
     'focusedInner:Polaris-ResourceList-Item--focusedInner',
   ],
-  attributeBindings: ['url:data-href'],
 
   layout,
 
