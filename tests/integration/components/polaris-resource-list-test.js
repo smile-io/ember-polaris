@@ -6,6 +6,7 @@ import { computed } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import BulkActionsComponent from '@smile-io/ember-polaris/components/polaris-resource-list/bulk-actions';
 import SelectComponent from '@smile-io/ember-polaris/components/polaris-select';
+import { setUpAttributeCaptureOnComponent } from '../../helpers/component-attribute-capture';
 
 const itemsNoID = [{ url: 'item 1' }, { url: 'item 2' }];
 const singleItemNoID = [{ url: 'item 1' }];
@@ -68,24 +69,6 @@ const ItemComponent = Component.extend({
     return `View details for ${this.get('item.title')}`;
   }).readOnly(),
 });
-
-function setUpAttributeCaptureOnComponent(
-  testContext,
-  componentPath,
-  componentClass,
-  attributeName
-) {
-  testContext.owner.register(
-    `component:${componentPath}`,
-    componentClass.extend({
-      didReceiveAttrs() {
-        this._super(...arguments);
-
-        testContext.set(attributeName, this.get(attributeName));
-      },
-    })
-  );
-}
 
 module('Integration | Component | polaris-resource-list', function(hooks) {
   setupRenderingTest(hooks);
@@ -215,7 +198,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           }}
         `);
         assert
-          .dom('[data-test-id="item-count-text-wrapper"]')
+          .dom('[data-test-id="header-title-wrapper"]')
           .hasText('Showing 1 item');
       });
 
@@ -229,7 +212,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           }}
         `);
         assert
-          .dom('[data-test-id="item-count-text-wrapper"]')
+          .dom('[data-test-id="header-title-wrapper"]')
           .hasText('Showing 1 product');
       });
     });
@@ -240,7 +223,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           {{polaris-resource-list items=itemsNoID itemComponent="item-component" showHeader=true}}
         `);
         assert
-          .dom('[data-test-id="item-count-text-wrapper"]')
+          .dom('[data-test-id="header-title-wrapper"]')
           .hasText('Showing 2 items');
       });
 
@@ -254,9 +237,26 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           }}
         `);
         assert
-          .dom('[data-test-id="item-count-text-wrapper"]')
+          .dom('[data-test-id="header-title-wrapper"]')
           .hasText('Showing 2 products');
       });
+    });
+  });
+
+  module('headerTitle', function() {
+    test('prints loading text when loading is true', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=singleItemWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+          loading=true
+        }}
+      `);
+
+      assert
+        .dom('[data-test-id="header-title-wrapper"]')
+        .hasText('Loading items');
     });
   });
 
@@ -296,7 +296,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.equal(this.get('accessibilityLabel'), 'Deselect item');
       });
 
-      test('provides the BulkActions with the right accessibilityLabel if there’s multiple items and they are all selected', async function(assert) {
+      test('provides the BulkActions with the right accessibilityLabel if there are multiple items and they are selected', async function(assert) {
         await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -394,6 +394,17 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
+    test('renders when an alternateTool is provided', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          alternateTool=(component "wrapper-element" class="AlternateTool")
+          items=itemsWithID
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').exists();
+    });
+
     test('renders when bulkActions are given', async function(assert) {
       await render(hbs`
         {{polaris-resource-list
@@ -421,6 +432,21 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
       `);
       assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
+    });
+
+    test('renders on non-initial load when items are provided', async function(assert) {
+      this.set('items', []);
+      await render(hbs`
+        {{polaris-resource-list
+          bulkActions=bulkActions
+          items=items
+          itemComponent="item-component"
+        }}
+      `);
+      assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
+
+      this.set('items', itemsWithID);
+      assert.dom('[data-test-id="resource-list-header"]').exists({ count: 1 });
     });
   });
 
@@ -469,6 +495,17 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       `);
       assert.dom('.Polaris-EmptySearchResult').doesNotExist();
     });
+
+    test('does not render when filterControl exists, items is empty, and loading is true', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=(array)
+          itemComponent="shallow-item-component"
+          filterControl=(component "wrapper-element")
+        }}
+      `);
+      assert.dom('.Polaris-EmptySearchResult').doesNotExist();
+    });
   });
 
   module('Sorting', function() {
@@ -488,6 +525,53 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         }}
       `);
       assert.dom('.Polaris-Select').exists();
+    });
+
+    test('does not render a sort select if an alternateTool is provided', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=itemsWithID
+          sortOptions=sortOptions
+          itemComponent="item-component"
+          alternateTool=(component "wrapper-element" class="AlternateTool")
+        }}
+      `);
+      assert.dom('.Polaris-Select').doesNotExist();
+    });
+
+    module('Alternate Tool', function() {
+      test('does not render if an alternateTool is not provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            itemComponent="item-component"
+          }}
+        `);
+        assert.dom('.AlternateTool').doesNotExist();
+      });
+
+      test('renders if an alternateTool is provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            itemComponent="item-component"
+            alternateTool=(component "wrapper-element" class="AlternateTool")
+          }}
+        `);
+        assert.dom('.AlternateTool').exists();
+      });
+
+      test('renders even if sortOptions are provided', async function(assert) {
+        await render(hbs`
+          {{polaris-resource-list
+            items=itemsWithID
+            itemComponent="item-component"
+            sortOptions=sortOptions
+            alternateTool=(component "wrapper-element" class="AlternateTool")
+          }}
+        `);
+        assert.dom('.AlternateTool').exists();
+      });
     });
 
     module(
@@ -575,6 +659,33 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       // Checking for spinner container here because currently
       // our tests can't render SVGs so the spinner doesn't appear.
       assert.dom('.Polaris-ResourceList__SpinnerContainer').exists();
+    });
+
+    test('does not render an <Item /> if loading is true and there are no items', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=(array)
+          sortOptions=sortOptions
+          itemComponent="item-component"
+          loading=true
+        }}
+      `);
+
+      assert.dom('[data-test-id="item-wrapper"]').doesNotExist();
+    });
+  });
+
+  module('BulkActions', function() {
+    test('renders on initial load when items are selected', async function(assert) {
+      await render(hbs`
+        {{polaris-resource-list
+          items=singleItemWithID
+          itemComponent="item-component"
+          bulkActions=bulkActions
+          selectedItems=(array "1")
+        }}
+      `);
+      assert.dom('[data-test-bulk-actions]').exists({ count: 1 });
     });
   });
 });

@@ -16,6 +16,7 @@ export default Component.extend(context.ConsumerMixin, {
     'persistActions:Polaris-ResourceList-Item--persistActions',
     'focusedInner:Polaris-ResourceList-Item--focusedInner',
   ],
+  attributeBindings: ['url:data-href'],
 
   layout,
 
@@ -221,6 +222,7 @@ export default Component.extend(context.ConsumerMixin, {
       'selectMode',
       'element'
     );
+    let { ctrlKey, metaKey } = event;
     let anchor = element && element.querySelector('a');
 
     if (selectMode) {
@@ -234,6 +236,11 @@ export default Component.extend(context.ConsumerMixin, {
 
     if (onClick) {
       onClick(itemId);
+    }
+
+    if (url && (ctrlKey || metaKey)) {
+      window.open(url, '_blank');
+      return;
     }
 
     if (url && anchor) {
