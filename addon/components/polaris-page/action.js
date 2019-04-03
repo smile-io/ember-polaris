@@ -10,10 +10,10 @@ export default Component.extend({
 
   attributeBindings: ['type', 'disabled', 'accessibilityLabel:aria-label'],
 
-  classNames: ['Polaris-Page__Action'],
+  classNames: ['Polaris-Header-Action'],
   classNameBindings: [
-    'disabled:Polaris-Page--disabled',
-    'isIconOnly:Polaris-Page--iconOnly',
+    'disabled:Polaris-Header-Action--disabled',
+    'isIconOnly:Polaris-Header-Action--iconOnly',
   ],
 
   layout,
