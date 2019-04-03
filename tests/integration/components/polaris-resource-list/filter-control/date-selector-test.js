@@ -7,10 +7,12 @@ import {
   triggerEvent,
   click,
   blur,
+  waitUntil,
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
 import DatePickerComponent from '@smile-io/ember-polaris/components/polaris-date-picker';
+import { setUpAttributeCaptureOnComponent } from '../../../../helpers/component-attribute-capture';
 
 const textFieldInputSelector = '.Polaris-TextField input';
 const selectedDaySelector = '.Polaris-DatePicker__Day--selected';
@@ -56,9 +58,13 @@ function getOptionsValuesList(options) {
   });
 }
 
-async function triggerChangeEventWithValue(selector, value) {
+async function triggerChangeEventWithValue(
+  selector,
+  value,
+  eventName = 'change'
+) {
   find(selector).value = value;
-  await triggerEvent(selector, 'change');
+  await triggerEvent(selector, eventName);
 }
 
 function hackDatePickerToFireOnChangeWithValue(value) {
@@ -74,6 +80,17 @@ function hackDatePickerToFireOnChangeWithValue(value) {
 module(
   'Integration | Component | polaris-resource-list/filter-control/date-selector',
   function(hooks) {
+    let origGetTimezoneOffset;
+
+    hooks.beforeEach(function() {
+      origGetTimezoneOffset = Date.prototype.getTimezoneOffset;
+      Date.prototype.getTimezoneOffset = () => -540;
+    });
+
+    hooks.afterEach(function() {
+      Date.prototype.getTimezoneOffset = origGetTimezoneOffset;
+    });
+
     setupRenderingTest(hooks);
 
     module('dateOptionType', function() {
@@ -217,6 +234,177 @@ module(
         `);
 
         assert.dom('.Polaris-DatePicker').doesNotExist();
+      });
+
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+        const filterValue = 'coming_week';
+        this.set('filterValue', filterValue);
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue=filterValue
+          }}
+        `);
+
+        assert.dom('select').hasValue(filterValue);
+      });
+    });
+
+    module('filterKey and filterMaxKey', function() {
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+        const filterValue = 'coming_week';
+        const filterKey = 'before';
+        const filterMaxKey = 'before';
+        this.setProperties({ filterValue, filterKey, filterMaxKey });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterMinKey="starts_min"
+            filterValue=filterValue
+            filterKey=filterKey
+            filterMaxKey=filterMaxKey
+          }}
+        `);
+        assert.dom('select').hasValue('on_or_before');
+      });
+    });
+
+    module(
+      'timezones adjustments',
+      {
+        beforeEach() {
+          setUpAttributeCaptureOnComponent(
+            this,
+            'polaris-date-picker',
+            DatePickerComponent,
+            'selected'
+          );
+        },
+      },
+      function() {
+        // Skipping these tests for the time being since they pass when
+        // dev tools is open but time out otherwise :wat:
+        skip('sets the selected date with negative timezone offset on DatePicker and TextField', async function(assert) {
+          const nextUserInputDate = '2019-01-01';
+          const timezoneOffset = -540;
+          const timezoneOffsetInHours = Math.abs(timezoneOffset / 60);
+          Date.prototype.getTimezoneOffset = () => timezoneOffset;
+
+          await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue="on_or_before"
+          }}
+        `);
+
+          await triggerChangeEventWithValue(
+            textFieldInputSelector,
+            nextUserInputDate,
+            'input'
+          );
+          await blur(textFieldInputSelector, 'blur');
+
+          // Grab the selected date from the date picker. For some reason this
+          // doesn't get updated during the `blur` event above so we need to
+          // wait for it.
+          let selectedDate = null;
+          await waitUntil(() => (selectedDate = this.get('selected')));
+
+          assert.equal(
+            selectedDate.toISOString(),
+            `2019-01-01T0${timezoneOffsetInHours}:00:00.000Z`
+          );
+          assert.dom(textFieldInputSelector).hasValue(nextUserInputDate);
+        });
+
+        skip('sets the selected date with fringe timezone offset on DatePicker and TextField', async function(assert) {
+          const nextUserInputDate = '2019-01-01';
+          Date.prototype.getTimezoneOffset = () => -720;
+
+          await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue="on_or_before"
+          }}
+        `);
+
+          await triggerChangeEventWithValue(
+            textFieldInputSelector,
+            nextUserInputDate,
+            'input'
+          );
+          await blur(textFieldInputSelector, 'blur');
+
+          // Grab the selected date from the date picker. For some reason this
+          // doesn't get updated during the `blur` event above so we need to
+          // wait for it.
+          let selectedDate = null;
+          await waitUntil(() => (selectedDate = this.get('selected')));
+
+          assert.ok(selectedDate.toISOString().indexOf(nextUserInputDate) > -1);
+          assert.dom(textFieldInputSelector).hasValue(nextUserInputDate);
+        });
+
+        skip('sets the selected date with positive timezone offset on DatePicker and TextField', async function(assert) {
+          const nextUserInputDate = '2019-01-01';
+          const timezoneOffset = 300;
+          const timezoneOffsetInHours = Math.abs(timezoneOffset / 60);
+          Date.prototype.getTimezoneOffset = () => timezoneOffset;
+
+          await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterKey="starts"
+            filterMinKey="starts_min"
+            filterMaxKey="starts_max"
+            filterValue="on_or_before"
+          }}
+        `);
+
+          await triggerChangeEventWithValue(
+            textFieldInputSelector,
+            nextUserInputDate,
+            'input'
+          );
+          await blur(textFieldInputSelector, 'blur');
+
+          // Grab the selected date from the date picker. For some reason this
+          // doesn't get updated during the `blur` event above so we need to
+          // wait for it.
+          let selectedDate = null;
+          await waitUntil(() => (selectedDate = this.get('selected')));
+
+          assert.equal(
+            selectedDate.toISOString(),
+            `2019-01-01T0${timezoneOffsetInHours}:00:00.000Z`
+          );
+          assert.dom(textFieldInputSelector).hasValue(nextUserInputDate);
+        });
+      }
+    );
+
+    module('filterKey and filterMinKey', function() {
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+        const filterValue = 'filter value';
+        const filterKey = 'after';
+        const filterMinKey = 'after';
+        this.setProperties({ filterValue, filterKey, filterMinKey });
+
+        await render(hbs`
+          {{polaris-resource-list/filter-control/date-selector
+            filterMaxKey="starts_max"
+            filterValue=filterValue
+            filterKey=filterKey
+            filterMinKey=filterMinKey
+          }}
+        `);
+        assert.dom('select').hasValue('on_or_after');
       });
     });
 

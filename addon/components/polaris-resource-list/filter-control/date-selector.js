@@ -222,7 +222,7 @@ export default Component.extend({
     }
 
     if (selectedDate) {
-      return formatDateValue(selectedDate);
+      return stripTimeFromISOString(formatDateForLocalTimezone(selectedDate));
     }
   }).readOnly(),
 
@@ -292,7 +292,9 @@ export default Component.extend({
     if (newOption === DateFilterOption.OnOrBefore) {
       onFilterKeyChange(filterMaxKey);
       onFilterValueChange(
-        selectedDate ? formatDateValue(selectedDate) : undefined
+        selectedDate
+          ? stripTimeFromISOString(formatDateForLocalTimezone(selectedDate))
+          : undefined
       );
       return;
     }
@@ -300,7 +302,9 @@ export default Component.extend({
     if (newOption === DateFilterOption.OnOrAfter) {
       onFilterKeyChange(filterMinKey);
       onFilterValueChange(
-        selectedDate ? formatDateValue(selectedDate) : undefined
+        selectedDate
+          ? stripTimeFromISOString(formatDateForLocalTimezone(selectedDate))
+          : undefined
       );
       return;
     }
@@ -348,12 +352,14 @@ export default Component.extend({
       return;
     }
 
-    let nextDate = new Date(userInputDate.replace(/-/g, '/'));
+    let formattedDateForTimezone = new Date(
+      formatDateForLocalTimezone(new Date(userInputDate))
+    );
 
     this.setProperties({
-      selectedDate: nextDate,
-      datePickerMonth: nextDate.getMonth(),
-      datePickerYear: nextDate.getFullYear(),
+      selectedDate: formattedDateForTimezone,
+      datePickerMonth: formattedDateForTimezone.getMonth(),
+      datePickerYear: formattedDateForTimezone.getFullYear(),
       userInputDate: undefined,
       userInputDateError: undefined,
     });
@@ -370,7 +376,9 @@ export default Component.extend({
       return;
     }
 
-    onFilterValueChange(formatDateValue(selectedDate));
+    onFilterValueChange(
+      stripTimeFromISOString(formatDateForLocalTimezone(selectedDate))
+    );
   },
 
   handleDatePickerChange({ end: nextDate }) {
@@ -425,6 +433,25 @@ function getDateFilterOption(
   return filterValue;
 }
 
-function formatDateValue(date) {
-  return date.toISOString().slice(0, 10);
+function stripTimeFromISOString(ISOString) {
+  return ISOString.slice(0, 10);
+}
+
+function formatDateForLocalTimezone(date) {
+  let timezoneOffset = date.getTimezoneOffset();
+  let timezoneOffsetMs = timezoneOffset * 60 * 1000;
+  let isFringeTimezone = timezoneOffset === -720 || timezoneOffset === 720;
+  let formattedDate = new Date();
+
+  if (isFringeTimezone && date.getHours() !== 0) {
+    return date.toISOString();
+  }
+
+  let newTime =
+    timezoneOffset > -1
+      ? date.getTime() + timezoneOffsetMs
+      : date.getTime() - timezoneOffsetMs;
+
+  formattedDate.setTime(newTime);
+  return formattedDate.toISOString();
 }

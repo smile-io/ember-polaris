@@ -15,8 +15,8 @@ const variationElement = (variation) => {
   switch (variation) {
     case variationValue.code:
       return 'code';
+
     case variationValue.strong:
-      return 'b';
     case variationValue.positive:
     case variationValue.negative:
     case variationValue.subdued:

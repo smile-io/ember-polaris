@@ -1,24 +1,28 @@
-{{#if url}}
-  {{polaris-unstyled-link
-    class="Polaris-ResourceList-Item__Link"
-    ariaDescribedBy=itemId
-    ariaLabel=accessibilityLabel
-    url=url
-    focusIn=(action handleAnchorFocus)
-    focusOut=(action handleFocusedBlur)
-  }}
-{{else}}
-  {{wrapper-element
-    tagName="button"
-    class="Polaris-ResourceList-Item__Button"
-    aria-label=accessibilityLabel
-    aria-controls=ariaControls
-    aria-expanded=ariaExpanded
-    click=(action handleClick)
-    focusIn=(action handleAnchorFocus)
-    focusOut=(action handleFocusedBlur)
-  }}
-{{/if}}
+{{#with (if loading "-1" "0") as |tabIndex|}}
+  {{#if url}}
+    {{polaris-unstyled-link
+      class="Polaris-ResourceList-Item__Link"
+      ariaDescribedBy=itemId
+      ariaLabel=accessibilityLabel
+      url=url
+      focusIn=(action handleAnchorFocus)
+      focusOut=(action handleFocusedBlur)
+      tabIndex=tabIndex
+    }}
+  {{else}}
+    {{wrapper-element
+      tagName="button"
+      class="Polaris-ResourceList-Item__Button"
+      aria-label=accessibilityLabel
+      aria-controls=ariaControls
+      aria-expanded=ariaExpanded
+      click=(action handleClick)
+      focusIn=(action handleAnchorFocus)
+      focusOut=(action handleFocusedBlur)
+      tabIndex=tabIndex
+    }}
+  {{/if}}
+{{/with}}
 
 <div
   data-test-id="item-content"
@@ -69,7 +73,7 @@
     </div>
   {{/if}}
 
-  {{#if shortcutActions}}
+  {{#if (and shortcutActions (not loading))}}
     {{#wrapper-element
       tagName="div"
       class="Polaris-ResourceList-Item__Actions"

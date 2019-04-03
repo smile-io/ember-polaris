@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import layout from '../templates/components/polaris-spinner';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
-import SvgHandling from '../mixins/components/svg-handling';
 
 const allowedColors = ['white', 'teal', 'inkLightest'];
 const colorsForLargeSpinner = ['teal', 'inkLightest'];
@@ -11,7 +10,12 @@ const defaultColor = 'teal';
 const allowedSizes = ['small', 'large'];
 const defaultSize = 'large';
 
-export default Component.extend(SvgHandling, {
+const spinnerSVGSources = {
+  small: '/@smile-io/ember-polaris/illustrations/spinner-small.svg',
+  large: '/@smile-io/ember-polaris/illustrations/spinner-large.svg',
+};
+
+export default Component.extend({
   tagName: '',
 
   layout,
@@ -71,8 +75,9 @@ export default Component.extend(SvgHandling, {
   /**
    * @private
    */
-  spinnerSource: computed('normalizedSize', function() {
-    return `polaris/spinner-${this.get('normalizedSize')}`;
+  spinnerSVG: computed('normalizedSize', function() {
+    let size = this.get('normalizedSize') === 'large' ? 'large' : 'small';
+    return spinnerSVGSources[size];
   }).readOnly(),
 
   /**
