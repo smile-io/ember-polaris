@@ -392,7 +392,9 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   /**
    * @private
    */
+
   buttonPressTimer: null,
+  wasFocused: false,
 
   dataTestTextField: 'text-field',
 
@@ -587,12 +589,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     });
   },
 
-  checkFocus() {
-    if (this.get('focused')) {
-      this.get('input').focus();
-    }
-  },
-
   handleButtonRelease() {
     clearTimeout(this.get('buttonPressTimer'));
   },
@@ -613,12 +609,30 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     this._super(...arguments);
 
     this.setInput();
-    this.checkFocus();
+
+    if (!this.get('focused')) {
+      return;
+    }
+
+    this.get('input').focus();
   },
 
   didUpdateAttrs() {
     this._super(...arguments);
-    this.checkFocus();
+
+    let { wasFocused, focused, input } = this.getProperties(
+      'wasFocused',
+      'focused',
+      'input'
+    );
+
+    if (!wasFocused && focused) {
+      input.focus();
+    } else if (wasFocused && !focused) {
+      input.blur();
+    }
+
+    this.set('wasFocused', focused);
   },
 
   actions: {
