@@ -460,7 +460,7 @@ module(
             assert.dom('[data-test-select="operator"]').doesNotExist();
           });
 
-          test('calls onFilterKeyChange when the filter key was changed', async function(assert) {
+          test('calls onChange when the filter key was changed', async function(assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter

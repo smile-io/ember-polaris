@@ -5,10 +5,10 @@ import { classify } from '@ember/string';
 import layout from '../../templates/components/polaris-drop-zone/file-upload';
 
 const iconDragDrop = 'drag-drop';
-const assetFileUpload = 'file-upload';
-const assetImageUpload = 'image-upload';
+const fileUpload = '/@smile-io/ember-polaris/images/file-upload.svg';
+const imageUpload = '/@smile-io/ember-polaris/images/image-upload.svg';
 
-const fileUpload = {
+const fileUploadStrings = {
   actionTitleFile: 'Add file',
   actionTitleImage: 'Add image',
   actionHintFile: 'or drop files to upload',
@@ -30,7 +30,7 @@ export default Component.extend({
    */
   actionTitle: computed('type', function() {
     let type = this.get('type');
-    return fileUpload[`actionTitle${classify(type)}`];
+    return fileUploadStrings[`actionTitle${classify(type)}`];
   }),
 
   /**
@@ -43,14 +43,14 @@ export default Component.extend({
    */
   actionHint: computed('type', function() {
     let type = this.get('type');
-    return fileUpload[`actionHint${classify(type)}`];
+    return fileUploadStrings[`actionHint${classify(type)}`];
   }),
 
   iconDragDrop,
 
-  assetFileUpload,
+  fileUpload,
 
-  assetImageUpload,
+  imageUpload,
 
   type: readOnly('context.type'),
 

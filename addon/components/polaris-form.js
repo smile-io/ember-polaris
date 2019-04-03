@@ -62,13 +62,14 @@ export default Component.extend({
   implicitSubmit: true,
 
   /**
-   * Method used to submit form
+   * Method used to submit form.
+   * Can be one of 'post', 'get' or 'action'.
    *
    * @type {String}
-   * @default null
+   * @default 'post'
    * @public
    */
-  method: null,
+  method: 'post',
 
   /**
    * A unique name for the form

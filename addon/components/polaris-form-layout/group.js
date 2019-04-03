@@ -11,7 +11,9 @@ export default Component.extend({
     'helpTextID:aria-describedby',
   ],
 
-  classNameBindings: ['condensed:Polaris-FormLayout--condensed'],
+  classNameBindings: [
+    'condensed:Polaris-FormLayout--condensed:Polaris-FormLayout--grouped',
+  ],
 
   layout,
 

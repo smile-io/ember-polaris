@@ -356,13 +356,19 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       onDrop,
       onDropAccepted,
       onDropRejected,
+      allowMultiple,
+      state,
     } = this.getProperties(
       'disabled',
       'onDrop',
       'onDropAccepted',
-      'onDropRejected'
+      'onDropRejected',
+      'allowMultiple',
+      'state'
     );
-    if (disabled) {
+    let numFiles = state.get('numFiles');
+
+    if (disabled || (!allowMultiple && numFiles > 0)) {
       return;
     }
     let fileList = getDataTransferFiles(event);
@@ -372,9 +378,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
     this.dragTargets = [];
 
-    this.get('state').setProperties({
+    state.setProperties({
       dragging: false,
       error: rejectedFiles.length > 0,
+      numFiles: state.get('numFiles') + acceptedFiles.length,
     });
 
     onDrop(files, acceptedFiles, rejectedFiles);
@@ -386,17 +393,22 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     if (rejectedFiles.length) {
       onDropRejected(rejectedFiles);
     }
+
+    event.target.value = '';
   },
 
   handleDragEnter(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter } = this.getProperties(
+    let { disabled, onDragEnter, allowMultiple, state } = this.getProperties(
       'disabled',
-      'onDragEnter'
+      'onDragEnter',
+      'allowMultiple',
+      'state'
     );
-    if (disabled) {
+
+    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
 
@@ -405,7 +417,6 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       this.dragTargets.push(event.target);
     }
 
-    let state = this.get('state');
     if (state.get('dragging')) {
       return false;
     }
@@ -424,26 +435,34 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragOver } = this.getProperties('disabled', 'onDragOver');
-    if (disabled) {
+    let state = this.get('state');
+    let { disabled, onDragOver, allowMultiple } = this.getProperties(
+      'disabled',
+      'onDragOver',
+      'allowMultiple'
+    );
+
+    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
 
     onDragOver();
 
-    // Browsers are somewhat inconsistent about needing these, but they don't hurt to add.
     return false;
   },
 
   handleDragLeave(event) {
     event.preventDefault();
 
-    let { disabled, onDragLeave, dropNode } = this.getProperties(
+    let state = this.get('state');
+    let { disabled, onDragLeave, allowMultiple, dropNode } = this.getProperties(
       'disabled',
       'onDragLeave',
+      'allowMultiple',
       'dropNode'
     );
-    if (disabled) {
+
+    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
       return;
     }
 
@@ -634,8 +653,13 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   actions: {
     handleClick(event) {
-      let { onClick, disabled } = this.getProperties('onClick', 'disabled');
-      if (disabled) {
+      let { onClick, disabled, allowMultiple } = this.getProperties(
+        'onClick',
+        'disabled'
+      );
+      let numFiles = this.get('state.numFiles');
+
+      if (disabled || (!allowMultiple && numFiles > 0)) {
         return;
       }
 

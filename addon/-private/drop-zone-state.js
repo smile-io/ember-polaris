@@ -42,6 +42,14 @@ export default EmberObject.extend({
    */
   error: false,
 
+  /**
+   * Number of files
+   * @type {Number}
+   * @default 0
+   * @property numFiles
+   */
+  numFiles: 0,
+
   overlayText: computed('type', function() {
     let type = this.get('type');
     return get(dropZone, `overlayText${capitalize(type)}`);

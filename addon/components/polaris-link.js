@@ -13,10 +13,10 @@ export default Component.extend({
   layout,
 
   /**
-   * The url to link to.
+   * The url to link to
    *
    * @property url
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -26,7 +26,7 @@ export default Component.extend({
    * The content to display inside link
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -36,17 +36,27 @@ export default Component.extend({
    * Use for a links that open a different site
    *
    * @property external
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
   external: false,
 
   /**
+   * Makes the link color the same as the current text color and adds an underline
+   *
+   * @property monochrome
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  monochrome: false,
+
+  /**
    * Callback when a link is clicked
    *
    * @property onClick
-   * @type {function}
+   * @type {Function}
    * @default noop
    * @public
    */
@@ -56,13 +66,17 @@ export default Component.extend({
    * @private
    */
   linkClass: computed('class', function() {
-    let linkClass = 'Polaris-Link';
-    const externalClasses = this.get('class');
+    let linkClasses = ['Polaris-Link'];
 
-    if (externalClasses) {
-      linkClass += ` ${externalClasses}`;
+    if (this.get('monochrome')) {
+      linkClasses.push('Polaris-Link--monochrome');
     }
 
-    return linkClass;
+    const externalClasses = this.get('class');
+    if (externalClasses) {
+      linkClasses.push(externalClasses);
+    }
+
+    return linkClasses.join(' ');
   }).readOnly(),
 });

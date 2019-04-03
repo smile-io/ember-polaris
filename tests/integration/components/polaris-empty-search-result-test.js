@@ -53,7 +53,7 @@ module('Integration | Component | polaris-empty-search-result', function(
     assert.dom(illustrationSelector).doesNotExist();
   });
 
-  test('displays the correct illustration when `withIllustration` is true', async function(assert) {
+  test('displays the illustration when `withIllustration` is true', async function(assert) {
     await render(hbs`
       {{polaris-empty-search-result
         title="Foo"

@@ -10,7 +10,7 @@ export default Component.extend({
    * Title for the section
    *
    * @property title
-   * @type {string}
+   * @type {String|Component}
    * @default: null
    * @public
    */
@@ -24,7 +24,7 @@ export default Component.extend({
    * instead of `text`
    *
    * @property text
-   * @type {string}
+   * @type {String}
    * @default: null
    * @public
    */
