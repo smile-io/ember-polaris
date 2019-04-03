@@ -520,11 +520,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   normalizedValue: computed('value', function() {
     let value = this.get('value');
     return value !== null ? value : '';
-  }),
+  }).readOnly(),
 
   characterCount: computed('normalizedValue.length', function() {
     return this.get('normalizedValue.length') || 0;
-  }),
+  }).readOnly(),
 
   characterCountLabel: computed('maxLength', 'characterCount', function() {
     let { maxLength, characterCount } = this.getProperties(
@@ -535,7 +535,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     return maxLength
       ? `${characterCount} characters of ${maxLength} used`
       : `${characterCount} characters`;
-  }),
+  }).readOnly(),
 
   characterCountClassName: computed('multiline', function() {
     let classNames = ['Polaris-TextField__CharacterCount'];
@@ -545,7 +545,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     return classNames.join(' ');
-  }),
+  }).readOnly(),
 
   characterCountText: computed('maxLength', 'characterCount', function() {
     let { maxLength, characterCount } = this.getProperties(
@@ -554,11 +554,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     );
 
     return !maxLength ? characterCount : `${characterCount}/${maxLength}`;
-  }),
+  }).readOnly(),
 
   focus: computed('focused', function() {
     return this.get('focused') || false;
-  }),
+  }).readOnly(),
 
   setInput() {
     this.set('input', document.querySelector(`[id='${this.get('id')}']`));
