@@ -8,7 +8,7 @@ import { isPresent } from '@ember/utils';
 import { getCode } from 'ember-keyboard';
 import layout from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
-import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import { runTask, cancelTask, runDisposables } from 'ember-lifeline';
 
 /**
  * Returns the length of decimal places in a number
@@ -19,7 +19,7 @@ const dpl = (num) => (num.toString().split('.')[1] || []).length;
  * Polaris text-field component.
  * See https://polaris.shopify.com/components/forms/text-field
  */
-export default Component.extend(ContextBoundEventListenersMixin, {
+export default Component.extend({
   tagName: '',
 
   layout,
@@ -576,21 +576,14 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
       onChange();
 
-      this.set(
-        'buttonPressTimer',
-        window.setTimeout(onChangeInterval, interval)
-      );
+      this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
     };
 
-    this.set('buttonPressTimer', window.setTimeout(onChangeInterval, interval));
-
-    this.addEventListener(document, 'mouseup', this.handleButtonRelease, {
-      once: true,
-    });
+    this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
   },
 
   handleButtonRelease() {
-    clearTimeout(this.get('buttonPressTimer'));
+    cancelTask(this, this.buttonPressTaskId);
   },
 
   init() {
@@ -633,6 +626,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     this.set('wasFocused', focused);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    runDisposables(this);
   },
 
   actions: {
