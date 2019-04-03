@@ -126,8 +126,8 @@ module('Integration | Component | polaris text style', function(hooks) {
       );
     assert.equal(
       find(textStyleSelector).tagName,
-      'B',
-      'strong variation - is rendered as a b tag'
+      'SPAN',
+      'strong variation - is rendered as a span tag'
     );
 
     this.set('variation', 'subdued');
