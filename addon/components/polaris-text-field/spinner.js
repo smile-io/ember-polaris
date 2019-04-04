@@ -26,9 +26,9 @@ export default Component.extend({
    */
   onClick() {},
 
-  onMouseDown() {},
+  onMouseDown(/* onChange */) {},
 
-  onMouseUp(/* onChange */) {},
+  onMouseUp() {},
 
   actions: {
     handleMouseDown(onChange, event) {

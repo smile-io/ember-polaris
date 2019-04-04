@@ -519,7 +519,7 @@ export default Component.extend({
 
   normalizedValue: computed('value', function() {
     let value = this.get('value');
-    return value !== null ? value : '';
+    return value != null ? value : '';
   }).readOnly(),
 
   characterCount: computed('normalizedValue.length', function() {
