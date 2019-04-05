@@ -491,6 +491,7 @@ export default Component.extend(
           'sortedColumnIndex',
           'scrollContainer'
         );
+        sortDirection = sortDirection || defaultSortDirection;
         sortedColumnIndex = isNone(sortedColumnIndex)
           ? initialSortColumnIndex
           : sortedColumnIndex;
