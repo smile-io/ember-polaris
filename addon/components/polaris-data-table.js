@@ -157,14 +157,6 @@ export default Component.extend(
     currentColumn: null,
 
     /**
-     * @property sorted
-     * @type {boolean}
-     * @default false
-     * @private
-     */
-    sorted: false,
-
-    /**
      * @property sortedColumnIndex
      * @type {Number}
      * @private
@@ -419,7 +411,6 @@ export default Component.extend(
 
       this.setProperties({
         columnVisibilityData: [],
-        sorted: isPresent(this.get('sortable')),
         heights: [],
         preservedScrollPosition: {},
       });
@@ -510,7 +501,6 @@ export default Component.extend(
         }
 
         this.setProperties({
-          sorted: true,
           sortDirection: newSortDirection,
           sortedColumnIndex: headingIndex,
         });
