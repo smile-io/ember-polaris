@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isBlank, isPresent, isNone } from '@ember/utils';
+import { isBlank, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { scheduleOnce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
