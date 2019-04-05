@@ -1,34 +1,25 @@
 export function measureColumn(tableData) {
   return function(column, index) {
-    let {
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge,
+    const {
       firstVisibleColumnIndex,
+      tableLeftVisibleEdge: tableStart,
+      tableRightVisibleEdge: tableEnd,
       fixedColumnWidth,
     } = tableData;
-    let width = column.offsetWidth;
-    let leftEdge = column.offsetLeft - fixedColumnWidth;
-    let rightEdge = leftEdge + width;
-    let leftEdgeIsVisible = isEdgeVisible(
-      leftEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge
-    );
-    let rightEdgeIsVisible = isEdgeVisible(
-      rightEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge
-    );
-    let isCompletelyVisible =
-      leftEdge < tableLeftVisibleEdge && rightEdge > tableRightVisibleEdge;
-    let isVisible =
-      isCompletelyVisible || leftEdgeIsVisible || rightEdgeIsVisible;
+
+    const leftEdge = column.offsetLeft + fixedColumnWidth;
+    const rightEdge = leftEdge + column.offsetWidth;
+    const isVisibleLeft = isEdgeVisible(leftEdge, tableStart, tableEnd);
+    const isVisibleRight = isEdgeVisible(rightEdge, tableStart, tableEnd);
+    const isVisible = isVisibleLeft || isVisibleRight;
+
     if (isVisible) {
       tableData.firstVisibleColumnIndex = Math.min(
         firstVisibleColumnIndex,
         index
       );
     }
+
     return { leftEdge, rightEdge, isVisible };
   };
 }
