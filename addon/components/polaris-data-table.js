@@ -1,68 +1,19 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { isBlank, isPresent, isNone } from '@ember/utils';
+import { isBlank, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { scheduleOnce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
+import { isEqual } from '@ember/utils';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../templates/components/polaris-data-table';
+import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
 
 function elementLookup(selector) {
   return computed(function() {
     return this.element.querySelector(selector);
   });
-}
-
-function measureColumn(tableData) {
-  return function(column, index) {
-    let {
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge,
-      firstVisibleColumnIndex,
-      fixedColumnWidth,
-    } = tableData;
-    let width = column.offsetWidth;
-    let leftEdge = column.offsetLeft - fixedColumnWidth;
-    let rightEdge = leftEdge + width;
-    let leftEdgeIsVisible = isEdgeVisible(
-      leftEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge
-    );
-    let rightEdgeIsVisible = isEdgeVisible(
-      rightEdge,
-      tableLeftVisibleEdge,
-      tableRightVisibleEdge
-    );
-    let isCompletelyVisible =
-      leftEdge < tableLeftVisibleEdge && rightEdge > tableRightVisibleEdge;
-    let isVisible =
-      isCompletelyVisible || leftEdgeIsVisible || rightEdgeIsVisible;
-    if (isVisible) {
-      tableData.firstVisibleColumnIndex = Math.min(
-        firstVisibleColumnIndex,
-        index
-      );
-    }
-    return { leftEdge, rightEdge, isVisible };
-  };
-}
-
-function isEdgeVisible(position, start, end) {
-  let minVisiblePixels = 30;
-  return (
-    position >= start + minVisiblePixels && position <= end - minVisiblePixels
-  );
-}
-
-function getPrevAndCurrentColumns(tableData, columnData) {
-  const { firstVisibleColumnIndex } = tableData;
-  const previousColumnIndex = Math.max(firstVisibleColumnIndex - 1, 0);
-  const previousColumn = columnData[previousColumnIndex];
-  const currentColumn = columnData[firstVisibleColumnIndex];
-
-  return { previousColumn, currentColumn };
 }
 
 /**
@@ -206,14 +157,6 @@ export default Component.extend(
     currentColumn: null,
 
     /**
-     * @property sorted
-     * @type {boolean}
-     * @default false
-     * @private
-     */
-    sorted: false,
-
-    /**
      * @property sortedColumnIndex
      * @type {Number}
      * @private
@@ -335,7 +278,7 @@ export default Component.extend(
       );
 
       if (collapsed && table && scrollContainer && dataTable) {
-        let headerCells = table.querySelectorAll('[class*=header]');
+        let headerCells = table.querySelectorAll('[data-polaris-header-cell]');
         let collapsedHeaderCells = Array.from(headerCells).slice(1);
         let fixedColumnWidth = headerCells[0].offsetWidth;
         let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
@@ -468,7 +411,6 @@ export default Component.extend(
 
       this.setProperties({
         columnVisibilityData: [],
-        sorted: isPresent(this.get('sortable')),
         heights: [],
         preservedScrollPosition: {},
       });
@@ -485,7 +427,13 @@ export default Component.extend(
     didUpdateAttrs() {
       this._super(...arguments);
 
+      if (isEqual(this.get('oldAttrs'), this.get('attrs'))) {
+        return;
+      }
+
       this.handleResize();
+
+      this.set('oldAttrs', this.get('attrs'));
     },
 
     actions: {
@@ -543,6 +491,7 @@ export default Component.extend(
           'sortedColumnIndex',
           'scrollContainer'
         );
+        sortDirection = sortDirection || defaultSortDirection;
         sortedColumnIndex = isNone(sortedColumnIndex)
           ? initialSortColumnIndex
           : sortedColumnIndex;
@@ -553,7 +502,6 @@ export default Component.extend(
         }
 
         this.setProperties({
-          sorted: true,
           sortDirection: newSortDirection,
           sortedColumnIndex: headingIndex,
         });
