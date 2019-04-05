@@ -4,13 +4,13 @@ import { computed } from '@ember/object';
 import { gt, or } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['Polaris-Page__Header'],
+  classNames: ['Polaris-Page-Header'],
   classNameBindings: [
-    'titleHidden:Polaris-Page__Title--hidden',
-    'hasBreadcrumbs:Polaris-Page__Header--hasBreadcrumbs',
-    'hasRollup:Polaris-Page__Header--hasRollup',
-    'separator:Polaris-Page__Header--hasSeparator',
-    'hasSecondaryActions:Polaris-Page__Header--hasSecondaryActions',
+    'titleHidden:Polaris-Page-Header__Title--hidden',
+    'hasBreadcrumbs:Polaris-Page-Header__Header--hasBreadcrumbs',
+    'hasRollup:Polaris-Page-Header__Header--hasRollup',
+    'separator:Polaris-Page-Header__Header--hasSeparator',
+    'hasSecondaryActions:Polaris-Page-Header__Header--hasSecondaryActions',
   ],
 
   layout,
@@ -36,7 +36,7 @@ export default Component.extend({
   titleMetadata: null,
 
   /**
-   * Visually hide the title
+   * Visually hide the title (stand-alone app use only)
    *
    * @property titleHidden
    * @public
@@ -46,7 +46,7 @@ export default Component.extend({
   titleHidden: false,
 
   /**
-   * App icon, for pages that are part of Shopify apps
+   * Application icon for identifying embedded applications
    *
    * @property icon
    * @public
@@ -67,7 +67,7 @@ export default Component.extend({
   breadcrumbs: null,
 
   /**
-   * Adds a border to the bottom of the page header
+   * Adds a border to the bottom of the page header (stand-alone app use only)
    *
    * @property separator
    * @public
@@ -75,16 +75,6 @@ export default Component.extend({
    * @default false
    */
   separator: false,
-
-  /**
-   * Primary page-level action
-   *
-   * @property primaryAction
-   * @public
-   * @type {Object}
-   * @default null
-   */
-  primaryAction: null,
 
   /**
    * Collection of secondary page-level actions
@@ -99,15 +89,33 @@ export default Component.extend({
   /**
    * Collection of page-level groups of secondary actions
    *
+   * Properties:
+   *
+   * @property {String} title Action group title
+   * @property {String} icon Icon to display
+   * @property {Object[]} actions List of actions
+   * @property {String|Component|Object} details Action details
+   * @property {Function} onActionAnyItem Callback when any action takes place
+   *
    * @property actionGroups
    * @public
-   * @type {Array}
+   * @type {Object[]}
    * @default null
    */
   actionGroups: null,
 
   /**
-   * Page-level pagination
+   * Primary page-level action
+   *
+   * @property primaryAction
+   * @public
+   * @type {Object}
+   * @default null
+   */
+  primaryAction: null,
+
+  /**
+   * Page-level pagination (stand-alone app use only)
    *
    * @property pagination
    * @public
@@ -145,7 +153,7 @@ export default Component.extend({
       let secondaryActions = this.get('secondaryActions') || [];
       let actionGroups = this.get('actionGroups') || [];
 
-      return secondaryActions.length + actionGroups.length > 1;
+      return secondaryActions.length + actionGroups.length >= 1;
     }
   ).readOnly(),
 

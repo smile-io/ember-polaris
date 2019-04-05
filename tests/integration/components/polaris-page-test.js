@@ -10,6 +10,18 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 const availableRoutes = ['home', 'home.the-beginning'];
 
 module('Integration | Component | polaris page', function(hooks) {
+  const pageSelector = 'div.Polaris-Page';
+  const headerSelector = buildNestedSelector(
+    pageSelector,
+    'div.Polaris-Page-Header'
+  );
+  const secondaryActionsWrapperSelector = buildNestedSelector(
+    headerSelector,
+    'div.Polaris-Page-Header__Actions',
+    'div.Polaris-Page-Header__SecondaryActions',
+    'div.Polaris-Page-Header__IndividualActions'
+  );
+
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
@@ -21,18 +33,12 @@ module('Integration | Component | polaris page', function(hooks) {
     stubRouting(this.owner, availableRoutes);
   });
 
-  const pageSelector = 'div.Polaris-Page';
-  const headerSelector = buildNestedSelector(
-    pageSelector,
-    'div.Polaris-Page__Header'
-  );
   const primaryButtonSelector = buildNestedSelector(
-    'div.Polaris-Page',
-    'div.Polaris-Page__Header',
-    'div.Polaris-Page__MainContent',
-    'div.Polaris-Page__TitleAndActions',
-    'div.Polaris-Page__Actions',
-    'div.Polaris-Page__PrimaryAction',
+    headerSelector,
+    'div.Polaris-Page-Header__MainContent',
+    'div.Polaris-Page-Header__TitleAndActions',
+    'div.Polaris-Page-Header__Actions',
+    'div.Polaris-Page-Header__PrimaryAction',
     'button.Polaris-Button'
   );
 
@@ -71,13 +77,15 @@ module('Integration | Component | polaris page', function(hooks) {
     assert
       .dom(headers[0])
       .hasNoClass(
-        'Polaris-Page__Header--hasSecondaryActions',
+        'Polaris-Page-Header__Header--hasSecondaryActions',
         'does not apply secondary actions class to header'
       );
 
     const displayTextSelector = buildNestedSelector(
       headerSelector,
-      'div.Polaris-Page__Title',
+      'div.Polaris-Page-Header__TitleAndRollup',
+      'div.Polaris-Page-Header__Title',
+      'div',
       'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge'
     );
     const displayTexts = findAll(displayTextSelector);
@@ -150,14 +158,14 @@ module('Integration | Component | polaris page', function(hooks) {
     assert
       .dom(header)
       .hasNoClass(
-        'Polaris-Page__Title--hidden',
+        'Polaris-Page-Header__Title--hidden',
         'titleHidden unset - does not apply titleHidden class'
       );
     this.set('titleHidden', true);
     assert
       .dom(header)
       .hasClass(
-        'Polaris-Page__Title--hidden',
+        'Polaris-Page-Header__Title--hidden',
         'titleHidden set - applies titleHidden class'
       );
   });
@@ -260,19 +268,14 @@ module('Integration | Component | polaris page', function(hooks) {
     assert
       .dom(header)
       .hasClass(
-        'Polaris-Page__Header--hasSecondaryActions',
+        'Polaris-Page-Header__Header--hasSecondaryActions',
         'applies secondary actions class'
       );
 
-    const secondaryActionsWrapperSelector = buildNestedSelector(
-      headerSelector,
-      'div.Polaris-Page__Actions',
-      'div.Polaris-Page__SecondaryActions',
-      'div.Polaris-Page__IndividualActions'
-    );
     const secondaryActionsButtonSelector = buildNestedSelector(
       secondaryActionsWrapperSelector,
-      'button.Polaris-Page__Action'
+      'div.Polaris-Page-Header__IndividualAction',
+      'button.Polaris-Header-Action'
     );
 
     const secondaryButtons = findAll(secondaryActionsButtonSelector);
@@ -302,7 +305,11 @@ module('Integration | Component | polaris page', function(hooks) {
 
     const focussedSecondaryButtonSelector = `${secondaryActionsButtonSelector}:focus`;
     await click(
-      buildNestedSelector(secondaryActionsWrapperSelector, 'button:first-child')
+      buildNestedSelector(
+        secondaryActionsWrapperSelector,
+        'div.Polaris-Page-Header__IndividualAction:first-child',
+        'button'
+      )
     );
     assert.ok(
       secondaryAction1Fired,
@@ -320,7 +327,11 @@ module('Integration | Component | polaris page', function(hooks) {
       );
 
     await click(
-      buildNestedSelector(secondaryActionsWrapperSelector, 'button:last-child')
+      buildNestedSelector(
+        secondaryActionsWrapperSelector,
+        'div.Polaris-Page-Header__IndividualAction:last-child',
+        'button'
+      )
     );
     assert.ok(
       secondaryAction2Fired,
@@ -353,19 +364,16 @@ module('Integration | Component | polaris page', function(hooks) {
     `);
 
     const secondaryActionsSelector = buildNestedSelector(
-      'div.Polaris-Page',
-      'div.Polaris-Page__Header',
-      'div.Polaris-Page__Actions',
-      'div.Polaris-Page__SecondaryActions',
-      'div.Polaris-Page__IndividualActions',
-      'button.Polaris-Page__Action',
-      'span.Polaris-Page__ActionContent'
+      secondaryActionsWrapperSelector,
+      'div.Polaris-Page-Header__IndividualAction',
+      'button.Polaris-Header-Action',
+      'span.Polaris-Header-Action__ActionContent'
     );
     assert.dom(secondaryActionsSelector).exists({ count: 2 });
 
     const secondaryActionIconSelector = buildNestedSelector(
       secondaryActionsSelector,
-      'span.Polaris-Page__ActionIcon',
+      'span.Polaris-Header-Action__ActionIcon',
       'span.Polaris-Icon',
       'svg'
     );
@@ -392,7 +400,8 @@ module('Integration | Component | polaris page', function(hooks) {
 
     // Test before setting breadcrumbs.
     const header = find(headerSelector);
-    const headerWithBreadcrumbsClass = 'Polaris-Page__Header--hasBreadcrumbs';
+    const headerWithBreadcrumbsClass =
+      'Polaris-Page-Header__Header--hasBreadcrumbs';
     assert.ok(header, 'without breadcrumbs - renders header');
     assert
       .dom(header)
@@ -403,7 +412,7 @@ module('Integration | Component | polaris page', function(hooks) {
 
     const navigationSelector = buildNestedSelector(
       headerSelector,
-      'div.Polaris-Page__Navigation'
+      'div.Polaris-Page-Header__Navigation'
     );
     const navigations = findAll(navigationSelector);
     assert.equal(

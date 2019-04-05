@@ -1,0 +1,22 @@
+{{#polaris-popover as |popover|}}
+  {{#popover.activator}}
+    {{polaris-page/action
+      disclosure=true
+      icon=icon
+      text=title
+    }}
+  {{/popover.activator}}
+
+  {{#popover.content}}
+    {{polaris-action-list
+      items=groupActions
+      onActionAnyItem=(action popover.close)
+    }}
+
+    {{#if details}}
+      <div class="Polaris-Header-ActionGroup__Details">
+        {{render-content details}}
+      </div>
+    {{/if}}
+  {{/popover.content}}
+{{/polaris-popover}}
