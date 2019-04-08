@@ -415,4 +415,14 @@ export default Component.extend({
     let ariaPressed = this.get('ariaPressed');
     return isPresent(ariaPressed) ? String(ariaPressed) : null;
   }).readOnly(),
+
+  actions: {
+    /**
+     * Helper to invoke passed-in actions without passing the
+     * button element's event object as the first parameter.
+     */
+    invokeMouseAction(actionName) {
+      return this.get(actionName)();
+    },
+  },
 });

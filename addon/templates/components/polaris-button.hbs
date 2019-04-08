@@ -52,9 +52,9 @@
       data-test-id={{dataTestId}}
       id={{id}}
       type={{type}}
-      onclick={{action onClick}}
-      onfocus={{action onFocus}}
-      onblur={{action onBlur}}
+      onclick={{action "invokeMouseAction" "onClick"}}
+      onfocus={{action "invokeMouseAction" "onFocus"}}
+      onblur={{action "invokeMouseAction" "onBlur"}}
       onkeydown={{action onKeyDown}}
       onkeyup={{action onKeyUp}}
       onkeypress={{action onKeyPress}}
