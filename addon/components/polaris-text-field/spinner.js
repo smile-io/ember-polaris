@@ -25,4 +25,17 @@ export default Component.extend({
    * @default noop
    */
   onClick() {},
+
+  onMouseDown(/* onChange */) {},
+
+  onMouseUp() {},
+
+  actions: {
+    handleMouseDown(onChange, event) {
+      if (event.button !== 0) {
+        return;
+      }
+      this.onMouseDown(onChange);
+    },
+  },
 });

@@ -8,6 +8,7 @@ import { isPresent } from '@ember/utils';
 import { getCode } from 'ember-keyboard';
 import layout from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
+import { runTask, cancelTask, runDisposables } from 'ember-lifeline';
 
 /**
  * Returns the length of decimal places in a number
@@ -349,6 +350,16 @@ export default Component.extend({
   ariaAutocomplete: null,
 
   /**
+   * Indicates whether or not the character count should be displayed
+   *
+   * @property showCharacterCount
+   * @public
+   * @type {Boolean}
+   * @default null
+   */
+  showCharacterCount: false,
+
+  /**
    * Callback when value is changed
    *
    * @property onChange
@@ -381,7 +392,9 @@ export default Component.extend({
   /**
    * @private
    */
-  focus: false,
+
+  buttonPressTimer: null,
+  wasFocused: false,
 
   dataTestTextField: 'text-field',
 
@@ -389,7 +402,7 @@ export default Component.extend({
   autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
 
   textFieldClasses: computed(
-    'value',
+    'normalizedValue',
     'disabled',
     'readOnly',
     'error',
@@ -397,14 +410,14 @@ export default Component.extend({
     'focus',
     function() {
       let {
-        value,
+        normalizedValue,
         disabled,
         readOnly,
         error,
         multiline,
         focus,
       } = this.getProperties(
-        'value',
+        'normalizedValue',
         'disabled',
         'readOnly',
         'error',
@@ -413,7 +426,7 @@ export default Component.extend({
       );
       let classes = ['Polaris-TextField'];
 
-      if (value) {
+      if (normalizedValue) {
         classes.push('Polaris-TextField--hasValue');
       }
 
@@ -504,19 +517,73 @@ export default Component.extend({
     return inputType === 'number' && !disabled;
   }).readOnly(),
 
-  checkFocus() {
-    let { input, focused } = this.getProperties('input', 'focused');
+  normalizedValue: computed('value', function() {
+    let value = this.get('value');
+    return value != null ? value : '';
+  }).readOnly(),
 
-    if (input && focused) {
-      // TODO this _seems_ to work in Polaris without the row below, but not for us (it does not apply focus class)
-      // look what's here....though this seems to do the job for now
-      this.set('focus', true);
-      input.focus();
+  characterCount: computed('normalizedValue.length', function() {
+    return this.get('normalizedValue.length') || 0;
+  }).readOnly(),
+
+  characterCountLabel: computed('maxLength', 'characterCount', function() {
+    let { maxLength, characterCount } = this.getProperties(
+      'maxLength',
+      'characterCount'
+    );
+
+    return maxLength
+      ? `${characterCount} characters of ${maxLength} used`
+      : `${characterCount} characters`;
+  }).readOnly(),
+
+  characterCountClassName: computed('multiline', function() {
+    let classNames = ['Polaris-TextField__CharacterCount'];
+
+    if (this.get('multiline')) {
+      classNames.push('Polaris-TextField__AlignFieldBottom');
     }
-  },
+
+    return classNames.join(' ');
+  }).readOnly(),
+
+  characterCountText: computed('maxLength', 'characterCount', function() {
+    let { maxLength, characterCount } = this.getProperties(
+      'maxLength',
+      'characterCount'
+    );
+
+    return !maxLength ? characterCount : `${characterCount}/${maxLength}`;
+  }).readOnly(),
+
+  focus: computed('focused', function() {
+    return this.get('focused') || false;
+  }).readOnly(),
 
   setInput() {
     this.set('input', document.querySelector(`[id='${this.get('id')}']`));
+  },
+
+  handleButtonPress(onChange) {
+    let minInterval = 50;
+    let decrementBy = 10;
+    let interval = 200;
+
+    let onChangeInterval = () => {
+      if (interval > minInterval) {
+        interval -= decrementBy;
+      }
+
+      onChange();
+
+      this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
+    };
+
+    this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
+  },
+
+  handleButtonRelease() {
+    cancelTask(this, this.buttonPressTaskId);
   },
 
   init() {
@@ -527,21 +594,43 @@ export default Component.extend({
 
     this.setProperties({
       height: null,
-      focus: false,
       id,
     });
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.checkFocus();
   },
 
   didInsertElement() {
     this._super(...arguments);
 
     this.setInput();
-    this.checkFocus();
+
+    if (!this.get('focused')) {
+      return;
+    }
+
+    this.get('input').focus();
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+
+    let { wasFocused, focused, input } = this.getProperties(
+      'wasFocused',
+      'focused',
+      'input'
+    );
+
+    if (!wasFocused && focused) {
+      input.focus();
+    } else if (wasFocused && !focused) {
+      input.blur();
+    }
+
+    this.set('wasFocused', focused);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    runDisposables(this);
   },
 
   actions: {
