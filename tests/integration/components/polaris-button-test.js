@@ -243,6 +243,14 @@ module('Integration | Component | polaris-button', function(hooks) {
         assert.equal(clickCount, 1);
       });
 
+      test('does not receive any params when the button is clicked', async function(assert) {
+        await render(
+          hbs`{{polaris-button onClick=(action (mut invocationParam))}}`
+        );
+        await click('button');
+        assert.equal(this.get('invocationParam'), undefined);
+      });
+
       test('is called when the link is clicked', async function(assert) {
         let clickCount = 0;
         this.set('incrementClickCount', () => clickCount++);
@@ -251,6 +259,14 @@ module('Integration | Component | polaris-button', function(hooks) {
         `);
         await click('[data-polaris-unstyled]');
         assert.equal(clickCount, 1);
+      });
+
+      test('does not receive any params when the link is clicked', async function(assert) {
+        await render(
+          hbs`{{polaris-button onClick=(action (mut invocationParam)) url="#"}}`
+        );
+        await click('[data-polaris-unstyled]');
+        assert.equal(this.get('invocationParam'), undefined);
       });
     });
 
