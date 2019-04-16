@@ -435,11 +435,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     event.preventDefault();
     event.stopPropagation();
 
-    let state = this.get('state');
-    let { disabled, onDragOver, allowMultiple } = this.getProperties(
+    let { disabled, onDragOver, allowMultiple, state } = this.getProperties(
       'disabled',
       'onDragOver',
-      'allowMultiple'
+      'allowMultiple',
+      'state'
     );
 
     if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
@@ -454,12 +454,18 @@ export default Component.extend(ContextBoundEventListenersMixin, {
   handleDragLeave(event) {
     event.preventDefault();
 
-    let state = this.get('state');
-    let { disabled, onDragLeave, allowMultiple, dropNode } = this.getProperties(
+    let {
+      disabled,
+      onDragLeave,
+      allowMultiple,
+      dropNode,
+      state,
+    } = this.getProperties(
       'disabled',
       'onDragLeave',
       'allowMultiple',
-      'dropNode'
+      'dropNode',
+      'state'
     );
 
     if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
@@ -474,7 +480,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       return;
     }
 
-    this.get('state').setProperties({
+    state.setProperties({
       dragging: false,
       error: false,
     });
@@ -655,7 +661,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     handleClick(event) {
       let { onClick, disabled, allowMultiple } = this.getProperties(
         'onClick',
-        'disabled'
+        'disabled',
+        'allowMultiple'
       );
       let numFiles = this.get('state.numFiles');
 
