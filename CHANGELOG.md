@@ -3,6 +3,7 @@
 ### Unreleased
 - [#295](https://github.com/smile-io/ember-polaris/pull/295) [INTERNAL] Upgrade to Ember CLI `3.8.1`
 - [#296](https://github.com/smile-io/ember-polaris/pull/296) [INTERNAL] Update misc dependencies
+- [#315](https://github.com/smile-io/ember-polaris/pull/315) [FEATURE] Add `polaris-skeleton-thumbnail` component
 
 ### v4.0.2 (March 5, 2019)
 - [#284](https://github.com/smile-io/ember-polaris/pull/284) [FIX] Fix infinite loop in `sticky-manager` service
