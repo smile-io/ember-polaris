@@ -558,7 +558,7 @@ export default Component.extend({
 
   focus: computed('focused', function() {
     return this.get('focused') || false;
-  }).readOnly(),
+  }),
 
   setInput() {
     this.set('input', document.querySelector(`[id='${this.get('id')}']`));
