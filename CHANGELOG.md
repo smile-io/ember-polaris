@@ -1,9 +1,38 @@
 # ember-polaris Changelog
 
-### Unreleased
+### v4.1.0 (April 25, 2019)
+- [#285](https://github.com/smile-io/ember-polaris/pull/285) [UPDATE] Update action list to Polaris v3.10.0
+- [#286](https://github.com/smile-io/ember-polaris/pull/286) [UPDATE] Update avatar to Polaris v3.10.0
+- [#287](https://github.com/smile-io/ember-polaris/pull/287) [UPDATE] Update badge to Polaris v3.10.0
+- [#288](https://github.com/smile-io/ember-polaris/pull/288) [UPDATE] Update banner to Polaris v3.10.0
+- [#289](https://github.com/smile-io/ember-polaris/pull/289) [UPDATE] Update callout card to Polaris v3.10.0
+- [#290](https://github.com/smile-io/ember-polaris/pull/290) [UPDATE] Update unstyled link to Polaris v3.10.0
+- [#291](https://github.com/smile-io/ember-polaris/pull/291) [UPDATE] Update button to Polaris v3.10.0
+- [#292](https://github.com/smile-io/ember-polaris/pull/292) [UPDATE] Update card to Polaris v3.10.0
+- [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
+- [#294](https://github.com/smile-io/ember-polaris/pull/294) [UPDATE] Update choice property descriptions
+- [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
 - [#295](https://github.com/smile-io/ember-polaris/pull/295) [INTERNAL] Upgrade to Ember CLI `3.8.1`
 - [#296](https://github.com/smile-io/ember-polaris/pull/296) [INTERNAL] Update misc dependencies
+- [#297](https://github.com/smile-io/ember-polaris/pull/297) [UPDATE] Update data table to Polaris v3.10.0
+- [#298](https://github.com/smile-io/ember-polaris/pull/298) [UPDATE] Update date picker to Polaris v3.10.0
+- [#299](https://github.com/smile-io/ember-polaris/pull/299) [UPDATE] Update drop zone to Polaris v3.10.0
+- [#300](https://github.com/smile-io/ember-polaris/pull/300) [UPDATE] Update empty search result to Polaris v3.10.0
+- [#301](https://github.com/smile-io/ember-polaris/pull/301) [UPDATE] Update form to Polaris v3.10.0
+- [#302](https://github.com/smile-io/ember-polaris/pull/302) [UPDATE] Update form layout to Polaris v3.10.0
+- [#303](https://github.com/smile-io/ember-polaris/pull/303) [UPDATE] Update layout to Polaris v3.10.0
+- [#304](https://github.com/smile-io/ember-polaris/pull/304) [UPDATE] Update link to Polaris v3.10.0
+- [#305](https://github.com/smile-io/ember-polaris/pull/305) [UPDATE] Update option list to Polaris v3.10.0
+- [#306](https://github.com/smile-io/ember-polaris/pull/306) [UPDATE] Update resource list to Polaris v3.10.0
+- [#307](https://github.com/smile-io/ember-polaris/pull/307) [UPDATE] Update skeleton page to Polaris v3.10.0
+- [#308](https://github.com/smile-io/ember-polaris/pull/308) [UPDATE] Update spinner to Polaris v3.10.0
+- [#309](https://github.com/smile-io/ember-polaris/pull/309) [UPDATE] Update text style to Polaris v3.10.0
+- [#310](https://github.com/smile-io/ember-polaris/pull/310) [UPDATE] Update text field to Polaris v3.10.0
+- [#311](https://github.com/smile-io/ember-polaris/pull/311) [UPDATE] Update page to Polaris v3.10.0
+- [#313](https://github.com/smile-io/ember-polaris/pull/313) [FIX] Fix spinner icon paths
+- [#314](https://github.com/smile-io/ember-polaris/pull/314) [FIX] Remove event object from button mouse action handler invocations
 - [#315](https://github.com/smile-io/ember-polaris/pull/315) [FEATURE] Add `polaris-skeleton-thumbnail` component
+- [#316](https://github.com/smile-io/ember-polaris/pull/316) [FIX] Make text field "focus" property writeable
 
 ### v4.0.2 (March 5, 2019)
 - [#284](https://github.com/smile-io/ember-polaris/pull/284) [FIX] Fix infinite loop in `sticky-manager` service
