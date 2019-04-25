@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { typeOf } from '@ember/utils';
 import { equal } from '@ember/object/computed';
 import { deprecate } from '@ember/debug';
 import layout from '../templates/components/polaris-checkbox';
@@ -34,6 +33,7 @@ export default Component.extend({
    * @property labelComponent
    * @type {String | Component}
    * @default null
+   * @deprecated
    * @public
    */
   labelComponent: null,
@@ -194,7 +194,7 @@ export default Component.extend({
     let describedBy = [];
     const { error, helpText } = this.getProperties('error', 'helpText');
 
-    if (typeOf(error) === 'string') {
+    if (error) {
       describedBy.push(`${this.get('_id')}Error`);
     }
 
@@ -202,7 +202,7 @@ export default Component.extend({
       describedBy.push(`${this.get('_id')}HelpText`);
     }
 
-    return describedBy.join(' ');
+    return describedBy.length ? describedBy.join(' ') : undefined;
   }).readOnly(),
 
   didReceiveAttrs() {
@@ -216,5 +216,25 @@ export default Component.extend({
         until: '2.0.0',
       }
     );
+  },
+
+  actions: {
+    handleChange(event) {
+      let { onChange, inputId, checked } = this.getProperties(
+        'onChange',
+        'inputId',
+        'checked'
+      );
+      if (onChange == null) {
+        return;
+      }
+
+      let { currentTarget } = event;
+      onChange(currentTarget.checked, inputId);
+
+      if (checked && !currentTarget.checked) {
+        currentTarget.focus();
+      }
+    },
   },
 });

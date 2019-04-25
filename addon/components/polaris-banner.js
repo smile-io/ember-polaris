@@ -8,6 +8,8 @@ import { capitalize } from '@ember/string';
 import { invokeAction } from 'ember-invoke-action';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
+// TODO icon-update: use new icon names here when @shopify/polaris-icons
+// is consumable by Ember apps.
 const bannerIcons = {
   success: {
     iconName: 'circle-check-mark',

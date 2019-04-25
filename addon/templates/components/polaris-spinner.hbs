@@ -1,7 +1,10 @@
-{{svg-jar
-  spinnerSource
+{{!-- TODO: replace this with polaris-image when implemented. --}}
+<img
+  alt=""
+  src={{spinnerSVG}}
+  class={{spinnerClass}}
+  draggable="false"
   role="status"
-  id=svgElementId
-  class=spinnerClass
-  aria-label=accessibilityLabel
-}}
+  aria-label={{accessibilityLabel}}
+  data-test-spinner
+>

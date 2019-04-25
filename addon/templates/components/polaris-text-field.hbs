@@ -42,10 +42,11 @@
           autocomplete=autoCompleteInputs
           max=max
           min=min
+          step=step
           minlength=minLength
           maxlength=maxLength
           spellcheck=spellCheck
-          value=value
+          value=normalizedValue
           class=inputClassName
           aria-describedby=ariaDescribedBy
           aria-label=label
@@ -84,9 +85,24 @@
         </div>
       {{/if}}
 
+      {{#if showCharacterCount}}
+        <div
+          id={{concat id "CharacterCounter"}}
+          class={{characterCountClassName}}
+          aria-label={{characterCountLabel}}
+          aria-live="polite"
+          aria-atomic="true"
+          data-test-text-field-character-count
+        >
+          {{characterCountText}}
+        </div>
+      {{/if}}
+
       {{#if shouldShowSpinner}}
         {{polaris-text-field/spinner
           onChange=(action "handleNumberChange")
+          onMouseDown=(action handleButtonPress)
+          onMouseUp=(action handleButtonRelease)
         }}
       {{/if}}
 
@@ -94,7 +110,7 @@
 
       {{#if multiline}}
         {{polaris-text-field/resizer
-          contents=(or value placeholder)
+          contents=(or normalizedValue placeholder)
           currentHeight=height
           minimumLines=minimumLines
           onHeightChange=(action "handleExpandingResize")

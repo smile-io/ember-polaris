@@ -6,6 +6,8 @@ export default Component.extend({
   classNameBindings: [
     'secondary:Polaris-Layout__Section--secondary',
     'fullWidth:Polaris-Layout__Section--fullWidth',
+    'oneHalf:Polaris-Layout__Section--oneHalf',
+    'oneThird:Polaris-Layout__Section--oneThird',
   ],
 
   layout,
@@ -13,4 +15,6 @@ export default Component.extend({
   text: null,
   secondary: false,
   fullWidth: false,
+  oneHalf: false,
+  oneThird: false,
 });

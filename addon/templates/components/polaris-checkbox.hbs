@@ -23,7 +23,7 @@
       aria-invalid={{if error "true" "false"}}
       aria-describedby={{describedBy}}
       indeterminate={{if isIndeterminate "true"}}
-      onchange={{action onChange value="target.checked"}}
+      onchange={{action "handleChange"}}
       onfocus={{action onFocus}}
       onblur={{action onBlur}}
     >

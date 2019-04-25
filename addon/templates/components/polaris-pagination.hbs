@@ -1,24 +1,24 @@
-{{#polaris-button/button
-  data-test-prev-btn=true
+<button
+  data-test-prev-btn="true"
   class="Polaris-Pagination__Button"
-  accessibilityLabel="Previous"
-  disabled=isPreviousDisabled
-  mouseUp=handleMouseUpByBlurring
-  onClick=(action onPrevious)
-}}
+  aria-label="Previous"
+  disabled={{isPreviousDisabled}}
+  onclick={{action onPrevious}}
+  onmouseup={{handleMouseUpByBlurring}}
+>
   {{polaris-icon source="arrow-left"}}
-{{/polaris-button/button}}
+</button>
 
-{{#polaris-button/button
-  data-test-next-btn=true
+<button
+  data-test-next-btn="true"
   class="Polaris-Pagination__Button"
-  accessibilityLabel="Next"
-  disabled=isNextDisabled
-  mouseUp=handleMouseUpByBlurring
-  onClick=(action onNext)
-}}
+  aria-label="Next"
+  disabled={{isNextDisabled}}
+  onclick={{action onNext}}
+  onmouseup={{handleMouseUpByBlurring}}
+>
   {{polaris-icon source="arrow-right"}}
-{{/polaris-button/button}}
+</button>
 
 {{#if isPreviousKeyListenerEnabled}}
   {{#each previousKeys as |key|}}

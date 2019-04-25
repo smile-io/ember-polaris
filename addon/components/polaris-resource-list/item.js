@@ -7,6 +7,7 @@ import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
 export default Component.extend(context.ConsumerMixin, {
+  attributeBindings: ['url:data-href'],
   classNames: ['Polaris-ResourceList-Item'],
   classNameBindings: [
     'focused:Polaris-ResourceList-Item--focused',
@@ -221,6 +222,7 @@ export default Component.extend(context.ConsumerMixin, {
       'selectMode',
       'element'
     );
+    let { ctrlKey, metaKey } = event;
     let anchor = element && element.querySelector('a');
 
     if (selectMode) {
@@ -234,6 +236,11 @@ export default Component.extend(context.ConsumerMixin, {
 
     if (onClick) {
       onClick(itemId);
+    }
+
+    if (url && (ctrlKey || metaKey)) {
+      window.open(url, '_blank');
+      return;
     }
 
     if (url && anchor) {

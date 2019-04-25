@@ -3,22 +3,40 @@ import { computed } from '@ember/object';
 import layout from '../templates/components/polaris-unstyled-link';
 import mapEventToAction from '../utils/map-event-to-action';
 
+/**
+ * Undocumented Polaris UnstyledLink component.
+ * Note that we do not support the custom link
+ * component behaviour provided by the React
+ * implementation at this point.
+ */
 export default Component.extend({
   tagName: 'a',
 
   attributeBindings: [
     'url:href',
     'dataPolarisUnstyled:data-polaris-unstyled',
+    'download',
     'target',
     'rel',
     'ariaLabel:aria-label',
     'ariaDescribedBy:aria-describedby',
+    'tabIndex:tabindex',
   ],
 
   layout,
 
   /**
-   * The url to link to.
+   * Content to display inside the link
+   *
+   * @property text
+   * @type {String}
+   * @default null
+   * @public
+   */
+  text: null,
+
+  /**
+   * A destination to link to
    *
    * @property url
    * @type {String}
@@ -29,7 +47,7 @@ export default Component.extend({
   url: null,
 
   /**
-   * Use for a links that open a different site
+   * Forces url to open in a new tab
    *
    * @property external
    * @type {Boolean}
@@ -37,6 +55,34 @@ export default Component.extend({
    * @public
    */
   external: false,
+
+  /**
+   * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
+   *
+   * @property download
+   * @type {String|Boolean}
+   * @default null
+   * @public
+   */
+  download: null,
+
+  /**
+   * Accessibility label
+   *
+   * @property ariaLabel
+   * @type {String}
+   * @default null
+   * @public
+   */
+  ariaLabel: null,
+
+  /**
+   * @property ariaDescribedBy
+   * @type {String}
+   * @default null
+   * @public
+   */
+  ariaDescribedBy: null,
 
   /**
    * Callback when a link is clicked
@@ -49,34 +95,11 @@ export default Component.extend({
   onClick() {},
 
   /**
-   * The content to display inside link
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   */
-  text: null,
-
-  /**
-   * Accessibility label
-   *
-   * @property ariaLabel
-   * @type {String}
-   * @default null
-   */
-  ariaLabel: null,
-
-  /**
-   * @property ariaDescribedBy
-   * @type {String}
-   * @default null
-   */
-  ariaDescribedBy: null,
-
-  /**
    * @private
    */
   dataPolarisUnstyled: 'true',
+
+  dataTestId: null,
 
   click: mapEventToAction('onClick', {
     preventDefault: false,

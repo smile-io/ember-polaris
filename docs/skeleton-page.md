@@ -14,12 +14,13 @@ Rendering a basic skeleton page with a dynamic title:
 {{/polaris-skeleton-page}}
 ```
 
-Skeleton page with a text title and skeleton breadcrumbs and two secondary actions:
+Skeleton page with a text title and skeleton breadcrumbs, a primary action, and two secondary actions:
 
 ```hbs
 {{#polaris-skeleton-page
   title="Skeleton Page"
   breadcrumbs=true
+  primaryAction=true
   secondaryActions=2
 }}
   ... page content here ...

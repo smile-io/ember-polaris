@@ -27,7 +27,12 @@ export default Component.extend({
   tagName: 'span',
   attributeBindings: ['role', 'label:aria-label'],
   classNames: ['Polaris-Avatar'],
-  classNameBindings: ['styleClass', 'sizeClass'],
+  classNameBindings: [
+    'styleClass',
+    'sizeClass',
+    'hiddenClass',
+    'hasImage:Polaris-Avatar--hasImage',
+  ],
 
   layout,
 
@@ -66,13 +71,13 @@ export default Component.extend({
    *
    * @property customer
    * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
   customer: false,
 
   /**
-   * URL of the avatar image
+   * URL of the avatar image which falls back to initials if the image fails to load
    *
    * @property source
    * @public
@@ -109,6 +114,30 @@ export default Component.extend({
   role: 'img',
 
   /**
+   * @property hasError
+   * @type {Boolean}
+   * @default false
+   * @private
+   */
+  hasError: false,
+
+  /**
+   * @property hasLoaded
+   * @type {Boolean}
+   * @default false
+   * @private
+   */
+  hasLoaded: false,
+
+  /**
+   * @property prevSource
+   * @type {String}
+   * @default null
+   * @private
+   */
+  prevSource: null,
+
+  /**
    * Image source to use (if any)
    * @property finalSource
    * @private
@@ -118,11 +147,27 @@ export default Component.extend({
 
   /**
    * Name to use (if any)
-   * @property finalName
+   * @property nameString
    * @private
    * @type {String}
    */
-  finalName: or('name', 'initials').readOnly(),
+  nameString: or('name', 'initials').readOnly(),
+
+  /**
+   * Whether we have an image to use
+   * @property
+   * @private
+   * @type {Boolean}
+   */
+  hasImage: computed('source', 'customer', 'hasError', function() {
+    let { source, customer, hasError } = this.getProperties(
+      'source',
+      'customer',
+      'hasError'
+    );
+
+    return (source || customer) && !hasError;
+  }).readOnly(),
 
   /**
    * Accessibility label to apply to avatar
@@ -158,11 +203,11 @@ export default Component.extend({
    * @private
    * @type {String}
    */
-  styleClass: computed('finalName', function() {
-    let finalName = this.get('finalName');
-    let styleIndex = isEmpty(finalName)
+  styleClass: computed('nameString', function() {
+    let nameString = this.get('nameString');
+    let styleIndex = isEmpty(nameString)
       ? 0
-      : finalName.charCodeAt(0) % styleClasses.length;
+      : nameString.charCodeAt(0) % styleClasses.length;
     let style = styleClasses[styleIndex];
 
     return `Polaris-Avatar--style${classify(style)}`;
@@ -184,20 +229,77 @@ export default Component.extend({
   }).readOnly(),
 
   /**
+   * Class name to hide avatar when loading
+   * @property hiddenClass
+   * @private
+   * @type {String}
+   */
+  hiddenClass: computed('hasImage', 'hasLoaded', function() {
+    let { hasImage, hasLoaded } = this;
+
+    return hasImage && !hasLoaded ? 'Polaris-Avatar--hidden' : null;
+  }).readOnly(),
+
+  /**
    * Image source when displaying a customer avatar
    * @property customerImageSource
    * @private
    * @type {String}
    */
-  customerImageSource: computed('customer', 'finalName', function() {
+  customerImageSource: computed('customer', 'nameString', function() {
     if (!this.get('customer')) {
       return null;
     }
 
-    let finalName = this.get('finalName');
-    let avatarIndex = isEmpty(finalName)
+    let nameString = this.get('nameString');
+    let avatarIndex = isEmpty(nameString)
       ? 0
-      : finalName.charCodeAt(0) % avatarImages.length;
+      : nameString.charCodeAt(0) % avatarImages.length;
     return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
   }).readOnly(),
+
+  /**
+   * Flag controlling whether the avatar initials should be rendered
+   * @property shouldShowInitials
+   * @private
+   * @type {Boolean}
+   */
+  shouldShowInitials: computed('initials', 'hasImage', function() {
+    let { initials, hasImage } = this.getProperties('initials', 'hasImage');
+    return initials && !hasImage;
+  }).readOnly(),
+
+  /**
+   * Flag controlling whether the avatar image should be rendered
+   * @property shouldShowImage
+   * @private
+   * @type {Boolean}
+   */
+  shouldShowImage: computed('finalSource', 'hasError', function() {
+    let { finalSource, hasError } = this.getProperties(
+      'finalSource',
+      'hasError'
+    );
+    return finalSource && !hasError;
+  }).readOnly(),
+
+  didReceiveAttrs() {
+    if (this.source !== this.prevSource) {
+      this.setProperties({
+        prevSource: this.source,
+        hasError: false,
+        hasLoaded: false,
+      });
+    }
+  },
+
+  actions: {
+    handleError() {
+      this.setProperties({ hasError: true, hasLoaded: false });
+    },
+
+    handleLoad() {
+      this.setProperties({ hasLoaded: true, hasError: false });
+    },
+  },
 });

@@ -54,7 +54,7 @@ module('Integration | Component | polaris-form', function(hooks) {
       .hasAttribute(
         'autoComplete',
         'off',
-        'renders autoComplete attribute when provided'
+        'sets the autocomplete attribute to "off" when provided as false'
       );
     assert
       .dom('[data-test-form]')
@@ -90,6 +90,13 @@ module('Integration | Component | polaris-form', function(hooks) {
       .doesNotExist(
         'does not render submit button when `implicitSubmit` is false'
       );
+  });
+
+  test('defaults to post when no method is set', async function(assert) {
+    await render(hbs`{{polaris-form}}`);
+    assert
+      .dom('[data-test-form]')
+      .hasAttribute('method', 'post', 'defaults to post when no method is set');
   });
 
   test('invokes `onSubmit` when form is submitted', async function(assert) {

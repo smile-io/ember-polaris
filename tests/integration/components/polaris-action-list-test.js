@@ -303,6 +303,7 @@ module('Integration | Component | polaris action list', function(hooks) {
           },
           {
             text: 'Section 2 item 2',
+            helpText: 'Helpful stuff',
           },
         ],
       },
@@ -384,11 +385,19 @@ module('Integration | Component | polaris action list', function(hooks) {
         'Section 2 item 1',
         "second section's first item renders the correct text"
       );
+
     assert
-      .dom(items[1])
+      .dom('.Polaris-ActionList__Text div div', items[1])
       .hasText(
         'Section 2 item 2',
         "second section's second item renders the correct text"
+      );
+
+    assert
+      .dom('.Polaris-ActionList__Text [data-test-text-style]', items[1])
+      .hasText(
+        'Helpful stuff',
+        "second section's second item renders the correct help text"
       );
 
     let item = items[0];
@@ -448,5 +457,22 @@ module('Integration | Component | polaris action list', function(hooks) {
     await click('li button');
     assert.ok(this.get('nestedActionFired'), 'nested action was fired');
     assert.notOk(this.get('formSubmitted'), 'form submit action is not fired');
+  });
+
+  test('renders helpText when the helpText prop is defined', async function(assert) {
+    await render(hbs`
+      {{polaris-action-list
+        items=(array
+          (hash
+            text="I'm helpful"
+            helpText="Yay I'm helping!"
+          )
+        )
+      }}
+    `);
+
+    assert
+      .dom(`${actionListItemSelector} [data-test-text-style]`)
+      .hasText(`Yay I'm helping!`);
   });
 });

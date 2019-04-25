@@ -1,55 +1,70 @@
-{{#polaris-card/section}}
-  <div class="Polaris-CalloutCard">
-    <div class="Polaris-CalloutCard__Content">
-      <div class="Polaris-CalloutCard__Title">
-        {{polaris-heading text=title}}
-      </div>
-
-      {{#polaris-text-container}}
-        {{#if hasBlock}}
-          {{yield}}
-        {{else}}
-          {{text}}
-        {{/if}}
-      {{/polaris-text-container}}
-
-      <div class="Polaris-CalloutCard__Buttons">
-        {{! template-lint-disable attribute-indentation }}
-        {{!-- TODO remove rule above once linter handles this correctly --}}
-        {{#with
-          (component "polaris-button"
-            text=primaryAction.text
-            accessibilityLabel=primaryAction.accessibilityLabel
-            disabled=primaryAction.disabled
-            primary=primaryAction.primary
-            destructive=primaryAction.destructive
-            icon=primaryAction.icon
-            loading=primaryAction.loading
-            onClick=(action primaryAction.onAction)
-          )
-          as |primaryButton|
-        }}
-          {{#if secondaryAction}}
-            {{#polaris-button-group}}
-              {{component primaryButton}}
-
-              {{polaris-button
-                plain=true
-                text=secondaryAction.text
-                accessibilityLabel=secondaryAction.accessibilityLabel
-                disabled=secondaryAction.disabled
-                icon=secondaryAction.icon
-                loading=secondaryAction.loading
-                onClick=(action secondaryAction.onAction)
-              }}
-            {{/polaris-button-group}}
-          {{else}}
-            {{component primaryButton}}
-          {{/if}}
-        {{/with}}
-      </div>
+<div class="Polaris-CalloutCard__Container">
+  {{#if onDismiss}}
+    <div class="Polaris-CalloutCard__Dismiss">
+      {{polaris-button
+        plain=true
+        icon="cancel-small"
+        accessibilityLabel="Dismiss card"
+        onClick=(action onDismiss)
+      }}
     </div>
+  {{/if}}
 
-    <img src={{illustration}} alt="" class="Polaris-CalloutCard__Image">
-  </div>
-{{/polaris-card/section}}
+  {{#polaris-card/section}}
+    <div class="Polaris-CalloutCard">
+      <div class="Polaris-CalloutCard__Content">
+        <div class="Polaris-CalloutCard__Title">
+          {{polaris-heading text=title}}
+        </div>
+
+        {{#polaris-text-container}}
+          {{#if hasBlock}}
+            {{yield}}
+          {{else}}
+            {{text}}
+          {{/if}}
+        {{/polaris-text-container}}
+
+        <div class="Polaris-CalloutCard__Buttons">
+          {{#with
+            (component "polaris-button"
+              text=primaryAction.text
+              accessibilityLabel=primaryAction.accessibilityLabel
+              disabled=primaryAction.disabled
+              primary=primaryAction.primary
+              destructive=primaryAction.destructive
+              icon=primaryAction.icon
+              loading=primaryAction.loading
+              onClick=(action primaryAction.onAction)
+            )
+            as |primaryButton|
+          }}
+            {{#if secondaryAction}}
+              {{#polaris-button-group}}
+                {{component primaryButton}}
+
+                {{polaris-button
+                  plain=true
+                  text=secondaryAction.text
+                  accessibilityLabel=secondaryAction.accessibilityLabel
+                  disabled=secondaryAction.disabled
+                  icon=secondaryAction.icon
+                  loading=secondaryAction.loading
+                  onClick=(action secondaryAction.onAction)
+                }}
+              {{/polaris-button-group}}
+            {{else}}
+              {{component primaryButton}}
+            {{/if}}
+          {{/with}}
+        </div>
+      </div>
+
+      <img
+        alt=""
+        class="Polaris-CalloutCard__Image {{if onDismiss "Polaris-CalloutCard__DismissImage"}}"
+        src={{illustration}}
+      >
+    </div>
+  {{/polaris-card/section}}
+</div>
