@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v4.2.0 (May 10, 2019)
+- [#318](https://github.com/smile-io/ember-polaris/pull/318) [ENHANCEMENT] Add childComponent support to `polaris-choice-list` choices
+
 ### v4.1.0 (April 25, 2019)
 - [#285](https://github.com/smile-io/ember-polaris/pull/285) [UPDATE] Update action list to Polaris v3.10.0
 - [#286](https://github.com/smile-io/ember-polaris/pull/286) [UPDATE] Update avatar to Polaris v3.10.0
