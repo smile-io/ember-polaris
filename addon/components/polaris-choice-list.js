@@ -53,7 +53,7 @@ export default Component.extend({
    *  - label
    *  - disabled
    *  - helpText
-   *  - extra (Polaris's renderChildren equivalent)
+   *  - childComponent (Polaris's renderChildren equivalent)
    *
    * @property choices
    * @public
@@ -113,13 +113,13 @@ export default Component.extend({
   titleHidden: false,
 
   /**
-   * Component to render children with a choice.
+   * Component to render a child component for a choice.
    *
    * @type {Component}
-   * @property extra
+   * @property childComponent
    * @public
    */
-  extra: null,
+  childComponent: null,
 
   /**
    * Callback when the selected choices change

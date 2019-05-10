@@ -643,7 +643,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     this.owner.register(
       'component:dummy-component',
       Component.extend({
-        layout: hbs`{{choice.label}}`,
+        layout: hbs`{{isSelected}}`,
         'data-test-dummy-component': true,
       })
     );
@@ -658,15 +658,15 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
           (hash
             label="option2"
             value="two"
-            extra=(component "dummy-component")
+            childComponent=(component "dummy-component")
           )
         )
-        selected=selected
+        selected="two"
       }}
     `);
 
     assert
       .dom('[data-test-dummy-component]')
-      .hasText('option2', 'renders choice extra component');
+      .hasText('true', 'renders choice extra component');
   });
 });
