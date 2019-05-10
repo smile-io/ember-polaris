@@ -3,7 +3,7 @@ import { get, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
-import { errorId } from '@smile-io/ember-polaris/utils/id';
+import { errorId } from '../utils/id';
 import layout from '../templates/components/polaris-choice-list';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
@@ -53,7 +53,7 @@ export default Component.extend({
    *  - label
    *  - disabled
    *  - helpText
-   *  - renderChildren (not implemented yet)
+   *  - childComponent (Polaris's renderChildren equivalent)
    *
    * @property choices
    * @public

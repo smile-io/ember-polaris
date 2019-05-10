@@ -56,3 +56,24 @@ Multiple choice list (checkboxes) with title:
   onChange=(action (mut selected))
 }}
 ```
+
+Render childComponents for a choice
+
+```hbs
+{{polaris-choice-list
+  title="Choose from these options"
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+      childComponent=(component "polaris-text-field" ...)
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
+}}
+```

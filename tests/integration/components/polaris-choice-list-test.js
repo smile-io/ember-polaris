@@ -4,6 +4,7 @@ import { render, findAll, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import Component from '@ember/component';
 
 const choiceListSelector = '[data-test-choice-list]';
 const choicesWrapperSelector = '[data-test-choice-list-choices]';
@@ -636,5 +637,36 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     this.set('selected', ['two']);
 
     assert.dom('.Polaris-RadioButton__Input:checked').hasValue('two');
+  });
+
+  test('it supports choice children components aka renderChildren', async function(assert) {
+    this.owner.register(
+      'component:dummy-component',
+      Component.extend({
+        layout: hbs`{{isSelected}}`,
+        'data-test-dummy-component': true,
+      })
+    );
+
+    await render(hbs`
+      {{polaris-choice-list
+        choices=(array
+          (hash
+            label="option1"
+            value="one"
+          )
+          (hash
+            label="option2"
+            value="two"
+            childComponent=(component "dummy-component")
+          )
+        )
+        selected="two"
+      }}
+    `);
+
+    assert
+      .dom('[data-test-dummy-component]')
+      .hasText('true', 'renders choice extra component');
   });
 });
