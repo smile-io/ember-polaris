@@ -17,6 +17,12 @@
         checked=choice.isSelected
         onChange=(action "updateSelectedChoices" choice)
       }}
+
+      {{#if choice.extra}}
+        <div class="Polaris-ChoiceList__ChoiceChildren">
+          {{component choice.extra choice=choice}}
+        </div>
+      {{/if}}
     </li>
   {{/each}}
 </ul>
