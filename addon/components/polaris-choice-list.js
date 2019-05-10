@@ -113,15 +113,6 @@ export default Component.extend({
   titleHidden: false,
 
   /**
-   * Component to render a child component for a choice.
-   *
-   * @type {Component}
-   * @property childComponent
-   * @public
-   */
-  childComponent: null,
-
-  /**
    * Callback when the selected choices change
    *
    * @property onChange
