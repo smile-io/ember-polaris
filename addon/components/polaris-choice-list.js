@@ -54,6 +54,9 @@ export default Component.extend({
    *  - disabled
    *  - helpText
    *  - childComponent (Polaris's renderChildren equivalent)
+   *  - alwaysRenderChildComponent
+   *
+   * TODO try to find a nicer API for React's `renderChildren`
    *
    * @property choices
    * @public

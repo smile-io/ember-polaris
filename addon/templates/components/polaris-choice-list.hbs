@@ -18,9 +18,14 @@
         onChange=(action "updateSelectedChoices" choice)
       }}
 
-      {{#if choice.childComponent}}
+      {{#if
+        (and
+          choice.childComponent
+          (or choice.isSelected choice.alwaysRenderChildComponent)
+        )
+      }}
         <div class="Polaris-ChoiceList__ChoiceChildren">
-          {{component choice.childComponent isSelected=choice.isSelected}}
+          {{component choice.childComponent}}
         </div>
       {{/if}}
     </li>
