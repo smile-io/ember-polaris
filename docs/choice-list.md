@@ -57,7 +57,7 @@ Multiple choice list (checkboxes) with title:
 }}
 ```
 
-Render childComponents for a choice
+Render childComponent for a selected choice
 
 ```hbs
 {{polaris-choice-list
@@ -71,6 +71,29 @@ Render childComponents for a choice
       label="Option 2"
       value="two"
       childComponent=(component "polaris-text-field" ...)
+    )
+  )
+  selected=selected
+  onChange=(action (mut selected))
+}}
+```
+
+
+Always render childComponent for a choice
+
+```hbs
+{{polaris-choice-list
+  title="Choose from these options"
+  choices=(array
+    (hash
+      label="Option 1"
+      value="one"
+    )
+    (hash
+      label="Option 2"
+      value="two"
+      childComponent=(component "polaris-text-field" ...)
+      alwaysRenderChildComponent=true
     )
   )
   selected=selected

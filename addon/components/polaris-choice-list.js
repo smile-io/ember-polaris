@@ -54,6 +54,7 @@ export default Component.extend({
    *  - disabled
    *  - helpText
    *  - childComponent (Polaris's renderChildren equivalent)
+   *  - alwaysRenderChildComponent
    *
    * @property choices
    * @public

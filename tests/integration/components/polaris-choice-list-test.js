@@ -643,10 +643,12 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     this.owner.register(
       'component:dummy-component',
       Component.extend({
-        layout: hbs`{{isSelected}}`,
+        layout: hbs``,
         'data-test-dummy-component': true,
       })
     );
+
+    this.set('selected', 'one');
 
     await render(hbs`
       {{polaris-choice-list
@@ -659,14 +661,27 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
             label="option2"
             value="two"
             childComponent=(component "dummy-component")
+            alwaysRenderChildComponent=alwaysRenderChildComponent
           )
         )
-        selected="two"
+        selected=selected
       }}
     `);
 
     assert
       .dom('[data-test-dummy-component]')
-      .hasText('true', 'renders choice extra component');
+      .doesNotExist('does not render choice childComponent, when not selected');
+
+    this.set('selected', 'two');
+    assert
+      .dom('[data-test-dummy-component]')
+      .exists('renders choice childComponent component, when selected');
+
+    this.setProperties({ selected: 'one', alwaysRenderChildComponent: true });
+    assert
+      .dom('[data-test-dummy-component]')
+      .exists(
+        'renders choice childComponent component, even when not selected if alwaysRenderChildComponent is true'
+      );
   });
 });
