@@ -66,11 +66,20 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group item.
-    this.$()
-      .children()
-      .not('div.Polaris-ButtonGroup__Item')
-      .wrap(
-        '<div data-test-button-group-item class="Polaris-ButtonGroup__Item"></div>'
-      );
+    let children = this.element.children;
+    let wrapper;
+    let childNode;
+
+    for (var i = children.length - 1; i >= 0; i--) {
+      childNode = children[i];
+
+      if (!childNode.classList.contains('Polaris-ButtonGroup__Item')) {
+        wrapper = document.createElement('div');
+        wrapper.classList.add('Polaris-ButtonGroup__Item');
+        wrapper.setAttribute('data-test-button-group-item', true);
+        childNode.parentNode.insertBefore(wrapper, childNode);
+        wrapper.appendChild(childNode);
+      }
+    }
   },
 });

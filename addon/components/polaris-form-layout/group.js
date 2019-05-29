@@ -84,11 +84,20 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each element that isn't already an item.
-    this.$('div.Polaris-FormLayout__Items')
-      .children()
-      .not('div.Polaris-FormLayout__Item')
-      .wrap(
-        '<div class="Polaris-FormLayout__Item" data-test-form-layout-item></div>'
-      );
+    let children = this.element.querySelectorAll('.Polaris-FormLayout__Items');
+    let wrapper;
+    let childNode;
+
+    for (var i = children.length - 1; i >= 0; i--) {
+      childNode = children[i];
+
+      if (!childNode.classList.contains('Polaris-FormLayout__Item')) {
+        wrapper = document.createElement('div');
+        wrapper.classList.add('Polaris-FormLayout__Item');
+        wrapper.setAttribute('data-test-form-layout-item', true);
+        childNode.parentNode.insertBefore(wrapper, childNode);
+        wrapper.appendChild(childNode);
+      }
+    }
   },
 });

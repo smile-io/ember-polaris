@@ -73,7 +73,7 @@ export default Component.extend({
     this._super(...arguments);
 
     // Grab the size of the component for positioning the draggable marker.
-    const huePickerElement = this.$()[0];
+    const huePickerElement = this.element;
     this.set('sliderHeight', huePickerElement.clientHeight);
   },
 

@@ -183,7 +183,9 @@ export default Component.extend({
   didRender() {
     this._super(...arguments);
 
-    let hasContentWrapper = this.$().find('div.Polaris-Banner__Content').length;
+    let hasContentWrapper = this.element.querySelectorAll(
+      'div.Polaris-Banner__Content'
+    ).length;
     let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
     this.set('contentId', contentId);
   },

@@ -128,9 +128,20 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a stack item.
-    this.$()
-      .children()
-      .not('div.Polaris-Stack__Item')
-      .wrap('<div data-test-stack-item class="Polaris-Stack__Item"></div>');
+    let children = this.element.children;
+    let wrapper;
+    let childNode;
+
+    for (var i = children.length - 1; i >= 0; i--) {
+      childNode = children[i];
+
+      if (!childNode.classList.contains('Polaris-Stack__Item')) {
+        wrapper = document.createElement('div');
+        wrapper.classList.add('Polaris-Stack__Item');
+        wrapper.setAttribute('data-test-stack-item', true);
+        childNode.parentNode.insertBefore(wrapper, childNode);
+        wrapper.appendChild(childNode);
+      }
+    }
   },
 });

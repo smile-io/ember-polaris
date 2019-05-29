@@ -1,1 +1,11 @@
-{{outlet}}
+<div style="margin-left: 180px; margin-top: 55px;">
+  {{#polaris-popover as |popover|}}
+    {{#popover.activator}}
+      {{polaris-button text="Toggle popover"}}
+    {{/popover.activator}}
+
+    {{#popover.content}}
+      This is the popover content
+    {{/popover.content}}
+  {{/polaris-popover}}
+</div>

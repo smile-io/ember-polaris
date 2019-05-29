@@ -28,12 +28,23 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group or an item.
-    this.$()
-      .children()
-      .not('div[role="group"]')
-      .not('div.Polaris-FormLayout__Item')
-      .wrap(
-        '<div class="Polaris-FormLayout__Item" data-test-form-layout-item></div>'
-      );
+    let children = this.element.children;
+    let wrapper;
+    let childNode;
+
+    for (var i = children.length - 1; i >= 0; i--) {
+      childNode = children[i];
+
+      if (
+        !childNode.classList.contains('Polaris-FormLayout__Item') &&
+        childNode.getAttribute('role') !== 'group'
+      ) {
+        wrapper = document.createElement('div');
+        wrapper.classList.add('Polaris-FormLayout__Item');
+        wrapper.setAttribute('data-test-form-layout-item', true);
+        childNode.parentNode.insertBefore(wrapper, childNode);
+        wrapper.appendChild(childNode);
+      }
+    }
   },
 });

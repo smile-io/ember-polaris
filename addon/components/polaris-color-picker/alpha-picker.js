@@ -76,7 +76,7 @@ export default Component.extend({
     this._super(...arguments);
 
     // Grab the size of the component for positioning the draggable marker.
-    const alphaPickerElement = this.$()[0];
+    const alphaPickerElement = this.element;
     this.set('sliderHeight', alphaPickerElement.clientHeight);
   },
 
