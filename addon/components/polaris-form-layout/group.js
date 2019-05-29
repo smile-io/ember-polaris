@@ -86,16 +86,13 @@ export default Component.extend({
 
     // Wrap each element that isn't already an item.
     let wrapper = document.createElement('div');
+    let itemsContainer = this.element.querySelector('.Polaris-FormLayout__Items');
 
     wrapper.classList.add('Polaris-FormLayout__Item');
     wrapper.setAttribute('data-test-form-layout-item', true);
 
-    wrapChildren(
-      this.element.querySelectorAll('.Polaris-FormLayout__Items'),
-      wrapper,
-      function(el) {
-        return !el.classList.contains('Polaris-FormLayout__Item');
-      }
-    );
+    wrapChildren(itemsContainer.children, wrapper, function(el) {
+      return !el.classList.contains('Polaris-FormLayout__Item');
+    });
   },
 });
