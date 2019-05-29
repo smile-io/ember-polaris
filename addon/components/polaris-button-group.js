@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-button-group';
+import wrapChildren from '../utils/wrap-children';
 
 /**
  * Polaris button group component.
@@ -66,20 +67,13 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group item.
-    let children = this.element.children;
-    let wrapper;
-    let childNode;
+    let wrapper = document.createElement('div');
 
-    for (var i = children.length - 1; i >= 0; i--) {
-      childNode = children[i];
+    wrapper.classList.add('Polaris-ButtonGroup__Item');
+    wrapper.setAttribute('data-test-button-group-item', true);
 
-      if (!childNode.classList.contains('Polaris-ButtonGroup__Item')) {
-        wrapper = document.createElement('div');
-        wrapper.classList.add('Polaris-ButtonGroup__Item');
-        wrapper.setAttribute('data-test-button-group-item', true);
-        childNode.parentNode.insertBefore(wrapper, childNode);
-        wrapper.appendChild(childNode);
-      }
-    }
+    wrapChildren(this.element.children, wrapper, function(el) {
+      return !el.classList.contains('Polaris-ButtonGroup__Item');
+    });
   },
 });
