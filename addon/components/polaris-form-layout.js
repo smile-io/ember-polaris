@@ -35,7 +35,10 @@ export default Component.extend({
     wrapper.setAttribute('data-test-form-layout-item', true);
 
     wrapChildren(this.element.children, wrapper, function(el) {
-      return !el.classList.contains('Polaris-FormLayout__Item') && el.getAttribute('role') !== 'group';
+      return (
+        !el.classList.contains('Polaris-FormLayout__Item') &&
+        el.getAttribute('role') !== 'group'
+      );
     });
   },
 });

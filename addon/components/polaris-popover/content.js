@@ -1,4 +1,3 @@
-import Ember$ from 'jquery';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
