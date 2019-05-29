@@ -133,17 +133,17 @@ export default Component.extend(
 
     addedMoreActionsWidthForMeasuring: 0,
 
-    moreActionsNode: computed(function() {
+    get moreActionsNode() {
       return this.element.querySelector(
         '.Polaris-ResourceList-BulkActions__Popover'
       );
-    }).volatile(),
+    },
 
-    largeScreenButtonsNode: computed(function() {
+    get largeScreenButtonsNode() {
       return this.element.querySelector(
         '.Polaris-ResourceList-BulkActions__Group--largeScreen'
       );
-    }).volatile(),
+    },
 
     promotedActionsWidths: computed(function() {
       return [];
