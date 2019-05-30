@@ -16,23 +16,9 @@ export default function wrapChildren(nodesToWrap, wrapper) {
 }
 
 /**
- * Convert htmlCollection to an array in order
- * to use array methods on the collection.
- */
-export function collectionToArray(htmlCollection) {
-  let a = [];
-  for (var i = 0; i < htmlCollection.length; i++) {
-    a.push(htmlCollection[i]);
-  }
-  return a;
-}
-
-/**
  * Convert an htmlCollection into a filtered array.
  *
  */
 export function childrenWithoutClassName(htmlCollection, className) {
-  return collectionToArray(htmlCollection).filter(
-    (el) => !el.classList.contains(className)
-  );
+  return [...htmlCollection].filter((el) => !el.classList.contains(className));
 }
