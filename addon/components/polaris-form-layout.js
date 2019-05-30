@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-form-layout';
-import wrapChildren from '../utils/wrap-children';
+import wrapChildren, { collectionToArray } from '../utils/wrap-children';
 
 /**
  * Polaris form layout component.
@@ -29,16 +29,18 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group or an item.
+    let childrenToWrap = (elems) =>
+      collectionToArray(elems).filter(
+        (el) =>
+          !el.classList.contains('Polaris-FormLayout__Item') &&
+          el.getAttribute('role') !== 'group'
+      );
+
+    let nodesToWrap = childrenToWrap(this.element.children);
     var wrapper = document.createElement('div');
 
     wrapper.classList.add('Polaris-FormLayout__Item');
     wrapper.setAttribute('data-test-form-layout-item', true);
-
-    wrapChildren(this.element.children, wrapper, function(el) {
-      return (
-        !el.classList.contains('Polaris-FormLayout__Item') &&
-        el.getAttribute('role') !== 'group'
-      );
-    });
+    wrapChildren(nodesToWrap, wrapper);
   },
 });

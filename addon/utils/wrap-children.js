@@ -1,34 +1,38 @@
 /**
- * Utility to wrap child nodes in wrapper nodes
+ * Utility to wrap nodes in wrapper nodes
  *
- * @param {HtmlCollection} children   Full list of child nodes for a given container.
- * @param {HtmlNode} wrapperNode      The node to wrap matching child nodes in.
- * @param {Function} shouldWrapFn     Function that recieves a child node and returns a boolean
- *                                    to determine if the child should be wrapped in the wrapper.
+ * @param {Array} nodesToWrap   List of nodes to be wrapped
+ * @param {HtmlNode} wrapper    The node to wrap matching child nodes in.
  *
- * Example:
- *
- *  wrapChildren(
- *    this.element.children,
- *    document.createElement('div'),
- *    function(el) {
- *      return !el.classList.contains('Polaris-Stack__Item');
- *    },
- *  );
  */
-export default function wrapChildren(children, wrapperNode, shouldWrapFn) {
-  let childNode;
+export default function wrapChildren(nodesToWrap, wrapper) {
   let clonedWrapper;
 
-  for (var i = children.length - 1; i >= 0; i--) {
-    childNode = children[i];
+  nodesToWrap.forEach((node) => {
+    clonedWrapper = wrapper.cloneNode();
+    node.parentNode.insertBefore(clonedWrapper, node);
+    clonedWrapper.appendChild(node);
+  });
+}
 
-    if (shouldWrapFn(childNode)) {
-      clonedWrapper = wrapperNode.cloneNode();
-      childNode.parentNode.insertBefore(clonedWrapper, childNode);
-      clonedWrapper.appendChild(childNode);
-    }
+/**
+ * Convert htmlCollection to an array in order
+ * to use array methods on the collection.
+ */
+export function collectionToArray(htmlCollection) {
+  let a = [];
+  for (var i = 0; i < htmlCollection.length; i++) {
+    a.push(htmlCollection[i]);
   }
+  return a;
+}
 
-  wrapperNode.remove();
+/**
+ * Convert an htmlCollection into a filtered array.
+ *
+ */
+export function childrenWithoutClassName(htmlCollection, className) {
+  return collectionToArray(htmlCollection).filter(
+    (el) => !el.classList.contains(className)
+  );
 }
