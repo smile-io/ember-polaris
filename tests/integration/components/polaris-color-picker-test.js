@@ -260,7 +260,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
     assertDraggerPosition(
       colorDragger,
       100,
-      100,
+      99.75,
       'color',
       'after moving color dragger'
     );
