@@ -52,9 +52,7 @@ module('Integration | Component | polaris-resource-list/bulk-actions', function(
 
   module('actions', function() {
     test('promotedActions render in the last position on intial load', async function(assert) {
-      this.setProperties({
-        promotedActions,
-      });
+      this.setProperties({ promotedActions });
 
       await render(hbs`
         {{polaris-resource-list/bulk-actions
@@ -65,16 +63,18 @@ module('Integration | Component | polaris-resource-list/bulk-actions', function(
 
       let allActionsButtons = findAll(actionsButtonGroupButtonsSelector);
 
-      assert.equal(
-        allActionsButtons[0].textContent.trim(),
-        'button 1',
-        'first promoted action is the first button rendered'
-      );
-      assert.equal(
-        allActionsButtons[1].textContent.trim(),
-        'button 2',
-        'second promoted action is the second button rendered'
-      );
+      assert
+        .dom(allActionsButtons[0])
+        .hasText(
+          'button 1',
+          'first promoted action is the first button rendered'
+        );
+      assert
+        .dom(allActionsButtons[1])
+        .hasText(
+          'button 2',
+          'second promoted action is the second button rendered'
+        );
     });
 
     test('actionsCollection actions render in the first position on initial load', async function(assert) {
@@ -91,24 +91,19 @@ module('Integration | Component | polaris-resource-list/bulk-actions', function(
         }}
       `);
 
-      assert
-        .dom(actionsButtonGroupSelector)
-        .doesNotIncludeText(
-          'button 3',
-          'non promoted actions are not rendered (button 3)'
-        );
-      assert
-        .dom(actionsButtonGroupSelector)
-        .doesNotIncludeText(
-          'button 4',
-          'non promoted actions are not rendered (button 4)'
-        );
-      assert
-        .dom(actionsButtonGroupSelector)
-        .doesNotIncludeText(
-          'button 5',
-          'non promoted actions are not rendered (button 5)'
-        );
+      const actionBtn = assert.dom(actionsButtonGroupSelector);
+      actionBtn.doesNotIncludeText(
+        'button 3',
+        'non promoted actions are not rendered (button 3)'
+      );
+      actionBtn.doesNotIncludeText(
+        'button 4',
+        'non promoted actions are not rendered (button 4)'
+      );
+      actionBtn.doesNotIncludeText(
+        'button 5',
+        'non promoted actions are not rendered (button 5)'
+      );
     });
 
     test('it renders a popover', async function(assert) {
@@ -163,11 +158,7 @@ module('Integration | Component | polaris-resource-list/bulk-actions', function(
         );
       assert
         .dom(checkableButtonCheckboxSelector)
-        .hasAttribute(
-          'disabled',
-          '',
-          'disabled is passed down into checkable-button'
-        );
+        .isDisabled('disabled is passed down into checkable-button');
     });
 
     test('renders a button for actions and one for each item in promotedActions', async function(assert) {
