@@ -97,8 +97,13 @@ export default Component.extend({
       (triggerRect.left - getRectForNode(content).left)}px`;
     const toolTip = document.querySelector('div.Polaris-Popover__Tip');
 
-    if (toolTip) toolTip.style.left = left;
-    if (content) content.style.left = left;
+    if (toolTip) {
+      toolTip.style.left = left;
+    }
+
+    if (content) {
+      content.style.left = left;
+    }
 
     // Set the height explicitly so the popover displays on Safari.
     const pane = document.querySelector('div.Polaris-Popover__Pane') || content;
@@ -114,7 +119,12 @@ export default Component.extend({
     );
     const height = `${paneContentRect.height}px`;
 
-    if (popoverContent) popoverContent.style.height = height;
-    if (content) content.style.height = height;
+    if (popoverContent) {
+      popoverContent.style.height = height;
+    }
+
+    if (content) {
+      content.style.height = height;
+    }
   },
 });

@@ -154,9 +154,9 @@ export default Component.extend({
     const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
     if (typeOf(onDraggerHeightChanged) === 'function') {
       // Publish the height of our dragger.
-      const draggerElement = this.element.querySelectorAll(
+      const draggerElement = this.element.querySelector(
         'div.Polaris-ColorPicker__Dragger'
-      )[0];
+      );
       if (isNone(draggerElement)) {
         return;
       }

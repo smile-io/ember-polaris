@@ -91,9 +91,9 @@ export default Component.extend({
     this._super(...arguments);
 
     // Grab the size of the picker for positioning the draggable markers.
-    const mainColorElement = this.element.querySelectorAll(
+    const mainColorElement = this.element.querySelector(
       'div.Polaris-ColorPicker__MainColor'
-    )[0];
+    );
     if (isNone(mainColorElement)) {
       return;
     }
