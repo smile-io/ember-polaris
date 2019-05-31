@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-form-layout';
-import wrapChildren from '../utils/wrap-children';
+import { wrapChildren } from '../utils/dom';
 
 /**
  * Polaris form layout component.

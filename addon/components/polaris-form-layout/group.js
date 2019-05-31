@@ -3,9 +3,7 @@ import layout from '../../templates/components/polaris-form-layout/group';
 import { isBlank } from '@ember/utils';
 import { computed } from '@ember/object';
 import { idVariation, helpTextId } from '../../utils/id';
-import wrapChildren, {
-  childrenWithoutClassName,
-} from '../../utils/wrap-children';
+import { wrapChildren, rejectNodesByClassName } from '../../utils/dom';
 
 export default Component.extend({
   attributeBindings: [
@@ -90,7 +88,7 @@ export default Component.extend({
       '.Polaris-FormLayout__Items'
     );
 
-    let nodesToWrap = childrenWithoutClassName(
+    let nodesToWrap = rejectNodesByClassName(
       itemsContainer.children,
       'Polaris-FormLayout__Item'
     );

@@ -4,7 +4,7 @@ import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-stack';
-import wrapChildren, { childrenWithoutClassName } from '../utils/wrap-children';
+import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
 /**
  * Polaris stack component.
@@ -129,7 +129,7 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a stack item.
-    let nodesToWrap = childrenWithoutClassName(
+    let nodesToWrap = rejectNodesByClassName(
       this.element.children,
       'Polaris-Stack__Item'
     );

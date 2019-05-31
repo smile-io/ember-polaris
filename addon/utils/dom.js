@@ -5,7 +5,7 @@
  * @param {HtmlNode} wrapper    The node to wrap matching child nodes in.
  *
  */
-export default function wrapChildren(nodesToWrap, wrapper) {
+export function wrapChildren(nodesToWrap, wrapper) {
   let clonedWrapper;
 
   nodesToWrap.forEach((node) => {
@@ -19,6 +19,6 @@ export default function wrapChildren(nodesToWrap, wrapper) {
  * Convert an htmlCollection into a filtered array.
  *
  */
-export function childrenWithoutClassName(htmlCollection, className) {
+export function rejectNodesByClassName(htmlCollection, className) {
   return [...htmlCollection].filter((el) => !el.classList.contains(className));
 }

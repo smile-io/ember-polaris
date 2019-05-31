@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-button-group';
-import wrapChildren, { childrenWithoutClassName } from '../utils/wrap-children';
+import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
 /**
  * Polaris button group component.
@@ -67,7 +67,7 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a group item.
-    let nodesToWrap = childrenWithoutClassName(
+    let nodesToWrap = rejectNodesByClassName(
       this.element.children,
       'Polaris-ButtonGroup__Item'
     );
