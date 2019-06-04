@@ -4,9 +4,11 @@ import { notEmpty } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
 import layout from '../templates/components/render-content';
 
-export default @tagName('')
+@tagName('')
 @templateLayout(layout)
-class RenderContent extends Component {
+export default class RenderContent extends Component {
+  static positionalParams = 'content';
+
   content = null;
 
   @(notEmpty('content.componentName').readOnly())
@@ -17,6 +19,4 @@ class RenderContent extends Component {
     let contentConstructorName = this.get('content.constructor.name') || '';
     return contentConstructorName.indexOf('ComponentDefinition') > -1;
   }
-}.reopenClass({
-  positionalParams: ['content'],
-});
+};
