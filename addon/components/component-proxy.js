@@ -1,5 +1,6 @@
+import { layout, tagName } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 // import { compileTemplate } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
 import Ember from 'ember';
@@ -16,66 +17,61 @@ import Ember from 'ember';
 //       onClick=(action "onButtonClicked")
 //     )
 //   }}
-export default Component.extend({
-  tagName: '',
+@tagName('')
+@layout(computed('componentName', 'propsString', function() {
+  let { componentName, propsString } = this.getProperties(
+    'componentName',
+    'propsString'
+  );
 
-  /**
-   * Dynamically-generated layout to render the proxied component.
-   * @private
-   */
-  layout: computed('componentName', 'propsString', function() {
-    let { componentName, propsString } = this.getProperties(
-      'componentName',
-      'propsString'
-    );
-
-    // Disable linting for this line because the recommended way of importing
-    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
-    // eslint-disable-next-line ember/new-module-imports
-    return Ember.HTMLBars.compile(`
-      {{#if hasBlock}}
-        {{#component "${componentName}"${propsString}}}
-          {{yield}}
-        {{/component}}
-      {{else}}
-        {{component "${componentName}"${propsString}}}
-      {{/if}}
-    `);
-  }).readOnly(),
-
+  // Disable linting for this line because the recommended way of importing
+  // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
+  // eslint-disable-next-line ember/new-module-imports
+  return Ember.HTMLBars.compile(`
+    {{#if hasBlock}}
+      {{#component "${componentName}"${propsString}}}
+        {{yield}}
+      {{/component}}
+    {{else}}
+      {{component "${componentName}"${propsString}}}
+    {{/if}}
+  `);
+}).readOnly())
+export default class ComponentProxy extends Component {
   /**
    * The name of the component to render.
    * @type {String}
    * @public
    * @required
    */
-  componentName: null,
+  componentName = null;
 
   /**
    * Optional hash of properties to pass to the component being rendered.
    * @type {Object}
    * @public
    */
-  props: null,
+  props = null;
 
   /**
    * List of properties that were previously set via the `props` hash.
    * @type {Array}
    * @private
    */
-  propNames: null,
+  propNames = null;
 
   /**
    * String representing the properties to pass to the proxied component.
    * @type {String}
    * @private
    */
-  propsString: computed('propNames.[]', function() {
+  @(computed('propNames.[]').readOnly())
+  get propsString() {
     let propNames = this.get('propNames') || [];
     return propNames.reduce((propsString, propName) => {
       return `${propsString} ${propName}=${propName}`;
     }, '');
-  }).readOnly(),
+  }
 
   updateProps() {
     // Unset any properties that were set previously and are now undefined,
@@ -92,11 +88,11 @@ export default Component.extend({
 
     let newProps = assign(propsToUnset, props, { propNames });
     this.setProperties(newProps);
-  },
+  }
 
   didReceiveAttrs() {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
 
     this.updateProps();
-  },
-});
+  }
+}

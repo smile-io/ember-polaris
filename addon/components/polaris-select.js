@@ -1,6 +1,7 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
+import { bool } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import { isGroup } from '@smile-io/ember-polaris/helpers/polaris-select/is-group';
@@ -8,11 +9,9 @@ import layout from '../templates/components/polaris-select';
 
 const PLACEHOLDER_VALUE = '';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSelect extends Component {
   /**
    * List of options or option groups to choose from
    *
@@ -33,7 +32,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  options: null,
+  options = null;
 
   /**
    * Label for the select
@@ -43,7 +42,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  label: null,
+  label = null;
 
   /**
    * Adds an action to the label
@@ -58,7 +57,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  labelAction: null,
+  labelAction = null;
 
   /**
    * Visually hide the label
@@ -68,7 +67,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Show the label to the left of the value, inside the control
@@ -78,7 +77,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  labelInline: false,
+  labelInline = false;
 
   /**
    * Disable input
@@ -88,7 +87,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Additional text to aide in use
@@ -98,7 +97,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * Example text to display as placeholder
@@ -108,7 +107,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  placeholder: null,
+  placeholder = null;
 
   /* eslint smile-ember/order-in-components: 'off' */
   /**
@@ -119,7 +118,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  id: null,
+  id = null;
 
   /**
    * Name for form input
@@ -129,7 +128,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Value for form input
@@ -139,7 +138,7 @@ export default Component.extend({
    * @default ''
    * @public
    */
-  value: '',
+  value = '';
 
   /**
    * Display an error state
@@ -149,7 +148,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  error: null,
+  error = null;
 
   /**
    * Callback when selection is changed
@@ -159,7 +158,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onChange() {},
+  onChange() {}
 
   /**
    * Callback when select is focussed
@@ -169,7 +168,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus is removed
@@ -179,7 +178,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onBlur() {},
+  onBlur() {}
 
   /**
    * Flag indicating whether an error is present
@@ -188,7 +187,8 @@ export default Component.extend({
    * @type {Boolean}
    * @private
    */
-  hasError: bool('error').readOnly(),
+  @(bool('error').readOnly())
+  hasError;
 
   /**
    * Internal ID for form input, with a default value.
@@ -198,9 +198,10 @@ export default Component.extend({
    * @private
    */
   // eslint disable smile-ember/order-in-components
-  _id: computed('id', function() {
+  @(computed('id').readOnly())
+  get _id() {
     return this.get('id') || guidFor(this);
-  }).readOnly(),
+  }
 
   /**
    * Class names for select element
@@ -209,7 +210,8 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  className: computed('error', 'disabled', function() {
+  @(computed('error', 'disabled').readOnly())
+  get className() {
     let classNames = ['Polaris-Select'];
 
     if (this.get('error')) {
@@ -221,7 +223,7 @@ export default Component.extend({
     }
 
     return classNames.join(' ');
-  }).readOnly(),
+  }
 
   /**
    * Aria described-by field for accessibility
@@ -230,7 +232,8 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  describedBy: computed('error', 'helpText', function() {
+  @(computed('error', 'helpText').readOnly())
+  get describedBy() {
     let { error, helpText, _id: id } = this.getProperties(
       'error',
       'helpText',
@@ -247,7 +250,7 @@ export default Component.extend({
     }
 
     return describedBy.length ? describedBy.join(' ') : undefined;
-  }).readOnly(),
+  }
 
   /**
    * Options processed into a renderable state.
@@ -256,7 +259,8 @@ export default Component.extend({
    * @type {Object[]}
    * @private
    */
-  normalizedOptions: computed('options.[]', 'placeholder', function() {
+  @(computed('options.[]', 'placeholder').readOnly())
+  get normalizedOptions() {
     let options = this.get('options') || [];
 
     let normalizedOptions = options.map(normalizeOption);
@@ -274,7 +278,7 @@ export default Component.extend({
     }
 
     return normalizedOptions;
-  }).readOnly(),
+  }
 
   /**
    * Gets the text to display in the UI, for the currently selected option
@@ -283,32 +287,28 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  selectedOption: computed(
-    'normalizedOptions.@each.value',
-    'value',
-    function() {
-      let { normalizedOptions: options, value } = this.getProperties(
-        'normalizedOptions',
-        'value'
-      );
-      let flatOptions = flattenOptions(options);
-      let selectedOption = flatOptions.find((option) => value === option.value);
+  @(computed('normalizedOptions.@each.value', 'value').readOnly())
+  get selectedOption() {
+    let { normalizedOptions: options, value } = this.getProperties(
+      'normalizedOptions',
+      'value'
+    );
+    let flatOptions = flattenOptions(options);
+    let selectedOption = flatOptions.find((option) => value === option.value);
 
-      if (selectedOption === undefined) {
-        // Get the first visible option (not the hidden placeholder)
-        selectedOption = flatOptions.find((option) => !option.hidden);
-      }
-
-      return selectedOption ? selectedOption.label : '';
+    if (selectedOption === undefined) {
+      // Get the first visible option (not the hidden placeholder)
+      selectedOption = flatOptions.find((option) => !option.hidden);
     }
-  ).readOnly(),
 
-  actions: {
-    handleChange(e) {
-      this.onChange(e.currentTarget.value, this.get('_id'));
-    },
-  },
-});
+    return selectedOption ? selectedOption.label : '';
+  }
+
+  @action
+  handleChange(e) {
+    this.onChange(e.currentTarget.value, this.get('_id'));
+  }
+}
 
 function isString(option) {
   return typeof option === 'string';

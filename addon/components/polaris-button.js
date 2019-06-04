@@ -1,6 +1,7 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
+import { or } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { or } from '@ember/object/computed';
-import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
 import { handleMouseUpByBlurring } from '../utils/focus';
@@ -17,412 +18,410 @@ const DEFAULT_SIZE = 'medium';
  * Polaris button component.
  * See https://polaris.shopify.com/components/actions/button
  */
-export default Component.extend({
-  // Polaris react behaviour is to render an anchor element if a URL is provided,
-  // or a button element otherwise. Ember components can't support dynamic tagNames,
-  // so we reproduce this behaviour using a dynamic component in block form in our template.
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class PolarisButton extends Component {
+ /**
+  * The content to display inside the button.
+  * This component can be used in block form,
+  * in which case the block content will be used
+  * instead of `text`.
+  *
+  * @property text
+  * @type {String}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  layout,
+ /**
+  * A destination to link to, rendered in the href attribute of a link
+  *
+  * @property url
+  * @type {String}
+  * @default null
+  * @public
+  */
+ url = null;
 
-  /**
-   * The content to display inside the button.
-   * This component can be used in block form,
-   * in which case the block content will be used
-   * instead of `text`.
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   * @public
-   */
-  text: null,
+ /**
+  * A unique identifier for the button
+  *
+  * @property id
+  * @type {String}
+  * @default null
+  * @public
+  */
+ // eslint-disable-next-line smile-ember/order-in-components
+ id = null;
 
-  /**
-   * A destination to link to, rendered in the href attribute of a link
-   *
-   * @property url
-   * @type {String}
-   * @default null
-   * @public
-   */
-  url: null,
+ /**
+  * Provides extra visual weight and identifies the primary action in a set of buttons
+  *
+  * @property primary
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ primary = false;
 
-  /**
-   * A unique identifier for the button
-   *
-   * @property id
-   * @type {String}
-   * @default null
-   * @public
-   */
-  // eslint-disable-next-line smile-ember/order-in-components
-  id: null,
+ /**
+  * Indicates a dangerous or potentially negative action
+  *
+  * @property destructive
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ destructive = false;
 
-  /**
-   * Provides extra visual weight and identifies the primary action in a set of buttons
-   *
-   * @property primary
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  primary: false,
+ /**
+  * Disables the button, disallowing merchant interaction
+  *
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disabled = false;
 
-  /**
-   * Indicates a dangerous or potentially negative action
-   *
-   * @property destructive
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  destructive: false,
+ /**
+  * Replaces button text with a spinner while a background action is being performed
+  *
+  * @property loading
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ loading = false;
 
-  /**
-   * Disables the button, disallowing merchant interaction
-   *
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ /**
+  * Changes the size of the button, giving it more or less padding
+  *
+  * @property size
+  * @type {String}
+  * @default 'medium'
+  * @public
+  */
+ size = DEFAULT_SIZE;
 
-  /**
-   * Replaces button text with a spinner while a background action is being performed
-   *
-   * @property loading
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  loading: false,
+ /**
+  * Gives the button a subtle alternative to the default button styling, appropriate for certain backdrops
+  *
+  * @property outline
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ outline = false;
 
-  /**
-   * Changes the size of the button, giving it more or less padding
-   *
-   * @property size
-   * @type {String}
-   * @default 'medium'
-   * @public
-   */
-  size: DEFAULT_SIZE,
+ /**
+  * Allows the button to grow to the width of its container
+  *
+  * @property fullWidth
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ fullWidth = false;
 
-  /**
-   * Gives the button a subtle alternative to the default button styling, appropriate for certain backdrops
-   *
-   * @property outline
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  outline: false,
+ /**
+  * Displays the button with a disclosure icon
+  *
+  * @property disclosure
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disclosure = false;
 
-  /**
-   * Allows the button to grow to the width of its container
-   *
-   * @property fullWidth
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  fullWidth: false,
+ /**
+  * Allows the button to submit a form
+  *
+  * @property submit
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ submit = false;
 
-  /**
-   * Displays the button with a disclosure icon
-   *
-   * @property disclosure
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disclosure: false,
+ /**
+  * Renders a button that looks like a link
+  *
+  * @property plain
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ plain = false;
 
-  /**
-   * Allows the button to submit a form
-   *
-   * @property submit
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  submit: false,
+ /**
+  * Makes `plain` and `outline` Button colors (text, borders, icons) the same as the current text color. Also adds an underline to `plain` Buttons
+  *
+  * @property monochrome
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ monochrome = false;
 
-  /**
-   * Renders a button that looks like a link
-   *
-   * @property plain
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  plain: false,
+ /**
+  * Forces url to open in a new tab
+  *
+  * @property external
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ external = false;
 
-  /**
-   * Makes `plain` and `outline` Button colors (text, borders, icons) the same as the current text color. Also adds an underline to `plain` Buttons
-   *
-   * @property monochrome
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  monochrome: false,
+ /**
+  * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
+  *
+  * @property download
+  * @type {String/Boolean}
+  * @default null
+  * @public
+  */
+ download = null;
 
-  /**
-   * Forces url to open in a new tab
-   *
-   * @property external
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  external: false,
+ /**
+  * Icon to display to the left of the button content
+  *
+  * @property icon
+  * @type {String|Component}
+  * @default null
+  * @public
+  */
+ icon = null;
 
-  /**
-   * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
-   *
-   * @property download
-   * @type {String/Boolean}
-   * @default null
-   * @public
-   */
-  download: null,
+ /**
+  * Visually hidden text for screen readers
+  *
+  * @property accessibilityLabel
+  * @type {String}
+  * @default null
+  * @public
+  */
+ accessibilityLabel = null;
 
-  /**
-   * Icon to display to the left of the button content
-   *
-   * @property icon
-   * @type {String|Component}
-   * @default null
-   * @public
-   */
-  icon: null,
+ /**
+  * Id of the element the button controls
+  *
+  * @property ariaControls
+  * @type {String}
+  * @default null
+  * @public
+  */
+ ariaControls = null;
 
-  /**
-   * Visually hidden text for screen readers
-   *
-   * @property accessibilityLabel
-   * @type {String}
-   * @default null
-   * @public
-   */
-  accessibilityLabel: null,
+ /**
+  * Tells screen reader the controlled element is expanded
+  *
+  * @property ariaExpanded
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ ariaExpanded = false;
 
-  /**
-   * Id of the element the button controls
-   *
-   * @property ariaControls
-   * @type {String}
-   * @default null
-   * @public
-   */
-  ariaControls: null,
+ /**
+  * Tells screen reader the element is pressed
+  *
+  * @property ariaPressed
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ ariaPressed = false;
 
-  /**
-   * Tells screen reader the controlled element is expanded
-   *
-   * @property ariaExpanded
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  ariaExpanded: false,
+ /**
+  * Callback when clicked
+  *
+  * @property onClick
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onClick() {}
 
-  /**
-   * Tells screen reader the element is pressed
-   *
-   * @property ariaPressed
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  ariaPressed: false,
+ /**
+  * Callback when button becomes focussed
+  *
+  * @property onFocus
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onFocus() {}
 
-  /**
-   * Callback when clicked
-   *
-   * @property onClick
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onClick() {},
+ /**
+  * Callback when focus leaves button
+  *
+  * @property onBlur
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onBlur() {}
 
-  /**
-   * Callback when button becomes focussed
-   *
-   * @property onFocus
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onFocus() {},
+ /**
+  * Callback when a keypress event is registered on the button
+  *
+  * @property onKeyPress
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onKeyPress() {}
 
-  /**
-   * Callback when focus leaves button
-   *
-   * @property onBlur
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onBlur() {},
+ /**
+  * Callback when a keyup event is registered on the button
+  *
+  * @property onKeyUp
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onKeyUp() {}
 
-  /**
-   * Callback when a keypress event is registered on the button
-   *
-   * @property onKeyPress
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onKeyPress() {},
+ /**
+  * Callback when a keydown event is registered on the button
+  *
+  * @property onKeyDown
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onKeyDown() {}
 
-  /**
-   * Callback when a keyup event is registered on the button
-   *
-   * @property onKeyUp
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onKeyUp() {},
+ dataTestId = null;
+ handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  /**
-   * Callback when a keydown event is registered on the button
-   *
-   * @property onKeyDown
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onKeyDown() {},
+ @(or('disabled', 'loading').readOnly())
+ isDisabled;
 
-  dataTestId: null,
+ @(computed('icon', 'text').readOnly())
+ get isIconOnly() {
+   let { icon, text } = this.getProperties('icon', 'text');
 
-  handleMouseUpByBlurring,
+   return icon && text == null;
+ }
 
-  isDisabled: or('disabled', 'loading').readOnly(),
+ @(computed(
+  'class',
+  'primary',
+  'outline',
+  'destructive',
+  'isDisabled',
+  'loading',
+  'plain',
+  'monochrome',
+  'size',
+  'fullWidth',
+  'isIconOnly'
+ ).readOnly())
+ get classes() {
+   let {
+     class: externalClasses,
+     primary,
+     outline,
+     destructive,
+     isDisabled,
+     loading,
+     plain,
+     monochrome,
+     size,
+     fullWidth,
+     isIconOnly,
+   } = this.getProperties(
+     'class',
+     'primary',
+     'outline',
+     'destructive',
+     'isDisabled',
+     'loading',
+     'plain',
+     'monochrome',
+     'size',
+     'fullWidth',
+     'isIconOnly'
+   );
+   let classes = ['Polaris-Button'];
 
-  isIconOnly: computed('icon', 'text', function() {
-    let { icon, text } = this.getProperties('icon', 'text');
+   if (isPresent(externalClasses)) {
+     classes.push(externalClasses);
+   }
 
-    return icon && text == null;
-  }).readOnly(),
+   if (primary) {
+     classes.push('Polaris-Button--primary');
+   }
 
-  classes: computed(
-    'class',
-    'primary',
-    'outline',
-    'destructive',
-    'isDisabled',
-    'loading',
-    'plain',
-    'monochrome',
-    'size',
-    'fullWidth',
-    'isIconOnly',
-    function() {
-      let {
-        class: externalClasses,
-        primary,
-        outline,
-        destructive,
-        isDisabled,
-        loading,
-        plain,
-        monochrome,
-        size,
-        fullWidth,
-        isIconOnly,
-      } = this.getProperties(
-        'class',
-        'primary',
-        'outline',
-        'destructive',
-        'isDisabled',
-        'loading',
-        'plain',
-        'monochrome',
-        'size',
-        'fullWidth',
-        'isIconOnly'
-      );
-      let classes = ['Polaris-Button'];
+   if (outline) {
+     classes.push('Polaris-Button--outline');
+   }
 
-      if (isPresent(externalClasses)) {
-        classes.push(externalClasses);
-      }
+   if (destructive) {
+     classes.push('Polaris-Button--destructive');
+   }
 
-      if (primary) {
-        classes.push('Polaris-Button--primary');
-      }
+   if (isDisabled) {
+     classes.push('Polaris-Button--disabled');
+   }
 
-      if (outline) {
-        classes.push('Polaris-Button--outline');
-      }
+   if (loading) {
+     classes.push('Polaris-Button--loading');
+   }
 
-      if (destructive) {
-        classes.push('Polaris-Button--destructive');
-      }
+   if (plain) {
+     classes.push('Polaris-Button--plain');
+   }
 
-      if (isDisabled) {
-        classes.push('Polaris-Button--disabled');
-      }
+   if (monochrome) {
+     classes.push('Polaris-Button--monochrome');
+   }
 
-      if (loading) {
-        classes.push('Polaris-Button--loading');
-      }
+   if (size && size !== DEFAULT_SIZE) {
+     size = SIZES[size] || null;
+     if (size) {
+       classes.push(`Polaris-Button--size${classify(size)}`);
+     }
+   }
 
-      if (plain) {
-        classes.push('Polaris-Button--plain');
-      }
+   if (fullWidth) {
+     classes.push('Polaris-Button--fullWidth');
+   }
 
-      if (monochrome) {
-        classes.push('Polaris-Button--monochrome');
-      }
+   if (isIconOnly) {
+     classes.push('Polaris-Button--iconOnly');
+   }
 
-      if (size && size !== DEFAULT_SIZE) {
-        size = SIZES[size] || null;
-        if (size) {
-          classes.push(`Polaris-Button--size${classify(size)}`);
-        }
-      }
+   return classes.join(' ');
+ }
 
-      if (fullWidth) {
-        classes.push('Polaris-Button--fullWidth');
-      }
+ @(computed('submit').readOnly())
+ get type() {
+   return this.get('submit') === true ? 'submit' : 'button';
+ }
 
-      if (isIconOnly) {
-        classes.push('Polaris-Button--iconOnly');
-      }
+ @(computed('ariaExpanded').readOnly())
+ get ariaExpandedValue() {
+   let ariaExpanded = this.get('ariaExpanded');
+   return isPresent(ariaExpanded) ? String(ariaExpanded) : null;
+ }
 
-      return classes.join(' ');
-    }
-  ).readOnly(),
+ @(computed('ariaPressed').readOnly())
+ get ariaPressedValue() {
+   let ariaPressed = this.get('ariaPressed');
+   return isPresent(ariaPressed) ? String(ariaPressed) : null;
+ }
 
-  type: computed('submit', function() {
-    return this.get('submit') === true ? 'submit' : 'button';
-  }).readOnly(),
-
-  ariaExpandedValue: computed('ariaExpanded', function() {
-    let ariaExpanded = this.get('ariaExpanded');
-    return isPresent(ariaExpanded) ? String(ariaExpanded) : null;
-  }).readOnly(),
-
-  ariaPressedValue: computed('ariaPressed', function() {
-    let ariaPressed = this.get('ariaPressed');
-    return isPresent(ariaPressed) ? String(ariaPressed) : null;
-  }).readOnly(),
-
-  actions: {
-    /**
-     * Helper to invoke passed-in actions without passing the
-     * button element's event object as the first parameter.
-     */
-    invokeMouseAction(actionName) {
-      return this.get(actionName)();
-    },
-  },
-});
+ /**
+  * Helper to invoke passed-in actions without passing the
+  * button element's event object as the first parameter.
+  */
+ @action
+ invokeMouseAction(actionName) {
+   return this.get(actionName)();
+ }
+}

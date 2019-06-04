@@ -1,138 +1,136 @@
+import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { equal } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
 
 // TODO: look into importing icons properly.
-export default Component.extend(SvgHandling, {
-  tagName: 'span',
+@tagName('span')
+@classNames('Polaris-Icon')
+@templateLayout(layout)
+export default class PolarisIcon extends Component.extend(SvgHandling) {
+ /**
+  * The SVG contents to display in the icon
+  * If the source doesn't have a slash in the name, it will look for Polaris
+  * icons in the namespace specified by `sourcePath` property.
+  *
+  * @property source
+  * @public
+  * @type {string}
+  * @default null
+  */
+ source = null;
 
-  attributeBindings: ['accessibilityLabel:aria-label'],
+ /**
+  * Sets the color for the SVG fill
+  *
+  * @property color
+  * @public
+  * @type {string}
+  * @default null
+  */
+ color = null;
 
-  classNames: ['Polaris-Icon'],
+ /**
+  * Show a backdrop behind the icon
+  *
+  * @property backdrop
+  * @public
+  * @type {boolean}
+  * @default false
+  */
+ @className("Polaris-Icon--hasBackdrop")
+ backdrop = false;
 
-  classNameBindings: [
-    'colorClass',
-    'isColored:Polaris-Icon--isColored',
-    'backdrop:Polaris-Icon--hasBackdrop',
-  ],
+ /**
+  * Descriptive text to be read to screenreaders
+  *
+  * @property accessibilityLabel
+  * @public
+  * @type {string}
+  * @default null
+  */
+ @attribute("aria-label")
+ accessibilityLabel = null;
 
-  layout,
+ /**
+  * Path under which `ember-svg-jar` serves the Polaris SVG icons
+  *
+  * @property sourcePath
+  * @public
+  * @type {string}
+  * @default 'polaris'
+  */
+ sourcePath = 'polaris';
 
-  /**
-   * The SVG contents to display in the icon
-   * If the source doesn't have a slash in the name, it will look for Polaris
-   * icons in the namespace specified by `sourcePath` property.
-   *
-   * @property source
-   * @public
-   * @type {string}
-   * @default null
-   */
-  source: null,
+ 'data-test-icon' = true;
 
-  /**
-   * Sets the color for the SVG fill
-   *
-   * @property color
-   * @public
-   * @type {string}
-   * @default null
-   */
-  color: null,
+ /**
+  * Whether the component should leave space for an icon
+  *
+  * @property showPlaceholder
+  * @private
+  * @type {boolean}
+  */
+ @(equal('source', 'placeholder').readOnly())
+ showPlaceholder;
 
-  /**
-   * Show a backdrop behind the icon
-   *
-   * @property backdrop
-   * @public
-   * @type {boolean}
-   * @default false
-   */
-  backdrop: false,
+ /**
+  * Class to apply to color the icon
+  *
+  * @property colorClass
+  * @private
+  * @type {string}
+  */
+ @(computed('color').readOnly())
+ @className
+ get colorClass() {
+   let color = this.get('color');
 
-  /**
-   * Descriptive text to be read to screenreaders
-   *
-   * @property accessibilityLabel
-   * @public
-   * @type {string}
-   * @default null
-   */
-  accessibilityLabel: null,
+   if (isEmpty(color)) {
+     return null;
+   }
 
-  /**
-   * Path under which `ember-svg-jar` serves the Polaris SVG icons
-   *
-   * @property sourcePath
-   * @public
-   * @type {string}
-   * @default 'polaris'
-   */
-  sourcePath: 'polaris',
+   return `Polaris-Icon--color${classify(color)}`;
+ }
 
-  'data-test-icon': true,
+ /**
+  * Whether a color has been specified for the icon
+  *
+  * @property isColored
+  * @private
+  * @type {boolean}
+  */
+ @(computed('color').readOnly())
+ @className("Polaris-Icon--isColored")
+ get isColored() {
+   let color = this.get('color');
 
-  /**
-   * Whether the component should leave space for an icon
-   *
-   * @property showPlaceholder
-   * @private
-   * @type {boolean}
-   */
-  showPlaceholder: equal('source', 'placeholder').readOnly(),
+   if (isEmpty(color)) {
+     return false;
+   }
 
-  /**
-   * Class to apply to color the icon
-   *
-   * @property colorClass
-   * @private
-   * @type {string}
-   */
-  colorClass: computed('color', function() {
-    let color = this.get('color');
+   return color !== 'white';
+ }
 
-    if (isEmpty(color)) {
-      return null;
-    }
+ /**
+  * Final source for the icon SVG
+  *
+  * @property iconSource
+  * @private
+  * @type {string}
+  */
+ @(computed('sourcePath', 'source').readOnly())
+ get iconSource() {
+   let source = this.get('source');
+   source =
+     source.indexOf('/') === -1
+       ? `${this.get('sourcePath')}/${source}`
+       : source;
 
-    return `Polaris-Icon--color${classify(color)}`;
-  }).readOnly(),
-
-  /**
-   * Whether a color has been specified for the icon
-   *
-   * @property isColored
-   * @private
-   * @type {boolean}
-   */
-  isColored: computed('color', function() {
-    let color = this.get('color');
-
-    if (isEmpty(color)) {
-      return false;
-    }
-
-    return color !== 'white';
-  }).readOnly(),
-
-  /**
-   * Final source for the icon SVG
-   *
-   * @property iconSource
-   * @private
-   * @type {string}
-   */
-  iconSource: computed('sourcePath', 'source', function() {
-    let source = this.get('source');
-    source =
-      source.indexOf('/') === -1
-        ? `${this.get('sourcePath')}/${source}`
-        : source;
-
-    return source;
-  }).readOnly(),
-});
+   return source;
+ }
+}

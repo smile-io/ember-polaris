@@ -1,14 +1,13 @@
+import { classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import { A as EmberArray } from '@ember/array';
 import { deprecate } from '@ember/debug';
 import layout from '../templates/components/polaris-description-list';
 
-export default Component.extend({
-  tagName: 'dl',
-  classNames: ['Polaris-DescriptionList'],
-
-  layout,
-
+@tagName('dl')
+@classNames('Polaris-DescriptionList')
+@templateLayout(layout)
+export default class PolarisDescriptionList extends Component {
   /**
    * Collection of items for list
    *
@@ -33,10 +32,10 @@ export default Component.extend({
    * @type {Array}
    * @default: null
    */
-  items: null,
+  items = null;
 
   didReceiveAttrs() {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
 
     let items = EmberArray(this.get('items') || []);
     deprecate(
@@ -55,5 +54,5 @@ export default Component.extend({
         until: '2.0.0',
       }
     );
-  },
-});
+  }
+}

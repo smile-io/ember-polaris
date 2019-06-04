@@ -1,52 +1,52 @@
+import { attribute, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { get } from '@ember/object';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import layout from '../templates/components/polaris-breadcrumbs';
 
-export default Component.extend({
-  tagName: 'nav',
-  attributeBindings: ['role'],
+@tagName('nav')
+@templateLayout(layout)
+export default class PolarisBreadcrumbs extends Component {
+ /**
+  * Collection of breadcrumbs
+  *
+  * @property breadcrumbs
+  * @public
+  * @type {Array}
+  * @default null
+  */
+ breadcrumbs = null;
 
-  layout,
+ /**
+  * Role attribute
+  *
+  * @property role
+  * @private
+  * @type {String}
+  * @default 'navigation'
+  */
+ @attribute
+ role = 'navigation';
 
-  /**
-   * Collection of breadcrumbs
-   *
-   * @property breadcrumbs
-   * @public
-   * @type {Array}
-   * @default null
-   */
-  breadcrumbs: null,
+ 'data-test-breadcrumbs' = true;
+ handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  /**
-   * Role attribute
-   *
-   * @property role
-   * @private
-   * @type {String}
-   * @default 'navigation'
-   */
-  role: 'navigation',
-
-  'data-test-breadcrumbs': true,
-
-  handleMouseUpByBlurring,
-
-  /**
-   * The breadcrumb to render (the last of the list)
-   * We're not always guaranteed to get an Ember array,
-   * so we can't just use `breadcrumbs.lastObject` in the template.
-   *
-   * @property breadcrumb
-   * @private
-   * @type {Object}
-   */
-  breadcrumb: computed('breadcrumbs.[]', function() {
-    let breadcrumbs = this.get('breadcrumbs') || [];
-    let breadcrumbsCount = get(breadcrumbs, 'length');
-    return breadcrumbsCount && breadcrumbsCount > 0
-      ? breadcrumbs[breadcrumbsCount - 1]
-      : null;
-  }).readOnly(),
-});
+ /**
+  * The breadcrumb to render (the last of the list)
+  * We're not always guaranteed to get an Ember array,
+  * so we can't just use `breadcrumbs.lastObject` in the template.
+  *
+  * @property breadcrumb
+  * @private
+  * @type {Object}
+  */
+ @(computed('breadcrumbs.[]').readOnly())
+ get breadcrumb() {
+   let breadcrumbs = this.get('breadcrumbs') || [];
+   let breadcrumbsCount = get(breadcrumbs, 'length');
+   return breadcrumbsCount && breadcrumbsCount > 0
+     ? breadcrumbs[breadcrumbsCount - 1]
+     : null;
+ }
+}

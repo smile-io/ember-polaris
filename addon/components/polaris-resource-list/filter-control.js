@@ -1,21 +1,21 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 
-export default Component.extend(context.ConsumerMixin, {
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class FilterControl extends Component.extend(context.ConsumerMixin) {
   /**
    * @property searchValue
    * @type {String}
    * @default null
    * @public
    */
-  searchValue: null,
+  searchValue = null;
 
   /**
    * @property appliedFilters
@@ -23,7 +23,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  appliedFilters: null,
+  appliedFilters = null;
 
   /**
    * @property additionalAction
@@ -31,7 +31,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  additionalAction: null,
+  additionalAction = null;
 
   /**
    * @property focused
@@ -39,7 +39,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default false
    * @public
    */
-  focused: false,
+  focused = false;
 
   /**
    * @property filters
@@ -47,7 +47,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  filters: null,
+  filters = null;
 
   /**
    * @property onSearchBlur
@@ -55,7 +55,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default noop
    * @public
    */
-  onSearchBlur() {},
+  onSearchBlur() {}
 
   /**
    * @property onSearchChange
@@ -63,7 +63,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default noop
    * @public
    */
-  onSearchChange() {},
+  onSearchChange() {}
 
   /**
    * @property onFiltersChange
@@ -71,7 +71,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default noop
    * @public
    */
-  onFiltersChange() {},
+  onFiltersChange() {}
 
   /**
    * Button details for `additionalAction`. This is here
@@ -84,32 +84,32 @@ export default Component.extend(context.ConsumerMixin, {
    * @type {Object}
    * @private
    */
-  additionalActionButton: computed(
+  @(computed(
     'additionalAction.{text,accessibilityLabel,url,external,destructive,icon,loading,onAction}',
-    'context.selectMode',
-    function() {
-      let { additionalAction, context } = this.getProperties(
-        'additionalAction',
-        'context'
-      );
-      if (!additionalAction) {
-        return null;
-      }
-
-      let props = Object.assign({}, additionalAction, {
-        disabled: get(context, 'selectMode'),
-      });
-
-      // Rename onAction to onClick.
-      props.onClick = props.onAction;
-      delete props.onAction;
-
-      return {
-        componentName: 'polaris-button',
-        props,
-      };
+    'context.selectMode'
+  ).readOnly())
+  get additionalActionButton() {
+    let { additionalAction, context } = this.getProperties(
+      'additionalAction',
+      'context'
+    );
+    if (!additionalAction) {
+      return null;
     }
-  ).readOnly(),
+
+    let props = Object.assign({}, additionalAction, {
+      disabled: get(context, 'selectMode'),
+    });
+
+    // Rename onAction to onClick.
+    props.onClick = props.onAction;
+    delete props.onAction;
+
+    return {
+      componentName: 'polaris-button',
+      props,
+    };
+  }
 
   /**
    * List of appliedFilters in a format
@@ -119,20 +119,22 @@ export default Component.extend(context.ConsumerMixin, {
    * @type {Object[]}
    * @private
    */
-  appliedFiltersForRender: computed('appliedFilters.[]', function() {
+  @(computed('appliedFilters.[]').readOnly())
+  get appliedFiltersForRender() {
     let appliedFilters = this.get('appliedFilters') || [];
     return appliedFilters.map((appliedFilter) => {
       let appliedFilterForRender = JSON.parse(JSON.stringify(appliedFilter));
       appliedFilterForRender.label = this.getFilterLabel(appliedFilter);
       return appliedFilterForRender;
     });
-  }).readOnly(),
+  }
 
-  textFieldLabel: computed(function() {
+  @(computed().readOnly())
+  get textFieldLabel() {
     return `Search ${this.get(
       'context.resourceName.plural'
     ).toLocaleLowerCase()}`;
-  }).readOnly(),
+  }
 
   handleAddFilter(newFilter) {
     let { onFiltersChange, appliedFilters } = this.getProperties(
@@ -156,7 +158,7 @@ export default Component.extend(context.ConsumerMixin, {
     let newAppliedFilters = [...appliedFilters, newFilter];
 
     onFiltersChange(newAppliedFilters);
-  },
+  }
 
   handleRemoveFilter(filter) {
     let filterId = idFromFilter(filter);
@@ -183,7 +185,7 @@ export default Component.extend(context.ConsumerMixin, {
         : [...appliedFilters];
 
     onFiltersChange(newAppliedFilters);
-  },
+  }
 
   getFilterLabel(appliedFilter) {
     let key = get(appliedFilter, 'key');
@@ -227,7 +229,7 @@ export default Component.extend(context.ConsumerMixin, {
     }
 
     return `${filter.label} ${filterOperatorLabel} ${filterLabelByType}`;
-  },
+  }
 
   findFilterLabelByType(filter, appliedFilter) {
     let appliedFilterValue = get(appliedFilter, 'value');
@@ -265,8 +267,8 @@ export default Component.extend(context.ConsumerMixin, {
     }
 
     return appliedFilterValue;
-  },
-});
+  }
+}
 
 function idFromFilter(appliedFilter) {
   return `${get(appliedFilter, 'key')}-${get(appliedFilter, 'value')}`;

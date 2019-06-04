@@ -1,6 +1,7 @@
+import { classNames, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import $Ember from 'jquery';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
@@ -30,11 +31,9 @@ function startDrag(event) {
 }
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
-export default Component.extend({
-  classNames: ['Polaris-ColorPicker__Slidable'],
-
-  layout,
-
+@classNames('Polaris-ColorPicker__Slidable')
+@templateLayout(layout)
+export default class Slidable extends Component {
   /**
    * The current x position of the dragger
    *
@@ -43,7 +42,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  draggerX: 0,
+  draggerX = 0;
 
   /**
    * The current y position of the dragger
@@ -53,7 +52,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  draggerY: 0,
+  draggerY = 0;
 
   /**
    * Callback for the outside world to receive the height of the dragger
@@ -63,31 +62,32 @@ export default Component.extend({
    * @default null
    * @public
    */
-  onDraggerHeightChanged: null,
+  onDraggerHeightChanged = null;
 
   /**
    * @private
    */
-  isDragging: false,
+  isDragging = false;
 
   /**
    * @private
    */
-  mouseDown: startDrag,
+  mouseDown = startDrag;
 
   /**
    * @private
    */
-  touchStart: startDrag,
+  touchStart = startDrag;
 
   /**
    * @private
    */
-  draggerStyle: computed('draggerX', 'draggerY', function() {
+  @(computed('draggerX', 'draggerY').readOnly())
+  get draggerStyle() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
     const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
     return htmlSafe(`transform: ${transform};`);
-  }).readOnly(),
+  }
 
   /**
    * @private
@@ -110,7 +110,7 @@ export default Component.extend({
     }
 
     this.handleDraggerMove(event.clientX, event.clientY);
-  },
+  }
 
   /**
    * @private
@@ -125,7 +125,7 @@ export default Component.extend({
     $Ember(window).off('touchmove');
     $Ember(window).off('touchend');
     $Ember(window).off('touchcancel');
-  },
+  }
 
   /**
    * @private
@@ -146,10 +146,10 @@ export default Component.extend({
       x: clientX - rect.left,
       y: clientY - rect.top,
     });
-  },
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
 
     const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
     if (typeOf(onDraggerHeightChanged) === 'function') {
@@ -164,5 +164,5 @@ export default Component.extend({
       // Yes, for some strange reason this is width not height in the shopify code...
       onDraggerHeightChanged(draggerElement.clientWidth);
     }
-  },
-});
+  }
+}

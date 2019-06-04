@@ -1,147 +1,145 @@
+import { attribute, className, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { notEmpty } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/polaris-skeleton-page';
 
-export default Component.extend({
-  attributeBindings: ['role', 'ariaLabel:aria-label'],
+@classNames('Polaris-SkeletonPage__Page')
+@templateLayout(layout)
+export default class PolarisSkeletonPage extends Component {
+ /**
+  * Page title, in large type
+  *
+  * @property title
+  * @public
+  * @type {String}
+  * @default ''
+  */
+ title = '';
 
-  classNames: ['Polaris-SkeletonPage__Page'],
+ /**
+  * Remove the normal max-width on the page
+  *
+  * @property fullwidth
+  * @public
+  * @type {Boolean}
+  * @default false
+  */
+ fullwidth = false;
 
-  classNameBindings: [
-    'fullWidth:Polaris-SkeletonPage--fullWidth',
-    'singleColumn:Polaris-SkeletonPage--singleColumn',
-  ],
+ /**
+  * Decreases the maximum layout width. Intended for single-column layouts
+  *
+  * @property singleColumn
+  * @public
+  * @type {Boolean}
+  * @default false
+  */
+ @className("Polaris-SkeletonPage--singleColumn")
+ singleColumn = false;
 
-  layout,
+ /**
+  * Shows a skeleton over the primary action
+  *
+  * @property primaryAction
+  * @public
+  * @type {Boolean}
+  * @default false
+  */
+ primaryAction = false;
 
-  /**
-   * Page title, in large type
-   *
-   * @property title
-   * @public
-   * @type {String}
-   * @default ''
-   */
-  title: '',
+ /**
+  * Number of secondary page-level actions to display
+  *
+  * @property secondaryActions
+  * @public
+  * @type {Number}
+  * @default null
+  */
+ secondaryActions = null;
 
-  /**
-   * Remove the normal max-width on the page
-   *
-   * @property fullwidth
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  fullwidth: false,
+ /**
+  * Shows a skeleton over the breadcrumb
+  *
+  * @property breadcrumbs
+  * @public
+  * @type {Boolean}
+  * @default null
+  */
+ breadcrumbs = null;
 
-  /**
-   * Decreases the maximum layout width. Intended for single-column layouts
-   *
-   * @property singleColumn
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  singleColumn: false,
+ /**
+  * The contents of the page
+  *
+  * This component can be used in block form,
+  * in which case the block content will be used
+  * instead of `text`
+  *
+  * @property text
+  * @public
+  * @type {String}
+  * @default null
+  */
+ text = null;
 
-  /**
-   * Shows a skeleton over the primary action
-   *
-   * @property primaryAction
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  primaryAction: false,
+ 'data-test-skeleton-page' = true;
 
-  /**
-   * Number of secondary page-level actions to display
-   *
-   * @property secondaryActions
-   * @public
-   * @type {Number}
-   * @default null
-   */
-  secondaryActions: null,
+ /**
+  * The role of this component, for accessibility purposes
+  *
+  * @property role
+  * @private
+  * @type {String}
+  */
+ @attribute
+ role = 'status';
 
-  /**
-   * Shows a skeleton over the breadcrumb
-   *
-   * @property breadcrumbs
-   * @public
-   * @type {Boolean}
-   * @default null
-   */
-  breadcrumbs: null,
+ /**
+  * The accessibility label of this component
+  *
+  * @property ariaLabel
+  * @private
+  * @type {String}
+  */
+ @attribute("aria-label")
+ ariaLabel = 'Page loading';
 
-  /**
-   * The contents of the page
-   *
-   * This component can be used in block form,
-   * in which case the block content will be used
-   * instead of `text`
-   *
-   * @property text
-   * @public
-   * @type {String}
-   * @default null
-   */
-  text: null,
+ /**
+  * Whether the page has an actual text title to display
+  *
+  * @property hasTitleText
+  * @private
+  * @type {Boolean}
+  */
+ @(notEmpty('title').readOnly())
+ hasTitleText;
 
-  'data-test-skeleton-page': true,
+ /**
+  * Whether the page should display any kind of title
+  *
+  * @property hasTitle
+  * @private
+  * @type {Boolean}
+  */
+ @(computed('title').readOnly())
+ get hasTitle() {
+   return this.get('title') !== null;
+ }
 
-  /**
-   * The role of this component, for accessibility purposes
-   *
-   * @property role
-   * @private
-   * @type {String}
-   */
-  role: 'status',
+ /**
+  * Array of dummy secondary actions to iterate over in template
+  *
+  * @property dummySecondaryActions
+  * @private
+  * @type {Array}
+  */
+ @(computed('secondaryActions').readOnly())
+ get dummySecondaryActions() {
+   let secondaryActions = parseInt(this.get('secondaryActions'));
+   if (isNaN(secondaryActions)) {
+     return null;
+   }
 
-  /**
-   * The accessibility label of this component
-   *
-   * @property ariaLabel
-   * @private
-   * @type {String}
-   */
-  ariaLabel: 'Page loading',
-
-  /**
-   * Whether the page has an actual text title to display
-   *
-   * @property hasTitleText
-   * @private
-   * @type {Boolean}
-   */
-  hasTitleText: notEmpty('title').readOnly(),
-
-  /**
-   * Whether the page should display any kind of title
-   *
-   * @property hasTitle
-   * @private
-   * @type {Boolean}
-   */
-  hasTitle: computed('title', function() {
-    return this.get('title') !== null;
-  }).readOnly(),
-
-  /**
-   * Array of dummy secondary actions to iterate over in template
-   *
-   * @property dummySecondaryActions
-   * @private
-   * @type {Array}
-   */
-  dummySecondaryActions: computed('secondaryActions', function() {
-    let secondaryActions = parseInt(this.get('secondaryActions'));
-    if (isNaN(secondaryActions)) {
-      return null;
-    }
-
-    return new Array(Math.max(secondaryActions, 0));
-  }).readOnly(),
-});
+   return new Array(Math.max(secondaryActions, 0));
+ }
+}

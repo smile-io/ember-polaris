@@ -1,5 +1,7 @@
+import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
+import { get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty } from '@ember/utils';
 import ObjectProxy from '@ember/object/proxy';
@@ -7,33 +9,24 @@ import { errorId } from '../utils/id';
 import layout from '../templates/components/polaris-choice-list';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
-const CheckedChoice = ObjectProxy.extend({
-  selected: null,
+class CheckedChoice extends ObjectProxy {
+  selected = null;
 
-  isSelected: computed('content.value', 'selected.[]', function() {
+  @(computed('content.value', 'selected.[]').readOnly())
+  get isSelected() {
     const selected = this.get('selected');
     return selected && selected.indexOf(this.get('value')) > -1;
-  }).readOnly(),
-});
+  }
+}
 
 /**
  * Polaris choice list component.
  * See https://polaris.shopify.com/components/forms/choice-list
  */
-export default Component.extend({
-  tagName: 'fieldset',
-
-  attributeBindings: [
-    'finalName:id',
-    'ariaInvalid:aria-invalid',
-    'ariaDescribedBy:aria-describedby',
-  ],
-
-  classNames: ['Polaris-ChoiceList'],
-  classNameBindings: ['titleHidden:Polaris-ChoiceList--titleHidden'],
-
-  layout,
-
+@tagName('fieldset')
+@classNames('Polaris-ChoiceList')
+@templateLayout(layout)
+export default class PolarisChoiceList extends Component {
   /**
    * Label for list of choices
    *
@@ -42,7 +35,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  title: null,
+  title = null;
 
   /**
    * Collection of choices
@@ -63,7 +56,7 @@ export default Component.extend({
    * @type {Array}
    * @default null
    */
-  choices: null,
+  choices = null;
 
   /**
    * Collection of selected choices
@@ -73,7 +66,7 @@ export default Component.extend({
    * @type {Array}
    * @default null
    */
-  selected: null,
+  selected = null;
 
   /**
    * Name for form input
@@ -83,7 +76,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  name: null,
+  name = null;
 
   /**
    * Allow multiple selections
@@ -93,7 +86,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  allowMultiple: false,
+  allowMultiple = false;
 
   /**
    * Display an error message
@@ -103,7 +96,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  error: null,
+  error = null;
 
   /**
    * Toggles display of the title
@@ -113,7 +106,8 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  titleHidden: false,
+  @className("Polaris-ChoiceList--titleHidden")
+  titleHidden = false;
 
   /**
    * Callback when the selected choices change
@@ -123,37 +117,44 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange() {},
+  onChange() {}
 
-  'data-test-choice-list': true,
+  'data-test-choice-list' = true;
 
   /**
    * @private
    */
-  ariaInvalid: computed('error', function() {
+  @computed('error')
+  @attribute("aria-invalid")
+  get ariaInvalid() {
     return this.get('error') != null;
-  }),
+  }
 
   /**
    * @private
    */
-  ariaDescribedBy: computed('finalName', function() {
+  @(computed('finalName').readOnly())
+  @attribute("aria-describedby")
+  get ariaDescribedBy() {
     return errorId(this.get('finalName'));
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  controlComponent: computed('allowMultiple', function() {
+  @(computed('allowMultiple').readOnly())
+  get controlComponent() {
     return this.get('allowMultiple')
       ? 'polaris-checkbox'
       : 'polaris-radio-button';
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  finalName: computed('name', 'allowMultiple', function() {
+  @(computed('name', 'allowMultiple').readOnly())
+  @attribute("id")
+  get finalName() {
     let { name, allowMultiple } = this.getProperties('name', 'allowMultiple');
 
     if (isEmpty(name)) {
@@ -165,12 +166,13 @@ export default Component.extend({
     }
 
     return name;
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  checkedChoices: computed('choices.[]', 'selected.[]', function() {
+  @(computed('choices.[]', 'selected.[]').readOnly())
+  get checkedChoices() {
     const choices = this.get('choices') || [];
     const selected = this.get('selected');
 
@@ -180,27 +182,26 @@ export default Component.extend({
         selected,
       });
     });
-  }).readOnly(),
+  }
 
-  actions: {
-    updateSelectedChoices(choice, checked) {
-      const value = get(choice, 'value');
-      let updatedSelectedChoices;
+  @action
+  updateSelectedChoices(choice, checked) {
+    const value = get(choice, 'value');
+    let updatedSelectedChoices;
 
-      if (this.get('allowMultiple')) {
-        const selected = this.get('selected');
-        if (checked) {
-          updatedSelectedChoices = [...selected, value];
-        } else {
-          updatedSelectedChoices = selected.filter(
-            (selectedChoice) => selectedChoice !== value
-          );
-        }
+    if (this.get('allowMultiple')) {
+      const selected = this.get('selected');
+      if (checked) {
+        updatedSelectedChoices = [...selected, value];
       } else {
-        updatedSelectedChoices = [value];
+        updatedSelectedChoices = selected.filter(
+          (selectedChoice) => selectedChoice !== value
+        );
       }
+    } else {
+      updatedSelectedChoices = [value];
+    }
 
-      return this.get('onChange')(updatedSelectedChoices, this.get('name'));
-    },
-  },
-});
+    return this.get('onChange')(updatedSelectedChoices, this.get('name'));
+  }
+}

@@ -1,3 +1,4 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import { assert } from '@ember/debug';
 import { isPresent } from '@ember/utils';
@@ -15,11 +16,9 @@ import layout from '../templates/components/key-event-listener';
  *
  * @component key-event-listener
  */
-export default Component.extend(EKMixin, EKOnInsertMixin, {
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class KeyEventListener extends Component.extend(EKMixin, EKOnInsertMixin) {
   /**
    * The key (or key combination) that triggers the keyDown/keyPress/keyUp event
    * @property key
@@ -28,7 +27,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * @default null
    * @required
    */
-  key: null,
+  key = null;
 
   /**
    * Corresponds to the native `onKeyPress` event that gets
@@ -39,7 +38,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * @public
    * @default null
    */
-  onKeyPress: null,
+  onKeyPress = null;
 
   /**
    * Corresponds to the native `onKeyDown` event that gets
@@ -50,7 +49,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * @public
    * @default null
    */
-  onKeyDown: null,
+  onKeyDown = null;
 
   /**
    * Corresponds to the native `onKeyUp` event that gets
@@ -61,10 +60,10 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * @public
    * @default null
    */
-  onKeyUp: null,
+  onKeyUp = null;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     assert(
       'ember-polaris::key-event-listener `key` should be passed',
       isPresent(this.key)
@@ -73,10 +72,10 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
       'ember-polaris::key-event-listener One of `onKeyPress`, `onKeyDown` or `onKeyUp` should be passed',
       this.onKeyUp || this.onKeyDown || this.onKeyPress
     );
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     if (this.onKeyUp) {
       this.on(keyUp(this.key), this.onKeyUp);
@@ -89,5 +88,5 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
     if (this.onKeyPress) {
       this.on(keyPress(this.key), this.onKeyPress);
     }
-  },
-});
+  }
+}

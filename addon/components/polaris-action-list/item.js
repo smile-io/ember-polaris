@@ -1,138 +1,139 @@
+import { attribute, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
-import { computed } from '@ember/object';
 import layout from '../../templates/components/polaris-action-list/item';
 
-export default Component.extend({
-  tagName: 'li',
+@tagName('li')
+@templateLayout(layout)
+export default class Item extends Component {
+ /**
+  * @property text
+  * @type {String}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  attributeBindings: ['role', 'active:aria-selected'],
+ /**
+  * @property helpText
+  * @type {String}
+  * @default null
+  * @public
+  */
+ helpText = null;
 
-  layout,
+ /**
+  * Not currently supported
+  * @property url
+  * @type {String}
+  * @default null
+  * @public
+  */
+ url = null;
 
-  /**
-   * @property text
-   * @type {String}
-   * @default null
-   * @public
-   */
-  text: null,
+ /**
+  * @property destructive
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ destructive = false;
 
-  /**
-   * @property helpText
-   * @type {String}
-   * @default null
-   * @public
-   */
-  helpText: null,
+ /**
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disabled = false;
 
-  /**
-   * Not currently supported
-   * @property url
-   * @type {String}
-   * @default null
-   * @public
-   */
-  url: null,
+ /**
+  * @property icon
+  * @type {String}
+  * @default null
+  * @public
+  */
+ icon = null;
 
-  /**
-   * @property destructive
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  destructive: false,
+ /**
+  * @property image
+  * @type {String}
+  * @default null
+  * @public
+  */
+ image = null;
 
-  /**
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ /**
+  * Not currently supported
+  * @property ellipsis
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ ellipsis = false;
 
-  /**
-   * @property icon
-   * @type {String}
-   * @default null
-   * @public
-   */
-  icon: null,
+ /**
+  * @property active
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ @attribute("aria-selected")
+ active = false;
 
-  /**
-   * @property image
-   * @type {String}
-   * @default null
-   * @public
-   */
-  image: null,
+ /**
+  * @property role
+  * @type {String}
+  * @default null
+  * @public
+  */
+ @attribute
+ role = null;
 
-  /**
-   * Not currently supported
-   * @property ellipsis
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  ellipsis: false,
+ /**
+  * Object with `status` and `content` properties
+  * Not currently supported
+  * @property badge
+  * @type {Object}
+  * @default null
+  * @public
+  */
+ badge = null;
 
-  /**
-   * @property active
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  active: false,
+ /**
+  * Callback for the item when clicked
+  *
+  * @property onAction
+  * @public
+  * @type {Function}
+  * @default no-op
+  */
+ onAction() {}
 
-  /**
-   * @property role
-   * @type {String}
-   * @default null
-   * @public
-   */
-  role: null,
+ @computed('destructive', 'disabled', 'active')
+ get itemClasses() {
+   let classNames = ['Polaris-ActionList__Item'];
+   let { destructive, disabled, active } = this;
 
-  /**
-   * Object with `status` and `content` properties
-   * Not currently supported
-   * @property badge
-   * @type {Object}
-   * @default null
-   * @public
-   */
-  badge: null,
+   if (destructive) {
+     classNames.push('Polaris-ActionList--destructive');
+   }
 
-  /**
-   * Callback for the item when clicked
-   *
-   * @property onAction
-   * @public
-   * @type {Function}
-   * @default no-op
-   */
-  onAction() {},
+   if (disabled) {
+     classNames.push('Polaris-ActionList--disabled');
+   }
 
-  itemClasses: computed('destructive', 'disabled', 'active', function() {
-    let classNames = ['Polaris-ActionList__Item'];
-    let { destructive, disabled, active } = this;
+   if (active) {
+     classNames.push('Polaris-ActionList--active');
+   }
 
-    if (destructive) {
-      classNames.push('Polaris-ActionList--destructive');
-    }
+   return classNames.join(' ');
+ }
 
-    if (disabled) {
-      classNames.push('Polaris-ActionList--disabled');
-    }
-
-    if (active) {
-      classNames.push('Polaris-ActionList--active');
-    }
-
-    return classNames.join(' ');
-  }),
-
-  imageBackgroundStyle: computed('image', function() {
-    let url = this.get('image');
-    return url ? htmlSafe(`background-image: url(${url})`) : '';
-  }).readOnly(),
-});
+ @(computed('image').readOnly())
+ get imageBackgroundStyle() {
+   let url = this.get('image');
+   return url ? htmlSafe(`background-image: url(${url})`) : '';
+ }
+}

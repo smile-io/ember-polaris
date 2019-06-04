@@ -1,40 +1,40 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { or } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { or } from '@ember/object/computed';
 import layout from '../templates/components/polaris-connected';
 
-export default Component.extend({
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class PolarisConnected extends Component {
+ /**
+  * An element connected to the left of the yielded content
+  *
+  * @property left
+  * @public
+  * @type {String|Component}
+  * @default null
+  */
+ left = null;
 
-  layout,
+ /**
+  * An element connected to the right of the yielded content
+  *
+  * @property right
+  * @public
+  * @type {String|Component}
+  * @default null
+  */
+ right = null;
 
-  /**
-   * An element connected to the left of the yielded content
-   *
-   * @property left
-   * @public
-   * @type {String|Component}
-   * @default null
-   */
-  left: null,
+ dataTestConnected = true;
 
-  /**
-   * An element connected to the right of the yielded content
-   *
-   * @property right
-   * @public
-   * @type {String|Component}
-   * @default null
-   */
-  right: null,
-
-  dataTestConnected: true,
-
-  /**
-   * Whether or not a `left` or `right` connection has been passed-in
-   *
-   * @property hasConnection
-   * @private
-   * @type {Boolean}
-   */
-  hasConnection: or('left', 'right').readOnly(),
-});
+ /**
+  * Whether or not a `left` or `right` connection has been passed-in
+  *
+  * @property hasConnection
+  * @private
+  * @type {Boolean}
+  */
+ @(or('left', 'right').readOnly())
+ hasConnection;
+}

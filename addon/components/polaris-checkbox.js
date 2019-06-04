@@ -1,7 +1,8 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
+import { equal } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { equal } from '@ember/object/computed';
 import { deprecate } from '@ember/debug';
 import layout from '../templates/components/polaris-checkbox';
 
@@ -9,232 +10,234 @@ import layout from '../templates/components/polaris-checkbox';
  * Polaris checkbox component.
  * See https://polaris.shopify.com/components/forms/checkbox
  */
-export default Component.extend({
-  // Tagless component, renders a `polaris-choice` component internally.
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class PolarisCheckbox extends Component {
+ /**
+  * Label for the checkbox
+  *
+  * @property label
+  * @type {String|Component}
+  * @default null
+  * @public
+  */
+ label = null;
 
-  layout,
+ /**
+  * Component to render for the checkbox's label
+  *
+  * DEPRECATED: pass the component as `label` instead.
+  *
+  * @property labelComponent
+  * @type {String | Component}
+  * @default null
+  * @deprecated
+  * @public
+  */
+ labelComponent = null;
 
-  /**
-   * Label for the checkbox
-   *
-   * @property label
-   * @type {String|Component}
-   * @default null
-   * @public
-   */
-  label: null,
+ /**
+  * Visually hide the label
+  *
+  * @property labelHidden
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ labelHidden = false;
 
-  /**
-   * Component to render for the checkbox's label
-   *
-   * DEPRECATED: pass the component as `label` instead.
-   *
-   * @property labelComponent
-   * @type {String | Component}
-   * @default null
-   * @deprecated
-   * @public
-   */
-  labelComponent: null,
+ /**
+  * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
+  *
+  * @property checked
+  * @type {Boolean/String}
+  * @default false
+  * @public
+  */
+ checked = false;
 
-  /**
-   * Visually hide the label
-   *
-   * @property labelHidden
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  labelHidden: false,
+ /**
+  * Additional text to aide in use
+  *
+  * @property helpText
+  * @type {String}
+  * @default null
+  * @public
+  */
+ helpText = null;
 
-  /**
-   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
-   *
-   * @property checked
-   * @type {Boolean/String}
-   * @default false
-   * @public
-   */
-  checked: false,
+ /**
+  * ID for form input
+  *
+  * @property inputId
+  * @type {String}
+  * @default null
+  * @public
+  */
+ inputId = null;
 
-  /**
-   * Additional text to aide in use
-   *
-   * @property helpText
-   * @type {String}
-   * @default null
-   * @public
-   */
-  helpText: null,
+ /**
+  * Name for form input
+  *
+  * @property name
+  * @type {String}
+  * @default null
+  * @public
+  */
+ name = null;
 
-  /**
-   * ID for form input
-   *
-   * @property inputId
-   * @type {String}
-   * @default null
-   * @public
-   */
-  inputId: null,
+ /**
+  * Value for form input
+  *
+  * @property value
+  * @type {String}
+  * @default null
+  * @public
+  */
+ value = null;
 
-  /**
-   * Name for form input
-   *
-   * @property name
-   * @type {String}
-   * @default null
-   * @public
-   */
-  name: null,
+ /**
+  * Display an error state
+  *
+  * @property error
+  * @type {String|Boolean}
+  * @default null
+  * @public
+  */
+ error = null;
 
-  /**
-   * Value for form input
-   *
-   * @property value
-   * @type {String}
-   * @default null
-   * @public
-   */
-  value: null,
+ /**
+  * Disable the checkbox
+  *
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disabled = false;
 
-  /**
-   * Display an error state
-   *
-   * @property error
-   * @type {String|Boolean}
-   * @default null
-   * @public
-   */
-  error: null,
+ /**
+  * Callback when checkbox is toggled
+  *
+  * @property onChange
+  * @type {function}
+  * @default noop
+  * @public
+  */
+ onChange() {}
 
-  /**
-   * Disable the checkbox
-   *
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ /**
+  * Callback when checkbox is focussed
+  *
+  * @property onFocus
+  * @type {function}
+  * @default noop
+  * @public
+  */
+ onFocus() {}
 
-  /**
-   * Callback when checkbox is toggled
-   *
-   * @property onChange
-   * @type {function}
-   * @default noop
-   * @public
-   */
-  onChange() {},
+ /**
+  * Callback when focus is removed
+  *
+  * @property onBlur
+  * @type {function}
+  * @default noop
+  * @public
+  */
+ onBlur() {}
 
-  /**
-   * Callback when checkbox is focussed
-   *
-   * @property onFocus
-   * @type {function}
-   * @default noop
-   * @public
-   */
-  onFocus() {},
+ /**
+  * @private
+  */
+ @(equal('checked', 'indeterminate').readOnly())
+ isIndeterminate;
 
-  /**
-   * Callback when focus is removed
-   *
-   * @property onBlur
-   * @type {function}
-   * @default noop
-   * @public
-   */
-  onBlur() {},
+ /**
+  * @private
+  */
+ @(computed('isIndeterminate', 'checked').readOnly())
+ get isChecked() {
+   return !this.get('isIndeterminate') && Boolean(this.get('checked'));
+ }
 
-  /**
-   * @private
-   */
-  isIndeterminate: equal('checked', 'indeterminate').readOnly(),
+ /**
+  * @private
+  */
+ @(computed('isIndeterminate', 'isChecked').readOnly())
+ get checkedState() {
+   return this.get('isIndeterminate') ? 'mixed' : `${this.get('isChecked')}`;
+ }
 
-  /**
-   * @private
-   */
-  isChecked: computed('isIndeterminate', 'checked', function() {
-    return !this.get('isIndeterminate') && Boolean(this.get('checked'));
-  }).readOnly(),
+ /**
+  * @private
+  */
+ @(computed('isIndeterminate').readOnly())
+ get checkboxClasses() {
+   let classNames = ['Polaris-Checkbox__Input'];
 
-  /**
-   * @private
-   */
-  checkedState: computed('isIndeterminate', 'isChecked', function() {
-    return this.get('isIndeterminate') ? 'mixed' : `${this.get('isChecked')}`;
-  }).readOnly(),
+   if (this.get('isIndeterminate')) {
+     classNames.push('Polaris-Checkbox__Input--indeterminate');
+   }
 
-  /**
-   * @private
-   */
-  checkboxClasses: computed('isIndeterminate', function() {
-    let classNames = ['Polaris-Checkbox__Input'];
+   return classNames.join(' ');
+ }
 
-    if (this.get('isIndeterminate')) {
-      classNames.push('Polaris-Checkbox__Input--indeterminate');
-    }
+ /**
+  * @private
+  */
+ @(computed('inputId').readOnly())
+ get _id() {
+   return this.get('inputId') || `polaris-checkbox-${guidFor(this)}`;
+ }
 
-    return classNames.join(' ');
-  }).readOnly(),
+ /**
+  * @private
+  */
+ @(computed('error', 'helpText', '_id').readOnly())
+ get describedBy() {
+   let describedBy = [];
+   const { error, helpText } = this.getProperties('error', 'helpText');
 
-  /**
-   * @private
-   */
-  _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-checkbox-${guidFor(this)}`;
-  }).readOnly(),
+   if (error) {
+     describedBy.push(`${this.get('_id')}Error`);
+   }
 
-  /**
-   * @private
-   */
-  describedBy: computed('error', 'helpText', '_id', function() {
-    let describedBy = [];
-    const { error, helpText } = this.getProperties('error', 'helpText');
+   if (helpText) {
+     describedBy.push(`${this.get('_id')}HelpText`);
+   }
 
-    if (error) {
-      describedBy.push(`${this.get('_id')}Error`);
-    }
+   return describedBy.length ? describedBy.join(' ') : undefined;
+ }
 
-    if (helpText) {
-      describedBy.push(`${this.get('_id')}HelpText`);
-    }
+ didReceiveAttrs() {
+   super.didReceiveAttrs(...arguments);
 
-    return describedBy.length ? describedBy.join(' ') : undefined;
-  }).readOnly(),
+   deprecate(
+     'Passing an explicit `labelComponent` to `polaris-checkbox` is deprecated - pass the component as `label` instead',
+     !this.get('labelComponent'),
+     {
+       id: 'ember-polaris.polaris-checkbox.label-component',
+       until: '2.0.0',
+     }
+   );
+ }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
+ @action
+ handleChange(event) {
+   let { onChange, inputId, checked } = this.getProperties(
+     'onChange',
+     'inputId',
+     'checked'
+   );
+   if (onChange == null) {
+     return;
+   }
 
-    deprecate(
-      'Passing an explicit `labelComponent` to `polaris-checkbox` is deprecated - pass the component as `label` instead',
-      !this.get('labelComponent'),
-      {
-        id: 'ember-polaris.polaris-checkbox.label-component',
-        until: '2.0.0',
-      }
-    );
-  },
+   let { currentTarget } = event;
+   onChange(currentTarget.checked, inputId);
 
-  actions: {
-    handleChange(event) {
-      let { onChange, inputId, checked } = this.getProperties(
-        'onChange',
-        'inputId',
-        'checked'
-      );
-      if (onChange == null) {
-        return;
-      }
-
-      let { currentTarget } = event;
-      onChange(currentTarget.checked, inputId);
-
-      if (checked && !currentTarget.checked) {
-        currentTarget.focus();
-      }
-    },
-  },
-});
+   if (checked && !currentTarget.checked) {
+     currentTarget.focus();
+   }
+ }
+}

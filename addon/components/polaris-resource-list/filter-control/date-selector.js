@@ -1,5 +1,6 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/date-selector';
 
 const VALID_DATE_REGEX = /^\d{4}-\d{1,2}-\d{1,2}$/;
@@ -17,11 +18,9 @@ export const DateFilterOption = {
   OnOrAfter: 'on_or_after',
 };
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class DateSelector extends Component {
   /**
    * Can be 'past', 'future' or 'full'.
    *
@@ -30,7 +29,7 @@ export default Component.extend({
    * @default 'full'
    * @public
    */
-  dateOptionType: 'full',
+  dateOptionType = 'full';
 
   /**
    * @property filterValue
@@ -38,7 +37,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  filterValue: null,
+  filterValue = null;
 
   /**
    * @property filterKey
@@ -46,7 +45,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  filterKey: null,
+  filterKey = null;
 
   /**
    * @property filterMinKey
@@ -54,7 +53,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  filterMinKey: null,
+  filterMinKey = null;
 
   /**
    * @property filterMaxKey
@@ -62,7 +61,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  filterMaxKey: null,
+  filterMaxKey = null;
 
   /**
    * @property onFilterValueChange
@@ -70,7 +69,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFilterValueChange() {},
+  onFilterValueChange() {}
 
   /**
    * @property onFilterKeyChange
@@ -78,7 +77,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFilterKeyChange() {},
+  onFilterKeyChange() {}
 
   /**
    * @property selectedDate
@@ -86,7 +85,7 @@ export default Component.extend({
    * @default null
    * @private
    */
-  selectedDate: null,
+  selectedDate = null;
 
   /**
    * @property userInputDate
@@ -94,7 +93,7 @@ export default Component.extend({
    * @default null
    * @private
    */
-  userInputDate: null,
+  userInputDate = null;
 
   /**
    * @property userInputDateError
@@ -102,7 +101,7 @@ export default Component.extend({
    * @default null
    * @private
    */
-  userInputDateError: null,
+  userInputDateError = null;
 
   /**
    * Month enum value, either string day of month or integer index (0 = Sunday).
@@ -111,14 +110,14 @@ export default Component.extend({
    * @type {String|Number}
    * @private
    */
-  datePickerMonth: null,
+  datePickerMonth = null;
 
   /**
    * @property datePickerYear
    * @type {Number}
    * @private
    */
-  datePickerYear: null,
+  datePickerYear = null;
 
   /**
    * Will be set on initialisation.
@@ -128,9 +127,10 @@ export default Component.extend({
    * @default null
    * @private
    */
-  initialConsumerFilterKey: null,
+  initialConsumerFilterKey = null;
 
-  dateComparatorOptions: computed(function() {
+  @(computed().readOnly())
+  get dateComparatorOptions() {
     return [
       {
         value: DateFilterOption.OnOrBefore,
@@ -141,9 +141,10 @@ export default Component.extend({
         label: 'on or after',
       },
     ];
-  }).readOnly(),
+  }
 
-  datePastOptions: computed(function() {
+  @(computed().readOnly())
+  get datePastOptions() {
     return [
       {
         value: DateFilterOption.PastWeek,
@@ -162,9 +163,10 @@ export default Component.extend({
         label: 'in the last year',
       },
     ];
-  }).readOnly(),
+  }
 
-  dateFutureOptions: computed(function() {
+  @(computed().readOnly())
+  get dateFutureOptions() {
     return [
       {
         value: DateFilterOption.ComingWeek,
@@ -183,9 +185,10 @@ export default Component.extend({
         label: 'in the next year',
       },
     ];
-  }).readOnly(),
+  }
 
-  dateOptionTypes: computed(function() {
+  @(computed().readOnly())
+  get dateOptionTypes() {
     return {
       past: [
         ...this.get('datePastOptions'),
@@ -201,13 +204,15 @@ export default Component.extend({
         ...this.get('dateComparatorOptions'),
       ],
     };
-  }).readOnly(),
+  }
 
-  now: computed(function() {
+  @(computed().readOnly())
+  get now() {
     return new Date();
-  }).readOnly(),
+  }
 
-  dateTextFieldValue: computed('userInputDate', 'selectedDate', function() {
+  @(computed('userInputDate', 'selectedDate').readOnly())
+  get dateTextFieldValue() {
     const { userInputDate, selectedDate } = this.getProperties(
       'userInputDate',
       'selectedDate'
@@ -224,49 +229,48 @@ export default Component.extend({
     if (selectedDate) {
       return stripTimeFromISOString(formatDateForLocalTimezone(selectedDate));
     }
-  }).readOnly(),
+  }
 
-  dateFilterOption: computed(
-    'filterValue',
-    'filterKey',
-    'filterMinKey',
-    'filterMaxKey',
-    function() {
-      let {
-        filterValue,
-        filterKey,
-        filterMinKey,
-        filterMaxKey,
-      } = this.getProperties(
-        'filterValue',
-        'filterKey',
-        'filterMinKey',
-        'filterMaxKey'
-      );
+  @(
+    computed('filterValue', 'filterKey', 'filterMinKey', 'filterMaxKey').readOnly()
+  )
+  get dateFilterOption() {
+    let {
+      filterValue,
+      filterKey,
+      filterMinKey,
+      filterMaxKey,
+    } = this.getProperties(
+      'filterValue',
+      'filterKey',
+      'filterMinKey',
+      'filterMaxKey'
+    );
 
-      return getDateFilterOption(
-        filterValue,
-        filterKey,
-        filterMinKey,
-        filterMaxKey
-      );
-    }
-  ).readOnly(),
+    return getDateFilterOption(
+      filterValue,
+      filterKey,
+      filterMinKey,
+      filterMaxKey
+    );
+  }
 
-  showDatePredicate: computed('dateFilterOption', function() {
+  @(computed('dateFilterOption').readOnly())
+  get showDatePredicate() {
     let dateFilterOption = this.get('dateFilterOption');
 
     return (
       dateFilterOption === DateFilterOption.OnOrBefore ||
       dateFilterOption === DateFilterOption.OnOrAfter
     );
-  }).readOnly(),
+  }
 
-  dateOptions: computed('dateOptionType', function() {
+  @(computed('dateOptionType').readOnly())
+  get dateOptions() {
     let dateOptionType = this.get('dateOptionType') || 'full';
 
     return this.get(`dateOptionTypes.${dateOptionType}`);
-  }).readOnly(),
+  }
 
   handleDateFilterOptionsChange(newOption) {
     let {
@@ -311,7 +315,7 @@ export default Component.extend({
 
     onFilterKeyChange(initialConsumerFilterKey);
     onFilterValueChange(newOption);
-  },
+  }
 
   handleDateFieldChange(value) {
     let { onFilterValueChange, userInputDateError } = this.getProperties(
@@ -329,7 +333,7 @@ export default Component.extend({
     }
 
     this.set('userInputDate', value);
-  },
+  }
 
   handleDateBlur() {
     let { onFilterValueChange, dateTextFieldValue } = this.getProperties(
@@ -364,7 +368,7 @@ export default Component.extend({
       userInputDateError: undefined,
     });
     this.handleDateChanged();
-  },
+  }
 
   handleDateChanged() {
     let { onFilterValueChange, selectedDate } = this.getProperties(
@@ -379,7 +383,7 @@ export default Component.extend({
     onFilterValueChange(
       stripTimeFromISOString(formatDateForLocalTimezone(selectedDate))
     );
-  },
+  }
 
   handleDatePickerChange({ end: nextDate }) {
     this.setProperties({
@@ -389,25 +393,25 @@ export default Component.extend({
     });
 
     this.handleDateChanged();
-  },
+  }
 
   handleDatePickerMonthChange(month, year) {
     this.setProperties({
       datePickerMonth: month,
       datePickerYear: year,
     });
-  },
+  }
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     this.setProperties({
       datePickerMonth: this.get('now').getMonth(),
       datePickerYear: this.get('now').getYear(),
       initialConsumerFilterKey: this.get('filterKey'),
     });
-  },
-});
+  }
+}
 
 function isValidDate(date) {
   if (!date) {

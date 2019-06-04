@@ -1,6 +1,7 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
-import { computed } from '@ember/object';
 import { dasherize, htmlSafe } from '@ember/string';
 import { assign } from '@ember/polyfills';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
@@ -20,11 +21,9 @@ function invertNumber(number) {
  * Polaris range slider component.
  * See https://polaris.shopify.com/components/forms/range-slider
  */
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisRangeSlider extends Component {
   /**
    * ID for range input
    *
@@ -34,9 +33,10 @@ export default Component.extend({
    * @type {String}
    * @public
    */
-  id: computed(function() {
+  @computed()
+  get id() {
     return guidFor(this);
-  }),
+  }
 
   /**
    * Label for the range input
@@ -45,7 +45,7 @@ export default Component.extend({
    * @type {String}
    * @public
    */
-  label: null,
+  label = null;
 
   /**
    * Adds an action to the label
@@ -54,7 +54,7 @@ export default Component.extend({
    * @type {Object}
    * @public
    */
-  labelAction: null,
+  labelAction = null;
 
   /**
    * Visually hide the label
@@ -64,7 +64,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Initial value for range input
@@ -74,7 +74,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  value: 0,
+  value = 0;
 
   /**
    * Minimum possible value for range input
@@ -84,7 +84,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  min: 0,
+  min = 0;
 
   /**
    * Maximum possible value for range input
@@ -94,7 +94,7 @@ export default Component.extend({
    * @default 100
    * @public
    */
-  max: 100,
+  max = 100;
 
   /**
    * Increment value for range input changes
@@ -104,7 +104,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  step: null,
+  step = null;
 
   /**
    * Provide a tooltip while sliding, indicating the current value
@@ -114,7 +114,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  output: false,
+  output = false;
 
   /**
    * Additional text to aid in use
@@ -123,7 +123,7 @@ export default Component.extend({
    * @type {String|Component}
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * Display an error message
@@ -132,7 +132,7 @@ export default Component.extend({
    * @type {String|Component}
    * @public
    */
-  error: null,
+  error = null;
 
   /**
    * Disable input
@@ -142,7 +142,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Element to display before the input
@@ -152,7 +152,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  prefix: null,
+  prefix = null;
 
   /**
    * Element to display after the input
@@ -162,7 +162,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  suffix: null,
+  suffix = null;
 
   /**
    * Callback when the range input is changed
@@ -172,7 +172,7 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  onChange() {},
+  onChange() {}
 
   /**
    * Callback when range input is focused
@@ -182,7 +182,7 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus is removed
@@ -192,9 +192,9 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  onBlur() {},
+  onBlur() {}
 
-  dataTestRangeSlider: true,
+  dataTestRangeSlider = true;
 
   /**
    * Class names for the range wrapper div
@@ -203,7 +203,8 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  rangeWrapperClassNames: computed('error', 'disabled', function() {
+  @(computed('error', 'disabled').readOnly())
+  get rangeWrapperClassNames() {
     let { error, disabled } = this.getProperties('error', 'disabled');
     let classNames = ['Polaris-RangeSlider'];
 
@@ -216,7 +217,7 @@ export default Component.extend({
     }
 
     return classNames.join(' ');
-  }).readOnly(),
+  }
 
   /**
    * Style for the range wrapper div
@@ -225,38 +226,33 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  rangeWrapperStyle: computed(
-    'min',
-    'max',
-    'value',
-    'sliderProgress',
-    function() {
-      let { min, max, value: current, sliderProgress } = this.getProperties(
-        'min',
-        'max',
-        'value',
-        'sliderProgress'
-      );
-      let styleProps = assign(
-        { min, max, current },
-        {
-          progress: `${sliderProgress}%`,
-          outputFactor: invertNumber((sliderProgress - 50) / 100),
-        }
-      );
+  @(computed('min', 'max', 'value', 'sliderProgress').readOnly())
+  get rangeWrapperStyle() {
+    let { min, max, value: current, sliderProgress } = this.getProperties(
+      'min',
+      'max',
+      'value',
+      'sliderProgress'
+    );
+    let styleProps = assign(
+      { min, max, current },
+      {
+        progress: `${sliderProgress}%`,
+        outputFactor: invertNumber((sliderProgress - 50) / 100),
+      }
+    );
 
-      let styleString = Object.keys(styleProps).reduce(
-        (styleString, propName) => {
-          return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
-            styleProps[propName]
-          };`;
-        },
-        ''
-      );
+    let styleString = Object.keys(styleProps).reduce(
+      (styleString, propName) => {
+        return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
+          styleProps[propName]
+        };`;
+      },
+      ''
+    );
 
-      return htmlSafe(styleString.trim());
-    }
-  ).readOnly(),
+    return htmlSafe(styleString.trim());
+  }
 
   /**
    * Slider progress percentage
@@ -265,10 +261,11 @@ export default Component.extend({
    * @type {Number}
    * @private
    */
-  sliderProgress: computed('min', 'max', 'value', function() {
+  @(computed('min', 'max', 'value').readOnly())
+  get sliderProgress() {
     let { min, max, value } = this.getProperties('min', 'max', 'value');
     return ((value - min) * 100) / (max - min);
-  }).readOnly(),
+  }
 
   /**
    * Stringified boolean flag indicating whether an error is present
@@ -277,9 +274,10 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  hasError: computed('error', function() {
+  @(computed('error').readOnly())
+  get hasError() {
     return Boolean(this.get('error')).toString();
-  }).readOnly(),
+  }
 
   /**
    * Accessibility
@@ -288,7 +286,8 @@ export default Component.extend({
    * @type {Boolean}
    * @private
    */
-  ariaDescribedBy: computed('error', 'helpText', function() {
+  @(computed('error', 'helpText').readOnly())
+  get ariaDescribedBy() {
     let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
     let describedBy = [];
 
@@ -301,7 +300,7 @@ export default Component.extend({
     }
 
     return describedBy.length ? describedBy.join(' ') : undefined;
-  }).readOnly(),
+  }
 
   /**
    * Boolean flag indicating whether the output value should be displayed
@@ -310,17 +309,17 @@ export default Component.extend({
    * @type {Boolean}
    * @private
    */
-  shouldShowOutput: computed('disabled', 'output', function() {
+  @(computed('disabled', 'output').readOnly())
+  get shouldShowOutput() {
     let { disabled, output } = this.getProperties('disabled', 'output');
     return !disabled && output;
-  }).readOnly(),
+  }
 
-  actions: {
-    handleChange(event) {
-      this.get('onChange')(
-        parseFloat(event.currentTarget.value),
-        this.get('id')
-      );
-    },
-  },
-});
+  @action
+  handleChange(event) {
+    this.get('onChange')(
+      parseFloat(event.currentTarget.value),
+      this.get('id')
+    );
+  }
+}

@@ -1,13 +1,12 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { invokeAction } from 'ember-invoke-action';
 import layout from '../../templates/components/polaris-action-list/section';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Section extends Component {
   /**
    * Collection of action items
    *
@@ -16,7 +15,7 @@ export default Component.extend({
    * @type {Object}
    * @default null
    */
-  section: null,
+  section = null;
 
   /**
    * Whether the parent action list has multiple sections
@@ -26,7 +25,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  hasMultipleSections: false,
+  hasMultipleSections = false;
 
   /**
    * Defines a specific role attribute for each action in the list
@@ -36,19 +35,19 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  actionRole: null,
+  actionRole = null;
 
-  sectionRole: computed('actionRole', function() {
+  @(computed('actionRole').readOnly())
+  get sectionRole() {
     return this.get('actionRole') === 'option' ? 'presentation' : undefined;
-  }).readOnly(),
+  }
 
-  actions: {
-    onItemAction(item, event) {
-      event.preventDefault();
-      event.stopPropagation();
+  @action
+  onItemAction(item, event) {
+    event.preventDefault();
+    event.stopPropagation();
 
-      invokeAction(item, 'onAction');
-      invokeAction(this, 'onActionAnyItem');
-    },
-  },
-});
+    invokeAction(item, 'onAction');
+    invokeAction(this, 'onActionAnyItem');
+  }
+}

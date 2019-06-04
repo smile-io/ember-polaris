@@ -1,5 +1,6 @@
+import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { classify, htmlSafe } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import layout from '../templates/components/polaris-progress-bar';
@@ -13,12 +14,9 @@ const defaultSize = 'medium';
  *
  * @component polaris-progress-bar
  */
-export default Component.extend({
-  classNames: ['Polaris-ProgressBar'],
-  classNameBindings: ['sizeClass'],
-
-  layout,
-
+@classNames('Polaris-ProgressBar')
+@templateLayout(layout)
+export default class PolarisProgressBar extends Component {
   /**
    * The progression of certain tasks
    *
@@ -27,7 +25,7 @@ export default Component.extend({
    * @type {Number}
    * @default: 0
    */
-  progress: 0,
+  progress = 0;
 
   /**
    * Size of progressbar
@@ -37,26 +35,29 @@ export default Component.extend({
    * @type {String}
    * @default: 'medium'
    */
-  size: defaultSize,
+  size = defaultSize;
 
-  'data-test-progress-bar': true,
+  'data-test-progress-bar' = true;
 
   /**
    * @private
    */
-  sizeClass: computed('size', function() {
+  @(computed('size').readOnly())
+  @className
+  get sizeClass() {
     let size = this.get('size');
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
 
     return `Polaris-ProgressBar--size${classify(size)}`;
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  parsedProgress: computed('progress', function() {
+  @(computed('progress').readOnly())
+  get parsedProgress() {
     let progress = this.get('progress');
     let parsedProgress;
 
@@ -73,17 +74,18 @@ export default Component.extend({
     }
 
     return parsedProgress;
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  progressStyle: computed('parsedProgress', function() {
+  @(computed('parsedProgress').readOnly())
+  get progressStyle() {
     let parsedProgress = this.get('parsedProgress');
     if (isPresent(parsedProgress)) {
       return htmlSafe(`width: ${parsedProgress}%;`);
     }
 
     return null;
-  }).readOnly(),
-});
+  }
+}

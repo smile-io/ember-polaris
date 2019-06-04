@@ -1,65 +1,67 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { equal } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-list';
 
 const allowedListTypes = ['bullet', 'number'];
 const defaultListType = 'bullet';
 
-export default Component.extend({
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class PolarisList extends Component {
+ /**
+  * Type of list to display
+  *
+  * @property type
+  * @public
+  * @type {String}
+  * @default 'bullet'
+  */
+ type = defaultListType;
 
-  layout,
+ /**
+  * Flag to determine whether to render an ordered or unordered list
+  *
+  * @property isBulletListType
+  * @private
+  * @type {boolean}
+  */
+ @(equal('listType', 'bullet').readOnly())
+ isBulletListType;
 
-  /**
-   * Type of list to display
-   *
-   * @property type
-   * @public
-   * @type {String}
-   * @default 'bullet'
-   */
-  type: defaultListType,
+ /**
+  * Actual list type for internal use
+  *
+  * @property listType
+  * @private
+  * @type {String}
+  */
+ @(computed('type').readOnly())
+ get listType() {
+   let type = this.get('type');
+   if (allowedListTypes.indexOf(type) === -1) {
+     type = defaultListType;
+   }
 
-  /**
-   * Flag to determine whether to render an ordered or unordered list
-   *
-   * @property isBulletListType
-   * @private
-   * @type {boolean}
-   */
-  isBulletListType: equal('listType', 'bullet').readOnly(),
+   return type;
+ }
 
-  /**
-   * Actual list type for internal use
-   *
-   * @property listType
-   * @private
-   * @type {String}
-   */
-  listType: computed('type', function() {
-    let type = this.get('type');
-    if (allowedListTypes.indexOf(type) === -1) {
-      type = defaultListType;
-    }
+ /**
+  * Class for list element
+  *
+  * @property listElementClass
+  * @private
+  * @type {String}
+  */
+ @(computed('listType').readOnly())
+ get listElementClass() {
+   let classNames = ['Polaris-List'];
 
-    return type;
-  }).readOnly(),
+   let type = this.get('listType');
+   classNames.push(`Polaris-List--type${classify(type)}`);
 
-  /**
-   * Class for list element
-   *
-   * @property listElementClass
-   * @private
-   * @type {String}
-   */
-  listElementClass: computed('listType', function() {
-    let classNames = ['Polaris-List'];
-
-    let type = this.get('listType');
-    classNames.push(`Polaris-List--type${classify(type)}`);
-
-    return classNames.join(' ');
-  }).readOnly(),
-});
+   return classNames.join(' ');
+ }
+}

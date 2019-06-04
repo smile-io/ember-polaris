@@ -1,5 +1,6 @@
+import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-text-container';
 
@@ -8,46 +9,44 @@ const allowedSpacings = ['tight', 'loose'];
 /**
  * Undocumented Polaris text container component.
  */
-export default Component.extend({
-  classNames: ['Polaris-TextContainer'],
+@classNames('Polaris-TextContainer')
+@templateLayout(layout)
+export default class PolarisTextContainer extends Component {
+ /**
+  * The text to display.
+  *
+  * This component can be used in block form,
+  * in which case the block content will be used
+  * instead of `text`
+  *
+  * @property text
+  * @type {string}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  classNameBindings: ['spacingClass'],
+ /**
+  * The amount of vertical spacing children will get between them.
+  *
+  * @property spacing
+  * @type {string}
+  * @default null
+  * @public
+  */
+ spacing = null;
 
-  layout,
+ /**
+  * @private
+  */
+ @(computed('spacing').readOnly())
+ @className
+ get spacingClass() {
+   let spacing = this.get('spacing');
+   if (allowedSpacings.indexOf(spacing) > -1) {
+     return `Polaris-TextContainer--spacing${classify(spacing)}`;
+   }
 
-  /**
-   * The text to display.
-   *
-   * This component can be used in block form,
-   * in which case the block content will be used
-   * instead of `text`
-   *
-   * @property text
-   * @type {string}
-   * @default null
-   * @public
-   */
-  text: null,
-
-  /**
-   * The amount of vertical spacing children will get between them.
-   *
-   * @property spacing
-   * @type {string}
-   * @default null
-   * @public
-   */
-  spacing: null,
-
-  /**
-   * @private
-   */
-  spacingClass: computed('spacing', function() {
-    let spacing = this.get('spacing');
-    if (allowedSpacings.indexOf(spacing) > -1) {
-      return `Polaris-TextContainer--spacing${classify(spacing)}`;
-    }
-
-    return null;
-  }).readOnly(),
-});
+   return null;
+ }
+}

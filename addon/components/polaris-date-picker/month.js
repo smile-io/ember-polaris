@@ -1,6 +1,7 @@
+import { attribute, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/month';
-import { computed } from '@ember/object';
 import {
   monthsArray,
   getWeeksForMonth,
@@ -9,172 +10,172 @@ import {
   getWeekdaysOrdered,
 } from '../../utils/dates';
 
-export default Component.extend({
-  attributeBindings: ['role'],
+@classNames('Polaris-DatePicker__Month')
+@templateLayout(layout)
+export default class Month extends Component {
+ /**
+  * @property focusedDate
+  * @public
+  * @type {Date}
+  * @default null
+  */
+ focusedDate = null;
 
-  classNames: ['Polaris-DatePicker__Month'],
+ /**
+  * @property selected
+  * @public
+  * @type {Object}
+  * @default null
+  */
+ selected = null;
 
-  layout,
+ /**
+  * @property hoverDate
+  * @public
+  * @type {Date}
+  * @default null
+  */
+ hoverDate = null;
 
-  /**
-   * @property focusedDate
-   * @public
-   * @type {Date}
-   * @default null
-   */
-  focusedDate: null,
+ /**
+  * @property month
+  * @public
+  * @type {Number}
+  * @default null
+  */
+ month = null;
 
-  /**
-   * @property selected
-   * @public
-   * @type {Object}
-   * @default null
-   */
-  selected: null,
+ /**
+  * @property year
+  * @public
+  * @type {Number}
+  * @default null
+  */
+ year = null;
 
-  /**
-   * @property hoverDate
-   * @public
-   * @type {Date}
-   * @default null
-   */
-  hoverDate: null,
+ /**
+  * @property disableDatesBefore
+  * @public
+  * @type {Date}
+  * @default null
+  */
+ disableDatesBefore = null;
 
-  /**
-   * @property month
-   * @public
-   * @type {Number}
-   * @default null
-   */
-  month: null,
+ /**
+  * @property disableDatesAfter
+  * @public
+  * @type {Date}
+  * @default null
+  */
+ disableDatesAfter = null;
 
-  /**
-   * @property year
-   * @public
-   * @type {Number}
-   * @default null
-   */
-  year: null,
+ /**
+  * @property allowRange
+  * @public
+  * @type {Boolean}
+  * @default false
+  */
+ allowRange = false;
 
-  /**
-   * @property disableDatesBefore
-   * @public
-   * @type {Date}
-   * @default null
-   */
-  disableDatesBefore: null,
+ /**
+  * @property weekStartsOn
+  * @public
+  * @type {String}
+  * @default null
+  */
+ weekStartsOn = null;
 
-  /**
-   * @property disableDatesAfter
-   * @public
-   * @type {Date}
-   * @default null
-   */
-  disableDatesAfter: null,
+ /**
+  * @property onChange
+  * @public
+  * @type {Function}
+  * @default noop
+  */
+ onChange/* dateRange */() {}
 
-  /**
-   * @property allowRange
-   * @public
-   * @type {Boolean}
-   * @default false
-   */
-  allowRange: false,
+ /**
+  * @property onHover
+  * @public
+  * @type {Function}
+  * @default noop
+  */
+ onHover/* hoverEnd */() {}
 
-  /**
-   * @property weekStartsOn
-   * @public
-   * @type {String}
-   * @default null
-   */
-  weekStartsOn: null,
+ /**
+  * @property onFocus
+  * @public
+  * @type {Function}
+  * @default noop
+  */
+ onFocus/* date */() {}
 
-  /**
-   * @property onChange
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  onChange(/* dateRange */) {},
+ /**
+  * @property monthName
+  * @public
+  * @type {Function}
+  * @default noop
+  */
+ monthName/* month */() {}
 
-  /**
-   * @property onHover
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  onHover(/* hoverEnd */) {},
+ /**
+  * @property weekdayName
+  * @public
+  * @type {Function}
+  * @default noop
+  */
+ weekdayName/* weekday */() {}
 
-  /**
-   * @property onFocus
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  onFocus(/* date */) {},
+ @attribute
+ role = 'grid';
 
-  /**
-   * @property monthName
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  monthName(/* month */) {},
+ 'data-test-date-picker-month' = true;
 
-  /**
-   * @property weekdayName
-   * @public
-   * @type {Function}
-   * @default noop
-   */
-  weekdayName(/* weekday */) {},
+ @(computed('month', 'year').readOnly())
+ get current() {
+   let now = new Date();
+   let thisMonth = now.getMonth();
+   let thisYear = now.getFullYear();
 
-  role: 'grid',
+   return thisMonth === this.get('month') && thisYear === this.get('year');
+ }
 
-  'data-test-date-picker-month': true,
+ @(computed('month').readOnly())
+ get monthDisplayName() {
+   return monthsArray[this.get('month')];
+ }
 
-  current: computed('month', 'year', function() {
-    let now = new Date();
-    let thisMonth = now.getMonth();
-    let thisYear = now.getFullYear();
+ @(computed('month', 'year', 'weekStartsOn').readOnly())
+ get weeks() {
+   let { month, year, weekStartsOn } = this.getProperties(
+     'month',
+     'year',
+     'weekStartsOn'
+   );
 
-    return thisMonth === this.get('month') && thisYear === this.get('year');
-  }).readOnly(),
+   return getWeeksForMonth(month, year, weekStartsOn);
+ }
 
-  monthDisplayName: computed('month', function() {
-    return monthsArray[this.get('month')];
-  }).readOnly(),
+ @(computed('current', 'weekStartsOn').readOnly())
+ get weekdays() {
+   let { current, weekStartsOn } = this.getProperties(
+     'current',
+     'weekStartsOn'
+   );
+   let day = new Date().getDay();
 
-  weeks: computed('month', 'year', 'weekStartsOn', function() {
-    let { month, year, weekStartsOn } = this.getProperties(
-      'month',
-      'year',
-      'weekStartsOn'
-    );
+   return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
+     return {
+       title: abbreviationForWeekday(weekday),
+       current: current && day === i,
+       label: weekday,
+     };
+   });
+ }
 
-    return getWeeksForMonth(month, year, weekStartsOn);
-  }).readOnly(),
+ @action
+ handleDateClick(day) {
+   let range = getNewRange(this.get('selected'), day);
 
-  weekdays: computed('current', 'weekStartsOn', function() {
-    let { current, weekStartsOn } = this.getProperties(
-      'current',
-      'weekStartsOn'
-    );
-    let day = new Date().getDay();
-
-    return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
-      return {
-        title: abbreviationForWeekday(weekday),
-        current: current && day === i,
-        label: weekday,
-      };
-    });
-  }).readOnly(),
-
-  actions: {
-    handleDateClick(day) {
-      let range = getNewRange(this.get('selected'), day);
-
-      this.get('onChange')(range);
-    },
-  },
-});
+   this.get('onChange')(range);
+ }
+}

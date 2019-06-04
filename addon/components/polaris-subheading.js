@@ -1,3 +1,4 @@
+import { attribute, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-subheading';
 
@@ -15,38 +16,34 @@ import layout from '../templates/components/polaris-subheading';
  *     This is an underlined subheading
  *   {{/polaris-subheading}}
  */
-export default Component.extend({
-  tagName: 'h3',
+@tagName('h3')
+@classNames('Polaris-Subheading')
+@templateLayout(layout)
+export default class PolarisSubheading extends Component {
+ /**
+  * The content to display inside the heading
+  *
+  * This component can be used in block form,
+  * in which case the block content will be used
+  * instead of `text`
+  *
+  * @property text
+  * @type {String}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  attributeBindings: ['ariaLabel:aria-label'],
+ /**
+  * @private
+  */
+ @attribute("aria-label")
+ ariaLabel = null;
 
-  classNames: ['Polaris-Subheading'],
+ didRender() {
+   super.didRender(...arguments);
 
-  layout,
-
-  /**
-   * The content to display inside the heading
-   *
-   * This component can be used in block form,
-   * in which case the block content will be used
-   * instead of `text`
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   * @public
-   */
-  text: null,
-
-  /**
-   * @private
-   */
-  ariaLabel: null,
-
-  didRender() {
-    this._super(...arguments);
-
-    // Update ariaLabel with the new content.
-    this.set('ariaLabel', this.element.textContent.trim());
-  },
-});
+   // Update ariaLabel with the new content.
+   this.set('ariaLabel', this.element.textContent.trim());
+ }
+}

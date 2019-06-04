@@ -1,108 +1,109 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { or } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { or } from '@ember/object/computed';
 import layout from '../templates/components/polaris-choice';
 
 /**
  * Polaris choice component.
  * Wrapper for checkbox and radiobutton components.
  */
-export default Component.extend({
-  // Tagless component since sometimes we need to wrap the label in a div.
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class PolarisChoice extends Component {
+ /**
+  * A unique identifier for the choice
+  *
+  * @property inputId
+  * @type {String}
+  * @default: null
+  * @public
+  */
+ inputId = null;
 
-  layout,
+ /**
+  * Label for the choice
+  *
+  * @property label
+  * @type {String|Component}
+  * @default: null
+  * @public
+  */
+ label = null;
 
-  /**
-   * A unique identifier for the choice
-   *
-   * @property inputId
-   * @type {String}
-   * @default: null
-   * @public
-   */
-  inputId: null,
+ /**
+  * Component to render for the choice's label
+  *
+  * DEPRECATED: pass the component as `label` instead.
+  *
+  * @property labelComponent
+  * @type {String | Component}
+  * @default null
+  * @public
+  */
+ labelComponent = null;
 
-  /**
-   * Label for the choice
-   *
-   * @property label
-   * @type {String|Component}
-   * @default: null
-   * @public
-   */
-  label: null,
+ /**
+  * Whether the associated form control is disabled
+  *
+  * @property disabled
+  * @type {Boolean}
+  * @default: null
+  * @public
+  */
+ disabled = null;
 
-  /**
-   * Component to render for the choice's label
-   *
-   * DEPRECATED: pass the component as `label` instead.
-   *
-   * @property labelComponent
-   * @type {String | Component}
-   * @default null
-   * @public
-   */
-  labelComponent: null,
+ /**
+  * Display an error message
+  *
+  * @property error
+  * @type {String|Boolean}
+  * @default: null
+  * @public
+  */
+ error = null;
 
-  /**
-   * Whether the associated form control is disabled
-   *
-   * @property disabled
-   * @type {Boolean}
-   * @default: null
-   * @public
-   */
-  disabled: null,
+ /**
+  * Visually hide the label
+  *
+  * @property labelHidden
+  * @type {boolean}
+  * @default: false
+  * @public
+  */
+ labelHidden = false;
 
-  /**
-   * Display an error message
-   *
-   * @property error
-   * @type {String|Boolean}
-   * @default: null
-   * @public
-   */
-  error: null,
+ /**
+  * Additional text to aide in use
+  *
+  * @property helpText
+  * @type {String|Component|Object}
+  * @default: null
+  * @public
+  */
+ helpText = null;
 
-  /**
-   * Visually hide the label
-   *
-   * @property labelHidden
-   * @type {boolean}
-   * @default: false
-   * @public
-   */
-  labelHidden: false,
+ /**
+  * @private
+  */
+ @or('error', 'helpText')
+ hasDescription;
 
-  /**
-   * Additional text to aide in use
-   *
-   * @property helpText
-   * @type {String|Component|Object}
-   * @default: null
-   * @public
-   */
-  helpText: null,
+ /**
+  * @private
+  */
+ @computed('error')
+ get shouldRenderError() {
+   let error = this.get('error');
 
-  /**
-   * @private
-   */
-  hasDescription: or('error', 'helpText'),
+   return error && typeof error !== 'boolean';
+ }
 
-  /**
-   * @private
-   */
-  shouldRenderError: computed('error', function() {
-    let error = this.get('error');
-
-    return error && typeof error !== 'boolean';
-  }),
-
-  /**
-   * @private
-   */
-  helpTextId: computed('inputId', function() {
-    return `${this.get('inputId')}HelpText`;
-  }).readOnly(),
-});
+ /**
+  * @private
+  */
+ @(computed('inputId').readOnly())
+ get helpTextId() {
+   return `${this.get('inputId')}HelpText`;
+ }
+}

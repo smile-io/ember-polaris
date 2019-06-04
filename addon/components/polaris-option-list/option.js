@@ -1,137 +1,139 @@
+import { action } from "@ember-decorators/object";
+import { attribute, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-option-list/option';
 
-export default Component.extend({
-  tagName: 'li',
-  attributeBindings: ['tabIndex', 'active:aria-selected', 'role'],
-  classNames: ['Polaris-OptionList-Option'],
+@tagName('li')
+@classNames('Polaris-OptionList-Option')
+@templateLayout(layout)
+export default class Option extends Component {
+ /**
+  * @property optionId
+  * @type {String}
+  * @default null
+  * @public
+  */
+ optionId = null;
 
-  layout,
+ /**
+  * @property label
+  * @type {String|Component|Object}
+  * @default null
+  * @public
+  */
+ label = null;
 
-  /**
-   * @property optionId
-   * @type {String}
-   * @default null
-   * @public
-   */
-  optionId: null,
+ /**
+  * @property value
+  * @type {String}
+  * @default null
+  * @public
+  */
+ value = null;
 
-  /**
-   * @property label
-   * @type {String|Component|Object}
-   * @default null
-   * @public
-   */
-  label: null,
+ /**
+  * @property section
+  * @type {Number}
+  * @default null
+  * @public
+  */
+ section = null;
 
-  /**
-   * @property value
-   * @type {String}
-   * @default null
-   * @public
-   */
-  value: null,
+ /**
+  * @property index
+  * @type {Number}
+  * @default null
+  * @public
+  */
+ index = null;
 
-  /**
-   * @property section
-   * @type {Number}
-   * @default null
-   * @public
-   */
-  section: null,
+ /**
+  * @property media
+  * @type {String|Component|Object}
+  * @default null
+  * @public
+  */
+ media = null;
 
-  /**
-   * @property index
-   * @type {Number}
-   * @default null
-   * @public
-   */
-  index: null,
+ /**
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disabled = false;
 
-  /**
-   * @property media
-   * @type {String|Component|Object}
-   * @default null
-   * @public
-   */
-  media: null,
+ /**
+  * @property active
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ @attribute("aria-selected")
+ active = false;
 
-  /**
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ /**
+  * @property select
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ select = false;
 
-  /**
-   * @property active
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  active: false,
+ /**
+  * @property allowMultiple
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ allowMultiple = false;
 
-  /**
-   * @property select
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  select: false,
+ /**
+  * @property role
+  * @type {String}
+  * @default null
+  * @public
+  */
+ @attribute
+ role = null;
 
-  /**
-   * @property allowMultiple
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  allowMultiple: false,
+ /**
+  * @property onClick
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onClick() {}
 
-  /**
-   * @property role
-   * @type {String}
-   * @default null
-   * @public
-   */
-  role: null,
+ /**
+  * @property focused
+  * @type {Boolean}
+  * @default false
+  * @private
+  */
+ focused = false;
 
-  /**
-   * @property onClick
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onClick() {},
+ @attribute
+ tabIndex = -1;
 
-  /**
-   * @property focused
-   * @type {Boolean}
-   * @default false
-   * @private
-   */
-  focused: false,
+ @action
+ handleClick() {
+   let { onClick, section, index, disabled } = this.getProperties(
+     'onClick',
+     'section',
+     'index',
+     'disabled'
+   );
 
-  tabIndex: -1,
+   if (disabled) {
+     return;
+   }
 
-  actions: {
-    handleClick() {
-      let { onClick, section, index, disabled } = this.getProperties(
-        'onClick',
-        'section',
-        'index',
-        'disabled'
-      );
+   onClick(section, index);
+ }
 
-      if (disabled) {
-        return;
-      }
-
-      onClick(section, index);
-    },
-
-    toggleFocus() {
-      this.toggleProperty('focused');
-    },
-  },
-});
+ @action
+ toggleFocus() {
+   this.toggleProperty('focused');
+ }
+}

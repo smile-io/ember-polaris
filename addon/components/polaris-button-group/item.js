@@ -1,55 +1,52 @@
+import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-button-group/item';
 
-export default Component.extend({
-  classNames: ['Polaris-ButtonGroup__Item'],
-  classNameBindings: [
-    'plain:Polaris-ButtonGroup__Item--plain',
-    'focused:Polaris-ButtonGroup__Item--focused',
-  ],
+@classNames('Polaris-ButtonGroup__Item')
+@templateLayout(layout)
+export default class Item extends Component {
+ /**
+  * Elements to display inside group item
+  *
+  * @property text
+  * @public
+  * @type {string}
+  * @default null
+  */
+ text = null;
 
-  layout,
+ /**
+  * Use a plain style for the group item
+  *
+  * @property plain
+  * @public
+  * @type {boolean}
+  * @default false
+  */
+ @className("Polaris-ButtonGroup__Item--plain")
+ plain = false;
 
-  /**
-   * Elements to display inside group item
-   *
-   * @property text
-   * @public
-   * @type {string}
-   * @default null
-   */
-  text: null,
+ /**
+  * Whether the group item is focused
+  *
+  * @property focused
+  * @private
+  * @type {boolean}
+  * @default false
+  */
+ @className("Polaris-ButtonGroup__Item--focused")
+ focused = false;
 
-  /**
-   * Use a plain style for the group item
-   *
-   * @property plain
-   * @public
-   * @type {boolean}
-   * @default false
-   */
-  plain: false,
+ 'data-test-button-group-item' = true;
 
-  /**
-   * Whether the group item is focused
-   *
-   * @property focused
-   * @private
-   * @type {boolean}
-   * @default false
-   */
-  focused: false,
+ /**
+  * Events.
+  */
+ focusIn() {
+   this.set('focused', true);
+ }
 
-  'data-test-button-group-item': true,
-
-  /**
-   * Events.
-   */
-  focusIn() {
-    this.set('focused', true);
-  },
-
-  focusOut() {
-    this.set('focused', false);
-  },
-});
+ focusOut() {
+   this.set('focused', false);
+ }
+}

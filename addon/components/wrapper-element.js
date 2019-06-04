@@ -1,3 +1,4 @@
+import { layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import { isBlank } from '@ember/utils';
 import { dasherize } from '@ember/string';
@@ -9,12 +10,9 @@ const blacklistedAttributeBindings = ['tagName', 'class'];
  * This is a simple utility component that lets us do things like wrap block content
  * in a conditional element, since `tagName` can't be a computed property.
  */
-export default Component.extend({
-  attributeBindings: [],
-
-  layout,
-
-  blacklistedAttributeBindings,
+@templateLayout(layout)
+export default class WrapperElement extends Component {
+  blacklistedAttributeBindings = blacklistedAttributeBindings;
 
   updateAttributeBindings() {
     if (isBlank(this.get('tagName'))) {
@@ -37,11 +35,11 @@ export default Component.extend({
       });
 
     this.set('attributeBindings', newAttributeBindings);
-  },
+  }
 
   didReceiveAttrs() {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
 
     this.updateAttributeBindings();
-  },
-});
+  }
+}

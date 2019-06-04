@@ -1,58 +1,58 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import layout from '../../templates/components/polaris-data-table/total';
 
-export default Component.extend({
-  tagName: '',
+@tagName('')
+@templateLayout(layout)
+export default class Total extends Component {
+ /**
+  * @property total
+  * @type {String|Number|Component}
+  * @public
+  */
+ total = null;
 
-  layout,
+ /**
+  * @property index
+  * @type {Number}
+  * @public
+  */
+ index = null;
 
-  /**
-   * @property total
-   * @type {String|Number|Component}
-   * @public
-   */
-  total: null,
+ /**
+  * @property heights
+  * @type {Number[]}
+  * @public
+  */
+ heights = null;
 
-  /**
-   * @property index
-   * @type {Number}
-   * @public
-   */
-  index: null,
+ /**
+  * @property truncate
+  * @type {boolean}
+  * @default false
+  * @public
+  */
+ truncate = false;
 
-  /**
-   * @property heights
-   * @type {Number[]}
-   * @public
-   */
-  heights: null,
+ /**
+  * @property totalsRowHeading
+  * @type {String}
+  * @public
+  */
+ totalsRowHeading = null;
 
-  /**
-   * @property truncate
-   * @type {boolean}
-   * @default false
-   * @public
-   */
-  truncate: false,
+ /**
+  * @property contentType
+  * @type {String}
+  * @private
+  */
+ @computed('total', 'index')
+ get contentType() {
+   let { total, index } = this.getProperties('total', 'index');
 
-  /**
-   * @property totalsRowHeading
-   * @type {String}
-   * @public
-   */
-  totalsRowHeading: null,
-
-  /**
-   * @property contentType
-   * @type {String}
-   * @private
-   */
-  contentType: computed('total', 'index', function() {
-    let { total, index } = this.getProperties('total', 'index');
-
-    if (total !== '' && index > 0) {
-      return 'numeric';
-    }
-  }),
-});
+   if (total !== '' && index > 0) {
+     return 'numeric';
+   }
+ }
+}

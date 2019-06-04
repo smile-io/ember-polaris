@@ -1,6 +1,7 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Ember from 'ember';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { warn } from '@ember/debug';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
@@ -14,11 +15,9 @@ const BELOW = 'below';
  * Polaris popover component.
  * See https://polaris.shopify.com/components/overlays/popover
  */
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisPopover extends Component {
   /**
    * The content to display inside the popover
    *
@@ -31,7 +30,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * The preferred direction to open the popover
@@ -41,7 +40,7 @@ export default Component.extend({
    * @default 'below'
    * @public
    */
-  preferredPosition: BELOW,
+  preferredPosition = BELOW;
 
   /**
    * Show or hide the Popover
@@ -53,7 +52,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  active: false,
+  active = false;
 
   /**
    * The element type to wrap the activator with
@@ -65,7 +64,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  activatorWrapper: null,
+  activatorWrapper = null;
 
   /**
    * Prevent automatic focus of the first field on activation
@@ -77,7 +76,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  preventAutofocus: false,
+  preventAutofocus = false;
 
   /**
    * Automatically add wrap content in a section
@@ -87,7 +86,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  sectioned: false,
+  sectioned = false;
 
   /**
    * Allow popover to stretch to the full width of its activator
@@ -97,7 +96,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  fullWidth: false,
+  fullWidth = false;
 
   /**
    * Allow popover to stretch to fit content vertically
@@ -107,7 +106,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  fullHeight: false,
+  fullHeight = false;
 
   /**
    * Callback when popover is closed
@@ -117,46 +116,41 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onClose() {},
+  onClose() {}
 
   /**
    * @private
    */
-  verticalPosition: computed('preferredPosition', {
-    // If `preferredPosition` is set to `mostSpace`, the value
-    // will be calculated and set when the user opens the popover.
-    // The only allowed values are 'above' and 'below', so we
-    // return null for anything other than those values and let
-    // ember-basic-dropdown use its default value.
-    get() {
-      let preferredPosition = this.get('preferredPosition');
+  @computed('preferredPosition')
+  get verticalPosition() {
+    let preferredPosition = this.get('preferredPosition');
 
-      if (preferredPosition === ABOVE || preferredPosition === BELOW) {
-        return preferredPosition;
-      }
+    if (preferredPosition === ABOVE || preferredPosition === BELOW) {
+      return preferredPosition;
+    }
 
-      return null;
-    },
+    return null;
+  }
 
-    set(key, value) {
-      if (value === ABOVE || value === BELOW) {
-        return value;
-      }
+  set verticalPosition(value) {
+    if (value === ABOVE || value === BELOW) {
+      return value;
+    }
 
-      return null;
-    },
-  }),
+    return null;
+  }
 
   /**
    * @private
    */
-  triggerStyle: computed(function() {
+  @(computed().readOnly())
+  get triggerStyle() {
     return htmlSafe(`
       display: inline-block;
       overflow: inherit;
       border: none;
     `);
-  }).readOnly(),
+  }
 
   /**
    * Checks the dropdown activator's location on
@@ -198,18 +192,17 @@ export default Component.extend({
 
     // Use `below` if distance is equal
     return bottomSpace >= top ? BELOW : ABOVE;
-  },
+  }
 
-  actions: {
-    onOpen() {
-      // Check to see if `preferredPosition` is set to `mostSpace`
-      // onOpen, since user could have scrolled vertically since
-      // the time the component originally rendered.
-      let preferredPosition = this.get('preferredPosition');
+  @action
+  onOpen() {
+    // Check to see if `preferredPosition` is set to `mostSpace`
+    // onOpen, since user could have scrolled vertically since
+    // the time the component originally rendered.
+    let preferredPosition = this.get('preferredPosition');
 
-      if (preferredPosition === 'mostSpace') {
-        this.set('verticalPosition', this.getMostVerticalSpace());
-      }
-    },
-  },
-});
+    if (preferredPosition === 'mostSpace') {
+      this.set('verticalPosition', this.getMostVerticalSpace());
+    }
+  }
+}

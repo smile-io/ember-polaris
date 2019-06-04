@@ -1,23 +1,13 @@
+import { attribute, className, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { isBlank } from '@ember/utils';
-import { computed } from '@ember/object';
 import { idVariation, helpTextId } from '../../utils/id';
 import { wrapChildren, rejectNodesByClassName } from '../../utils/dom';
 
-export default Component.extend({
-  attributeBindings: [
-    'role',
-    'titleID:aria-labelledby',
-    'helpTextID:aria-describedby',
-  ],
-
-  classNameBindings: [
-    'condensed:Polaris-FormLayout--condensed:Polaris-FormLayout--grouped',
-  ],
-
-  layout,
-
+@templateLayout(layout)
+export default class Group extends Component {
   /**
    * Elements to display inside group item
    *
@@ -26,7 +16,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Condensed field group
@@ -36,7 +26,8 @@ export default Component.extend({
    * @default false
    * @public
    */
-  condensed: false,
+  @className("Polaris-FormLayout--condensed", "Polaris-FormLayout--grouped")
+  condensed = false;
 
   /**
    * Form layout group title
@@ -46,7 +37,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Form layout help text
@@ -56,33 +47,38 @@ export default Component.extend({
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * @private
    */
-  role: 'group',
+  @attribute
+  role = 'group';
 
-  'data-test-form-layout-group': true,
+  'data-test-form-layout-group' = true;
 
-  titleID: computed('title', function() {
+  @(computed('title').readOnly())
+  @attribute("aria-labelledby")
+  get titleID() {
     if (isBlank(this.get('title'))) {
       return;
     }
 
     return idVariation(this.get('elementId'), 'Title');
-  }).readOnly(),
+  }
 
-  helpTextID: computed('helpText', function() {
+  @(computed('helpText').readOnly())
+  @attribute("aria-describedby")
+  get helpTextID() {
     if (isBlank(this.get('helpText'))) {
       return;
     }
 
     return helpTextId(this.get('elementId'));
-  }).readOnly(),
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
 
     let itemsContainer = this.element.querySelector(
       '.Polaris-FormLayout__Items'
@@ -97,5 +93,5 @@ export default Component.extend({
     wrapper.classList.add('Polaris-FormLayout__Item');
     wrapper.setAttribute('data-test-form-layout-item', true);
     wrapChildren(nodesToWrap, wrapper);
-  },
-});
+  }
+}

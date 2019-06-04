@@ -1,21 +1,22 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { notEmpty } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { notEmpty } from '@ember/object/computed';
 import layout from '../templates/components/render-content';
 
-export default Component.extend({
-  tagName: '',
+export default @tagName('')
+@templateLayout(layout)
+class RenderContent extends Component {
+  content = null;
 
-  layout,
+  @(notEmpty('content.componentName').readOnly())
+  contentIsComponentHash;
 
-  content: null,
-
-  contentIsComponentHash: notEmpty('content.componentName').readOnly(),
-
-  contentIsComponentDefinition: computed('content', function() {
+  @(computed('content').readOnly())
+  get contentIsComponentDefinition() {
     let contentConstructorName = this.get('content.constructor.name') || '';
     return contentConstructorName.indexOf('ComponentDefinition') > -1;
-  }).readOnly(),
-}).reopenClass({
+  }
+}.reopenClass({
   positionalParams: ['content'],
 });

@@ -1,13 +1,12 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../../templates/components/polaris-popover/content';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Content extends Component {
   /**
    * Automatically add wrap content in a section
    *
@@ -16,7 +15,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  sectioned: false,
+  sectioned = false;
 
   /**
    * Allow popover to stretch to the full width of its activator
@@ -26,7 +25,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  fullWidth: false,
+  fullWidth = false;
 
   /**
    * Allow popover to stretch to fit content vertically
@@ -36,7 +35,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  fullHeight: false,
+  fullHeight = false;
 
   /**
    * Content wrapper component.
@@ -46,7 +45,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  contentComponent: null,
+  contentComponent = null;
 
   /**
    * Simple text for quick popovers.
@@ -60,7 +59,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * `ember-basic-dropdown`'s generated ID, used to look up
@@ -70,10 +69,10 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  uniqueId: null,
+  uniqueId = null;
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
 
     // Position the tip div correctly.
     const uniqueId = this.get('uniqueId');
@@ -126,5 +125,5 @@ export default Component.extend({
     if (content) {
       content.style.height = height;
     }
-  },
-});
+  }
+}

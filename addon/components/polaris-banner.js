@@ -1,7 +1,8 @@
+import { attribute, className, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
+import { bool } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-banner';
-import { computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
@@ -39,26 +40,9 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
-export default Component.extend({
-  attributeBindings: [
-    'tabIndex',
-    'role',
-    'ariaLive:aria-live',
-    'contentId:aria-describedby',
-    'headingId:aria-labelledby',
-    'data-test-banner',
-  ],
-
-  classNames: ['Polaris-Banner'],
-
-  classNameBindings: [
-    'statusClass',
-    'hasDismiss:Polaris-Banner--hasDismiss',
-    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
-  ],
-
-  layout,
-
+@classNames('Polaris-Banner')
+@templateLayout(layout)
+export default class PolarisBanner extends Component {
   /**
    * Title content for the banner.
    *
@@ -66,7 +50,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  title: null,
+  title = null;
 
   /**
    * Icon to display in the banner.
@@ -75,7 +59,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  icon: null,
+  icon = null;
 
   /**
    * Sets the status of the banner.
@@ -84,7 +68,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  status: null,
+  status = null;
 
   /**
    * Action for banner.
@@ -93,7 +77,7 @@ export default Component.extend({
    * @type {Object}
    * @default null
    */
-  action: null,
+  action = null;
 
   /**
    * Displays a secondary action.
@@ -102,7 +86,7 @@ export default Component.extend({
    * @type {Object}
    * @default null
    */
-  secondaryAction: null,
+  secondaryAction = null;
 
   /**
    * Callback when banner is dismissed
@@ -111,11 +95,13 @@ export default Component.extend({
    * @type {Func}
    * @default null
    */
-  onDismiss: null,
+  onDismiss = null;
 
-  tabIndex: '0',
+  @attribute
+  tabIndex = '0';
 
-  ariaLive: 'polite',
+  @attribute("aria-live")
+  ariaLive = 'polite';
 
   /**
    * Temporary workaround for not having appProvider/withAppProvider equivalents implemented yet.
@@ -123,24 +109,29 @@ export default Component.extend({
    *
    * TODO implement appProvider/withAppProvider
    */
-  withinContentContainer: false,
+  @className("Polaris-Banner--withinContentContainer", "Polaris-Banner--withinPage")
+  withinContentContainer = false;
 
-  mouseUp: handleMouseUpByBlurring,
+  mouseUp = handleMouseUpByBlurring;
+  'data-test-banner' = '';
 
-  'data-test-banner': '',
+  @(bool('onDismiss').readOnly())
+  @className("Polaris-Banner--hasDismiss")
+  hasDismiss;
 
-  hasDismiss: bool('onDismiss').readOnly(),
-
-  role: computed('status', function() {
+  @(computed('status').readOnly())
+  @attribute
+  get role() {
     let status = this.get('status');
     if (status === 'warning' || status === 'critical') {
       return 'alert';
     }
 
     return 'status';
-  }).readOnly(),
+  }
 
-  iconName: computed('icon', 'status', function() {
+  @(computed('icon', 'status').readOnly())
+  get iconName() {
     let icon = this.get('icon');
     if (isPresent(icon)) {
       return icon;
@@ -152,51 +143,55 @@ export default Component.extend({
     }
 
     return bannerIcons[status].iconName;
-  }).readOnly(),
+  }
 
-  iconColor: computed('status', function() {
+  @(computed('status').readOnly())
+  get iconColor() {
     let status = this.get('status');
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
 
     return bannerIcons[status].color;
-  }).readOnly(),
+  }
 
-  headingId: computed('title', function() {
+  @(computed('title').readOnly())
+  @attribute("aria-labelledby")
+  get headingId() {
     if (isBlank(this.get('title'))) {
       return;
     }
 
     return `${guidFor(this)}-heading`;
-  }).readOnly(),
+  }
 
-  statusClass: computed('status', function() {
+  @(computed('status').readOnly())
+  @className
+  get statusClass() {
     let status = this.get('status');
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       return;
     }
 
     return `Polaris-Banner--status${capitalize(status)}`;
-  }).readOnly(),
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
 
     let hasContentWrapper = isPresent(
       this.element.querySelector('div.Polaris-Banner__Content')
     );
     let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
     this.set('contentId', contentId);
-  },
+  }
 
-  actions: {
-    triggerAction(action, event) {
-      if (event) {
-        event.stopPropagation();
-      }
+  @action
+  triggerAction(action, event) {
+    if (event) {
+      event.stopPropagation();
+    }
 
-      return invokeAction(this, action.onAction);
-    },
-  },
-});
+    return invokeAction(this, action.onAction);
+  }
+}

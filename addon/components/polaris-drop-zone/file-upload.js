@@ -1,6 +1,7 @@
+import { classNames, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember-decorators/object";
+import { readOnly } from "@ember-decorators/object/computed";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import layout from '../../templates/components/polaris-drop-zone/file-upload';
 
@@ -15,11 +16,9 @@ const fileUploadStrings = {
   actionHintImage: 'or drop images to upload',
 };
 
-export default Component.extend({
-  classNames: ['Polaris-DropZone-FileUpload'],
-
-  layout,
-
+@classNames('Polaris-DropZone-FileUpload')
+@templateLayout(layout)
+export default class FileUpload extends Component {
   /**
    * String that appears in file upload
    *
@@ -28,10 +27,11 @@ export default Component.extend({
    * @public
    * @property actionTitle
    */
-  actionTitle: computed('type', function() {
+  @computed('type')
+  get actionTitle() {
     let type = this.get('type');
     return fileUploadStrings[`actionTitle${classify(type)}`];
-  }),
+  }
 
   /**
    * String that appears in file upload
@@ -41,22 +41,24 @@ export default Component.extend({
    * @public
    * @property actionHint
    */
-  actionHint: computed('type', function() {
+  @computed('type')
+  get actionHint() {
     let type = this.get('type');
     return fileUploadStrings[`actionHint${classify(type)}`];
-  }),
+  }
 
-  iconDragDrop,
+  iconDragDrop = iconDragDrop;
+  fileUpload = fileUpload;
+  imageUpload = imageUpload;
 
-  fileUpload,
+  @readOnly('context.type')
+  type;
 
-  imageUpload,
+  @readOnly('context.size')
+  size;
 
-  type: readOnly('context.type'),
-
-  size: readOnly('context.size'),
-
-  imageClasses: computed('size', function() {
+  @(computed('size').readOnly())
+  get imageClasses() {
     let classes = ['Polaris-DropZone-FileUpload__Image'];
     let size = this.get('size');
     if (['extraLarge', 'large'].includes(size)) {
@@ -64,5 +66,5 @@ export default Component.extend({
     }
 
     return classes.join(' ');
-  }).readOnly(),
-});
+  }
+}

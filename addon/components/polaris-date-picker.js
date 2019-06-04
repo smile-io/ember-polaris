@@ -1,5 +1,6 @@
+import { classNames, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
 import layout from '../templates/components/polaris-date-picker';
@@ -17,11 +18,9 @@ import {
 
 const weekStartsOn = weekdays.Sunday;
 
-export default Component.extend({
-  classNames: ['Polaris-DatePicker'],
-
-  layout,
-
+@classNames('Polaris-DatePicker')
+@templateLayout(layout)
+export default class PolarisDatePicker extends Component {
   /**
    * The selected date or range of dates
    *
@@ -30,7 +29,7 @@ export default Component.extend({
    * @type {Date | Object}
    * @default null
    */
-  selected: null,
+  selected = null;
 
   /**
    * The month to show
@@ -40,7 +39,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  month: null,
+  month = null;
 
   /**
    * The year to show
@@ -50,7 +49,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  year: null,
+  year = null;
 
   /**
    * Disable selecting dates before this date
@@ -60,7 +59,7 @@ export default Component.extend({
    * @type {Date}
    * @default null
    */
-  disableDatesBefore: null,
+  disableDatesBefore = null;
 
   /**
    * Disable selecting dates after this
@@ -70,7 +69,7 @@ export default Component.extend({
    * @type {Date}
    * @default null
    */
-  disableDatesAfter: null,
+  disableDatesAfter = null;
 
   /**
    * The selection can span multiple months
@@ -80,7 +79,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  multiMonth: false,
+  multiMonth = false;
 
   /**
    * First day of week. Sunday by default
@@ -90,7 +89,7 @@ export default Component.extend({
    * @type {String}
    * @default 'Sunday'
    */
-  weekStartsOn,
+  weekStartsOn = weekStartsOn;
 
   /**
    * Allow a range of dates to be selected
@@ -99,11 +98,12 @@ export default Component.extend({
    * @public
    * @type {Boolean}
    */
-  allowRange: computed('selected', function() {
+  @computed('selected')
+  get allowRange() {
     let selected = this.get('selected');
 
     return selected !== null && !(selected instanceof Date);
-  }),
+  }
 
   /**
    * Callback when date is selected
@@ -113,7 +113,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(/* dateRange */) {},
+  onChange/* dateRange */() {}
 
   /**
    * Callback when month is changed
@@ -123,100 +123,95 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onMonthChange(/* month, year */) {},
+  onMonthChange/* month, year */() {}
 
-  hoverDate: null,
+  hoverDate = null;
+  focusDate = null;
+  'data-test-date-picker' = true;
 
-  focusDate: null,
-
-  'data-test-date-picker': true,
-
-  showNextYear: computed('month', 'year', function() {
+  @(computed('month', 'year').readOnly())
+  get showNextYear() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getNextDisplayYear(month, year);
-  }).readOnly(),
+  }
 
-  showNextMonth: computed('month', function() {
+  @(computed('month').readOnly())
+  get showNextMonth() {
     return getNextDisplayMonth(this.get('month'));
-  }).readOnly(),
+  }
 
-  showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
+  @(computed('showNextMonth', 'showNextYear').readOnly())
+  get showNextToNextYear() {
     let { showNextMonth, showNextYear } = this.getProperties(
       'showNextMonth',
       'showNextYear'
     );
 
     return getNextDisplayYear(showNextMonth, showNextYear);
-  }).readOnly(),
+  }
 
-  showNextToNextMonth: computed('showNextMonth', function() {
+  @(computed('showNextMonth').readOnly())
+  get showNextToNextMonth() {
     return getNextDisplayMonth(this.get('showNextMonth'));
-  }).readOnly(),
+  }
 
-  showPreviousYear: computed('month', 'year', function() {
+  @(computed('month', 'year').readOnly())
+  get showPreviousYear() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getPreviousDisplayYear(month, year);
-  }).readOnly(),
+  }
 
-  showPreviousMonth: computed('month', function() {
+  @(computed('month').readOnly())
+  get showPreviousMonth() {
     return getPreviousDisplayMonth(this.get('month'));
-  }).readOnly(),
+  }
 
-  previousMonthName: computed('showPreviousMonth', function() {
+  @(computed('showPreviousMonth').readOnly())
+  get previousMonthName() {
     return monthsArray[this.get('showPreviousMonth')];
-  }).readOnly(),
+  }
 
-  nextMonth: computed(
-    'multiMonth',
-    'showNextToNextMonth',
-    'showNextMonth',
-    function() {
-      let {
-        multiMonth,
-        showNextToNextMonth,
-        showNextMonth,
-      } = this.getProperties(
-        'multiMonth',
-        'showNextToNextMonth',
-        'showNextMonth'
-      );
+  @(computed('multiMonth', 'showNextToNextMonth', 'showNextMonth').readOnly())
+  get nextMonth() {
+    let {
+      multiMonth,
+      showNextToNextMonth,
+      showNextMonth,
+    } = this.getProperties(
+      'multiMonth',
+      'showNextToNextMonth',
+      'showNextMonth'
+    );
 
-      return multiMonth
-        ? monthsArray[showNextToNextMonth]
-        : monthsArray[showNextMonth];
-    }
-  ).readOnly(),
+    return multiMonth
+      ? monthsArray[showNextToNextMonth]
+      : monthsArray[showNextMonth];
+  }
 
-  nextYear: computed(
-    'multiMonth',
-    'showNextToNextYear',
-    'showNextYear',
-    function() {
-      let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
-        'multiMonth',
-        'showNextToNextYear',
-        'showNextYear'
-      );
+  @(computed('multiMonth', 'showNextToNextYear', 'showNextYear').readOnly())
+  get nextYear() {
+    let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
+      'multiMonth',
+      'showNextToNextYear',
+      'showNextYear'
+    );
 
-      return multiMonth ? showNextToNextYear : showNextYear;
-    }
-  ).readOnly(),
+    return multiMonth ? showNextToNextYear : showNextYear;
+  }
 
-  previousMonthLabel: computed(
-    'previousMonthName',
-    'showPreviousYear',
-    function() {
-      return `Show previous month, ${this.get('previousMonthName')} ${this.get(
-        'showPreviousYear'
-      )}`;
-    }
-  ).readOnly(),
+  @(computed('previousMonthName', 'showPreviousYear').readOnly())
+  get previousMonthLabel() {
+    return `Show previous month, ${this.get('previousMonthName')} ${this.get(
+      'showPreviousYear'
+    )}`;
+  }
 
-  nextMonthLabel: computed('nextMonth', 'nextYear', function() {
+  @(computed('nextMonth', 'nextYear').readOnly())
+  get nextMonthLabel() {
     return `Show next month, ${this.get('nextMonth')} ${this.get('nextYear')}`;
-  }).readOnly(),
+  }
 
   setFocusDateAndHandleMonthChange(date) {
     this.get('onMonthChange')(date.getMonth(), date.getFullYear());
@@ -225,15 +220,15 @@ export default Component.extend({
       hoverDate: date,
       focusDate: date,
     });
-  },
+  }
 
   handleFocus(date) {
     this.set('focusDate', date);
-  },
+  }
 
   resetFocus() {
     this.set('focusDate', null);
-  },
+  }
 
   isSameSelectedDate(previousSelection, currentSelection) {
     if (previousSelection == null || currentSelection == null) {
@@ -252,7 +247,7 @@ export default Component.extend({
       isSameDay(previousSelection.start, currentSelection.start) &&
       isSameDay(previousSelection.end, currentSelection.end)
     );
-  },
+  }
 
   /**
    * Events
@@ -320,7 +315,7 @@ export default Component.extend({
         this.setFocusDateAndHandleMonthChange(yesterday);
       }
     }
-  },
+  }
 
   keyDown(e) {
     let { key } = e;
@@ -334,10 +329,10 @@ export default Component.extend({
       e.preventDefault();
       e.stopPropagation();
     }
-  },
+  }
 
   didReceiveAttrs() {
-    this._super(...arguments);
+    super.didReceiveAttrs(...arguments);
 
     let previousSelected = this.get('_previousSelected');
     let selected = this.get('selected');
@@ -348,24 +343,24 @@ export default Component.extend({
     ) {
       this.resetFocus();
     }
-  },
+  }
 
-  actions: {
-    handleDateSelection(dateRange) {
-      let { end: endDate } = dateRange;
+  @action
+  handleDateSelection(dateRange) {
+    let { end: endDate } = dateRange;
 
-      this.setProperties({
-        hoverDate: endDate,
-        focusDate: new Date(endDate),
-      });
+    this.setProperties({
+      hoverDate: endDate,
+      focusDate: new Date(endDate),
+    });
 
-      this.get('onChange')(dateRange);
-    },
+    this.get('onChange')(dateRange);
+  }
 
-    handleMonthChangeClick(month, year) {
-      this.get('onMonthChange')(month, year);
+  @action
+  handleMonthChangeClick(month, year) {
+    this.get('onMonthChange')(month, year);
 
-      this.set('focusDate', null);
-    },
-  },
-});
+    this.set('focusDate', null);
+  }
+}
