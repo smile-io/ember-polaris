@@ -1,6 +1,6 @@
 import { className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { notEmpty } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { notEmpty } from "@ember/object/computed";
 import Component from '@ember/component';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';

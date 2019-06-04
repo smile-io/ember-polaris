@@ -1,6 +1,6 @@
 import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { equal } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { equal } from "@ember/object/computed";
 import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';

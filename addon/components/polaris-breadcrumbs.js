@@ -1,5 +1,5 @@
 import { attribute, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import { handleMouseUpByBlurring } from '../utils/focus';

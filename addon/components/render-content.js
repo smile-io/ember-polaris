@@ -1,6 +1,6 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { notEmpty } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { notEmpty } from "@ember/object/computed";
 import Component from '@ember/component';
 import layout from '../templates/components/render-content';
 

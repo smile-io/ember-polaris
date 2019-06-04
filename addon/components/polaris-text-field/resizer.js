@@ -1,5 +1,5 @@
 import { attribute, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';

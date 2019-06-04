@@ -1,5 +1,5 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { or } from "@ember-decorators/object/computed";
+import { or } from "@ember/object/computed";
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-connected';
 

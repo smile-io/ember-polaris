@@ -1,5 +1,5 @@
 import { attribute, className, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { isBlank } from '@ember/utils';

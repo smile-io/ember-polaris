@@ -1,5 +1,5 @@
 import { layout, tagName } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 // import { compileTemplate } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';

@@ -1,6 +1,6 @@
 import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { or, gt } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { or, gt } from "@ember/object/computed";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/header';
 

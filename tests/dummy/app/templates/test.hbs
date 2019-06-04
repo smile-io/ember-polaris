@@ -1,11 +1,15 @@
-{{#polaris-button-group as |group|}}
-  {{#group.item}}
-    {{polaris-button text="Button 1" onClick=(action (mut dummy))}}
-  {{/group.item}}
-
-  {{#group.item}}
-    {{polaris-button text="Button 2" onClick=(action (mut dummy))}}
-  {{/group.item}}
-
-  {{polaris-button text="Button 2" onClick=(action (mut dummy))}}
-{{/polaris-button-group}}
+{{#polaris-banner
+  status="success"
+  icon="confetti"
+  action=(hash
+    text="Track"
+    onAction=(action (mut dummy))
+  )
+  secondaryAction=(hash
+    text="View"
+    onAction=(action (mut dummy))
+  )
+  onDismiss=(action (mut dummy))
+}}
+  <p>This order has been shipped.</p>
+{{/polaris-banner}}

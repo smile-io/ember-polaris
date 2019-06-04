@@ -1,5 +1,5 @@
 import { className, classNames } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 

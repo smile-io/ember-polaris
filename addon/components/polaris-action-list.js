@@ -1,6 +1,6 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { gt } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { gt } from "@ember/object/computed";
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';

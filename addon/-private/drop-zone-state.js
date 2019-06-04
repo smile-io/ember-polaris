@@ -1,4 +1,4 @@
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import EmberObject, { get } from '@ember/object';
 import { capitalize } from '@ember/string';
 

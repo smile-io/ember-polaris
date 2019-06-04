@@ -1,6 +1,6 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { and } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { and } from "@ember/object/computed";
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-creator';

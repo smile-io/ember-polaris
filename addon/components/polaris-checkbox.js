@@ -1,6 +1,6 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
 import { action, computed } from "@ember-decorators/object";
-import { equal } from "@ember-decorators/object/computed";
+import { equal } from "@ember/object/computed";
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
 import { deprecate } from '@ember/debug';

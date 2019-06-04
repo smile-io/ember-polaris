@@ -1,6 +1,6 @@
 import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
-import { not, and } from "@ember-decorators/object/computed";
+import { computed } from "@ember/object";
+import { not, and } from "@ember/object/computed";
 import Component from '@ember/component';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';

@@ -1,5 +1,5 @@
 import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember-decorators/object";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
 import { classify, htmlSafe } from '@ember/string';
 import { isPresent } from '@ember/utils';

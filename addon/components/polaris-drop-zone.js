@@ -1,6 +1,6 @@
 import { layout as templateLayout } from "@ember-decorators/component";
 import { action, computed } from "@ember-decorators/object";
-import { or } from "@ember-decorators/object/computed";
+import { or } from "@ember/object/computed";
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
