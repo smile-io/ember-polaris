@@ -1,5 +1,5 @@
 import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';

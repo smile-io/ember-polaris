@@ -1,5 +1,5 @@
 import { attribute, className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import { bool } from "@ember/object/computed";
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-banner';
@@ -73,11 +73,11 @@ export default class PolarisBanner extends Component {
   /**
    * Action for banner.
    *
-   * @property action
+   * @property primaryAction
    * @type {Object}
    * @default null
    */
-  action = null;
+  primaryAction = null;
 
   /**
    * Displays a secondary action.
@@ -192,6 +192,6 @@ export default class PolarisBanner extends Component {
       event.stopPropagation();
     }
 
-    return invokeAction(this, action.onAction);
+    return invokeAction(this, primaryAction.onAction);
   }
 }

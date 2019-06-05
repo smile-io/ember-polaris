@@ -1,5 +1,5 @@
 import { attribute, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/month';
 import {

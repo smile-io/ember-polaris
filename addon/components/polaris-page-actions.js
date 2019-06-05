@@ -1,5 +1,5 @@
 import { classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { isArray } from '@ember/array';
 import { invokeAction } from 'ember-invoke-action';

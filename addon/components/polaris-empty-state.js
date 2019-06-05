@@ -63,11 +63,11 @@ export default class PolarisEmptyState extends Component {
  /**
   * Primary action for empty state
   *
-  * @property action
+  * @property primaryAction
   * @type {Object}
   * @default null
   */
- action = null;
+ primaryAction = null;
 
  /**
   * Secondary action for empty state

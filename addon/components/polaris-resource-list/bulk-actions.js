@@ -1,5 +1,5 @@
 import { layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { warn } from '@ember/debug';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';

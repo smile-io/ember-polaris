@@ -1,5 +1,5 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { invokeAction } from 'ember-invoke-action';
 import layout from '../../templates/components/polaris-action-list/section';

@@ -1,5 +1,5 @@
 import { classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { typeOf } from '@ember/utils';
 import layout from '../../templates/components/polaris-color-picker/hue-picker';

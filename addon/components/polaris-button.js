@@ -1,5 +1,5 @@
 import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import { or } from "@ember/object/computed";
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';

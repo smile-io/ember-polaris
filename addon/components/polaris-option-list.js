@@ -1,5 +1,5 @@
 import { attribute, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
+import { action, computed } from "@ember/object";
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
 import layout from '../templates/components/polaris-option-list';
