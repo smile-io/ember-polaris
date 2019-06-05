@@ -1,4 +1,7 @@
-import { classNames, layout as templateLayout } from "@ember-decorators/component";
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../../../templates/components/polaris-page/header/action-group';
 

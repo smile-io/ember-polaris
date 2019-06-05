@@ -1,5 +1,5 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/day';
 import {
@@ -68,7 +68,7 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onClick/* day */() {}
+  onClick /* day */() {}
 
   /**
    * @property onHover
@@ -76,7 +76,7 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onHover/* day */() {}
+  onHover /* day */() {}
 
   /**
    * @property onFocus
@@ -84,11 +84,15 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onFocus/* day */() {}
+  onFocus /* day */() {}
 
-  @(
-    computed('selected', 'disabled', 'isDateToday', 'inHoveringRange', 'inRange').readOnly()
-  )
+  @(computed(
+    'selected',
+    'disabled',
+    'isDateToday',
+    'inHoveringRange',
+    'inRange'
+  ).readOnly())
   get dayButtonClasses() {
     let classNames = ['Polaris-DatePicker__Day'];
     let {
@@ -182,17 +186,15 @@ export default class Day extends Component {
     return `${isDateToday ? 'Today ' : ''}${month} ${date} ${year}`;
   }
 
-  @(
-    computed('focused', 'selected', 'disabled', 'date', 'isDateToday').readOnly()
-  )
+  @(computed(
+    'focused',
+    'selected',
+    'disabled',
+    'date',
+    'isDateToday'
+  ).readOnly())
   get tabIndex() {
-    let {
-      focused,
-      selected,
-      disabled,
-      date,
-      isDateToday,
-    } = this.getProperties(
+    let { focused, selected, disabled, date, isDateToday } = this.getProperties(
       'focused',
       'selected',
       'disabled',

@@ -1,5 +1,9 @@
-import { attribute, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  attribute,
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/polaris-skeleton-page/action';

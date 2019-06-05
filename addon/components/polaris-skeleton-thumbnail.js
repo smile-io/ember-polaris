@@ -1,5 +1,5 @@
-import { className, classNames } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import { className, classNames } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { capitalize } from '@ember/string';
 

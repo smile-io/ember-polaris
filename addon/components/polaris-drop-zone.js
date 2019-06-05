@@ -1,6 +1,6 @@
-import { layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
-import { or } from "@ember/object/computed";
+import { layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
@@ -22,7 +22,9 @@ const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
 @templateLayout(layout)
-export default class PolarisDropZone extends Component.extend(ContextBoundEventListenersMixin) {
+export default class PolarisDropZone extends Component.extend(
+  ContextBoundEventListenersMixin
+) {
   /**
    * ID for file input
    *

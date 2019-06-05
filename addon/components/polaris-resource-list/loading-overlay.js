@@ -1,4 +1,4 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-resource-list/loading-overlay';
 
@@ -8,7 +8,7 @@ import layout from '../../templates/components/polaris-resource-list/loading-ove
 @tagName('')
 @templateLayout(layout)
 export default class LoadingOverlay extends Component {
- loading = false;
- spinnerStyle = null;
- spinnerSize = null;
+  loading = false;
+  spinnerStyle = null;
+  spinnerSize = null;
 }

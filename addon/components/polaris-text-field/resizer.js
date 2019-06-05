@@ -1,5 +1,9 @@
-import { attribute, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  attribute,
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
@@ -21,7 +25,10 @@ function replaceEntity(entity) {
 
 @classNames('Polaris-TextField__Resizer')
 @templateLayout(layout)
-export default class Resizer extends Component.extend(ContextBoundTasksMixin, ContextBoundEventListenersMixin) {
+export default class Resizer extends Component.extend(
+  ContextBoundTasksMixin,
+  ContextBoundEventListenersMixin
+) {
   /**
    * The value of the textarea
    *
@@ -61,9 +68,9 @@ export default class Resizer extends Component.extend(ContextBoundTasksMixin, Co
    * @type {Function}
    * @default noop
    */
-  onHeightChange/* height */() {}
+  onHeightChange /* height */() {}
 
-  @attribute("aria-hidden")
+  @attribute('aria-hidden')
   ariaHidden = 'true';
 
   'data-test-text-field-resizer' = true;

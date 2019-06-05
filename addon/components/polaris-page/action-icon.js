@@ -1,4 +1,8 @@
-import { classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import {
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-page/action-icon';
 
@@ -6,12 +10,12 @@ import layout from '../../templates/components/polaris-page/action-icon';
 @classNames('Polaris-Header-Action__ActionIcon')
 @templateLayout(layout)
 export default class ActionIcon extends Component {
- /**
-  * The icon to display
-  *
-  * @property icon
-  * @type {String}
-  * @default null
-  */
- icon = null;
+  /**
+   * The icon to display
+   *
+   * @property icon
+   * @type {String}
+   * @default null
+   */
+  icon = null;
 }

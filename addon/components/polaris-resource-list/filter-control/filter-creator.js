@@ -1,6 +1,6 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
-import { and } from "@ember/object/computed";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
+import { and } from '@ember/object/computed';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-creator';
@@ -66,9 +66,11 @@ export default class FilterCreator extends Component {
    */
   selectedFilterValue = null;
 
-  @(
-    and('selectedFilter', 'selectedFilterKey', 'selectedFilterValue').readOnly()
-  )
+  @(and(
+    'selectedFilter',
+    'selectedFilterKey',
+    'selectedFilterValue'
+  ).readOnly())
   canAddFilter;
 
   @(computed('resourceName.plural').readOnly())

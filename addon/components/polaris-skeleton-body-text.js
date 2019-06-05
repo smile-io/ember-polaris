@@ -1,5 +1,8 @@
-import { classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-skeleton-body-text';
 

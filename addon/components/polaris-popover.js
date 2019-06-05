@@ -1,5 +1,5 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Ember from 'ember';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';

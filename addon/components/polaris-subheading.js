@@ -1,4 +1,9 @@
-import { attribute, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import {
+  attribute,
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-subheading';
 
@@ -20,30 +25,30 @@ import layout from '../templates/components/polaris-subheading';
 @classNames('Polaris-Subheading')
 @templateLayout(layout)
 export default class PolarisSubheading extends Component {
- /**
-  * The content to display inside the heading
-  *
-  * This component can be used in block form,
-  * in which case the block content will be used
-  * instead of `text`
-  *
-  * @property text
-  * @type {String}
-  * @default null
-  * @public
-  */
- text = null;
+  /**
+   * The content to display inside the heading
+   *
+   * This component can be used in block form,
+   * in which case the block content will be used
+   * instead of `text`
+   *
+   * @property text
+   * @type {String}
+   * @default null
+   * @public
+   */
+  text = null;
 
- /**
-  * @private
-  */
- @attribute("aria-label")
- ariaLabel = null;
+  /**
+   * @private
+   */
+  @attribute('aria-label')
+  ariaLabel = null;
 
- didRender() {
-   super.didRender(...arguments);
+  didRender() {
+    super.didRender(...arguments);
 
-   // Update ariaLabel with the new content.
-   this.set('ariaLabel', this.element.textContent.trim());
- }
+    // Update ariaLabel with the new content.
+    this.set('ariaLabel', this.element.textContent.trim());
+  }
 }

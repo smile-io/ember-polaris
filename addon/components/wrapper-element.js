@@ -1,4 +1,4 @@
-import { layout as templateLayout } from "@ember-decorators/component";
+import { layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { isBlank } from '@ember/utils';
 import { dasherize } from '@ember/string';

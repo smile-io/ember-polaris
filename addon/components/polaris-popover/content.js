@@ -1,4 +1,4 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';

@@ -1,5 +1,5 @@
-import { layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
+import { layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { warn } from '@ember/debug';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
@@ -9,7 +9,10 @@ import layout from '../../templates/components/polaris-resource-list/bulk-action
 const MAX_PROMOTED_ACTIONS = 2;
 
 @templateLayout(layout)
-export default class BulkActions extends Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin) {
+export default class BulkActions extends Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin
+) {
   /**
    * Visually hidden text for screen readers
    *
@@ -108,7 +111,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
    * @property onSelectModeToggle
    * @public
    */
-  onSelectModeToggle/* selectMode **/() {}
+  onSelectModeToggle /* selectMode **/() {}
 
   /**
    * Callback when the select all checkbox is clicked
@@ -248,9 +251,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
     if (
       !promotedActions ||
-      (promotedActions &&
-        numberOfPromotedActionsToRender === 0 &&
-        !measuring)
+      (promotedActions && numberOfPromotedActionsToRender === 0 && !measuring)
     ) {
       return 'Actions';
     }
@@ -300,14 +301,10 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
       'rolledInPromotedActions'
     );
 
-    let rolledInPromotedActionsHasLength =
-      rolledInPromotedActions.length > 0;
+    let rolledInPromotedActionsHasLength = rolledInPromotedActions.length > 0;
 
     if (actionSections && rolledInPromotedActionsHasLength) {
-      combinedActions = [
-        { items: rolledInPromotedActions },
-        ...actionSections,
-      ];
+      combinedActions = [{ items: rolledInPromotedActions }, ...actionSections];
     } else if (actionSections) {
       combinedActions = actionSections;
     } else if (rolledInPromotedActionsHasLength) {
@@ -361,11 +358,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
     let largeScreenGroupNode = this.get('largeScreenButtonsNode');
 
     if (largeScreenGroupNode) {
-      this.addEventListener(
-        largeScreenGroupNode,
-        'resize',
-        this.handleResize
-      );
+      this.addEventListener(largeScreenGroupNode, 'resize', this.handleResize);
     }
   }
 

@@ -1,6 +1,6 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
-import { bool } from "@ember/object/computed";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';

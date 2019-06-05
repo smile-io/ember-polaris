@@ -1,5 +1,8 @@
-import { classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import $Ember from 'jquery';
 import Component from '@ember/component';
 import { isNone, typeOf } from '@ember/utils';

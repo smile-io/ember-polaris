@@ -1,6 +1,11 @@
-import { attribute, className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
-import { bool } from "@ember/object/computed";
+import {
+  attribute,
+  className,
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { bool } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-banner';
 import { isBlank, isPresent } from '@ember/utils';
@@ -100,7 +105,7 @@ export default class PolarisBanner extends Component {
   @attribute
   tabIndex = '0';
 
-  @attribute("aria-live")
+  @attribute('aria-live')
   ariaLive = 'polite';
 
   /**
@@ -109,14 +114,17 @@ export default class PolarisBanner extends Component {
    *
    * TODO implement appProvider/withAppProvider
    */
-  @className("Polaris-Banner--withinContentContainer", "Polaris-Banner--withinPage")
+  @className(
+    'Polaris-Banner--withinContentContainer',
+    'Polaris-Banner--withinPage'
+  )
   withinContentContainer = false;
 
   mouseUp = handleMouseUpByBlurring;
   'data-test-banner' = '';
 
   @(bool('onDismiss').readOnly())
-  @className("Polaris-Banner--hasDismiss")
+  @className('Polaris-Banner--hasDismiss')
   hasDismiss;
 
   @(computed('status').readOnly())
@@ -156,7 +164,7 @@ export default class PolarisBanner extends Component {
   }
 
   @(computed('title').readOnly())
-  @attribute("aria-labelledby")
+  @attribute('aria-labelledby')
   get headingId() {
     if (isBlank(this.get('title'))) {
       return;

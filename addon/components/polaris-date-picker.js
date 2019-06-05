@@ -1,5 +1,8 @@
-import { classNames, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
 import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
@@ -113,7 +116,7 @@ export default class PolarisDatePicker extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange/* dateRange */() {}
+  onChange /* dateRange */() {}
 
   /**
    * Callback when month is changed
@@ -123,7 +126,7 @@ export default class PolarisDatePicker extends Component {
    * @type {Function}
    * @default noop
    */
-  onMonthChange/* month, year */() {}
+  onMonthChange /* month, year */() {}
 
   hoverDate = null;
   focusDate = null;
@@ -175,11 +178,7 @@ export default class PolarisDatePicker extends Component {
 
   @(computed('multiMonth', 'showNextToNextMonth', 'showNextMonth').readOnly())
   get nextMonth() {
-    let {
-      multiMonth,
-      showNextToNextMonth,
-      showNextMonth,
-    } = this.getProperties(
+    let { multiMonth, showNextToNextMonth, showNextMonth } = this.getProperties(
       'multiMonth',
       'showNextToNextMonth',
       'showNextMonth'

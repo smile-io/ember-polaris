@@ -1,5 +1,9 @@
-import { attribute, className, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  attribute,
+  className,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { isBlank } from '@ember/utils';
@@ -26,7 +30,7 @@ export default class Group extends Component {
    * @default false
    * @public
    */
-  @className("Polaris-FormLayout--condensed", "Polaris-FormLayout--grouped")
+  @className('Polaris-FormLayout--condensed', 'Polaris-FormLayout--grouped')
   condensed = false;
 
   /**
@@ -58,7 +62,7 @@ export default class Group extends Component {
   'data-test-form-layout-group' = true;
 
   @(computed('title').readOnly())
-  @attribute("aria-labelledby")
+  @attribute('aria-labelledby')
   get titleID() {
     if (isBlank(this.get('title'))) {
       return;
@@ -68,7 +72,7 @@ export default class Group extends Component {
   }
 
   @(computed('helpText').readOnly())
-  @attribute("aria-describedby")
+  @attribute('aria-describedby')
   get helpTextID() {
     if (isBlank(this.get('helpText'))) {
       return;

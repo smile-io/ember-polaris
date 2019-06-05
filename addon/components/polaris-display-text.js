@@ -1,5 +1,10 @@
-import { className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import {
+  className,
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-display-text';
@@ -22,39 +27,39 @@ import layout from '../templates/components/polaris-display-text';
 @classNames('Polaris-DisplayText')
 @templateLayout(layout)
 export default class PolarisDisplayText extends Component {
- /**
-  * Size of the text
-  *
-  * @property size
-  * @type {String}
-  * @default medium
-  * @public
-  */
- size = 'medium';
+  /**
+   * Size of the text
+   *
+   * @property size
+   * @type {String}
+   * @default medium
+   * @public
+   */
+  size = 'medium';
 
- /**
-  * Content to display
-  *
-  * This component can be used in block form,
-  * in which case the block content will be used
-  * instead of `text`
-  *
-  * @property text
-  * @type {String}
-  * @default null
-  * @public
-  */
- text = null;
+  /**
+   * Content to display
+   *
+   * This component can be used in block form,
+   * in which case the block content will be used
+   * instead of `text`
+   *
+   * @property text
+   * @type {String}
+   * @default null
+   * @public
+   */
+  text = null;
 
- 'data-test-display-text' = true;
+  'data-test-display-text' = true;
 
- /**
-  * @private
-  */
- @(computed('size').readOnly())
- @className
- get sizeClassName() {
-   const size = this.get('size');
-   return `Polaris-DisplayText--size${classify(size)}`;
- }
+  /**
+   * @private
+   */
+  @(computed('size').readOnly())
+  @className
+  get sizeClassName() {
+    const size = this.get('size');
+    return `Polaris-DisplayText--size${classify(size)}`;
+  }
 }

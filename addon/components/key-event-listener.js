@@ -1,4 +1,4 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { assert } from '@ember/debug';
 import { isPresent } from '@ember/utils';
@@ -18,7 +18,10 @@ import layout from '../templates/components/key-event-listener';
  */
 @tagName('')
 @templateLayout(layout)
-export default class KeyEventListener extends Component.extend(EKMixin, EKOnInsertMixin) {
+export default class KeyEventListener extends Component.extend(
+  EKMixin,
+  EKOnInsertMixin
+) {
   /**
    * The key (or key combination) that triggers the keyDown/keyPress/keyUp event
    * @property key

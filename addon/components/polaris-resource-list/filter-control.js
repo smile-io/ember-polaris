@@ -1,5 +1,5 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
@@ -8,7 +8,9 @@ import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-
 
 @tagName('')
 @templateLayout(layout)
-export default class FilterControl extends Component.extend(context.ConsumerMixin) {
+export default class FilterControl extends Component.extend(
+  context.ConsumerMixin
+) {
   /**
    * @property searchValue
    * @type {String}

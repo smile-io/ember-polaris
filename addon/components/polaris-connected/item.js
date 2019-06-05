@@ -1,5 +1,9 @@
-import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { equal } from "@ember/object/computed";
+import {
+  className,
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { equal } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-connected/item';
 
@@ -26,19 +30,19 @@ export default class Item extends Component {
    * @type {Boolean}
    * @default false
    */
-  @className("Polaris-Connected__Item--focused")
+  @className('Polaris-Connected__Item--focused')
   focused = false;
 
   @(equal('position', 'left').readOnly())
-  @className("Polaris-Connected__Item--connection")
+  @className('Polaris-Connected__Item--connection')
   left;
 
   @(equal('position', 'right').readOnly())
-  @className("Polaris-Connected__Item--connection")
+  @className('Polaris-Connected__Item--connection')
   right;
 
   @(equal('position', 'primary').readOnly())
-  @className("Polaris-Connected__Item--primary")
+  @className('Polaris-Connected__Item--primary')
   primary;
 
   focusIn() {

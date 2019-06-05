@@ -1,5 +1,11 @@
-import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
+import {
+  attribute,
+  className,
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
@@ -106,7 +112,7 @@ export default class PolarisChoiceList extends Component {
    * @type {Boolean}
    * @default false
    */
-  @className("Polaris-ChoiceList--titleHidden")
+  @className('Polaris-ChoiceList--titleHidden')
   titleHidden = false;
 
   /**
@@ -125,7 +131,7 @@ export default class PolarisChoiceList extends Component {
    * @private
    */
   @computed('error')
-  @attribute("aria-invalid")
+  @attribute('aria-invalid')
   get ariaInvalid() {
     return this.get('error') != null;
   }
@@ -134,7 +140,7 @@ export default class PolarisChoiceList extends Component {
    * @private
    */
   @(computed('finalName').readOnly())
-  @attribute("aria-describedby")
+  @attribute('aria-describedby')
   get ariaDescribedBy() {
     return errorId(this.get('finalName'));
   }
@@ -153,7 +159,7 @@ export default class PolarisChoiceList extends Component {
    * @private
    */
   @(computed('name', 'allowMultiple').readOnly())
-  @attribute("id")
+  @attribute('id')
   get finalName() {
     let { name, allowMultiple } = this.getProperties('name', 'allowMultiple');
 

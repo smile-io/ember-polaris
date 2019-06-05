@@ -1,4 +1,8 @@
-import { classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import {
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import Component from '@ember/component';
 import { A as EmberArray } from '@ember/array';
 import { deprecate } from '@ember/debug';

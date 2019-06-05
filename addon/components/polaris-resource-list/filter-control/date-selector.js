@@ -1,5 +1,5 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
 import Component from '@ember/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/date-selector';
 
@@ -231,9 +231,12 @@ export default class DateSelector extends Component {
     }
   }
 
-  @(
-    computed('filterValue', 'filterKey', 'filterMinKey', 'filterMaxKey').readOnly()
-  )
+  @(computed(
+    'filterValue',
+    'filterKey',
+    'filterMinKey',
+    'filterMaxKey'
+  ).readOnly())
   get dateFilterOption() {
     let {
       filterValue,

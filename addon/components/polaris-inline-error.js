@@ -1,4 +1,4 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-inline-error';
 import { assert } from '@ember/debug';

@@ -1,6 +1,12 @@
-import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
-import { or } from "@ember/object/computed";
+import {
+  attribute,
+  className,
+  classNames,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import Component from '@ember/component';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
@@ -155,7 +161,7 @@ export default class PolarisAvatar extends Component {
    * @type {Boolean}
    */
   @(computed('source', 'customer', 'hasError').readOnly())
-  @className("Polaris-Avatar--hasImage")
+  @className('Polaris-Avatar--hasImage')
   get hasImage() {
     let { source, customer, hasError } = this.getProperties(
       'source',
@@ -173,7 +179,7 @@ export default class PolarisAvatar extends Component {
    * @type {String}
    */
   @(computed('accessibilityLabel', 'name', 'initials').readOnly())
-  @attribute("aria-label")
+  @attribute('aria-label')
   get label() {
     let { accessibilityLabel, name, initials } = this.getProperties(
       'accessibilityLabel',
