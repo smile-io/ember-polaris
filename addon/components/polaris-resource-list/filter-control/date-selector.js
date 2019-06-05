@@ -229,6 +229,8 @@ export default class DateSelector extends Component {
     if (selectedDate) {
       return stripTimeFromISOString(formatDateForLocalTimezone(selectedDate));
     }
+
+    return null;
   }
 
   @(computed(

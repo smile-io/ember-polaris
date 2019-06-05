@@ -291,6 +291,8 @@ export default class BulkActions extends Component.extend(
     if (this.instanceOfBulkActionArray(actionsCollection)) {
       return [{ items: actionsCollection }];
     }
+
+    return null;
   }
 
   @computed('actionSections.[]', 'rolledInPromotedActions')

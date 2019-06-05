@@ -167,7 +167,7 @@ export default class PolarisBanner extends Component {
   @attribute('aria-labelledby')
   get headingId() {
     if (isBlank(this.get('title'))) {
-      return;
+      return null;
     }
 
     return `${guidFor(this)}-heading`;
@@ -178,7 +178,7 @@ export default class PolarisBanner extends Component {
   get statusClass() {
     let status = this.get('status');
     if (isBlank(status) || !supportedStatuses.includes(status)) {
-      return;
+      return null;
     }
 
     return `Polaris-Banner--status${capitalize(status)}`;
@@ -200,6 +200,7 @@ export default class PolarisBanner extends Component {
       event.stopPropagation();
     }
 
+    // eslint-disable-next-line no-undef
     return invokeAction(this, primaryAction.onAction);
   }
 }

@@ -190,7 +190,7 @@ export default class Cell extends Component {
     let { header, contentType } = this.getProperties('header', 'contentType');
 
     if (isNone(header)) {
-      return;
+      return null;
     }
 
     let classNames = ['Polaris-DataTable__Heading'];

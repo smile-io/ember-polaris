@@ -65,7 +65,7 @@ export default class Group extends Component {
   @attribute('aria-labelledby')
   get titleID() {
     if (isBlank(this.get('title'))) {
-      return;
+      return null;
     }
 
     return idVariation(this.get('elementId'), 'Title');
@@ -75,7 +75,7 @@ export default class Group extends Component {
   @attribute('aria-describedby')
   get helpTextID() {
     if (isBlank(this.get('helpText'))) {
-      return;
+      return null;
     }
 
     return helpTextId(this.get('elementId'));

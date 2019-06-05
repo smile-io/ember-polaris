@@ -54,5 +54,7 @@ export default class Total extends Component {
     if (total !== '' && index > 0) {
       return 'numeric';
     }
+
+    return null;
   }
 }
