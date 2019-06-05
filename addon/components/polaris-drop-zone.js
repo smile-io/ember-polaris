@@ -288,7 +288,9 @@ export default class PolarisDropZone extends Component.extend(
   iconAlertCircle = iconAlertCircle;
 
   @(computed().readOnly())
-  state;
+  get state() {
+    return State.create();
+  }
 
   @(or('active', 'state.dragging').readOnly())
   isDragging;
