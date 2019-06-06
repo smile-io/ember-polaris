@@ -1,4 +1,4 @@
-import { action } from '@ember-decorators/object';
+import { action as actionDecorator } from '@ember-decorators/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { invokeAction } from 'ember-invoke-action';
@@ -33,7 +33,7 @@ export default class PolarisSettingToggle extends Component {
    * @default null
    * @public
    */
-  primaryAction = null;
+  action = null;
 
   /**
    * Sets toggle state to enabled or disabled
@@ -45,8 +45,8 @@ export default class PolarisSettingToggle extends Component {
    */
   enabled = null;
 
-  @action
-  fireAction(primaryAction) {
-    invokeAction(primaryAction, 'onAction');
+  @actionDecorator
+  fireAction(action) {
+    invokeAction(action, 'onAction');
   }
 }

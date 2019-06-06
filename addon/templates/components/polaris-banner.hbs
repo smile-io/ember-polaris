@@ -24,7 +24,7 @@
     </div>
   {{/if}}
 
-  {{#if (or hasBlock text primaryAction)}}
+  {{#if (or hasBlock text action)}}
     <div class="Polaris-Banner__Content" id={{contentId}}>
       {{#if hasBlock}}
         {{yield}}
@@ -32,17 +32,17 @@
         {{text}}
       {{/if}}
 
-      {{#if primaryAction}}
+      {{#if action}}
         <div class="Polaris-Banner__Actions">
           {{#polaris-button-group}}
             <div class="Polaris-Banner__PrimaryAction">
               {{polaris-button
                 outline=true
                 size=(if withinContentContainer "slim")
-                text=primaryAction.text
-                disabled=primaryAction.disabled
-                loading=primaryAction.loading
-                onClick=(action "triggerAction" primaryAction)
+                text=action.text
+                disabled=action.disabled
+                loading=action.loading
+                onClick=(action "triggerAction" action)
               }}
             </div>
 

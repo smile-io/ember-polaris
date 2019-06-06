@@ -28,7 +28,7 @@ export default class PolarisForm extends Component {
    * @public
    */
   @attribute
-  primaryAction = null;
+  action = null;
 
   /**
    * Grants the broswer the ability to autocomplete input elements

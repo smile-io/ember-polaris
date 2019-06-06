@@ -33,11 +33,11 @@ export default class Details extends Component {
   /**
    * Primary action for empty state
    *
-   * @property primaryAction
+   * @property action
    * @type {Object}
    * @default null
    */
-  primaryAction = null;
+  action = null;
 
   /**
    * Secondary action for empty state

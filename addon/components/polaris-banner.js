@@ -4,7 +4,7 @@ import {
   classNames,
   layout as templateLayout,
 } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
+import { action as actionDecorator, computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-banner';
@@ -82,7 +82,7 @@ export default class PolarisBanner extends Component {
    * @type {Object}
    * @default null
    */
-  primaryAction = null;
+  action = null;
 
   /**
    * Displays a secondary action.
@@ -194,13 +194,12 @@ export default class PolarisBanner extends Component {
     this.set('contentId', contentId);
   }
 
-  @action
+  @actionDecorator
   triggerAction(action, event) {
     if (event) {
       event.stopPropagation();
     }
 
-    // eslint-disable-next-line no-undef
-    return invokeAction(this, primaryAction.onAction);
+    return invokeAction(this, action.onAction);
   }
 }
