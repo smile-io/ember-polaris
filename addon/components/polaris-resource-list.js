@@ -436,7 +436,7 @@ export default class PolarisResourceList extends Component.extend(
     resourceName = resourceName || this.get('defaultResourceName');
 
     if (!this.get('selectable') || !hasMoreItems) {
-      return;
+      return null;
     }
 
     if (selectedItems === SELECT_ALL_ITEMS) {
@@ -445,6 +445,8 @@ export default class PolarisResourceList extends Component.extend(
         'plural'
       )} in your store are selected.`;
     }
+
+    return null;
   }
 
   @(computed(
@@ -468,7 +470,7 @@ export default class PolarisResourceList extends Component.extend(
     resourceName = resourceName || this.get('defaultResourceName');
 
     if (!this.get('selectable') || !hasMoreItems) {
-      return;
+      return null;
     }
 
     let actionText =

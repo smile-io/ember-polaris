@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { get, computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 
 const dropZone = {
