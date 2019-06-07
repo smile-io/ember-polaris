@@ -1,6 +1,6 @@
-import { layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
-import { inject as service } from "@ember-decorators/service";
+import { layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember-decorators/service';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
@@ -66,7 +66,7 @@ export default class PolarisSticky extends Component {
    * @type {String}
    * @private
    */
-  @computedIdVariation('elementId', 'PlaceHolder').readOnly()
+  @(computedIdVariation('elementId', 'PlaceHolder').readOnly())
   placeHolderNodeId;
 
   /**
@@ -74,7 +74,7 @@ export default class PolarisSticky extends Component {
    * @type {String}
    * @private
    */
-  @computedIdVariation('elementId', 'Sticky').readOnly()
+  @(computedIdVariation('elementId', 'Sticky').readOnly())
   stickyNodeId;
 
   /**

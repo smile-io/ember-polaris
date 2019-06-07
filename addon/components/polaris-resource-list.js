@@ -1,6 +1,6 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
-import { gt } from "@ember/object/computed";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
+import { gt } from '@ember/object/computed';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
@@ -32,7 +32,10 @@ const LARGE_SPINNER_HEIGHT = 45;
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisResourceList extends Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin) {
+export default class PolarisResourceList extends Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin
+) {
   /**
    * Item data; each item is passed to renderItem
    *
@@ -276,7 +279,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   @(gt('items.length', 0).readOnly())
   itemsExist;
 
-  @computedIdVariation('id', 'Select').readOnly()
+  @(computedIdVariation('id', 'Select').readOnly())
   selectId;
 
   /**
@@ -330,10 +333,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('selectedItems.length', 'items.length').readOnly())
   get bulkSelectState() {
-    let { selectedItems, items } = this.getProperties(
-      'selectedItems',
-      'items'
-    );
+    let { selectedItems, items } = this.getProperties('selectedItems', 'items');
     let selectState = 'indeterminate';
     if (
       !selectedItems ||
@@ -342,17 +342,18 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
       selectState = false;
     } else if (
       selectedItems === SELECT_ALL_ITEMS ||
-      (Array.isArray(selectedItems) &&
-        selectedItems.length === items.length)
+      (Array.isArray(selectedItems) && selectedItems.length === items.length)
     ) {
       selectState = true;
     }
     return selectState;
   }
 
-  @(
-    computed('resourceName.{singular,plural}', 'items.length', 'loading').readOnly()
-  )
+  @(computed(
+    'resourceName.{singular,plural}',
+    'items.length',
+    'loading'
+  ).readOnly())
   get headerTitle() {
     let { resourceName, items, loading } = this.getProperties(
       'resourceName',
@@ -374,10 +375,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('selectedItems.length', 'items.length').readOnly())
   get bulkActionsLabel() {
-    let { selectedItems, items } = this.getProperties(
-      'selectedItems',
-      'items'
-    );
+    let { selectedItems, items } = this.getProperties('selectedItems', 'items');
     selectedItems = selectedItems || [];
 
     let selectedItemsCount =
@@ -388,9 +386,11 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     return `${selectedItemsCount} selected`;
   }
 
-  @(
-    computed('resourceName.{singular,plural}', 'selectedItems.length', 'items.length').readOnly()
-  )
+  @(computed(
+    'resourceName.{singular,plural}',
+    'selectedItems.length',
+    'items.length'
+  ).readOnly())
   get bulkActionsAccessibilityLabel() {
     let { resourceName, selectedItems, items } = this.getProperties(
       'resourceName',
@@ -415,9 +415,12 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     }
   }
 
-  @(
-    computed('hasMoreItems', 'selectedItems', 'items.length', 'resourceName.plural').readOnly()
-  )
+  @(computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural'
+  ).readOnly())
   get paginatedSelectAllText() {
     let {
       hasMoreItems,
@@ -444,9 +447,12 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     }
   }
 
-  @(
-    computed('hasMoreItems', 'selectedItems', 'items.length', 'resourceName.plural').readOnly()
-  )
+  @(computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural'
+  ).readOnly())
   get paginatedSelectAllAction() {
     let {
       hasMoreItems,
@@ -502,8 +508,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   get spinnerStyle() {
     let loadingPosition = this.get('loadingPosition');
     let defaultTopPadding = 8;
-    let topPadding =
-      loadingPosition > 0 ? loadingPosition : defaultTopPadding;
+    let topPadding = loadingPosition > 0 ? loadingPosition : defaultTopPadding;
     return htmlSafe(`padding-top: ${topPadding}px`);
   }
 
@@ -512,9 +517,13 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     return this.get('items.length') < 2 ? 'small' : 'large';
   }
 
-  @(
-    computed('selectedItems.[]', 'resourceName', 'loading', 'selectMode', 'selectable').readOnly()
-  )
+  @(computed(
+    'selectedItems.[]',
+    'resourceName',
+    'loading',
+    'selectMode',
+    'selectable'
+  ).readOnly())
   get context() {
     let {
       selectedItems,
@@ -690,8 +699,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     let newlySelectedItems = [];
 
     if (
-      (Array.isArray(selectedItems) &&
-        selectedItems.length === items.length) ||
+      (Array.isArray(selectedItems) && selectedItems.length === items.length) ||
       selectedItems === SELECT_ALL_ITEMS
     ) {
       newlySelectedItems = [];

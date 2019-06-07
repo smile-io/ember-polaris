@@ -22,7 +22,7 @@ export default class ComponentProxy extends Component {
    * Dynamically-generated layout to render the proxied component.
    * @private
    */
-  @(computed('componentName', 'propsString')).readOnly()
+  @(computed('componentName', 'propsString').readOnly())
   get layout() {
     let { componentName, propsString } = this.getProperties(
       'componentName',

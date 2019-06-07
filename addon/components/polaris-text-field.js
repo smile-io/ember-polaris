@@ -1,6 +1,6 @@
-import { tagName, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember-decorators/object";
-import { bool } from "@ember/object/computed";
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember-decorators/object';
+import { bool } from '@ember/object/computed';
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/string';
@@ -366,7 +366,7 @@ export default class PolarisTextField extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange/** value, id */() {}
+  onChange /** value, id */() {}
 
   /**
    * Callback when input is focused
@@ -403,9 +403,14 @@ export default class PolarisTextField extends Component {
   @normalizeAutoCompleteProperty('autoComplete')
   autoCompleteInputs;
 
-  @(
-    computed('normalizedValue', 'disabled', 'readOnly', 'error', 'multiline', 'focus').readOnly()
-  )
+  @(computed(
+    'normalizedValue',
+    'disabled',
+    'readOnly',
+    'error',
+    'multiline',
+    'focus'
+  ).readOnly())
   get textFieldClasses() {
     let {
       normalizedValue,

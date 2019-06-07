@@ -1,5 +1,8 @@
-import { className, layout as templateLayout } from "@ember-decorators/component";
-import { action, computed } from "@ember/object";
+import {
+  className,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { isBlank, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
@@ -22,7 +25,10 @@ function elementLookup(selector) {
  * See https://polaris.shopify.com/components/lists-and-tables/data-table
  */
 @templateLayout(layout)
-export default class PolarisDataTable extends Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin) {
+export default class PolarisDataTable extends Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin
+) {
   /**
    * List of data types, which determines content alignment for each column.
    * Data types are "text," which aligns left, or "numeric," which aligns right.
@@ -120,7 +126,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @default no-op
    * @public
    */
-  onSort/* headingIndex, direction */() {}
+  onSort /* headingIndex, direction */() {}
 
   /**
    * @property collapsed
@@ -128,7 +134,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @default false
    * @private
    */
-  @className("Polaris-DataTable--collapsed")
+  @className('Polaris-DataTable--collapsed')
   collapsed = false;
 
   /**
@@ -213,7 +219,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @type {HTMLElement}
    * @private
    */
-  @elementLookup('.Polaris-DataTable').readOnly()
+  @(elementLookup('.Polaris-DataTable').readOnly())
   dataTable;
 
   /**
@@ -221,7 +227,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @type {HTMLElement}
    * @private
    */
-  @elementLookup('.Polaris-DataTable__Table').readOnly()
+  @(elementLookup('.Polaris-DataTable__Table').readOnly())
   table;
 
   /**
@@ -229,7 +235,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @type {HTMLElement}
    * @private
    */
-  @elementLookup('.Polaris-DataTable__ScrollContainer').readOnly()
+  @(elementLookup('.Polaris-DataTable__ScrollContainer').readOnly())
   scrollContainer;
 
   /**
@@ -237,7 +243,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
    * @type {String}
    * @private
    */
-  @computed('footerContent', 'heights.[]').readOnly()
+  @(computed('footerContent', 'heights.[]').readOnly())
   get scrollContainerStyle() {
     if (isBlank(this.get('footerContent'))) {
       return null;
@@ -280,8 +286,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
       let collapsedHeaderCells = Array.from(headerCells).slice(1);
       let fixedColumnWidth = headerCells[0].offsetWidth;
       let firstVisibleColumnIndex = collapsedHeaderCells.length - 1;
-      let tableLeftVisibleEdge =
-        scrollContainer.scrollLeft + fixedColumnWidth;
+      let tableLeftVisibleEdge = scrollContainer.scrollLeft + fixedColumnWidth;
       let tableRightVisibleEdge =
         scrollContainer.scrollLeft + dataTable.offsetWidth;
 
@@ -388,8 +393,7 @@ export default class PolarisDataTable extends Component.extend(ContextBoundEvent
       }
 
       if (footerContent) {
-        let footerCellHeight =
-          rows[rows.length - 1].childNodes[0].clientHeight;
+        let footerCellHeight = rows[rows.length - 1].childNodes[0].clientHeight;
         heights = [footerCellHeight];
       }
 

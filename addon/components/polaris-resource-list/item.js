@@ -1,6 +1,11 @@
-import { attribute, className, classNames, layout as templateLayout } from "@ember-decorators/component";
-import { computed } from "@ember/object";
-import { readOnly } from "@ember/object/computed";
+import {
+  attribute,
+  className,
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
+import { computed } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import Component from '@ember/component';
 import { get } from '@ember/object';
 import layout from '../../templates/components/polaris-resource-list/item';
@@ -65,7 +70,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
    * @default false
    * @public
    */
-  @className("Polaris-ResourceList-Item--persistActions")
+  @className('Polaris-ResourceList-Item--persistActions')
   persistActions = false;
 
   /**
@@ -90,7 +95,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
    * @default null
    * @public
    */
-  @attribute("data-href")
+  @attribute('data-href')
   url = null;
 
   /**
@@ -107,7 +112,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
    * @default false
    * @private
    */
-  @className("Polaris-ResourceList-Item--focused")
+  @className('Polaris-ResourceList-Item--focused')
   focused = false;
 
   /**
@@ -116,24 +121,24 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
    * @default false
    * @private
    */
-  @className("Polaris-ResourceList-Item--focusedInner")
+  @className('Polaris-ResourceList-Item--focusedInner')
   focusedInner = false;
 
   'data-test-id' = 'item-wrapper';
   stopPropagation = stopPropagation;
 
   @readOnly('context.selectable')
-  @className("Polaris-ResourceList-Item--selectable")
+  @className('Polaris-ResourceList-Item--selectable')
   selectable;
 
   @readOnly('context.selectMode')
-  @className("Polaris-ResourceList-Item--selectMode")
+  @className('Polaris-ResourceList-Item--selectMode')
   selectMode;
 
   @readOnly('context.loading')
   loading;
 
-  @computedIdVariation('itemId', 'ResourceListItemCheckbox').readOnly()
+  @(computedIdVariation('itemId', 'ResourceListItemCheckbox').readOnly())
   checkboxId;
 
   @(computed('itemId', 'context.selectedItems').readOnly())
