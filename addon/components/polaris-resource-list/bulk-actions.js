@@ -111,7 +111,7 @@ export default class BulkActions extends Component.extend(
    * @property onSelectModeToggle
    * @public
    */
-  onSelectModeToggle /* selectMode **/() {}
+  onSelectModeToggle(/** selectMode */) {}
 
   /**
    * Callback when the select all checkbox is clicked

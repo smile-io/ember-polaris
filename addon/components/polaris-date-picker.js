@@ -116,7 +116,7 @@ export default class PolarisDatePicker extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange /* dateRange */() {}
+  onChange(/** dateRange */) {}
 
   /**
    * Callback when month is changed
@@ -126,7 +126,7 @@ export default class PolarisDatePicker extends Component {
    * @type {Function}
    * @default noop
    */
-  onMonthChange /* month, year */() {}
+  onMonthChange(/** month, year */) {}
 
   hoverDate = null;
   focusDate = null;

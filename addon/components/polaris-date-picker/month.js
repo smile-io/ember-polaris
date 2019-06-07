@@ -95,7 +95,7 @@ export default class Month extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange /* dateRange */() {}
+  onChange(/** dateRange */) {}
 
   /**
    * @property onHover
@@ -103,7 +103,7 @@ export default class Month extends Component {
    * @type {Function}
    * @default noop
    */
-  onHover /* hoverEnd */() {}
+  onHover(/** hoverEnd */) {}
 
   /**
    * @property onFocus
@@ -111,7 +111,7 @@ export default class Month extends Component {
    * @type {Function}
    * @default noop
    */
-  onFocus /* date */() {}
+  onFocus(/** date */) {}
 
   /**
    * @property monthName
@@ -119,7 +119,7 @@ export default class Month extends Component {
    * @type {Function}
    * @default noop
    */
-  monthName /* month */() {}
+  monthName(/** month */) {}
 
   /**
    * @property weekdayName
@@ -127,7 +127,7 @@ export default class Month extends Component {
    * @type {Function}
    * @default noop
    */
-  weekdayName /* weekday */() {}
+  weekdayName(/** weekday */) {}
 
   @attribute
   role = 'grid';

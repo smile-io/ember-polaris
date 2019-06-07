@@ -68,7 +68,7 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onClick /* day */() {}
+  onClick(/** day */) {}
 
   /**
    * @property onHover
@@ -76,7 +76,7 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onHover /* day */() {}
+  onHover(/** day */) {}
 
   /**
    * @property onFocus
@@ -84,7 +84,7 @@ export default class Day extends Component {
    * @type {Function}
    * @default noop
    */
-  onFocus /* day */() {}
+  onFocus(/** day */) {}
 
   @(computed(
     'selected',

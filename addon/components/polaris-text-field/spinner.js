@@ -14,7 +14,7 @@ export default class Spinner extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange /* number */() {}
+  onChange(/** number */) {}
 
   /**
    * Additional callback when any icon in the component is clicked
@@ -26,7 +26,7 @@ export default class Spinner extends Component {
    */
   onClick() {}
 
-  onMouseDown /* onChange */() {}
+  onMouseDown(/** onChange */) {}
   onMouseUp() {}
 
   @action

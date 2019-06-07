@@ -68,7 +68,7 @@ export default class Resizer extends Component.extend(
    * @type {Function}
    * @default noop
    */
-  onHeightChange /* height */() {}
+  onHeightChange(/** height */) {}
 
   @attribute('aria-hidden')
   ariaHidden = 'true';
