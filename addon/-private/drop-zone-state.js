@@ -1,5 +1,4 @@
 import { computed } from '@ember/object';
-import EmberObject, { get } from '@ember/object';
 import { capitalize } from '@ember/string';
 
 const dropZone = {
@@ -9,7 +8,7 @@ const dropZone = {
   errorOverlayTextImage: 'Image type is not valid',
 };
 
-export default class DropZoneState extends EmberObject {
+export default class DropZoneState {
   /**
    * Whether is a file or an image
    *
