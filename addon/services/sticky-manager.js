@@ -1,4 +1,4 @@
-import Service from '@ember/service';
+import Service from '@ember-decorators/service';
 import { A as EmberArray } from '@ember/array';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { throttleTask, runDisposables } from 'ember-lifeline';
@@ -6,31 +6,33 @@ import tokens from '@shopify/polaris-tokens';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import stackedContent from '@smile-io/ember-polaris/utils/breakpoints';
 
-export default Service.extend(ContextBoundEventListenersMixin, {
+export default class StickyManager extends Service.extend(
+  ContextBoundEventListenersMixin
+) {
   /**
    * @property stickyItems
    * @type {Object[]}
    * @private
    */
-  stickyItems: EmberArray(),
+  stickyItems = EmberArray();
 
   /**
    * @property stuckItems
    * @type {Object[]}
    * @private
    */
-  stuckItems: EmberArray(),
+  stuckItems = EmberArray();
 
   /**
    * @property container
    * @type {Document|HTMLElement}
    * @private
    */
-  container: null,
+  container = null;
 
   registerStickyItem(stickyItem) {
     this.get('stickyItems').push(stickyItem);
-  },
+  }
 
   unregisterStickyItem(nodeToRemove) {
     let stickyItems = this.get('stickyItems');
@@ -38,14 +40,14 @@ export default Service.extend(ContextBoundEventListenersMixin, {
       ({ stickyNode }) => nodeToRemove === stickyNode
     );
     stickyItems.splice(nodeIndex, 1);
-  },
+  }
 
   setContainer(el) {
     this.set('container', el);
     this.addEventListener(el, 'scroll', this.handleScroll);
     this.addEventListener(window, 'resize', this.handleResize);
     this.manageStickyItems();
-  },
+  }
 
   removeScrollListener() {
     let container = this.get('container');
@@ -53,15 +55,15 @@ export default Service.extend(ContextBoundEventListenersMixin, {
       this.removeEventListener(container, 'scroll', this.handleScroll);
       this.removeEventListener(window, 'resize', this.handleResize);
     }
-  },
+  }
 
   handleResize() {
     throttleTask(this, 'manageStickyItems', 50, false);
-  },
+  }
 
   handleScroll() {
     throttleTask(this, 'manageStickyItems', 50, false);
-  },
+  }
 
   manageStickyItems() {
     let stickyItems = this.get('stickyItems');
@@ -86,7 +88,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
 
       handlePositioning(sticky, top, left, width);
     });
-  },
+  }
 
   evaluateStickyItem(stickyItem, scrollTop, containerTop) {
     let {
@@ -140,7 +142,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
       left,
       width,
     };
-  },
+  }
 
   updateStuckItems(item, sticky) {
     let { stickyNode } = item;
@@ -149,11 +151,11 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     } else if (!sticky && this.isNodeStuck(stickyNode)) {
       this.removeStuckItem(item);
     }
-  },
+  }
 
   addStuckItem(stickyItem) {
     this.get('stuckItems').push(stickyItem);
-  },
+  }
 
   removeStuckItem(stickyItem) {
     let stuckItems = this.get('stuckItems');
@@ -162,7 +164,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
       ({ stickyNode }) => nodeToRemove === stickyNode
     );
     stuckItems.splice(nodeIndex, 1);
-  },
+  }
 
   getOffset(node) {
     let stuckItems = this.get('stuckItems');
@@ -189,7 +191,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     }
 
     return offset;
-  },
+  }
 
   isNodeStuck(node) {
     let nodeFound = this.get('stuckItems').findIndex(
@@ -197,10 +199,10 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     );
 
     return nodeFound >= 0;
-  },
+  }
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     /*
      * The original `StickyManager` React code doesn't default this to `document`,
@@ -212,14 +214,14 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     if (container) {
       this.setContainer(container);
     }
-  },
+  }
 
   willDestroy() {
-    this._super(...arguments);
+    super.willDestroy(...arguments);
 
     runDisposables(this);
-  },
-});
+  }
+}
 
 function isDocument(node) {
   return node === document;
