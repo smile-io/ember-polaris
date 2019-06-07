@@ -1,6 +1,6 @@
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { computed } from '@ember/object';
-import { gt } from '@ember/object/computed';
+import { gt, readOnly } from '@ember/object/computed';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
@@ -57,7 +57,8 @@ export default class PolarisActionList extends Component {
   /**
    * @private
    */
-  @(gt('finalSections.length', 1).readOnly())
+  @readOnly('hasMultipleSections')
+  @gt('finalSections.length', 1)
   hasMultipleSections;
 
   /**

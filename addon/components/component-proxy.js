@@ -1,7 +1,6 @@
-import { layout, tagName } from '@ember-decorators/component';
+import { tagName } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import Component from '@ember/component';
-// import { compileTemplate } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
 import Ember from 'ember';
 
@@ -18,8 +17,13 @@ import Ember from 'ember';
 //     )
 //   }}
 @tagName('')
-@layout(
-  computed('componentName', 'propsString', function() {
+export default class ComponentProxy extends Component {
+  /**
+   * Dynamically-generated layout to render the proxied component.
+   * @private
+   */
+  @(computed('componentName', 'propsString')).readOnly()
+  get layout() {
     let { componentName, propsString } = this.getProperties(
       'componentName',
       'propsString'
@@ -29,17 +33,15 @@ import Ember from 'ember';
     // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
     // eslint-disable-next-line ember/new-module-imports
     return Ember.HTMLBars.compile(`
-    {{#if hasBlock}}
-      {{#component "${componentName}"${propsString}}}
-        {{yield}}
-      {{/component}}
-    {{else}}
-      {{component "${componentName}"${propsString}}}
-    {{/if}}
-  `);
-  }).readOnly()
-)
-export default class ComponentProxy extends Component {
+      {{#if hasBlock}}
+        {{#component "${componentName}"${propsString}}}
+          {{yield}}
+        {{/component}}
+      {{else}}
+        {{component "${componentName}"${propsString}}}
+      {{/if}}
+    `);
+  }
   /**
    * The name of the component to render.
    * @type {String}
