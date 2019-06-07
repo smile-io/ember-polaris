@@ -1,7 +1,8 @@
+import { tagName, layout as templateLayout } from "@ember-decorators/component";
+import { action, computed } from "@ember-decorators/object";
+import { bool } from "@ember/object/computed";
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
-import { computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
 import { htmlSafe } from '@ember/string';
 import { typeOf } from '@ember/utils';
 import { isPresent } from '@ember/utils';
@@ -19,11 +20,9 @@ const dpl = (num) => (num.toString().split('.')[1] || []).length;
  * Polaris text-field component.
  * See https://polaris.shopify.com/components/forms/text-field
  */
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisTextField extends Component {
   /**
    * ID for the input
    *
@@ -32,7 +31,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  id: null,
+  id = null;
 
   /**
    * Text to display before value
@@ -42,7 +41,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  prefix: null,
+  prefix = null;
 
   /**
    * Text to display after value
@@ -52,7 +51,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  suffix: null,
+  suffix = null;
 
   /**
    * Hint text to display
@@ -62,7 +61,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  placeholder: null,
+  placeholder = null;
 
   /**
    * Initial value for the input
@@ -72,7 +71,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  value: null,
+  value = null;
 
   /**
    * Additional hint text to display
@@ -82,7 +81,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * Label for the input
@@ -92,7 +91,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  label: null,
+  label = null;
 
   /**
    * Adds an action to the label
@@ -105,7 +104,7 @@ export default Component.extend({
    * Currently supports:
    * { onAction, text, accessibilityLabel }
    */
-  labelAction: null,
+  labelAction = null;
 
   /**
    * Visually hide the label
@@ -115,7 +114,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default false
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Disable the input
@@ -125,7 +124,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  disabled: null,
+  disabled = null;
 
   /**
    * Disable editing of the input
@@ -135,7 +134,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  readOnly: null,
+  readOnly = null;
 
   /**
    * Automatically focus the input
@@ -145,7 +144,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  autoFocus: null,
+  autoFocus = null;
 
   /**
    * Force the focus state on the input
@@ -155,7 +154,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  focused: null,
+  focused = null;
 
   /**
    * Allow for multiple lines of input
@@ -165,7 +164,7 @@ export default Component.extend({
    * @type {Boolean|Number}
    * @default null
    */
-  multiline: null,
+  multiline = null;
 
   /**
    * Error to display beneath the label
@@ -175,7 +174,7 @@ export default Component.extend({
    * @type {String|Component|Boolean|(String|Component)[]}
    * @default null
    */
-  error: null,
+  error = null;
 
   /**
    * An element connected to the right of the input
@@ -185,7 +184,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  connectedRight: null,
+  connectedRight = null;
 
   /**
    * An element connected to the left of the input
@@ -195,7 +194,7 @@ export default Component.extend({
    * @type {String|Component}
    * @default null
    */
-  connectedLeft: null,
+  connectedLeft = null;
 
   /**
    * Determine type of input
@@ -205,7 +204,7 @@ export default Component.extend({
    * @type {String}
    * @default text
    */
-  type: 'text',
+  type = 'text';
 
   /**
    * Name of the input
@@ -215,7 +214,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  name: null,
+  name = null;
 
   /**
    * Defines a specific role attribute for the input
@@ -225,7 +224,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  role: null,
+  role = null;
 
   /**
    * Limit increment value for numeric and date-time inputs
@@ -235,7 +234,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  step: null,
+  step = null;
 
   /**
    * Enable automatic completion by the browser
@@ -245,7 +244,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  autoComplete: null,
+  autoComplete = null;
 
   /**
    * Mimics the behavior of the native HTML attribute,
@@ -256,7 +255,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  max: null,
+  max = null;
 
   /**
    * Maximum character length for an input
@@ -266,7 +265,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  maxLength: null,
+  maxLength = null;
 
   /**
    * Mimics the behavior of the native HTML attribute,
@@ -277,7 +276,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  min: null,
+  min = null;
 
   /**
    * Minimum character length for an input
@@ -287,7 +286,7 @@ export default Component.extend({
    * @type {Number}
    * @default null
    */
-  minLength: null,
+  minLength = null;
 
   /**
    * A regular expression to check the value against
@@ -297,7 +296,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  pattern: null,
+  pattern = null;
 
   /**
    * Indicate whether value should have spelling checked
@@ -307,7 +306,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  spellCheck: null,
+  spellCheck = null;
 
   /**
    * Indicates the id of a component owned by the input
@@ -317,7 +316,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  ariaOwns: null,
+  ariaOwns = null;
 
   /**
    * Indicates the id of a component controlled by the input
@@ -327,7 +326,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  ariaControls: null,
+  ariaControls = null;
 
   /**
    * Indicates the id of a related component's visually focused element ot the input
@@ -337,7 +336,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  ariaActiveDescendant: null,
+  ariaActiveDescendant = null;
 
   /**
    * Indicates what kind of user input completion suggestions are provided
@@ -347,7 +346,7 @@ export default Component.extend({
    * @type {String}
    * @default null
    */
-  ariaAutocomplete: null,
+  ariaAutocomplete = null;
 
   /**
    * Indicates whether or not the character count should be displayed
@@ -357,7 +356,7 @@ export default Component.extend({
    * @type {Boolean}
    * @default null
    */
-  showCharacterCount: false,
+  showCharacterCount = false;
 
   /**
    * Callback when value is changed
@@ -367,7 +366,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onChange(/* value, id */) {},
+  onChange/** value, id */() {}
 
   /**
    * Callback when input is focused
@@ -377,7 +376,7 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus is removed
@@ -387,83 +386,83 @@ export default Component.extend({
    * @type {Function}
    * @default noop
    */
-  onBlur() {},
+  onBlur() {}
 
   /**
    * @private
    */
 
-  buttonPressTimer: null,
-  wasFocused: false,
+  buttonPressTimer = null;
 
-  dataTestTextField: 'text-field',
+  wasFocused = false;
+  dataTestTextField = 'text-field';
 
-  ariaInvalid: bool('error').readOnly(),
-  autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
+  @(bool('error').readOnly())
+  ariaInvalid;
 
-  textFieldClasses: computed(
-    'normalizedValue',
-    'disabled',
-    'readOnly',
-    'error',
-    'multiline',
-    'focus',
-    function() {
-      let {
-        normalizedValue,
-        disabled,
-        readOnly,
-        error,
-        multiline,
-        focus,
-      } = this.getProperties(
-        'normalizedValue',
-        'disabled',
-        'readOnly',
-        'error',
-        'multiline',
-        'focus'
-      );
-      let classes = ['Polaris-TextField'];
+  @normalizeAutoCompleteProperty('autoComplete')
+  autoCompleteInputs;
 
-      if (normalizedValue) {
-        classes.push('Polaris-TextField--hasValue');
-      }
+  @(
+    computed('normalizedValue', 'disabled', 'readOnly', 'error', 'multiline', 'focus').readOnly()
+  )
+  get textFieldClasses() {
+    let {
+      normalizedValue,
+      disabled,
+      readOnly,
+      error,
+      multiline,
+      focus,
+    } = this.getProperties(
+      'normalizedValue',
+      'disabled',
+      'readOnly',
+      'error',
+      'multiline',
+      'focus'
+    );
+    let classes = ['Polaris-TextField'];
 
-      if (disabled) {
-        classes.push('Polaris-TextField--disabled');
-      }
-
-      if (readOnly) {
-        classes.push('Polaris-TextField--readOnly');
-      }
-
-      if (error) {
-        classes.push('Polaris-TextField--error');
-      }
-
-      if (multiline) {
-        classes.push('Polaris-TextField--multiline');
-      }
-
-      if (focus) {
-        classes.push('Polaris-TextField--focus');
-      }
-
-      return classes.join(' ');
+    if (normalizedValue) {
+      classes.push('Polaris-TextField--hasValue');
     }
-  ).readOnly(),
 
-  inputClassName: computed('suffix', function() {
+    if (disabled) {
+      classes.push('Polaris-TextField--disabled');
+    }
+
+    if (readOnly) {
+      classes.push('Polaris-TextField--readOnly');
+    }
+
+    if (error) {
+      classes.push('Polaris-TextField--error');
+    }
+
+    if (multiline) {
+      classes.push('Polaris-TextField--multiline');
+    }
+
+    if (focus) {
+      classes.push('Polaris-TextField--focus');
+    }
+
+    return classes.join(' ');
+  }
+
+  @(computed('suffix').readOnly())
+  get inputClassName() {
     let classes = ['Polaris-TextField__Input'];
     if (this.get('suffix')) {
       classes.push('Polaris-TextField__Input--suffixed');
     }
 
     return classes.join(' ');
-  }).readOnly(),
+  }
 
-  ariaDescribedBy: computed('error', 'helpText', 'id', function() {
+  @(computed('error', 'helpText', 'id').readOnly())
+  get ariaDescribedBy() {
     let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
     let describedBy = [];
 
@@ -476,9 +475,10 @@ export default Component.extend({
     }
 
     return describedBy.join(' ');
-  }).readOnly(),
+  }
 
-  ariaLabelledBy: computed('id', function() {
+  @(computed('id').readOnly())
+  get ariaLabelledBy() {
     let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
     let labelledBy = [`${id}Label`];
 
@@ -491,42 +491,49 @@ export default Component.extend({
     }
 
     return labelledBy.join(' ');
-  }).readOnly(),
+  }
 
-  inputType: computed('type', function() {
+  @(computed('type').readOnly())
+  get inputType() {
     let type = this.get('type');
 
     return type === 'currency' ? 'text' : type;
-  }).readOnly(),
+  }
 
-  minimumLines: computed('multiline', function() {
+  @(computed('multiline').readOnly())
+  get minimumLines() {
     let multiline = this.get('multiline');
 
     return typeOf(multiline) === 'number' ? multiline : 1;
-  }).readOnly(),
+  }
 
-  heightStyle: computed('height', 'multiline', function() {
+  @(computed('height', 'multiline').readOnly())
+  get heightStyle() {
     let { height, multiline } = this.getProperties('height', 'multiline');
 
     return height && multiline ? htmlSafe(`height: ${height}px`) : null;
-  }).readOnly(),
+  }
 
-  shouldShowSpinner: computed('disabled', 'inputType', function() {
+  @(computed('disabled', 'inputType').readOnly())
+  get shouldShowSpinner() {
     let { inputType, disabled } = this.getProperties('inputType', 'disabled');
 
     return inputType === 'number' && !disabled;
-  }).readOnly(),
+  }
 
-  normalizedValue: computed('value', function() {
+  @(computed('value').readOnly())
+  get normalizedValue() {
     let value = this.get('value');
     return value != null ? value : '';
-  }).readOnly(),
+  }
 
-  characterCount: computed('normalizedValue.length', function() {
+  @(computed('normalizedValue.length').readOnly())
+  get characterCount() {
     return this.get('normalizedValue.length') || 0;
-  }).readOnly(),
+  }
 
-  characterCountLabel: computed('maxLength', 'characterCount', function() {
+  @(computed('maxLength', 'characterCount').readOnly())
+  get characterCountLabel() {
     let { maxLength, characterCount } = this.getProperties(
       'maxLength',
       'characterCount'
@@ -535,9 +542,10 @@ export default Component.extend({
     return maxLength
       ? `${characterCount} characters of ${maxLength} used`
       : `${characterCount} characters`;
-  }).readOnly(),
+  }
 
-  characterCountClassName: computed('multiline', function() {
+  @(computed('multiline').readOnly())
+  get characterCountClassName() {
     let classNames = ['Polaris-TextField__CharacterCount'];
 
     if (this.get('multiline')) {
@@ -545,24 +553,26 @@ export default Component.extend({
     }
 
     return classNames.join(' ');
-  }).readOnly(),
+  }
 
-  characterCountText: computed('maxLength', 'characterCount', function() {
+  @(computed('maxLength', 'characterCount').readOnly())
+  get characterCountText() {
     let { maxLength, characterCount } = this.getProperties(
       'maxLength',
       'characterCount'
     );
 
     return !maxLength ? characterCount : `${characterCount}/${maxLength}`;
-  }).readOnly(),
+  }
 
-  focus: computed('focused', function() {
+  @computed('focused')
+  get focus() {
     return this.get('focused') || false;
-  }),
+  }
 
   setInput() {
     this.set('input', document.querySelector(`[id='${this.get('id')}']`));
-  },
+  }
 
   handleButtonPress(onChange) {
     let minInterval = 50;
@@ -580,14 +590,14 @@ export default Component.extend({
     };
 
     this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
-  },
+  }
 
   handleButtonRelease() {
     cancelTask(this, this.buttonPressTaskId);
-  },
+  }
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     let id = this.get('id');
     id = id || `TextField-${guidFor(this)}`;
@@ -596,10 +606,10 @@ export default Component.extend({
       height: null,
       id,
     });
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     this.setInput();
 
@@ -608,10 +618,10 @@ export default Component.extend({
     }
 
     this.get('input').focus();
-  },
+  }
 
   didUpdateAttrs() {
-    this._super(...arguments);
+    super.didUpdateAttrs(...arguments);
 
     let { wasFocused, focused, input } = this.getProperties(
       'wasFocused',
@@ -626,77 +636,82 @@ export default Component.extend({
     }
 
     this.set('wasFocused', focused);
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     runDisposables(this);
-  },
+  }
 
-  actions: {
-    handleNumberChange(steps) {
-      let { id, onChange, value, step, min, max } = this.getProperties(
-        'id',
-        'onChange',
-        'value',
-        'step',
-        'min',
-        'max'
-      );
+  @action
+  handleNumberChange(steps) {
+    let { id, onChange, value, step, min, max } = this.getProperties(
+      'id',
+      'onChange',
+      'value',
+      'step',
+      'min',
+      'max'
+    );
 
-      step = step || 1;
-      min = isPresent(min) ? min : -Infinity;
-      max = isPresent(max) ? max : Infinity;
+    step = step || 1;
+    min = isPresent(min) ? min : -Infinity;
+    max = isPresent(max) ? max : Infinity;
 
-      let numericValue = value ? parseFloat(value) : 0;
+    let numericValue = value ? parseFloat(value) : 0;
 
-      if (isNaN(numericValue)) {
-        return;
-      }
+    if (isNaN(numericValue)) {
+      return;
+    }
 
-      // Making sure the new value has the same length of decimal places as the
-      // step / value has.
-      let decimalPlaces = Math.max(dpl(numericValue), dpl(step));
-      let newValue = Math.min(max, Math.max(numericValue + steps * step, min));
+    // Making sure the new value has the same length of decimal places as the
+    // step / value has.
+    let decimalPlaces = Math.max(dpl(numericValue), dpl(step));
+    let newValue = Math.min(max, Math.max(numericValue + steps * step, min));
 
-      onChange(String(newValue.toFixed(decimalPlaces)), id);
-    },
+    onChange(String(newValue.toFixed(decimalPlaces)), id);
+  }
 
-    handleExpandingResize(height) {
-      this.set('height', height);
-    },
+  @action
+  handleExpandingResize(height) {
+    this.set('height', height);
+  }
 
-    handleChange(event) {
-      this.get('onChange')(event.target.value, this.get('id'));
-    },
+  @action
+  handleChange(event) {
+    this.get('onChange')(event.target.value, this.get('id'));
+  }
 
-    handleFocus() {
-      this.set('focus', true);
-    },
+  @action
+  handleFocus() {
+    this.set('focus', true);
+  }
 
-    handleBlur() {
-      this.set('focus', false);
-    },
+  @action
+  handleBlur() {
+    this.set('focus', false);
+  }
 
-    handleClick() {
-      let input = this.get('input');
-      input.focus();
-    },
+  @action
+  handleClick() {
+    let input = this.get('input');
+    input.focus();
+  }
 
-    handleKeyPress(event) {
-      let { key } = event;
-      let type = this.get('type');
-      let numbersSpec = /[\d.eE+-]$/;
+  @action
+  handleKeyPress(event) {
+    let { key } = event;
+    let type = this.get('type');
+    let numbersSpec = /[\d.eE+-]$/;
 
-      if (
-        type !== 'number' ||
-        getCode(event) === 'Enter' ||
-        key.match(numbersSpec)
-      ) {
-        return;
-      }
+    if (
+      type !== 'number' ||
+      getCode(event) === 'Enter' ||
+      key.match(numbersSpec)
+    ) {
+      return;
+    }
 
-      event.preventDefault();
-    },
-  },
-});
+    event.preventDefault();
+  }
+}

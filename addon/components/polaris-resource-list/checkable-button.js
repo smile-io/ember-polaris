@@ -1,81 +1,84 @@
+import { className, classNames, layout as templateLayout } from "@ember-decorators/component";
+import { not, and } from "@ember/object/computed";
 import Component from '@ember/component';
-import { and, not } from '@ember/object/computed';
 import mapEventToAction from '@smile-io/ember-polaris/utils/map-event-to-action';
 import layout from '../../templates/components/polaris-resource-list/checkable-button';
 
-export default Component.extend({
-  classNames: ['Polaris-ResourceList-CheckableButton'],
+@classNames('Polaris-ResourceList-CheckableButton')
+@templateLayout(layout)
+export default class CheckableButton extends Component {
+ /**
+  * @type {String}
+  * @default null
+  * @property accessibilityLabel
+  */
+ accessibilityLabel = null;
 
-  classNameBindings: [
-    'plain:Polaris-ResourceList-CheckableButton__CheckableButton--plain',
-    'shouldApplySelectModeClass:Polaris-ResourceList-CheckableButton__CheckableButton--selectMode',
-    'shouldApplySelectedClass:Polaris-ResourceList-CheckableButton__CheckableButton--selected',
-    'shouldApplyMeasuringClass:Polaris-ResourceList-CheckableButton__CheckableButton--measuring',
-  ],
+ /**
+  * @type {String}
+  * @default ''
+  * @property label
+  */
+ label = '';
 
-  layout,
+ /**
+  *
+  * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
+  *
+  * @type {Boolean|String}
+  * @default null
+  * @property selected
+  */
+ selected = null;
 
-  /**
-   * @type {String}
-   * @default null
-   * @property accessibilityLabel
-   */
-  accessibilityLabel: null,
+ /**
+  * @type {Boolean}
+  * @default false
+  * @property selectMode
+  */
+ selectMode = false;
 
-  /**
-   * @type {String}
-   * @default ''
-   * @property label
-   */
-  label: '',
+ /**
+  * @type {Boolean}
+  * @default false
+  * @property plain
+  */
+ @className("Polaris-ResourceList-CheckableButton__CheckableButton--plain")
+ plain = false;
 
-  /**
-   *
-   * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
-   *
-   * @type {Boolean|String}
-   * @default null
-   * @property selected
-   */
-  selected: null,
+ /**
+  * @type {Boolean}
+  * @default false
+  * @property measuring
+  */
+ measuring = false;
 
-  /**
-   * @type {Boolean}
-   * @default false
-   * @property selectMode
-   */
-  selectMode: false,
+ /**
+  * @type {Boolean}
+  * @default false
+  * @property disabled
+  */
+ disabled = false;
 
-  /**
-   * @type {Boolean}
-   * @default false
-   * @property plain
-   */
-  plain: false,
+ /**
+  * @type {Function}
+  * @default noop
+  * @property onToggleAll
+  */
+  click = mapEventToAction('onToggleAll');
 
-  /**
-   * @type {Boolean}
-   * @default false
-   * @property measuring
-   */
-  measuring: false,
+ @not('plain')
+ isNotPlain;
 
-  /**
-   * @type {Boolean}
-   * @default false
-   * @property disabled
-   */
-  disabled: false,
+ @and('isNotPlain', 'selectMode')
+ @className("Polaris-ResourceList-CheckableButton__CheckableButton--selectMode")
+ shouldApplySelectModeClass;
 
-  /**
-   * @type {Function}
-   * @default noop
-   * @property onToggleAll
-   */
-  click: mapEventToAction('onToggleAll'),
+ @and('isNotPlain', 'selected')
+ @className("Polaris-ResourceList-CheckableButton__CheckableButton--selected")
+ shouldApplySelectedClass;
 
-  isNotPlain: not('plain'),
-  shouldApplySelectModeClass: and('isNotPlain', 'selectMode'),
-  shouldApplySelectedClass: and('isNotPlain', 'selected'),
-  shouldApplyMeasuringClass: and('isNotPlain', 'measuring'),
-});
+ @and('isNotPlain', 'measuring')
+ @className("Polaris-ResourceList-CheckableButton__CheckableButton--measuring")
+ shouldApplyMeasuringClass;
+}

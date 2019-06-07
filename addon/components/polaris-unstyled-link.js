@@ -1,5 +1,6 @@
+import { attribute, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import layout from '../templates/components/polaris-unstyled-link';
 import mapEventToAction from '../utils/map-event-to-action';
 
@@ -9,108 +10,104 @@ import mapEventToAction from '../utils/map-event-to-action';
  * component behaviour provided by the React
  * implementation at this point.
  */
-export default Component.extend({
-  tagName: 'a',
+@tagName('a')
+@templateLayout(layout)
+export default class PolarisUnstyledLink extends Component {
+ /**
+  * Content to display inside the link
+  *
+  * @property text
+  * @type {String}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  attributeBindings: [
-    'url:href',
-    'dataPolarisUnstyled:data-polaris-unstyled',
-    'download',
-    'target',
-    'rel',
-    'ariaLabel:aria-label',
-    'ariaDescribedBy:aria-describedby',
-    'tabIndex:tabindex',
-  ],
+ /**
+  * A destination to link to
+  *
+  * @property url
+  * @type {String}
+  * @default null
+  * @public
+  *
+  */
+ @attribute("href")
+ url = null;
 
-  layout,
+ /**
+  * Forces url to open in a new tab
+  *
+  * @property external
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ external = false;
 
-  /**
-   * Content to display inside the link
-   *
-   * @property text
-   * @type {String}
-   * @default null
-   * @public
-   */
-  text: null,
+ /**
+  * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
+  *
+  * @property download
+  * @type {String|Boolean}
+  * @default null
+  * @public
+  */
+ @attribute
+ download = null;
 
-  /**
-   * A destination to link to
-   *
-   * @property url
-   * @type {String}
-   * @default null
-   * @public
-   *
-   */
-  url: null,
+ /**
+  * Accessibility label
+  *
+  * @property ariaLabel
+  * @type {String}
+  * @default null
+  * @public
+  */
+ @attribute("aria-label")
+ ariaLabel = null;
 
-  /**
-   * Forces url to open in a new tab
-   *
-   * @property external
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  external: false,
+ /**
+  * @property ariaDescribedBy
+  * @type {String}
+  * @default null
+  * @public
+  */
+ @attribute("aria-describedby")
+ ariaDescribedBy = null;
 
-  /**
-   * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
-   *
-   * @property download
-   * @type {String|Boolean}
-   * @default null
-   * @public
-   */
-  download: null,
+ /**
+  * Callback when a link is clicked
+  *
+  * @property onClick
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onClick() {}
 
-  /**
-   * Accessibility label
-   *
-   * @property ariaLabel
-   * @type {String}
-   * @default null
-   * @public
-   */
-  ariaLabel: null,
+ /**
+  * @private
+  */
+ @attribute("data-polaris-unstyled")
+ dataPolarisUnstyled = 'true';
 
-  /**
-   * @property ariaDescribedBy
-   * @type {String}
-   * @default null
-   * @public
-   */
-  ariaDescribedBy: null,
+ dataTestId = null;
 
-  /**
-   * Callback when a link is clicked
-   *
-   * @property onClick
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onClick() {},
+ click = mapEventToAction('onClick', {
+   preventDefault: false,
+   stopPropagation: true,
+ });
 
-  /**
-   * @private
-   */
-  dataPolarisUnstyled: 'true',
+ @(computed('external').readOnly())
+ @attribute
+ get target() {
+   return this.get('external') ? '_blank' : null;
+ }
 
-  dataTestId: null,
-
-  click: mapEventToAction('onClick', {
-    preventDefault: false,
-    stopPropagation: true,
-  }),
-
-  target: computed('external', function() {
-    return this.get('external') ? '_blank' : null;
-  }).readOnly(),
-
-  rel: computed('external', function() {
-    return this.get('external') ? 'noopener noreferrer' : null;
-  }).readOnly(),
-});
+ @(computed('external').readOnly())
+ @attribute
+ get rel() {
+   return this.get('external') ? 'noopener noreferrer' : null;
+ }
+}

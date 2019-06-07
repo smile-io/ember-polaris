@@ -1,95 +1,93 @@
+import { attribute, className, classNames, tagName, layout as templateLayout } from "@ember-decorators/component";
+import { computed } from "@ember/object";
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import layout from '../../templates/components/polaris-page/action';
 import { handleMouseUpByBlurring } from '../../utils/focus';
 import mapEventToAction from '../../utils/map-event-to-action';
 
-export default Component.extend({
-  tagName: 'button',
+@tagName('button')
+@classNames('Polaris-Header-Action')
+@templateLayout(layout)
+export default class Action extends Component {
+ /**
+  * @property text
+  * @type {String}
+  * @default null
+  * @public
+  */
+ text = null;
 
-  attributeBindings: ['type', 'disabled', 'accessibilityLabel:aria-label'],
+ /**
+  * @property disclosure
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disclosure = false;
 
-  classNames: ['Polaris-Header-Action'],
-  classNameBindings: [
-    'disabled:Polaris-Header-Action--disabled',
-    'isIconOnly:Polaris-Header-Action--iconOnly',
-  ],
+ /**
+  * @property url
+  * @type {String}
+  * @default null
+  * @public
+  * TODO: not implemented
+  */
+ url = null;
 
-  layout,
+ /**
+  * @property external
+  * @type {Boolean}
+  * @default false
+  * @public
+  * TODO: not implemented
+  */
+ external = false;
 
-  /**
-   * @property text
-   * @type {String}
-   * @default null
-   * @public
-   */
-  text: null,
+ /**
+  * @property icon
+  * @type {String}
+  * @default null
+  * @public
+  */
+ icon = null;
 
-  /**
-   * @property disclosure
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disclosure: false,
+ /**
+  * @property accessibilityLabel
+  * @type {String}
+  * @default null
+  * @public
+  */
+ @attribute("aria-label")
+ accessibilityLabel = null;
 
-  /**
-   * @property url
-   * @type {String}
-   * @default null
-   * @public
-   * TODO: not implemented
-   */
-  url: null,
+ /**
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ @attribute
+ disabled = false;
 
-  /**
-   * @property external
-   * @type {Boolean}
-   * @default false
-   * @public
-   * TODO: not implemented
-   */
-  external: false,
+ /**
+  * @property onAction
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onAction() {}
 
-  /**
-   * @property icon
-   * @type {String}
-   * @default null
-   * @public
-   */
-  icon: null,
+ @attribute
+ type = 'button';
 
-  /**
-   * @property accessibilityLabel
-   * @type {String}
-   * @default null
-   * @public
-   */
-  accessibilityLabel: null,
+ mouseUp = handleMouseUpByBlurring;
 
-  /**
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ click = mapEventToAction('onAction');
 
-  /**
-   * @property onAction
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onAction() {},
-
-  type: 'button',
-
-  mouseUp: handleMouseUpByBlurring,
-  click: mapEventToAction('onAction'),
-
-  isIconOnly: computed('text', 'icon', function() {
-    return this.get('icon') && isBlank(this.get('text'));
-  }).readOnly(),
-});
+ @(computed('text', 'icon').readOnly())
+ @className("Polaris-Header-Action--iconOnly")
+ get isIconOnly() {
+   return this.get('icon') && isBlank(this.get('text'));
+ }
+}
