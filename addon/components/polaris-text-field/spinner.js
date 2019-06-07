@@ -1,4 +1,4 @@
-import { action } from '@ember-decorators/object';
+import { action } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import layout from '../../templates/components/polaris-text-field/spinner';

@@ -1,4 +1,4 @@
-import { action as actionDecorator } from '@ember-decorators/object';
+import { action as actionDecorator } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import Component from '@ember/component';
 import { invokeAction } from 'ember-invoke-action';
