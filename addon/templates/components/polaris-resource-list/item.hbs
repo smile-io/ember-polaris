@@ -96,6 +96,7 @@
               destructive=shortcutAction.destructive
               icon=shortcutAction.icon
               loading=shortcutAction.loading
+              disabled=shortcutAction.disabled
               onClick=(action
                 (or shortcutAction.onAction (action (mut dummy)))
               )
