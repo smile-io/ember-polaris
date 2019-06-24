@@ -557,9 +557,7 @@ module(
           assert
             .dom('.Polaris-Tag')
             .hasText(
-              `${
-                filter.label
-              } ${appliedOperatorOptionLabel} ${appliedFilterValue}`
+              `${filter.label} ${appliedOperatorOptionLabel} ${appliedFilterValue}`
             );
         });
 
