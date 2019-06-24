@@ -14,7 +14,6 @@
 - [#292](https://github.com/smile-io/ember-polaris/pull/292) [UPDATE] Update card to Polaris v3.10.0
 - [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
 - [#294](https://github.com/smile-io/ember-polaris/pull/294) [UPDATE] Update choice property descriptions
-- [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
 - [#295](https://github.com/smile-io/ember-polaris/pull/295) [INTERNAL] Upgrade to Ember CLI `3.8.1`
 - [#296](https://github.com/smile-io/ember-polaris/pull/296) [INTERNAL] Update misc dependencies
 - [#297](https://github.com/smile-io/ember-polaris/pull/297) [UPDATE] Update data table to Polaris v3.10.0
