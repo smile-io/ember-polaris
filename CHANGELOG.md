@@ -1,5 +1,10 @@
 # ember-polaris Changelog
 
+### v4.3.1 (June 24, 2019)
+- [#325](https://github.com/smile-io/ember-polaris/pull/325) [ENHANCEMENT] Add the ability to disable shortcutActions in polaris resource list item
+- [#319](https://github.com/smile-io/ember-polaris/pull/319) [BUG] Fix rendering choice-list child components
+- [#318](https://github.com/smile-io/ember-polaris/pull/318) [ENHANCEMENT] Add support for choice-list extra component aka renderChildren
+
 ### v4.2.0 (May 10, 2019)
 - [#318](https://github.com/smile-io/ember-polaris/pull/318) [ENHANCEMENT] Add childComponent support to `polaris-choice-list` choices
 
@@ -14,7 +19,6 @@
 - [#292](https://github.com/smile-io/ember-polaris/pull/292) [UPDATE] Update card to Polaris v3.10.0
 - [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
 - [#294](https://github.com/smile-io/ember-polaris/pull/294) [UPDATE] Update choice property descriptions
-- [#293](https://github.com/smile-io/ember-polaris/pull/293) [UPDATE] Update checkbox to Polaris v3.10.0
 - [#295](https://github.com/smile-io/ember-polaris/pull/295) [INTERNAL] Upgrade to Ember CLI `3.8.1`
 - [#296](https://github.com/smile-io/ember-polaris/pull/296) [INTERNAL] Update misc dependencies
 - [#297](https://github.com/smile-io/ember-polaris/pull/297) [UPDATE] Update data table to Polaris v3.10.0
