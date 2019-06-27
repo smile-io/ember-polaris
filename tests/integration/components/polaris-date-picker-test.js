@@ -1,492 +1,484 @@
-import { moduleForComponent, test } from 'ember-qunit';
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find, click } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-moduleForComponent(
-  'polaris-date-picker',
-  'Integration | Component | polaris date picker',
-  {
-    integration: true,
+module('Integration | Component | polaris date picker', function(hooks) {
+  setupRenderingTest(hooks);
 
-    beforeEach() {
-      this.register('component:svg-jar', MockSvgJarComponent);
-    },
-  }
-);
-
-const DAY_SELECTED_CLASS = 'Polaris-DatePicker__Day--selected';
-const DAY_DISABLED_CLASS = 'Polaris-DatePicker__Day--disabled';
-const DAY_IN_RANGE_CLASS = 'Polaris-DatePicker__Day--inRange';
-const DAY_IS_TODAY_CLASS = 'Polaris-DatePicker__Day--today';
-
-const DAYS_PER_WEEK = 7;
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-const MONTH = 1;
-const YEAR = 2018;
-const MONTH_NAME = 'February';
-const START_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
-const END_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
-
-const container = '[data-test-date-picker]';
-const header = '[data-test-date-picker-header]';
-const monthContainer = '[data-test-date-picker-month-container]';
-const monthBody = '[data-test-date-picker-month]';
-const monthTitle = '[data-test-date-picker-title]';
-const weekdaysHeader = '[data-test-date-picker-week-heading]';
-const weekday = '[data-test-date-picker-weekday]';
-const week = '[data-test-date-picker-week]';
-const day = '[data-test-date-picker-day]';
-const dayEmpty = '[data-test-date-picker-day-empty]';
-
-const headerSelector = buildNestedSelector(container, header);
-
-const headerPrevBtnSelector = `${header} button:first-of-type`;
-
-const headerNextBtnSelector = `${header} button:last-of-type`;
-
-const monthSelector = buildNestedSelector(container, monthContainer);
-
-const monthBodySelector = buildNestedSelector(monthContainer, monthBody);
-
-const monthTitleSelector = buildNestedSelector(
-  monthContainer,
-  monthBody,
-  monthTitle
-);
-
-const weekdaySelector = buildNestedSelector(
-  monthContainer,
-  monthBody,
-  weekdaysHeader,
-  weekday
-);
-
-const monthWeekSelector = buildNestedSelector(monthContainer, monthBody, week);
-
-const daySelector = buildNestedSelector(week, day);
-
-const dayEmptySelector = buildNestedSelector(week, dayEmpty);
-
-const daySelectedSelector = `.${DAY_SELECTED_CLASS}`;
-
-test('it renders the correct date-picker HTML', function(assert) {
-  /**
-   * Assertions made in this test are based
-   * off a set month of February 2018, with
-   * February 7th set as the selected date.
-   */
-  const FEB_2018_WEEKS = 5;
-  const FEB_2018_DAYS = 28;
-  const FEB_2018_DAYS_EMPTY = 7;
-
-  let selected = {
-    start: new Date(START_DATE),
-    end: new Date(END_DATE),
-  };
-
-  this.setProperties({ month: MONTH, year: YEAR, selected });
-
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-    }}
-  `);
-
-  let containerEl = find(container);
-  assert.ok(containerEl, 'it renders the date picker component');
-
-  let headerEl = find(headerSelector);
-  assert.ok(headerEl, 'it renders the date picker header');
-
-  let headerPrevBtnEl = find(headerPrevBtnSelector);
-  let iconPrev = find('svg', headerPrevBtnEl);
-  assert.ok(headerPrevBtnSelector, 'it renders a `prev` button in the header');
-  assert.equal(
-    iconPrev.dataset.iconSource,
-    'polaris/arrow-left',
-    'it renders a left arrow icon as the `prev` button'
-  );
-
-  let headerNextBtnEl = find(headerNextBtnSelector);
-  let iconNext = find('svg', headerNextBtnEl);
-  assert.ok(headerNextBtnSelector, 'it renders a `next` button in the header');
-  assert.equal(
-    iconNext.dataset.iconSource,
-    'polaris/arrow-right',
-    'it renders a right arrow icon as the `next` button'
-  );
-
-  let monthTitleEl = find(monthTitleSelector);
-  let expectedTitle = `${MONTH_NAME} ${YEAR}`;
-  assert
-    .dom(monthTitleEl)
-    .hasText(
-      expectedTitle,
-      'it renders a title displaying the current month name and year'
-    );
-
-  let monthsEl = findAll(monthSelector);
-  assert.ok(monthsEl, 'it renders a single month container');
-
-  let monthBodyEls = findAll(monthBodySelector);
-  assert.equal(monthBodyEls.length, 1, 'it renders a single month body');
-
-  let weekdayEls = findAll(weekdaySelector);
-  let [sunday] = weekdayEls;
-  assert.equal(
-    weekdayEls.length,
-    DAYS_PER_WEEK,
-    'it renders 7 weekday labels in the weekday header'
-  );
-  assert
-    .dom(sunday)
-    .hasText('Su', 'it abbreviates the weekday names in the weekday header');
-
-  let weekEls = findAll(monthWeekSelector);
-  assert.equal(
-    weekEls.length,
-    FEB_2018_WEEKS,
-    'it renders 5 weeks for February 2018'
-  );
-
-  let dayEls = findAll(daySelector);
-  assert.equal(
-    dayEls.length,
-    FEB_2018_DAYS,
-    'it renders 28 days for February 2018'
-  );
-
-  let dayEmptyEls = findAll(dayEmptySelector);
-  assert.equal(
-    dayEmptyEls.length,
-    FEB_2018_DAYS_EMPTY,
-    'it renders 6 empty days for February 2018'
-  );
-
-  let selectedDay = find(daySelectedSelector);
-  assert
-    .dom(selectedDay)
-    .hasText('7', 'it renders February 7th as the selected date');
-});
-
-test('it calls a passed-in `onChange` action when a new date is chosen', function(assert) {
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    onChangeActionFired: false,
+  hooks.beforeEach(function() {
+    this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      onChange=(action (mut onChangeActionFired) true)
-    }}
-  `);
+  const DAY_SELECTED_CLASS = 'Polaris-DatePicker__Day--selected';
+  const DAY_DISABLED_CLASS = 'Polaris-DatePicker__Day--disabled';
+  const DAY_IN_RANGE_CLASS = 'Polaris-DatePicker__Day--inRange';
+  const DAY_IS_TODAY_CLASS = 'Polaris-DatePicker__Day--today';
 
-  click(daySelector);
-  assert.ok(
-    this.get('onChangeActionFired'),
-    'onChange action is called when a day is clicked'
+  const DAYS_PER_WEEK = 7;
+
+  const MONTHS = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const MONTH = 1;
+  const YEAR = 2018;
+  const MONTH_NAME = 'February';
+  const START_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
+  const END_DATE = 'Wed Feb 07 2018 00:00:00 GMT-0500 (EST)';
+
+  const container = '[data-test-date-picker]';
+  const header = '[data-test-date-picker-header]';
+  const monthContainer = '[data-test-date-picker-month-container]';
+  const monthBody = '[data-test-date-picker-month]';
+  const monthTitle = '[data-test-date-picker-title]';
+  const weekdaysHeader = '[data-test-date-picker-week-heading]';
+  const weekday = '[data-test-date-picker-weekday]';
+  const week = '[data-test-date-picker-week]';
+  const day = '[data-test-date-picker-day]';
+  const dayEmpty = '[data-test-date-picker-day-empty]';
+
+  const headerSelector = buildNestedSelector(container, header);
+
+  const headerPrevBtnSelector = `${header} button:first-of-type`;
+
+  const headerNextBtnSelector = `${header} button:last-of-type`;
+
+  const monthSelector = buildNestedSelector(container, monthContainer);
+
+  const monthBodySelector = buildNestedSelector(monthContainer, monthBody);
+
+  const monthTitleSelector = buildNestedSelector(
+    monthContainer,
+    monthBody,
+    monthTitle
   );
-});
 
-test('it passes a `selected` range argument to the `onChange` action', function(assert) {
-  assert.expect(3);
+  const weekdaySelector = buildNestedSelector(
+    monthContainer,
+    monthBody,
+    weekdaysHeader,
+    weekday
+  );
 
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    onChangeActionFired: false,
-    onChange: (selected) => {
-      assert.ok(
-        selected.start,
-        '`onChange` receives a range with a `start` attribute'
+  const monthWeekSelector = buildNestedSelector(
+    monthContainer,
+    monthBody,
+    week
+  );
+
+  const daySelector = buildNestedSelector(week, day);
+
+  const dayEmptySelector = buildNestedSelector(week, dayEmpty);
+
+  const daySelectedSelector = `.${DAY_SELECTED_CLASS}`;
+
+  test('it renders the correct date-picker HTML', async function(assert) {
+    /**
+     * Assertions made in this test are based
+     * off a set month of February 2018, with
+     * February 7th set as the selected date.
+     */
+    const FEB_2018_WEEKS = 5;
+    const FEB_2018_DAYS = 28;
+    const FEB_2018_DAYS_EMPTY = 7;
+
+    let selected = {
+      start: new Date(START_DATE),
+      end: new Date(END_DATE),
+    };
+
+    this.setProperties({ month: MONTH, year: YEAR, selected });
+
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+      }}
+    `);
+
+    assert.dom(container).exists('it renders the date picker component');
+
+    assert.dom(headerSelector).exists('it renders the date picker header');
+
+    assert
+      .dom(headerPrevBtnSelector)
+      .exists('it renders a `prev` button in the header');
+
+    assert
+      .dom(`${headerPrevBtnSelector} svg`)
+      .hasAttribute(
+        'data-icon-source',
+        'polaris/arrow-left',
+        'it renders a left arrow icon as the `prev` button'
       );
-      assert.ok(
-        selected.end,
-        '`onChange` receives a range with an `end` attribute'
+
+    assert
+      .dom(headerNextBtnSelector)
+      .exists('it renders a `next` button in the header');
+
+    assert
+      .dom(`${headerNextBtnSelector} svg`)
+      .hasAttribute(
+        'data-icon-source',
+        'polaris/arrow-right',
+        'it renders a right arrow icon as the `next` button'
       );
-      this.set('onChangeActionFired', true);
-    },
-  });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      onChange=(action onChange)
-    }}
-  `);
-
-  click(daySelector);
-  assert.ok(
-    this.get('onChangeActionFired'),
-    '`onChange` action sends up correct arguments'
-  );
-});
-
-test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', function(assert) {
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    onMonthChangeActionFired: false,
-  });
-
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      onMonthChange=(action (mut onMonthChangeActionFired) true)
-    }}
-  `);
-
-  click(headerPrevBtnSelector);
-  assert.ok(
-    this.get('onMonthChangeActionFired'),
-    'onMonthChange action is called when `prev` button is clicked'
-  );
-
-  this.set('onMonthChangeActionFired', false);
-
-  click(headerNextBtnSelector);
-  assert.ok(
-    this.get('onMonthChangeActionFired'),
-    'onMonthChange action is called when `next` button is clicked'
-  );
-});
-
-test('it passes `month` and `year` arguments to the `onMonthChange` action', function(assert) {
-  assert.expect(3);
-
-  let expectedMonth = MONTH + 1;
-  let expectedYear = YEAR;
-
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    onMonthChangeActionFired: false,
-    onMonthChange: (month, year) => {
-      assert.equal(
-        month,
-        expectedMonth,
-        '`onMonthChange` receives the correct `month` argument'
+    assert
+      .dom(monthTitleSelector)
+      .hasText(
+        `${MONTH_NAME} ${YEAR}`,
+        'it renders a title displaying the current month name and year'
       );
-      assert.equal(
-        year,
-        expectedYear,
-        '`onMonthChange` receives the correct `year` argument'
+
+    assert.dom(monthSelector).exists('it renders a single month container');
+
+    assert
+      .dom(monthBodySelector)
+      .exists({ count: 1 }, 'it renders a single month body');
+
+    assert
+      .dom(weekdaySelector)
+      .exists(
+        { count: DAYS_PER_WEEK },
+        'it renders 7 weekday labels in the weekday header'
       );
-      this.set('onMonthChangeActionFired', true);
-    },
+
+    assert
+      .dom(weekdaySelector)
+      .hasText('Su', 'it abbreviates the weekday names in the weekday header');
+
+    assert
+      .dom(monthWeekSelector)
+      .exists(
+        { count: FEB_2018_WEEKS },
+        'it renders 5 weeks for February 2018'
+      );
+
+    assert
+      .dom(daySelector)
+      .exists({ count: FEB_2018_DAYS }, 'it renders 28 days for February 2018');
+
+    assert
+      .dom(dayEmptySelector)
+      .exists(
+        { count: FEB_2018_DAYS_EMPTY },
+        'it renders 6 empty days for February 2018'
+      );
+
+    assert
+      .dom(daySelectedSelector)
+      .hasText('7', 'it renders February 7th as the selected date');
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      onMonthChange=(action onMonthChange)
-    }}
-  `);
+  test('it calls a passed-in `onChange` action when a new date is chosen', async function(assert) {
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      onChangeActionFired: false,
+    });
 
-  click(headerNextBtnSelector);
-  assert.ok(
-    this.get('onMonthChangeActionFired'),
-    '`onMonthChange` action sends up correct arguments'
-  );
-});
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        onChange=(action (mut onChangeActionFired) true)
+      }}
+    `);
 
-test('it displays two months at a time when `multiMonth` is true', function(assert) {
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    multiMonth: true,
+    await click(daySelector);
+    assert.ok(
+      this.get('onChangeActionFired'),
+      'onChange action is called when a day is clicked'
+    );
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      multiMonth=multiMonth
-    }}
-  `);
+  test('it passes a `selected` range argument to the `onChange` action', async function(assert) {
+    assert.expect(3);
 
-  let monthBodyEls = findAll(monthBodySelector);
-  assert.equal(
-    monthBodyEls.length,
-    2,
-    'it renders 2 months when `multiMonth` is true'
-  );
-});
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      onChangeActionFired: false,
+      onChange: (selected) => {
+        assert.ok(
+          selected.start,
+          '`onChange` receives a range with a `start` attribute'
+        );
+        assert.ok(
+          selected.end,
+          '`onChange` receives a range with an `end` attribute'
+        );
+        this.set('onChangeActionFired', true);
+      },
+    });
 
-test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', function(assert) {
-  const DISABLE_BEFORE = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
-  const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
-  const DISABLE_BEFORE_SELECTOR = '[aria-label="February 4 2018"]';
-  const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        onChange=(action onChange)
+      }}
+    `);
 
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    disableDatesBefore: DISABLE_BEFORE,
-    disableDatesAfter: DISABLE_AFTER,
+    await click(daySelector);
+    assert.ok(
+      this.get('onChangeActionFired'),
+      '`onChange` action sends up correct arguments'
+    );
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      disableDatesBefore=disableDatesBefore
-      disableDatesAfter=disableDatesAfter
-    }}
-  `);
+  test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', async function(assert) {
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      onMonthChangeActionFired: false,
+    });
 
-  let disabledBeforeDateEl = find(DISABLE_BEFORE_SELECTOR);
-  assert
-    .dom(disabledBeforeDateEl)
-    .hasClass(
-      DAY_DISABLED_CLASS,
-      'dates before `disableDatesBefore` have a disabled class'
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        onMonthChange=(action (mut onMonthChangeActionFired) true)
+      }}
+    `);
+
+    await click(headerPrevBtnSelector);
+    assert.ok(
+      this.get('onMonthChangeActionFired'),
+      'onMonthChange action is called when `prev` button is clicked'
     );
 
-  let disabledAfterDateEl = find(DISABLE_AFTER_SELECTOR);
-  assert
-    .dom(disabledAfterDateEl)
-    .hasClass(
-      DAY_DISABLED_CLASS,
-      'dates after `disableDatesAfter` have a disabled class'
+    this.set('onMonthChangeActionFired', false);
+
+    await click(headerNextBtnSelector);
+    assert.ok(
+      this.get('onMonthChangeActionFired'),
+      'onMonthChange action is called when `next` button is clicked'
     );
-});
-
-test('it does not fire actions when disabled days are clicked', function(assert) {
-  const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
-  const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
-
-  this.set('onChangeActionFired', false);
-
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: null,
-    disableDatesAfter: DISABLE_AFTER,
-    onChange: () => {
-      this.set('onChangeActionFired', true);
-    },
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-      disableDatesAfter=disableDatesAfter
-      onChange=(action onChange)
-    }}
-  `);
+  test('it passes `month` and `year` arguments to the `onMonthChange` action', async function(assert) {
+    assert.expect(3);
 
-  click(DISABLE_AFTER_SELECTOR);
-  assert.notOk(
-    this.get('onChangeActionFired'),
-    'clicking disabled day did not fire `onChange` action'
-  );
-});
+    let expectedMonth = MONTH + 1;
+    let expectedYear = YEAR;
 
-test('it applies an `inRange` class to days between the selected range', function(assert) {
-  const RANGE_START = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
-  const RANGE_END = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
-  const IN_RANGE_SELECTOR = '[aria-label="February 7 2018"]';
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      onMonthChangeActionFired: false,
+      onMonthChange: (month, year) => {
+        assert.equal(
+          month,
+          expectedMonth,
+          '`onMonthChange` receives the correct `month` argument'
+        );
+        assert.equal(
+          year,
+          expectedYear,
+          '`onMonthChange` receives the correct `year` argument'
+        );
+        this.set('onMonthChangeActionFired', true);
+      },
+    });
 
-  this.setProperties({
-    month: MONTH,
-    year: YEAR,
-    selected: {
-      start: RANGE_START,
-      end: RANGE_END,
-    },
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        onMonthChange=(action onMonthChange)
+      }}
+    `);
+
+    await click(headerNextBtnSelector);
+    assert.ok(
+      this.get('onMonthChangeActionFired'),
+      '`onMonthChange` action sends up correct arguments'
+    );
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-    }}
-  `);
+  test('it displays two months at a time when `multiMonth` is true', async function(assert) {
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      multiMonth: true,
+    });
 
-  let inRangeDayEl = find(IN_RANGE_SELECTOR);
-  assert
-    .dom(inRangeDayEl)
-    .hasClass(
-      DAY_IN_RANGE_CLASS,
-      'days within the provided range contain an `inRange` class'
-    );
-});
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        multiMonth=multiMonth
+      }}
+    `);
 
-test('it applies a `today` class to the day representing the current day', function(assert) {
-  const TODAY = new Date();
-  const TODAY_MONTH = TODAY.getMonth();
-  const TODAY_DATE = TODAY.getDate();
-  const TODAY_YEAR = TODAY.getFullYear();
-  const TODAY_LABEL = `${MONTHS[TODAY_MONTH]} ${TODAY_DATE} ${TODAY_YEAR}`; // ex: 'February 9 2018'
-  const TODAY_SELECTOR = `[aria-label="Today ${TODAY_LABEL}"]`;
-
-  this.setProperties({
-    month: TODAY_MONTH,
-    year: TODAY_YEAR,
-    selected: null,
+    assert
+      .dom(monthBodySelector)
+      .exists({ count: 2 }, 'it renders 2 months when `multiMonth` is true');
   });
 
-  this.render(hbs`
-    {{polaris-date-picker
-      month=month
-      year=year
-      selected=selected
-    }}
-  `);
+  test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', async function(assert) {
+    const DISABLE_BEFORE = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
+    const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+    const DISABLE_BEFORE_SELECTOR = '[aria-label="February 4 2018"]';
+    const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
 
-  let todayEl = find(TODAY_SELECTOR);
-  assert
-    .dom(todayEl)
-    .hasClass(
-      DAY_IS_TODAY_CLASS,
-      'the day representing today contains a `today` class'
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      disableDatesBefore: DISABLE_BEFORE,
+      disableDatesAfter: DISABLE_AFTER,
+    });
+
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        disableDatesBefore=disableDatesBefore
+        disableDatesAfter=disableDatesAfter
+      }}
+    `);
+
+    assert
+      .dom(DISABLE_BEFORE_SELECTOR)
+      .hasClass(
+        DAY_DISABLED_CLASS,
+        'dates before `disableDatesBefore` have a disabled class'
+      );
+
+    assert
+      .dom(DISABLE_AFTER_SELECTOR)
+      .hasClass(
+        DAY_DISABLED_CLASS,
+        'dates after `disableDatesAfter` have a disabled class'
+      );
+  });
+
+  test('it does not fire actions when disabled days are clicked', async function(assert) {
+    const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+    const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
+
+    this.set('onChangeActionFired', false);
+
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: null,
+      disableDatesAfter: DISABLE_AFTER,
+      onChange: () => {
+        this.set('onChangeActionFired', true);
+      },
+    });
+
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+        disableDatesAfter=disableDatesAfter
+        onChange=(action onChange)
+      }}
+    `);
+
+    await click(DISABLE_AFTER_SELECTOR);
+    assert.notOk(
+      this.get('onChangeActionFired'),
+      'clicking disabled day did not fire `onChange` action'
     );
+  });
 
-  let todayEls = findAll(`.${DAY_IS_TODAY_CLASS}`);
-  assert.ok(
-    todayEls.length,
-    1,
-    'only a single day element contains a `today` class'
-  );
+  test('it applies an `inRange` class to days between the selected range', async function(assert) {
+    const RANGE_START = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
+    const RANGE_END = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
+    const IN_RANGE_SELECTOR = '[aria-label="February 7 2018"]';
+
+    this.setProperties({
+      month: MONTH,
+      year: YEAR,
+      selected: {
+        start: RANGE_START,
+        end: RANGE_END,
+      },
+    });
+
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+      }}
+    `);
+
+    assert
+      .dom(IN_RANGE_SELECTOR)
+      .hasClass(
+        DAY_IN_RANGE_CLASS,
+        'days within the provided range contain an `inRange` class'
+      );
+  });
+
+  test('it applies a `today` class to the day representing the current day', async function(assert) {
+    const TODAY = new Date();
+    const TODAY_MONTH = TODAY.getMonth();
+    const TODAY_DATE = TODAY.getDate();
+    const TODAY_YEAR = TODAY.getFullYear();
+    const TODAY_LABEL = `${MONTHS[TODAY_MONTH]} ${TODAY_DATE} ${TODAY_YEAR}`; // ex: 'February 9 2018'
+    const TODAY_SELECTOR = `[aria-label="Today ${TODAY_LABEL}"]`;
+
+    this.setProperties({
+      month: TODAY_MONTH,
+      year: TODAY_YEAR,
+      selected: null,
+    });
+
+    await render(hbs`
+      {{polaris-date-picker
+        month=month
+        year=year
+        selected=selected
+      }}
+    `);
+
+    assert
+      .dom(TODAY_SELECTOR)
+      .hasClass(
+        DAY_IS_TODAY_CLASS,
+        'the day representing today contains a `today` class'
+      );
+
+    assert
+      .dom(`.${DAY_IS_TODAY_CLASS}`)
+      .exists(
+        { count: 1 },
+        'only a single day element contains a `today` class'
+      );
+  });
 });

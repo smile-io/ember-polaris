@@ -1,8 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-// import { compileTemplate } from '@ember/template-compilation';
+import { compileTemplate as compile } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
-import Ember from 'ember';
 
 // Renders a named component with a passed-in hash of properties.
 // This effectively allows us to spread/splat a props hash onto
@@ -29,10 +28,7 @@ export default Component.extend({
       'propsString'
     );
 
-    // Disable linting for this line because the recommended way of importing
-    // results in a "Could not find module `@ember/template-compilation`" error ¯\_(ツ)_/¯
-    // eslint-disable-next-line ember/new-module-imports
-    return Ember.HTMLBars.compile(`
+    return compile(`
       {{#if hasBlock}}
         {{#component "${componentName}"${propsString}}}
           {{yield}}

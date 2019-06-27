@@ -50,60 +50,44 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .dom(buildNestedSelector(textFieldSelector, fieldSelector, inputSelector))
       .exists('renders text field input correctly');
     assert.dom(labelSelector).hasText(label, 'it renders the passed-in label');
-    assert
-      .dom(fieldSelector)
-      .hasClass('Polaris-TextField', 'input wrapper has correct class');
-    assert
-      .dom(fieldSelector)
-      .hasNoClass(
-        'Polaris-TextField--multiline',
-        'input wrapper has no multiline class'
-      );
-    assert
-      .dom(fieldSelector)
-      .hasNoClass(
-        'Polaris-TextField--readOnly',
-        'input wrapper has no readOnly class'
-      );
-    assert
-      .dom(fieldSelector)
-      .hasNoClass(
-        'Polaris-TextField--hasValue',
-        'input wrapper has no value class applied'
-      );
-    assert
-      .dom(fieldSelector)
-      .hasNoClass(
-        'Polaris-TextField--error',
-        'input wrapper has no error class applied'
-      );
-    assert
-      .dom(inputSelector)
-      .hasClass('Polaris-TextField__Input', 'input has correct class');
-    assert
-      .dom(inputSelector)
-      .hasNoAttribute(
-        'aria-multiline',
-        'input element has no aria-multiline attribute'
-      );
-    assert
-      .dom(inputSelector)
-      .hasNoAttribute(
-        'aria-invalid',
-        'input element has no aria-invalid attribute'
-      );
-    assert
-      .dom(inputSelector)
-      .hasNoClass(
-        'Polaris-TextField__Input--suffixed',
-        'input element has no suffixed class'
-      );
+
+    let field = assert.dom(fieldSelector);
+    field.hasClass('Polaris-TextField', 'input wrapper has correct class');
+    field.hasNoClass(
+      'Polaris-TextField--multiline',
+      'input wrapper has no multiline class'
+    );
+    field.hasNoClass(
+      'Polaris-TextField--readOnly',
+      'input wrapper has no readOnly class'
+    );
+    field.hasNoClass(
+      'Polaris-TextField--hasValue',
+      'input wrapper has no value class applied'
+    );
+    field.hasNoClass(
+      'Polaris-TextField--error',
+      'input wrapper has no error class applied'
+    );
+
+    let input = assert.dom(inputSelector);
+    input.hasClass('Polaris-TextField__Input', 'input has correct class');
+    input.hasNoAttribute(
+      'aria-multiline',
+      'input element has no aria-multiline attribute'
+    );
+    input.hasNoAttribute(
+      'aria-invalid',
+      'input element has no aria-invalid attribute'
+    );
+    input.hasNoClass(
+      'Polaris-TextField__Input--suffixed',
+      'input element has no suffixed class'
+    );
   });
 
   test('it supports focused property', async function(assert) {
-    this.set('focused', false);
-
-    await render(hbs`{{polaris-text-field focused=focused}}`);
+    await render(hbs`{{polaris-text-field focused=false}}`);
 
     assert
       .dom(fieldSelector)
@@ -115,7 +99,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .dom(inputSelector)
       .isNotFocused('when focused is false - input is not focused');
 
-    this.set('focused', true);
+    await render(hbs`{{polaris-text-field focused=true}}`);
 
     assert
       .dom(fieldSelector)

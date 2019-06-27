@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { capitalize, htmlSafe } from '@ember/string';
-import { selectFiles } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import MockEvent from '@smile-io/ember-polaris/test-support/mock-drop-zone-event';
@@ -100,33 +99,30 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     await render(hbs`{{polaris-drop-zone}}`);
 
     // Defaults
-    assert.dom(dropZoneSelector).exists('has Polaris-DropZone class');
-    assert
-      .dom(dropZoneSelector)
-      .hasClass('Polaris-DropZone--hasOutline', 'has outline class');
-    assert
-      .dom(dropZoneSelector)
-      .hasClass(
-        'Polaris-DropZone--sizeExtraLarge',
-        'has extra large size class'
-      );
+    const dropZone = assert.dom(dropZoneSelector);
+    dropZone.exists('has Polaris-DropZone class');
+    dropZone.hasClass('Polaris-DropZone--hasOutline', 'has outline class');
+    dropZone.hasClass(
+      'Polaris-DropZone--sizeExtraLarge',
+      'has extra large size class'
+    );
 
     assert.dom(containerSelector).exists('has the DropZone container element');
 
-    assert.dom(inputSelector).exists('has the input element hidden');
-    assert
-      .dom(inputSelector)
-      .hasAttribute(
-        'autocomplete',
-        'off',
-        'input element has attribute autocomplete `off`'
-      );
-    assert
-      .dom(inputSelector)
-      .hasAttribute('multiple', '', 'input element has attribute multiple');
-    assert
-      .dom(inputSelector)
-      .hasAttribute('type', 'file', 'input element has attribute type `file`');
+    const input = assert.dom(inputSelector);
+
+    input.exists('has the input element hidden');
+    input.hasAttribute(
+      'autocomplete',
+      'off',
+      'input element has attribute autocomplete `off`'
+    );
+    input.hasAttribute('multiple', '', 'input element has attribute multiple');
+    input.hasAttribute(
+      'type',
+      'file',
+      'input element has attribute type `file`'
+    );
   });
 
   test('it supports `outline` property', async function(assert) {
@@ -136,17 +132,14 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     await render(hbs`{{polaris-drop-zone outline=outline}}`);
 
-    assert
-      .dom(dropZoneSelector)
-      .hasClass('Polaris-DropZone--hasOutline', 'has outline class');
+    const dropZone = assert.dom(dropZoneSelector);
+    dropZone.hasClass('Polaris-DropZone--hasOutline', 'has outline class');
 
     this.set('outline', false);
-    assert
-      .dom(dropZoneSelector)
-      .doesNotHaveClass(
-        'Polaris-DropZone--hasOutline',
-        'if `outline` is false, it does not have  outline class'
-      );
+    dropZone.doesNotHaveClass(
+      'Polaris-DropZone--hasOutline',
+      'if `outline` is false, it does not have  outline class'
+    );
   });
 
   test('it supports `disabled` property', async function(assert) {
@@ -154,29 +147,24 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     await render(hbs`{{polaris-drop-zone disabled=disabled}}`);
 
-    assert
-      .dom(dropZoneSelector)
-      .doesNotHaveAttribute(
-        'aria-disabled',
-        'if `disabled` is not provided, dropzone does not have `aria-label` attribute'
-      );
-    assert
-      .dom(inputSelector)
-      .isNotDisabled(
-        'if `disabled` is not provided, input does not have `disabled` attribute'
-      );
+    const dropZone = assert.dom(dropZoneSelector);
+    const input = assert.dom(inputSelector);
+
+    dropZone.doesNotHaveAttribute(
+      'aria-disabled',
+      'if `disabled` is not provided, dropzone does not have `aria-label` attribute'
+    );
+    input.isNotDisabled(
+      'if `disabled` is not provided, input does not have `disabled` attribute'
+    );
 
     this.set('disabled', true);
-    assert
-      .dom(dropZoneSelector)
-      .hasAttribute(
-        'aria-disabled',
-        'true',
-        '`aria-disabled` attribute set, if `disabled` is true'
-      );
-    assert
-      .dom(inputSelector)
-      .isDisabled('if `disabled` is true, input is disabled');
+    dropZone.hasAttribute(
+      'aria-disabled',
+      'true',
+      '`aria-disabled` attribute set, if `disabled` is true'
+    );
+    input.isDisabled('if `disabled` is true, input is disabled');
   });
 
   test('it supports `accept` property', async function(assert) {
@@ -184,17 +172,14 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
     await render(hbs`{{polaris-drop-zone accept=accept}}`);
 
-    assert
-      .dom(inputSelector)
-      .doesNotHaveAttribute(
-        'accept',
-        'if `accept` is not provided, input does not have `accept` attribute'
-      );
+    const input = assert.dom(inputSelector);
+    input.doesNotHaveAttribute(
+      'accept',
+      'if `accept` is not provided, input does not have `accept` attribute'
+    );
 
     this.set('accept', 'image/*');
-    assert
-      .dom(inputSelector)
-      .hasAttribute('accept', 'image/*', '`accept` attribute properly set');
+    input.hasAttribute('accept', 'image/*', '`accept` attribute properly set');
   });
 
   test('it supports `error` && `errorOverlayText` properties', async function(assert) {
@@ -206,23 +191,21 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     );
     await triggerEvent(dropZoneSelector, 'dragenter', event);
 
-    assert
-      .dom(dropZoneSelector)
-      .doesNotHaveClass(
-        'Polaris-DropZone--hasError',
-        'if `error` is not provided, dropzone does not have error class'
-      );
+    const dropZone = assert.dom(dropZoneSelector);
+
+    dropZone.doesNotHaveClass(
+      'Polaris-DropZone--hasError',
+      'if `error` is not provided, dropzone does not have error class'
+    );
 
     this.setProperties({
       error: true,
       errorOverlayText: 'Something went haywire!',
     });
-    assert
-      .dom(dropZoneSelector)
-      .hasClass(
-        'Polaris-DropZone--hasError',
-        'if `error` is true, dropzone has error class'
-      );
+    dropZone.hasClass(
+      'Polaris-DropZone--hasError',
+      'if `error` is true, dropzone has error class'
+    );
     assert
       .dom(dropZoneOverlayTextSelector)
       .hasText(
@@ -1050,7 +1033,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       // Test that selecting files triggers onDrop
       await render(hbs`{{polaris-drop-zone onDrop=(action drop)}}`);
-      selectFiles(inputSelector, uploadedFiles);
+      await triggerEvent(inputSelector, 'change', uploadedFiles);
 
       // Test with `accept` being set
       expectedAcceptedFiles = uploadedFiles.slice(0, 2);
