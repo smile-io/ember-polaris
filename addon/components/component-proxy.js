@@ -1,6 +1,6 @@
-import { compileTemplate as compile } from '@ember/template-compilation';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { compileTemplate as compile } from '@ember/template-compilation';
 import { assign } from '@ember/polyfills';
 
 // Renders a named component with a passed-in hash of properties.
