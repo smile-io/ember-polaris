@@ -4,6 +4,7 @@ import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
 import layout from '../templates/components/polaris-stack';
+import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
 /**
  * Polaris stack component.
@@ -128,9 +129,14 @@ export default Component.extend({
     this._super(...arguments);
 
     // Wrap each child element that isn't already a stack item.
-    this.$()
-      .children()
-      .not('div.Polaris-Stack__Item')
-      .wrap('<div data-test-stack-item class="Polaris-Stack__Item"></div>');
+    let nodesToWrap = rejectNodesByClassName(
+      this.element.children,
+      'Polaris-Stack__Item'
+    );
+    let wrapper = document.createElement('div');
+
+    wrapper.classList.add('Polaris-Stack__Item');
+    wrapper.setAttribute('data-test-stack-item', true);
+    wrapChildren(nodesToWrap, wrapper);
   },
 });

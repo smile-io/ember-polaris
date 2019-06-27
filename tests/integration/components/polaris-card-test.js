@@ -31,14 +31,10 @@ module('Integration | Component | polaris card', function(hooks) {
       {{/polaris-card}}
     `);
 
-    const cards = findAll(cardSelector);
-    assert.equal(
-      cards.length,
-      1,
-      'one section, basic usage - renders one card'
-    );
-    assert.notOk(
-      cards[0].classList.contains('Polaris-Card--subdued'),
+    let card = assert.dom(cardSelector);
+    card.exists({ count: 1 }, 'one section, basic usage - renders one card');
+    card.hasNoClass(
+      'Polaris-Card--subdued',
       'one section, basic usage - does not apply subdued class'
     );
 
@@ -46,27 +42,23 @@ module('Integration | Component | polaris card', function(hooks) {
       headerSelector,
       'h2.Polaris-Heading'
     );
-    const headings = findAll(headingSelector);
-    assert.equal(
-      headings.length,
-      1,
+    const heading = assert.dom(headingSelector);
+    heading.exists(
+      { count: 1 },
       'one section, basic usage - renders one heading'
     );
-    assert.equal(
-      headings[0].textContent.trim(),
+    heading.hasText(
       'This is the card title',
       'one section, basic usage - renders correct heading text'
     );
 
     const unsectionedParagraphSelector = buildNestedSelector(cardSelector, 'p');
-    const unsectionedParagraphs = findAll(unsectionedParagraphSelector);
-    assert.equal(
-      unsectionedParagraphs.length,
-      1,
+    const unsectionedParagraphs = assert.dom(unsectionedParagraphSelector);
+    unsectionedParagraphs.exists(
+      { count: 1 },
       'one section, basic usage - renders one unsectioned paragraph'
     );
-    assert.equal(
-      unsectionedParagraphs[0].textContent.trim(),
+    unsectionedParagraphs.hasText(
       'This is the card content',
       'one section, basic usage - renders correct unsectioned paragraph text'
     );
@@ -82,14 +74,13 @@ module('Integration | Component | polaris card', function(hooks) {
       sectionSelector,
       'p'
     );
-    const sectionedParagraphs = findAll(sectionedParagraphSelector);
-    assert.equal(
-      sectionedParagraphs.length,
-      1,
+    const sectionedParagraphs = assert.dom(sectionedParagraphSelector);
+
+    sectionedParagraphs.exists(
+      { count: 1 },
       'one section, basic usage - renders one sectioned paragraph'
     );
-    assert.equal(
-      sectionedParagraphs[0].textContent.trim(),
+    sectionedParagraphs.hasText(
       'This is the card content',
       'one section, basic usage - renders correct sectioned paragraph text'
     );
@@ -102,12 +93,12 @@ module('Integration | Component | polaris card', function(hooks) {
     `);
 
     const subduedCardSelector = 'div.Polaris-Card.Polaris-Card--subdued';
-    const subduedCards = findAll(subduedCardSelector);
-    assert.equal(
-      subduedCards.length,
-      1,
-      'one section, subdued=true - renders one card with subdued class'
-    );
+    assert
+      .dom(subduedCardSelector)
+      .exists(
+        { count: 1 },
+        'one section, subdued=true - renders one card with subdued class'
+      );
 
     // Multiple sections.
     await render(hbs`
@@ -302,10 +293,9 @@ module('Integration | Component | polaris card', function(hooks) {
       'div.Polaris-Stack__Item.Polaris-Stack__Item--fill',
       'h2.Polaris-Heading'
     );
-    const headings = findAll(headingSelector);
-    assert.equal(headings.length, 1, 'renders one heading');
-    assert.equal(
-      headings[0].textContent.trim(),
+    const headings = assert.dom(headingSelector);
+    headings.exists({ count: 1 }, 'renders one heading');
+    headings.hasText(
       'This is a card with actions',
       'renders correct heading content'
     );
@@ -324,21 +314,15 @@ module('Integration | Component | polaris card', function(hooks) {
       3,
       'renders the correct number of action buttons'
     );
-    assert.equal(
-      actionButtons[0].textContent.trim(),
-      'Action 1',
-      'first action button - renders correct content'
-    );
-    assert.equal(
-      actionButtons[1].textContent.trim(),
-      'Action 2',
-      'second action button - renders correct content'
-    );
-    assert.equal(
-      actionButtons[2].textContent.trim(),
-      'Action 3',
-      'third action button - renders correct content'
-    );
+    assert
+      .dom(actionButtons[0])
+      .hasText('Action 1', 'first action button - renders correct content');
+    assert
+      .dom(actionButtons[1])
+      .hasText('Action 2', 'second action button - renders correct content');
+    assert
+      .dom(actionButtons[2])
+      .hasText('Action 3', 'third action button - renders correct content');
 
     // Check clicking the buttons.
     await click(actionButtons[0]);
@@ -366,10 +350,12 @@ module('Integration | Component | polaris card', function(hooks) {
       false,
       'clicking disabled third action button - does not invoke third action handler'
     );
-    assert.ok(
-      actionButtons[2].classList.contains('Polaris-Button--disabled'),
-      'third action is a disabled header action - disabled class'
-    );
+    assert
+      .dom(actionButtons[2])
+      .hasClass(
+        'Polaris-Button--disabled',
+        'third action is a disabled header action - disabled class'
+      );
   });
 
   test('it allows section header customization', async function(assert) {
@@ -401,24 +387,24 @@ module('Integration | Component | polaris card', function(hooks) {
       1,
       'renders one section header title'
     );
-    assert.equal(
-      sectionHeaderTitles[0].textContent.trim(),
-      'Custom section title',
-      'renders the correct section header title'
-    );
+    assert
+      .dom(sectionHeaderTitles[0])
+      .hasText(
+        'Custom section title',
+        'renders the correct section header title'
+      );
 
     const sectionHeaderContentSelector = buildNestedSelector(
       sectionHeaderSelector,
       'p'
     );
-    const sectionHeaderContents = findAll(sectionHeaderContentSelector);
-    assert.equal(
-      sectionHeaderContents.length,
-      1,
+    const sectionHeaderContents = assert.dom(sectionHeaderContentSelector);
+
+    sectionHeaderContents.exists(
+      { count: 1 },
       'renders custom section header content'
     );
-    assert.equal(
-      sectionHeaderContents[0].textContent.trim(),
+    sectionHeaderContents.hasText(
       'Custom section content',
       'renders the correct custom section header content'
     );

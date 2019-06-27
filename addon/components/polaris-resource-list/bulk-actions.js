@@ -133,18 +133,6 @@ export default Component.extend(
 
     addedMoreActionsWidthForMeasuring: 0,
 
-    moreActionsNode: computed(function() {
-      return this.element.querySelector(
-        '.Polaris-ResourceList-BulkActions__Popover'
-      );
-    }).volatile(),
-
-    largeScreenButtonsNode: computed(function() {
-      return this.element.querySelector(
-        '.Polaris-ResourceList-BulkActions__Group--largeScreen'
-      );
-    }).volatile(),
-
     promotedActionsWidths: computed(function() {
       return [];
     }),
@@ -349,6 +337,18 @@ export default Component.extend(
         return combinedActions;
       }
     ),
+
+    get moreActionsNode() {
+      return this.element.querySelector(
+        '.Polaris-ResourceList-BulkActions__Popover'
+      );
+    },
+
+    get largeScreenButtonsNode() {
+      return this.element.querySelector(
+        '.Polaris-ResourceList-BulkActions__Group--largeScreen'
+      );
+    },
 
     instanceOfBulkActionListSectionArray(actionsCollection) {
       let validList = actionsCollection.filter((action) => {

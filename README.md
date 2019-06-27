@@ -15,8 +15,9 @@ ember-polaris
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v2.18 or above
-* Ember CLI v2.13 or above
+* Ember.js v3.10 or above (if you need a version compatible with ember 2.18 - 3.8, then use v4.x of this addon)
+* Ember CLI v3.10 or above
+* Node.js v8 or above
 
 
 Installation
@@ -66,17 +67,11 @@ If your app does not already import `ember-template-compiler`, you may get an er
 Uncaught TypeError: _ember.default.HTMLBars.compile is not a function
 ```
 
-If that happens, you need to add an import statement to its `ember-cli-build.js`. For non-Bower projects (Ember 2.13 and later by default):
+If that happens, you need to add an import statement to its `ember-cli-build.js`.
 
 ```javascript
 // ember-cli-build.js
 app.import('vendor/ember/ember-template-compiler.js');
-```
-
-For projects using Bower, this should be:
-
-```javascript
-app.import('bower_components/ember/ember-template-compiler.js');
 ```
 
 **NOTE:** This setup will be handled by `ember-polaris` in the future.

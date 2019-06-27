@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render } from '@ember/test-helpers';
+import { click, findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { findAll, find } from 'ember-native-dom-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
@@ -58,28 +57,25 @@ module('Integration | Component | polaris page', function(hooks) {
         <div class="test-page-content">This is some test content</div>
       {{/polaris-page}}`);
 
-    const pages = findAll(pageSelector);
-    assert.equal(pages.length, 1, 'renders one page div');
+    const pages = assert.dom(pageSelector);
+    pages.exists({ count: 1 }, 'renders one page div');
 
-    const page = pages[0];
-    assert
-      .dom(page)
-      .hasNoClass('Polaris-Page--fullWidth', 'does not apply full width class');
-    assert
-      .dom(page)
-      .hasNoClass(
-        'Polaris-Page--singleColumn',
-        'does not apply single column class'
-      );
+    pages.hasNoClass(
+      'Polaris-Page--fullWidth',
+      'does not apply full width class'
+    );
+    pages.hasNoClass(
+      'Polaris-Page--singleColumn',
+      'does not apply single column class'
+    );
 
-    const headers = findAll(headerSelector);
-    assert.equal(headers.length, 1, 'renders one page header div');
-    assert
-      .dom(headers[0])
-      .hasNoClass(
-        'Polaris-Page-Header__Header--hasSecondaryActions',
-        'does not apply secondary actions class to header'
-      );
+    const headers = assert.dom(headerSelector);
+    headers.exists({ count: 1 }, 'renders one page header div');
+
+    headers.hasNoClass(
+      'Polaris-Page-Header__Header--hasSecondaryActions',
+      'does not apply secondary actions class to header'
+    );
 
     const displayTextSelector = buildNestedSelector(
       headerSelector,
@@ -88,15 +84,15 @@ module('Integration | Component | polaris page', function(hooks) {
       'div',
       'h1.Polaris-DisplayText.Polaris-DisplayText--sizeLarge'
     );
-    const displayTexts = findAll(displayTextSelector);
-    assert.equal(
-      displayTexts.length,
-      1,
+    const displayTexts = assert.dom(displayTextSelector);
+
+    displayTexts.exists(
+      { count: 1 },
+
       'renders one page header display text'
     );
-    const titleText = displayTexts[0].textContent.trim();
-    assert.equal(
-      titleText,
+
+    displayTexts.hasText(
       'This is the title',
       'renders correct page header display text content'
     );
@@ -105,69 +101,48 @@ module('Integration | Component | polaris page', function(hooks) {
       pageSelector,
       'div.Polaris-Page__Content'
     );
-    const contentWrappers = findAll(contentWrapperSelector);
-    assert.equal(
-      contentWrappers.length,
-      1,
-      'renders one page content wrapper div'
-    );
+    assert
+      .dom(contentWrapperSelector)
+      .exists({ count: 1 }, 'renders one page content wrapper div');
 
     const contentSelector = buildNestedSelector(
       contentWrapperSelector,
       'div.test-page-content'
     );
-    const contents = findAll(contentSelector);
-    assert.equal(contents.length, 1, 'renders one content div');
+    const contents = assert.dom(contentSelector);
+    contents.exists({ count: 1 }, 'renders one content div');
 
-    const contentText = contents[0].textContent.trim();
-    assert.equal(
-      contentText,
-      'This is some test content',
-      'renders correct content'
+    contents.hasText('This is some test content', 'renders correct content');
+
+    pages.hasNoClass(
+      'Polaris-Page--fullWidth',
+      'fullWidth unset - does not apply fullWidth class'
+    );
+    this.set('fullWidth', true);
+    pages.hasClass(
+      'Polaris-Page--fullWidth',
+      'fullWidth set - applies fullWidth class'
     );
 
-    assert
-      .dom(page)
-      .hasNoClass(
-        'Polaris-Page--fullWidth',
-        'fullWidth unset - does not apply fullWidth class'
-      );
-    this.set('fullWidth', true);
-    assert
-      .dom(page)
-      .hasClass(
-        'Polaris-Page--fullWidth',
-        'fullWidth set - applies fullWidth class'
-      );
-
-    assert
-      .dom(page)
-      .hasNoClass(
-        'Polaris-Page--singleColumn',
-        'singleColumn unset - does not apply singleColumn class'
-      );
+    pages.hasNoClass(
+      'Polaris-Page--singleColumn',
+      'singleColumn unset - does not apply singleColumn class'
+    );
     this.set('singleColumn', true);
-    assert
-      .dom(page)
-      .hasClass(
-        'Polaris-Page--singleColumn',
-        'singleColumn set - applies singleColumn class'
-      );
+    pages.hasClass(
+      'Polaris-Page--singleColumn',
+      'singleColumn set - applies singleColumn class'
+    );
 
-    let header = headers[0];
-    assert
-      .dom(header)
-      .hasNoClass(
-        'Polaris-Page-Header__Title--hidden',
-        'titleHidden unset - does not apply titleHidden class'
-      );
+    headers.hasNoClass(
+      'Polaris-Page-Header__Title--hidden',
+      'titleHidden unset - does not apply titleHidden class'
+    );
     this.set('titleHidden', true);
-    assert
-      .dom(header)
-      .hasClass(
-        'Polaris-Page-Header__Title--hidden',
-        'titleHidden set - applies titleHidden class'
-      );
+    headers.hasClass(
+      'Polaris-Page-Header__Title--hidden',
+      'titleHidden set - applies titleHidden class'
+    );
   });
 
   test('it handles primary action correctly when supplied', async function(assert) {
@@ -192,43 +167,33 @@ module('Integration | Component | polaris page', function(hooks) {
       }}
     `);
 
-    const primaryButtons = findAll(primaryButtonSelector);
-    assert.equal(primaryButtons.length, 1, 'renders one primary button');
-    const primaryButton = primaryButtons[0];
-    const primaryButtonText = primaryButton.textContent.trim();
-    assert.equal(
-      primaryButtonText,
+    const primaryButtons = assert.dom(primaryButtonSelector);
+    primaryButtons.exists({ count: 1 }, 'renders one primary button');
+
+    primaryButtons.hasText(
       'Take action!',
       'uses correct text on primary button'
     );
 
-    assert.ok(
-      primaryButton.disabled,
-      'primary action button is initially disabled'
+    primaryButtons.isDisabled('primary action button is initially disabled');
+    primaryButtons.hasNoClass(
+      'Polaris-Button--loading',
+      'primary action button is not initially in loading state'
     );
-    assert
-      .dom(primaryButton)
-      .hasNoClass(
-        'Polaris-Button--loading',
-        'primary action button is not initially in loading state'
-      );
 
     this.setProperties({
       primaryActionDisabled: false,
       primaryActionLoading: true,
     });
-    assert
-      .dom(primaryButton)
-      .hasClass(
-        'Polaris-Button--loading',
-        'primary action button goes into loading state'
-      );
+
+    primaryButtons.hasClass(
+      'Polaris-Button--loading',
+      'primary action button goes into loading state'
+    );
 
     this.set('primaryActionLoading', false);
-    assert.notOk(
-      primaryButton.disabled,
-      'primary action button becomes enabled'
-    );
+
+    primaryButtons.isNotDisabled('primary action button becomes enabled');
     assert.notOk(
       primaryActionFired,
       "hasn't fired primary action before clicking button"
@@ -264,9 +229,8 @@ module('Integration | Component | polaris page', function(hooks) {
       }}
     `);
 
-    const header = find(headerSelector);
     assert
-      .dom(header)
+      .dom(headerSelector)
       .hasClass(
         'Polaris-Page-Header__Header--hasSecondaryActions',
         'applies secondary actions class'
@@ -398,28 +362,25 @@ module('Integration | Component | polaris page', function(hooks) {
       hbs`{{polaris-page title="This is a page" breadcrumbs=breadcrumbs}}`
     );
 
-    // Test before setting breadcrumbs.
-    const header = find(headerSelector);
     const headerWithBreadcrumbsClass =
       'Polaris-Page-Header__Header--hasBreadcrumbs';
-    assert.ok(header, 'without breadcrumbs - renders header');
-    assert
-      .dom(header)
-      .hasNoClass(
-        headerWithBreadcrumbsClass,
-        'without breadcrumbs - does not apply hasBreadcrumbs class'
-      );
+
+    // Test before setting breadcrumbs.
+    const header = assert.dom(headerSelector);
+
+    header.exists('without breadcrumbs - renders header');
+    header.hasNoClass(
+      headerWithBreadcrumbsClass,
+      'without breadcrumbs - does not apply hasBreadcrumbs class'
+    );
 
     const navigationSelector = buildNestedSelector(
       headerSelector,
       'div.Polaris-Page-Header__Navigation'
     );
-    const navigations = findAll(navigationSelector);
-    assert.equal(
-      navigations.length,
-      0,
-      'without breadcrumbs - does not render navigation div'
-    );
+    assert
+      .dom(navigationSelector)
+      .doesNotExist('without breadcrumbs - does not render navigation div');
 
     // Add the breadcrumbs.
     this.set('breadcrumbs', [
@@ -433,12 +394,10 @@ module('Integration | Component | polaris page', function(hooks) {
       },
     ]);
 
-    assert
-      .dom(header)
-      .hasClass(
-        headerWithBreadcrumbsClass,
-        'with breadcrumbs - applies hasBreadcrumbs class'
-      );
+    header.hasClass(
+      headerWithBreadcrumbsClass,
+      'with breadcrumbs - applies hasBreadcrumbs class'
+    );
 
     // Check the breadcrumbs rendered.
     const breadcrumbLinkSelector = buildNestedSelector(
@@ -446,10 +405,10 @@ module('Integration | Component | polaris page', function(hooks) {
       'nav[role="navigation"]',
       'a.Polaris-Breadcrumbs__Breadcrumb'
     );
-    const breadcrumbLinks = findAll(breadcrumbLinkSelector);
-    assert.equal(
-      breadcrumbLinks.length,
-      1,
+    const breadcrumbLinks = assert.dom(breadcrumbLinkSelector);
+
+    breadcrumbLinks.exists(
+      { count: 1 },
       'with breadcrumbs - renders 1 breadcrumb'
     );
 
@@ -460,28 +419,27 @@ module('Integration | Component | polaris page', function(hooks) {
     );
     const contentSelector = 'span.Polaris-Breadcrumbs__Content';
 
-    let breadcrumbLink = breadcrumbLinks[0];
-    assert.ok(
-      breadcrumbLink.href.indexOf('/home/the-beginning') > -1,
+    breadcrumbLinks.hasAttribute(
+      'href',
+      '/home/the-beginning',
       'breadcrumb has href of last breadcrumb in list'
     );
-    assert.equal(
-      breadcrumbLink.dataset.polarisUnstyled,
+    breadcrumbLinks.hasAttribute(
+      'data-polaris-unstyled',
       'true',
       'breadcrumb has data-polaris-unstyled attribute'
     );
 
-    let contents = findAll(contentSelector, breadcrumbLink);
-    assert.equal(contents.length, 1, 'breadcrumb renders content');
-    assert
-      .dom(contents[0])
-      .hasText(
-        'No, really!',
-        'breadcrumb renders text from last breadcrumb in list'
-      );
+    let contents = assert.dom(`${breadcrumbLinkSelector} ${contentSelector}`);
+    contents.exists({ count: 1 }, 'breadcrumb renders content');
+    contents.hasText(
+      'No, really!',
+      'breadcrumb renders text from last breadcrumb in list'
+    );
 
-    let icons = findAll(iconSelector, breadcrumbLink);
-    assert.equal(icons.length, 1, 'breadcrumb renders icon');
+    assert
+      .dom(`${breadcrumbLinkSelector} ${iconSelector}`)
+      .exists({ count: 1 }, 'breadcrumb renders icon');
   });
 
   test('it renders title metadata', async function(assert) {
@@ -492,9 +450,7 @@ module('Integration | Component | polaris page', function(hooks) {
       }}
     `);
 
-    const metadataBadgeSelector = '.Polaris-Badge';
-    let metadataBadge = find(metadataBadgeSelector);
-    assert.ok(metadataBadge, 'renders title metadata');
+    assert.dom('.Polaris-Badge').exists('renders title metadata');
   });
 
   test('it allows the primary action to be rendered as not primary', async function(assert) {
@@ -511,37 +467,29 @@ module('Integration | Component | polaris page', function(hooks) {
       }}
     `);
 
-    let primaryButton = find(primaryButtonSelector);
-    assert.ok(primaryButton, 'primary false - renders primary action');
-    assert
-      .dom(primaryButton)
-      .hasNoClass(
-        'Polaris-Button--primary',
-        'primary false - button is not rendered as primary'
-      );
+    let primaryButton = assert.dom(primaryButtonSelector);
+    primaryButton.exists('primary false - renders primary action');
+    primaryButton.hasNoClass(
+      'Polaris-Button--primary',
+      'primary false - button is not rendered as primary'
+    );
 
     this.set('shouldRenderPrimaryActionAsPrimary', null);
-    assert
-      .dom(primaryButton)
-      .hasNoClass(
-        'Polaris-Button--primary',
-        'primary null - button is not rendered as primary'
-      );
+    primaryButton.hasNoClass(
+      'Polaris-Button--primary',
+      'primary null - button is not rendered as primary'
+    );
 
     this.set('shouldRenderPrimaryActionAsPrimary', true);
-    assert
-      .dom(primaryButton)
-      .hasClass(
-        'Polaris-Button--primary',
-        'primary true - button is rendered as primary'
-      );
+    primaryButton.hasClass(
+      'Polaris-Button--primary',
+      'primary true - button is rendered as primary'
+    );
 
     this.set('shouldRenderPrimaryActionAsPrimary', undefined);
-    assert
-      .dom(primaryButton)
-      .hasClass(
-        'Polaris-Button--primary',
-        'primary undefined - button is rendered as primary'
-      );
+    primaryButton.hasClass(
+      'Polaris-Button--primary',
+      'primary undefined - button is rendered as primary'
+    );
   });
 });

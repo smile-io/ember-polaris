@@ -47,11 +47,6 @@ export default Component.extend({
     this._super(...arguments);
 
     // Update ariaLabel with the new content.
-    this.set(
-      'ariaLabel',
-      this.$()
-        .text()
-        .trim()
-    );
+    this.set('ariaLabel', this.element.textContent.trim());
   },
 });
