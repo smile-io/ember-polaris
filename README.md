@@ -15,7 +15,7 @@ ember-polaris
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.10 or above (if you need a version compatible with ember 2.18 - 3.8, then use v4.x of this addonUpda)
+* Ember.js v3.10 or above (if you need a version compatible with ember 2.18 - 3.8, then use v4.x of this addon)
 * Ember CLI v3.10 or above
 * Node.js v8 or above
 
