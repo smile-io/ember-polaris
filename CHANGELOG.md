@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### v5.0.0 (June 27, 2019)
+- [#320](https://github.com/smile-io/ember-polaris/pull/320) [INTERNAL] Upgrade to ember 3.10
+
 ### v4.3.1 (June 24, 2019)
 - [#325](https://github.com/smile-io/ember-polaris/pull/325) [ENHANCEMENT] Add the ability to disable shortcutActions in polaris resource list item
 - [#319](https://github.com/smile-io/ember-polaris/pull/319) [BUG] Fix rendering choice-list child components
