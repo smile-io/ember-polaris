@@ -1,5 +1,8 @@
 # ember-polaris Changelog
 
+### V5.1.0 (July 8, 2019)
+- [#327](https://github.com/smile-io/ember-polaris/pull/327) [BUG] Stop popover content from jumping around
+
 ### v5.0.0 (June 27, 2019)
 - [#320](https://github.com/smile-io/ember-polaris/pull/320) [INTERNAL] Upgrade to ember 3.10
 
