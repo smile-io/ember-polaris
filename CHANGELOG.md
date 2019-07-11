@@ -1,5 +1,17 @@
 # ember-polaris Changelog
 
+### v5.2.0 (July 11, 2019)
+- [#342](https://github.com/smile-io/ember-polaris/pull/342) [INTERNAL] Bump fs-extra from 8.0.1 to 8.1.0 & ember-auto-import from 1.4.1 to 1.5.1
+- [#341](https://github.com/smile-io/ember-polaris/pull/341) [INTERNAL],[SECURITY] Bump lodash from 4.17.11 to 4.17.14
+- [#340](https://github.com/smile-io/ember-polaris/pull/340) [INTERNAL],[SECURITY] Bump lodash.merge from 4.6.1 to 4.6.2
+- [#339](https://github.com/smile-io/ember-polaris/pull/339) [INTERNAL],[SECURITY] Bump lodash.defaultsdeep from 4.6.0 to 4.6.1
+- [#338](https://github.com/smile-io/ember-polaris/pull/338) [INTERNAL] Bump @shopify/javascript-utilities from 2.3.0 to 2.4.0
+- [#334](https://github.com/smile-io/ember-polaris/pull/334) [INTERNAL] Bump ember-cli-code-coverage from 1.0.0-beta.4 to 1.0.0-beta.8
+- [#333](https://github.com/smile-io/ember-polaris/pull/333) [INTERNAL] Bump husky from 2.5.0 to 3.0.0
+- [#331](https://github.com/smile-io/ember-polaris/pull/331) [INTERNAL],[SECURITY] Bump tar from 2.2.1 to 2.2.2
+- [#330](https://github.com/smile-io/ember-polaris/pull/330) [INTERNAL] Bump ember-cli-htmlbars from 3.0.1 to 3.1.0
+- [#328](https://github.com/smile-io/ember-polaris/pull/328) [INTERNAL],[SECURITY] Bump jquery from 3.3.1 to 3.4.1
+
 ### V5.1.0 (July 8, 2019)
 - [#327](https://github.com/smile-io/ember-polaris/pull/327) [BUG] Stop popover content from jumping around
 
