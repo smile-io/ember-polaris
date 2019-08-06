@@ -4,16 +4,16 @@ window.deprecationWorkflow = window.deprecationWorkflow || {};
 window.deprecationWorkflow.config = {
   workflow: [
     {
-      handler: 'silence',
+      handler: 'throw',
       matchId: 'ember-polaris.polaris-description-list.term-component',
     },
     {
-      handler: 'silence',
+      handler: 'throw',
       matchId: 'ember-polaris.polaris-description-list.description-component',
     },
-    { handler: 'silence', matchId: 'computed-property.override' },
+    { handler: 'throw', matchId: 'computed-property.override' },
     {
-      handler: 'silence',
+      handler: 'throw',
       matchId: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
     },
   ],
