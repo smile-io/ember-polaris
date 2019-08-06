@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { classNames, layout } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-card/section-header';
 
-@classNames('Polaris-Card__SectionHeader')
+@tagName('')
 @layout(template)
 export default class CardSectionHeaderComponent extends Component {
   /**

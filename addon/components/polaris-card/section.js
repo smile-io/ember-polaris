@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { className, classNames, layout } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-card/section';
 
-@classNames('Polaris-Card__Section')
+@tagName('')
 @layout(template)
 export default class CardSectionComponent extends Component {
   /**
@@ -23,7 +23,6 @@ export default class CardSectionComponent extends Component {
    * @type {boolean}
    * @default: false
    */
-  @className('Polaris-Card__Section--subdued')
   subdued = false;
 
   /**
@@ -34,7 +33,6 @@ export default class CardSectionComponent extends Component {
    * @type {boolean}
    * @default: false
    */
-  @className('Polaris-Card__Section--fullWidth')
   fullWidth = false;
 
   /**

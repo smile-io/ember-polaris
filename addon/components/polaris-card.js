@@ -1,12 +1,12 @@
 import Component from '@ember/component';
-import { className, classNames, layout } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-card';
 
 /**
  * Polaris card component.
  * See https://polaris.shopify.com/components/structure/card
  */
-@classNames('Polaris-Card')
+@tagName('')
 @layout(template)
 export default class PolarisCardComponent extends Component {
   /**
@@ -41,7 +41,6 @@ export default class PolarisCardComponent extends Component {
    * @default: false
    * @public
    */
-  @className('Polaris-Card--subdued')
   subdued = false;
 
   /**
