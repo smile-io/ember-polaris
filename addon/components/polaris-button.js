@@ -1,10 +1,11 @@
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
-import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
+import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import layout from '../templates/components/polaris-button';
+import template from '../templates/components/polaris-button';
 
 const SIZES = {
   slim: 'slim',
@@ -17,14 +18,9 @@ const DEFAULT_SIZE = 'medium';
  * Polaris button component.
  * See https://polaris.shopify.com/components/actions/button
  */
-export default Component.extend({
-  // Polaris react behaviour is to render an anchor element if a URL is provided,
-  // or a button element otherwise. Ember components can't support dynamic tagNames,
-  // so we reproduce this behaviour using a dynamic component in block form in our template.
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisButtonComponent extends Component {
   /**
    * The content to display inside the button.
    * This component can be used in block form,
@@ -36,7 +32,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * A destination to link to, rendered in the href attribute of a link
@@ -46,7 +42,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  url: null,
+  url = null;
 
   /**
    * A unique identifier for the button
@@ -57,7 +53,7 @@ export default Component.extend({
    * @public
    */
   // eslint-disable-next-line smile-ember/order-in-components
-  id: null,
+  id = null;
 
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons
@@ -67,7 +63,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  primary: false,
+  primary = false;
 
   /**
    * Indicates a dangerous or potentially negative action
@@ -77,7 +73,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  destructive: false,
+  destructive = false;
 
   /**
    * Disables the button, disallowing merchant interaction
@@ -87,7 +83,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Replaces button text with a spinner while a background action is being performed
@@ -97,7 +93,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  loading: false,
+  loading = false;
 
   /**
    * Changes the size of the button, giving it more or less padding
@@ -107,7 +103,7 @@ export default Component.extend({
    * @default 'medium'
    * @public
    */
-  size: DEFAULT_SIZE,
+  size = DEFAULT_SIZE;
 
   /**
    * Gives the button a subtle alternative to the default button styling, appropriate for certain backdrops
@@ -117,7 +113,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  outline: false,
+  outline = false;
 
   /**
    * Allows the button to grow to the width of its container
@@ -127,7 +123,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  fullWidth: false,
+  fullWidth = false;
 
   /**
    * Displays the button with a disclosure icon
@@ -137,7 +133,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disclosure: false,
+  disclosure = false;
 
   /**
    * Allows the button to submit a form
@@ -147,7 +143,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  submit: false,
+  submit = false;
 
   /**
    * Renders a button that looks like a link
@@ -157,7 +153,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  plain: false,
+  plain = false;
 
   /**
    * Makes `plain` and `outline` Button colors (text, borders, icons) the same as the current text color. Also adds an underline to `plain` Buttons
@@ -167,7 +163,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  monochrome: false,
+  monochrome = false;
 
   /**
    * Forces url to open in a new tab
@@ -177,7 +173,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  external: false,
+  external = false;
 
   /**
    * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
@@ -187,7 +183,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  download: null,
+  download = null;
 
   /**
    * Icon to display to the left of the button content
@@ -197,7 +193,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  icon: null,
+  icon = null;
 
   /**
    * Visually hidden text for screen readers
@@ -207,7 +203,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * Id of the element the button controls
@@ -217,7 +213,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  ariaControls: null,
+  ariaControls = null;
 
   /**
    * Tells screen reader the controlled element is expanded
@@ -227,7 +223,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  ariaExpanded: false,
+  ariaExpanded = false;
 
   /**
    * Tells screen reader the element is pressed
@@ -237,7 +233,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  ariaPressed: false,
+  ariaPressed = false;
 
   /**
    * Callback when clicked
@@ -247,7 +243,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onClick() {},
+  onClick() {}
 
   /**
    * Callback when button becomes focussed
@@ -257,7 +253,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus leaves button
@@ -267,7 +263,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onBlur() {},
+  onBlur() {}
 
   /**
    * Callback when a keypress event is registered on the button
@@ -277,7 +273,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onKeyPress() {},
+  onKeyPress() {}
 
   /**
    * Callback when a keyup event is registered on the button
@@ -287,7 +283,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onKeyUp() {},
+  onKeyUp() {}
 
   /**
    * Callback when a keydown event is registered on the button
@@ -297,21 +293,22 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onKeyDown() {},
+  onKeyDown() {}
 
-  dataTestId: null,
+  dataTestId = null;
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  handleMouseUpByBlurring,
+  @(or('disabled', 'loading').readOnly())
+  isDisabled;
 
-  isDisabled: or('disabled', 'loading').readOnly(),
-
-  isIconOnly: computed('icon', 'text', function() {
+  @(computed('icon', 'text').readOnly())
+  get isIconOnly() {
     let { icon, text } = this.getProperties('icon', 'text');
 
     return icon && text == null;
-  }).readOnly(),
+  }
 
-  classes: computed(
+  @(computed(
     'class',
     'primary',
     'outline',
@@ -322,107 +319,109 @@ export default Component.extend({
     'monochrome',
     'size',
     'fullWidth',
-    'isIconOnly',
-    function() {
-      let {
-        class: externalClasses,
-        primary,
-        outline,
-        destructive,
-        isDisabled,
-        loading,
-        plain,
-        monochrome,
-        size,
-        fullWidth,
-        isIconOnly,
-      } = this.getProperties(
-        'class',
-        'primary',
-        'outline',
-        'destructive',
-        'isDisabled',
-        'loading',
-        'plain',
-        'monochrome',
-        'size',
-        'fullWidth',
-        'isIconOnly'
-      );
-      let classes = ['Polaris-Button'];
+    'isIconOnly'
+  ).readOnly())
+  get classes() {
+    let {
+      class: externalClasses,
+      primary,
+      outline,
+      destructive,
+      isDisabled,
+      loading,
+      plain,
+      monochrome,
+      size,
+      fullWidth,
+      isIconOnly,
+    } = this.getProperties(
+      'class',
+      'primary',
+      'outline',
+      'destructive',
+      'isDisabled',
+      'loading',
+      'plain',
+      'monochrome',
+      'size',
+      'fullWidth',
+      'isIconOnly'
+    );
+    let classes = ['Polaris-Button'];
 
-      if (isPresent(externalClasses)) {
-        classes.push(externalClasses);
-      }
-
-      if (primary) {
-        classes.push('Polaris-Button--primary');
-      }
-
-      if (outline) {
-        classes.push('Polaris-Button--outline');
-      }
-
-      if (destructive) {
-        classes.push('Polaris-Button--destructive');
-      }
-
-      if (isDisabled) {
-        classes.push('Polaris-Button--disabled');
-      }
-
-      if (loading) {
-        classes.push('Polaris-Button--loading');
-      }
-
-      if (plain) {
-        classes.push('Polaris-Button--plain');
-      }
-
-      if (monochrome) {
-        classes.push('Polaris-Button--monochrome');
-      }
-
-      if (size && size !== DEFAULT_SIZE) {
-        size = SIZES[size] || null;
-        if (size) {
-          classes.push(`Polaris-Button--size${classify(size)}`);
-        }
-      }
-
-      if (fullWidth) {
-        classes.push('Polaris-Button--fullWidth');
-      }
-
-      if (isIconOnly) {
-        classes.push('Polaris-Button--iconOnly');
-      }
-
-      return classes.join(' ');
+    if (isPresent(externalClasses)) {
+      classes.push(externalClasses);
     }
-  ).readOnly(),
 
-  type: computed('submit', function() {
+    if (primary) {
+      classes.push('Polaris-Button--primary');
+    }
+
+    if (outline) {
+      classes.push('Polaris-Button--outline');
+    }
+
+    if (destructive) {
+      classes.push('Polaris-Button--destructive');
+    }
+
+    if (isDisabled) {
+      classes.push('Polaris-Button--disabled');
+    }
+
+    if (loading) {
+      classes.push('Polaris-Button--loading');
+    }
+
+    if (plain) {
+      classes.push('Polaris-Button--plain');
+    }
+
+    if (monochrome) {
+      classes.push('Polaris-Button--monochrome');
+    }
+
+    if (size && size !== DEFAULT_SIZE) {
+      size = SIZES[size] || null;
+      if (size) {
+        classes.push(`Polaris-Button--size${classify(size)}`);
+      }
+    }
+
+    if (fullWidth) {
+      classes.push('Polaris-Button--fullWidth');
+    }
+
+    if (isIconOnly) {
+      classes.push('Polaris-Button--iconOnly');
+    }
+
+    return classes.join(' ');
+  }
+
+  @(computed('submit').readOnly())
+  get type() {
     return this.get('submit') === true ? 'submit' : 'button';
-  }).readOnly(),
+  }
 
-  ariaExpandedValue: computed('ariaExpanded', function() {
+  @(computed('ariaExpanded').readOnly())
+  get ariaExpandedValue() {
     let ariaExpanded = this.get('ariaExpanded');
     return isPresent(ariaExpanded) ? String(ariaExpanded) : null;
-  }).readOnly(),
+  }
 
-  ariaPressedValue: computed('ariaPressed', function() {
+  @(computed('ariaPressed').readOnly())
+  get ariaPressedValue() {
     let ariaPressed = this.get('ariaPressed');
     return isPresent(ariaPressed) ? String(ariaPressed) : null;
-  }).readOnly(),
+  }
 
-  actions: {
-    /**
-     * Helper to invoke passed-in actions without passing the
-     * button element's event object as the first parameter.
-     */
-    invokeMouseAction(actionName) {
-      return this.get(actionName)();
-    },
-  },
-});
+  /**
+   * Helper to invoke passed-in actions without passing the
+   * button element's event object as the first parameter.
+   */
+  @action
+  invokeMouseAction(actionName) {
+    return this.get(actionName)();
+  }
+}
