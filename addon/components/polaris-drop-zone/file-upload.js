@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
-import { classNames, layout } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-drop-zone/file-upload';
 
 const iconDragDrop = 'drag-drop';
@@ -16,7 +16,7 @@ const fileUploadStrings = {
   actionHintImage: 'or drop images to upload',
 };
 
-@classNames('Polaris-DropZone-FileUpload')
+@tagName('')
 @layout(template)
 export default class FileUploadComponent extends Component {
   iconDragDrop = iconDragDrop;
