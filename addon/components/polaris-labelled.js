@@ -110,14 +110,16 @@ export default class PolarisLabelledComponent extends Component {
   init() {
     super.init(...arguments);
 
-    deprecate(
-      `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.dataTestLabelled,
-      {
-        id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
-        until: '6.0.0',
-      }
-    );
-    this.dataTestLabelled = true;
+    if (typeof this.dataTestLabelled === 'undefined') {
+      deprecate(
+        `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+        false,
+        {
+          id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
+          until: '6.0.0',
+        }
+      );
+      this.dataTestLabelled = true;
+    }
   }
 }
