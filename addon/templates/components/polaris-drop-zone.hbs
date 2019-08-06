@@ -7,17 +7,18 @@
     labelHidden=labelHidden
     action=labelAction
   )
-  (component "wrapper-element"
-    tagName=""
-  )
-) as |wrapper|}}
-  {{#component wrapper}}
+  (component "wrapper-element" tagName="")
+) as |Wrapper|}}
+  <Wrapper>
     <div
       data-test-drop-zone
       class={{dropZoneClasses}}
       aria-disabled={{ariaDisabled}}
       onclick={{action "handleClick"}}
       ondragstart={{action "handleDragStart"}}
+      {{did-insert this.setNode}}
+      {{did-insert this.setupEvents}}
+      ...attributes
     >
       {{#if showDragOverlay}}
         <div data-test-drop-zone-overlay class="Polaris-DropZone__Overlay">
@@ -81,5 +82,5 @@
         >
       {{/polaris-visually-hidden}}
     </div>
-  {{/component}}
+  </Wrapper>
 {{/with}}

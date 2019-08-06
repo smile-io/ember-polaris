@@ -1,4 +1,3 @@
-import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 
 const dropZone = {
@@ -50,15 +49,9 @@ export default class DropZoneState {
    */
   numFiles = 0;
 
-  @computed('type')
-  get overlayText() {
-    let type = this.type;
-    return dropZone[`overlayText${capitalize(type)}`];
-  }
-
-  @computed('type')
-  get errorOverlayText() {
-    let type = this.type;
-    return dropZone[`errorOverlayText${capitalize(type)}`];
+  constructor() {
+    const suffix = capitalize(this.type);
+    this.overlayText = dropZone[`overlayText${suffix}`];
+    this.errorOverlayText = dropZone[`errorOverlayText${suffix}`];
   }
 }

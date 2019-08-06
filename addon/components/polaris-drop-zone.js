@@ -4,7 +4,7 @@ import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
-import { layout } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import { guidFor } from '@ember/object/internals';
@@ -21,6 +21,7 @@ import {
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
+@tagName('')
 @layout(template)
 export default class PolarisDropZoneComponent extends Component.extend(
   ContextBoundEventListenersMixin
@@ -321,9 +322,13 @@ export default class PolarisDropZoneComponent extends Component.extend(
     return classNames.join(' ');
   }
 
-  @(computed('state.id').readOnly())
+  @(computed('state.id', 'node').readOnly())
   get fileInputNode() {
-    return this.element.querySelector(
+    if (!this.get('node')) {
+      return null;
+    }
+
+    return this.get('node').querySelector(
       `input[id='${this.get('state.id')}-input']`
     );
   }
@@ -425,7 +430,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
     }
 
     let { rejectedFiles } = this.getValidatedFiles(fileList);
-
     setProperties(state, {
       dragging: true,
       error: rejectedFiles.length > 0,
@@ -548,32 +552,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
     };
   }
 
-  setupEvents() {
-    let dropNode = this.get('dropNode');
-    if (isNone(dropNode)) {
-      return;
-    }
-
-    this.addEventListener(dropNode, 'drop', this.handleDrop);
-    this.addEventListener(dropNode, 'dragover', this.handleDragOver);
-    this.addEventListener(dropNode, 'dragenter', this.handleDragEnter);
-    this.addEventListener(dropNode, 'dragleave', this.handleDragLeave);
-
-    this.addEventListener(window, 'resize', this.adjustSize);
-  }
-
-  setNode() {
-    let dropOnPage = this.get('dropOnPage');
-    let dropzoneContainer = this.element.querySelector('.Polaris-DropZone');
-
-    this.setProperties({
-      node: dropzoneContainer,
-      dropNode: dropOnPage ? document : dropzoneContainer,
-    });
-
-    this.adjustSize();
-  }
-
   getDerivedStateFromProps() {
     let { id, error, type, overlayText, errorOverlayText } = this.get('state');
 
@@ -641,9 +619,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   didInsertElement() {
     super.didInsertElement(...arguments);
 
-    this.setNode();
     this.set('state.error', this.get('error'));
-    this.setupEvents();
 
     if (this.get('openFileDialog')) {
       this.triggerFileDialog();
@@ -656,6 +632,33 @@ export default class PolarisDropZoneComponent extends Component.extend(
     if (this.get('openFileDialog')) {
       this.triggerFileDialog();
     }
+  }
+
+  @action
+  setNode(dropzoneContainer) {
+    let dropOnPage = this.get('dropOnPage');
+
+    this.setProperties({
+      node: dropzoneContainer,
+      dropNode: dropOnPage ? document : dropzoneContainer,
+    });
+
+    this.adjustSize();
+  }
+
+  @action
+  setupEvents() {
+    let dropNode = this.get('dropNode');
+    if (isNone(dropNode)) {
+      return;
+    }
+
+    this.addEventListener(dropNode, 'drop', this.handleDrop);
+    this.addEventListener(dropNode, 'dragover', this.handleDragOver);
+    this.addEventListener(dropNode, 'dragenter', this.handleDragEnter);
+    this.addEventListener(dropNode, 'dragleave', this.handleDragLeave);
+
+    this.addEventListener(window, 'resize', this.adjustSize);
   }
 
   @action
