@@ -295,7 +295,6 @@ export default class PolarisButtonComponent extends Component {
    */
   onKeyDown() {}
 
-  dataTestId = null;
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   @(or('disabled', 'loading').readOnly())
@@ -304,7 +303,6 @@ export default class PolarisButtonComponent extends Component {
   @(computed('icon', 'text').readOnly())
   get isIconOnly() {
     let { icon, text } = this.getProperties('icon', 'text');
-
     return icon && text == null;
   }
 
