@@ -1,4 +1,4 @@
-import EmberObject, { get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
 
 const dropZone = {
@@ -8,7 +8,7 @@ const dropZone = {
   errorOverlayTextImage: 'Image type is not valid',
 };
 
-export default EmberObject.extend({
+export default class DropZoneState {
   /**
    * Whether is a file or an image
    *
@@ -16,7 +16,7 @@ export default EmberObject.extend({
    * @default 'file'
    * @property type
    */
-  type: 'file',
+  type = 'file';
 
   /**
    * The size of the dropzone
@@ -24,7 +24,7 @@ export default EmberObject.extend({
    * @default 'extraLarge'
    * @property size
    */
-  size: 'extraLarge',
+  size = 'extraLarge';
 
   /**
    * True, when dragging in progress
@@ -32,7 +32,7 @@ export default EmberObject.extend({
    * @default false
    * @property dragging
    */
-  dragging: false,
+  dragging = false;
 
   /**
    * True, when dropzone has errors
@@ -40,7 +40,7 @@ export default EmberObject.extend({
    * @default false
    * @property error
    */
-  error: false,
+  error = false;
 
   /**
    * Number of files
@@ -48,15 +48,17 @@ export default EmberObject.extend({
    * @default 0
    * @property numFiles
    */
-  numFiles: 0,
+  numFiles = 0;
 
-  overlayText: computed('type', function() {
-    let type = this.get('type');
-    return get(dropZone, `overlayText${capitalize(type)}`);
-  }),
+  @computed('type')
+  get overlayText() {
+    let type = this.type;
+    return dropZone[`overlayText${capitalize(type)}`];
+  }
 
-  errorOverlayText: computed('type', function() {
-    let type = this.get('type');
-    return get(dropZone, `errorOverlayText${capitalize(type)}`);
-  }),
-});
+  @computed('type')
+  get errorOverlayText() {
+    let type = this.type;
+    return dropZone[`errorOverlayText${capitalize(type)}`];
+  }
+}
