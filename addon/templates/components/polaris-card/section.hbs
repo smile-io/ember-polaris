@@ -1,24 +1,18 @@
 <div
-  class="
-    Polaris-Card__Section
+  class="Polaris-Card__Section
     {{if @subdued "Polaris-Card__Section--subdued"}}
-    {{if @fullWidth "Polaris-Card__Section--fullWidth"}}
-  "
+    {{if @fullWidth "Polaris-Card__Section--fullWidth"}}"
   ...attributes
 >
-  {{#let (component "polaris-card/section-header") as |headerComponent|}}
-    {{#if title}}
-      {{component headerComponent title=title}}
+  {{#let (component "polaris-card/section-header") as |Header|}}
+    {{#if @title}}
+      <Header @title={{@title}} />
     {{/if}}
 
     {{#if hasBlock}}
-      {{yield
-        (hash
-          header=headerComponent
-        )
-      }}
+      {{yield (hash header=Header Header=Header)}}
     {{else}}
-      {{text}}
+      {{@text}}
     {{/if}}
   {{/let}}
 </div>
