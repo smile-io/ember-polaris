@@ -1,79 +1,87 @@
 {{#with
-  (component "polaris-button/content"
-    text=text
-    primary=primary
-    destructive=destructive
-    loading=loading
-    disclosure=disclosure
-    icon=icon
-  )
-  as |contentComponent|
+  (component
+    "polaris-button/content"
+    text=this.text
+    primary=this.primary
+    destructive=this.destructive
+    loading=this.loading
+    disclosure=this.disclosure
+    icon=this.icon
+  ) as |Content|
 }}
-  {{#if url}}
-    {{#if isDisabled}}
-      {{!--
+  {{#if this.url}}
+    {{#if this.isDisabled}}
+      {{!
         Render an `<a>` so toggling disabled/enabled state changes only the
         `href` attribute instead of replacing the whole element.
-      --}}
-      <a id={{id}} class={{classes}} aria-label={{accessibilityLabel}} data-test-id={{dataTestId}}>
+      }}
+      <a
+        id={{this.id}}
+        class={{this.classes}}
+        aria-label={{this.accessibilityLabel}}
+        data-test-id={{dataTestId }}
+        ...attributes
+      >
         {{#if hasBlock}}
-          {{#component contentComponent}}
+          <Content>
             {{yield}}
-          {{/component}}
+          </Content>
         {{else}}
-          {{component contentComponent}}
+          <Content />
         {{/if}}
       </a>
     {{else}}
-      {{#polaris-unstyled-link
-        dataTestId=dataTestId
-        id=id
-        url=url
-        external=external
-        download=download
-        onClick=(action onClick)
-        focusIn=(action onFocus)
-        focusOut=(action onBlur)
-        mouseUp=handleMouseUpByBlurring
-        class=classes
-        ariaLabel=accessibilityLabel
-      }}
+      <PolarisUnstyledLink
+        class={{this.classes}}
+        @dataTestId={{@dataTestId}}
+        @id={{this.id}}
+        @url={{this.url}}
+        @external={{this.external}}
+        @download={{this.download}}
+        @ariaLabel={{this.accessibilityLabel}}
+        @onClick={{action this.onClick}}
+        @focusIn={{action this.onFocus}}
+        @focusOut={{action this.onBlur}}
+        @mouseUp={{action this.handleMouseUpByBlurring}}
+        ...attributes
+      >
         {{#if hasBlock}}
-          {{#component contentComponent}}
+          <Content>
             {{yield}}
-          {{/component}}
+          </Content>
         {{else}}
-          {{component contentComponent}}
+          <Content />
         {{/if}}
-      {{/polaris-unstyled-link}}
+      </PolarisUnstyledLink>
     {{/if}}
   {{else}}
     <button
-      data-test-id={{dataTestId}}
-      id={{id}}
-      type={{type}}
+      id={{this.id}}
+      type={{this.type}}
+      data-test-id={{@dataTestId}}
+      class={{this.classes}}
+      disabled={{this.isDisabled}}
+      aria-label={{this.accessibilityLabel}}
+      aria-controls={{this.ariaControls}}
+      aria-expanded={{this.ariaExpandedValue}}
+      aria-pressed={{this.ariaPressedValue}}
+      role={{if this.loading "alert"}}
+      aria-busy={{if this.loading "true"}}
       onclick={{action "invokeMouseAction" "onClick"}}
       onfocus={{action "invokeMouseAction" "onFocus"}}
       onblur={{action "invokeMouseAction" "onBlur"}}
-      onkeydown={{action onKeyDown}}
-      onkeyup={{action onKeyUp}}
-      onkeypress={{action onKeyPress}}
-      onmouseup={{handleMouseUpByBlurring}}
-      class={{classes}}
-      disabled={{isDisabled}}
-      aria-label={{accessibilityLabel}}
-      aria-controls={{ariaControls}}
-      aria-expanded={{ariaExpandedValue}}
-      aria-pressed={{ariaPressedValue}}
-      role={{if loading "alert"}}
-      aria-busy={{if loading "true"}}
+      onkeydown={{action this.onKeyDown}}
+      onkeyup={{action this.onKeyUp}}
+      onkeypress={{action this.onKeyPress}}
+      onmouseup={{action this.handleMouseUpByBlurring}}
+      ...attributes
     >
       {{#if hasBlock}}
-        {{#component contentComponent}}
+        <Content>
           {{yield}}
-        {{/component}}
+        </Content>
       {{else}}
-        {{component contentComponent}}
+        <Content />
       {{/if}}
     </button>
   {{/if}}
