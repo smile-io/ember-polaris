@@ -1,7 +1,8 @@
 import Component from '@ember/component';
-import { tagName, layout } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
 import {
   computedErrorId,
   computedHelpTextId,
@@ -55,8 +56,6 @@ export default class PolarisLabelledComponent extends Component {
    */
   labelHidden = false;
 
-  dataTestLabelled = true;
-
   /**
    * A unique identifier for the label
    * Note that we default this to Ember's GUID for this component instance,
@@ -106,5 +105,19 @@ export default class PolarisLabelledComponent extends Component {
   get shouldRenderError() {
     let error = this.get('error');
     return error && typeof error !== 'boolean';
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.dataTestLabelled,
+      {
+        id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
+        until: '6.0.0',
+      }
+    );
+    this.dataTestLabelled = true;
   }
 }
