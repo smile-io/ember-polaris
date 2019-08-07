@@ -46,6 +46,7 @@
     }
   },
   "dependencies": {
+    "@ember-decorators/component": "^6.0.0",
     "@shopify/javascript-utilities": "^2.4.0",
     "@shopify/polaris": "3.10.0",
     "@shopify/polaris-tokens": "^1.3.1",
