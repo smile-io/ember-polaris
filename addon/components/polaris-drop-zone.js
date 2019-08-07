@@ -288,12 +288,12 @@ export default class PolarisDropZoneComponent extends Component.extend(
   iconDragDrop = iconDragDrop;
   iconAlertCircle = iconAlertCircle;
 
-  @(computed().readOnly())
+  @computed()
   get state() {
     return new DropZoneState();
   }
 
-  @(or('active', 'state.dragging').readOnly())
+  @or('active', 'state.dragging')
   isDragging;
 
   @computed('outline', 'isDragging', 'state.error', 'sizeClass')
@@ -303,7 +303,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
       isDragging,
       state: { error },
       sizeClass,
-    } = this.getProperties('outline', 'isDragging', 'state', 'sizeClass');
+    } = this;
 
     let classNames = ['Polaris-DropZone', sizeClass];
 
@@ -322,32 +322,33 @@ export default class PolarisDropZoneComponent extends Component.extend(
     return classNames.join(' ');
   }
 
-  @(computed('state.id', 'node').readOnly())
+  @computed('state.id', 'node')
   get fileInputNode() {
-    if (!this.get('node')) {
+    if (!this.node) {
       return null;
     }
 
-    return this.get('node').querySelector(
-      `input[id='${this.get('state.id')}-input']`
-    );
+    return this.node.querySelector(`input[id='${this.state.id}-input']`);
   }
 
-  @(computed('disabled').readOnly())
+  @computed('disabled')
   get ariaDisabled() {
-    return isPresent(this.get('disabled')) ? 'true' : null;
+    return isPresent(this.disabled) ? 'true' : null;
   }
 
-  @(computed('state.size').readOnly())
+  @computed('state.size')
   get sizeClass() {
-    let size = this.get('state.size');
+    let { size } = this.state;
     return `Polaris-DropZone--size${classify(size)}`;
   }
 
-  @(computed('isDragging', 'state.error', 'overlay').readOnly())
+  @computed('isDragging', 'state.error', 'overlay')
   get showDragOverlay() {
-    let error = this.get('state.error');
-    let { isDragging, overlay } = this.getProperties('isDragging', 'overlay');
+    let {
+      isDragging,
+      overlay,
+      state: { error },
+    } = this;
 
     return isDragging && !error && overlay;
   }
@@ -366,14 +367,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
       onDropRejected,
       allowMultiple,
       state,
-    } = this.getProperties(
-      'disabled',
-      'onDrop',
-      'onDropAccepted',
-      'onDropRejected',
-      'allowMultiple',
-      'state'
-    );
+    } = this;
     let numFiles = state.numFiles;
 
     if (disabled || (!allowMultiple && numFiles > 0)) {
@@ -409,12 +403,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter, allowMultiple, state } = this.getProperties(
-      'disabled',
-      'onDragEnter',
-      'allowMultiple',
-      'state'
-    );
+    let { disabled, onDragEnter, allowMultiple, state } = this;
 
     if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
@@ -442,12 +431,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragOver, allowMultiple, state } = this.getProperties(
-      'disabled',
-      'onDragOver',
-      'allowMultiple',
-      'state'
-    );
+    let { disabled, onDragOver, allowMultiple, state } = this;
 
     if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
@@ -461,19 +445,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   handleDragLeave(event) {
     event.preventDefault();
 
-    let {
-      disabled,
-      onDragLeave,
-      allowMultiple,
-      dropNode,
-      state,
-    } = this.getProperties(
-      'disabled',
-      'onDragLeave',
-      'allowMultiple',
-      'dropNode',
-      'state'
-    );
+    let { disabled, onDragLeave, allowMultiple, dropNode, state } = this;
 
     if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
@@ -499,8 +471,10 @@ export default class PolarisDropZoneComponent extends Component.extend(
     throttle(
       this,
       function() {
-        let node = this.get('node');
-        let size = this.get('state.size');
+        let {
+          node,
+          state: { size },
+        } = this;
         let width = getRectForNode(node).width;
 
         if (width < smallSizeWidthLimit) {
@@ -518,12 +492,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   }
 
   getValidatedFiles(files) {
-    let { accept, allowMultiple, customValidator } = this.getProperties(
-      'accept',
-      'allowMultiple',
-      'customValidator'
-    );
-
+    let { accept, allowMultiple, customValidator } = this;
     let acceptedFiles = [];
     let rejectedFiles = [];
 
@@ -553,28 +522,28 @@ export default class PolarisDropZoneComponent extends Component.extend(
   }
 
   getDerivedStateFromProps() {
-    let { id, error, type, overlayText, errorOverlayText } = this.get('state');
+    let { id, error, type, overlayText, errorOverlayText } = this.state;
 
-    let newId = this.get('id') || guidFor(this);
+    let newId = this.id || guidFor(this);
     if (id !== null && id !== newId) {
       this.set('state.id', newId);
     }
 
-    if (error !== this.get('error')) {
-      this.set('state.error', this.get('error'));
+    if (error !== this.error) {
+      this.set('state.error', this.error);
     }
 
-    let newType = this.get('type');
+    let newType = this.type;
     if (isPresent(newType) && newType !== type) {
       this.set('state.type', newType);
     }
 
-    let newOverlayText = this.get('overlayText');
+    let newOverlayText = this.overlayText;
     if (isPresent(newOverlayText) && newOverlayText !== overlayText) {
       this.set('state.overlayText', newOverlayText);
     }
 
-    let newErrorOverlayText = this.get('errorOverlayText');
+    let newErrorOverlayText = this.errorOverlayText;
     if (
       isPresent(newErrorOverlayText) &&
       newErrorOverlayText !== errorOverlayText
@@ -584,8 +553,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   }
 
   open() {
-    let fileInputNode = this.get('fileInputNode');
-
+    let { fileInputNode } = this;
     if (isNone(fileInputNode)) {
       return;
     }
@@ -596,7 +564,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   triggerFileDialog() {
     this.open();
 
-    let close = this.get('onFileDialogClose');
+    let close = this.onFileDialogClose;
 
     if (close) {
       scheduleOnce('afterRender', close);
@@ -619,9 +587,9 @@ export default class PolarisDropZoneComponent extends Component.extend(
   didInsertElement() {
     super.didInsertElement(...arguments);
 
-    this.set('state.error', this.get('error'));
+    this.set('state.error', this.error);
 
-    if (this.get('openFileDialog')) {
+    if (this.openFileDialog) {
       this.triggerFileDialog();
     }
   }
@@ -629,14 +597,14 @@ export default class PolarisDropZoneComponent extends Component.extend(
   didUpdateAttrs() {
     super.didUpdateAttrs(...arguments);
 
-    if (this.get('openFileDialog')) {
+    if (this.openFileDialog) {
       this.triggerFileDialog();
     }
   }
 
   @action
   setNode(dropzoneContainer) {
-    let dropOnPage = this.get('dropOnPage');
+    let { dropOnPage } = this;
 
     this.setProperties({
       node: dropzoneContainer,
@@ -648,7 +616,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
 
   @action
   setupEvents() {
-    let dropNode = this.get('dropNode');
+    let { dropNode } = this;
     if (isNone(dropNode)) {
       return;
     }
@@ -663,12 +631,12 @@ export default class PolarisDropZoneComponent extends Component.extend(
 
   @action
   handleClick(event) {
-    let { onClick, disabled, allowMultiple } = this.getProperties(
-      'onClick',
-      'disabled',
-      'allowMultiple'
-    );
-    let numFiles = this.get('state.numFiles');
+    let {
+      onClick,
+      disabled,
+      allowMultiple,
+      state: { numFiles },
+    } = this;
 
     if (disabled || (!allowMultiple && numFiles > 0)) {
       return;

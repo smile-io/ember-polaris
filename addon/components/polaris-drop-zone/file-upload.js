@@ -39,7 +39,7 @@ export default class FileUploadComponent extends Component {
    */
   @computed('type')
   get actionTitle() {
-    let type = this.get('type');
+    let { type } = this;
     return fileUploadStrings[`actionTitle${classify(type)}`];
   }
 
@@ -53,14 +53,14 @@ export default class FileUploadComponent extends Component {
    */
   @computed('type')
   get actionHint() {
-    let type = this.get('type');
+    let { type } = this;
     return fileUploadStrings[`actionHint${classify(type)}`];
   }
 
-  @(computed('size').readOnly())
+  @computed('size')
   get imageClasses() {
     let classes = ['Polaris-DropZone-FileUpload__Image'];
-    let size = this.get('size');
+    let { size } = this;
     if (['extraLarge', 'large'].includes(size)) {
       classes.push(`Polaris-DropZone-FileUpload--size${classify(size)}`);
     }
