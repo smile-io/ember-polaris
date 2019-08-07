@@ -75,6 +75,12 @@ export default class PolarisLabelledComponent extends Component {
   }
 
   /**
+   * @public
+   * @deprecated
+   */
+  dataTestLabelled = true;
+
+  /**
    * ID for the help text div
    *
    * @type {String}
@@ -98,16 +104,14 @@ export default class PolarisLabelledComponent extends Component {
   init() {
     super.init(...arguments);
 
-    if (typeof this.dataTestLabelled === 'undefined') {
-      deprecate(
-        `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-        false,
-        {
-          id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
-          until: '6.0.0',
-        }
-      );
-      this.dataTestLabelled = true;
-    }
+    deprecate(
+      `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      this.dataTestLabelled === true,
+      {
+        id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
+        until: '6.0.0',
+      }
+    );
+    this.dataTestLabelled = this.dataTestLabelled || true;
   }
 }
