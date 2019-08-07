@@ -3,10 +3,7 @@ import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
-import {
-  computedErrorId,
-  computedHelpTextId,
-} from '@smile-io/ember-polaris/utils/id';
+import { computedHelpTextId } from '@smile-io/ember-polaris/utils/id';
 import template from '../templates/components/polaris-labelled';
 
 /**
@@ -78,15 +75,6 @@ export default class PolarisLabelledComponent extends Component {
   }
 
   /**
-   * ID for the error message div
-   *
-   * @type {String}
-   * @private
-   */
-  @computedErrorId('id')
-  errorId;
-
-  /**
    * ID for the help text div
    *
    * @type {String}
@@ -101,9 +89,9 @@ export default class PolarisLabelledComponent extends Component {
    * @type {Boolean}
    * @private
    */
-  @(computed('error').readOnly())
+  @computed('error')
   get shouldRenderError() {
-    let error = this.get('error');
+    let { error } = this;
     return error && typeof error !== 'boolean';
   }
 

@@ -1,5 +1,5 @@
 <div
-  class={{if this.labelHidden "Polaris-Labelled--hidden"}}
+  class={{if @labelHidden "Polaris-Labelled--hidden"}}
   data-test-labelled={{this.dataTestLabelled}}
   ...attributes
 >
@@ -21,12 +21,15 @@
       {{/if}}
     </div>
   {{/if}}
+
   {{yield}}
+
   {{#if this.shouldRenderError}}
     <div data-test-labelled-error class="Polaris-Labelled__Error">
       <PolarisInlineError @message={{@error}} @fieldID={{this.id}} />
     </div>
   {{/if}}
+
   {{#if @helpText}}
     <div
       data-test-label-help-text
