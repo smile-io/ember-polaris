@@ -6,9 +6,9 @@ import template from '../../templates/components/polaris-button/content';
 @tagName('')
 @layout(template)
 export default class ContentComponent extends Component {
-  @(computed('primary', 'destructive').readOnly())
+  @computed('primary', 'destructive')
   get spinnerColor() {
-    let { primary, destructive } = this.getProperties('primary', 'destructive');
+    let { primary, destructive } = this;
     return primary || destructive ? 'white' : 'inkLightest';
   }
 }

@@ -298,16 +298,16 @@ export default class PolarisButtonComponent extends Component {
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  @(or('disabled', 'loading').readOnly())
+  @or('disabled', 'loading')
   isDisabled;
 
-  @(computed('icon', 'text').readOnly())
+  @computed('icon', 'text')
   get isIconOnly() {
-    let { icon, text } = this.getProperties('icon', 'text');
+    let { icon, text } = this;
     return icon && text == null;
   }
 
-  @(computed(
+  @computed(
     'class',
     'primary',
     'outline',
@@ -319,7 +319,7 @@ export default class PolarisButtonComponent extends Component {
     'size',
     'fullWidth',
     'isIconOnly'
-  ).readOnly())
+  )
   get classes() {
     let {
       class: externalClasses,
@@ -333,19 +333,7 @@ export default class PolarisButtonComponent extends Component {
       size,
       fullWidth,
       isIconOnly,
-    } = this.getProperties(
-      'class',
-      'primary',
-      'outline',
-      'destructive',
-      'isDisabled',
-      'loading',
-      'plain',
-      'monochrome',
-      'size',
-      'fullWidth',
-      'isIconOnly'
-    );
+    } = this;
     let classes = ['Polaris-Button'];
 
     if (isPresent(externalClasses)) {
@@ -398,20 +386,20 @@ export default class PolarisButtonComponent extends Component {
     return classes.join(' ');
   }
 
-  @(computed('submit').readOnly())
+  @computed('submit')
   get type() {
-    return this.get('submit') === true ? 'submit' : 'button';
+    return this.submit === true ? 'submit' : 'button';
   }
 
-  @(computed('ariaExpanded').readOnly())
+  @computed('ariaExpanded')
   get ariaExpandedValue() {
-    let ariaExpanded = this.get('ariaExpanded');
+    let ariaExpanded = this.ariaExpanded;
     return isPresent(ariaExpanded) ? String(ariaExpanded) : null;
   }
 
-  @(computed('ariaPressed').readOnly())
+  @computed('ariaPressed')
   get ariaPressedValue() {
-    let ariaPressed = this.get('ariaPressed');
+    let ariaPressed = this.ariaPressed;
     return isPresent(ariaPressed) ? String(ariaPressed) : null;
   }
 
@@ -420,7 +408,7 @@ export default class PolarisButtonComponent extends Component {
 
     deprecate(
       `[polaris-button] Passing 'externalClasses' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.get('externalClasses'),
+      !this.externalClasses,
       {
         id: 'ember-polaris.polaris-button.externalClasses-arg',
         until: '6.0.0',
@@ -434,6 +422,6 @@ export default class PolarisButtonComponent extends Component {
    */
   @action
   invokeMouseAction(actionName) {
-    return this.get(actionName)();
+    return this[actionName]();
   }
 }
