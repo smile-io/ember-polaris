@@ -3,6 +3,7 @@ import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import template from '../templates/components/polaris-button';
@@ -412,6 +413,19 @@ export default class PolarisButtonComponent extends Component {
   get ariaPressedValue() {
     let ariaPressed = this.get('ariaPressed');
     return isPresent(ariaPressed) ? String(ariaPressed) : null;
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-button] Passing 'externalClasses' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.get('externalClasses'),
+      {
+        id: 'ember-polaris.polaris-button.externalClasses-arg',
+        until: '6.0.0',
+      }
+    );
   }
 
   /**
