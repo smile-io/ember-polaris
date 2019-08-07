@@ -4,10 +4,10 @@ import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
+import { guidFor } from '@ember/object/internals';
 import { layout, tagName } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
-import { guidFor } from '@ember/object/internals';
 import template from '../templates/components/polaris-drop-zone';
 import DropZoneState from '../-private/drop-zone-state';
 import {
