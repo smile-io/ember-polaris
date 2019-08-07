@@ -365,7 +365,7 @@ export default class PolarisTextFieldComponent extends Component {
    * @type {Function}
    * @default noop
    */
-  onChange /* value, id */() {}
+  onChange(/* value, id */) {}
 
   /**
    * Callback when input is focused
@@ -387,45 +387,27 @@ export default class PolarisTextFieldComponent extends Component {
    */
   onBlur() {}
 
-  /**
-   * @private
-   */
-
   buttonPressTimer = null;
 
   wasFocused = false;
   dataTestTextField = 'text-field';
 
-  @(bool('error').readOnly())
+  @bool('error')
   ariaInvalid;
 
   @normalizeAutoCompleteProperty('autoComplete')
   autoCompleteInputs;
 
-  @(computed(
+  @computed(
     'normalizedValue',
     'disabled',
     'readOnly',
     'error',
     'multiline',
     'focus'
-  ).readOnly())
+  )
   get textFieldClasses() {
-    let {
-      normalizedValue,
-      disabled,
-      readOnly,
-      error,
-      multiline,
-      focus,
-    } = this.getProperties(
-      'normalizedValue',
-      'disabled',
-      'readOnly',
-      'error',
-      'multiline',
-      'focus'
-    );
+    let { normalizedValue, disabled, readOnly, error, multiline, focus } = this;
     let classes = ['Polaris-TextField'];
 
     if (normalizedValue) {
@@ -455,19 +437,19 @@ export default class PolarisTextFieldComponent extends Component {
     return classes.join(' ');
   }
 
-  @(computed('suffix').readOnly())
+  @computed('suffix')
   get inputClassName() {
     let classes = ['Polaris-TextField__Input'];
-    if (this.get('suffix')) {
+    if (this.suffix) {
       classes.push('Polaris-TextField__Input--suffixed');
     }
 
     return classes.join(' ');
   }
 
-  @(computed('error', 'helpText', 'id').readOnly())
+  @computed('error', 'helpText', 'id')
   get ariaDescribedBy() {
-    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let { error, helpText, id } = this;
     let describedBy = [];
 
     if (error) {
@@ -481,9 +463,9 @@ export default class PolarisTextFieldComponent extends Component {
     return describedBy.join(' ');
   }
 
-  @(computed('id', 'prefix', 'suffix').readOnly())
+  @computed('id', 'prefix', 'suffix')
   get ariaLabelledBy() {
-    let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
+    let { id, prefix, suffix } = this;
     let labelledBy = [`${id}Label`];
 
     if (prefix) {
@@ -497,85 +479,74 @@ export default class PolarisTextFieldComponent extends Component {
     return labelledBy.join(' ');
   }
 
-  @(computed('type').readOnly())
+  @computed('type')
   get inputType() {
-    let type = this.get('type');
-
+    let { type } = this;
     return type === 'currency' ? 'text' : type;
   }
 
-  @(computed('multiline').readOnly())
+  @computed('multiline')
   get minimumLines() {
-    let multiline = this.get('multiline');
-
+    let { multiline } = this;
     return typeOf(multiline) === 'number' ? multiline : 1;
   }
 
-  @(computed('height', 'multiline').readOnly())
+  @computed('height', 'multiline')
   get heightStyle() {
-    let { height, multiline } = this.getProperties('height', 'multiline');
-
+    let { height, multiline } = this;
     return height && multiline ? htmlSafe(`height: ${height}px`) : null;
   }
 
-  @(computed('disabled', 'inputType').readOnly())
+  @computed('disabled', 'inputType')
   get shouldShowSpinner() {
-    let { inputType, disabled } = this.getProperties('inputType', 'disabled');
-
+    let { inputType, disabled } = this;
     return inputType === 'number' && !disabled;
   }
 
-  @(computed('value').readOnly())
+  @computed('value')
   get normalizedValue() {
-    let value = this.get('value');
+    let { value } = this;
     return value != null ? value : '';
   }
 
-  @(computed('normalizedValue.length').readOnly())
+  @computed('normalizedValue.length')
   get characterCount() {
-    return this.get('normalizedValue.length') || 0;
+    return this.normalizedValue.length || 0;
   }
 
-  @(computed('maxLength', 'characterCount').readOnly())
+  @computed('maxLength', 'characterCount')
   get characterCountLabel() {
-    let { maxLength, characterCount } = this.getProperties(
-      'maxLength',
-      'characterCount'
-    );
+    let { maxLength, characterCount } = this;
 
     return maxLength
       ? `${characterCount} characters of ${maxLength} used`
       : `${characterCount} characters`;
   }
 
-  @(computed('multiline').readOnly())
+  @computed('multiline')
   get characterCountClassName() {
     let classNames = ['Polaris-TextField__CharacterCount'];
 
-    if (this.get('multiline')) {
+    if (this.multiline) {
       classNames.push('Polaris-TextField__AlignFieldBottom');
     }
 
     return classNames.join(' ');
   }
 
-  @(computed('maxLength', 'characterCount').readOnly())
+  @computed('maxLength', 'characterCount')
   get characterCountText() {
-    let { maxLength, characterCount } = this.getProperties(
-      'maxLength',
-      'characterCount'
-    );
-
+    let { maxLength, characterCount } = this;
     return !maxLength ? characterCount : `${characterCount}/${maxLength}`;
   }
 
   @computed('focused')
   get focus() {
-    return this.get('focused') || false;
+    return this.focused || false;
   }
 
   setInput() {
-    this.set('input', document.querySelector(`[id='${this.get('id')}']`));
+    this.set('input', document.querySelector(`[id='${this.id}']`));
   }
 
   handleButtonPress(onChange) {
@@ -603,7 +574,7 @@ export default class PolarisTextFieldComponent extends Component {
   init() {
     super.init(...arguments);
 
-    let id = this.get('id');
+    let { id } = this;
     id = id || `TextField-${guidFor(this)}`;
 
     this.setProperties({
@@ -617,21 +588,17 @@ export default class PolarisTextFieldComponent extends Component {
 
     this.setInput();
 
-    if (!this.get('focused')) {
+    if (!this.focused) {
       return;
     }
 
-    this.get('input').focus();
+    this.input.focus();
   }
 
   didUpdateAttrs() {
     super.didUpdateAttrs(...arguments);
 
-    let { wasFocused, focused, input } = this.getProperties(
-      'wasFocused',
-      'focused',
-      'input'
-    );
+    let { wasFocused, focused, input } = this;
 
     if (!wasFocused && focused) {
       input.focus();
@@ -649,14 +616,7 @@ export default class PolarisTextFieldComponent extends Component {
 
   @action
   handleNumberChange(steps) {
-    let { id, onChange, value, step, min, max } = this.getProperties(
-      'id',
-      'onChange',
-      'value',
-      'step',
-      'min',
-      'max'
-    );
+    let { id, onChange, value, step, min, max } = this;
 
     step = step || 1;
     min = isPresent(min) ? min : -Infinity;
@@ -683,7 +643,7 @@ export default class PolarisTextFieldComponent extends Component {
 
   @action
   handleChange(event) {
-    this.get('onChange')(event.target.value, this.get('id'));
+    this.onChange(event.target.value, this.id);
   }
 
   @action
@@ -698,18 +658,16 @@ export default class PolarisTextFieldComponent extends Component {
 
   @action
   handleClick() {
-    let input = this.get('input');
-    input.focus();
+    this.input.focus();
   }
 
   @action
   handleKeyPress(event) {
     let { key } = event;
-    let type = this.get('type');
     let numbersSpec = /[\d.eE+-]$/;
 
     if (
-      type !== 'number' ||
+      this.type !== 'number' ||
       getCode(event) === 'Enter' ||
       key.match(numbersSpec)
     ) {

@@ -71,9 +71,9 @@ export default class ResizerComponent extends Component.extend(
 
   'data-test-text-field-resizer' = true;
 
-  @(computed('contents').readOnly())
+  @computed('contents')
   get finalContents() {
-    let contents = this.get('contents');
+    let { contents } = this;
 
     contents = contents
       ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
@@ -82,12 +82,11 @@ export default class ResizerComponent extends Component.extend(
     return htmlSafe(contents);
   }
 
-  @(computed('minimumLines').readOnly())
+  @computed('minimumLines')
   get contentsForMinimumLines() {
-    let minimumLines = this.get('minimumLines');
     let content = '';
 
-    for (let line = 0; line < minimumLines; line++) {
+    for (let line = 0; line < this.minimumLines; line++) {
       content = `${content}<br>`;
     }
 
@@ -106,10 +105,7 @@ export default class ResizerComponent extends Component.extend(
     let contentHeight = contentNode.offsetHeight;
     let minimumHeight = minimumLinesNode.offsetHeight;
     let newHeight = Math.max(contentHeight, minimumHeight);
-    let { currentHeight, onHeightChange } = this.getProperties(
-      'currentHeight',
-      'onHeightChange'
-    );
+    let { currentHeight, onHeightChange } = this;
 
     if (newHeight !== currentHeight) {
       this.scheduleTask('actions', () => {
