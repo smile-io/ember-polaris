@@ -6,12 +6,15 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | polaris visually hidden', function(hooks) {
   setupRenderingTest(hooks);
 
-  const visuallyHiddenSelector = 'span.Polaris-VisuallyHidden';
+  const visuallyHiddenSelector = '[data-test="visually-hidden-test"]';
 
   test('it renders the correct HTML in basic inline usage', async function(assert) {
-    await render(
-      hbs`{{polaris-visually-hidden text="Inline visually hidden content"}}`
-    );
+    await render(hbs`
+      <PolarisVisuallyHidden
+        data-test="visually-hidden-test"
+        @text="Inline visually hidden content"
+      />
+    `);
 
     const visuallyHidden = assert.dom(visuallyHiddenSelector);
     visuallyHidden.exists(
@@ -26,9 +29,9 @@ module('Integration | Component | polaris visually hidden', function(hooks) {
 
   test('it renders the correct HTML in basic block usage', async function(assert) {
     await render(hbs`
-      {{#polaris-visually-hidden}}
+      <PolarisVisuallyHidden data-test="visually-hidden-test">
         Block visually hidden content
-      {{/polaris-visually-hidden}}
+      </PolarisVisuallyHidden>
     `);
 
     const visuallyHidden = assert.dom(visuallyHiddenSelector);
