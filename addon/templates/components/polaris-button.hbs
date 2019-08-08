@@ -1,15 +1,15 @@
 {{#with
   (component
     "polaris-button/content"
-    text=this.text
-    primary=this.primary
-    destructive=this.destructive
-    loading=this.loading
-    disclosure=this.disclosure
-    icon=this.icon
+    text=@text
+    primary=@primary
+    destructive=@destructive
+    loading=@loading
+    disclosure=@disclosure
+    icon=@icon
   ) as |Content|
 }}
-  {{#if this.url}}
+  {{#if @url}}
     {{#if this.isDisabled}}
       {{!
         Render an `<a>` so toggling disabled/enabled state changes only the
@@ -18,8 +18,8 @@
       <a
         id={{this.id}}
         class={{this.classes}}
-        aria-label={{this.accessibilityLabel}}
-        data-test-id={{dataTestId }}
+        aria-label={{@accessibilityLabel}}
+        data-test-id={{@dataTestId}}
         ...attributes
       >
         {{#if hasBlock}}
@@ -35,10 +35,10 @@
         class={{this.classes}}
         @dataTestId={{@dataTestId}}
         @id={{this.id}}
-        @url={{this.url}}
-        @external={{this.external}}
-        @download={{this.download}}
-        @ariaLabel={{this.accessibilityLabel}}
+        @url={{@url}}
+        @external={{@external}}
+        @download={{@download}}
+        @ariaLabel={{@accessibilityLabel}}
         @onClick={{action this.onClick}}
         @focusIn={{action this.onFocus}}
         @focusOut={{action this.onBlur}}
@@ -57,23 +57,23 @@
   {{else}}
     <button
       id={{this.id}}
-      type={{this.type}}
       data-test-id={{@dataTestId}}
       class={{this.classes}}
       disabled={{this.isDisabled}}
-      aria-label={{this.accessibilityLabel}}
-      aria-controls={{this.ariaControls}}
-      aria-expanded={{this.ariaExpandedValue}}
-      aria-pressed={{this.ariaPressedValue}}
-      role={{if this.loading "alert"}}
+      type={{if @submit "submit" "button"}}
+      role={{if @loading "alert"}}
       aria-busy={{if this.loading "true"}}
-      onclick={{action "invokeMouseAction" "onClick"}}
-      onfocus={{action "invokeMouseAction" "onFocus"}}
-      onblur={{action "invokeMouseAction" "onBlur"}}
-      onkeydown={{action this.onKeyDown}}
-      onkeyup={{action this.onKeyUp}}
-      onkeypress={{action this.onKeyPress}}
-      onmouseup={{action this.handleMouseUpByBlurring}}
+      aria-label={{@accessibilityLabel}}
+      aria-controls={{@ariaControls}}
+      aria-expanded={{if @ariaExpanded "true"}}
+      aria-pressed={{if @ariaPressed "true"}}
+      {{on "click" this.onClick}}
+      {{on "focus" this.onFocus}}
+      {{on "blur" this.onBlur}}
+      {{on "keydown" this.onKeyDown}}
+      {{on "keyup" this.onKeyUp}}
+      {{on "keypress" this.onKeyPress}}
+      {{on "mouseup" this.handleMouseUpByBlurring}}
       ...attributes
     >
       {{#if hasBlock}}
