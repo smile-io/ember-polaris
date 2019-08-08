@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
@@ -386,23 +386,6 @@ export default class PolarisButtonComponent extends Component {
     return classes.join(' ');
   }
 
-  @computed('submit')
-  get type() {
-    return this.submit === true ? 'submit' : 'button';
-  }
-
-  @computed('ariaExpanded')
-  get ariaExpandedValue() {
-    let ariaExpanded = this.ariaExpanded;
-    return isPresent(ariaExpanded) ? String(ariaExpanded) : null;
-  }
-
-  @computed('ariaPressed')
-  get ariaPressedValue() {
-    let ariaPressed = this.ariaPressed;
-    return isPresent(ariaPressed) ? String(ariaPressed) : null;
-  }
-
   init() {
     super.init(...arguments);
 
@@ -414,14 +397,5 @@ export default class PolarisButtonComponent extends Component {
         until: '6.0.0',
       }
     );
-  }
-
-  /**
-   * Helper to invoke passed-in actions without passing the
-   * button element's event object as the first parameter.
-   */
-  @action
-  invokeMouseAction(actionName) {
-    return this[actionName]();
   }
 }

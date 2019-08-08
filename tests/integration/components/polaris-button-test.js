@@ -234,21 +234,18 @@ module('Integration | Component | polaris-button', function(hooks) {
 
     module('onClick()', function() {
       test('is called when the button is clicked', async function(assert) {
-        let clickCount = 0;
-        this.set('incrementClickCount', () => clickCount++);
-        await render(
-          hbs`{{polaris-button onClick=(action incrementClickCount)}}`
-        );
-        await click('button');
-        assert.equal(clickCount, 1);
-      });
+        this.set('handleClick', (_myArg, event) => {
+          assert.ok(true, 'triggers onClick handler');
+          assert.ok(
+            event instanceof MouseEvent,
+            'receives the MouseEvent as last argument'
+          );
+        });
 
-      test('does not receive any params when the button is clicked', async function(assert) {
         await render(
-          hbs`{{polaris-button onClick=(action (mut invocationParam))}}`
+          hbs`{{polaris-button onClick=(action handleClick "myArg")}}`
         );
         await click('button');
-        assert.equal(this.get('invocationParam'), undefined);
       });
 
       test('is called when the link is clicked', async function(assert) {
@@ -272,13 +269,18 @@ module('Integration | Component | polaris-button', function(hooks) {
 
     module('onFocus()', function() {
       test('is called when the button is focussed', async function(assert) {
-        let focusCount = 0;
-        this.set('incrementFocusCount', () => focusCount++);
+        this.set('handleFocus', (_myArg, event) => {
+          assert.ok(true, 'triggers onFocus handler');
+          assert.ok(
+            event instanceof Event,
+            'receives the Event as last argument'
+          );
+        });
+
         await render(
-          hbs`{{polaris-button onFocus=(action incrementFocusCount)}}`
+          hbs`{{polaris-button onFocus=(action handleFocus "myArg")}}`
         );
         await focus('button');
-        assert.equal(focusCount, 1);
       });
 
       test('is called when the link is focussed', async function(assert) {
@@ -294,14 +296,20 @@ module('Integration | Component | polaris-button', function(hooks) {
 
     module('onBlur()', function() {
       test('is called when the button is blurred', async function(assert) {
-        let blurCount = 0;
-        this.set('incrementBlurCount', () => blurCount++);
+        this.set('handleBlur', (_myArg, event) => {
+          assert.ok(true, 'triggers onBlur handler');
+          assert.ok(
+            event instanceof Event,
+            'receives the Event as last argument'
+          );
+        });
+
         await render(
-          hbs`{{polaris-button onBlur=(action incrementBlurCount)}}`
+          hbs`{{polaris-button onBlur=(action handleBlur "myArg")}}`
         );
+
         await focus('button');
         await blur('button');
-        assert.equal(blurCount, 1);
       });
 
       test('is called when the link is blurred', async function(assert) {
