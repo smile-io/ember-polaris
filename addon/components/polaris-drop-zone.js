@@ -287,6 +287,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
 
   iconDragDrop = iconDragDrop;
   iconAlertCircle = iconAlertCircle;
+  dragTargets = [];
 
   @computed()
   get state() {
@@ -331,11 +332,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
     return this.node.querySelector(`input[id='${this.state.id}-input']`);
   }
 
-  @computed('disabled')
-  get ariaDisabled() {
-    return isPresent(this.disabled) ? 'true' : null;
-  }
-
   @computed('state.size')
   get sizeClass() {
     let { size } = this.state;
@@ -356,6 +352,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   /**
    * Event handlers
    */
+  @action
   handleDrop(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -368,7 +365,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
       allowMultiple,
       state,
     } = this;
-    let numFiles = state.numFiles;
+    let { numFiles } = state;
 
     if (disabled || (!allowMultiple && numFiles > 0)) {
       return;
@@ -378,7 +375,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
       fileList
     );
 
-    this.dragTargets = [];
+    this.set('dragTargets', []);
 
     setProperties(state, {
       dragging: false,
@@ -451,9 +448,12 @@ export default class PolarisDropZoneComponent extends Component.extend(
       return;
     }
 
-    this.dragTargets = this.dragTargets.filter((el) => {
-      return el !== event.target && dropNode && dropNode.contains(el);
-    });
+    this.set(
+      'dragTargets',
+      this.dragTargets.filter((el) => {
+        return el !== event.target && dropNode && dropNode.contains(el);
+      })
+    );
 
     if (this.dragTargets.length > 0) {
       return;
@@ -561,44 +561,33 @@ export default class PolarisDropZoneComponent extends Component.extend(
     fileInputNode.click();
   }
 
-  triggerFileDialog() {
-    this.open();
-
-    let close = this.onFileDialogClose;
-
-    if (close) {
-      scheduleOnce('afterRender', close);
-    }
-  }
-
   /**
    * Component life-cycle hooks
    */
-  init() {
-    super.init(...arguments);
-    this.dragTargets = [];
-  }
-
   didReceiveAttrs() {
     super.didReceiveAttrs(...arguments);
     this.getDerivedStateFromProps();
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-
-    this.set('state.error', this.error);
-
-    if (this.openFileDialog) {
-      this.triggerFileDialog();
+  /**
+   * NOTE: if the component is rendered with `openFileDialog = true`, this will
+   * not work as expected: the file chooser is not opened because of how the HTML
+   * input element works. This should be a user activation.
+   *
+   * Following warning will be logged
+   * `File chooser dialog can only be shown with a user activation.`
+   */
+  @action
+  triggerFileDialog() {
+    if (!this.openFileDialog) {
+      return;
     }
-  }
 
-  didUpdateAttrs() {
-    super.didUpdateAttrs(...arguments);
+    this.open();
 
-    if (this.openFileDialog) {
-      this.triggerFileDialog();
+    let close = this.onFileDialogClose;
+    if (close) {
+      scheduleOnce('afterRender', close);
     }
   }
 

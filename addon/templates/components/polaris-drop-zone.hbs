@@ -1,23 +1,23 @@
-{{! template-lint-disable no-invalid-interactive }}
-
-{{#with (if this.label
-  (component "polaris-labelled"
-    id=this.id
-    label=this.label
-    labelHidden=this.labelHidden
-    action=this.labelAction
-  )
+{{#let (if @label
+  (component "polaris-labelled")
   (component "wrapper-element" tagName="")
 ) as |Wrapper|}}
-  <Wrapper>
+  <Wrapper
+    @id={{this.id}}
+    @label={{@label}}
+    @labelHidden={{@labelHidden}}
+    @action={{@labelAction}}
+  >
     <div
       data-test-drop-zone
       class={{this.dropZoneClasses}}
-      aria-disabled={{this.ariaDisabled}}
-      onclick={{action "handleClick"}}
-      ondragstart={{action "handleDragStart"}}
+      aria-disabled={{if @disabled "true"}}
+      {{on "click" this.handleClick}}
+      {{on "dragstart" this.handleDragStart}}
       {{did-insert this.setNode}}
       {{did-insert this.setupEvents}}
+      {{did-insert this.triggerFileDialog this.openFileDialog}}
+      {{did-update this.triggerFileDialog this.openFileDialog}}
       ...attributes
     >
       {{#if this.showDragOverlay}}
@@ -75,12 +75,12 @@
           type="file"
           autocomplete="off"
           id="{{this.state.id}}-input"
-          accept={{this.accept}}
-          disabled={{this.disabled}}
+          accept={{@accept}}
+          disabled={{@disabled}}
           multiple={{this.allowMultiple}}
-          onchange={{action this.handleDrop}}
+          {{on "change" this.handleDrop}}
         >
       </PolarisVisuallyHidden>
     </div>
   </Wrapper>
-{{/with}}
+{{/let}}
