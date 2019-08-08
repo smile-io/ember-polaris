@@ -46,6 +46,7 @@
     }
   },
   "dependencies": {
+    "@ember-decorators/component": "^6.0.0",
     "@shopify/javascript-utilities": "^2.4.0",
     "@shopify/polaris": "3.10.0",
     "@shopify/polaris-tokens": "^1.3.1",
@@ -74,6 +75,7 @@
     "@ember/optional-features": "^0.7.0",
     "@smile-io/changelog-generator": "^2.1.0",
     "@smile-io/ember-styleguide": "^9.1.0",
+    "babel-eslint": "^8.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-array-helper": "^5.0.0",
     "ember-cli": "~3.10.1",
@@ -87,9 +89,11 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-template-lint": "^1.0.0-beta.3",
     "ember-cli-uglify": "^3.0.0",
+    "ember-decorators": "^6.0.0",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-load-initializers": "^2.0.0",
     "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-on-modifier": "^1.0.0",
     "ember-qunit": "^4.5.1",
     "ember-resolver": "^5.2.0",
     "ember-source": "~3.10.2",
