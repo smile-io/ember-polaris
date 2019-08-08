@@ -78,6 +78,7 @@
           accept={{@accept}}
           disabled={{@disabled}}
           multiple={{this.allowMultiple}}
+          {{did-insert (action (mut this.fileInputNode))}}
           {{on "change" this.handleDrop}}
         >
       </PolarisVisuallyHidden>

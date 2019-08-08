@@ -323,15 +323,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
     return classNames.join(' ');
   }
 
-  @computed('state.id', 'node')
-  get fileInputNode() {
-    if (!this.node) {
-      return null;
-    }
-
-    return this.node.querySelector(`input[id='${this.state.id}-input']`);
-  }
-
   @computed('state.size')
   get sizeClass() {
     let { size } = this.state;
