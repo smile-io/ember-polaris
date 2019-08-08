@@ -1,121 +1,106 @@
 import Component from '@ember/component';
 import { or } from '@ember/object/computed';
-import layout from '../templates/components/polaris-page';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-page';
 
 /**
  * Polaris page component.
  * See https://polaris.shopify.com/components/structure/page
  */
-export default Component.extend({
-  classNames: ['Polaris-Page'],
-  classNameBindings: [
-    'fullWidth:Polaris-Page--fullWidth',
-    'singleColumn:Polaris-Page--singleColumn',
-  ],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisPageComponent extends Component {
   /**
    * Page title, in large type
    *
-   * @property title
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Important and non-interactive status information shown immediately after the title
    *
-   * @property titleMetadata
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
-  titleMetadata: null,
+  titleMetadata = null;
 
   /**
    * Visually hide the title (stand-alone app use only)
    *
-   * @property titleHidden
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  titleHidden: false,
+  titleHidden = false;
 
   /**
    * Application icon for identifying embedded applications
    *
-   * @property icon
-   * @public
    * @type {String}
    * @default null
+   * @public
    * TODO: not implemented yet
    */
-  icon: null,
+  icon = null;
 
   /**
    * Collection of breadcrumbs
    *
-   * @property breadcrumbs
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  breadcrumbs: null,
+  breadcrumbs = null;
 
   /**
    * Adds a border to the bottom of the page header (stand-alone app use only)
    *
-   * @property separator
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  separator: false,
+  separator = false;
 
   /**
    * Collection of secondary page-level actions
    *
-   * @property secondaryActions
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  secondaryActions: null,
+  secondaryActions = null;
 
   /**
    * Collection of page-level groups of secondary actions
    *
-   * @property actionGroups
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  actionGroups: null,
+  actionGroups = null;
 
   /**
    * Primary page-level action
    *
-   * @property primaryAction
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
-  primaryAction: null,
+  primaryAction = null;
 
   /**
    * Page-level pagination (stand-alone app use only)
    *
-   * @property pagination
-   * @public
    * @type {Object}
    * @default null
+   * @public
    * TODO: not implemented yet
    */
-  pagination: null,
+  pagination = null;
 
   /**
    * The contents of the page
@@ -124,52 +109,47 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Remove the normal max-width on the page
    *
-   * @property fullWidth
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  fullWidth: false,
+  fullWidth = false;
 
   /**
    * Decreases the maximum layout width. Intended for single-column layouts
    *
-   * @property singleColumn
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  singleColumn: false,
+  singleColumn = false;
 
   /**
    * Force render in page and do not delegate to the app bridge TitleBar action
    *
-   * @property forceRender
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
+   *
    * TODO: not implemented yet (only for embedded apps)
    */
-  forceRender: false,
+  forceRender = false;
 
-  /**
-   * Computed properties.
-   */
-  hasHeaderContent: or(
+  @or(
     'title',
     'primaryAction',
     'secondaryActions',
     'actionGroups',
     'breadcrumbs'
-  ).readOnly(),
-});
+  )
+  hasHeaderContent;
+}
