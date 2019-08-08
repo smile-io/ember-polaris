@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/polaris-unstyled-link';
-import mapEventToAction from '../utils/map-event-to-action';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-unstyled-link';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -9,22 +10,9 @@ import mapEventToAction from '../utils/map-event-to-action';
  * component behaviour provided by the React
  * implementation at this point.
  */
-export default Component.extend({
-  tagName: 'a',
-
-  attributeBindings: [
-    'url:href',
-    'dataPolarisUnstyled:data-polaris-unstyled',
-    'download',
-    'target',
-    'rel',
-    'ariaLabel:aria-label',
-    'ariaDescribedBy:aria-describedby',
-    'tabIndex:tabindex',
-  ],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Content to display inside the link
    *
@@ -33,7 +21,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * A destination to link to
@@ -44,7 +32,7 @@ export default Component.extend({
    * @public
    *
    */
-  url: null,
+  url = null;
 
   /**
    * Forces url to open in a new tab
@@ -54,7 +42,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  external: false,
+  external = false;
 
   /**
    * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
@@ -64,7 +52,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  download: null,
+  download = null;
 
   /**
    * Accessibility label
@@ -74,7 +62,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  ariaLabel: null,
+  ariaLabel = null;
 
   /**
    * @property ariaDescribedBy
@@ -82,7 +70,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  ariaDescribedBy: null,
+  ariaDescribedBy = null;
 
   /**
    * Callback when a link is clicked
@@ -92,25 +80,40 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onClick() {},
+  onClick() {}
 
-  /**
-   * @private
-   */
-  dataPolarisUnstyled: 'true',
+  /** @private */
+  dataPolarisUnstyled = 'true';
 
-  dataTestId: null,
+  /** @deprecated */
+  dataTestId = null;
 
-  click: mapEventToAction('onClick', {
-    preventDefault: false,
-    stopPropagation: true,
-  }),
+  // TODO what/where are these options coming from?!
+  // click: mapEventToAction('onClick', {
+  //   preventDefault: false,
+  //   stopPropagation: true,
+  // }),
 
-  target: computed('external', function() {
-    return this.get('external') ? '_blank' : null;
-  }).readOnly(),
+  @computed('external')
+  get target() {
+    return this.external ? '_blank' : null;
+  }
 
-  rel: computed('external', function() {
-    return this.get('external') ? 'noopener noreferrer' : null;
-  }).readOnly(),
-});
+  @computed('external')
+  get rel() {
+    return this.external ? 'noopener noreferrer' : null;
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-unstyled-link] Passing 'dataTestId' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.dataTestId,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.dataTestId-arg',
+        until: '6.0.0',
+      }
+    );
+  }
+}

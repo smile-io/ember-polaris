@@ -1,5 +1,19 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+<a
+  data-test={{@dataTestId}}
+  ...attributes
+  href={{@url}}
+  download={{@download}}
+  tabindex={{@tabIndex}}
+  aria-label={{@ariaLabel}}
+  aria-describedby={{@ariaDescribedBy}}
+  target={{this.target}}
+  rel={{this.rel}}
+  data-polaris-unstyled={{this.dataPolarisUnstyled}}
+  {{on "click" this.onClick}}
+>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</a>
