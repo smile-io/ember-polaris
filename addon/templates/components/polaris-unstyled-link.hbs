@@ -1,6 +1,7 @@
 <a
+  data-polaris-unstyled="true"
   data-test={{@dataTestId}}
-  ...attributes
+  class={{@class}}
   href={{@url}}
   download={{@download}}
   tabindex={{@tabIndex}}
@@ -8,8 +9,11 @@
   aria-describedby={{@ariaDescribedBy}}
   target={{this.target}}
   rel={{this.rel}}
-  data-polaris-unstyled={{this.dataPolarisUnstyled}}
-  {{on "click" this.onClick}}
+  {{on "click" this.handleClick}}
+  {{on "focus" this.onFocus}}
+  {{on "blur" this.onBlur}}
+  {{on "mouseup" this.onMouseUp}}
+  ...attributes
 >
   {{#if hasBlock}}
     {{yield}}

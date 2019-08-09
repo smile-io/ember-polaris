@@ -1,14 +1,14 @@
 {{#with (if loading "-1" "0") as |tabIndex|}}
   {{#if url}}
-    {{polaris-unstyled-link
+    <PolarisUnstyledLink
       class="Polaris-ResourceList-Item__Link"
-      ariaDescribedBy=itemId
-      ariaLabel=accessibilityLabel
-      url=url
-      focusIn=(action handleAnchorFocus)
-      focusOut=(action handleFocusedBlur)
-      tabIndex=tabIndex
-    }}
+      @ariaDescribedBy={{itemId}}
+      @ariaLabel={{accessibilityLabel}}
+      @url={{url}}
+      @tabIndex={{tabIndex}}
+      @onFocus={{action handleAnchorFocus}}
+      @onBlur={{action handleFocusedBlur}}
+    />
   {{else}}
     {{wrapper-element
       tagName="button"

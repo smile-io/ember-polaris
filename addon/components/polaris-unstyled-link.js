@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-unstyled-link';
@@ -16,7 +16,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Content to display inside the link
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -26,7 +25,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * A destination to link to
    *
-   * @property url
    * @type {String}
    * @default null
    * @public
@@ -37,7 +35,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Forces url to open in a new tab
    *
-   * @property external
    * @type {Boolean}
    * @default false
    * @public
@@ -47,7 +44,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
    *
-   * @property download
    * @type {String|Boolean}
    * @default null
    * @public
@@ -57,7 +53,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Accessibility label
    *
-   * @property ariaLabel
    * @type {String}
    * @default null
    * @public
@@ -65,7 +60,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   ariaLabel = null;
 
   /**
-   * @property ariaDescribedBy
    * @type {String}
    * @default null
    * @public
@@ -75,24 +69,41 @@ export default class PolarisUnstyledLinkComponent extends Component {
   /**
    * Callback when a link is clicked
    *
-   * @property onClick
    * @type {Function}
    * @default noop
    * @public
    */
   onClick() {}
 
-  /** @private */
-  dataPolarisUnstyled = 'true';
+  /**
+   * Callback when a link is focused
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onFocus() {}
+
+  /**
+   * Callback when a link is blured
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onBlur() {}
+
+  /**
+   * Callback for mouseup event
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onMouseUp() {}
 
   /** @deprecated */
   dataTestId = null;
-
-  // TODO what/where are these options coming from?!
-  // click: mapEventToAction('onClick', {
-  //   preventDefault: false,
-  //   stopPropagation: true,
-  // }),
 
   @computed('external')
   get target() {
@@ -115,5 +126,27 @@ export default class PolarisUnstyledLinkComponent extends Component {
         until: '6.0.0',
       }
     );
+    deprecate(
+      `[polaris-unstyled-link] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.id,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.id-arg',
+        until: '6.0.0',
+      }
+    );
+    deprecate(
+      `[polaris-unstyled-link] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.class-arg',
+        until: '6.0.0',
+      }
+    );
+  }
+
+  @action
+  handleClick(event) {
+    event.stopPropagation();
+    this.onClick(event);
   }
 }

@@ -1,16 +1,16 @@
 {{#if url}}
-  {{#polaris-unstyled-link
-    url=url
-    class=linkClass
-    external=external
-    onClick=(action onClick)
-  }}
+  <PolarisUnstyledLink
+    class={{linkClass}}
+    @url={{url}}
+    @external={{external}}
+    @onClick={{action onClick}}
+  >
     {{#if hasBlock}}
       {{yield}}
     {{else}}
       {{text}}
     {{/if}}
-  {{/polaris-unstyled-link}}
+  </PolarisUnstyledLink>
 {{else}}
   <button
     type="button"
