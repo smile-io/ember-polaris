@@ -6,8 +6,12 @@ export function isComponentDefinition(content) {
     return false;
   }
 
-  let contentConstructorName = content.constructor.name || '';
-  return contentConstructorName.indexOf('ComponentDefinition') > -1;
+  let contentPropNames = Object.keys(content);
+  return Boolean(
+    contentPropNames.find(
+      (propName) => propName.indexOf('COMPONENT DEFINITION') > -1
+    )
+  );
 }
 
 export default helper(([content]) => isComponentDefinition(content));
