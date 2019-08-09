@@ -1,6 +1,6 @@
 {
   "name": "@smile-io/ember-polaris",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Ember components for Shopify's Polaris design system.",
   "keywords": [
     "component library",
@@ -78,7 +78,7 @@
     "babel-eslint": "^8.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-array-helper": "^5.0.0",
-    "ember-cli": "~3.10.1",
+    "ember-cli": "~3.11.0",
     "ember-cli-code-coverage": "1.0.0-beta.8",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-eslint": "^5.1.0",
@@ -96,7 +96,7 @@
     "ember-on-modifier": "^1.0.0",
     "ember-qunit": "^4.5.1",
     "ember-resolver": "^5.2.0",
-    "ember-source": "~3.10.2",
+    "ember-source": "~3.12.0",
     "ember-source-channel-url": "^2.0.1",
     "ember-test-selectors": "^2.1.0",
     "ember-try": "^1.2.1",
