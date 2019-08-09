@@ -1,13 +1,17 @@
 import { helper } from '@ember/component/helper';
 import { typeOf } from '@ember/utils';
 
-export function isComponentDefinition([content]) {
+export function isComponentDefinition(content) {
   if (typeOf(content) !== 'object') {
     return false;
   }
 
-  let contentConstructorName = content.constructor.name || '';
-  return contentConstructorName.indexOf('ComponentDefinition') > -1;
+  let contentPropNames = Object.keys(content);
+  return Boolean(
+    contentPropNames.find(
+      (propName) => propName.indexOf('COMPONENT DEFINITION') > -1
+    )
+  );
 }
 
-export default helper(isComponentDefinition);
+export default helper(([content]) => isComponentDefinition(content));
