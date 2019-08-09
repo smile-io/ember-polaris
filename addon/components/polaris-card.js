@@ -1,16 +1,14 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-card';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-card';
 
 /**
  * Polaris card component.
  * See https://polaris.shopify.com/components/structure/card
  */
-export default Component.extend({
-  classNames: ['Polaris-Card'],
-  classNameBindings: ['subdued:Polaris-Card--subdued'],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisCardComponent extends Component {
   /**
    * Title content for the card
    *
@@ -19,7 +17,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Inner content of the card
@@ -33,7 +31,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * A less prominent card
@@ -43,7 +41,7 @@ export default Component.extend({
    * @default: false
    * @public
    */
-  subdued: false,
+  subdued = false;
 
   /**
    * Auto wrap content in section
@@ -53,7 +51,7 @@ export default Component.extend({
    * @default: false
    * @public
    */
-  sectioned: false,
+  sectioned = false;
 
   /**
    * Card header actions
@@ -63,7 +61,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  headerActions: null,
+  headerActions = null;
 
   /**
    * Primary action in the card footer
@@ -72,7 +70,7 @@ export default Component.extend({
    * @type {Action}
    * @default: null
    */
-  primaryFooterAction: null,
+  primaryFooterAction = null;
 
   /**
    * Secondary action in the card footer
@@ -81,5 +79,5 @@ export default Component.extend({
    * @type {Action}
    * @default: null
    */
-  secondaryFooterAction: null,
-});
+  secondaryFooterAction = null;
+}

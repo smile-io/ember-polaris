@@ -1,11 +1,10 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-card/section-header';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-card/section-header';
 
-export default Component.extend({
-  classNames: ['Polaris-Card__SectionHeader'],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class CardSectionHeaderComponent extends Component {
   /**
    * Title for the section
    *
@@ -14,7 +13,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Inner content of the section
@@ -28,5 +27,5 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  text: null,
-});
+  text = null;
+}
