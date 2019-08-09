@@ -1,21 +1,57 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import {
-  computedErrorId,
-  computedHelpTextId,
-} from '@smile-io/ember-polaris/utils/id';
-import layout from '../templates/components/polaris-labelled';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
+import { computedHelpTextId } from '@smile-io/ember-polaris/utils/id';
+import template from '../templates/components/polaris-labelled';
 
 /**
  * Internal Polaris labelled component, used to add labels to form fields.
  */
-export default Component.extend({
-  // Tagless component so that Ember doesn't apply the `id`
-  // attribute to the component's root element.
-  tagName: '',
+@tagName('')
+@layout(template)
+export default class PolarisLabelledComponent extends Component {
+  /**
+   * Text for the label
+   *
+   * @type {String}
+   * @public
+   */
+  label = null;
 
-  layout,
+  /**
+   * Error to display beneath the label
+   *
+   * @type {String|Component|Boolean}
+   * @public
+   */
+  error = null;
+
+  /**
+   * An action
+   *
+   * @type {Object}
+   * @public
+   */
+  action = null;
+
+  /**
+   * Additional hint text to display
+   *
+   * @type {String|Component}
+   * @public
+   */
+  helpText = null;
+
+  /**
+   * Visually hide the label
+   *
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  labelHidden = false;
 
   /**
    * A unique identifier for the label
@@ -25,60 +61,24 @@ export default Component.extend({
    * @type {String}
    * @public
    */
-  id: computed(function() {
+  @computed()
+  get id() {
+    if (this._id) {
+      return this._id;
+    }
+
     return guidFor(this);
-  }),
+  }
+  set id(value) {
+    this._id = value;
+    return value;
+  }
 
   /**
-   * Text for the label
-   *
-   * @type {String}
    * @public
+   * @deprecated
    */
-  label: null,
-
-  /**
-   * Error to display beneath the label
-   *
-   * @type {String|Component|Boolean}
-   * @public
-   */
-  error: null,
-
-  /**
-   * An action
-   *
-   * @type {Object}
-   * @public
-   */
-  action: null,
-
-  /**
-   * Additional hint text to display
-   *
-   * @type {String|Component}
-   * @public
-   */
-  helpText: null,
-
-  /**
-   * Visually hide the label
-   *
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  labelHidden: false,
-
-  dataTestLabelled: true,
-
-  /**
-   * ID for the error message div
-   *
-   * @type {String}
-   * @private
-   */
-  errorId: computedErrorId('id').readOnly(),
+  dataTestLabelled = true;
 
   /**
    * ID for the help text div
@@ -86,7 +86,8 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  helpTextId: computedHelpTextId('id').readOnly(),
+  @computedHelpTextId('id')
+  helpTextId;
 
   /**
    * Flag indicating whether to render the error component
@@ -94,8 +95,23 @@ export default Component.extend({
    * @type {Boolean}
    * @private
    */
-  shouldRenderError: computed('error', function() {
-    let error = this.get('error');
+  @computed('error')
+  get shouldRenderError() {
+    let { error } = this;
     return error && typeof error !== 'boolean';
-  }).readOnly(),
-});
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      this.dataTestLabelled === true,
+      {
+        id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
+        until: '6.0.0',
+      }
+    );
+    this.dataTestLabelled = this.dataTestLabelled || true;
+  }
+}
