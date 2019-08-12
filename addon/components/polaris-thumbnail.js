@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { tagName, layout } from '@ember-decorators/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import { warn } from '@ember/debug';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-thumbnail';
 
 const allowedSizes = ['small', 'medium', 'large'];
