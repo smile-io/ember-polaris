@@ -1,13 +1,12 @@
 <div
-  class="Polaris-Page-Header
-    {{if @titleHidden "Polaris-Page-Header__Title--hidden"}}
-    {{if @separator "Polaris-Page-Header__Header--hasSeparator"}}
-    {{if this.hasBreadcrumbs "Polaris-Page-Header__Header--hasBreadcrumbs"}}
-    {{if
-      this.hasSecondaryActions
-      "Polaris-Page-Header__Header--hasSecondaryActions"
-    }}
-    {{if this.hasRollup "Polaris-Page-Header__Header--hasRollup"}}"
+  class={{concat
+    "Polaris-Page-Header"
+    (if @titleHidden " Polaris-Page-Header__Title--hidden")
+    (if @separator " Polaris-Page-Header__Header--hasSeparator")
+    (if this.hasBreadcrumbs " Polaris-Page-Header__Header--hasBreadcrumbs")
+    (if this.hasSecondaryActions " Polaris-Page-Header__Header--hasSecondaryActions")
+    (if this.hasRollup " Polaris-Page-Header__Header--hasRollup")
+  }}
 >
   {{#let
     (component
@@ -47,9 +46,11 @@
         <div class="Polaris-Page-Header__TitleAndRollup">
           <div class="Polaris-Page-Header__Title">
             <div>
-              <PolarisDisplayText @tagName="h1" @size="large">
-                {{@title}}
-              </PolarisDisplayText>
+              <PolarisDisplayText
+                @tagName="h1"
+                @size="large"
+                @text={{@title}}
+              />
             </div>
 
             <div>
@@ -77,8 +78,7 @@
                         @url={{secondaryAction.url}}
                         @external={{secondaryAction.external}}
                         @icon={{secondaryAction.icon}}
-                        @accessibilityLabel={{secondaryAction.accessibilityLabel
-                        }}
+                        @accessibilityLabel={{secondaryAction.accessibilityLabel}}
                         @disabled={{secondaryAction.disabled}}
                         @onAction={{action secondaryAction.onAction}}
                       />
@@ -101,9 +101,7 @@
 
             {{#if @primaryAction}}
               <div class="Polaris-Page-Header__PrimaryAction">
-                <PrimaryActionButton
-                  @onClick={{action @primaryAction.onAction}}
-                />
+                <PrimaryActionButton @onClick={{action @primaryAction.onAction}} />
               </div>
             {{/if}}
           </div>
@@ -113,9 +111,7 @@
       {{#if @primaryAction}}
         {{! Primary action gets rendered twice, with one getting hidden based on media queries. }}
         <div class="Polaris-Page-Header__PrimaryAction">
-          <PrimaryActionButton
-            @onClick={{action @primaryAction.onAction}}
-          />
+          <PrimaryActionButton @onClick={{action @primaryAction.onAction}} />
         </div>
       {{/if}}
     </MainContent>
