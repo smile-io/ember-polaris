@@ -1,6 +1,10 @@
 {{! TODO: support url }}
 <button
-  class="Polaris-Header-Action {{if this.isIconOnly "Polaris-Header-Action--iconOnly"}}"
+  class={{concat
+    "Polaris-Header-Action"
+    (if this.isIconOnly "Polaris-Header-Action--iconOnly")
+    (if @disabled "Polaris-Header-Action--disabled")
+  }}
   aria-label={{@accessibilityLabel}}
   disabled={{@disabled}}
   type={{this.type}}
