@@ -18,8 +18,10 @@ module.exports = {
     },
   },
 
-  included: function(/* app */) {
+  included: function(app) {
     this._super.included.apply(this, arguments);
+
+    this._setupPreprocessorRegistry(app);
   },
 
   treeForStyles(tree) {
@@ -41,4 +43,28 @@ module.exports = {
   isDevelopingAddon() {
     return process.env.SMILE_DEV;
   },
+
+  _setupPreprocessorRegistry(app) {
+    let AutoWrapperPlugin = require('./lib/auto-wrapper-plugin').createRegistryPlugin();
+
+    app.registry.add('htmlbars-ast-plugin', {
+      name: 'auto-wrapper-plugin',
+      plugin: AutoWrapperPlugin,
+      baseDir() {
+        return __dirname;
+      },
+      // cacheKey() {
+      //   return cacheKeyForConfig(config);
+      // },
+    });
+  },
 };
+
+// function cacheKeyForConfig(config) {
+//   let configHash = hashObj(config, {
+//     encoding: 'base64',
+//     algorithm: 'md5',
+//   });
+
+//   return `ember-polaris-auto-wrapper-${configHash}`;
+// }

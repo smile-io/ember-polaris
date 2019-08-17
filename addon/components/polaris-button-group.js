@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import layout from '../templates/components/polaris-button-group';
-import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
 /**
  * Polaris button group component.
@@ -62,19 +61,4 @@ export default Component.extend({
   connectedTop: false,
 
   'data-test-button-group': true,
-
-  didRender() {
-    this._super(...arguments);
-
-    // Wrap each child element that isn't already a group item.
-    let nodesToWrap = rejectNodesByClassName(
-      this.element.children,
-      'Polaris-ButtonGroup__Item'
-    );
-    let wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-ButtonGroup__Item');
-    wrapper.setAttribute('data-test-button-group-item', true);
-    wrapChildren(nodesToWrap, wrapper);
-  },
 });
