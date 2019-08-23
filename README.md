@@ -71,7 +71,7 @@ If that happens, you need to add an import statement to its `ember-cli-build.js`
 
 ```javascript
 // ember-cli-build.js
-app.import('vendor/ember/ember-template-compiler.js');
+app.import('node_modules/ember-source/dist/ember-template-compiler.js');
 ```
 
 **NOTE:** This setup will be handled by `ember-polaris` in the future.
