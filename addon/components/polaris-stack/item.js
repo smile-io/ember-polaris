@@ -1,31 +1,28 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-stack/item';
+import { className, classNames, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-stack/item';
 
-export default Component.extend({
-  classNames: ['Polaris-Stack__Item'],
-  classNameBindings: ['fill:Polaris-Stack__Item--fill'],
-
-  layout,
-
+@classNames('Polaris-Stack__Item')
+@layout(template)
+export default class ItemComponent extends Component {
   /**
    * Elements to display inside stack item
    *
-   * @property text
    * @type {string}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Fill the width of the stack
    *
-   * @property fill
    * @type {boolean}
    * @default false
    * @public
    */
-  fill: false,
+  @className('Polaris-Stack__Item--fill')
+  fill = false;
 
-  'data-test-stack-item': true,
-});
+  'data-test-stack-item' = true;
+}
