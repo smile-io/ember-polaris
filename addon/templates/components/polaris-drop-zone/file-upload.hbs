@@ -15,9 +15,7 @@
     <PolarisStack @vertical={{true}} @spacing="tight">
       {{#if (eq this.type "file")}}
         <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
-      {{/if}}
-
-      {{#if (eq this.type "image")}}
+      {{else if (eq this.type "image")}}
         <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
       {{/if}}
 
@@ -31,9 +29,7 @@
     <PolarisStack @vertical={{true}}>
       {{#if (eq this.type "file")}}
         <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
-      {{/if}}
-
-      {{#if (eq this.type "image")}}
+      {{else if (eq this.type "image")}}
         <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
       {{/if}}
 
