@@ -524,6 +524,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .hasText('or drop files to upload', 'fileUpload has correct text');
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)
@@ -613,6 +614,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)

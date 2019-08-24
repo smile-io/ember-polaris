@@ -1,3 +1,5 @@
+import { action } from '@ember/object';
+import { run } from '@ember/runloop';
 import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
 export default class AutoWrapper {
@@ -12,7 +14,7 @@ export default class AutoWrapper {
 
   _setup() {
     this.mutationObserver = new MutationObserver(() => {
-      this._wrapChildren();
+      run(this, this._wrapChildren);
     });
 
     this.mutationObserver.observe(this.target, {
@@ -25,6 +27,7 @@ export default class AutoWrapper {
     this.mutationObserver = null;
   }
 
+  @action
   _wrapChildren() {
     const { attributes, childClass, target } = this;
 
