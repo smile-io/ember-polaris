@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
-import { className, classNames, layout } from '@ember-decorators/component';
+import { layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-stack';
 import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
 
@@ -11,7 +11,6 @@ import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
  * Polaris stack component.
  * See https://polaris.shopify.com/components/structure/stack
  */
-@classNames('Polaris-Stack')
 @layout(template)
 export default class PolarisStackComponent extends Component {
   /**
@@ -30,7 +29,6 @@ export default class PolarisStackComponent extends Component {
    * @default false
    * @public
    */
-  @className('Polaris-Stack--vertical')
   vertical = false;
 
   /**
@@ -72,11 +70,9 @@ export default class PolarisStackComponent extends Component {
   'data-test-stack' = true;
 
   @(equal('wrap', false).readOnly())
-  @className('Polaris-Stack--noWrap')
   noWrap;
 
   @computed('spacing')
-  @className
   get spacingClassName() {
     const spacing = this.get('spacing');
     if (isBlank(spacing)) {
@@ -87,7 +83,6 @@ export default class PolarisStackComponent extends Component {
   }
 
   @computed('alignment')
-  @className
   get alignmentClassName() {
     const alignment = this.get('alignment');
     if (isBlank(alignment)) {
@@ -98,7 +93,6 @@ export default class PolarisStackComponent extends Component {
   }
 
   @computed('distribution')
-  @className
   get distributionClassName() {
     const distribution = this.get('distribution');
     if (isBlank(distribution) || distribution === 'baseline') {
@@ -106,6 +100,29 @@ export default class PolarisStackComponent extends Component {
     }
 
     return `Polaris-Stack--distribution${classify(distribution)}`;
+  }
+
+  @computed(
+    'spacingClassName',
+    'alignmentClassName',
+    'distributionClassName',
+    'vertical'
+  )
+  get classNames() {
+    let classNames = [
+      'Polaris-Stack',
+      this.spacingClassName,
+      this.alignmentClassName,
+      this.distributionClassName,
+    ];
+    if (this.vertical) {
+      classNames.push('Polaris-Stack--vertical');
+    }
+    if (this.noWrap) {
+      classNames.push('Polaris-Stack--noWrap');
+    }
+
+    return classNames.join(' ');
   }
 
   didRender() {

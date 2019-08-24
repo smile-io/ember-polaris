@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import { className, classNames, layout } from '@ember-decorators/component';
+import { computed } from '@ember/object';
+import { layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-stack/item';
 
-@classNames('Polaris-Stack__Item')
 @layout(template)
 export default class ItemComponent extends Component {
   /**
@@ -21,8 +21,15 @@ export default class ItemComponent extends Component {
    * @default false
    * @public
    */
-  @className('Polaris-Stack__Item--fill')
   fill = false;
 
-  'data-test-stack-item' = true;
+  @computed('fill')
+  get classNames() {
+    let classNames = ['Polaris-Stack__Item'];
+    if (this.fill) {
+      classNames.push('Polaris-Stack__Item--fill');
+    }
+
+    return classNames.join(' ');
+  }
 }
