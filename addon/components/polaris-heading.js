@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-heading';
+import { classNames, tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-heading';
 
 /**
  * Polaris heading component.
@@ -15,13 +16,10 @@ import layout from '../templates/components/polaris-heading';
  *     This is an emphasised heading
  *   {{/polaris-heading}}
  */
-export default Component.extend({
-  tagName: 'h2',
-
-  classNames: ['Polaris-Heading'],
-
-  layout,
-
+@tagName('h2')
+@classNames('Polaris-Heading')
+@layout(template)
+export default class PolarisHeadingComponent extends Component {
   /**
    * The content to display inside the heading
    *
@@ -29,10 +27,9 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
    */
-  text: null,
-});
+  text = null;
+}
