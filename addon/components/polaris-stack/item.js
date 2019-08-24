@@ -31,6 +31,6 @@ export default class StackItemComponent extends Component {
       classNames.push('Polaris-Stack__Item--fill');
     }
 
-    return classNames.join(' ').trim();
+    return classNames.join(' ');
   }
 }

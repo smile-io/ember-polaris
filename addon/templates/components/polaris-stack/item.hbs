@@ -1,4 +1,8 @@
-<div class={{this.classes}} ...attributes>
+<div
+  data-test-stack-item={{true}}
+  class={{this.classes}}
+  ...attributes
+>
   {{#if hasBlock}}
     {{yield}}
   {{else}}

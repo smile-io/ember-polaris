@@ -109,12 +109,18 @@ export default class PolarisStackComponent extends Component {
     'noWrap'
   )
   get classes() {
-    let classNames = [
-      'Polaris-Stack',
-      this.spacingClassName,
-      this.alignmentClassName,
-      this.distributionClassName,
-    ];
+    let classNames = ['Polaris-Stack'];
+
+    let { spacingClassName, alignmentClassName, distributionClassName } = this;
+    if (spacingClassName) {
+      classNames.push(spacingClassName);
+    }
+    if (alignmentClassName) {
+      classNames.push(alignmentClassName);
+    }
+    if (distributionClassName) {
+      classNames.push(distributionClassName);
+    }
     if (this.vertical) {
       classNames.push('Polaris-Stack--vertical');
     }
@@ -122,7 +128,7 @@ export default class PolarisStackComponent extends Component {
       classNames.push('Polaris-Stack--noWrap');
     }
 
-    return classNames.join(' ').trim();
+    return classNames.join(' ');
   }
 
   @action
