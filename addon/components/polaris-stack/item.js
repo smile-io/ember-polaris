@@ -1,10 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { layout } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-stack/item';
 
+@tagName('')
 @layout(template)
-export default class ItemComponent extends Component {
+export default class StackItemComponent extends Component {
   /**
    * Elements to display inside stack item
    *
@@ -24,12 +25,12 @@ export default class ItemComponent extends Component {
   fill = false;
 
   @computed('fill')
-  get classNames() {
+  get classes() {
     let classNames = ['Polaris-Stack__Item'];
     if (this.fill) {
       classNames.push('Polaris-Stack__Item--fill');
     }
 
-    return classNames.join(' ');
+    return classNames.join(' ').trim();
   }
 }

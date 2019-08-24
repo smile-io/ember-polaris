@@ -514,7 +514,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .dom(fileUploadImageSelector)
           .hasClass(
             'Polaris-DropZone-FileUpload--sizeExtraLarge',
-            '',
             'fileUpload has extra large class'
           );
         assert

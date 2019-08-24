@@ -1,16 +1,17 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
-import { layout } from '@ember-decorators/component';
+import { layout, tagName } from '@ember-decorators/component';
 import template from '../templates/components/polaris-stack';
-import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
+import AutoWrapper from '../-private/auto-wrapper';
 
 /**
  * Polaris stack component.
  * See https://polaris.shopify.com/components/structure/stack
  */
+@tagName('')
 @layout(template)
 export default class PolarisStackComponent extends Component {
   /**
@@ -67,8 +68,6 @@ export default class PolarisStackComponent extends Component {
    */
   wrap = true;
 
-  'data-test-stack' = true;
-
   @(equal('wrap', false).readOnly())
   noWrap;
 
@@ -106,9 +105,10 @@ export default class PolarisStackComponent extends Component {
     'spacingClassName',
     'alignmentClassName',
     'distributionClassName',
-    'vertical'
+    'vertical',
+    'noWrap'
   )
-  get classNames() {
+  get classes() {
     let classNames = [
       'Polaris-Stack',
       this.spacingClassName,
@@ -122,21 +122,18 @@ export default class PolarisStackComponent extends Component {
       classNames.push('Polaris-Stack--noWrap');
     }
 
-    return classNames.join(' ');
+    return classNames.join(' ').trim();
   }
 
-  didRender() {
-    super.didRender(...arguments);
+  @action
+  setupAutoWrapper(stackElement) {
+    this.autoWrapper = new AutoWrapper(stackElement, 'Polaris-Stack__Item', {
+      'data-test-stack-item': true,
+    });
+  }
 
-    // Wrap each child element that isn't already a stack item.
-    let nodesToWrap = rejectNodesByClassName(
-      this.element.children,
-      'Polaris-Stack__Item'
-    );
-    let wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-Stack__Item');
-    wrapper.setAttribute('data-test-stack-item', true);
-    wrapChildren(nodesToWrap, wrapper);
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
   }
 }

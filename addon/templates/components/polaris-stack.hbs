@@ -1,4 +1,10 @@
-<div class={{this.classNames}} ...attributes>
+<div
+  class={{this.classes}}
+  data-test-stack={{true}}
+  {{did-insert this.setupAutoWrapper}}
+  {{will-destroy this.teardownAutoWrapper}}
+  ...attributes
+>
   {{#if hasBlock}}
     {{yield (hash item=(component "polaris-stack/item"))}}
   {{else}}
