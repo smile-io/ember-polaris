@@ -74,4 +74,18 @@ export default class ActionComponent extends Component {
   get isIconOnly() {
     return this.icon && isBlank(this.text);
   }
+
+  @computed('isIconOnly', 'disabled')
+  get classes() {
+    let classes = ['Polaris-Header-Action'];
+    if (this.isIconOnly) {
+      classes.push('Polaris-Header-Action--iconOnly');
+    }
+
+    if (this.disabled) {
+      classes.push('Polaris-Header-Action--disabled');
+    }
+
+    return classes.join(' ');
+  }
 }

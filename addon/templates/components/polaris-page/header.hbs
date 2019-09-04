@@ -1,13 +1,4 @@
-<div
-  class={{concat
-    "Polaris-Page-Header"
-    (if @titleHidden " Polaris-Page-Header__Title--hidden")
-    (if @separator " Polaris-Page-Header__Header--hasSeparator")
-    (if this.hasBreadcrumbs " Polaris-Page-Header__Header--hasBreadcrumbs")
-    (if this.hasSecondaryActions " Polaris-Page-Header__Header--hasSecondaryActions")
-    (if this.hasRollup " Polaris-Page-Header__Header--hasRollup")
-  }}
->
+<div class={{this.classes}}>
   {{#let
     (component
       "polaris-page/header/rollup"

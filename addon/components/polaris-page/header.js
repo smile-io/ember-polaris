@@ -148,4 +148,37 @@ export default class HeaderComponent extends Component {
       return { title, items: actions };
     });
   }
+
+  @computed(
+    'titleHidden',
+    'separator',
+    'hasBreadcrumbs',
+    'hasSecondaryActions',
+    'hasRollup'
+  )
+  get classes() {
+    let classes = ['Polaris-Page-Header'];
+
+    if (this.titleHidden) {
+      classes.push('Polaris-Page-Header__Title--hidden');
+    }
+
+    if (this.separator) {
+      classes.push('Polaris-Page-Header__Header--hasSeparator');
+    }
+
+    if (this.hasBreadcrumbs) {
+      classes.push('Polaris-Page-Header__Header--hasBreadcrumbs');
+    }
+
+    if (this.hasSecondaryActions) {
+      classes.push('Polaris-Page-Header__Header--hasSecondaryActions');
+    }
+
+    if (this.hasRollup) {
+      classes.push('Polaris-Page-Header__Header--hasRollup');
+    }
+
+    return classes.join(' ');
+  }
 }

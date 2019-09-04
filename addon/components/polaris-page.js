@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-page';
@@ -152,4 +153,18 @@ export default class PolarisPageComponent extends Component {
     'breadcrumbs'
   )
   hasHeaderContent;
+
+  @computed('fullWidth', 'singleColumn')
+  get classes() {
+    let classes = ['Polaris-Page'];
+    if (this.fullWidth) {
+      classes.push('Polaris-Page--fullWidth');
+    }
+
+    if (this.singleColumn) {
+      classes.push('Polaris-Page--singleColumn');
+    }
+
+    return classes.join(' ');
+  }
 }
