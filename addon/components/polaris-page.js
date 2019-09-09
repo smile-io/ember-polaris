@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-page';
 
@@ -165,6 +166,23 @@ export default class PolarisPageComponent extends Component {
       classes.push('Polaris-Page--singleColumn');
     }
 
+    if (this.class) {
+      classes.push(this.class);
+    }
+
     return classes.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-page] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-page.class-arg',
+        until: '6.0.0',
+      }
+    );
   }
 }

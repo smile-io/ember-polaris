@@ -492,4 +492,19 @@ module('Integration | Component | polaris page', function(hooks) {
       'primary undefined - button is rendered as primary'
     );
   });
+
+  test('backwards compatibility - allows a custom class to be applied', async function(assert) {
+    this.set('shouldRenderPrimaryActionAsPrimary', false);
+
+    await render(hbs`
+      {{polaris-page class="custom_class"}}
+    `);
+
+    assert
+      .dom(pageSelector)
+      .hasClass(
+        'custom_class',
+        'classic syntax - supports a custom `class` to be applied'
+      );
+  });
 });
