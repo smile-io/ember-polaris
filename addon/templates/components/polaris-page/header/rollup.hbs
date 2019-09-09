@@ -1,20 +1,17 @@
-{{#if hasRollup}}
+{{#if @hasRollup}}
   <div class="Polaris-Page-Header__Rollup">
-    {{#polaris-popover as |popover|}}
-      {{#popover.activator}}
-        {{polaris-button
-          plain=true
-          icon="horizontal-dots"
-        }}
-      {{/popover.activator}}
+    <PolarisPopover as |popover|>
+      <popover.activator>
+        <PolarisButton @plain={{true}} @icon="horizontal-dots" />
+      </popover.activator>
 
-      {{#popover.content}}
-        {{polaris-action-list
-          items=secondaryActions
-          sections=actionGroupSections
-          onActionAnyItem=(action popover.close)
-        }}
-      {{/popover.content}}
-    {{/polaris-popover}}
+      <popover.content>
+        <PolarisActionList
+          @items={{@secondaryActions}}
+          @sections={{@actionGroupSections}}
+          @onActionAnyItem={{action popover.close}}
+        />
+      </popover.content>
+    </PolarisPopover>
   </div>
 {{/if}}
