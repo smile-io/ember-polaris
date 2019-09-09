@@ -1,0 +1,17 @@
+version: 1
+
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "weekly"
+    default_labels:
+    - "internal"
+    ignored_updates:
+      - match:
+          dependency_name: "ember-cli"
+      - match:
+          dependency_name: "@shopify/polaris"
+      - match:
+          dependency_name: "@shopify/polaris-tokens"
+      - match:
+          dependency_name: "@shopify/javascript-utilities"
