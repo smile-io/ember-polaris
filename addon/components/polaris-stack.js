@@ -1,142 +1,163 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
-import layout from '../templates/components/polaris-stack';
-import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
+import { deprecate } from '@ember/application/deprecations';
+import { layout, tagName } from '@ember-decorators/component';
+import template from '../templates/components/polaris-stack';
+import AutoWrapper from '../-private/auto-wrapper';
 
 /**
  * Polaris stack component.
  * See https://polaris.shopify.com/components/structure/stack
  */
-export default Component.extend({
-  classNames: ['Polaris-Stack'],
-  classNameBindings: [
-    'vertical:Polaris-Stack--vertical',
-    'spacingClassName',
-    'alignmentClassName',
-    'distributionClassName',
-    'noWrap:Polaris-Stack--noWrap',
-  ],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisStackComponent extends Component {
   /**
    * Elements to display inside stack
    *
-   * @property text
-   * @public
    * @type {string}
    * @default null
+   * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Stack the elements vertically
    *
-   * @property vertical
-   * @public
    * @type {boolean}
    * @default false
+   * @public
    */
-  vertical: false,
+  vertical = false;
 
   /**
    * Adjust spacing between elements
    *
-   * @property spacing
-   * @public
    * @type {enum}
    * @default null
+   * @public
    */
-  spacing: null,
+  spacing = null;
 
   /**
    * Adjust alignment of elements
    *
-   * @property alignment
-   * @public
    * @type {enum}
    * @default null
+   * @public
    */
-  alignment: null,
+  alignment = null;
 
   /**
    * Adjust distribution of elements
    *
-   * @property distribution
-   * @public
    * @type {enum}
    * @default baseline
+   * @public
    */
-  distribution: 'baseline',
+  distribution = 'baseline';
 
   /**
    * Wrap stack elements to additional rows as needed on small screens (Defaults to true)
    *
-   * @property wrap
-   * @public
    * @type {boolean}
    * @default true
+   * @public
    */
-  wrap: true,
+  wrap = true;
 
-  'data-test-stack': true,
+  @(equal('wrap', false).readOnly())
+  noWrap;
 
-  /**
-   * @private
-   */
-  noWrap: equal('wrap', false).readOnly(),
-
-  /**
-   * @private
-   */
-  spacingClassName: computed('spacing', function() {
+  @computed('spacing')
+  get spacingClassName() {
     const spacing = this.get('spacing');
     if (isBlank(spacing)) {
       return null;
     }
 
     return `Polaris-Stack--spacing${classify(spacing)}`;
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  alignmentClassName: computed('alignment', function() {
+  @computed('alignment')
+  get alignmentClassName() {
     const alignment = this.get('alignment');
     if (isBlank(alignment)) {
       return null;
     }
 
     return `Polaris-Stack--alignment${classify(alignment)}`;
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  distributionClassName: computed('distribution', function() {
+  @computed('distribution')
+  get distributionClassName() {
     const distribution = this.get('distribution');
     if (isBlank(distribution) || distribution === 'baseline') {
       return null;
     }
 
     return `Polaris-Stack--distribution${classify(distribution)}`;
-  }).readOnly(),
+  }
 
-  didRender() {
-    this._super(...arguments);
+  @computed(
+    'spacingClassName',
+    'alignmentClassName',
+    'distributionClassName',
+    'vertical',
+    'noWrap',
+    'class'
+  )
+  get classes() {
+    let classNames = ['Polaris-Stack'];
 
-    // Wrap each child element that isn't already a stack item.
-    let nodesToWrap = rejectNodesByClassName(
-      this.element.children,
-      'Polaris-Stack__Item'
+    let { spacingClassName, alignmentClassName, distributionClassName } = this;
+    if (spacingClassName) {
+      classNames.push(spacingClassName);
+    }
+    if (alignmentClassName) {
+      classNames.push(alignmentClassName);
+    }
+    if (distributionClassName) {
+      classNames.push(distributionClassName);
+    }
+    if (this.vertical) {
+      classNames.push('Polaris-Stack--vertical');
+    }
+    if (this.noWrap) {
+      classNames.push('Polaris-Stack--noWrap');
+    }
+    if (this.class) {
+      classNames.push(this.class);
+    }
+
+    return classNames.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-stack] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-stack.class-arg',
+        until: '6.0.0',
+      }
     );
-    let wrapper = document.createElement('div');
+  }
 
-    wrapper.classList.add('Polaris-Stack__Item');
-    wrapper.setAttribute('data-test-stack-item', true);
-    wrapChildren(nodesToWrap, wrapper);
-  },
-});
+  @action
+  setupAutoWrapper(stackElement) {
+    this.autoWrapper = new AutoWrapper(stackElement, 'Polaris-Stack__Item', {
+      'data-test-stack-item': true,
+    });
+  }
+
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
+  }
+}

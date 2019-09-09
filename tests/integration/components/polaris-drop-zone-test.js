@@ -514,7 +514,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .dom(fileUploadImageSelector)
           .hasClass(
             'Polaris-DropZone-FileUpload--sizeExtraLarge',
-            '',
             'fileUpload has extra large class'
           );
         assert
@@ -525,6 +524,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .hasText('or drop files to upload', 'fileUpload has correct text');
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)
@@ -598,7 +598,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .dom(fileUploadImageSelector)
           .hasClass(
             'Polaris-DropZone-FileUpload--sizeLarge',
-            '',
             'fileUpload has large class'
           );
         assert
@@ -615,6 +614,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)
