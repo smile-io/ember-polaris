@@ -3,6 +3,7 @@ import { computed, action } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { layout, tagName } from '@ember-decorators/component';
 import template from '../templates/components/polaris-stack';
 import AutoWrapper from '../-private/auto-wrapper';
@@ -106,7 +107,8 @@ export default class PolarisStackComponent extends Component {
     'alignmentClassName',
     'distributionClassName',
     'vertical',
-    'noWrap'
+    'noWrap',
+    'class'
   )
   get classes() {
     let classNames = ['Polaris-Stack'];
@@ -127,8 +129,24 @@ export default class PolarisStackComponent extends Component {
     if (this.noWrap) {
       classNames.push('Polaris-Stack--noWrap');
     }
+    if (this.class) {
+      classNames.push(this.class);
+    }
 
     return classNames.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-stack] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-stack.class-arg',
+        until: '6.0.0',
+      }
+    );
   }
 
   @action

@@ -155,7 +155,7 @@ export default class PolarisPageComponent extends Component {
   )
   hasHeaderContent;
 
-  @computed('fullWidth', 'singleColumn')
+  @computed('fullWidth', 'singleColumn', 'class')
   get classes() {
     let classes = ['Polaris-Page'];
     if (this.fullWidth) {

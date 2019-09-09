@@ -326,4 +326,26 @@ module('Integration | Component | polaris stack', function(hooks) {
         'third stack item - renders the correct content'
       );
   });
+
+  test('backwards compatibility - allows a custom class to be applied', async function(assert) {
+    await render(hbs`
+      {{#polaris-stack class="stack-class" as |stack|}}
+        {{stack.item class="stack-item-class"}}
+      {{/polaris-stack}}
+    `);
+
+    assert
+      .dom(stackSelector)
+      .hasClass(
+        'stack-class',
+        'classic syntax - supports a custom `class` to be applied'
+      );
+
+    assert
+      .dom(stackItemSelector)
+      .hasClass(
+        'stack-item-class',
+        'classic syntax - supports a custom `class` to be applied to stack item'
+      );
+  });
 });
