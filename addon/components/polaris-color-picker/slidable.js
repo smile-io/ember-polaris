@@ -1,4 +1,3 @@
-import $Ember from 'jquery';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
@@ -11,21 +10,28 @@ function startDrag(event) {
   this.handleMove(event);
 
   // Set up global event listeners to handle dragging outside the slidable area.
-  $Ember(window).on('mousemove', (...moveArgs) => {
-    this.handleMove(...moveArgs);
-  });
-  $Ember(window).on('mouseup', () => {
-    this.handleDragEnd();
-  });
+  let mousemove = window.addEventListener('mousemove', (...moveArgs) =>
+    this.handleMove(...moveArgs)
+  );
 
-  $Ember(window).on('touchmove', (...moveArgs) => {
-    this.handleMove(...moveArgs);
-  });
-  $Ember(window).on('touchend', () => {
-    this.handleDragEnd();
-  });
-  $Ember(window).on('touchcancel', () => {
-    this.handleDragEnd();
+  let mouseup = window.addEventListener('mouseup', () => this.handleDragEnd());
+
+  let touchmove = window.addEventListener('touchmove', (...moveArgs) =>
+    this.handleMove(...moveArgs)
+  );
+  let touchend = window.addEventListener('touchend', () =>
+    this.handleDragEnd()
+  );
+  let touchcancel = window.addEventListener('touchcancel', () =>
+    this.handleDragEnd()
+  );
+
+  this.set('globalEventListeners', {
+    mousemove,
+    mouseup,
+    touchmove,
+    touchend,
+    touchcancel,
   });
 }
 
@@ -118,13 +124,12 @@ export default Component.extend({
   handleDragEnd() {
     this.set('isDragging', false);
 
-    // Remove our global event listeners.
-    $Ember(window).off('mousemove');
-    $Ember(window).off('mouseup');
+    let { globalEventListeners } = this;
 
-    $Ember(window).off('touchmove');
-    $Ember(window).off('touchend');
-    $Ember(window).off('touchcancel');
+    // Remove our global event listeners.
+    Object.keys(globalEventListeners).map((eventType) =>
+      window.removeEventListener(eventType, globalEventListeners[eventType])
+    );
   },
 
   /**
