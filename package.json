@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@ember/jquery": "^1.1.0",
-    "@ember/optional-features": "^0.7.0",
+    "@ember/optional-features": "^1.0.0",
     "@smile-io/changelog-generator": "^2.1.0",
     "@smile-io/ember-styleguide": "^9.1.0",
     "broccoli-asset-rev": "^3.0.0",
