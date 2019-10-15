@@ -20,6 +20,7 @@ Router.map(function() {
   this.route('select');
 
   this.route('resource-list', function() {});
+  this.route('color-picker');
 });
 
 export default Router;

@@ -1,0 +1,16 @@
+<PolarisPage
+  @title="Color picker example"
+  @singleColumn={{true}}
+>
+  <PolarisCard @sectioned={{true}}>
+    <PolarisStack @distribution="center" @alignment="center">
+      <PolarisColorPicker
+        @color={{this.color}}
+        @onChange={{action updateColor}}
+      />
+      <div style={{this.previewBoxStyle}}>
+        👻
+      </div>
+    </PolarisStack>
+  </PolarisCard>
+</PolarisPage>

@@ -22,6 +22,10 @@ const samplePages = [
     text: 'Select',
   },
   {
+    path: 'color-picker',
+    text: 'Color picker',
+  },
+  {
     path: 'test',
     text: 'Go to test route',
   },
