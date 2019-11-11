@@ -224,6 +224,8 @@ export default Component.extend({
     if (selectedDate) {
       return stripTimeFromISOString(formatDateForLocalTimezone(selectedDate));
     }
+
+    return null;
   }).readOnly(),
 
   dateFilterOption: computed(

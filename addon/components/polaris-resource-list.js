@@ -451,7 +451,7 @@ export default Component.extend(
         resourceName = resourceName || this.get('defaultResourceName');
 
         if (!this.get('selectable') || !hasMoreItems) {
-          return;
+          return null;
         }
 
         if (selectedItems === SELECT_ALL_ITEMS) {
@@ -460,6 +460,8 @@ export default Component.extend(
             'plural'
           )} in your store are selected.`;
         }
+
+        return null;
       }
     ).readOnly(),
 

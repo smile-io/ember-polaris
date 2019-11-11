@@ -354,11 +354,9 @@ export default Component.extend(
         )
       );
 
-      scheduleOnce('afterRender', () => {
-        if (footerContent || !truncate) {
-          this.setHeightsAndScrollPosition();
-        }
-      });
+      if (footerContent || !truncate) {
+        scheduleOnce('afterRender', this, this.setHeightsAndScrollPosition);
+      }
     },
 
     scrollListener() {
@@ -506,6 +504,7 @@ export default Component.extend(
           sortedColumnIndex: headingIndex,
         });
 
+        /* eslint-disable-next-line ember/no-incorrect-calls-with-inline-anonymous-functions */
         scheduleOnce('afterRender', () => {
           if (onSort) {
             onSort(headingIndex, newSortDirection);
