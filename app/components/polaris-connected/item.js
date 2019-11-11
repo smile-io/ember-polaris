@@ -1,3 +1,1 @@
-export {
-  default,
-} from '@smile-io/ember-polaris/components/polaris-connected/item';
+export { default } from '@smile-io/ember-polaris/components/polaris-connected/item';

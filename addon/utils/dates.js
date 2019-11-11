@@ -106,7 +106,7 @@ export function dateIsInRange(day, range) {
 
   const { start, end } = range;
 
-  return isPresent(start) && day > start && (isPresent(end) && day < end);
+  return isPresent(start) && day > start && isPresent(end) && day < end;
 }
 
 export function dateIsSelected(day, range) {

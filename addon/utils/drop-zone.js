@@ -56,5 +56,5 @@ function isDragEvent(event) {
 }
 
 function isChangeEvent(event) {
-  return event.hasOwnProperty('target');
+  return Object.prototype.hasOwnProperty.call(event, 'target');
 }

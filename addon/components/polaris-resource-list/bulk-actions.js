@@ -308,6 +308,8 @@ export default Component.extend(
       if (this.instanceOfBulkActionArray(actionsCollection)) {
         return [{ items: actionsCollection }];
       }
+
+      return null;
     }),
 
     combinedActions: computed(
