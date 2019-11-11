@@ -96,11 +96,11 @@
     "ember-source-channel-url": "^2.0.1",
     "ember-test-selectors": "^2.1.0",
     "ember-try": "^1.2.1",
-    "eslint-plugin-smile-ember": "^4.0.0",
-    "husky": "^3.0.5",
+    "eslint-plugin-smile-ember": "^5.0.1",
+    "husky": "^3.0.9",
     "loader.js": "^4.7.0",
     "precise-commits": "^1.0.2",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "qunit-dom": "^0.9.0"
   },
   "engines": {
