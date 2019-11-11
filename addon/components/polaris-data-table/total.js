@@ -54,5 +54,7 @@ export default Component.extend({
     if (total !== '' && index > 0) {
       return 'numeric';
     }
+
+    return null;
   }),
 });

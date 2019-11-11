@@ -1,3 +1,1 @@
-export {
-  default,
-} from '@smile-io/ember-polaris/components/polaris-option-list/checkbox';
+export { default } from '@smile-io/ember-polaris/components/polaris-option-list/checkbox';

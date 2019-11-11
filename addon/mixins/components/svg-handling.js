@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-new-mixins */
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';

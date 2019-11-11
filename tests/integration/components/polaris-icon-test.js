@@ -104,7 +104,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     );
 
     // Check all the available colors are handled correctly.
-    for (const color of colors) {
+    colors.forEach((color) => {
       this.set('color', color);
 
       const colorClass = `Polaris-Icon--color${classify(color)}`;
@@ -134,7 +134,7 @@ module('Integration | Component | polaris icon', function(hooks) {
           `icon with ${color} color adds isColored class`
         );
       }
-    }
+    });
   });
 
   test('it handles backdrop correctly', async function(assert) {

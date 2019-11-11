@@ -1150,7 +1150,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     test('should not call any callback when the dropzone is disabled', async function(assert) {
       assert.expect(0);
 
-      for (let callback of [
+      [
         'drop',
         'dropAccepted',
         'dropRejected',
@@ -1158,11 +1158,11 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         'dragLeave',
         'dragOver',
         'click',
-      ]) {
+      ].forEach((callback) => {
         this.set(callback, () => {
           assert.ok(false, `on${capitalize(callback)} should not be invoked`);
         });
-      }
+      });
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
 

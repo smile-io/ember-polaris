@@ -136,8 +136,8 @@ export default Component.extend({
     }
 
     assert(
-      isArray(this.nextKeys),
-      'ember-polaris:polaris-pagination `nextKeys` should be an array'
+      'ember-polaris:polaris-pagination `nextKeys` should be an array',
+      isArray(this.nextKeys)
     );
 
     return true;
@@ -150,8 +150,8 @@ export default Component.extend({
     }
 
     assert(
-      isArray(this.previousKeys),
-      'ember-polaris:polaris-pagination `previousKeys` should be an array'
+      'ember-polaris:polaris-pagination `previousKeys` should be an array',
+      isArray(this.previousKeys)
     );
 
     return true;

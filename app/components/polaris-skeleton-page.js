@@ -1,3 +1,1 @@
-export {
-  default,
-} from '@smile-io/ember-polaris/components/polaris-skeleton-page';
+export { default } from '@smile-io/ember-polaris/components/polaris-skeleton-page';
