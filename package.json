@@ -100,7 +100,7 @@
     "eslint-plugin-ember": "7.2.0",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "3.1.1",
-    "eslint-plugin-smile-ember": "smile-io/eslint-plugin-smile-ember#tweak-deps",
+    "eslint-plugin-smile-ember": "^5.1.1",
     "husky": "^3.0.9",
     "loader.js": "^4.7.0",
     "precise-commits": "^1.0.2",
