@@ -286,11 +286,11 @@ export default Component.extend(ContextBoundEventListenersMixin, {
 
   iconAlertCircle,
 
+  isDragging: or('active', 'state.dragging').readOnly(),
+
   state: computed(function() {
     return State.create();
   }).readOnly(),
-
-  isDragging: or('active', 'state.dragging').readOnly(),
 
   dropZoneClasses: computed(
     'outline',
