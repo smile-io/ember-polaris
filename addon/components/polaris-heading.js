@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { classNames, tagName, layout } from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-heading';
 
 /**
@@ -16,8 +16,7 @@ import template from '../templates/components/polaris-heading';
  *     This is an emphasised heading
  *   {{/polaris-heading}}
  */
-@tagName('h2')
-@classNames('Polaris-Heading')
+@tagName('')
 @layout(template)
 export default class PolarisHeadingComponent extends Component {
   /**
@@ -32,4 +31,6 @@ export default class PolarisHeadingComponent extends Component {
    * @public
    */
   text = null;
+
+  tagName = 'h2';
 }
