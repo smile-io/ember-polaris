@@ -93,7 +93,7 @@ export default class PolarisSkeletonPageComponent extends Component {
    *
    * @type {Boolean}
    */
-  @(notEmpty('title').readOnly())
+  @notEmpty('title')
   hasTitleText;
 
   /**
