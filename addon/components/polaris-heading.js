@@ -31,6 +31,4 @@ export default class PolarisHeadingComponent extends Component {
    * @public
    */
   text = null;
-
-  tagName = 'h2';
 }

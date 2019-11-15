@@ -1,4 +1,4 @@
-{{#let (element this.tagName) as |Heading|}}
+{{#let (element (or @tagName "h2")) as |Heading|}}
   <Heading class="Polaris-Heading">
     {{#if hasBlock}}
       {{yield}}
