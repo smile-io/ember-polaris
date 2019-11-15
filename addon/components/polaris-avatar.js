@@ -3,14 +3,8 @@ import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import {
-  classNames,
-  attributeBindings,
-  classNameBindings,
-  tagName,
-  layout as templateLayout,
-} from '@ember-decorators/component';
-import layout from '../templates/components/polaris-avatar';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-avatar';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -30,96 +24,79 @@ const avatarImages = [
 
 const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-@tagName('span')
-@attributeBindings('role', 'label:aria-label')
-@classNames('Polaris-Avatar')
-@classNameBindings(
-  'styleClass',
-  'sizeClass',
-  'hiddenClass',
-  'hasImage:Polaris-Avatar--hasImage'
-)
-@templateLayout(layout)
+@tagName('')
+@layout(template)
 export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
    *
-   * @property size
-   * @public
    * @type {String}
    * @default 'medium'
+   * @public
    */
   size = defaultSize;
 
   /**
    * The name of the person
    *
-   * @property name
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   name = null;
 
   /**
    * Initials of person to display
    *
-   * @property initials
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   initials = null;
 
   /**
    * Whether the avatar is for a customer
    *
-   * @property customer
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   customer = false;
 
   /**
    * URL of the avatar image which falls back to initials if the image fails to load
    *
-   * @property source
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   source = null;
 
   /**
    * Accessible label for the avatar image
    *
-   * @property accessibilityLabel
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   accessibilityLabel = null;
 
   /**
    * Path to the Polaris avatar images
    * TODO: read this from config? Need a way to set this by default?
-   * @property avatarSourcePath
-   * @private
    * @type {String}
+   * @private
    */
   avatarSourcePath = '';
 
   /**
    * Role attribute value
-   * @property role
-   * @private
    * @type {String}
+   * @private
    */
   role = 'img';
 
   /**
-   * @property hasError
    * @type {Boolean}
    * @default false
    * @private
@@ -127,7 +104,6 @@ export default class PolarisAvatar extends Component {
   hasError = false;
 
   /**
-   * @property hasLoaded
    * @type {Boolean}
    * @default false
    * @private
@@ -135,7 +111,6 @@ export default class PolarisAvatar extends Component {
   hasLoaded = false;
 
   /**
-   * @property prevSource
    * @type {String}
    * @default null
    * @private
@@ -144,27 +119,24 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Image source to use (if any)
-   * @property finalSource
-   * @private
    * @type {String}
+   * @private
    */
   @or('source', 'customerImageSource')
   finalSource;
 
   /**
    * Name to use (if any)
-   * @property nameString
-   * @private
    * @type {String}
+   * @private
    */
   @or('name', 'initials')
   nameString;
 
   /**
    * Whether we have an image to use
-   * @property
-   * @private
    * @type {Boolean}
+   * @private
    */
   @computed('source', 'customer', 'hasError')
   get hasImage() {
@@ -174,9 +146,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Accessibility label to apply to avatar
-   * @property label
-   * @private
    * @type {String}
+   * @private
    */
   @computed('accessibilityLabel', 'name', 'initials')
   get label() {
@@ -199,9 +170,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Class name to set avatar style
-   * @property styleClass
-   * @private
    * @type {String}
+   * @private
    */
   @computed('nameString')
   get styleClass() {
@@ -216,9 +186,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Class name to set avatar size
-   * @property sizeClass
-   * @private
    * @type {String}
+   * @private
    */
   @computed('size')
   get sizeClass() {
@@ -232,9 +201,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Class name to hide avatar when loading
-   * @property hiddenClass
-   * @private
    * @type {String}
+   * @private
    */
   @computed('hasImage', 'hasLoaded')
   get hiddenClass() {
@@ -245,9 +213,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Image source when displaying a customer avatar
-   * @property customerImageSource
-   * @private
    * @type {String}
+   * @private
    */
   @computed('customer', 'nameString')
   get customerImageSource() {
@@ -264,9 +231,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Flag controlling whether the avatar initials should be rendered
-   * @property shouldShowInitials
-   * @private
    * @type {Boolean}
+   * @private
    */
   @computed('initials', 'hasImage')
   get shouldShowInitials() {
@@ -276,9 +242,8 @@ export default class PolarisAvatar extends Component {
 
   /**
    * Flag controlling whether the avatar image should be rendered
-   * @property shouldShowImage
-   * @private
    * @type {Boolean}
+   * @private
    */
   @computed('finalSource', 'hasError')
   get shouldShowImage() {
@@ -287,6 +252,8 @@ export default class PolarisAvatar extends Component {
   }
 
   didReceiveAttrs() {
+    super.didReceiveAttrs(...arguments);
+
     if (this.source !== this.prevSource) {
       this.setProperties({
         prevSource: this.source,
