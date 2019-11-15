@@ -249,21 +249,18 @@ module('Integration | Component | polaris-button', function(hooks) {
       });
 
       test('is called when the link is clicked', async function(assert) {
-        let clickCount = 0;
-        this.set('incrementClickCount', () => clickCount++);
-        await render(hbs`
-          {{polaris-button onClick=(action incrementClickCount) url="#"}}
-        `);
-        await click('[data-polaris-unstyled]');
-        assert.equal(clickCount, 1);
-      });
+        this.set('handleClick', (_myArg, event) => {
+          assert.ok(true, 'triggers onClick handler');
+          assert.ok(
+            event instanceof MouseEvent,
+            'receives the MouseEvent as last argument'
+          );
+        });
 
-      test('does not receive any params when the link is clicked', async function(assert) {
         await render(
-          hbs`{{polaris-button onClick=(action (mut invocationParam)) url="#"}}`
+          hbs`{{polaris-button onClick=(action handleClick "myArg") url="#"}}`
         );
         await click('[data-polaris-unstyled]');
-        assert.equal(this.get('invocationParam'), undefined);
       });
     });
 
