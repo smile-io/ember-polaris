@@ -1,22 +1,24 @@
 import Component from '@ember/component';
-import { htmlSafe } from '@ember/string';
 import { computed } from '@ember/object';
-import layout from '../../templates/components/polaris-action-list/item';
-
-export default Component.extend({
-  tagName: 'li',
-
-  attributeBindings: ['role', 'active:aria-selected'],
-
+import { htmlSafe } from '@ember/string';
+import {
+  attributeBindings,
+  tagName,
   layout,
+} from '@ember-decorators/component';
+import template from '../../templates/components/polaris-action-list/item';
 
+@tagName('li')
+@attributeBindings('role', 'active:aria-selected')
+@layout(template)
+export default class Item extends Component {
   /**
    * @property text
    * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * @property helpText
@@ -24,7 +26,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * Not currently supported
@@ -33,7 +35,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  url: null,
+  url = null;
 
   /**
    * @property destructive
@@ -41,7 +43,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  destructive: false,
+  destructive = false;
 
   /**
    * @property disabled
@@ -49,7 +51,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * @property icon
@@ -57,7 +59,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  icon: null,
+  icon = null;
 
   /**
    * @property image
@@ -65,7 +67,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  image: null,
+  image = null;
 
   /**
    * Not currently supported
@@ -74,7 +76,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  ellipsis: false,
+  ellipsis = false;
 
   /**
    * @property active
@@ -82,7 +84,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  active: false,
+  active = false;
 
   /**
    * @property role
@@ -90,7 +92,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  role: null,
+  role = null;
 
   /**
    * Object with `status` and `content` properties
@@ -100,7 +102,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  badge: null,
+  badge = null;
 
   /**
    * Callback for the item when clicked
@@ -110,9 +112,10 @@ export default Component.extend({
    * @type {Function}
    * @default no-op
    */
-  onAction() {},
+  onAction() {}
 
-  itemClasses: computed('destructive', 'disabled', 'active', function() {
+  @computed('destructive', 'disabled', 'active')
+  get itemClasses() {
     let classNames = ['Polaris-ActionList__Item'];
     let { destructive, disabled, active } = this;
 
@@ -129,10 +132,11 @@ export default Component.extend({
     }
 
     return classNames.join(' ');
-  }),
+  }
 
-  imageBackgroundStyle: computed('image', function() {
+  @computed('image')
+  get imageBackgroundStyle() {
     let url = this.get('image');
     return url ? htmlSafe(`background-image: url(${url})`) : '';
-  }).readOnly(),
-});
+  }
+}
