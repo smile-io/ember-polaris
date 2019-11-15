@@ -12,6 +12,7 @@
       data-test-drop-zone
       class={{this.dropZoneClasses}}
       aria-disabled={{if @disabled "true"}}
+      role="button"
       {{on "click" this.handleClick}}
       {{on "dragstart" this.handleDragStart}}
       {{did-insert this.setNode}}
@@ -70,6 +71,7 @@
       </div>
 
       <PolarisVisuallyHidden>
+        {{!-- template-lint-disable no-nested-interactive --}}
         <input
           data-test-drop-zone-hidden-input
           type="file"
