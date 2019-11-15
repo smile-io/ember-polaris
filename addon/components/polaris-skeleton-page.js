@@ -1,15 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
-import {
-  attribute,
-  className,
-  classNames,
-  layout,
-} from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-skeleton-page';
 
-@classNames('Polaris-SkeletonPage__Page')
+@tagName('')
 @layout(template)
 export default class PolarisSkeletonPageComponent extends Component {
   /**
@@ -37,7 +32,6 @@ export default class PolarisSkeletonPageComponent extends Component {
    * @default false
    * @public
    */
-  @className('Polaris-SkeletonPage--singleColumn')
   singleColumn = false;
 
   /**
@@ -80,14 +74,11 @@ export default class PolarisSkeletonPageComponent extends Component {
    */
   text = null;
 
-  'data-test-skeleton-page' = true;
-
   /**
    * The role of this component, for accessibility purposes
    *
    * @type {String}
    */
-  @attribute
   role = 'status';
 
   /**
@@ -95,7 +86,6 @@ export default class PolarisSkeletonPageComponent extends Component {
    *
    * @type {String}
    */
-  @attribute('aria-label')
   ariaLabel = 'Page loading';
 
   /**
@@ -129,5 +119,18 @@ export default class PolarisSkeletonPageComponent extends Component {
     }
 
     return new Array(Math.max(secondaryActions, 0));
+  }
+
+  @computed('fullWidth', 'singleColumn')
+  get classes() {
+    let classNames = ['Polaris-SkeletonPage__Page'];
+    if (this.fullWidth) {
+      classNames.push('Polaris-SkeletonPage--fullWidth');
+    }
+    if (this.singleColumn) {
+      classNames.push('Polaris-SkeletonPage--singleColumn');
+    }
+
+    return classNames.join(' ');
   }
 }
