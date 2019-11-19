@@ -111,13 +111,6 @@ export default class PolarisAvatar extends Component {
   hasLoaded = false;
 
   /**
-   * @type {String}
-   * @default null
-   * @private
-   */
-  prevSource = null;
-
-  /**
    * Image source to use (if any)
    * @type {String}
    * @private
@@ -251,18 +244,6 @@ export default class PolarisAvatar extends Component {
     return finalSource && !hasError;
   }
 
-  didReceiveAttrs() {
-    super.didReceiveAttrs(...arguments);
-
-    if (this.source !== this.prevSource) {
-      this.setProperties({
-        prevSource: this.source,
-        hasError: false,
-        hasLoaded: false,
-      });
-    }
-  }
-
   @action
   handleError() {
     this.setProperties({ hasError: true, hasLoaded: false });
@@ -271,5 +252,13 @@ export default class PolarisAvatar extends Component {
   @action
   handleLoad() {
     this.setProperties({ hasLoaded: true, hasError: false });
+  }
+
+  @action
+  resetImage() {
+    this.setProperties({
+      hasError: false,
+      hasLoaded: false,
+    });
   }
 }

@@ -3,13 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-/*
- * N.B. a bunch of these tests are currently skipped because of an issue with Ember 2.16 and 2.18
- * where `await render(...)` waits long enough that the `img` element's `onerror` event fires
- * because the image file isn't present under testing.
- *
- * TODO: fix avatar images and un-skip tests (or wait until we no longer support Ember 2.16 and 2.18 ;))
- */
 module('Integration | Component | polaris-avatar', function(hooks) {
   setupRenderingTest(hooks);
 

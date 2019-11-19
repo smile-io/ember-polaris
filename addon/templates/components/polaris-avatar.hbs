@@ -2,6 +2,7 @@
   role={{this.role}}
   aria-label={{this.label}}
   class="Polaris-Avatar {{if this.hasImage "Polaris-Avatar--hasImage"}} {{this.styleClass}} {{this.sizeClass}} {{this.hiddenClass}}"
+  {{did-update this.resetImage @source}}
   ...attributes
 >
   {{#if this.shouldShowInitials}}
