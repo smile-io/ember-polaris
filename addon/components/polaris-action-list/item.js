@@ -13,7 +13,6 @@ import template from '../../templates/components/polaris-action-list/item';
 @layout(template)
 export default class Item extends Component {
   /**
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -21,7 +20,6 @@ export default class Item extends Component {
   text = null;
 
   /**
-   * @property helpText
    * @type {String}
    * @default null
    * @public
@@ -30,7 +28,6 @@ export default class Item extends Component {
 
   /**
    * Not currently supported
-   * @property url
    * @type {String}
    * @default null
    * @public
@@ -38,7 +35,6 @@ export default class Item extends Component {
   url = null;
 
   /**
-   * @property destructive
    * @type {Boolean}
    * @default false
    * @public
@@ -46,7 +42,6 @@ export default class Item extends Component {
   destructive = false;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -54,7 +49,6 @@ export default class Item extends Component {
   disabled = false;
 
   /**
-   * @property icon
    * @type {String}
    * @default null
    * @public
@@ -62,7 +56,6 @@ export default class Item extends Component {
   icon = null;
 
   /**
-   * @property image
    * @type {String}
    * @default null
    * @public
@@ -71,7 +64,6 @@ export default class Item extends Component {
 
   /**
    * Not currently supported
-   * @property ellipsis
    * @type {Boolean}
    * @default false
    * @public
@@ -79,7 +71,6 @@ export default class Item extends Component {
   ellipsis = false;
 
   /**
-   * @property active
    * @type {Boolean}
    * @default false
    * @public
@@ -87,7 +78,6 @@ export default class Item extends Component {
   active = false;
 
   /**
-   * @property role
    * @type {String}
    * @default null
    * @public
@@ -97,7 +87,6 @@ export default class Item extends Component {
   /**
    * Object with `status` and `content` properties
    * Not currently supported
-   * @property badge
    * @type {Object}
    * @default null
    * @public
@@ -107,10 +96,9 @@ export default class Item extends Component {
   /**
    * Callback for the item when clicked
    *
-   * @property onAction
-   * @public
    * @type {Function}
    * @default no-op
+   * @public
    */
   onAction() {}
 

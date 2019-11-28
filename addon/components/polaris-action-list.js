@@ -17,40 +17,36 @@ export default class PolarisActionList extends Component {
   /**
    * Collection of actions for list
    *
-   * @property items
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
   items = null;
 
   /**
    * Collection of sectioned action items
    *
-   * @property sections
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
   sections = null;
 
   /**
    * Defines a specific role attribute for each action in the list
    *
-   * @property actionRole
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   actionRole = null;
 
   /**
    * Callback when any item is clicked or keypressed
    *
-   * @property onActionAnyItem
-   * @public
    * @type {function}
    * @default no-op
+   * @public
    */
   onActionAnyItem() {}
 
