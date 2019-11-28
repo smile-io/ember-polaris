@@ -1,16 +1,9 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  classNameBindings,
-  layout,
-} from '@ember-decorators/component';
+import { action } from '@ember/object';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-button-group/item';
 
-@classNames('Polaris-ButtonGroup__Item')
-@classNameBindings(
-  'plain:Polaris-ButtonGroup__Item--plain',
-  'focused:Polaris-ButtonGroup__Item--focused'
-)
+@tagName('')
 @layout(template)
 export default class Item extends Component {
   /**
@@ -40,16 +33,13 @@ export default class Item extends Component {
    */
   focused = false;
 
-  'data-test-button-group-item' = true;
-
-  /**
-   * Events.
-   */
-  focusIn() {
+  @action
+  handleFocus() {
     this.set('focused', true);
   }
 
-  focusOut() {
+  @action
+  handleBlur() {
     this.set('focused', false);
   }
 }

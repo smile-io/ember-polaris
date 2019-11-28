@@ -1,22 +1,14 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  classNameBindings,
-  layout,
-} from '@ember-decorators/component';
+import { action } from '@ember/object';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-button-group';
-import { wrapChildren, rejectNodesByClassName } from '../utils/dom';
+import AutoWrapper from '../-private/auto-wrapper';
 
 /**
  * Polaris button group component.
  * See https://polaris.shopify.com/components/actions/button-group
  */
-@classNames('Polaris-ButtonGroup')
-@classNameBindings(
-  'segmented:Polaris-ButtonGroup--segmented',
-  'fullWidth:Polaris-ButtonGroup--fullWidth',
-  'connectedTop:Polaris-ButtonGroup--connectedTop'
-)
+@tagName('')
 @layout(template)
 export default class PolarisButtonGroup extends Component {
   /**
@@ -59,20 +51,17 @@ export default class PolarisButtonGroup extends Component {
    */
   connectedTop = false;
 
-  'data-test-button-group' = true;
+  @action
+  setupAutoWrapper(element) {
+    // TODO When we're auto-wrapping we bypass the group item component, so will not handle
+    // focus events and hence not apply correct class to the wrapper group item
+    this.autoWrapper = new AutoWrapper(element, 'Polaris-ButtonGroup__Item', {
+      'data-test-button-group-item': true,
+    });
+  }
 
-  didRender() {
-    super.didRender(...arguments);
-
-    // Wrap each child element that isn't already a group item.
-    let nodesToWrap = rejectNodesByClassName(
-      this.element.children,
-      'Polaris-ButtonGroup__Item'
-    );
-    let wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-ButtonGroup__Item');
-    wrapper.setAttribute('data-test-button-group-item', true);
-    wrapChildren(nodesToWrap, wrapper);
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
   }
 }
