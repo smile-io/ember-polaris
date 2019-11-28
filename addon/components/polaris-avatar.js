@@ -91,13 +91,6 @@ export default class PolarisAvatar extends Component {
   avatarSourcePath = '';
 
   /**
-   * Role attribute value
-   * @type {String}
-   * @private
-   */
-  role = 'img';
-
-  /**
    * @type {Boolean}
    * @default false
    * @private
