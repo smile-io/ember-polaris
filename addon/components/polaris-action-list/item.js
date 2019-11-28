@@ -6,7 +6,7 @@ import template from '../../templates/components/polaris-action-list/item';
 
 @tagName('')
 @layout(template)
-export default class Item extends Component {
+export default class PolarisActionListItem extends Component {
   /**
    * @type {String}
    * @default null

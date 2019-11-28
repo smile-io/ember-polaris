@@ -6,7 +6,7 @@ import template from '../../templates/components/polaris-action-list/section';
 
 @tagName('')
 @layout(template)
-export default class Section extends Component {
+export default class PolarisActionListSection extends Component {
   /**
    * Collection of action items
    *
