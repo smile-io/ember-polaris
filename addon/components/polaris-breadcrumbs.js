@@ -1,14 +1,17 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
-import { handleMouseUpByBlurring } from '../utils/focus';
-import layout from '../templates/components/polaris-breadcrumbs';
-
-export default Component.extend({
-  tagName: 'nav',
-  attributeBindings: ['role'],
-
+import { get, computed } from '@ember/object';
+import {
+  attributeBindings,
+  tagName,
   layout,
+} from '@ember-decorators/component';
+import { handleMouseUpByBlurring } from '../utils/focus';
+import template from '../templates/components/polaris-breadcrumbs';
 
+@tagName('nav')
+@attributeBindings('role')
+@layout(template)
+export default class PolarisBreadcrumbs extends Component {
   /**
    * Collection of breadcrumbs
    *
@@ -17,7 +20,7 @@ export default Component.extend({
    * @type {Array}
    * @default null
    */
-  breadcrumbs: null,
+  breadcrumbs = null;
 
   /**
    * Role attribute
@@ -27,11 +30,10 @@ export default Component.extend({
    * @type {String}
    * @default 'navigation'
    */
-  role: 'navigation',
+  role = 'navigation';
 
-  'data-test-breadcrumbs': true,
-
-  handleMouseUpByBlurring,
+  'data-test-breadcrumbs' = true;
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   /**
    * The breadcrumb to render (the last of the list)
@@ -42,11 +44,12 @@ export default Component.extend({
    * @private
    * @type {Object}
    */
-  breadcrumb: computed('breadcrumbs.[]', function() {
+  @(computed('breadcrumbs.[]').readOnly())
+  get breadcrumb() {
     let breadcrumbs = this.get('breadcrumbs') || [];
     let breadcrumbsCount = get(breadcrumbs, 'length');
     return breadcrumbsCount && breadcrumbsCount > 0
       ? breadcrumbs[breadcrumbsCount - 1]
       : null;
-  }).readOnly(),
-});
+  }
+}
