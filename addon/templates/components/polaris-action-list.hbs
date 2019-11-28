@@ -1,13 +1,12 @@
-{{#wrapper-element
-  class="Polaris-ActionList"
-  tagName=(if hasMultipleSections "ul" "div")
-}}
-  {{#each finalSections as |section|}}
-    {{polaris-action-list/section
-      section=section
-      hasMultipleSections=hasMultipleSections
-      actionRole=actionRole
-      onActionAnyItem=(action onActionAnyItem)
-    }}
-  {{/each}}
-{{/wrapper-element}}
+{{#let (element (if this.hasMultipleSections "ul" "div")) as |ActionList|}}
+  <ActionList class="Polaris-ActionList" ...attributes>
+    {{#each this.finalSections as |section|}}
+      <PolarisActionList::Section
+        @section={{section}}
+        @hasMultipleSections={{this.hasMultipleSections}}
+        @actionRole={{@actionRole}}
+        @onActionAnyItem={{this.onActionAnyItem}}
+      />
+    {{/each}}
+  </ActionList>
+{{/let}}
