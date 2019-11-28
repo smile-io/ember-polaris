@@ -1,38 +1,22 @@
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
-import {
-  attributeBindings,
-  tagName,
-  layout,
-} from '@ember-decorators/component';
+import { computed, action } from '@ember/object';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import template from '../templates/components/polaris-breadcrumbs';
 
-@tagName('nav')
-@attributeBindings('role')
+@tagName('')
 @layout(template)
 export default class PolarisBreadcrumbs extends Component {
   /**
    * Collection of breadcrumbs
    *
-   * @property breadcrumbs
-   * @public
    * @type {Array}
-   * @default null
+   * @default []
+   * @public
    */
-  breadcrumbs = null;
+  breadcrumbs = [];
 
-  /**
-   * Role attribute
-   *
-   * @property role
-   * @private
-   * @type {String}
-   * @default 'navigation'
-   */
-  role = 'navigation';
-
-  'data-test-breadcrumbs' = true;
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   /**
@@ -40,16 +24,30 @@ export default class PolarisBreadcrumbs extends Component {
    * We're not always guaranteed to get an Ember array,
    * so we can't just use `breadcrumbs.lastObject` in the template.
    *
-   * @property breadcrumb
    * @private
    * @type {Object}
    */
-  @(computed('breadcrumbs.[]').readOnly())
+  @computed('breadcrumbs.[]')
   get breadcrumb() {
-    let breadcrumbs = this.get('breadcrumbs') || [];
-    let breadcrumbsCount = get(breadcrumbs, 'length');
-    return breadcrumbsCount && breadcrumbsCount > 0
-      ? breadcrumbs[breadcrumbsCount - 1]
-      : null;
+    let { breadcrumbs } = this;
+    return breadcrumbs[breadcrumbs.length - 1];
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-breadcrumbs] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-breadcrumbs.class-arg',
+        until: '6.0.0',
+      }
+    );
+  }
+
+  @action
+  handleClick(/* element */) {
+    this.breadcrumb.onAction();
   }
 }
