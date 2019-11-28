@@ -1,26 +1,17 @@
 {{#if hasDismiss}}
   <div class="Polaris-Banner__Dismiss">
-    {{polaris-button
-      icon="cancel-small"
-      accessibilityLabel="Dismiss notification"
-      plain=true
-      onClick=(action onDismiss)
-    }}
+    <PolarisButton @icon="cancel-small" @accessibilityLabel="Dismiss notification" @plain={{true}} @onClick={{action onDismiss}} />
   </div>
 {{/if}}
 
 <div class="Polaris-Banner__Ribbon">
-  {{polaris-icon
-    backdrop=true
-    source=iconName
-    color=iconColor
-  }}
+  <PolarisIcon @backdrop={{true}} @source={{iconName}} @color={{iconColor}} />
 </div>
 
 <div>
   {{#if title}}
     <div class="Polaris-Banner__Heading" id={{headingId}}>
-      {{polaris-heading tagName="p" text=title}}
+      <PolarisHeading @tagName="p" @text={{title}} />
     </div>
   {{/if}}
 
@@ -34,16 +25,9 @@
 
       {{#if action}}
         <div class="Polaris-Banner__Actions">
-          {{#polaris-button-group}}
+          <PolarisButtonGroup>
             <div class="Polaris-Banner__PrimaryAction">
-              {{polaris-button
-                outline=true
-                size=(if withinContentContainer "slim")
-                text=action.text
-                disabled=action.disabled
-                loading=action.loading
-                onClick=(action "triggerAction" action)
-              }}
+              <PolarisButton @outline={{true}} @size={{if withinContentContainer "slim"}} @text={{action.text}} @disabled={{action.disabled}} @loading={{action.loading}} @onClick={{action "triggerAction" action}} />
             </div>
 
             {{#if secondaryAction}}
@@ -54,7 +38,7 @@
                 <span class="Polaris-Banner__Text">{{secondaryAction.text}}</span>
               </button>
             {{/if}}
-          {{/polaris-button-group}}
+          </PolarisButtonGroup>
         </div>
       {{/if}}
     </div>
