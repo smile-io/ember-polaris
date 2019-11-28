@@ -1,46 +1,74 @@
-{{#if hasDismiss}}
-  <div class="Polaris-Banner__Dismiss">
-    <PolarisButton @icon="cancel-small" @accessibilityLabel="Dismiss notification" @plain={{true}} @onClick={{action onDismiss}} />
+<div
+  class="Polaris-Banner {{this.statusClass}} {{if this.hasDismiss "Polaris-Banner--hasDismiss"}} {{if @withinContentContainer "Polaris-Banner--withinContentContainer" "Polaris-Banner--withinPage"}}"
+  tabindex="0"
+  aria-live="polite"
+  aria-describedby={{this.contentId}}
+  aria-labelledby={{this.headingId}}
+  role={{this.role}}
+  {{on "mouseup" this.handleMouseUpByBlurring}}
+  ...attributes
+>
+  {{#if this.hasDismiss}}
+    <div class="Polaris-Banner__Dismiss">
+      <PolarisButton
+        @icon="cancel-small"
+        @accessibilityLabel="Dismiss notification"
+        @plain={{true}}
+        @onClick={{@onDismiss}}
+      />
+    </div>
+  {{/if}}
+
+  <div class="Polaris-Banner__Ribbon">
+    <PolarisIcon @backdrop={{true}} @source={{this.iconName}} @color={{this.iconColor}} />
   </div>
-{{/if}}
 
-<div class="Polaris-Banner__Ribbon">
-  <PolarisIcon @backdrop={{true}} @source={{iconName}} @color={{iconColor}} />
-</div>
+  <div>
+    {{#if @title}}
+      <div class="Polaris-Banner__Heading" id={{this.headingId}}>
+        <PolarisHeading @tagName="p" @text={{@title}} />
+      </div>
+    {{/if}}
 
-<div>
-  {{#if title}}
-    <div class="Polaris-Banner__Heading" id={{headingId}}>
-      <PolarisHeading @tagName="p" @text={{title}} />
-    </div>
-  {{/if}}
+    {{#if (or hasBlock @text @action)}}
+      <div
+        class="Polaris-Banner__Content"
+        id={{this.contentId}}
+        {{did-insert this.setContentId}}
+        {{will-destroy this.setContentId null}}
+      >
+        {{#if hasBlock}}
+          {{yield}}
+        {{else}}
+          {{@text}}
+        {{/if}}
 
-  {{#if (or hasBlock text action)}}
-    <div class="Polaris-Banner__Content" id={{contentId}}>
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
+        {{#if @action}}
+          <div class="Polaris-Banner__Actions">
+            <PolarisButtonGroup>
+              <div class="Polaris-Banner__PrimaryAction">
+                <PolarisButton
+                  @outline={{true}}
+                  @size={{if @withinContentContainer "slim"}}
+                  @text={{action.text}}
+                  @disabled={{action.disabled}}
+                  @loading={{action.loading}}
+                  @onClick={{fn this.triggerAction @action}}
+                />
+              </div>
 
-      {{#if action}}
-        <div class="Polaris-Banner__Actions">
-          <PolarisButtonGroup>
-            <div class="Polaris-Banner__PrimaryAction">
-              <PolarisButton @outline={{true}} @size={{if withinContentContainer "slim"}} @text={{action.text}} @disabled={{action.disabled}} @loading={{action.loading}} @onClick={{action "triggerAction" action}} />
-            </div>
-
-            {{#if secondaryAction}}
-              <button
-                class="Polaris-Banner__SecondaryAction"
-                onclick={{action "triggerAction" secondaryAction}}
-              >
-                <span class="Polaris-Banner__Text">{{secondaryAction.text}}</span>
-              </button>
-            {{/if}}
-          </PolarisButtonGroup>
-        </div>
-      {{/if}}
-    </div>
-  {{/if}}
+              {{#if @secondaryAction}}
+                <button
+                  class="Polaris-Banner__SecondaryAction"
+                  onclick={{fn this.triggerAction @secondaryAction}}
+                >
+                  <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
+                </button>
+              {{/if}}
+            </PolarisButtonGroup>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
 </div>

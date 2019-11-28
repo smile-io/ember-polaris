@@ -1,13 +1,12 @@
-import classic from 'ember-classic-decorator';
-import { classNames, attributeBindings, classNameBindings, layout as templateLayout } from '@ember-decorators/component';
+import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
-import Component from '@ember/component';
-import layout from '../templates/components/polaris-banner';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
+import { tagName, layout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
+import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
 // TODO icon-update: use new icon names here when @shopify/polaris-icons
@@ -41,79 +40,62 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
-@classic
-@attributeBindings(
-  'tabIndex',
-  'role',
-  'ariaLive:aria-live',
-  'contentId:aria-describedby',
-  'headingId:aria-labelledby',
-  'data-test-banner'
-)
-@classNames('Polaris-Banner')
-@classNameBindings(
-  'statusClass',
-  'hasDismiss:Polaris-Banner--hasDismiss',
-  'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage'
-)
-@templateLayout(layout)
+@tagName('')
+@layout(template)
 export default class PolarisBanner extends Component {
   /**
    * Title content for the banner.
    *
-   * @property title
    * @type {String}
    * @default null
+   * @public
    */
   title = null;
 
   /**
    * Icon to display in the banner.
    *
-   * @property icon
    * @type {String}
    * @default null
+   * @public
    */
   icon = null;
 
   /**
    * Sets the status of the banner.
    *
-   * @property status
    * @type {String}
    * @default null
+   * @public
    */
   status = null;
 
   /**
    * Action for banner.
    *
-   * @property action
    * @type {Object}
    * @default null
+   * @public
    */
   action = null;
 
   /**
    * Displays a secondary action.
    *
-   * @property secondaryAction
    * @type {Object}
    * @default null
+   * @public
    */
   secondaryAction = null;
 
   /**
    * Callback when banner is dismissed
    *
-   * @property onDismiss
    * @type {Func}
    * @default null
+   * @public
    */
   onDismiss = null;
-
-  tabIndex = '0';
-  ariaLive = 'polite';
 
   /**
    * Temporary workaround for not having appProvider/withAppProvider equivalents implemented yet.
@@ -123,15 +105,14 @@ export default class PolarisBanner extends Component {
    */
   withinContentContainer = false;
 
-  mouseUp = handleMouseUpByBlurring;
-  'data-test-banner' = '';
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  @(bool('onDismiss').readOnly())
+  @bool('onDismiss')
   hasDismiss;
 
-  @(computed('status').readOnly())
+  @computed('status')
   get role() {
-    let status = this.get('status');
+    let { status } = this;
     if (status === 'warning' || status === 'critical') {
       return 'alert';
     }
@@ -139,14 +120,13 @@ export default class PolarisBanner extends Component {
     return 'status';
   }
 
-  @(computed('icon', 'status').readOnly())
+  @computed('icon', 'status')
   get iconName() {
-    let icon = this.get('icon');
+    let { icon, status } = this;
     if (isPresent(icon)) {
       return icon;
     }
 
-    let status = this.get('status');
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
@@ -154,9 +134,9 @@ export default class PolarisBanner extends Component {
     return bannerIcons[status].iconName;
   }
 
-  @(computed('status').readOnly())
+  @computed('status')
   get iconColor() {
-    let status = this.get('status');
+    let { status } = this;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
@@ -164,41 +144,37 @@ export default class PolarisBanner extends Component {
     return bannerIcons[status].color;
   }
 
-  @(computed('title').readOnly())
+  @computed('title')
   get headingId() {
-    if (isBlank(this.get('title'))) {
-      return;
+    if (isBlank(this.title)) {
+      return null;
     }
 
     return `${guidFor(this)}-heading`;
   }
 
-  @(computed('status').readOnly())
+  @computed('status')
   get statusClass() {
-    let status = this.get('status');
+    let { status } = this;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
-      return;
+      return null;
     }
 
     return `Polaris-Banner--status${capitalize(status)}`;
   }
 
-  didRender() {
-    super.didRender(...arguments);
-
-    let hasContentWrapper = isPresent(
-      this.element.querySelector('div.Polaris-Banner__Content')
-    );
-    let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
-    this.set('contentId', contentId);
-  }
-
   @action
-  triggerAction(action, event) {
+  triggerAction(actionObj, event) {
     if (event) {
       event.stopPropagation();
     }
 
-    return invokeAction(this, action.onAction);
+    return invokeAction(this, actionObj.onAction);
+  }
+
+  @action
+  setContentId(element, [value]) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
   }
 }
