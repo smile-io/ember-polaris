@@ -296,24 +296,24 @@ module('Integration | Component | polaris badge', function(hooks) {
         'applies `class` when used in curly-brackets form'
       );
 
-    // await render(hbs`
-    //   <PolarisBadge @class="custom-class" />
-    // `);
-    // assert
-    //   .dom(badgeSelector)
-    //   .hasClass(
-    //     'custom-class',
-    //     'applies `@class` when used in angle-brackets form'
-    //   );
+    await render(hbs`
+      <PolarisBadge @class="custom-class" />
+    `);
+    assert
+      .dom(badgeSelector)
+      .hasClass(
+        'custom-class',
+        'applies `@class` when used in angle-brackets form'
+      );
 
-    // await render(hbs`
-    //   <PolarisBadge class="custom-class" />
-    // `);
-    // assert
-    //   .dom(badgeSelector)
-    //   .hasClass(
-    //     'custom-class',
-    //     'applies `class` when used in angle-brackets form'
-    //   );
+    await render(hbs`
+      <PolarisBadge class="custom-class" />
+    `);
+    assert
+      .dom(badgeSelector)
+      .hasClass(
+        'custom-class',
+        'applies `class` when used in angle-brackets form'
+      );
   });
 });
