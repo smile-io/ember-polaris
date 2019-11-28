@@ -3,12 +3,7 @@ import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
-import {
-  classNames,
-  classNameBindings,
-  tagName,
-  layout,
-} from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-badge';
 
 const PROGRESS_LABELS = {
@@ -36,9 +31,7 @@ const DEFAULT_SIZE = SIZES.medium;
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
  */
-@tagName('span')
-@classNames('Polaris-Badge')
-@classNameBindings('statusClass', 'progressClass', 'sizeClass')
+@tagName('')
 @layout(template)
 export default class PolarisBadge extends Component {
   /**
