@@ -3,13 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-/*
- * N.B. a bunch of these tests are currently skipped because of an issue with Ember 2.16 and 2.18
- * where `await render(...)` waits long enough that the `img` element's `onerror` event fires
- * because the image file isn't present under testing.
- *
- * TODO: fix avatar images and un-skip tests (or wait until we no longer support Ember 2.16 and 2.18 ;))
- */
 module('Integration | Component | polaris-avatar', function(hooks) {
   setupRenderingTest(hooks);
 
@@ -22,10 +15,8 @@ module('Integration | Component | polaris-avatar', function(hooks) {
 
   module('source', function() {
     skip('renders an Image component with the Avatar source if one is provided', async function(assert) {
-      const src = 'image/path/';
-      this.set('src', src);
-      await render(hbs`{{polaris-avatar source=src}}`);
-      assert.dom('img').hasAttribute('src', src);
+      await render(hbs`{{polaris-avatar source="image.png"}}`);
+      assert.dom('img').hasAttribute('src', 'image.png');
     });
   });
 
@@ -36,9 +27,7 @@ module('Integration | Component | polaris-avatar', function(hooks) {
     });
 
     skip('does not render a customer Avatar if a source is provided', async function(assert) {
-      const src = 'image/path/';
-      this.set('src', src);
-      await render(hbs`{{polaris-avatar customer=true source=src}}`);
+      await render(hbs`{{polaris-avatar customer=true source="image.png"}}`);
       assert.dom('img').hasAttribute('src', /(?!avatar-)/);
     });
   });
@@ -85,5 +74,38 @@ module('Integration | Component | polaris-avatar', function(hooks) {
       await render(hbs`{{polaris-avatar name="Hello World"}}`);
       assert.dom('span:first-child').hasAttribute('aria-label', 'Hello World');
     });
+  });
+
+  test('supports passing a @class argument for backwards compatibility', async function(assert) {
+    await render(hbs`
+      {{polaris-avatar class="custom-class"}}
+    `);
+
+    assert
+      .dom('.Polaris-Avatar')
+      .hasClass(
+        'custom-class',
+        'applies `class` when used in curly-brackets form'
+      );
+
+    await render(hbs`
+      <PolarisAvatar @class="custom-class" />
+    `);
+    assert
+      .dom('.Polaris-Avatar')
+      .hasClass(
+        'custom-class',
+        'applies `@class` when used in angle-brackets form'
+      );
+
+    await render(hbs`
+      <PolarisAvatar class="custom-class" />
+    `);
+    assert
+      .dom('.Polaris-Avatar')
+      .hasClass(
+        'custom-class',
+        'applies `class` when used in angle-brackets form'
+      );
   });
 });

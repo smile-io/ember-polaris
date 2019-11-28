@@ -1,9 +1,11 @@
 import Component from '@ember/component';
-import { isEmpty } from '@ember/utils';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import layout from '../templates/components/polaris-avatar';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-avatar';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -23,164 +25,120 @@ const avatarImages = [
 
 const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-export default Component.extend({
-  tagName: 'span',
-  attributeBindings: ['role', 'label:aria-label'],
-  classNames: ['Polaris-Avatar'],
-  classNameBindings: [
-    'styleClass',
-    'sizeClass',
-    'hiddenClass',
-    'hasImage:Polaris-Avatar--hasImage',
-  ],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
    *
-   * @property size
-   * @public
    * @type {String}
    * @default 'medium'
+   * @public
    */
-  size: defaultSize,
+  size = defaultSize;
 
   /**
    * The name of the person
    *
-   * @property name
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Initials of person to display
    *
-   * @property initials
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  initials: null,
+  initials = null;
 
   /**
    * Whether the avatar is for a customer
    *
-   * @property customer
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  customer: false,
+  customer = false;
 
   /**
    * URL of the avatar image which falls back to initials if the image fails to load
    *
-   * @property source
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  source: null,
+  source = null;
 
   /**
    * Accessible label for the avatar image
    *
-   * @property accessibilityLabel
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * Path to the Polaris avatar images
    * TODO: read this from config? Need a way to set this by default?
-   * @property avatarSourcePath
-   * @private
    * @type {String}
+   * @private
    */
-  avatarSourcePath: '',
+  avatarSourcePath = '';
 
   /**
-   * Role attribute value
-   * @property role
-   * @private
-   * @type {String}
-   */
-  role: 'img',
-
-  /**
-   * @property hasError
    * @type {Boolean}
    * @default false
    * @private
    */
-  hasError: false,
+  hasError = false;
 
   /**
-   * @property hasLoaded
    * @type {Boolean}
    * @default false
    * @private
    */
-  hasLoaded: false,
-
-  /**
-   * @property prevSource
-   * @type {String}
-   * @default null
-   * @private
-   */
-  prevSource: null,
+  hasLoaded = false;
 
   /**
    * Image source to use (if any)
-   * @property finalSource
-   * @private
    * @type {String}
+   * @private
    */
-  finalSource: or('source', 'customerImageSource').readOnly(),
+  @or('source', 'customerImageSource')
+  finalSource;
 
   /**
    * Name to use (if any)
-   * @property nameString
-   * @private
    * @type {String}
+   * @private
    */
-  nameString: or('name', 'initials').readOnly(),
+  @or('name', 'initials')
+  nameString;
 
   /**
    * Whether we have an image to use
-   * @property
-   * @private
    * @type {Boolean}
+   * @private
    */
-  hasImage: computed('source', 'customer', 'hasError', function() {
-    let { source, customer, hasError } = this.getProperties(
-      'source',
-      'customer',
-      'hasError'
-    );
-
+  @computed('source', 'customer', 'hasError')
+  get hasImage() {
+    let { source, customer, hasError } = this;
     return (source || customer) && !hasError;
-  }).readOnly(),
+  }
 
   /**
    * Accessibility label to apply to avatar
-   * @property label
-   * @private
    * @type {String}
+   * @private
    */
-  label: computed('accessibilityLabel', 'name', 'initials', function() {
-    let { accessibilityLabel, name, initials } = this.getProperties(
-      'accessibilityLabel',
-      'name',
-      'initials'
-    );
+  @computed('accessibilityLabel', 'name', 'initials')
+  get label() {
+    let { accessibilityLabel, name, initials } = this;
 
     if (accessibilityLabel) {
       return accessibilityLabel;
@@ -195,15 +153,15 @@ export default Component.extend({
     }
 
     return 'Avatar';
-  }).readOnly(),
+  }
 
   /**
    * Class name to set avatar style
-   * @property styleClass
-   * @private
    * @type {String}
+   * @private
    */
-  styleClass: computed('nameString', function() {
+  @computed('nameString')
+  get styleClass() {
     let nameString = this.get('nameString');
     let styleIndex = isEmpty(nameString)
       ? 0
@@ -211,42 +169,42 @@ export default Component.extend({
     let style = styleClasses[styleIndex];
 
     return `Polaris-Avatar--style${classify(style)}`;
-  }).readOnly(),
+  }
 
   /**
    * Class name to set avatar size
-   * @property sizeClass
-   * @private
    * @type {String}
+   * @private
    */
-  sizeClass: computed('size', function() {
+  @computed('size')
+  get sizeClass() {
     let size = this.get('size');
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
 
     return `Polaris-Avatar--size${classify(size)}`;
-  }).readOnly(),
+  }
 
   /**
    * Class name to hide avatar when loading
-   * @property hiddenClass
-   * @private
    * @type {String}
+   * @private
    */
-  hiddenClass: computed('hasImage', 'hasLoaded', function() {
+  @computed('hasImage', 'hasLoaded')
+  get hiddenClass() {
     let { hasImage, hasLoaded } = this;
 
     return hasImage && !hasLoaded ? 'Polaris-Avatar--hidden' : null;
-  }).readOnly(),
+  }
 
   /**
    * Image source when displaying a customer avatar
-   * @property customerImageSource
-   * @private
    * @type {String}
+   * @private
    */
-  customerImageSource: computed('customer', 'nameString', function() {
+  @computed('customer', 'nameString')
+  get customerImageSource() {
     if (!this.get('customer')) {
       return null;
     }
@@ -256,50 +214,58 @@ export default Component.extend({
       ? 0
       : nameString.charCodeAt(0) % avatarImages.length;
     return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
-  }).readOnly(),
+  }
 
   /**
    * Flag controlling whether the avatar initials should be rendered
-   * @property shouldShowInitials
-   * @private
    * @type {Boolean}
+   * @private
    */
-  shouldShowInitials: computed('initials', 'hasImage', function() {
-    let { initials, hasImage } = this.getProperties('initials', 'hasImage');
+  @computed('initials', 'hasImage')
+  get shouldShowInitials() {
+    let { initials, hasImage } = this;
     return initials && !hasImage;
-  }).readOnly(),
+  }
 
   /**
    * Flag controlling whether the avatar image should be rendered
-   * @property shouldShowImage
-   * @private
    * @type {Boolean}
+   * @private
    */
-  shouldShowImage: computed('finalSource', 'hasError', function() {
-    let { finalSource, hasError } = this.getProperties(
-      'finalSource',
-      'hasError'
-    );
+  @computed('finalSource', 'hasError')
+  get shouldShowImage() {
+    let { finalSource, hasError } = this;
     return finalSource && !hasError;
-  }).readOnly(),
+  }
 
-  didReceiveAttrs() {
-    if (this.source !== this.prevSource) {
-      this.setProperties({
-        prevSource: this.source,
-        hasError: false,
-        hasLoaded: false,
-      });
-    }
-  },
+  init() {
+    super.init(...arguments);
 
-  actions: {
-    handleError() {
-      this.setProperties({ hasError: true, hasLoaded: false });
-    },
+    deprecate(
+      `[polaris-avatar] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-avatar.class-arg',
+        until: '6.0.0',
+      }
+    );
+  }
 
-    handleLoad() {
-      this.setProperties({ hasLoaded: true, hasError: false });
-    },
-  },
-});
+  @action
+  handleError() {
+    this.setProperties({ hasError: true, hasLoaded: false });
+  }
+
+  @action
+  handleLoad() {
+    this.setProperties({ hasLoaded: true, hasError: false });
+  }
+
+  @action
+  resetImage() {
+    this.setProperties({
+      hasError: false,
+      hasLoaded: false,
+    });
+  }
+}
