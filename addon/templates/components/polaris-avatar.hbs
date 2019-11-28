@@ -1,7 +1,7 @@
 <span
   role={{this.role}}
   aria-label={{this.label}}
-  class="Polaris-Avatar {{if this.hasImage "Polaris-Avatar--hasImage"}} {{this.styleClass}} {{this.sizeClass}} {{this.hiddenClass}}"
+  class="Polaris-Avatar {{if this.hasImage "Polaris-Avatar--hasImage"}} {{this.styleClass}} {{this.sizeClass}} {{this.hiddenClass}} {{@class}}"
   {{did-update this.resetImage @source}}
   ...attributes
 >
