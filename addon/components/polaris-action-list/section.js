@@ -10,36 +10,33 @@ export default class Section extends Component {
   /**
    * Collection of action items
    *
-   * @property section
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
   section = null;
 
   /**
    * Whether the parent action list has multiple sections
    *
-   * @property hasMultipleSections
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   hasMultipleSections = false;
 
   /**
    * Defines a specific role attribute for each action in the list
    *
-   * @property actionRole
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   actionRole = null;
 
   @computed('actionRole')
   get sectionRole() {
-    return this.get('actionRole') === 'option' ? 'presentation' : undefined;
+    return this.actionRole === 'option' ? 'presentation' : undefined;
   }
 
   @action

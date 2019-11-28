@@ -1,15 +1,10 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import {
-  attributeBindings,
-  tagName,
-  layout,
-} from '@ember-decorators/component';
+import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-action-list/item';
 
-@tagName('li')
-@attributeBindings('role', 'active:aria-selected')
+@tagName('')
 @layout(template)
 export default class Item extends Component {
   /**
