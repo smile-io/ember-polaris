@@ -5,7 +5,7 @@
     @onMouseUp={{handleMouseUpByBlurring}}
   >
     <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-      {{polaris-icon source="chevron-left"}}
+      <PolarisIcon @source="chevron-left" />
     </span>
     <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
       {{breadcrumb.content}}
@@ -19,7 +19,7 @@
     {{action breadcrumb.onAction}}
   >
     <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-      {{polaris-icon source="chevron-left"}}
+      <PolarisIcon @source="chevron-left" />
     </span>
     <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
       {{breadcrumb.content}}
