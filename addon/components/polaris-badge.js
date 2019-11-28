@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-badge';
 
@@ -128,5 +129,18 @@ export default class PolarisBadge extends Component {
     }
 
     return `Polaris-Badge--status${classify(status)}`;
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-badge] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-badge.class-arg',
+        until: '6.0.0',
+      }
+    );
   }
 }
