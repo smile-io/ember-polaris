@@ -53,7 +53,7 @@ export default class PolarisButtonGroup extends Component {
 
   @action
   setupAutoWrapper(element) {
-    // TODO When we're auto-wrapping we bypass the group item component, so will not handle
+    // TODO When we're auto-wrapping we bypass the group item component, so we will not handle
     // focus events and hence not apply correct class to the wrapper group item
     this.autoWrapper = new AutoWrapper(element, 'Polaris-ButtonGroup__Item', {
       'data-test-button-group-item': true,
