@@ -4,66 +4,63 @@ import { gt } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import layout from '../templates/components/polaris-action-list';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-action-list';
 
 /**
  * Polaris action list component.
  * See https://polaris.shopify.com/components/actions/action-list
  */
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisActionList extends Component {
   /**
    * Collection of actions for list
    *
-   * @property items
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  items: null,
+  items = null;
 
   /**
    * Collection of sectioned action items
    *
-   * @property sections
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  sections: null,
+  sections = null;
 
   /**
    * Defines a specific role attribute for each action in the list
    *
-   * @property actionRole
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  actionRole: null,
+  actionRole = null;
 
   /**
    * Callback when any item is clicked or keypressed
    *
-   * @property onActionAnyItem
-   * @public
    * @type {function}
    * @default no-op
+   * @public
    */
-  onActionAnyItem() {},
+  onActionAnyItem() {}
 
   /**
    * @private
    */
-  hasMultipleSections: gt('finalSections.length', 1).readOnly(),
+  @gt('finalSections.length', 1)
+  hasMultipleSections;
 
   /**
    * @private
    */
-  finalSections: computed('items', 'sections.[]', function() {
+  @computed('items', 'sections.[]')
+  get finalSections() {
     let finalSections = [];
 
     let items = this.get('items');
@@ -79,5 +76,5 @@ export default Component.extend({
     finalSections.push(...sections);
 
     return finalSections;
-  }).readOnly(),
-});
+  }
+}

@@ -1,33 +1,34 @@
 {{!-- TODO: add scroll support here when `polaris-scrollable` is available. --}}
-
-<button
-  class={{itemClasses}}
-  disabled={{disabled}}
-  onclick={{action onAction}}
->
-  <div class="Polaris-ActionList__Content">
-    {{#if icon}}
-      <div class="Polaris-ActionList__Image">
-        {{polaris-icon source=icon}}
-      </div>
-    {{else if image}}
-      <div
-        role="presentation"
-        class="Polaris-ActionList__Image"
-        style={{imageBackgroundStyle}}
-      >
-      </div>
-    {{/if}}
-
-    <div class="Polaris-ActionList__Text">
-      {{#if helpText}}
-        <div>
-          <div>{{text}}</div>
-          {{polaris-text-style variation="subdued" text=helpText}}
+<li role={{@role}} aria-selected={{this.active}}>
+  <button
+    class={{this.itemClasses}}
+    disabled={{this.disabled}}
+    {{on "click" this.onAction}}
+  >
+    <div class="Polaris-ActionList__Content">
+      {{#if @icon}}
+        <div class="Polaris-ActionList__Image">
+          <PolarisIcon @source={{@icon}} />
         </div>
-      {{else}}
-        {{text}}
+      {{else if @image}}
+        <div
+          role="presentation"
+          class="Polaris-ActionList__Image"
+          style={{this.imageBackgroundStyle}}
+        >
+        </div>
       {{/if}}
+
+      <div class="Polaris-ActionList__Text">
+        {{#if @helpText}}
+          <div>
+            <div>{{@text}}</div>
+            <PolarisTextStyle @variation="subdued" @text={{@helpText}} />
+          </div>
+        {{else}}
+          {{@text}}
+        {{/if}}
+      </div>
     </div>
-  </div>
-</button>
+  </button>
+</li>
