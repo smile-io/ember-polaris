@@ -47,7 +47,7 @@ export default class PolarisBreadcrumbs extends Component {
   }
 
   @action
-  handleClick(/* element */) {
+  handleClick() {
     this.breadcrumb.onAction();
   }
 }
