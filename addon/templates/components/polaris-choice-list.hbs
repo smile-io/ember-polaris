@@ -1,42 +1,49 @@
-{{#if title}}
-  <legend data-test-choice-list-title class="Polaris-ChoiceList__Title">
-    {{title}}
-  </legend>
-{{/if}}
+<fieldset
+  id={{this.finalName}}
+  aria-invalid={{this.ariaInvalid}}
+  aria-describedby={{this.ariaDescribedBy}}
+  class="Polaris-ChoiceList {{if this.titleHidden "Polaris-ChoiceList--titleHidden"}}"
+  data-test-choice-list
+  ...attributes
+>
+  {{#if @title}}
+    <legend data-test-choice-list-title class="Polaris-ChoiceList__Title">
+      {{@title}}
+    </legend>
+  {{/if}}
 
-<ul data-test-choice-list-choices class="Polaris-ChoiceList__Choices">
-  {{#each checkedChoices as |choice|}}
-    <li data-test-choice-list-item>
-      {{component
-        controlComponent
-        label=choice.label
-        value=choice.value
-        helpText=choice.helpText
-        disabled=choice.disabled
-        name=finalName
-        checked=choice.isSelected
-        onChange=(action "updateSelectedChoices" choice)
-      }}
+  <ul data-test-choice-list-choices class="Polaris-ChoiceList__Choices">
+    {{#each this.checkedChoices as |choice|}}
+      <li data-test-choice-list-item>
+        {{#let this.controlComponent as |Control|}}
+          <Control
+            @label={{choice.label}}
+            @value={{choice.value}}
+            @helpText={{choice.helpText}}
+            @disabled={{choice.disabled}}
+            @checked={{choice.isSelected}}
+            @name={{this.finalName}}
+            @onChange={{fn this.updateSelectedChoices choice}}
+          />
+        {{/let}}
 
-      {{#if
-        (and
-          choice.childComponent
-          (or choice.isSelected choice.alwaysRenderChildComponent)
-        )
-      }}
-        <div class="Polaris-ChoiceList__ChoiceChildren">
-          {{component choice.childComponent}}
-        </div>
-      {{/if}}
-    </li>
-  {{/each}}
-</ul>
+        {{#if
+          (and
+            choice.childComponent
+            (or choice.isSelected choice.alwaysRenderChildComponent)
+          )
+        }}
+          <div class="Polaris-ChoiceList__ChoiceChildren">
+            {{component choice.childComponent}}
+          </div>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
 
-{{#if error}}
-  <div data-test-choice-list-error class="Polaris-ChoiceList__ChoiceError">
-    {{polaris-inline-error
-      message=error
-      fieldID=finalName
-    }}
-  </div>
-{{/if}}
+  {{#if @error}}
+    <div data-test-choice-list-error class="Polaris-ChoiceList__ChoiceError">
+      <PolarisInlineError @message={{@error}} @fieldID={{this.finalName}} />
+    </div>
+  {{/if}}
+</fieldset>
