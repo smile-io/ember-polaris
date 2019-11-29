@@ -1,9 +1,17 @@
-{{#if hasBlock}}
-  {{yield
-    (hash
-      item=(component "polaris-button-group/item")
-    )
-  }}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  class="Polaris-ButtonGroup {{if @segmented "Polaris-ButtonGroup--segmented"}} {{if @fullWidth "Polaris-ButtonGroup--fullWidth"}} {{if @connectedTop "Polaris-ButtonGroup--connectedTop"}}"
+  data-test-button-group
+  {{did-insert this.setupAutoWrapper}}
+  {{will-destroy this.teardownAutoWrapper}}
+  ...attributes
+>
+  {{#if hasBlock}}
+    {{yield
+      (hash
+        item=(component "polaris-button-group/item")
+      )
+    }}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>

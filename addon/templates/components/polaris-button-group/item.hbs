@@ -1,5 +1,14 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  class="Polaris-ButtonGroup__Item {{if @plain "Polaris-ButtonGroup__Item--plain"}} {{if this.focused "Polaris-ButtonGroup__Item--focused"}}"
+  data-test-button-group-item
+  role="button"
+  {{on "focus" this.handleFocus}}
+  {{on "blur" this.handleBlur}}
+  ...attributes
+>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>
