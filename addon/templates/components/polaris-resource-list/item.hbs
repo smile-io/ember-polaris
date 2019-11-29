@@ -79,11 +79,11 @@
       class="Polaris-ResourceList-Item__Actions"
       click=(action stopPropagation)
     }}
-      {{#polaris-button-group
-        segmented=(not persistActions)
-        data-test-id=(unless persistActions "shortcut-actions")
+      <PolarisButtonGroup
+        data-test-id={{unless persistActions "shortcut-actions"}}
+        @segmented={{not persistActions}}
         as |buttonGroup|
-      }}
+      >
         {{#each shortcutActions as |shortcutAction|}}
           {{#buttonGroup.item}}
             {{polaris-button
@@ -103,7 +103,7 @@
             }}
           {{/buttonGroup.item}}
         {{/each}}
-      {{/polaris-button-group}}
+      </PolarisButtonGroup>
     {{/wrapper-element}}
 
     {{#if persistActions}}
