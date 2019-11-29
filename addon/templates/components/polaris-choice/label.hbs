@@ -1,11 +1,17 @@
-<span class="Polaris-Choice__Control">
-  {{yield}}
-</span>
+<label
+  for={{@inputId}}
+  class="Polaris-Choice {{if @labelHidden "Polaris-Choice--labelHidden"}} {{if @disabled "Polaris-Choice--disabled"}}"
+  ...attributes
+>
+  <span class="Polaris-Choice__Control">
+    {{yield}}
+  </span>
 
-<span class="Polaris-Choice__Label">
-  {{#if labelComponent}}
-    {{component labelComponent}}
-  {{else}}
-    {{render-content label}}
-  {{/if}}
-</span>
+  <span class="Polaris-Choice__Label">
+    {{#if @labelComponent}}
+      {{component @labelComponent}}
+    {{else}}
+      {{render-content @label}}
+    {{/if}}
+  </span>
+</label>
