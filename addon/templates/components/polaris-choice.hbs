@@ -10,9 +10,9 @@
 }}
   {{#if this.hasDescription}}
     <div>
-      {{#component ChoiceLabel}}
+      <ChoiceLabel ...attributes>
         {{yield}}
-      {{/component}}
+      </ChoiceLabel>
 
       <div class="Polaris-Choice__Descriptions">
         {{#if this.shouldRenderError}}
@@ -29,8 +29,8 @@
       </div>
     </div>
   {{else}}
-    {{#component ChoiceLabel}}
+    <ChoiceLabel ...attributes>
       {{yield}}
-    {{/component}}
+    </ChoiceLabel>
   {{/if}}
 {{/let}}
