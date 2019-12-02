@@ -9,7 +9,7 @@ import template from '../templates/components/polaris-choice-list';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
 class CheckedChoice extends ObjectProxy {
-  selected = null;
+  selected = [];
 
   @computed('content.value', 'selected.[]')
   get isSelected() {
@@ -58,10 +58,10 @@ export default class PolarisChoiceList extends Component {
    * Collection of selected choices
    *
    * @type {Array}
-   * @default null
+   * @default []
    * @public
    */
-  selected = null;
+  selected = [];
 
   /**
    * Name for form input
