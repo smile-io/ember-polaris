@@ -4642,11 +4642,12 @@ ember-array-contains-helper@^2.0.0:
     ember-cli-babel "^6.6.0"
 
 ember-array-helper@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/ember-array-helper/-/ember-array-helper-5.0.0.tgz#d2d72f170e15d120bdaffe456d5cdfd8d335de75"
-  integrity sha512-TkmHoOgPmv4QOs8Z/DPA80kas8m8yl3aeuxC1Ph40V3byFEq1A4Z/JNnUNkfRYmWiYveBc996NV/y2wwK/2ptw==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/ember-array-helper/-/ember-array-helper-5.1.0.tgz#1d9f319b24df05181ecf207f97b19a99128537c8"
+  integrity sha512-inSnELMADOgX46ipx7E1jcAOFLxQ0X1AqaaoEZfn9TFEzwgx0PMYZL7i5YbEfNqpMswmO8sbMZeW4hxKvEycnw==
   dependencies:
     ember-cli-babel "^7.1.2"
+    ember-cli-version-checker "^4.1.0"
 
 ember-assign-polyfill@^2.5.0, ember-assign-polyfill@^2.6.0:
   version "2.6.0"
@@ -4975,6 +4976,15 @@ ember-cli-version-checker@^3.1.3:
   dependencies:
     resolve-package-path "^1.2.6"
     semver "^5.6.0"
+
+ember-cli-version-checker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-4.1.0.tgz#7fc9836bdbc87451d286ba6a9a89b23591d8bbb7"
+  integrity sha512-yLf2YqotTSsjiXwx9Dt6H7AU0QcldFn5SLk/pG3Zqb0aHNeanBOPlx4/Ysa46ILGWYIh0fDH34AEVRueXTrQBQ==
+  dependencies:
+    resolve-package-path "^2.0.0"
+    semver "^6.3.0"
+    silent-error "^1.1.1"
 
 ember-cli@~3.13.1:
   version "3.13.1"
@@ -10805,6 +10815,14 @@ resolve-package-path@^1.0.11, resolve-package-path@^1.2.2, resolve-package-path@
     path-root "^0.1.1"
     resolve "^1.10.0"
 
+resolve-package-path@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/resolve-package-path/-/resolve-package-path-2.0.0.tgz#7f258ab86ff074fff4ff8027a28f94d17d6fb1df"
+  integrity sha512-/CLuzodHO2wyyHTzls5Qr+EFeG6RcW4u6//gjYvUfcfyuplIX1SSccU+A5A9A78Gmezkl3NBkFAMxLbzTY9TJA==
+  dependencies:
+    path-root "^0.1.1"
+    resolve "^1.13.1"
+
 resolve-path@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/resolve-path/-/resolve-path-1.4.0.tgz#c4bda9f5efb2fce65247873ab36bb4d834fe16f7"
@@ -10829,6 +10847,13 @@ resolve@^1.1.3, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.11.1, resolve@^1.12
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.13.1.tgz#be0aa4c06acd53083505abb35f4d66932ab35d16"
   integrity sha512-CxqObCX8K8YtAhOBRg+lrcdn+LK+WYOS8tSjqSFbjtrI5PnS63QPhZl4+yKfrU9tdsbMu9Anr/amegT87M9Z6w==
+  dependencies:
+    path-parse "^1.0.6"
+
+resolve@^1.13.1:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.15.0.tgz#1b7ca96073ebb52e741ffd799f6b39ea462c67f5"
+  integrity sha512-+hTmAldEGE80U2wJJDC1lebb5jWqvTYAfm3YZ1ckk1gBr0MnCqUKlwK1e+anaFljIl+F5tR5IoZcm4ZDA1zMQw==
   dependencies:
     path-parse "^1.0.6"
 
