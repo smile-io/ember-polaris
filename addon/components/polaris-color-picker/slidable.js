@@ -1,40 +1,17 @@
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { computed, action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import $Ember from 'jquery';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 
-function startDrag(event) {
-  this.set('isDragging', true);
-  this.handleMove(event);
-
-  // Set up global event listeners to handle dragging outside the slidable area.
-  $Ember(window).on('mousemove', (...moveArgs) => {
-    this.handleMove(...moveArgs);
-  });
-  $Ember(window).on('mouseup', () => {
-    this.handleDragEnd();
-  });
-
-  $Ember(window).on('touchmove', (...moveArgs) => {
-    this.handleMove(...moveArgs);
-  });
-  $Ember(window).on('touchend', () => {
-    this.handleDragEnd();
-  });
-  $Ember(window).on('touchcancel', () => {
-    this.handleDragEnd();
-  });
-}
-
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
-export default Component.extend({
-  classNames: ['Polaris-ColorPicker__Slidable'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Slidable extends Component {
   /**
    * The current x position of the dragger
    *
@@ -43,7 +20,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  draggerX: 0,
+  draggerX = 0;
 
   /**
    * The current y position of the dragger
@@ -53,7 +30,7 @@ export default Component.extend({
    * @default 0
    * @public
    */
-  draggerY: 0,
+  draggerY = 0;
 
   /**
    * Callback for the outside world to receive the height of the dragger
@@ -63,31 +40,22 @@ export default Component.extend({
    * @default null
    * @public
    */
-  onDraggerHeightChanged: null,
+  onDraggerHeightChanged = null;
 
   /**
    * @private
    */
-  isDragging: false,
+  isDragging = false;
 
   /**
    * @private
    */
-  mouseDown: startDrag,
-
-  /**
-   * @private
-   */
-  touchStart: startDrag,
-
-  /**
-   * @private
-   */
-  draggerStyle: computed('draggerX', 'draggerY', function() {
+  @(computed('draggerX', 'draggerY').readOnly())
+  get draggerStyle() {
     const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
     const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
     return htmlSafe(`transform: ${transform};`);
-  }).readOnly(),
+  }
 
   /**
    * @private
@@ -110,7 +78,7 @@ export default Component.extend({
     }
 
     this.handleDraggerMove(event.clientX, event.clientY);
-  },
+  }
 
   /**
    * @private
@@ -125,7 +93,7 @@ export default Component.extend({
     $Ember(window).off('touchmove');
     $Ember(window).off('touchend');
     $Ember(window).off('touchcancel');
-  },
+  }
 
   /**
    * @private
@@ -142,19 +110,31 @@ export default Component.extend({
     }
 
     const rect = getRectForNode(element);
+
     moveHandler({
       x: clientX - rect.left,
       y: clientY - rect.top,
     });
-  },
+  }
+
+  @computed('contentId')
+  get element() {
+    return document.querySelector(`#${this.contentId}`);
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
+
+    let element = this.element;
+
+    if (isNone(element)) {
+      return;
+    }
 
     const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
     if (typeOf(onDraggerHeightChanged) === 'function') {
       // Publish the height of our dragger.
-      const draggerElement = this.element.querySelector(
+      const draggerElement = element.querySelector(
         'div.Polaris-ColorPicker__Dragger'
       );
       if (isNone(draggerElement)) {
@@ -164,5 +144,35 @@ export default Component.extend({
       // Yes, for some strange reason this is width not height in the shopify code...
       onDraggerHeightChanged(draggerElement.clientWidth);
     }
-  },
-});
+  }
+
+  @action
+  setContentId(element, [value]) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
+  }
+
+  @action
+  startDrag(event) {
+    this.set('isDragging', true);
+    this.handleMove(event);
+
+    // Set up global event listeners to handle dragging outside the slidable area.
+    $Ember(window).on('mousemove', (...moveArgs) => {
+      this.handleMove(...moveArgs);
+    });
+    $Ember(window).on('mouseup', () => {
+      this.handleDragEnd();
+    });
+
+    $Ember(window).on('touchmove', (...moveArgs) => {
+      this.handleMove(...moveArgs);
+    });
+    $Ember(window).on('touchend', () => {
+      this.handleDragEnd();
+    });
+    $Ember(window).on('touchcancel', () => {
+      this.handleDragEnd();
+    });
+  }
+}

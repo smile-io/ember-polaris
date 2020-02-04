@@ -1,6 +1,8 @@
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { typeOf } from '@ember/utils';
+import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../../templates/components/polaris-color-picker/alpha-picker';
 import { clamp } from '../../utils/math';
@@ -23,11 +25,9 @@ function alphaForOffset(offset, sliderHeight) {
   return clamp(1 - selectionHeight / slidableArea, 0, 1);
 }
 
-export default Component.extend({
-  classNames: ['Polaris-ColorPicker__AlphaPicker'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class AlphaPicker extends Component {
   /**
    * The current alpha value
    *
@@ -35,34 +35,36 @@ export default Component.extend({
    * @type {Number}
    * @default 1
    */
-  alpha: 1,
+  alpha = 1;
 
   /**
    * @private
    */
-  sliderHeight: null,
+  sliderHeight = null;
 
   /**
    * @private
    */
-  draggerHeight: null,
+  draggerHeight = null;
 
   /**
    * @private
    */
-  colorLayerStyle: computed('color.{hue,saturation,brightness}', function() {
+  @(computed('color.{hue,saturation,brightness}').readOnly())
+  get colorLayerStyle() {
     const color = this.get('color');
     const { red, green, blue } = hsbaToRgba(color);
 
     const rgb = `${red}, ${green}, ${blue}`;
     const background = `linear-gradient(to top, rgba(${rgb}, 0) 18px, rgba(${rgb}, 1) calc(100% - 18px))`;
     return htmlSafe(`background: ${background};`);
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  draggerY: computed('alpha', 'sliderHeight', function() {
+  @(computed('alpha', 'sliderHeight', 'draggerHeight').readOnly())
+  get draggerY() {
     const { alpha, sliderHeight, draggerHeight } = this.getProperties(
       'alpha',
       'sliderHeight',
@@ -70,30 +72,44 @@ export default Component.extend({
     );
     const offset = offsetForAlpha(alpha, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);
-  }).readOnly(),
+  }
+
+  @computed('contentId')
+  get element() {
+    return document.querySelector(`#${this.contentId}`);
+  }
+
+  @action
+  setContentId(element, [value]) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
+
+    let alphaPickerElement = this.element;
+    if (isNone(alphaPickerElement)) {
+      return;
+    }
 
     // Grab the size of the component for positioning the draggable marker.
-    const alphaPickerElement = this.element;
     this.set('sliderHeight', alphaPickerElement.clientHeight);
-  },
+  }
 
-  actions: {
-    handleChange({ y }) {
-      const { sliderHeight, onChange } = this.getProperties(
-        'sliderHeight',
-        'onChange'
-      );
-      if (typeOf(onChange) !== 'function') {
-        return;
-      }
+  @action
+  handleChange({ y }) {
+    const { sliderHeight, onChange } = this.getProperties(
+      'sliderHeight',
+      'onChange'
+    );
+    if (typeOf(onChange) !== 'function') {
+      return;
+    }
 
-      const offsetY = clamp(y, 0, sliderHeight);
-      const alpha = alphaForOffset(offsetY, sliderHeight);
+    const offsetY = clamp(y, 0, sliderHeight);
+    const alpha = alphaForOffset(offsetY, sliderHeight);
 
-      onChange(alpha);
-    },
-  },
-});
+    onChange(alpha);
+  }
+}

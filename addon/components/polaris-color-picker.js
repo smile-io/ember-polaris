@@ -1,5 +1,7 @@
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { typeOf, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import layout from '../templates/components/polaris-color-picker';
@@ -10,11 +12,9 @@ import { hsbaToRgba } from '../utils/color';
  * Polaris color picker component.
  * See https://polaris.shopify.com/components/forms/color-picker
  */
-export default Component.extend({
-  classNames: ['Polaris-ColorPicker'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisColorPicker extends Component {
   /**
    * The currently selected color
    *
@@ -23,7 +23,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  color: null,
+  color = null;
 
   /**
    * Allow user to select an alpha value
@@ -33,7 +33,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  allowAlpha: false,
+  allowAlpha = false;
 
   /**
    * Callback when color is selected
@@ -43,17 +43,18 @@ export default Component.extend({
    * @default null
    * @public
    */
-  onChange: null,
+  onChange = null;
 
   /**
    * @private
    */
-  pickerSize: null,
+  pickerSize = null;
 
   /**
    * @private
    */
-  colorLayerStyle: computed('color.{hue,alpha}', function() {
+  @(computed('color.{hue,alpha}').readOnly())
+  get colorLayerStyle() {
     const { hue, alpha = 1 } = this.get('color');
     const { red, green, blue } = hsbaToRgba({
       hue,
@@ -63,35 +64,48 @@ export default Component.extend({
 
     const backgroundColor = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
     return htmlSafe(`background-color: ${backgroundColor};`);
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  draggerX: computed('color.saturation', 'pickerSize', function() {
+  @(computed('color.saturation', 'pickerSize').readOnly())
+  get draggerX() {
     const {
       color: { saturation },
       pickerSize,
     } = this.getProperties('color', 'pickerSize');
     return clamp(saturation * pickerSize, 0, pickerSize);
-  }).readOnly(),
+  }
 
   /**
    * @private
    */
-  draggerY: computed('color.brightness', 'pickerSize', function() {
+  @(computed('color.brightness', 'pickerSize').readOnly())
+  get draggerY() {
     const {
       color: { brightness },
       pickerSize,
     } = this.getProperties('color', 'pickerSize');
     return clamp(pickerSize - brightness * pickerSize, 0, pickerSize);
-  }).readOnly(),
+  }
+
+  @computed('contentId')
+  get element() {
+    return document.querySelector(`#${this.contentId}`);
+  }
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
+
+    let element = this.element;
+
+    if (isNone(element)) {
+      return;
+    }
 
     // Grab the size of the picker for positioning the draggable markers.
-    const mainColorElement = this.element.querySelector(
+    const mainColorElement = element.querySelector(
       'div.Polaris-ColorPicker__MainColor'
     );
     if (isNone(mainColorElement)) {
@@ -99,61 +113,68 @@ export default Component.extend({
     }
 
     this.set('pickerSize', mainColorElement.clientWidth);
-  },
+  }
 
-  actions: {
-    draggerMoved({ x, y }) {
-      const {
-        pickerSize,
-        color: { hue, alpha = 1 },
-        onChange,
-      } = this.getProperties('pickerSize', 'color', 'onChange');
+  @action
+  setContentId(element, [value]) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
+  }
 
-      if (typeOf(onChange) !== 'function') {
-        return;
-      }
+  @action
+  draggerMoved({ x, y }) {
+    const {
+      pickerSize,
+      color: { hue, alpha = 1 },
+      onChange,
+    } = this.getProperties('pickerSize', 'color', 'onChange');
 
-      const saturation = clamp(x / pickerSize, 0, 1);
-      const brightness = clamp(1 - y / pickerSize, 0, 1);
+    if (typeOf(onChange) !== 'function') {
+      return;
+    }
 
+    const saturation = clamp(x / pickerSize, 0, 1);
+    const brightness = clamp(1 - y / pickerSize, 0, 1);
+
+    onChange({
+      hue,
+      saturation,
+      brightness,
+      alpha,
+    });
+  }
+
+  @action
+  handleHueChange(hue) {
+    const {
+      color: { brightness, saturation, alpha = 1 },
+      onChange,
+    } = this.getProperties('color', 'onChange');
+
+    if (typeOf(onChange) === 'function') {
       onChange({
         hue,
-        saturation,
         brightness,
+        saturation,
         alpha,
       });
-    },
+    }
+  }
 
-    handleHueChange(hue) {
-      const {
-        color: { brightness, saturation, alpha = 1 },
-        onChange,
-      } = this.getProperties('color', 'onChange');
+  @action
+  handleAlphaChange(alpha) {
+    const {
+      color: { hue, brightness, saturation },
+      onChange,
+    } = this.getProperties('color', 'onChange');
 
-      if (typeOf(onChange) === 'function') {
-        onChange({
-          hue,
-          brightness,
-          saturation,
-          alpha,
-        });
-      }
-    },
-
-    handleAlphaChange(alpha) {
-      const {
-        color: { hue, brightness, saturation },
-        onChange,
-      } = this.getProperties('color', 'onChange');
-
-      if (typeOf(onChange) === 'function') {
-        onChange({
-          hue,
-          brightness,
-          saturation,
-          alpha,
-        });
-      }
-    },
-  },
-});
+    if (typeOf(onChange) === 'function') {
+      onChange({
+        hue,
+        brightness,
+        saturation,
+        alpha,
+      });
+    }
+  }
+}
