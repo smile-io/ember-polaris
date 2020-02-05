@@ -13,10 +13,7 @@
           onclick={{action onSort}}
         >
           <span class="Polaris-DataTable__Icon">
-            {{polaris-icon
-              source=source
-              accessibilityLabel=sortAccessibilityLabel
-            }}
+            <PolarisIcon @source={{source}} @accessibilityLabel={{sortAccessibilityLabel}} />
           </span>
 
           {{render-content text}}
