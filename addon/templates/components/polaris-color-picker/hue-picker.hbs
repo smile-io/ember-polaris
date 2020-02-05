@@ -7,7 +7,7 @@
   <PolarisColorPicker::Slidable
     @draggerX={{0}}
     @draggerY={{this.draggerY}}
-    @onDraggerHeightChanged={{fn (mut this.draggerHeight)}}
+    @onDraggerHeightChanged={{action (mut this.draggerHeight)}}
     @onChange={{fn this.handleChange}}
   />
 </div>
