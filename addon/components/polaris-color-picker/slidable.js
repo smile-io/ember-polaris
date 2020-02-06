@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed, action } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
@@ -104,7 +103,7 @@ export default class Slidable extends Component {
       return;
     }
 
-    const element = this.get('element');
+    const element = this.get('sliderElement');
     if (isNone(element)) {
       return;
     }
@@ -117,20 +116,9 @@ export default class Slidable extends Component {
     });
   }
 
-  @computed('contentId')
-  get element() {
-    return document.querySelector(`#${this.contentId}`);
-  }
-
   @action
-  setContentId(element, value) {
-    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
-    this.set('contentId', value);
-  }
-
-  @action
-  setContentIdAndTriggerHeightChanged(element, [value]) {
-    this.setContentId(element, value);
+  setElementAndTriggerHeightChanged(element) {
+    this.set('sliderElement', element);
 
     const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
     if (typeOf(onDraggerHeightChanged) === 'function') {
