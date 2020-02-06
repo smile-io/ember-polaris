@@ -1,11 +1,11 @@
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import Component from '@ember/component';
 import { computed, action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import $Ember from 'jquery';
-import Component from '@ember/component';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import $Ember from 'jquery';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
@@ -52,7 +52,7 @@ export default class Slidable extends Component {
    */
   @(computed('draggerX', 'draggerY').readOnly())
   get draggerStyle() {
-    const { draggerX, draggerY } = this.getProperties('draggerX', 'draggerY');
+    const { draggerX, draggerY } = this;
     const transform = `translate3d(${draggerX}px, ${draggerY}px, 0)`;
     return htmlSafe(`transform: ${transform};`);
   }
@@ -122,14 +122,15 @@ export default class Slidable extends Component {
     return document.querySelector(`#${this.contentId}`);
   }
 
-  didRender() {
-    super.didRender(...arguments);
+  @action
+  setContentId(element, value) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
+  }
 
-    let element = this.element;
-
-    if (isNone(element)) {
-      return;
-    }
+  @action
+  setContentIdAndTriggerHeightChanged(element, [value]) {
+    this.setContentId(element, value);
 
     const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
     if (typeOf(onDraggerHeightChanged) === 'function') {
@@ -144,12 +145,6 @@ export default class Slidable extends Component {
       // Yes, for some strange reason this is width not height in the shopify code...
       onDraggerHeightChanged(draggerElement.clientWidth);
     }
-  }
-
-  @action
-  setContentId(element, [value]) {
-    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
-    this.set('contentId', value);
   }
 
   @action

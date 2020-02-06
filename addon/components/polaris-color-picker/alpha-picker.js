@@ -1,12 +1,12 @@
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import Component from '@ember/component';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import layout from '../../templates/components/polaris-color-picker/alpha-picker';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../../utils/math';
 import { hsbaToRgba } from '../../utils/color';
+import layout from '../../templates/components/polaris-color-picker/alpha-picker';
 
 const VERTICAL_PADDING = 13;
 
@@ -65,44 +65,20 @@ export default class AlphaPicker extends Component {
    */
   @(computed('alpha', 'sliderHeight', 'draggerHeight').readOnly())
   get draggerY() {
-    const { alpha, sliderHeight, draggerHeight } = this.getProperties(
-      'alpha',
-      'sliderHeight',
-      'draggerHeight'
-    );
+    const { alpha, sliderHeight, draggerHeight } = this;
     const offset = offsetForAlpha(alpha, sliderHeight, draggerHeight);
     return clamp(offset, 0, sliderHeight);
   }
 
-  @computed('contentId')
-  get element() {
-    return document.querySelector(`#${this.contentId}`);
-  }
-
   @action
-  setContentId(element, [value]) {
-    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
-    this.set('contentId', value);
-  }
-
-  didRender() {
-    super.didRender(...arguments);
-
-    let alphaPickerElement = this.element;
-    if (isNone(alphaPickerElement)) {
-      return;
-    }
-
+  setSliderHeight(element) {
     // Grab the size of the component for positioning the draggable marker.
-    this.set('sliderHeight', alphaPickerElement.clientHeight);
+    this.set('sliderHeight', element.clientHeight);
   }
 
   @action
   handleChange({ y }) {
-    const { sliderHeight, onChange } = this.getProperties(
-      'sliderHeight',
-      'onChange'
-    );
+    const { sliderHeight, onChange } = this;
     if (typeOf(onChange) !== 'function') {
       return;
     }

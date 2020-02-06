@@ -4,7 +4,7 @@
   class="Polaris-ColorPicker__Slidable"
   {{on "mousedown" this.startDrag}}
   {{on "touchstart" this.startDrag}}
-  {{did-insert this.setContentId}}
+  {{did-insert this.setContentIdAndTriggerHeightChanged}}
   {{will-destroy this.setContentId null}}
 >
   <div class="Polaris-ColorPicker__Dragger" style={{this.draggerStyle}}></div>

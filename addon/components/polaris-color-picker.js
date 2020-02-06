@@ -1,12 +1,12 @@
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import Component from '@ember/component';
 import { typeOf, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import layout from '../templates/components/polaris-color-picker';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../utils/math';
 import { hsbaToRgba } from '../utils/color';
+import layout from '../templates/components/polaris-color-picker';
 
 /**
  * Polaris color picker component.
@@ -74,7 +74,7 @@ export default class PolarisColorPicker extends Component {
     const {
       color: { saturation },
       pickerSize,
-    } = this.getProperties('color', 'pickerSize');
+    } = this;
     return clamp(saturation * pickerSize, 0, pickerSize);
   }
 
@@ -86,24 +86,12 @@ export default class PolarisColorPicker extends Component {
     const {
       color: { brightness },
       pickerSize,
-    } = this.getProperties('color', 'pickerSize');
+    } = this;
     return clamp(pickerSize - brightness * pickerSize, 0, pickerSize);
   }
 
-  @computed('contentId')
-  get element() {
-    return document.querySelector(`#${this.contentId}`);
-  }
-
-  didRender() {
-    super.didRender(...arguments);
-
-    let element = this.element;
-
-    if (isNone(element)) {
-      return;
-    }
-
+  @action
+  setPickerSize(element) {
     // Grab the size of the picker for positioning the draggable markers.
     const mainColorElement = element.querySelector(
       'div.Polaris-ColorPicker__MainColor'
@@ -116,18 +104,12 @@ export default class PolarisColorPicker extends Component {
   }
 
   @action
-  setContentId(element, [value]) {
-    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
-    this.set('contentId', value);
-  }
-
-  @action
   draggerMoved({ x, y }) {
     const {
       pickerSize,
       color: { hue, alpha = 1 },
       onChange,
-    } = this.getProperties('pickerSize', 'color', 'onChange');
+    } = this;
 
     if (typeOf(onChange) !== 'function') {
       return;
@@ -149,7 +131,7 @@ export default class PolarisColorPicker extends Component {
     const {
       color: { brightness, saturation, alpha = 1 },
       onChange,
-    } = this.getProperties('color', 'onChange');
+    } = this;
 
     if (typeOf(onChange) === 'function') {
       onChange({
@@ -166,7 +148,7 @@ export default class PolarisColorPicker extends Component {
     const {
       color: { hue, brightness, saturation },
       onChange,
-    } = this.getProperties('color', 'onChange');
+    } = this;
 
     if (typeOf(onChange) === 'function') {
       onChange({
