@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
-import { isNone, typeOf } from '@ember/utils';
+import { typeOf } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../../utils/math';
 import layout from '../../templates/components/polaris-color-picker/hue-picker';

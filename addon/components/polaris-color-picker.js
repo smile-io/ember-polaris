@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { typeOf, isNone } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
