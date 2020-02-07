@@ -1,84 +1,79 @@
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/row';
 
-@tagName("")
+@tagName('')
 @templateLayout(layout)
 export default class Row extends Component {
- /**
-  * @property row
-  * @type {Array}
-  * @public
-  */
- row = null;
+  /**
+   * @property row
+   * @type {Array}
+   * @public
+   */
+  row = null;
 
- /**
-  * @property index
-  * @type {Number}
-  * @public
-  */
- index = null;
+  /**
+   * @property index
+   * @type {Number}
+   * @public
+   */
+  index = null;
 
- /**
-  * @property totals
-  * @type {Number[]}
-  * @public
-  */
- totals = null;
+  /**
+   * @property totals
+   * @type {Number[]}
+   * @public
+   */
+  totals = null;
 
- /**
-  * @property heights
-  * @type {Number[]}
-  * @public
-  */
- heights = null;
+  /**
+   * @property heights
+   * @type {Number[]}
+   * @public
+   */
+  heights = null;
 
- /**
-  * @property footerContent
-  * @type {String|Number|Component}
-  * @public
-  */
- footerContent = null;
+  /**
+   * @property footerContent
+   * @type {String|Number|Component}
+   * @public
+   */
+  footerContent = null;
 
- /**
-  * @property contentTypes
-  * @type {String[]}
-  * @public
-  */
- contentTypes = null;
+  /**
+   * @property contentTypes
+   * @type {String[]}
+   * @public
+   */
+  contentTypes = null;
 
- /**
-  * @property truncate
-  * @type {boolean}
-  * @default false
-  * @public
-  */
- truncate = false;
+  /**
+   * @property truncate
+   * @type {boolean}
+   * @default false
+   * @public
+   */
+  truncate = false;
 
- 'data-test-data-table-row' = true;
+  /**
+   * @property bodyCellHeights
+   * @type {Number[]}
+   * @private
+   */
+  @(computed('totals.[]', 'heights.[]', 'footerContent').readOnly())
+  get bodyCellHeights() {
+    let { totals, heights, footerContent } = this;
 
- /**
-  * @property bodyCellHeights
-  * @type {Number[]}
-  * @private
-  */
- @(computed('totals.[]', 'heights.[]', 'footerContent').readOnly())
- get bodyCellHeights() {
-   let { totals, heights, footerContent } = this.getProperties(
-     'totals',
-     'heights',
-     'footerContent'
-   );
-   let bodyCellHeights = isPresent(totals)
-     ? heights.slice(2)
-     : heights.slice(1);
+    let bodyCellHeights = isPresent(totals)
+      ? heights.slice(2)
+      : heights.slice(1);
 
-   if (footerContent) {
-     bodyCellHeights.pop();
-   }
+    if (footerContent) {
+      bodyCellHeights.pop();
+    }
 
-   return bodyCellHeights;
- }
+    return bodyCellHeights;
+  }
 }

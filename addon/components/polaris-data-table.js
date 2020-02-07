@@ -13,7 +13,7 @@ import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
 
 function elementLookup(selector) {
   return computed(function() {
-    return this.element.querySelector(selector);
+    return this.dataTableElement.querySelector(selector);
   });
 }
 
@@ -272,11 +272,7 @@ export default class PolarisDataTable extends Component.extend(
   }
 
   calculateColumnVisibilityData(collapsed) {
-    let { table, scrollContainer, dataTable } = this.getProperties(
-      'table',
-      'scrollContainer',
-      'dataTable'
-    );
+    let { table, scrollContainer, dataTable } = this;
 
     if (collapsed && table && scrollContainer && dataTable) {
       let headerCells = table.querySelectorAll('[data-polaris-header-cell]');
@@ -325,17 +321,7 @@ export default class PolarisDataTable extends Component.extend(
   }
 
   debouncedHandleResize() {
-    let {
-      footerContent,
-      truncate,
-      table,
-      scrollContainer,
-    } = this.getProperties(
-      'footerContent',
-      'truncate',
-      'table',
-      'scrollContainer'
-    );
+    let { footerContent, truncate, table, scrollContainer } = this;
 
     let collapsed = false;
 
@@ -370,12 +356,7 @@ export default class PolarisDataTable extends Component.extend(
   }
 
   tallestCellHeights() {
-    let { footerContent, truncate, heights, table } = this.getProperties(
-      'footerContent',
-      'truncate',
-      'heights',
-      'table'
-    );
+    let { footerContent, truncate, heights, table } = this;
 
     if (table) {
       let rows = Array.from(table.getElementsByTagName('tr'));
@@ -411,19 +392,13 @@ export default class PolarisDataTable extends Component.extend(
       heights: [],
       preservedScrollPosition: {},
     });
-  }
-
-  didInsertElement() {
-    super.didInsertElement(...arguments);
 
     this.handleResize();
-
     this.addEventHandlers();
   }
 
-  didUpdateAttrs() {
-    super.didUpdateAttrs(...arguments);
-
+  @action
+  dataTableDidUpdate() {
     if (isEqual(this.get('oldAttrs'), this.get('attrs'))) {
       return;
     }
@@ -434,18 +409,18 @@ export default class PolarisDataTable extends Component.extend(
   }
 
   @action
+  setDataTableElement(element) {
+    this.set('dataTableElement', element);
+  }
+
+  @action
   navigateTable(direction) {
     let {
       currentColumn,
       previousColumn,
       fixedColumnWidth,
       scrollContainer,
-    } = this.getProperties(
-      'currentColumn',
-      'previousColumn',
-      'fixedColumnWidth',
-      'scrollContainer'
-    );
+    } = this;
 
     if (!currentColumn || !previousColumn || !fixedColumnWidth) {
       return;
@@ -480,15 +455,8 @@ export default class PolarisDataTable extends Component.extend(
       sortDirection,
       sortedColumnIndex,
       scrollContainer,
-    } = this.getProperties(
-      'onSort',
-      'truncate',
-      'defaultSortDirection',
-      'initialSortColumnIndex',
-      'sortDirection',
-      'sortedColumnIndex',
-      'scrollContainer'
-    );
+    } = this;
+
     sortDirection = sortDirection || defaultSortDirection;
     sortedColumnIndex = isNone(sortedColumnIndex)
       ? initialSortColumnIndex

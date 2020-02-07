@@ -1,4 +1,9 @@
-<div class={{if this.collapsed "Polaris-DataTable--collapsed"}} ...attributes>
+<div
+  class={{if this.collapsed "Polaris-DataTable--collapsed"}}
+  {{did-insert this.setDataTableElement}}
+  {{did-update this.dataTableDidUpdate}}
+  ...attributes
+>
   <PolarisDataTable::Navigation
     @columnVisibilityData={{columnVisibilityData}}
     @isScrolledFarthestLeft={{isScrolledFarthestLeft}}

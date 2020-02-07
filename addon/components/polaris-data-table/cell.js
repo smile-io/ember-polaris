@@ -1,8 +1,8 @@
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { isNone } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/cell';
 
 @tagName('')
@@ -134,16 +134,7 @@ export default class Cell extends Component {
       contentType,
       sorted,
       sortable,
-    } = this.getProperties(
-      'fixed',
-      'truncate',
-      'header',
-      'total',
-      'footer',
-      'contentType',
-      'sorted',
-      'sortable'
-    );
+    } = this;
 
     if (fixed) {
       classNames.push('Polaris-DataTable__Cell--fixed');
@@ -187,7 +178,7 @@ export default class Cell extends Component {
    */
   @(computed('header', 'contentType').readOnly())
   get headerClassNames() {
-    let { header, contentType } = this.getProperties('header', 'contentType');
+    let { header, contentType } = this;
 
     if (isNone(header)) {
       return;
@@ -220,11 +211,7 @@ export default class Cell extends Component {
    */
   @(computed('sorted', 'sortDirection', 'defaultSortDirection').readOnly())
   get direction() {
-    let { sorted, sortDirection, defaultSortDirection } = this.getProperties(
-      'sorted',
-      'sortDirection',
-      'defaultSortDirection'
-    );
+    let { sorted, sortDirection, defaultSortDirection } = this;
 
     return sorted ? sortDirection : defaultSortDirection;
   }
@@ -258,11 +245,7 @@ export default class Cell extends Component {
    */
   @(computed('sorted', 'oppositeDirection', 'direction').readOnly())
   get sortAccessibilityLabel() {
-    let { sorted, oppositeDirection, direction } = this.getProperties(
-      'sorted',
-      'oppositeDirection',
-      'direction'
-    );
+    let { sorted, oppositeDirection, direction } = this;
 
     return `sort by ${sorted ? oppositeDirection : direction}`;
   }
