@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-text-style';
 
 const variationValue = {
@@ -31,11 +32,9 @@ const variationElement = (variation) => {
  *
  * @component polaris-text-style
  */
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisTextStyle extends Component {
   /**
    * Give text additional visual meaning
    *
@@ -46,7 +45,7 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  variation: null,
+  variation = null;
 
   /**
    * The content that should get the intended styling
@@ -60,33 +59,33 @@ export default Component.extend({
    * @default: null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Custom style classes to apply to this element.
    *
    * @type {String}
    */
-  classes: '',
-
-  dataTestTextStyle: true,
+  classes = '';
 
   /**
    * @private
    */
-  elementTagName: computed('variation', function() {
-    return variationElement(this.get('variation'));
-  }).readOnly(),
+  @(computed('variation').readOnly())
+  get elementTagName() {
+    return variationElement(this.variation);
+  }
 
   /**
    * @private
    */
-  textStyleClasses: computed('variation', 'classes', function() {
-    let { variation, classes } = this.getProperties('variation', 'classes');
+  @(computed('variation', 'classes').readOnly())
+  get textStyleClasses() {
+    let { variation, classes } = this;
     if (Object.keys(variationValue).includes(variation)) {
       classes = `Polaris-TextStyle--variation${classify(variation)} ${classes}`;
     }
 
     return classes.trim();
-  }).readOnly(),
-});
+  }
+}
