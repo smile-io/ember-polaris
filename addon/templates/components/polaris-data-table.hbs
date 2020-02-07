@@ -1,51 +1,51 @@
 <div
   class={{if this.collapsed "Polaris-DataTable--collapsed"}}
-  {{did-insert this.setDataTableElement}}
+  {{did-insert this.dataTableDidInsert}}
   {{did-update this.dataTableDidUpdate}}
   ...attributes
 >
   <PolarisDataTable::Navigation
-    @columnVisibilityData={{columnVisibilityData}}
-    @isScrolledFarthestLeft={{isScrolledFarthestLeft}}
-    @isScrolledFarthestRight={{isScrolledFarthestRight}}
-    @navigateTableLeft={{action "navigateTable" "left"}}
-    @navigateTableRight={{action "navigateTable" "right"}}
+    @columnVisibilityData={{this.columnVisibilityData}}
+    @isScrolledFarthestLeft={{this.isScrolledFarthestLeft}}
+    @isScrolledFarthestRight={{this.isScrolledFarthestRight}}
+    @navigateTableLeft={{fn this.navigateTable "left"}}
+    @navigateTableRight={{fn this.navigateTable "right"}}
   />
   {{! template-lint-disable attribute-indentation }}
   {{!-- TODO remove rule above once linter handles this correctly --}}
   <div
-    class="Polaris-DataTable {{if collapsed "Polaris-DataTable--collapsed"}} {{if footerContent "Polaris-DataTable--hasFooter"}}"
+    class="Polaris-DataTable {{if this.collapsed "Polaris-DataTable--collapsed"}} {{if @footerContent "Polaris-DataTable--hasFooter"}}"
   >
     <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
       {{! template-lint-disable table-groups }}
       <table class="Polaris-DataTable__Table">
         <thead>
           <tr>
-            {{#each headings as |heading headingIndex|}}
+            {{#each @headings as |heading headingIndex|}}
               <PolarisDataTable::Heading
                 @heading={{heading}}
                 @headingIndex={{headingIndex}}
-                @truncate={{truncate}}
-                @heights={{heights}}
-                @sortable={{sortable}}
-                @sortedColumnIndex={{or sortedColumnIndex initialSortColumnIndex}}
-                @sortDirection={{sortDirection}}
-                @contentTypes={{columnContentTypes}}
-                @defaultSortDirection={{defaultSortDirection}}
-                @defaultOnSort={{action "defaultOnSort"}}
+                @truncate={{@truncate}}
+                @heights={{this.heights}}
+                @sortable={{@sortable}}
+                @sortedColumnIndex={{or this.sortedColumnIndex this.initialSortColumnIndex}}
+                @sortDirection={{this.sortDirection}}
+                @contentTypes={{@columnContentTypes}}
+                @defaultSortDirection={{@defaultSortDirection}}
+                @defaultOnSort={{fn this.defaultOnSort}}
               />
             {{/each}}
           </tr>
 
-          {{#if totals}}
+          {{#if @totals}}
             <tr>
-              {{#each totals as |total index|}}
+              {{#each @totals as |total index|}}
                 <PolarisDataTable::Total
                   @total={{total}}
                   @index={{index}}
-                  @heights={{heights}}
-                  @truncate={{truncate}}
-                  @totalsRowHeading={{totalsRowHeading}}
+                  @heights={{this.heights}}
+                  @truncate={{@truncate}}
+                  @totalsRowHeading={{this.totalsRowHeading}}
                 />
               {{/each}}
             </tr>
@@ -53,27 +53,27 @@
         </thead>
 
         <tbody>
-          {{#each rows as |row index|}}
+          {{#each @rows as |row index|}}
             <PolarisDataTable::Row
               @row={{row}}
               @index={{index}}
-              @totals={{totals}}
-              @heights={{heights}}
-              @footerContent={{footerContent}}
-              @contentTypes={{columnContentTypes}}
-              @truncate={{truncate}}
+              @totals={{@totals}}
+              @heights={{this.heights}}
+              @footerContent={{@footerContent}}
+              @contentTypes={{@columnContentTypes}}
+              @truncate={{@truncate}}
             />
           {{/each}}
         </tbody>
 
-        {{#if footerContent}}
+        {{#if @footerContent}}
           <tfoot class="Polaris-DataTable__TableFoot">
             <tr>
               <PolarisDataTable::Cell
                 @footer={{true}}
-                @height={{heights.lastObject}}
-                @text={{footerContent}}
-                @truncate={{truncate}}
+                @height={{this.heights.lastObject}}
+                @text={{@footerContent}}
+                @truncate={{@truncate}}
               />
             </tr>
           </tfoot>

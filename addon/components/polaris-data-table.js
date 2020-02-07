@@ -392,7 +392,11 @@ export default class PolarisDataTable extends Component.extend(
       heights: [],
       preservedScrollPosition: {},
     });
+  }
 
+  @action
+  dataTableDidInsert(element) {
+    this.set('dataTableElement', element);
     this.handleResize();
     this.addEventHandlers();
   }
@@ -406,11 +410,6 @@ export default class PolarisDataTable extends Component.extend(
     this.handleResize();
 
     this.set('oldAttrs', this.get('attrs'));
-  }
-
-  @action
-  setDataTableElement(element) {
-    this.set('dataTableElement', element);
   }
 
   @action

@@ -1,41 +1,44 @@
-{{#if (or header fixed)}}
-  {{#if header}}
+{{#if (or @header @fixed)}}
+  {{#if @header}}
     <th
       data-polaris-header-cell="true"
       scope="col"
-      class={{cellClassNames}}
-      aria-sort={{sortDirection}}
-      style={{style}}
+      class={{this.cellClassNames}}
+      aria-sort={{@sortDirection}}
+      style={{this.style}}
     >
       {{#if sortable}}
         <button
-          class={{headerClassNames}}
-          onclick={{action onSort}}
+          class={{this.headerClassNames}}
+          onclick={{fn this.onSort}}
         >
           <span class="Polaris-DataTable__Icon">
-            <PolarisIcon @source={{source}} @accessibilityLabel={{sortAccessibilityLabel}} />
+            <PolarisIcon
+              @source={{this.source}}
+              @accessibilityLabel={{this.sortAccessibilityLabel}}
+            />
           </span>
 
-          {{render-content text}}
+          {{render-content @text}}
         </button>
       {{else}}
-        {{render-content text}}
+        {{render-content @text}}
       {{/if}}
     </th>
   {{else}}
     <th
       scope="row"
-      class={{cellClassNames}}
-      style={{style}}
+      class={{this.cellClassNames}}
+      style={{this.style}}
     >
-      {{render-content text}}
+      {{render-content @text}}
     </th>
   {{/if}}
 {{else}}
   <td
-    class={{cellClassNames}}
-    style={{style}}
+    class={{this.cellClassNames}}
+    style={{this.style}}
   >
-    {{render-content text}}
+    {{render-content @text}}
   </td>
 {{/if}}
