@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-text-style';
 
@@ -87,5 +88,18 @@ export default class PolarisTextStyle extends Component {
     }
 
     return classes.trim();
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-text-style] Passing 'classes' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.classes,
+      {
+        id: 'ember-polaris.polaris-text-style.class-arg',
+        until: '6.0.0',
+      }
+    );
   }
 }
