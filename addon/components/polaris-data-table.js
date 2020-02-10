@@ -139,7 +139,7 @@ export default class PolarisDataTable extends Component.extend(
    * @type {Object[]}
    * @private
    */
-  columnVisibilityData = null;
+  columnVisibilityData = [];
 
   /**
    * @property previousColumn
@@ -174,7 +174,7 @@ export default class PolarisDataTable extends Component.extend(
    * @type {Number[]}
    * @private
    */
-  heights = null;
+  heights = [];
 
   /**
    * @property fixedColumnWidth
@@ -188,7 +188,7 @@ export default class PolarisDataTable extends Component.extend(
    * @type {Object}
    * @private
    */
-  preservedScrollPosition = null;
+  preservedScrollPosition = {};
 
   /**
    * @property isScrolledFarthestLeft
@@ -384,25 +384,15 @@ export default class PolarisDataTable extends Component.extend(
     });
   }
 
-  init() {
-    super.init(...arguments);
-
-    this.setProperties({
-      columnVisibilityData: [],
-      heights: [],
-      preservedScrollPosition: {},
-    });
-  }
-
   @action
-  dataTableDidInsert(element) {
+  insertDataTable(element) {
     this.set('dataTableElement', element);
     this.handleResize();
     this.addEventHandlers();
   }
 
   @action
-  dataTableDidUpdate() {
+  updateDataTable() {
     if (isEqual(this.get('oldAttrs'), this.get('attrs'))) {
       return;
     }

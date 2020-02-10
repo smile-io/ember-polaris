@@ -1,7 +1,7 @@
 <div
   class={{if this.collapsed "Polaris-DataTable--collapsed"}}
-  {{did-insert this.dataTableDidInsert}}
-  {{did-update this.dataTableDidUpdate}}
+  {{did-insert this.insertDataTable}}
+  {{did-update this.updateDataTable}}
   ...attributes
 >
   <PolarisDataTable::Navigation
@@ -28,7 +28,7 @@
                 @truncate={{@truncate}}
                 @heights={{this.heights}}
                 @sortable={{@sortable}}
-                @sortedColumnIndex={{or this.sortedColumnIndex this.initialSortColumnIndex}}
+                @sortedColumnIndex={{or this.sortedColumnIndex @initialSortColumnIndex}}
                 @sortDirection={{this.sortDirection}}
                 @contentTypes={{@columnContentTypes}}
                 @defaultSortDirection={{@defaultSortDirection}}
