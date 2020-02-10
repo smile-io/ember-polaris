@@ -1,9 +1,8 @@
-import classic from 'ember-classic-decorator';
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { dasherize, htmlSafe } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { assign } from '@ember/polyfills';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-range-slider';
@@ -22,7 +21,6 @@ function invertNumber(number) {
  * Polaris range slider component.
  * See https://polaris.shopify.com/components/forms/range-slider
  */
-@classic
 @tagName('')
 @templateLayout(layout)
 export default class PolarisRangeSlider extends Component {
@@ -207,7 +205,7 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('error', 'disabled').readOnly())
   get rangeWrapperClassNames() {
-    let { error, disabled } = this.getProperties('error', 'disabled');
+    let { error, disabled } = this;
     let classNames = ['Polaris-RangeSlider'];
 
     if (error) {
@@ -230,12 +228,8 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('min', 'max', 'value', 'sliderProgress').readOnly())
   get rangeWrapperStyle() {
-    let { min, max, value: current, sliderProgress } = this.getProperties(
-      'min',
-      'max',
-      'value',
-      'sliderProgress'
-    );
+    let { min, max, value: current, sliderProgress } = this;
+
     let styleProps = assign(
       { min, max, current },
       {
@@ -265,7 +259,7 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('min', 'max', 'value').readOnly())
   get sliderProgress() {
-    let { min, max, value } = this.getProperties('min', 'max', 'value');
+    let { min, max, value } = this;
     return ((value - min) * 100) / (max - min);
   }
 
@@ -278,7 +272,7 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('error').readOnly())
   get hasError() {
-    return Boolean(this.get('error')).toString();
+    return Boolean(this.error).toString();
   }
 
   /**
@@ -290,7 +284,7 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('error', 'helpText').readOnly())
   get ariaDescribedBy() {
-    let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
+    let { error, helpText, id } = this;
     let describedBy = [];
 
     if (error) {
@@ -313,15 +307,12 @@ export default class PolarisRangeSlider extends Component {
    */
   @(computed('disabled', 'output').readOnly())
   get shouldShowOutput() {
-    let { disabled, output } = this.getProperties('disabled', 'output');
+    let { disabled, output } = this;
     return !disabled && output;
   }
 
   @action
   handleChange(event) {
-    this.get('onChange')(
-      parseFloat(event.currentTarget.value),
-      this.get('id')
-    );
+    this.onChange(parseFloat(event.currentTarget.value), this.id);
   }
 }
