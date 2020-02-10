@@ -1,12 +1,4 @@
-{{#polaris-labelled
-  dataTestLabelled=dataTestRangeSlider
-  id=id
-  label=label
-  error=error
-  action=labelAction
-  labelHidden=labelHidden
-  helpText=helpText
-}}
+<PolarisLabelled @dataTestLabelled={{dataTestRangeSlider}} @id={{id}} @label={{label}} @error={{error}} @action={{labelAction}} @labelHidden={{labelHidden}} @helpText={{helpText}}>
   <div
     data-test-range-slider-wrapper
     class={{rangeWrapperClassNames}}
@@ -59,4 +51,4 @@
       </div>
     {{/if}}
   </div>
-{{/polaris-labelled}}
+</PolarisLabelled>
