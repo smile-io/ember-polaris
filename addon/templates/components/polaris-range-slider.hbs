@@ -1,6 +1,6 @@
 <PolarisLabelled
-  @dataTestLabelled={{dataTestRangeSlider}}
-  @id={{@id}}
+  @dataTestLabelled={{this.dataTestRangeSlider}}
+  @id={{this.id}}
   @label={{@label}}
   @error={{@error}}
   @action={{@labelAction}}
@@ -23,18 +23,18 @@
         data-test-range-slider-input
         type="range"
         class="Polaris-RangeSlider__Input"
-        id={{@id}}
-        name={{@id}}
-        min={{@min}}
-        max={{@max}}
+        id={{this.id}}
+        name={{this.id}}
+        min={{this.min}}
+        max={{this.max}}
         step={{@step}}
         value={{@value}}
         disabled={{@disabled}}
         oninput={{fn this.handleChange}}
         onfocus={{fn this.onFocus}}
         onblur={{fn this.onBlur}}
-        aria-valuemin={{@min}}
-        aria-valuemax={{@max}}
+        aria-valuemin={{this.min}}
+        aria-valuemax={{this.max}}
         aria-valuenow={{@value}}
         aria-invalid={{this.hasError}}
         aria-describedby={{this.ariaDescribedBy}}
@@ -43,7 +43,7 @@
       {{#if this.shouldShowOutput}}
         <output
           data-test-range-slider-output
-          htmlFor={{@id}}
+          htmlFor={{this.id}}
           class="Polaris-RangeSlider__Output"
         >
           <div class="Polaris-RangeSlider__OutputBubble">
