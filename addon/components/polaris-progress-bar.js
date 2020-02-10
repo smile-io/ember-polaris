@@ -42,7 +42,7 @@ export default class PolarisProgressBar extends Component {
    */
   @(computed('size').readOnly())
   get sizeClass() {
-    let size = this.size;
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
@@ -55,7 +55,7 @@ export default class PolarisProgressBar extends Component {
    */
   @(computed('progress').readOnly())
   get parsedProgress() {
-    let progress = this.progress;
+    let { progress } = this;
     let parsedProgress;
 
     if (typeof progress !== 'number') {
@@ -78,7 +78,7 @@ export default class PolarisProgressBar extends Component {
    */
   @(computed('parsedProgress').readOnly())
   get progressStyle() {
-    let parsedProgress = this.parsedProgress;
+    let { parsedProgress } = this;
     if (isPresent(parsedProgress)) {
       return htmlSafe(`width: ${parsedProgress}%;`);
     }
