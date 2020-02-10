@@ -97,7 +97,7 @@ export default class PolarisTextStyle extends Component {
       `[polaris-text-style] Passing 'classes' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.classes,
       {
-        id: 'ember-polaris.polaris-text-style.class-arg',
+        id: 'ember-polaris.polaris-text-style.classes-arg',
         until: '6.0.0',
       }
     );
