@@ -129,7 +129,6 @@ export default class DateSelector extends Component {
    */
   initialConsumerFilterKey = null;
 
-  @(computed.readOnly())
   get dateComparatorOptions() {
     return [
       {
@@ -143,7 +142,6 @@ export default class DateSelector extends Component {
     ];
   }
 
-  @(computed.readOnly())
   get datePastOptions() {
     return [
       {
@@ -165,7 +163,6 @@ export default class DateSelector extends Component {
     ];
   }
 
-  @(computed.readOnly())
   get dateFutureOptions() {
     return [
       {
@@ -187,36 +184,25 @@ export default class DateSelector extends Component {
     ];
   }
 
-  @(computed.readOnly())
   get dateOptionTypes() {
     return {
-      past: [
-        ...this.get('datePastOptions'),
-        ...this.get('dateComparatorOptions'),
-      ],
-      future: [
-        ...this.get('dateFutureOptions'),
-        ...this.get('dateComparatorOptions'),
-      ],
+      past: [...this.datePastOptions, ...this.dateComparatorOptions],
+      future: [...this.dateFutureOptions, ...this.dateComparatorOptions],
       full: [
-        ...this.get('datePastOptions'),
-        ...this.get('dateFutureOptions'),
-        ...this.get('dateComparatorOptions'),
+        ...this.datePastOptions,
+        ...this.dateFutureOptions,
+        ...this.dateComparatorOptions,
       ],
     };
   }
 
-  @(computed.readOnly())
   get now() {
     return new Date();
   }
 
   @(computed('userInputDate', 'selectedDate').readOnly())
   get dateTextFieldValue() {
-    const { userInputDate, selectedDate } = this.getProperties(
-      'userInputDate',
-      'selectedDate'
-    );
+    const { userInputDate, selectedDate } = this;
 
     if (!userInputDate && !selectedDate) {
       return undefined;
@@ -233,21 +219,14 @@ export default class DateSelector extends Component {
     return null;
   }
 
-  @(
-    computed('filterValue', 'filterKey', 'filterMinKey', 'filterMaxKey').readOnly()
-  )
+  @(computed(
+    'filterValue',
+    'filterKey',
+    'filterMinKey',
+    'filterMaxKey'
+  ).readOnly())
   get dateFilterOption() {
-    let {
-      filterValue,
-      filterKey,
-      filterMinKey,
-      filterMaxKey,
-    } = this.getProperties(
-      'filterValue',
-      'filterKey',
-      'filterMinKey',
-      'filterMaxKey'
-    );
+    let { filterValue, filterKey, filterMinKey, filterMaxKey } = this;
 
     return getDateFilterOption(
       filterValue,
@@ -259,7 +238,7 @@ export default class DateSelector extends Component {
 
   @(computed('dateFilterOption').readOnly())
   get showDatePredicate() {
-    let dateFilterOption = this.get('dateFilterOption');
+    let { dateFilterOption } = this;
 
     return (
       dateFilterOption === DateFilterOption.OnOrBefore ||
@@ -269,7 +248,7 @@ export default class DateSelector extends Component {
 
   @(computed('dateOptionType').readOnly())
   get dateOptions() {
-    let dateOptionType = this.get('dateOptionType') || 'full';
+    let dateOptionType = this.dateOptionType || 'full';
 
     return this.get(`dateOptionTypes.${dateOptionType}`);
   }
@@ -282,14 +261,7 @@ export default class DateSelector extends Component {
       filterMaxKey,
       initialConsumerFilterKey,
       selectedDate,
-    } = this.getProperties(
-      'onFilterValueChange',
-      'onFilterKeyChange',
-      'filterMinKey',
-      'filterMaxKey',
-      'initialConsumerFilterKey',
-      'selectedDate'
-    );
+    } = this;
 
     if (!initialConsumerFilterKey) {
       return;
@@ -320,10 +292,7 @@ export default class DateSelector extends Component {
   }
 
   handleDateFieldChange(value) {
-    let { onFilterValueChange, userInputDateError } = this.getProperties(
-      'onFilterValueChange',
-      'userInputDateError'
-    );
+    let { onFilterValueChange, userInputDateError } = this;
 
     if (value.length === 0) {
       this.set('selectedDate', undefined);
@@ -338,10 +307,7 @@ export default class DateSelector extends Component {
   }
 
   handleDateBlur() {
-    let { onFilterValueChange, dateTextFieldValue } = this.getProperties(
-      'onFilterValueChange',
-      'dateTextFieldValue'
-    );
+    let { onFilterValueChange, dateTextFieldValue } = this;
 
     if (!dateTextFieldValue || !isValidDate(dateTextFieldValue)) {
       this.setProperties({
@@ -353,7 +319,7 @@ export default class DateSelector extends Component {
       return;
     }
 
-    let userInputDate = this.get('userInputDate');
+    let { userInputDate } = this;
     if (!userInputDate) {
       return;
     }
@@ -373,10 +339,7 @@ export default class DateSelector extends Component {
   }
 
   handleDateChanged() {
-    let { onFilterValueChange, selectedDate } = this.getProperties(
-      'onFilterValueChange',
-      'selectedDate'
-    );
+    let { onFilterValueChange, selectedDate } = this;
 
     if (!selectedDate) {
       return;
@@ -408,9 +371,9 @@ export default class DateSelector extends Component {
     super.init(...arguments);
 
     this.setProperties({
-      datePickerMonth: this.get('now').getMonth(),
-      datePickerYear: this.get('now').getYear(),
-      initialConsumerFilterKey: this.get('filterKey'),
+      datePickerMonth: this.now.getMonth(),
+      datePickerYear: this.now.getYear(),
+      initialConsumerFilterKey: this.filterKey,
     });
   }
 }

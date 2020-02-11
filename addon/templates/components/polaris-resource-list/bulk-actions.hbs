@@ -1,4 +1,5 @@
 <div
+  data-test-bulk-actions="true"
   class="Polaris-ResourceList-BulkActions__Group
     Polaris-ResourceList-BulkActions__Group--smallScreen
     {{if selectMode
@@ -6,6 +7,7 @@
       "Polaris-ResourceList-BulkActions__Group--exited"
     }}
   "
+  {{did-insert this.insertBulkActions}}
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     <PolarisResourceList::CheckableButton @accessibilityLabel={{accessibilityLabel}} @label={{label}} @selected={{selected}} @selectMode={{selectMode}} @measuring={{measuring}} @disabled={{disabled}} @onToggleAll={{action onToggleAll}} />

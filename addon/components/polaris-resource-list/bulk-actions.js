@@ -10,7 +10,10 @@ const MAX_PROMOTED_ACTIONS = 2;
 
 @tagName('')
 @templateLayout(layout)
-export default class BulkActions extends Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin) {
+export default class BulkActions extends Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin
+) {
   /**
    * Visually hidden text for screen readers
    *
@@ -109,7 +112,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
    * @property onSelectModeToggle
    * @public
    */
-  onSelectModeToggle/* selectMode **/() {}
+  onSelectModeToggle(/* selectMode **/) {}
 
   /**
    * Callback when the select all checkbox is clicked
@@ -121,26 +124,15 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
    */
   onToggleAll() {}
 
-  'data-test-bulk-actions' = true;
   containerWidth = 0;
   measuring = true;
   bulkActionsWidth = 0;
   addedMoreActionsWidthForMeasuring = 0;
-
-  @computed
-  get promotedActionsWidths() {
-    return [];
-  }
+  promotedActionsWidths = [];
 
   @computed('promotedActions', 'numberOfPromotedActionsToRender')
   get promotedActionsToRender() {
-    let {
-      promotedActions,
-      numberOfPromotedActionsToRender,
-    } = this.getProperties(
-      'promotedActions',
-      'numberOfPromotedActionsToRender'
-    );
+    let { promotedActions, numberOfPromotedActionsToRender } = this;
 
     if (promotedActions && numberOfPromotedActionsToRender > 0) {
       return promotedActions.slice(0, numberOfPromotedActionsToRender);
@@ -165,14 +157,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
       measuring,
       addedMoreActionsWidthForMeasuring,
       promotedActionsWidths,
-    } = this.getProperties(
-      'promotedActions',
-      'containerWidth',
-      'bulkActionsWidth',
-      'measuring',
-      'addedMoreActionsWidthForMeasuring',
-      'promotedActionsWidths'
-    );
+    } = this;
 
     if (!promotedActions) {
       return 0;
@@ -204,10 +189,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
   @computed('promotedActions', 'actionsCollection')
   get hasActions() {
-    let { promotedActions, actionsCollection } = this.getProperties(
-      'promotedActions',
-      'actionsCollection'
-    );
+    let { promotedActions, actionsCollection } = this;
 
     return Boolean(
       (promotedActions && promotedActions.length > 0) ||
@@ -217,13 +199,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
   @computed('promotedActions.length', 'numberOfPromotedActionsToRender')
   get rolledInPromotedActions() {
-    let {
-      promotedActions,
-      numberOfPromotedActionsToRender,
-    } = this.getProperties(
-      'promotedActions',
-      'numberOfPromotedActionsToRender'
-    );
+    let { promotedActions, numberOfPromotedActionsToRender } = this;
 
     if (
       promotedActions &&
@@ -237,21 +213,11 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
   @computed('promotedActions', 'numberOfPromotedActionsToRender', 'measuring')
   get activatorLabel() {
-    let {
-      promotedActions,
-      numberOfPromotedActionsToRender,
-      measuring,
-    } = this.getProperties(
-      'promotedActions',
-      'numberOfPromotedActionsToRender',
-      'measuring'
-    );
+    let { promotedActions, numberOfPromotedActionsToRender, measuring } = this;
 
     if (
       !promotedActions ||
-      (promotedActions &&
-        numberOfPromotedActionsToRender === 0 &&
-        !measuring)
+      (promotedActions && numberOfPromotedActionsToRender === 0 && !measuring)
     ) {
       return 'Actions';
     }
@@ -261,15 +227,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
   @computed('actionSections', 'rolledInPromotedActions.length', 'measuring')
   get shouldRenderActionsPopover() {
-    let {
-      actionSections,
-      rolledInPromotedActions,
-      measuring,
-    } = this.getProperties(
-      'actionSections',
-      'rolledInPromotedActions',
-      'measuring'
-    );
+    let { actionSections, rolledInPromotedActions, measuring } = this;
 
     return Boolean(
       actionSections || rolledInPromotedActions.length > 0 || measuring
@@ -278,7 +236,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
 
   @computed('actionsCollection.[]')
   get actionSections() {
-    let actionsCollection = this.get('actionsCollection');
+    let { actionsCollection } = this;
 
     if (!actionsCollection || actionsCollection.length === 0) {
       return null;
@@ -298,19 +256,12 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
   @computed('actionSections.[]', 'rolledInPromotedActions')
   get combinedActions() {
     let combinedActions = [];
-    let { actionSections, rolledInPromotedActions } = this.getProperties(
-      'actionSections',
-      'rolledInPromotedActions'
-    );
+    let { actionSections, rolledInPromotedActions } = this;
 
-    let rolledInPromotedActionsHasLength =
-      rolledInPromotedActions.length > 0;
+    let rolledInPromotedActionsHasLength = rolledInPromotedActions.length > 0;
 
     if (actionSections && rolledInPromotedActionsHasLength) {
-      combinedActions = [
-        { items: rolledInPromotedActions },
-        ...actionSections,
-      ];
+      combinedActions = [{ items: rolledInPromotedActions }, ...actionSections];
     } else if (actionSections) {
       combinedActions = actionSections;
     } else if (rolledInPromotedActionsHasLength) {
@@ -321,13 +272,13 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
   }
 
   get moreActionsNode() {
-    return this.element.querySelector(
+    return this.bulkActionsElement.querySelector(
       '.Polaris-ResourceList-BulkActions__Popover'
     );
   }
 
   get largeScreenButtonsNode() {
-    return this.element.querySelector(
+    return this.bulkActionsElement.querySelector(
       '.Polaris-ResourceList-BulkActions__Group--largeScreen'
     );
   }
@@ -349,7 +300,7 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
   }
 
   setContainerWidth() {
-    let containerWidth = this.element.getBoundingClientRect().width;
+    let containerWidth = this.bulkActionsElement.getBoundingClientRect().width;
 
     if (containerWidth > 0) {
       this.set('containerWidth', containerWidth);
@@ -361,21 +312,24 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
   }
 
   addResizeEventListener() {
-    let largeScreenGroupNode = this.get('largeScreenButtonsNode');
+    let { largeScreenGroupNode } = this;
 
     if (largeScreenGroupNode) {
-      this.addEventListener(
-        largeScreenGroupNode,
-        'resize',
-        this.handleResize
-      );
+      this.addEventListener(largeScreenGroupNode, 'resize', this.handleResize);
     }
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
+  @action
+  insertBulkActions(element) {
+    this.set('bulkActionsElement', element);
 
-    let promotedActions = this.get('promotedActions');
+    let {
+      actionsCollection,
+      promotedActions,
+      moreActionsNode,
+      addedMoreActionsWidthForMeasuring,
+      largeScreenButtonsNode,
+    } = this;
 
     if (promotedActions && promotedActions.length > MAX_PROMOTED_ACTIONS) {
       warn(
@@ -388,24 +342,6 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
     }
 
     this.addResizeEventListener();
-  }
-
-  didRender() {
-    super.didRender(...arguments);
-
-    let {
-      actionsCollection,
-      promotedActions,
-      moreActionsNode,
-      addedMoreActionsWidthForMeasuring,
-      largeScreenButtonsNode,
-    } = this.getProperties(
-      'actionsCollection',
-      'promotedActions',
-      'moreActionsNode',
-      'addedMoreActionsWidthForMeasuring',
-      'largeScreenButtonsNode'
-    );
 
     if (promotedActions && !actionsCollection && moreActionsNode) {
       addedMoreActionsWidthForMeasuring = moreActionsNode.getBoundingClientRect()
@@ -420,22 +356,20 @@ export default class BulkActions extends Component.extend(ContextBoundEventListe
     this.set('bulkActionsWidth', bulkActionsWidth);
 
     this.setProperties({
-      containerWidth: this.element.getBoundingClientRect().width,
+      containerWidth: element.getBoundingClientRect().width,
       measuring: false,
     });
   }
 
   @action
   setSelectMode(val) {
-    this.get('onSelectModeToggle')(val);
+    this.onSelectModeToggle(val);
   }
 
   @action
   handleMeasurement(width) {
-    let measuring = this.get('measuring');
-
-    if (measuring) {
-      this.get('promotedActionsWidths').pushObject(width);
+    if (this.measuring) {
+      this.promotedActionsWidths.pushObject(width);
     }
   }
 }

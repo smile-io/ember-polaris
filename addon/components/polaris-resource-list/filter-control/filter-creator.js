@@ -65,19 +65,21 @@ export default class FilterCreator extends Component {
    */
   selectedFilterValue = null;
 
-  @(
-    and('selectedFilter', 'selectedFilterKey', 'selectedFilterValue').readOnly()
-  )
+  @(and(
+    'selectedFilter',
+    'selectedFilterKey',
+    'selectedFilterValue'
+  ).readOnly())
   canAddFilter;
 
   @(computed('resourceName.plural').readOnly())
   get selectLabel() {
-    return `Show all ${this.get('resourceName.plural')} where:`;
+    return `Show all ${this.resourceName.plural} where:`;
   }
 
   @(computed('filters.@each.{key,label}').readOnly())
   get filterOptions() {
-    return this.get('filters').map(({ key, label }) => ({
+    return this.filters.map(({ key, label }) => ({
       value: key,
       label,
     }));
@@ -85,13 +87,13 @@ export default class FilterCreator extends Component {
 
   handleButtonFocus(...args) {
     let event = args[0];
-    if (!this.get('node') && event) {
+    if (!this.node && event) {
       this.set('node', event.target);
     }
   }
 
   handleFilterKeyChange(filterKey) {
-    let filters = this.get('filters');
+    let { filters } = this;
 
     let foundFilter = filters.find((filter) => {
       let minKey = get(filter, 'minKey');
@@ -128,18 +130,15 @@ export default class FilterCreator extends Component {
   }
 
   handleAddFilter(popover) {
-    let { onAddFilter, selectedFilterKey } = this.getProperties(
-      'onAddFilter',
-      'selectedFilterKey'
-    );
+    let { onAddFilter, selectedFilterKey } = this;
 
-    if (!onAddFilter || !this.get('canAddFilter') || !selectedFilterKey) {
+    if (!onAddFilter || !this.canAddFilter || !selectedFilterKey) {
       return;
     }
 
     onAddFilter({
       key: selectedFilterKey,
-      value: this.get('selectedFilterValue') || '',
+      value: this.selectedFilterValue || '',
     });
     this.setProperties({
       selectedFilter: undefined,
@@ -148,7 +147,7 @@ export default class FilterCreator extends Component {
 
     popover.close();
 
-    let node = this.get('node');
+    let { node } = this;
     if (node != null) {
       node.focus();
     }

@@ -7,7 +7,12 @@
     )
     as |loadingOverlay|
   }}
-    <div class="Polaris-ResourceList__ResourceListWrapper" id={{wrapperId}}>
+    <div
+      class="Polaris-ResourceList__ResourceListWrapper"
+      id={{wrapperId}}
+      {{did-insert this.insertResourceList}}
+      {{did-update this.updateResourceList}}
+    >
       {{#if filterControl}}
         <div class="Polaris-ResourceList__FiltersWrapper">
           {{render-content filterControl}}

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
+import { action, get, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-value-selector';
 
@@ -56,7 +56,7 @@ export default class FilterValueSelector extends Component {
 
   @(computed('filter.{type,operatorText}').readOnly())
   get showOperatorOptions() {
-    let filter = this.get('filter');
+    let { filter } = this;
     let type = get(filter, 'type');
     let operatorText = get(filter, 'operatorText');
 
@@ -69,7 +69,7 @@ export default class FilterValueSelector extends Component {
 
   @(computed('filter.{label,operatorText}', 'filterKey').readOnly())
   get operatorOptionsMarkup() {
-    let { filter, filterKey } = this.getProperties('filter', 'filterKey');
+    let { filter, filterKey } = this;
 
     return {
       componentName: 'polaris-select',
@@ -86,16 +86,13 @@ export default class FilterValueSelector extends Component {
 
   @(computed('filter.operatorText').readOnly())
   get selectedFilterLabel() {
-    let operatorText = this.get('filter.operatorText');
+    let operatorText = this.filter.operatorText;
     return typeof operatorText === 'string' ? operatorText : '';
   }
 
   handleOperatorOptionChange(operatorKey) {
-    let { value, onChange, onFilterKeyChange } = this.getProperties(
-      'value',
-      'onChange',
-      'onFilterKeyChange'
-    );
+    let { value, onChange, onFilterKeyChange } = this;
+
     onFilterKeyChange(operatorKey);
 
     if (!value) {
@@ -105,10 +102,9 @@ export default class FilterValueSelector extends Component {
     onChange(value);
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-
-    let filter = this.get('filter');
+  @action
+  insertFilterValueSelector() {
+    let { filter } = this;
     let { operatorText, type } = filter;
 
     if (

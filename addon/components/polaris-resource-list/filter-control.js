@@ -7,7 +7,9 @@ import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-
 
 @tagName('')
 @templateLayout(layout)
-export default class FilterControl extends Component.extend(context.ConsumerMixin) {
+export default class FilterControl extends Component.extend(
+  context.ConsumerMixin
+) {
   /**
    * @property searchValue
    * @type {String}
@@ -88,10 +90,8 @@ export default class FilterControl extends Component.extend(context.ConsumerMixi
     'context.selectMode'
   ).readOnly())
   get additionalActionButton() {
-    let { additionalAction, context } = this.getProperties(
-      'additionalAction',
-      'context'
-    );
+    let { additionalAction, context } = this;
+
     if (!additionalAction) {
       return null;
     }
@@ -120,7 +120,7 @@ export default class FilterControl extends Component.extend(context.ConsumerMixi
    */
   @(computed('appliedFilters.[]').readOnly())
   get appliedFiltersForRender() {
-    let appliedFilters = this.get('appliedFilters') || [];
+    let appliedFilters = this.appliedFilters || [];
     return appliedFilters.map((appliedFilter) => {
       let appliedFilterForRender = JSON.parse(JSON.stringify(appliedFilter));
       appliedFilterForRender.label = this.getFilterLabel(appliedFilter);
@@ -128,18 +128,12 @@ export default class FilterControl extends Component.extend(context.ConsumerMixi
     });
   }
 
-  @(computed.readOnly())
   get textFieldLabel() {
-    return `Search ${this.get(
-      'context.resourceName.plural'
-    ).toLocaleLowerCase()}`;
+    return `Search ${this.context.resourceName.plural.toLocaleLowerCase()}`;
   }
 
   handleAddFilter(newFilter) {
-    let { onFiltersChange, appliedFilters } = this.getProperties(
-      'onFiltersChange',
-      'appliedFilters'
-    );
+    let { onFiltersChange, appliedFilters } = this;
     appliedFilters = appliedFilters || [];
 
     if (!onFiltersChange) {
@@ -161,10 +155,7 @@ export default class FilterControl extends Component.extend(context.ConsumerMixi
 
   handleRemoveFilter(filter) {
     let filterId = idFromFilter(filter);
-    let { onFiltersChange, appliedFilters } = this.getProperties(
-      'onFiltersChange',
-      'appliedFilters'
-    );
+    let { onFiltersChange, appliedFilters } = this;
     appliedFilters = appliedFilters || [];
 
     if (!onFiltersChange) {
@@ -194,7 +185,7 @@ export default class FilterControl extends Component.extend(context.ConsumerMixi
       return label;
     }
 
-    let filters = this.get('filters') || [];
+    let filters = this.filters || [];
 
     let filter = filters.find((filter) => {
       let minKey = get(filter, 'minKey');

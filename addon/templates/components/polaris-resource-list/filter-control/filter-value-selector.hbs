@@ -1,5 +1,9 @@
 {{#if (eq filter.type FilterType.Select)}}
-  <PolarisStack @vertical={{true}} as |stack|>
+  <PolarisStack
+    {{did-insert this.insertFilterValueSelector}}
+    @vertical={{true}}
+    as |stack|
+  >
     {{#if showOperatorOptions}}
       <stack.item>
         {{render-content operatorOptionsMarkup}}
@@ -8,7 +12,11 @@
     <PolarisSelect @dataTestSelect="filter" @label={{selectedFilterLabel}} @options={{filter.options}} @placeholder="Select a filter..." @value={{or value ""}} @onChange={{action onChange}} />
   </PolarisStack>
 {{else if (eq filter.type FilterType.TextField)}}
-  <PolarisStack @vertical={{true}} as |stack|>
+  <PolarisStack
+    {{did-insert this.insertFilterValueSelector}}
+    @vertical={{true}}
+    as |stack|
+  >
     {{#if showOperatorOptions}}
       <stack.item>
         {{render-content operatorOptionsMarkup}}

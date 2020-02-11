@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { gt } from '@ember/object/computed';
-import { get, computed } from '@ember/object';
+import { action, get, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/string';
 import { assert } from '@ember/debug';
@@ -31,7 +31,10 @@ const LARGE_SPINNER_HEIGHT = 45;
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisResourceList extends Component.extend(ContextBoundEventListenersMixin, ContextBoundTasksMixin) {
+export default class PolarisResourceList extends Component.extend(
+  ContextBoundEventListenersMixin,
+  ContextBoundTasksMixin
+) {
   /**
    * Item data; each item is passed to renderItem
    *
@@ -281,7 +284,6 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   /**
    * ID used to identify our wrapper element from other instances
    */
-  @(computed.readOnly())
   get wrapperId() {
     return guidFor(this);
   }
@@ -291,7 +293,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
    */
   @(computed('items.[]', 'idForItem').readOnly())
   get itemsWithId() {
-    let { items, idForItem } = this.getProperties('items', 'idForItem');
+    let { items, idForItem } = this;
     items = items || [];
     idForItem = idForItem || defaultIdForItem;
 
@@ -305,11 +307,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('selectable', 'sortOptions.length', 'alternateTool').readOnly())
   get needsHeader() {
-    let { selectable, sortOptions, alternateTool } = this.getProperties(
-      'selectable',
-      'sortOptions',
-      'alternateTool'
-    );
+    let { selectable, sortOptions, alternateTool } = this;
     return (
       selectable || (sortOptions && sortOptions.length > 0) || alternateTool
     );
@@ -317,10 +315,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('promotedBulkActions.length', 'bulkActions.length').readOnly())
   get selectable() {
-    let { promotedBulkActions, bulkActions } = this.getProperties(
-      'promotedBulkActions',
-      'bulkActions'
-    );
+    let { promotedBulkActions, bulkActions } = this;
     return Boolean(
       (promotedBulkActions && promotedBulkActions.length > 0) ||
         (bulkActions && bulkActions.length > 0)
@@ -329,10 +324,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('selectedItems.length', 'items.length').readOnly())
   get bulkSelectState() {
-    let { selectedItems, items } = this.getProperties(
-      'selectedItems',
-      'items'
-    );
+    let { selectedItems, items } = this;
     let selectState = 'indeterminate';
     if (
       !selectedItems ||
@@ -341,24 +333,21 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
       selectState = false;
     } else if (
       selectedItems === SELECT_ALL_ITEMS ||
-      (Array.isArray(selectedItems) &&
-        selectedItems.length === items.length)
+      (Array.isArray(selectedItems) && selectedItems.length === items.length)
     ) {
       selectState = true;
     }
     return selectState;
   }
 
-  @(
-    computed('resourceName.{singular,plural}', 'items.length', 'loading').readOnly()
-  )
+  @(computed(
+    'resourceName.{singular,plural}',
+    'items.length',
+    'loading'
+  ).readOnly())
   get headerTitle() {
-    let { resourceName, items, loading } = this.getProperties(
-      'resourceName',
-      'items',
-      'loading'
-    );
-    resourceName = resourceName || this.get('defaultResourceName');
+    let { resourceName, items, loading } = this;
+    resourceName = resourceName || this.defaultResourceName;
 
     let itemsCount = items.length;
     let resource =
@@ -373,10 +362,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('selectedItems.length', 'items.length').readOnly())
   get bulkActionsLabel() {
-    let { selectedItems, items } = this.getProperties(
-      'selectedItems',
-      'items'
-    );
+    let { selectedItems, items } = this;
     selectedItems = selectedItems || [];
 
     let selectedItemsCount =
@@ -387,16 +373,14 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     return `${selectedItemsCount} selected`;
   }
 
-  @(
-    computed('resourceName.{singular,plural}', 'selectedItems.length', 'items.length').readOnly()
-  )
+  @(computed(
+    'resourceName.{singular,plural}',
+    'selectedItems.length',
+    'items.length'
+  ).readOnly())
   get bulkActionsAccessibilityLabel() {
-    let { resourceName, selectedItems, items } = this.getProperties(
-      'resourceName',
-      'selectedItems',
-      'items'
-    );
-    resourceName = resourceName || this.get('defaultResourceName');
+    let { resourceName, selectedItems, items } = this;
+    resourceName = resourceName || this.defaultResourceName;
     selectedItems = selectedItems || [];
 
     let selectedItemsCount = selectedItems.length;
@@ -414,24 +398,17 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     }
   }
 
-  @(
-    computed('hasMoreItems', 'selectedItems', 'items.length', 'resourceName.plural').readOnly()
-  )
+  @(computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural'
+  ).readOnly())
   get paginatedSelectAllText() {
-    let {
-      hasMoreItems,
-      selectedItems,
-      items,
-      resourceName,
-    } = this.getProperties(
-      'hasMoreItems',
-      'selectedItems',
-      'items',
-      'resourceName'
-    );
-    resourceName = resourceName || this.get('defaultResourceName');
+    let { hasMoreItems, selectedItems, items, resourceName } = this;
+    resourceName = resourceName || this.defaultResourceName;
 
-    if (!this.get('selectable') || !hasMoreItems) {
+    if (!this.selectable || !hasMoreItems) {
       return null;
     }
 
@@ -445,25 +422,18 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     return null;
   }
 
-  @(
-    computed('hasMoreItems', 'selectedItems', 'items.length', 'resourceName.plural').readOnly()
-  )
+  @(computed(
+    'hasMoreItems',
+    'selectedItems',
+    'items.length',
+    'resourceName.plural'
+  ).readOnly())
   get paginatedSelectAllAction() {
-    let {
-      hasMoreItems,
-      selectedItems,
-      items,
-      resourceName,
-    } = this.getProperties(
-      'hasMoreItems',
-      'selectedItems',
-      'items',
-      'resourceName'
-    );
-    resourceName = resourceName || this.get('defaultResourceName');
+    let { hasMoreItems, selectedItems, items, resourceName } = this;
+    resourceName = resourceName || this.defaultResourceName;
 
-    if (!this.get('selectable') || !hasMoreItems) {
-      return;
+    if (!this.selectable || !hasMoreItems) {
+      return null;
     }
 
     let actionText =
@@ -482,55 +452,41 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   @(computed('resourceName.plural').readOnly())
   get emptySearchResultTitle() {
-    let resourceName =
-      this.get('resourceName') || this.get('defaultResourceName');
+    let resourceName = this.resourceName || this.defaultResourceName;
 
     return `No ${get(resourceName, 'plural')} found`;
   }
 
   @(computed('filterControl', 'itemsExist', 'loading').readOnly())
   get showEmptyState() {
-    let { filterControl, itemsExist, loading } = this.getProperties(
-      'filterControl',
-      'itemsExist',
-      'loading'
-    );
+    let { filterControl, itemsExist, loading } = this;
 
     return filterControl && !itemsExist && !loading;
   }
 
   @(computed('loadingPosition').readOnly())
   get spinnerStyle() {
-    let loadingPosition = this.get('loadingPosition');
+    let { loadingPosition } = this;
     let defaultTopPadding = 8;
-    let topPadding =
-      loadingPosition > 0 ? loadingPosition : defaultTopPadding;
+    let topPadding = loadingPosition > 0 ? loadingPosition : defaultTopPadding;
     return htmlSafe(`padding-top: ${topPadding}px`);
   }
 
   @(computed('items.length').readOnly())
   get spinnerSize() {
-    return this.get('items.length') < 2 ? 'small' : 'large';
+    return this.items.length < 2 ? 'small' : 'large';
   }
 
-  @(
-    computed('selectedItems.[]', 'resourceName', 'loading', 'selectMode', 'selectable').readOnly()
-  )
+  @(computed(
+    'selectedItems.[]',
+    'resourceName',
+    'loading',
+    'selectMode',
+    'selectable'
+  ).readOnly())
   get context() {
-    let {
-      selectedItems,
-      resourceName,
-      loading,
-      selectMode,
-      selectable,
-    } = this.getProperties(
-      'selectedItems',
-      'resourceName',
-      'loading',
-      'selectMode',
-      'selectable'
-    );
-    resourceName = resourceName || this.get('defaultResourceName');
+    let { selectedItems, resourceName, loading, selectMode, selectable } = this;
+    resourceName = resourceName || this.defaultResourceName;
     return {
       selectable,
       selectedItems,
@@ -553,14 +509,11 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     // is only rendered when `selectable` is truthy. We handle
     // that by bombing out of this handler when that condition
     // is met rather than dynamically managing event listeners.
-    if (!this.get('selectable')) {
+    if (!this.selectable) {
       return;
     }
 
-    let { selectedItems, selectMode } = this.getProperties(
-      'selectedItems',
-      'selectMode'
-    );
+    let { selectedItems, selectMode } = this;
 
     if (
       selectedItems &&
@@ -573,7 +526,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   }
 
   setLoadingPosition() {
-    let listNode = this.get('listNode');
+    let { listNode } = this;
 
     if (listNode != null) {
       if (typeof window === 'undefined') {
@@ -589,9 +542,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
       let overflow = viewportHeight - overlay.height;
 
       let spinnerHeight =
-        this.get('items.length') === 1
-          ? SMALL_SPINNER_HEIGHT
-          : LARGE_SPINNER_HEIGHT;
+        this.items.length === 1 ? SMALL_SPINNER_HEIGHT : LARGE_SPINNER_HEIGHT;
 
       let spinnerPosition =
         overflow > 0
@@ -603,17 +554,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   }
 
   handleSelectAllItemsInStore() {
-    let {
-      onSelectionChange,
-      selectedItems,
-      items,
-      idForItem,
-    } = this.getProperties(
-      'onSelectionChange',
-      'selectedItems',
-      'items',
-      'idForItem'
-    );
+    let { onSelectionChange, selectedItems, items, idForItem } = this;
     idForItem = idForItem || defaultIdForItem;
 
     let newlySelectedItems =
@@ -627,17 +568,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   }
 
   handleSelectionChange(selected, id) {
-    let {
-      onSelectionChange,
-      selectedItems,
-      items,
-      idForItem,
-    } = this.getProperties(
-      'onSelectionChange',
-      'selectedItems',
-      'items',
-      'idForItem'
-    );
+    let { onSelectionChange, selectedItems, items, idForItem } = this;
     idForItem = idForItem || defaultIdForItem;
 
     if (selectedItems == null || onSelectionChange == null) {
@@ -667,7 +598,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   }
 
   handleSelectMode(selectMode) {
-    let onSelectionChange = this.get('onSelectionChange');
+    let { onSelectionChange } = this;
     this.set('selectMode', selectMode);
     if (!selectMode && onSelectionChange) {
       onSelectionChange([]);
@@ -675,24 +606,13 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
   }
 
   handleToggleAll() {
-    let {
-      onSelectionChange,
-      selectedItems,
-      items,
-      idForItem,
-    } = this.getProperties(
-      'onSelectionChange',
-      'selectedItems',
-      'items',
-      'idForItem'
-    );
+    let { onSelectionChange, selectedItems, items, idForItem } = this;
     idForItem = idForItem || defaultIdForItem;
 
     let newlySelectedItems = [];
 
     if (
-      (Array.isArray(selectedItems) &&
-        selectedItems.length === items.length) ||
+      (Array.isArray(selectedItems) && selectedItems.length === items.length) ||
       selectedItems === SELECT_ALL_ITEMS
     ) {
       newlySelectedItems = [];
@@ -716,16 +636,15 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
 
   setListNode() {
     let listNode =
-      document.querySelector(
-        `#${this.get('wrapperId')} ul.Polaris-ResourceList`
-      ) || null;
+      document.querySelector(`#${this.wrapperId} ul.Polaris-ResourceList`) ||
+      null;
     this.set('listNode', listNode);
   }
 
   init() {
     super.init(...arguments);
 
-    let selectedItems = this.get('selectedItems');
+    let { selectedItems } = this;
     this.setProperties({
       defaultResourceName: {
         singular: 'item',
@@ -735,20 +654,16 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     });
   }
 
-  didReceiveAttrs() {
-    super.didReceiveAttrs(...arguments);
-
+  @action
+  updateResourceList() {
     assert(
       'ember-polaris::polaris-resource-list - itemComponent must be a component name or definition',
-      this.get('itemComponent')
+      this.itemComponent
     );
 
     // This logic is in the React implementation's
     // `componentWillReceiveProps` hook.
-    let { selectedItems, previousSelectedItems } = this.getProperties(
-      'selectedItems',
-      'previousSelectedItems'
-    );
+    let { selectedItems, previousSelectedItems } = this;
 
     if (
       previousSelectedItems &&
@@ -771,10 +686,7 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     //    this.forceUpdate(); -> triggers rerender of component.
     //  }
 
-    let { loading, previousLoading } = this.getProperties(
-      'loading',
-      'previousLoading'
-    );
+    let { loading, previousLoading } = this;
 
     if (loading && !previousLoading) {
       this.setLoadingPosition();
@@ -786,18 +698,13 @@ export default class PolarisResourceList extends Component.extend(ContextBoundEv
     });
   }
 
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-
+  @action
+  insertResourceList() {
     this.addEventListener(window, 'resize', this.handleResize);
 
-    if (this.get('loading')) {
+    if (this.loading) {
       this.setLoadingPosition();
     }
-  }
-
-  didRender() {
-    super.didRender(...arguments);
 
     this.setListNode();
   }
