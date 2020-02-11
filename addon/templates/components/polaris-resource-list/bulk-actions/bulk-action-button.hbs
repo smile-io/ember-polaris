@@ -30,19 +30,17 @@
       )
     )
   }}
-    {{#wrapper-element
-      tagName=(if disclosure "span" "")
-    }}
+    <WrapperElement @tagName={{if disclosure "span" ""}}>
       {{#if hasBlock}}
         {{yield}}
       {{else}}
         {{render-content content}}
       {{/if}}
-    {{/wrapper-element}}
+    </WrapperElement>
 
     {{#if disclosure}}
       <span class="Polaris-ResourceList-BulkActions__ActionIcon">
-        {{polaris-icon source="caret-down"}}
+        <PolarisIcon @source="caret-down" />
       </span>
     {{/if}}
   {{/component}}

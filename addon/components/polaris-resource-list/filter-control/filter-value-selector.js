@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { get, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-value-selector';
 
 export const FilterType = {
@@ -8,18 +9,16 @@ export const FilterType = {
   DateSelector: 'date_selector',
 };
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class FilterValueSelector extends Component {
   /**
    * @property filter
    * @type {Object}
    * @default null
    * @public
    */
-  filter: null,
+  filter = null;
 
   /**
    * @property filterKey
@@ -27,7 +26,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  filterKey: null,
+  filterKey = null;
 
   /**
    * @property value
@@ -35,7 +34,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  value: null,
+  value = null;
 
   /**
    * @property onChange
@@ -43,7 +42,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onChange() {},
+  onChange() {}
 
   /**
    * @property onFilterKeyChange
@@ -51,11 +50,12 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onFilterKeyChange() {},
+  onFilterKeyChange() {}
 
-  FilterType,
+  FilterType = FilterType;
 
-  showOperatorOptions: computed('filter.{type,operatorText}', function() {
+  @(computed('filter.{type,operatorText}').readOnly())
+  get showOperatorOptions() {
     let filter = this.get('filter');
     let type = get(filter, 'type');
     let operatorText = get(filter, 'operatorText');
@@ -65,32 +65,30 @@ export default Component.extend({
       operatorText &&
       typeof operatorText !== 'string'
     );
-  }).readOnly(),
+  }
 
-  operatorOptionsMarkup: computed(
-    'filter.{label,operatorText}',
-    'filterKey',
-    function() {
-      let { filter, filterKey } = this.getProperties('filter', 'filterKey');
+  @(computed('filter.{label,operatorText}', 'filterKey').readOnly())
+  get operatorOptionsMarkup() {
+    let { filter, filterKey } = this.getProperties('filter', 'filterKey');
 
-      return {
-        componentName: 'polaris-select',
-        props: {
-          labelHidden: true,
-          dataTestSelect: 'operator',
-          label: get(filter, 'label'),
-          options: buildOperatorOptions(get(filter, 'operatorText')),
-          value: filterKey,
-          onChange: (...args) => this.handleOperatorOptionChange(...args),
-        },
-      };
-    }
-  ).readOnly(),
+    return {
+      componentName: 'polaris-select',
+      props: {
+        labelHidden: true,
+        dataTestSelect: 'operator',
+        label: get(filter, 'label'),
+        options: buildOperatorOptions(get(filter, 'operatorText')),
+        value: filterKey,
+        onChange: (...args) => this.handleOperatorOptionChange(...args),
+      },
+    };
+  }
 
-  selectedFilterLabel: computed('filter.operatorText', function() {
+  @(computed('filter.operatorText').readOnly())
+  get selectedFilterLabel() {
     let operatorText = this.get('filter.operatorText');
     return typeof operatorText === 'string' ? operatorText : '';
-  }).readOnly(),
+  }
 
   handleOperatorOptionChange(operatorKey) {
     let { value, onChange, onFilterKeyChange } = this.getProperties(
@@ -105,10 +103,10 @@ export default Component.extend({
     }
 
     onChange(value);
-  },
+  }
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     let filter = this.get('filter');
     let { operatorText, type } = filter;
@@ -123,8 +121,8 @@ export default Component.extend({
     }
 
     this.handleOperatorOptionChange(operatorText[0].key);
-  },
-});
+  }
+}
 
 function buildOperatorOptions(operatorText) {
   if (!operatorText || typeof operatorText === 'string') {

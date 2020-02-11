@@ -20,7 +20,7 @@
         itemsExist
       )}}
         <div class="Polaris-ResourceList__HeaderOuterWrapper">
-          {{#polaris-sticky boundingElement=listNode as |sticky|}}
+          <PolarisSticky @boundingElement={{listNode}} as |sticky|>
             <div
               data-test-id="resource-list-header"
               class="
@@ -47,13 +47,7 @@
 
                 {{#if selectable}}
                   <div class="Polaris-ResourceList__CheckableButtonWrapper">
-                    {{polaris-resource-list/checkable-button
-                      plain=true
-                      disabled=loading
-                      accessibilityLabel=bulkActionsAccessibilityLabel
-                      label=headerTitle
-                      onToggleAll=(action handleToggleAll)
-                    }}
+                    <PolarisResourceList::CheckableButton @plain={{true}} @disabled={{loading}} @accessibilityLabel={{bulkActionsAccessibilityLabel}} @label={{headerTitle}} @onToggleAll={{action handleToggleAll}} />
                   </div>
                 {{/if}}
 
@@ -63,14 +57,7 @@
                       Sort by
                     </label>
 
-                    {{polaris-select
-                      label="Sort by"
-                      labelHidden=true
-                      options=sortOptions
-                      value=(or sortValue "")
-                      disabled=selectMode
-                      onChange=(action onSortChange)
-                    }}
+                    <PolarisSelect @label="Sort by" @labelHidden={{true}} @options={{sortOptions}} @value={{or sortValue ""}} @disabled={{selectMode}} @onChange={{action onSortChange}} />
                   </div>
                 {{else if alternateTool}}
                   <div class="Polaris-ResourceList__AlternateToolWrapper">
@@ -81,35 +68,18 @@
                 {{#if selectable}}
                   <div class="Polaris-ResourceList__SelectButtonWrapper">
                     {{!-- TODO: include enable-selection icon --}}
-                    {{polaris-button
-                      text="Select"
-                      disabled=selectMode
-                      icon="enable-selection"
-                      onClick=(action handleSelectMode true)
-                    }}
+                    <PolarisButton @text="Select" @disabled={{selectMode}} @icon="enable-selection" @onClick={{action handleSelectMode true}} />
                   </div>
                 {{/if}}
               </div>
 
               {{#if selectable}}
                 <div class="Polaris-ResourceList__BulkActionsWrapper">
-                  {{polaris-resource-list/bulk-actions
-                    label=bulkActionsLabel
-                    accessibilityLabel=bulkActionsAccessibilityLabel
-                    selected=bulkSelectState
-                    onToggleAll=(action handleToggleAll)
-                    selectMode=selectMode
-                    onSelectModeToggle=(action handleSelectMode)
-                    promotedActions=promotedBulkActions
-                    paginatedSelectAllAction=paginatedSelectAllAction
-                    paginatedSelectAllText=paginatedSelectAllText
-                    actionsCollection=bulkActions
-                    disabled=loading
-                  }}
+                  <PolarisResourceList::BulkActions @label={{bulkActionsLabel}} @accessibilityLabel={{bulkActionsAccessibilityLabel}} @selected={{bulkSelectState}} @onToggleAll={{action handleToggleAll}} @selectMode={{selectMode}} @onSelectModeToggle={{action handleSelectMode}} @promotedActions={{promotedBulkActions}} @paginatedSelectAllAction={{paginatedSelectAllAction}} @paginatedSelectAllText={{paginatedSelectAllText}} @actionsCollection={{bulkActions}} @disabled={{loading}} />
                 </div>
               {{/if}}
             </div>
-          {{/polaris-sticky}}
+          </PolarisSticky>
         </div>
       {{/if}}
 
@@ -138,11 +108,7 @@
         </ul>
       {{else if showEmptyState}}
         <div class="Polaris-ResourceList__EmptySearchResultWrapper">
-          {{polaris-empty-search-result
-            withIllustration=true
-            description="Try changing the filters or search term"
-            title=emptySearchResultTitle
-          }}
+          <PolarisEmptySearchResult @withIllustration={{true}} @description="Try changing the filters or search term" @title={{emptySearchResultTitle}} />
         </div>
       {{/if}}
 
