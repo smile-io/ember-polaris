@@ -9,7 +9,6 @@
   }}
     <div
       class="Polaris-ResourceList__ResourceListWrapper"
-      id={{this.wrapperId}}
       {{did-insert this.insertResourceList}}
       {{did-update this.updateResourceList}}
     >
@@ -129,6 +128,7 @@
           class="Polaris-ResourceList {{if @loading "Polaris-ResourceList--disabledPointerEvents"}}"
           aria-live="polite"
           aria-busy={{@loading}}
+          {{did-insert this.insertListNode}}
         >
           {{component loadingOverlay}}
 

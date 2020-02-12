@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { gt } from '@ember/object/computed';
 import { action, get, computed } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/string';
 import { assert } from '@ember/debug';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
@@ -280,13 +279,6 @@ export default class PolarisResourceList extends Component.extend(
 
   @(computedIdVariation('id', 'Select').readOnly())
   selectId;
-
-  /**
-   * ID used to identify our wrapper element from other instances
-   */
-  get wrapperId() {
-    return guidFor(this);
-  }
 
   /**
    * List of item/id tuples needed for rendering items
@@ -636,13 +628,6 @@ export default class PolarisResourceList extends Component.extend(
     }
   }
 
-  setListNode() {
-    let listNode =
-      document.querySelector(`#${this.wrapperId} ul.Polaris-ResourceList`) ||
-      null;
-    this.set('listNode', listNode);
-  }
-
   init() {
     super.init(...arguments);
 
@@ -707,8 +692,11 @@ export default class PolarisResourceList extends Component.extend(
     if (this.loading) {
       this.setLoadingPosition();
     }
+  }
 
-    this.setListNode();
+  @action
+  insertListNode(element) {
+    this.set('listNode', element);
   }
 }
 

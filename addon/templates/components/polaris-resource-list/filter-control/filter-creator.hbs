@@ -8,7 +8,7 @@
     popover.activator
   )}}
     <PolarisButton
-      dataTestId="filter-activator"
+      @dataTestId="filter-activator"
       @text="Filter"
       @disclosure={{true}}
       @disabled={{@disabled}}
@@ -40,7 +40,7 @@
 
           <formLayout.item>
             <PolarisButton
-              dataTestId="add-filter"
+              @dataTestId="add-filter"
               @text="Add filter"
               @disabled={{not this.canAddFilter}}
               @onClick={{fn this.handleAddFilter popover}}
