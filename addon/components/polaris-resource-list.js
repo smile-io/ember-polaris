@@ -597,6 +597,7 @@ export default class PolarisResourceList extends Component.extend(
     }
   }
 
+  @action
   handleSelectMode(selectMode) {
     let { onSelectionChange } = this;
     this.set('selectMode', selectMode);
@@ -605,6 +606,7 @@ export default class PolarisResourceList extends Component.extend(
     }
   }
 
+  @action
   handleToggleAll() {
     let { onSelectionChange, selectedItems, items, idForItem } = this;
     idForItem = idForItem || defaultIdForItem;

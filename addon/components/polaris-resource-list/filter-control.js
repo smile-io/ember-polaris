@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
+import { action, get, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-resource-list/filter-control';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
@@ -132,6 +132,7 @@ export default class FilterControl extends Component.extend(
     return `Search ${this.context.resourceName.plural.toLocaleLowerCase()}`;
   }
 
+  @action
   handleAddFilter(newFilter) {
     let { onFiltersChange, appliedFilters } = this;
     appliedFilters = appliedFilters || [];
@@ -153,6 +154,7 @@ export default class FilterControl extends Component.extend(
     onFiltersChange(newAppliedFilters);
   }
 
+  @action
   handleRemoveFilter(filter) {
     let filterId = idFromFilter(filter);
     let { onFiltersChange, appliedFilters } = this;

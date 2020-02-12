@@ -139,6 +139,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
     );
   }
 
+  @action
   handleAnchorFocus() {
     this.setProperties({
       focused: true,
@@ -146,6 +147,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
     });
   }
 
+  @action
   handleFocusedBlur() {
     this.setProperties({
       focused: true,
@@ -153,10 +155,12 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
     });
   }
 
+  @action
   handleFocus() {
     this.set('focused', true);
   }
 
+  @action
   handleBlur(event) {
     let isInside = this.compareEventNode(event);
     // TODO: check this works because React implementation
@@ -171,15 +175,18 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
     }
   }
 
+  @action
   handleMouseDown() {
     this.set('focusedInner', true);
   }
 
+  @action
   handleLargerSelectionArea(event) {
     stopPropagation(event);
     this.handleSelection(!this.isSelected);
   }
 
+  @action
   handleSelection(value) {
     let { itemId, context } = this;
     let onSelectionChange = get(context, 'onSelectionChange');
@@ -193,6 +200,7 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
     onSelectionChange(value, itemId);
   }
 
+  @action
   handleClick(event) {
     let { itemId, onClick, url, selectMode, element } = this;
     let { ctrlKey, metaKey } = event;

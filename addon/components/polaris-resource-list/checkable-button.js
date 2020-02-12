@@ -10,6 +10,7 @@ export default class CheckableButton extends Component {
    * @type {String}
    * @default null
    * @property accessibilityLabel
+   * @public
    */
   accessibilityLabel = null;
 
@@ -17,6 +18,7 @@ export default class CheckableButton extends Component {
    * @type {String}
    * @default ''
    * @property label
+   * @public
    */
   label = '';
 
@@ -27,6 +29,7 @@ export default class CheckableButton extends Component {
    * @type {Boolean|String}
    * @default null
    * @property selected
+   * @public
    */
   selected = null;
 
@@ -34,6 +37,7 @@ export default class CheckableButton extends Component {
    * @type {Boolean}
    * @default false
    * @property selectMode
+   * @public
    */
   selectMode = false;
 
@@ -41,6 +45,7 @@ export default class CheckableButton extends Component {
    * @type {Boolean}
    * @default false
    * @property plain
+   * @public
    */
   plain = false;
 
@@ -48,6 +53,7 @@ export default class CheckableButton extends Component {
    * @type {Boolean}
    * @default false
    * @property measuring
+   * @public
    */
   measuring = false;
 
@@ -55,6 +61,7 @@ export default class CheckableButton extends Component {
    * @type {Boolean}
    * @default false
    * @property disabled
+   * @public
    */
   disabled = false;
 
@@ -62,6 +69,7 @@ export default class CheckableButton extends Component {
    * @type {Function}
    * @default noop
    * @property onToggleAll
+   * @public
    */
   onToggleAll() {}
 

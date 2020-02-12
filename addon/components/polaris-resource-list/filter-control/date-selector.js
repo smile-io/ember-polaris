@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/date-selector';
 
@@ -253,6 +253,7 @@ export default class DateSelector extends Component {
     return this.get(`dateOptionTypes.${dateOptionType}`);
   }
 
+  @action
   handleDateFilterOptionsChange(newOption) {
     let {
       onFilterValueChange,
@@ -291,6 +292,7 @@ export default class DateSelector extends Component {
     onFilterValueChange(newOption);
   }
 
+  @action
   handleDateFieldChange(value) {
     let { onFilterValueChange, userInputDateError } = this;
 
@@ -306,6 +308,7 @@ export default class DateSelector extends Component {
     this.set('userInputDate', value);
   }
 
+  @action
   handleDateBlur() {
     let { onFilterValueChange, dateTextFieldValue } = this;
 
@@ -350,6 +353,7 @@ export default class DateSelector extends Component {
     );
   }
 
+  @action
   handleDatePickerChange({ end: nextDate }) {
     this.setProperties({
       selectedDate: new Date(nextDate),
@@ -360,6 +364,7 @@ export default class DateSelector extends Component {
     this.handleDateChanged();
   }
 
+  @action
   handleDatePickerMonthChange(month, year) {
     this.setProperties({
       datePickerMonth: month,

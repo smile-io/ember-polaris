@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { and } from '@ember/object/computed';
-import { get, computed } from '@ember/object';
+import { action, get, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-creator';
 
@@ -85,6 +85,7 @@ export default class FilterCreator extends Component {
     }));
   }
 
+  @action
   handleButtonFocus(...args) {
     let event = args[0];
     if (!this.node && event) {
@@ -92,6 +93,7 @@ export default class FilterCreator extends Component {
     }
   }
 
+  @action
   handleFilterKeyChange(filterKey) {
     let { filters } = this;
 
@@ -129,6 +131,7 @@ export default class FilterCreator extends Component {
     });
   }
 
+  @action
   handleAddFilter(popover) {
     let { onAddFilter, selectedFilterKey } = this;
 
