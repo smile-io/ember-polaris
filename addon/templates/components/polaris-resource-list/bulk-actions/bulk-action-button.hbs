@@ -19,29 +19,19 @@
   ariaLabel=@accessibilityLabel
   onMouseUp=this.handleMouseUpByBlurring
 }}
-  {{#component
-    (if @disclosure
-      (component "wrapper-element"
-        tagName="span"
-        class="Polaris-ResourceList-BulkActions__ActionContent"
-      )
-      (component "wrapper-element"
-        tagName=""
-      )
-    )
-  }}
-    <WrapperElement @tagName={{if @disclosure "span" ""}}>
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{render-content @content}}
-      {{/if}}
-    </WrapperElement>
-
-    {{#if @disclosure}}
-      <span class="Polaris-ResourceList-BulkActions__ActionIcon">
-        <PolarisIcon @source="caret-down" />
-      </span>
-    {{/if}}
-  {{/component}}
+  {{#let (element (if @disclosure "span" "")) as |OuterWrapper|}}
+    <OuterWrapper
+      class="Polaris-ResourceList-BulkActions__ActionContent"
+    >
+      {{#let (element (if @disclosure "span" "")) as |InnerWrapper|}}
+        <InnerWrapper>
+          {{#if hasBlock}}
+            {{yield}}
+          {{else}}
+            {{render-content @content}}
+          {{/if}}
+        </InnerWrapper>
+      {{/let}}
+    </OuterWrapper>
+  {{/let}}
 {{/component}}

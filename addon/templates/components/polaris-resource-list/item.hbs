@@ -29,17 +29,18 @@
         @onBlur={{fn this.handleFocusedBlur}}
       />
     {{else}}
-      <WrapperElement
-        class="Polaris-ResourceList-Item__Button"
-        @tagName="button"
-        @aria-label={{@accessibilityLabel}}
-        @aria-controls={{@ariaControls}}
-        @aria-expanded={{@ariaExpanded}}
-        @click={{fn this.handleClick}}
-        @focusIn={{fn this.handleAnchorFocus}}
-        @focusOut={{fn this.handleFocusedBlur}}
-        @tabIndex={{tabIndex}}
-      />
+      {{#let (element "button") as |ItemButton|}}
+        <ItemButton
+          class="Polaris-ResourceList-Item__Button"
+          aria-label={{@accessibilityLabel}}
+          aria-controls={{@ariaControls}}
+          aria-expanded={{@ariaExpanded}}
+          tab-index={{tabIndex}}
+          onclick={{fn this.handleClick}}
+          onfocusin={{fn this.handleAnchorFocus}}
+          onfocusout={{fn this.handleFocusedBlur}}
+        />
+      {{/let}}
     {{/if}}
   {{/with}}
 
@@ -51,27 +52,29 @@
     {{#if (or @media this.selectable)}}
       <div class="Polaris-ResourceList-Item__Owned">
         {{#if this.selectable}}
-          <WrapperElement
-            class="Polaris-ResourceList-Item__Handle"
-            @tagName="div"
-            @data-test-id="larger-selection-area"
-            @click={{fn this.handleLargerSelectionArea}}
-          >
-            <WrapperElement
-              class="Polaris-ResourceList-Item__CheckboxWrapper"
-              @tagName="div"
-              @click={{fn this.stopPropagation}}
+          {{#let (element "div") as |ItemHandle|}}
+            <ItemHandle
+              data-test-id="larger-selection-area"
+              class="Polaris-ResourceList-Item__Handle"
+              onclick={{fn this.handleLargerSelectionArea}}
             >
-              <PolarisCheckbox
-                @id={{this.checkboxId}}
-                @label={{label}}
-                @labelHidden={{true}}
-                @checked={{this.isSelected}}
-                @disabled={{@loading}}
-                @onChange={{fn this.handleSelection}}
-              />
-            </WrapperElement>
-          </WrapperElement>
+              {{#let (element "div") as |CheckboxWrapper|}}
+                <CheckboxWrapper
+                  class="Polaris-ResourceList-Item__CheckboxWrapper"
+                  onclick={{fn this.stopPropagation}}
+                >
+                  <PolarisCheckbox
+                    @id={{this.checkboxId}}
+                    @label={{label}}
+                    @labelHidden={{true}}
+                    @checked={{this.isSelected}}
+                    @disabled={{@loading}}
+                    @onChange={{fn this.handleSelection}}
+                  />
+                </CheckboxWrapper>
+              {{/let}}
+            </ItemHandle>
+          {{/let}}
         {{/if}}
 
         {{#if @media}}
@@ -93,63 +96,65 @@
     {{/if}}
 
     {{#if (and @shortcutActions (not @loading))}}
-      <WrapperElement
-        class="Polaris-ResourceList-Item__Actions"
-        @tagName="div"
-        @click={{fn this.stopPropagation}}
-      >
-        <PolarisButtonGroup
-          data-test-id={{unless @persistActions "shortcut-actions"}}
-          @segmented={{not @persistActions}}
-          as |buttonGroup|
+      {{#let (element "div") as |ItemActions|}}
+        <ItemActions
+          class="Polaris-ResourceList-Item__Actions"
+          onclick={{fn this.stopPropagation}}
         >
-          {{#each @shortcutActions as |shortcutAction|}}
-            <buttonGroup.item>
-              <PolarisButton
-                @size="slim"
-                @plain={{@persistActions}}
-                @text={{shortcutAction.text}}
-                @accessibilityLabel={{shortcutAction.accessibilityLabel}}
-                @url={{shortcutAction.url}}
-                @external={{shortcutAction.external}}
-                @destructive={{shortcutAction.destructive}}
-                @icon={{shortcutAction.icon}}
-                @loading={{shortcutAction.loading}}
-                @disabled={{shortcutAction.disabled}}
-                @onClick={{fn (or shortcutAction.onAction (action (mut dummy)))}}
-              />
-            </buttonGroup.item>
-          {{/each}}
-        </PolarisButtonGroup>
-      </WrapperElement>
+          <PolarisButtonGroup
+            data-test-id={{unless @persistActions "shortcut-actions"}}
+            @segmented={{not @persistActions}}
+            as |buttonGroup|
+          >
+            {{#each @shortcutActions as |shortcutAction|}}
+              <buttonGroup.item>
+                <PolarisButton
+                  @size="slim"
+                  @plain={{@persistActions}}
+                  @text={{shortcutAction.text}}
+                  @accessibilityLabel={{shortcutAction.accessibilityLabel}}
+                  @url={{shortcutAction.url}}
+                  @external={{shortcutAction.external}}
+                  @destructive={{shortcutAction.destructive}}
+                  @icon={{shortcutAction.icon}}
+                  @loading={{shortcutAction.loading}}
+                  @disabled={{shortcutAction.disabled}}
+                  @onClick={{fn (or shortcutAction.onAction (action (mut dummy)))}}
+                />
+              </buttonGroup.item>
+            {{/each}}
+          </PolarisButtonGroup>
+        </ItemActions>
+      {{/let}}
 
       {{#if @persistActions}}
-        <WrapperElement
-          class="Polaris-ResourceList-Item__Disclosure"
-          @tagName="div"
-          @click={{fn this.stopPropagation}}
-        >
-          <PolarisPopover as |popover|>
-            <popover.activator>
-              {{!--
-                Possible mistake in the Polaris source here as
-                `Button` doesn't seem to support `aria-label`.
-                Matching what they do for now, and if they fix
-                it we can update ;)
-              --}}
-              <PolarisButton
-                aria-label="Actions dropdown"
-                @plain={{true}}
-                @icon="horizontal-dots"
-                @onClick={{fn popover.toggle}}
-              />
-            </popover.activator>
+        {{#let (element "div") as |ItemDisclosure|}}
+          <ItemDisclosure
+            class="Polaris-ResourceList-Item__Disclosure"
+            onclick={{fn this.stopPropagation}}
+          >
+            <PolarisPopover as |popover|>
+              <popover.activator>
+                {{!--
+                  Possible mistake in the Polaris source here as
+                  `Button` doesn't seem to support `aria-label`.
+                  Matching what they do for now, and if they fix
+                  it we can update ;)
+                --}}
+                <PolarisButton
+                  aria-label="Actions dropdown"
+                  @plain={{true}}
+                  @icon="horizontal-dots"
+                  @onClick={{fn popover.toggle}}
+                />
+              </popover.activator>
 
-            <popover.content>
-              <PolarisActionList @items={{@shortcutActions}} />
-            </popover.content>
-          </PolarisPopover>
-        </WrapperElement>
+              <popover.content>
+                <PolarisActionList @items={{@shortcutActions}} />
+              </popover.content>
+            </PolarisPopover>
+          </ItemDisclosure>
+        {{/let}}
       {{/if}}
     {{/if}}
   </div>
