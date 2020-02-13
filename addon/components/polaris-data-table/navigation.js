@@ -1,31 +1,30 @@
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/navigation';
 
-export default Component.extend({
-  classNames: ['Polaris-DataTable__Navigation'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Navigation extends Component {
   /**
    * @property isScrolledFarthestLeft
    * @type {Boolean}
    * @public
    */
-  isScrolledFarthestLeft: null,
+  isScrolledFarthestLeft = null;
 
   /**
    * @property isScrolledFarthestRight
    * @type {Boolean}
    * @public
    */
-  isScrolledFarthestRight: null,
+  isScrolledFarthestRight = null;
 
   /**
    * @property columnVisibilityData
    * @type {Object[]}
    * @public
    */
-  columnVisibilityData: null,
+  columnVisibilityData = null;
 
   /**
    * @property navigateTableLeft
@@ -33,7 +32,7 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  navigateTableLeft() {},
+  navigateTableLeft() {}
 
   /**
    * @property navigateTableRight
@@ -41,5 +40,5 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  navigateTableRight() {},
-});
+  navigateTableRight() {}
+}

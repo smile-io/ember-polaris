@@ -1,13 +1,13 @@
-{{polaris-data-table/cell
-  header=true
-  height=height
-  text=heading
-  contentType=(get contentTypes headingIndex)
-  fixed=isFixed
-  truncate=truncate
-  defaultSortDirection=(if sortable defaultSortDirection)
-  sorted=(if sortable (eq sortedColumnIndex headingIndex))
-  sortable=(if sortable (get sortable headingIndex))
-  sortDirection=(if sortable direction)
-  onSort=(if sortable (action defaultOnSort headingIndex))
-}}
+<PolarisDataTable::Cell
+  @header={{true}}
+  @height={{this.height}}
+  @text={{@heading}}
+  @contentType={{get @contentTypes @headingIndex}}
+  @fixed={{this.isFixed}}
+  @truncate={{@truncate}}
+  @defaultSortDirection={{if @sortable @defaultSortDirection}}
+  @sorted={{if @sortable (eq @sortedColumnIndex @headingIndex)}}
+  @sortable={{if @sortable (get @sortable @headingIndex)}}
+  @sortDirection={{if @sortable this.direction}}
+  @onSort={{if @sortable (fn @defaultOnSort @headingIndex)}}
+/>
