@@ -1,39 +1,39 @@
-<button
-  data-test-prev-btn="true"
-  class="Polaris-Pagination__Button"
-  aria-label="Previous"
-  disabled={{isPreviousDisabled}}
-  onclick={{action onPrevious}}
-  onmouseup={{handleMouseUpByBlurring}}
+<nav
+  aria-label={{this.accessibilityLabel}}
+  class="Polaris-Pagination {{if @plain "Polaris-Pagination--plain"}}"
+  ...attributes
 >
-  {{polaris-icon source="arrow-left"}}
-</button>
+  <button
+    data-test-prev-btn="true"
+    class="Polaris-Pagination__Button"
+    aria-label="Previous"
+    disabled={{this.isPreviousDisabled}}
+    {{on "click" (or @onPrevious this.onPrevious)}}
+    {{on "mouseup" this.handleMouseUpByBlurring}}
+  >
+    <PolarisIcon @source="arrow-left" />
+  </button>
 
-<button
-  data-test-next-btn="true"
-  class="Polaris-Pagination__Button"
-  aria-label="Next"
-  disabled={{isNextDisabled}}
-  onclick={{action onNext}}
-  onmouseup={{handleMouseUpByBlurring}}
->
-  {{polaris-icon source="arrow-right"}}
-</button>
+  <button
+    data-test-next-btn="true"
+    class="Polaris-Pagination__Button"
+    aria-label="Next"
+    disabled={{this.isNextDisabled}}
+    {{on "click" (or @onNext this.onNext)}}
+    {{on "mouseup" this.handleMouseUpByBlurring}}
+  >
+    <PolarisIcon @source="arrow-right" />
+  </button>
 
-{{#if isPreviousKeyListenerEnabled}}
-  {{#each previousKeys as |key|}}
-    {{key-event-listener
-      key=key
-      onKeyUp=(action onPrevious)
-    }}
-  {{/each}}
-{{/if}}
+  {{#if this.isPreviousKeyListenerEnabled}}
+    {{#each @previousKeys as |key|}}
+      <KeyEventListener @key={{key}} @onKeyUp={{fn (or @onPrevious this.onPrevious)}} />
+    {{/each}}
+  {{/if}}
 
-{{#if isNextKeyListenerEnabled}}
-  {{#each nextKeys as |key|}}
-    {{key-event-listener
-      key=key
-      onKeyUp=(action onNext)
-    }}
-  {{/each}}
-{{/if}}
+  {{#if this.isNextKeyListenerEnabled}}
+    {{#each @nextKeys as |key|}}
+      <KeyEventListener @key={{key}} @onKeyUp={{fn (or @onNext this.onNext)}} />
+    {{/each}}
+  {{/if}}
+</nav>

@@ -1,23 +1,16 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { not, and } from '@ember/object/computed';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { computed } from '@ember/object';
-import { and, not } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-pagination';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
-export default Component.extend({
-  tagName: 'nav',
-
-  attributeBindings: ['accessibilityLabel:aria-label'],
-
-  classNames: ['Polaris-Pagination'],
-
-  classNameBindings: ['plain:Polaris-Pagination--plain'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisPagination extends Component {
   /**
    * A more subdued control for use in headers
    *
@@ -26,7 +19,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  plain: false,
+  plain = false;
 
   /**
    * The URL of the next page
@@ -37,7 +30,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  nextUrl: null,
+  nextUrl = null;
 
   /**
    * The URL of the previous page
@@ -48,7 +41,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  previousUrl: null,
+  previousUrl = null;
 
   /**
    * Whether there is a next page to show
@@ -58,7 +51,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  hasNext: false,
+  hasNext = false;
 
   /**
    * Whether there is a previous page to show
@@ -68,7 +61,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  hasPrevious: false,
+  hasPrevious = false;
 
   /**
    * Visually hidden text for screen readers
@@ -78,7 +71,7 @@ export default Component.extend({
    * @default 'Pagination'
    * @public
    */
-  accessibilityLabel: 'Pagination',
+  accessibilityLabel = 'Pagination';
 
   /**
    * Keyboard shortcuts for the previous button
@@ -88,7 +81,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  previousKeys: null,
+  previousKeys = null;
 
   /**
    * Keyboard shortcuts for the next button
@@ -98,7 +91,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  nextKeys: null,
+  nextKeys = null;
 
   /**
    * Callback when next button is clicked
@@ -108,7 +101,7 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  onNext() {},
+  onNext() {}
 
   /**
    * Callback when previous button is clicked
@@ -118,56 +111,58 @@ export default Component.extend({
    * @default no-op
    * @public
    */
-  onPrevious() {},
+  onPrevious() {}
 
   /** @private */
-  handleMouseUpByBlurring,
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   /** @private */
-  isPreviousDisabled: not('hasPrevious').readOnly(),
+  @(not('hasPrevious').readOnly())
+  isPreviousDisabled;
 
   /** @private */
-  isNextDisabled: not('hasNext').readOnly(),
+  @(not('hasNext').readOnly())
+  isNextDisabled;
 
   /** @private */
-  hasNextKeysConfigured: computed('nextKeys.[]', function() {
-    if (isEmpty(this.nextKeys)) {
+  @(computed('nextKeys.[]').readOnly())
+  get hasNextKeysConfigured() {
+    let { nextKeys } = this;
+
+    if (isEmpty(nextKeys)) {
       return false;
     }
 
     assert(
       'ember-polaris:polaris-pagination `nextKeys` should be an array',
-      isArray(this.nextKeys)
+      isArray(nextKeys)
     );
 
     return true;
-  }).readOnly(),
+  }
 
   /** @private */
-  hasPreviousKeysConfigured: computed('previousKeys.[]', function() {
-    if (isEmpty(this.previousKeys)) {
+  @(computed('previousKeys.[]').readOnly())
+  get hasPreviousKeysConfigured() {
+    let { previousKeys } = this;
+
+    if (isEmpty(previousKeys)) {
       return false;
     }
 
     assert(
       'ember-polaris:polaris-pagination `previousKeys` should be an array',
-      isArray(this.previousKeys)
+      isArray(previousKeys)
     );
 
     return true;
-  }).readOnly(),
+  }
 
   /** @private */
-  isNextKeyListenerEnabled: and(
-    'hasNext',
-    'hasNextKeysConfigured',
-    'onNext'
-  ).readOnly(),
+  @(and('hasNext', 'hasNextKeysConfigured', 'onNext').readOnly())
+  isNextKeyListenerEnabled;
 
   /** @private */
-  isPreviousKeyListenerEnabled: and(
-    'hasPrevious',
-    'hasPreviousKeysConfigured',
-    'onPrevious'
-  ).readOnly(),
-});
+  @(and('hasPrevious', 'hasPreviousKeysConfigured', 'onPrevious').readOnly())
+  isPreviousKeyListenerEnabled;
+}
