@@ -18,7 +18,7 @@
   {{did-insert this.insertResourceListItem}}
   ...attributes
 >
-  {{#with (if this.loading "-1" "0") as |tabIndex|}}
+  {{#let (if this.loading "-1" "0") as |tabIndex|}}
     {{#if @url}}
       <PolarisUnstyledLink
         class="Polaris-ResourceList-Item__Link"
@@ -37,13 +37,13 @@
           aria-controls={{@ariaControls}}
           aria-expanded={{@ariaExpanded}}
           tab-index={{tabIndex}}
-          onclick={{fn this.handleClick}}
-          onfocusin={{fn this.handleAnchorFocus}}
-          onfocusout={{fn this.handleFocusedBlur}}
+          {{on "click" this.handleClick}}
+          {{on "focusin" this.handleAnchorFocus}}
+          {{on "focusout" this.handleFocusedBlur}}
         />
       {{/let}}
     {{/if}}
-  {{/with}}
+  {{/let}}
 
   <div
     data-test-id="item-content"

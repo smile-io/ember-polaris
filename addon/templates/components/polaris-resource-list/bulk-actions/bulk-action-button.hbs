@@ -32,6 +32,12 @@
           {{/if}}
         </InnerWrapper>
       {{/let}}
+
+      {{#if @disclosure}}
+        <span class="Polaris-ResourceList-BulkActions__ActionIcon">
+          <PolarisIcon @source="caret-down" />
+        </span>
+      {{/if}}
     </OuterWrapper>
   {{/let}}
 {{/component}}

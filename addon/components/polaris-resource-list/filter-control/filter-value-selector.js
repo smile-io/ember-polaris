@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { get, computed } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
+import { action, get, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-value-selector';
 
@@ -103,6 +102,7 @@ export default class FilterValueSelector extends Component {
     onChange(value);
   }
 
+  @action
   insertFilterValueSelector() {
     let {
       filter: { type, operatorText },
@@ -118,15 +118,6 @@ export default class FilterValueSelector extends Component {
     }
 
     this.handleOperatorOptionChange(operatorText[0].key);
-  }
-
-  init() {
-    super.init(...arguments);
-
-    // Using `afterRender` here instead of `didInsertElement` hook.
-    // This component is tagless and has no container div so we can't
-    // use `{{did-insert}}` modifiers in the template.
-    scheduleOnce('afterRender', this, this.insertFilterValueSelector);
   }
 }
 

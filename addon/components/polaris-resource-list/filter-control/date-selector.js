@@ -129,73 +129,66 @@ export default class DateSelector extends Component {
    */
   initialConsumerFilterKey = null;
 
-  get dateComparatorOptions() {
-    return [
-      {
-        value: DateFilterOption.OnOrBefore,
-        label: 'on or before',
-      },
-      {
-        value: DateFilterOption.OnOrAfter,
-        label: 'on or after',
-      },
-    ];
-  }
+  dateComparatorOptions = [
+    {
+      value: DateFilterOption.OnOrBefore,
+      label: 'on or before',
+    },
+    {
+      value: DateFilterOption.OnOrAfter,
+      label: 'on or after',
+    },
+  ];
 
-  get datePastOptions() {
-    return [
-      {
-        value: DateFilterOption.PastWeek,
-        label: 'in the last week',
-      },
-      {
-        value: DateFilterOption.PastMonth,
-        label: 'in the last month',
-      },
-      {
-        value: DateFilterOption.PastQuarter,
-        label: 'in the last 3 months',
-      },
-      {
-        value: DateFilterOption.PastYear,
-        label: 'in the last year',
-      },
-    ];
-  }
+  datePastOptions = [
+    {
+      value: DateFilterOption.PastWeek,
+      label: 'in the last week',
+    },
+    {
+      value: DateFilterOption.PastMonth,
+      label: 'in the last month',
+    },
+    {
+      value: DateFilterOption.PastQuarter,
+      label: 'in the last 3 months',
+    },
+    {
+      value: DateFilterOption.PastYear,
+      label: 'in the last year',
+    },
+  ];
 
-  get dateFutureOptions() {
-    return [
-      {
-        value: DateFilterOption.ComingWeek,
-        label: 'next week',
-      },
-      {
-        value: DateFilterOption.ComingMonth,
-        label: 'next month',
-      },
-      {
-        value: DateFilterOption.ComingQuarter,
-        label: 'in the next 3 months',
-      },
-      {
-        value: DateFilterOption.ComingYear,
-        label: 'in the next year',
-      },
-    ];
-  }
+  dateFutureOptions = [
+    {
+      value: DateFilterOption.ComingWeek,
+      label: 'next week',
+    },
+    {
+      value: DateFilterOption.ComingMonth,
+      label: 'next month',
+    },
+    {
+      value: DateFilterOption.ComingQuarter,
+      label: 'in the next 3 months',
+    },
+    {
+      value: DateFilterOption.ComingYear,
+      label: 'in the next year',
+    },
+  ];
 
-  get dateOptionTypes() {
-    return {
-      past: [...this.datePastOptions, ...this.dateComparatorOptions],
-      future: [...this.dateFutureOptions, ...this.dateComparatorOptions],
-      full: [
-        ...this.datePastOptions,
-        ...this.dateFutureOptions,
-        ...this.dateComparatorOptions,
-      ],
-    };
-  }
+  dateOptionTypes = {
+    past: [...this.datePastOptions, ...this.dateComparatorOptions],
+    future: [...this.dateFutureOptions, ...this.dateComparatorOptions],
+    full: [
+      ...this.datePastOptions,
+      ...this.dateFutureOptions,
+      ...this.dateComparatorOptions,
+    ],
+  };
 
+  @computed()
   get now() {
     return new Date();
   }

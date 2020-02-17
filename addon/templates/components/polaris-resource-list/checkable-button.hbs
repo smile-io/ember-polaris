@@ -1,6 +1,6 @@
 {{!-- template-lint-disable no-invalid-interactive --}}
 <div
-  {{on "click" this.onToggleAll}}
+  {{on "click" (fn (or @onToggleAll this.onToggleAll))}}
   class="Polaris-ResourceList-CheckableButton
     {{if this.plain "Polaris-ResourceList-CheckableButton__CheckableButton--plain"}}
     {{if this.shouldApplySelectModeClass "Polaris-ResourceList-CheckableButton__CheckableButton--selectMode"}}
