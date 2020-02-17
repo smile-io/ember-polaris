@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-radio-button';
@@ -135,5 +135,10 @@ export default class PolarisRadioButton extends Component {
   @(computed('helpText', '_id').readOnly())
   get describedBy() {
     return this.helpText ? `${this._id}HelpText` : null;
+  }
+
+  @action
+  handleChange(event) {
+    this.onChange(event.target.value);
   }
 }
