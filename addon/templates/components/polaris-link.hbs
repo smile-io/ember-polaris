@@ -1,26 +1,26 @@
-{{#if url}}
+{{#if @url}}
   <PolarisUnstyledLink
-    class={{linkClass}}
-    @url={{url}}
-    @external={{external}}
-    @onClick={{action onClick}}
+    class={{this.linkClass}}
+    @url={{@url}}
+    @external={{@external}}
+    @onClick={{fn (or @onClick this.onClick)}}
   >
     {{#if hasBlock}}
       {{yield}}
     {{else}}
-      {{text}}
+      {{@text}}
     {{/if}}
   </PolarisUnstyledLink>
 {{else}}
   <button
     type="button"
-    class={{linkClass}}
-    {{action (action onClick) bubbles=false}}
+    class={{this.linkClass}}
+    {{on "click" (stop-propagation (or @onClick this.onClick))}}
   >
     {{#if hasBlock}}
       {{yield}}
     {{else}}
-      {{text}}
+      {{@text}}
     {{/if}}
   </button>
 {{/if}}

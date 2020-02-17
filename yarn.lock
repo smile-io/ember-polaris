@@ -5066,6 +5066,13 @@ ember-element-helper@^0.1.1:
   dependencies:
     ember-cli-babel "^6.16.0"
 
+ember-event-helpers@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ember-event-helpers/-/ember-event-helpers-0.1.0.tgz#4b7f49f136b660df21731a9e0329507c0816438e"
+  integrity sha512-JdsYPmW0g0LLKmdRGxS9lRIdtB1Swc7Asr0XmUwhkjbFY40bfB0wlQ8P2yA3YLqbP/ToShBitN62t9Cy4PTazQ==
+  dependencies:
+    ember-cli-babel "^7.7.3"
+
 ember-fn-helper-polyfill@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ember-fn-helper-polyfill/-/ember-fn-helper-polyfill-1.0.2.tgz#deb035fced77f98b9256ba4eb17694b7a2e2a526"
