@@ -8,8 +8,8 @@
     class="Polaris-Pagination__Button"
     aria-label="Previous"
     disabled={{this.isPreviousDisabled}}
-    {{on "click" (or @onPrevious this.onPrevious)}}
-    {{on "mouseup" this.handleMouseUpByBlurring}}
+    {{on "click" (fn (or @onPrevious this.onPrevious))}}
+    {{on "mouseup" (fn this.handleMouseUpByBlurring)}}
   >
     <PolarisIcon @source="arrow-left" />
   </button>
@@ -19,8 +19,8 @@
     class="Polaris-Pagination__Button"
     aria-label="Next"
     disabled={{this.isNextDisabled}}
-    onclick={{fn (or @onNext this.onNext)}}
-    onmouseup={{fn this.handleMouseUpByBlurring}}
+    {{on "click" (fn (or @onNext this.onNext))}}
+    {{on "mouseup" (fn this.handleMouseUpByBlurring)}}
   >
     <PolarisIcon @source="arrow-right" />
   </button>
