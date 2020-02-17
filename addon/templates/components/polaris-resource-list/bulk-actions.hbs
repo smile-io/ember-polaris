@@ -40,7 +40,7 @@
 
     <button
       class="Polaris-ResourceList-BulkActions__Button Polaris-ResourceList-BulkActions__Button--cancel"
-      onclick={{fn this.setSelectMode false}}
+      {{on "click" (fn this.setSelectMode false)}}
     >
       Cancel
     </button>
