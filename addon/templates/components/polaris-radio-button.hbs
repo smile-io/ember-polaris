@@ -16,7 +16,7 @@
       checked={{@checked}}
       disabled={{@disabled}}
       aria-describedby={{this.describedBy}}
-      onchange={{action (or @onChange this.onChange) value="target.value"}}
+      {{on "change" (or @onChange this.onChange)}}
       {{on "focus" (or @onFocus this.onFocus)}}
       {{on "blur" (or @onBlur this.onBlur)}}
     >

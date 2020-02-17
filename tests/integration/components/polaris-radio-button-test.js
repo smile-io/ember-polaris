@@ -143,12 +143,15 @@ module('Integration | Component | polaris radio button', function(hooks) {
       selectedValue: 'none',
       focusFired: false,
       blurFired: false,
+      onChange: (e) => {
+        this.set('selectedValue', e.target.value);
+      },
     });
 
     await render(hbs`
       {{polaris-radio-button
         value="clicked"
-        onChange=(action (mut selectedValue))
+        onChange=(action this.onChange)
         onFocus=(action (mut focusFired) true)
         onBlur=(action (mut blurFired) true)
       }}
