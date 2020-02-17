@@ -17,8 +17,8 @@
       disabled={{@disabled}}
       aria-describedby={{this.describedBy}}
       onchange={{action (or @onChange this.onChange) value="target.value"}}
-      onfocus={{fn (or @onFocus this.onFocus)}}
-      onblur={{fn (or @onBlur this.onBlur)}}
+      {{on "focus" (or @onFocus this.onFocus)}}
+      {{on "blur" (or @onBlur this.onBlur)}}
     >
 
     <span data-test-radio-button-backdrop="true" class="Polaris-RadioButton__Backdrop"></span>
