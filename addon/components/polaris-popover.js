@@ -123,7 +123,7 @@ export default class PolarisPopover extends Component {
    */
   @computed('preferredPosition')
   get verticalPosition() {
-    let preferredPosition = this.get('preferredPosition');
+    let { preferredPosition } = this;
 
     if (preferredPosition === ABOVE || preferredPosition === BELOW) {
       return preferredPosition;
@@ -143,7 +143,7 @@ export default class PolarisPopover extends Component {
   /**
    * @private
    */
-  @(computed.readOnly())
+  @computed
   get triggerStyle() {
     return htmlSafe(`
       display: inline-block;
@@ -199,9 +199,7 @@ export default class PolarisPopover extends Component {
     // Check to see if `preferredPosition` is set to `mostSpace`
     // onOpen, since user could have scrolled vertically since
     // the time the component originally rendered.
-    let preferredPosition = this.get('preferredPosition');
-
-    if (preferredPosition === 'mostSpace') {
+    if (this.preferredPosition === 'mostSpace') {
       this.set('verticalPosition', this.getMostVerticalSpace());
     }
   }
