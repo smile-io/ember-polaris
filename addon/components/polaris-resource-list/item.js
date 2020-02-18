@@ -1,25 +1,15 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
+import { action, get, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-resource-list/item';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
 
-export default Component.extend(context.ConsumerMixin, {
-  attributeBindings: ['url:data-href'],
-  classNames: ['Polaris-ResourceList-Item'],
-  classNameBindings: [
-    'focused:Polaris-ResourceList-Item--focused',
-    'selectable:Polaris-ResourceList-Item--selectable',
-    'selected:Polaris-ResourceList-Item--selected',
-    'selectMode:Polaris-ResourceList-Item--selectMode',
-    'persistActions:Polaris-ResourceList-Item--persistActions',
-    'focusedInner:Polaris-ResourceList-Item--focusedInner',
-  ],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * Unique identifier for the item
    *
@@ -28,7 +18,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  itemId: null,
+  itemId = null;
 
   /**
    * Visually hidden text for screen readers
@@ -38,7 +28,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * Id of the element the item onClick controls
@@ -48,7 +38,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  ariaControls: null,
+  ariaControls = null;
 
   /**
    * Tells screen reader the controlled element is expanded
@@ -58,7 +48,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default false
    * @public
    */
-  ariaExpanded: false,
+  ariaExpanded = false;
 
   /**
    * @property media
@@ -66,7 +56,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  media: null,
+  media = null;
 
   /**
    * @property persistActions
@@ -74,7 +64,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default false
    * @public
    */
-  persistActions: false,
+  persistActions = false;
 
   /**
    * @property shortcutActions
@@ -82,7 +72,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  shortcutActions: null,
+  shortcutActions = null;
 
   /**
    * @property children
@@ -90,7 +80,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  children: null,
+  children = null;
 
   /**
    * @property url
@@ -98,7 +88,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  url: null,
+  url = null;
 
   /**
    * @property onClick
@@ -106,7 +96,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default null
    * @public
    */
-  onClick: null,
+  onClick = null;
 
   /**
    * @property focused
@@ -114,7 +104,7 @@ export default Component.extend(context.ConsumerMixin, {
    * @default false
    * @private
    */
-  focused: false,
+  focused = false;
 
   /**
    * @property focusedInner
@@ -122,87 +112,83 @@ export default Component.extend(context.ConsumerMixin, {
    * @default false
    * @private
    */
-  focusedInner: false,
+  focusedInner = false;
 
-  'data-test-id': 'item-wrapper',
+  stopPropagation = stopPropagation;
 
-  stopPropagation,
+  @readOnly('context.selectable')
+  selectable;
 
-  selectable: readOnly('context.selectable'),
-  selectMode: readOnly('context.selectMode'),
-  loading: readOnly('context.loading'),
+  @readOnly('context.selectMode')
+  selectMode;
 
-  checkboxId: computedIdVariation(
-    'itemId',
-    'ResourceListItemCheckbox'
-  ).readOnly(),
+  @readOnly('context.loading')
+  loading;
 
-  isSelected: computed('itemId', 'context.selectedItems', function() {
-    let { itemId, context } = this.getProperties('itemId', 'context');
+  @(computedIdVariation('itemId', 'ResourceListItemCheckbox').readOnly())
+  checkboxId;
+
+  @(computed('itemId', 'context.selectedItems').readOnly())
+  get isSelected() {
+    let { itemId, context } = this;
     let selectedItems = get(context, 'selectedItems');
     return (
       selectedItems &&
       ((Array.isArray(selectedItems) && selectedItems.includes(itemId)) ||
         selectedItems === SELECT_ALL_ITEMS)
     );
-  }).readOnly(),
+  }
 
-  click() {
-    this.handleClick(...arguments);
-  },
-  focusIn() {
-    this.handleFocus(...arguments);
-  },
-  focusOut() {
-    this.handleBlur(...arguments);
-  },
-  mouseDown() {
-    this.handleMouseDown(...arguments);
-  },
-  keyUp() {
-    this.handleKeypress(...arguments);
-  },
-
+  @action
   handleAnchorFocus() {
     this.setProperties({
       focused: true,
       focusedInner: false,
     });
-  },
+  }
 
+  @action
   handleFocusedBlur() {
     this.setProperties({
       focused: true,
       focusedInner: true,
     });
-  },
+  }
 
+  @action
   handleFocus() {
     this.set('focused', true);
-  },
+  }
 
+  @action
   handleBlur(event) {
     let isInside = this.compareEventNode(event);
     // TODO: check this works because React implementation
     // casts event.relatedTarget as HTMLElement.
-    if (this.element == null || !this.element.contains(event.relatedTarget)) {
+    if (
+      this.resourceListElement == null ||
+      !this.resourceListElement.contains(event.relatedTarget)
+    ) {
       this.set('focused', false);
     } else if (isInside) {
       this.set('focusedInner', true);
     }
-  },
+  }
 
+  @action
   handleMouseDown() {
     this.set('focusedInner', true);
-  },
+  }
 
+  @action
   handleLargerSelectionArea(event) {
     stopPropagation(event);
-    this.handleSelection(!this.get('isSelected'));
-  },
+    this.handleSelection(!this.isSelected);
+  }
 
+  @action
   handleSelection(value) {
-    let { itemId, context } = this.getProperties('itemId', 'context');
+    let { itemId, context } = this;
     let onSelectionChange = get(context, 'onSelectionChange');
     if (itemId == null || onSelectionChange == null) {
       return;
@@ -212,16 +198,11 @@ export default Component.extend(context.ConsumerMixin, {
       focusedInner: true,
     });
     onSelectionChange(value, itemId);
-  },
+  }
 
+  @action
   handleClick(event) {
-    let { itemId, onClick, url, selectMode, element } = this.getProperties(
-      'itemId',
-      'onClick',
-      'url',
-      'selectMode',
-      'element'
-    );
+    let { itemId, onClick, url, selectMode, element } = this;
     let { ctrlKey, metaKey } = event;
     let anchor = element && element.querySelector('a');
 
@@ -246,23 +227,28 @@ export default Component.extend(context.ConsumerMixin, {
     if (url && anchor) {
       anchor.click();
     }
-  },
+  }
 
   handleKeypress(event) {
-    let { onClick, selectMode } = this.getProperties('onClick', 'selectMode');
+    let { onClick, selectMode } = this;
     let { key } = event;
 
     if (onClick && key === 'Enter' && !selectMode) {
       onClick();
     }
-  },
+  }
 
   compareEventNode(event) {
-    return this.get('onClick')
-      ? event.target === this.element
+    return this.onClick
+      ? event.target === this.resourceListElement
       : event.target.tagName.toLowerCase() === 'a';
-  },
-});
+  }
+
+  @action
+  insertResourceListItem(element) {
+    this.set('resourceListElement', element);
+  }
+}
 
 function stopPropagation(event) {
   event.stopPropagation();
