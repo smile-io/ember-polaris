@@ -1,9 +1,4 @@
-{{#basic-dropdown
-  verticalPosition=verticalPosition
-  onOpen=(action "onOpen")
-  onClose=(action onClose)
-  as |dd|
-}}
+<BasicDropdown @verticalPosition={{verticalPosition}} @onOpen={{action "onOpen"}} @onClose={{action onClose}} as |dd|>
   {{yield
     (hash
       activator=(component dd.trigger style=triggerStyle)
@@ -19,4 +14,4 @@
       toggle=(action dd.actions.toggle)
     )
   }}
-{{/basic-dropdown}}
+</BasicDropdown>
