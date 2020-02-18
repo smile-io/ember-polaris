@@ -1,76 +1,75 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-option-list/checkbox';
 
-export default Component.extend({
-  classNames: ['Polaris-OptionList-Checkbox'],
-  classNameBindings: ['active:Polaris-OptionList-Checkbox--active'],
+@tagName('')
+@templateLayout(layout)
+export default class Checkbox extends Component {
+ /**
+  * @property checked
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ checked = false;
 
-  layout,
+ /**
+  * @property disabled
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ disabled = false;
 
-  /**
-   * @property checked
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  checked: false,
+ /**
+  * @property active
+  * @type {Boolean}
+  * @default false
+  * @public
+  */
+ active = false;
 
-  /**
-   * @property disabled
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled: false,
+ /**
+  * @property name
+  * @type {String}
+  * @default null
+  * @public
+  */
+ name = null;
 
-  /**
-   * @property active
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  active: false,
+ /**
+  * @property value
+  * @type {String}
+  * @default null
+  * @public
+  */
+ value = null;
 
-  /**
-   * @property name
-   * @type {String}
-   * @default null
-   * @public
-   */
-  name: null,
+ /**
+  * @property role
+  * @type {String}
+  * @default null
+  * @public
+  */
+ role = null;
 
-  /**
-   * @property value
-   * @type {String}
-   * @default null
-   * @public
-   */
-  value: null,
+ /**
+  * @property checkboxId
+  * @type {String}
+  * @public
+  */
+ @computed
+ get checkboxId() {
+   return guidFor(this);
+ }
 
-  /**
-   * @property role
-   * @type {String}
-   * @default null
-   * @public
-   */
-  role: null,
-
-  /**
-   * @property checkboxId
-   * @type {String}
-   * @public
-   */
-  checkboxId: computed(function() {
-    return guidFor(this);
-  }),
-
-  /**
-   * @property onChange
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onChange() {},
-});
+ /**
+  * @property onChange
+  * @type {Function}
+  * @default noop
+  * @public
+  */
+ onChange() {}
+}
