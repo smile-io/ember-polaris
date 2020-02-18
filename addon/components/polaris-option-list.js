@@ -121,27 +121,13 @@ export default class PolarisOptionList extends Component {
    */
   @(computed('options.[]', 'sections.[]', 'title').readOnly())
   get normalizedOptions() {
-    let { options, sections, title } = this.getProperties(
-      'options',
-      'sections',
-      'title'
-    );
-    return createNormalizedOptions(options, sections, title);
+    return createNormalizedOptions(this.options, this.sections, this.title);
   }
 
   @action
   handleClick(sectionIndex, optionIndex) {
-    let {
-      selected,
-      onChange,
-      allowMultiple,
-      normalizedOptions,
-    } = this.getProperties(
-      'selected',
-      'onChange',
-      'allowMultiple',
-      'normalizedOptions'
-    );
+    let { selected, onChange, allowMultiple, normalizedOptions } = this;
+
     selected = selected || [];
     let selectedValue =
       normalizedOptions[sectionIndex].options[optionIndex].value;

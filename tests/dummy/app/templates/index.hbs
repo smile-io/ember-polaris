@@ -1,4 +1,4 @@
-<!-- {{#polaris-page
+{{#polaris-page
   title="This is the application route"
   breadcrumbs=(array
     (hash
@@ -77,26 +77,3 @@
   }}
 
 {{/polaris-page}}
- -->
-
- {{polaris-option-list
-  allowMultiple=true
-  sections=(array
-    (hash
-      options=(array
-        (hash value="type" label="Sale item type")
-        (hash value="kind" label="Sale kind")
-      )
-    )
-    (hash
-      title="Traffic"
-      options=(array
-        (hash value="source" label="Traffic referrer source")
-        (hash value="host" label="Traffic referrer host")
-        (hash value="path" label="Traffic referrer path")
-      )
-    )
-  )
-  selected=selected
-  onChange=(action (mut selected))
-}}
