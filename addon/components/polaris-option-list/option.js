@@ -1,20 +1,18 @@
+import { action } from '@ember/object';
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-option-list/option';
 
-export default Component.extend({
-  tagName: 'li',
-  attributeBindings: ['tabIndex', 'active:aria-selected', 'role'],
-  classNames: ['Polaris-OptionList-Option'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class Option extends Component {
   /**
    * @property optionId
    * @type {String}
    * @default null
    * @public
    */
-  optionId: null,
+  optionId = null;
 
   /**
    * @property label
@@ -22,7 +20,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  label: null,
+  label = null;
 
   /**
    * @property value
@@ -30,7 +28,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  value: null,
+  value = null;
 
   /**
    * @property section
@@ -38,7 +36,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  section: null,
+  section = null;
 
   /**
    * @property index
@@ -46,7 +44,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  index: null,
+  index = null;
 
   /**
    * @property media
@@ -54,7 +52,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  media: null,
+  media = null;
 
   /**
    * @property disabled
@@ -62,7 +60,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * @property active
@@ -70,7 +68,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  active: false,
+  active = false;
 
   /**
    * @property select
@@ -78,7 +76,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  select: false,
+  select = false;
 
   /**
    * @property allowMultiple
@@ -86,7 +84,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  allowMultiple: false,
+  allowMultiple = false;
 
   /**
    * @property role
@@ -94,7 +92,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  role: null,
+  role = null;
 
   /**
    * @property onClick
@@ -102,7 +100,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onClick() {},
+  onClick() {}
 
   /**
    * @property focused
@@ -110,28 +108,21 @@ export default Component.extend({
    * @default false
    * @private
    */
-  focused: false,
+  focused = false;
 
-  tabIndex: -1,
+  tabIndex = -1;
 
-  actions: {
-    handleClick() {
-      let { onClick, section, index, disabled } = this.getProperties(
-        'onClick',
-        'section',
-        'index',
-        'disabled'
-      );
+  @action
+  handleClick() {
+    if (this.disabled) {
+      return;
+    }
 
-      if (disabled) {
-        return;
-      }
+    this.onClick(this.section, this.index);
+  }
 
-      onClick(section, index);
-    },
-
-    toggleFocus() {
-      this.toggleProperty('focused');
-    },
-  },
-});
+  @action
+  toggleFocus() {
+    this.toggleProperty('focused');
+  }
+}
