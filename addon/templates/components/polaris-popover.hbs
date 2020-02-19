@@ -1,22 +1,22 @@
-{{#basic-dropdown
-  verticalPosition=verticalPosition
-  onOpen=(action "onOpen")
-  onClose=(action onClose)
+<BasicDropdown
+  @verticalPosition={{this.verticalPosition}}
+  @onOpen={{fn this.onOpen}}
+  @onClose={{fn (or @onClose this.onClose)}}
   as |dd|
-}}
+>
   {{yield
     (hash
-      activator=(component dd.trigger style=triggerStyle)
+      activator=(component dd.trigger style=this.triggerStyle)
       content=(component "polaris-popover/content"
         contentComponent=dd.content
         uniqueId=dd.uniqueId
-        sectioned=sectioned
-        fullWidth=fullWidth
-        fullHeight=fullHeight
+        sectioned=@sectioned
+        fullWidth=@fullWidth
+        fullHeight=@fullHeight
       )
-      open=(action dd.actions.open)
-      close=(action dd.actions.close)
-      toggle=(action dd.actions.toggle)
+      open=(fn dd.actions.open)
+      close=(fn dd.actions.close)
+      toggle=(fn dd.actions.toggle)
     )
   }}
-{{/basic-dropdown}}
+</BasicDropdown>
