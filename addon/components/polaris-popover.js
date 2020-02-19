@@ -121,8 +121,22 @@ export default class PolarisPopover extends Component {
   /**
    * @private
    */
+  triggerStyle = htmlSafe(`
+    display: inline-block;
+    overflow: inherit;
+    border: none;
+  `);
+
+  /**
+   * @private
+   */
   @computed('preferredPosition')
   get verticalPosition() {
+    // If `preferredPosition` is set to `mostSpace`, the value
+    // will be calculated and set when the user opens the popover.
+    // The only allowed values are 'above' and 'below', so we
+    // return null for anything other than those values and let
+    // ember-basic-dropdown use its default value.
     let { preferredPosition } = this;
 
     if (preferredPosition === ABOVE || preferredPosition === BELOW) {
@@ -138,18 +152,6 @@ export default class PolarisPopover extends Component {
     }
 
     return null;
-  }
-
-  /**
-   * @private
-   */
-  @computed
-  get triggerStyle() {
-    return htmlSafe(`
-      display: inline-block;
-      overflow: inherit;
-      border: none;
-    `);
   }
 
   /**
