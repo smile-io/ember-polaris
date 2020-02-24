@@ -1,12 +1,14 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
-import { className, classNames } from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-skeleton-display-text';
 
-const allowedSizes = ['small', 'medium', 'large', 'extraLarge'];
 const defaultSize = 'medium';
+const allowedSizes = ['small', defaultSize, 'large', 'extraLarge'];
 
-@classNames('Polaris-SkeletonDisplayText__DisplayText')
+@tagName('')
+@templateLayout(layout)
 export default class PolarisSkeletonDisplayTextComponent extends Component {
   /**
    * Size of the text
@@ -23,9 +25,8 @@ export default class PolarisSkeletonDisplayTextComponent extends Component {
    * @type {String}
    */
   @computed('size')
-  @className
   get sizeClass() {
-    let size = this.get('size');
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
