@@ -1,11 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../../templates/components/polaris-skeleton-page/action';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../../templates/components/polaris-skeleton-page/action';
 
 @tagName('')
-@layout(template)
+@templateLayout(layout)
 export default class SkeletonPageActionComponent extends Component {
   @computed()
   get width() {
@@ -14,6 +14,6 @@ export default class SkeletonPageActionComponent extends Component {
 
   @computed('width')
   get style() {
-    return htmlSafe(`width: ${this.get('width')}px;`);
+    return htmlSafe(`width: ${this.width}px;`);
   }
 }
