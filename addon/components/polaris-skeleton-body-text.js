@@ -1,12 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { classNames, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-skeleton-body-text';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-skeleton-body-text';
 
 const defaultLines = 3;
 
-@classNames('Polaris-SkeletonBodyText__SkeletonBodyTextContainer')
-@layout(template)
+@tagName('')
+@templateLayout(layout)
 export default class PolarisSkeletonBodyTextComponent extends Component {
   /**
    * Number of lines to display
@@ -24,7 +24,7 @@ export default class PolarisSkeletonBodyTextComponent extends Component {
    */
   @computed('lines')
   get dummyLines() {
-    let lines = parseInt(this.get('lines'));
+    let lines = parseInt(this.lines);
     if (isNaN(lines)) {
       lines = defaultLines;
     }
