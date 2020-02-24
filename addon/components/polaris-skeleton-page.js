@@ -1,11 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-skeleton-page';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-skeleton-page';
 
 @tagName('')
-@layout(template)
+@templateLayout(layout)
 export default class PolarisSkeletonPageComponent extends Component {
   /**
    * Page title, in large type
@@ -113,7 +113,7 @@ export default class PolarisSkeletonPageComponent extends Component {
    */
   @computed('secondaryActions')
   get dummySecondaryActions() {
-    let secondaryActions = parseInt(this.get('secondaryActions'));
+    let secondaryActions = parseInt(this.secondaryActions);
     if (isNaN(secondaryActions)) {
       return null;
     }
