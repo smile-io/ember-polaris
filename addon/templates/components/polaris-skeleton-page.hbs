@@ -7,14 +7,14 @@
 >
   <div
     class="Polaris-SkeletonPage__Header
-      {{if breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
+      {{if @breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
       {{if
-        dummySecondaryActions
+        this.dummySecondaryActions
         "Polaris-SkeletonPage__Header--hasSecondaryActions"
       }}"
     data-test-skeleton-page-header
   >
-    {{#if breadcrumbs}}
+    {{#if @breadcrumbs}}
       <div
         class="Polaris-SkeletonPage__BreadcrumbAction"
         style="width: 60px;"
@@ -32,13 +32,13 @@
       class="Polaris-SkeletonPage__TitleAndPrimaryAction"
     >
       <div data-test-skeleton-page-title class="Polaris-SkeletonPage__Title">
-        {{#if hasTitle}}
-          {{#if hasTitleText}}
+        {{#if this.hasTitle}}
+          {{#if this.hasTitleText}}
             <PolarisDisplayText
               data-test-skeleton-page-title-text={{true}}
               @tagName="h1"
               @size="large"
-              @text={{title}}
+              @text={{or @title ""}}
             />
           {{else}}
             <PolarisSkeletonDisplayText
@@ -49,7 +49,7 @@
         {{/if}}
       </div>
 
-      {{#if primaryAction}}
+      {{#if @primaryAction}}
         <div
           class="Polaris-SkeletonPage__PrimaryAction"
           data-test-skeleton-page-primary-action
@@ -59,9 +59,9 @@
       {{/if}}
     </div>
 
-    {{#if dummySecondaryActions}}
+    {{#if this.dummySecondaryActions}}
       <div class="Polaris-SkeletonPage__Actions" data-test-skeleton-page-actions>
-        {{#each dummySecondaryActions}}
+        {{#each this.dummySecondaryActions}}
           <PolarisSkeletonPage::Action data-test-skeleton-page-action={{true}} />
         {{/each}}
       </div>
@@ -72,7 +72,7 @@
     {{#if hasBlock}}
       {{yield}}
     {{else}}
-      {{text}}
+      {{@text}}
     {{/if}}
   </div>
 </div>

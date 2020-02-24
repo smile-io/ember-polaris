@@ -103,7 +103,7 @@ export default class PolarisSkeletonPageComponent extends Component {
    */
   @computed('title')
   get hasTitle() {
-    return this.get('title') !== null;
+    return this.title !== null;
   }
 
   /**
