@@ -5524,10 +5524,10 @@ eslint-plugin-prettier@3.1.2:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-smile-ember@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-5.1.1.tgz#15724421907e22a6361e8b0480ecd89e81b14e08"
-  integrity sha512-uX2uw8zimjsWHJpFipdZtsrFtbtmGROcER7AvQulXf2J574GdMjW9rwap1JAuSepHYV5A6mPi+Qx/3fRjlU+rA==
+eslint-plugin-smile-ember@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-6.0.0.tgz#02456d7cc39b7c44fb5a73c8bf9efd66a1e07e88"
+  integrity sha512-6RVAcioNp+ZSIFRp7Wo4mDS3s8ltIsix0pCN4yQfxnCgYnFpPK099vBywF4NRVrwzmMKZroq3RKXAANiEg01IA==
   dependencies:
     deep-value "^1.0.4"
     requireindex "~1.2.0"
