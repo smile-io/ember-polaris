@@ -1,0 +1,10 @@
+{
+  "extends": ["@smile-io:addon"],
+  "packageRules": [
+    {
+      "groupName": "shopify polaris",
+      "packagePatterns": ["^@shopify"],
+      "enabled": false
+    }
+  ]
+}
