@@ -37,13 +37,12 @@ export default class PolarisSettingToggle extends Component {
    * Sets toggle state to enabled or disabled
    *
    * @type {boolean}
-   * @default null
    * @public
    */
-  enabled = null;
+  enabled;
 
   @action
-  fireAction(action) {
-    invokeAction(action, 'onAction');
+  fireAction(primaryAction) {
+    invokeAction(primaryAction, 'onAction');
   }
 }
