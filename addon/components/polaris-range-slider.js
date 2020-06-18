@@ -282,7 +282,7 @@ export default class PolarisRangeSlider extends Component {
    * @type {Boolean}
    * @private
    */
-  @(computed('error', 'helpText').readOnly())
+  @(computed('error', 'helpText', 'id').readOnly())
   get ariaDescribedBy() {
     let { error, helpText, id } = this;
     let describedBy = [];

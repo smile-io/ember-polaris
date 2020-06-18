@@ -203,7 +203,7 @@ export default class PolarisAvatar extends Component {
    * @type {String}
    * @private
    */
-  @computed('customer', 'nameString')
+  @computed('avatarSourcePath', 'customer', 'nameString')
   get customerImageSource() {
     if (!this.get('customer')) {
       return null;

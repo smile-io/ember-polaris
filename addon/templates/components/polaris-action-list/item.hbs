@@ -1,6 +1,7 @@
 {{!-- TODO: add scroll support here when `polaris-scrollable` is available. --}}
 <li role={{@role}} aria-selected={{this.active}}>
   <button
+    type="button"
     class={{this.itemClasses}}
     disabled={{this.disabled}}
     {{on "click" this.onAction}}

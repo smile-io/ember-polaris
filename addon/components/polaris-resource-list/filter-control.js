@@ -128,6 +128,7 @@ export default class FilterControl extends Component.extend(
     });
   }
 
+  @computed('context.resourceName.plural')
   get textFieldLabel() {
     return `Search ${this.context.resourceName.plural.toLocaleLowerCase()}`;
   }

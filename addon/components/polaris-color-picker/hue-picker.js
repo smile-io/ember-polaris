@@ -58,7 +58,7 @@ export default class HuePicker extends Component {
   /**
    * @private
    */
-  @(computed('hue', 'sliderHeight', 'draggerHeight').readOnly())
+  @(computed('draggerHeight', 'hue', 'sliderHeight').readOnly())
   get draggerY() {
     const { hue, sliderHeight, draggerHeight } = this;
     const offset = offsetForHue(hue, sliderHeight, draggerHeight);

@@ -7,6 +7,7 @@
     data-test-prev-btn="true"
     class="Polaris-Pagination__Button"
     aria-label="Previous"
+    type="button"
     disabled={{this.isPreviousDisabled}}
     {{on "click" (or @onPrevious this.onPrevious)}}
     {{on "mouseup" this.handleMouseUpByBlurring}}
@@ -18,6 +19,7 @@
     data-test-next-btn="true"
     class="Polaris-Pagination__Button"
     aria-label="Next"
+    type="button"
     disabled={{this.isNextDisabled}}
     {{on "click" (or @onNext this.onNext)}}
     {{on "mouseup" this.handleMouseUpByBlurring}}

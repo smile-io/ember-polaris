@@ -1,8 +1,10 @@
 {{#if day}}
+  {{!-- template-lint-disable no-positive-tabindex --}}
   <button
     data-test-date-picker-day
     data-test-date-picker-date={{dataTestDatePickerDate}}
     role="gridcell"
+    type="button"
     class={{dayButtonClasses}}
     tabindex={{tabIndex}}
     aria-label={{ariaLabel}}

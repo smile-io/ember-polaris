@@ -333,9 +333,10 @@ export default class PolarisResourceList extends Component.extend(
   }
 
   @(computed(
-    'resourceName.{singular,plural}',
+    'defaultResourceName',
     'items.length',
-    'loading'
+    'loading',
+    'resourceName.{singular,plural}'
   ).readOnly())
   get headerTitle() {
     let { resourceName, items, loading } = this;
@@ -366,9 +367,10 @@ export default class PolarisResourceList extends Component.extend(
   }
 
   @(computed(
-    'resourceName.{singular,plural}',
-    'selectedItems.length',
-    'items.length'
+    'defaultResourceName',
+    'items.length',
+    'resourceName.{plural,singular}',
+    'selectedItems.length'
   ).readOnly())
   get bulkActionsAccessibilityLabel() {
     let { resourceName, selectedItems, items } = this;
@@ -391,10 +393,12 @@ export default class PolarisResourceList extends Component.extend(
   }
 
   @(computed(
+    'defaultResourceName',
     'hasMoreItems',
-    'selectedItems',
     'items.length',
-    'resourceName.plural'
+    'resourceName.plural',
+    'selectable',
+    'selectedItems'
   ).readOnly())
   get paginatedSelectAllText() {
     let { hasMoreItems, selectedItems, items, resourceName } = this;
@@ -415,10 +419,13 @@ export default class PolarisResourceList extends Component.extend(
   }
 
   @(computed(
+    'defaultResourceName',
+    'handleSelectAllItemsInStore',
     'hasMoreItems',
-    'selectedItems',
     'items.length',
-    'resourceName.plural'
+    'resourceName.plural',
+    'selectable',
+    'selectedItems'
   ).readOnly())
   get paginatedSelectAllAction() {
     let { hasMoreItems, selectedItems, items, resourceName } = this;
@@ -442,17 +449,15 @@ export default class PolarisResourceList extends Component.extend(
     };
   }
 
-  @(computed('resourceName.plural').readOnly())
+  @(computed('defaultResourceName', 'resourceName.plural').readOnly())
   get emptySearchResultTitle() {
     let resourceName = this.resourceName || this.defaultResourceName;
-
     return `No ${get(resourceName, 'plural')} found`;
   }
 
   @(computed('filterControl', 'itemsExist', 'loading').readOnly())
   get showEmptyState() {
     let { filterControl, itemsExist, loading } = this;
-
     return filterControl && !itemsExist && !loading;
   }
 
@@ -470,11 +475,12 @@ export default class PolarisResourceList extends Component.extend(
   }
 
   @(computed(
-    'selectedItems.[]',
-    'resourceName',
+    'defaultResourceName',
     'loading',
+    'resourceName',
     'selectMode',
-    'selectable'
+    'selectable',
+    'selectedItems.[]'
   ).readOnly())
   get context() {
     let { selectedItems, resourceName, loading, selectMode, selectable } = this;

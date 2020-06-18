@@ -62,7 +62,7 @@ export default class AlphaPicker extends Component {
   /**
    * @private
    */
-  @(computed('alpha', 'sliderHeight', 'draggerHeight').readOnly())
+  @(computed('alpha', 'draggerHeight', 'sliderHeight').readOnly())
   get draggerY() {
     const { alpha, sliderHeight, draggerHeight } = this;
     const offset = offsetForAlpha(alpha, sliderHeight, draggerHeight);

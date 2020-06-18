@@ -11,7 +11,7 @@ import template from '../templates/components/polaris-choice-list';
 class CheckedChoice extends ObjectProxy {
   selected = [];
 
-  @computed('content.value', 'selected.[]')
+  @computed('content.value', 'selected.[]', 'value')
   get isSelected() {
     const selected = this.get('selected');
     return selected && selected.indexOf(this.get('value')) > -1;
