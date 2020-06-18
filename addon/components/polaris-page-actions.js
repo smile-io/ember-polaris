@@ -1,10 +1,7 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { isArray } from '@ember/array';
-import {
-  classNames,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-page-actions';
 
@@ -12,7 +9,7 @@ import layout from '../templates/components/polaris-page-actions';
  * Polaris page actions component.
  * See https://polaris.shopify.com/components/structure/page-actions
  */
-@classNames('Polaris-PageActions')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisPageActions extends Component {
   /**
@@ -35,11 +32,11 @@ export default class PolarisPageActions extends Component {
 
   @(computed('secondaryActions').readOnly())
   get showSecondaryActions() {
-    return isArray(this.get('secondaryActions'));
+    return isArray(this.secondaryActions);
   }
 
   @action
-  fireAction(action) {
-    invokeAction(action, 'onAction');
+  fireAction(act) {
+    invokeAction(act, 'onAction');
   }
 }
