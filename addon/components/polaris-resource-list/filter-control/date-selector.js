@@ -185,23 +185,28 @@ export default Component.extend({
     ];
   }).readOnly(),
 
-  dateOptionTypes: computed(function() {
-    return {
-      past: [
-        ...this.get('datePastOptions'),
-        ...this.get('dateComparatorOptions'),
-      ],
-      future: [
-        ...this.get('dateFutureOptions'),
-        ...this.get('dateComparatorOptions'),
-      ],
-      full: [
-        ...this.get('datePastOptions'),
-        ...this.get('dateFutureOptions'),
-        ...this.get('dateComparatorOptions'),
-      ],
-    };
-  }).readOnly(),
+  dateOptionTypes: computed(
+    'dateComparatorOptions',
+    'dateFutureOptions',
+    'datePastOptions',
+    function() {
+      return {
+        past: [
+          ...this.get('datePastOptions'),
+          ...this.get('dateComparatorOptions'),
+        ],
+        future: [
+          ...this.get('dateFutureOptions'),
+          ...this.get('dateComparatorOptions'),
+        ],
+        full: [
+          ...this.get('datePastOptions'),
+          ...this.get('dateFutureOptions'),
+          ...this.get('dateComparatorOptions'),
+        ],
+      };
+    }
+  ).readOnly(),
 
   now: computed(function() {
     return new Date();

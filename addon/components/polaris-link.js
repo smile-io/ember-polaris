@@ -65,7 +65,7 @@ export default Component.extend({
   /**
    * @private
    */
-  linkClass: computed('class', function() {
+  linkClass: computed('class', 'monochrome', function() {
     let linkClasses = ['Polaris-Link'];
 
     if (this.get('monochrome')) {

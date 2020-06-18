@@ -324,7 +324,7 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
   ),
 
-  fileInputNode: computed('state.id', function() {
+  fileInputNode: computed('element', 'state.id', function() {
     return this.element.querySelector(
       `input[id='${this.get('state.id')}-input']`
     );

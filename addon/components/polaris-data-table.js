@@ -11,7 +11,7 @@ import layout from '../templates/components/polaris-data-table';
 import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
 
 function elementLookup(selector) {
-  return computed(function() {
+  return computed('element', function() {
     return this.element.querySelector(selector);
   });
 }

@@ -10,7 +10,7 @@ import layout from '../templates/components/polaris-choice-list';
 const CheckedChoice = ObjectProxy.extend({
   selected: null,
 
-  isSelected: computed('content.value', 'selected.[]', function() {
+  isSelected: computed('content.value', 'selected.[]', 'value', function() {
     const selected = this.get('selected');
     return selected && selected.indexOf(this.get('value')) > -1;
   }).readOnly(),

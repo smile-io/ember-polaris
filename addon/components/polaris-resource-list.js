@@ -360,9 +360,10 @@ export default Component.extend(
     ).readOnly(),
 
     headerTitle: computed(
-      'resourceName.{singular,plural}',
+      'defaultResourceName',
       'items.length',
       'loading',
+      'resourceName.{plural,singular}',
       function() {
         let { resourceName, items, loading } = this.getProperties(
           'resourceName',
@@ -403,9 +404,10 @@ export default Component.extend(
     ).readOnly(),
 
     bulkActionsAccessibilityLabel: computed(
-      'resourceName.{singular,plural}',
-      'selectedItems.length',
+      'defaultResourceName',
       'items.length',
+      'resourceName.{plural,singular}',
+      'selectedItems.length',
       function() {
         let { resourceName, selectedItems, items } = this.getProperties(
           'resourceName',
@@ -432,10 +434,12 @@ export default Component.extend(
     ).readOnly(),
 
     paginatedSelectAllText: computed(
+      'defaultResourceName',
       'hasMoreItems',
-      'selectedItems',
       'items.length',
       'resourceName.plural',
+      'selectable',
+      'selectedItems',
       function() {
         let {
           hasMoreItems,
@@ -466,10 +470,13 @@ export default Component.extend(
     ).readOnly(),
 
     paginatedSelectAllAction: computed(
+      'defaultResourceName',
+      'handleSelectAllItemsInStore',
       'hasMoreItems',
-      'selectedItems',
       'items.length',
       'resourceName.plural',
+      'selectable',
+      'selectedItems',
       function() {
         let {
           hasMoreItems,
@@ -503,12 +510,16 @@ export default Component.extend(
       }
     ).readOnly(),
 
-    emptySearchResultTitle: computed('resourceName.plural', function() {
-      let resourceName =
-        this.get('resourceName') || this.get('defaultResourceName');
+    emptySearchResultTitle: computed(
+      'defaultResourceName',
+      'resourceName.plural',
+      function() {
+        let resourceName =
+          this.get('resourceName') || this.get('defaultResourceName');
 
-      return `No ${get(resourceName, 'plural')} found`;
-    }).readOnly(),
+        return `No ${get(resourceName, 'plural')} found`;
+      }
+    ).readOnly(),
 
     showEmptyState: computed(
       'filterControl',
@@ -538,11 +549,12 @@ export default Component.extend(
     }).readOnly(),
 
     context: computed(
-      'selectedItems.[]',
-      'resourceName',
+      'defaultResourceName',
       'loading',
+      'resourceName',
       'selectMode',
       'selectable',
+      'selectedItems.[]',
       function() {
         let {
           selectedItems,

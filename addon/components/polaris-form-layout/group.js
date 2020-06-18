@@ -65,7 +65,7 @@ export default Component.extend({
 
   'data-test-form-layout-group': true,
 
-  titleID: computed('title', function() {
+  titleID: computed('elementId', 'title', function() {
     if (isBlank(this.get('title'))) {
       return;
     }
@@ -73,7 +73,7 @@ export default Component.extend({
     return idVariation(this.get('elementId'), 'Title');
   }).readOnly(),
 
-  helpTextID: computed('helpText', function() {
+  helpTextID: computed('elementId', 'helpText', function() {
     if (isBlank(this.get('helpText'))) {
       return;
     }

@@ -288,7 +288,7 @@ export default Component.extend({
    * @type {Boolean}
    * @private
    */
-  ariaDescribedBy: computed('error', 'helpText', function() {
+  ariaDescribedBy: computed('error', 'helpText', 'id', function() {
     let { error, helpText, id } = this.getProperties('error', 'helpText', 'id');
     let describedBy = [];
 
