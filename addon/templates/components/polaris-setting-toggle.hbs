@@ -1,4 +1,4 @@
-{{#polaris-card sectioned=true}}
+<PolarisCard @sectioned={{true}}>
   <div class="Polaris-SettingAction">
     <div class="Polaris-SettingAction__Setting">
       {{#if hasBlock}}
@@ -10,14 +10,14 @@
 
     <div class="Polaris-SettingAction__Action">
       {{#if action}}
-        {{polaris-button
-          text=action.text
-          disabled=action.disabled
-          loading=action.loading
-          primary=enabled
-          onClick=(action "fireAction" action)
-        }}
+        <PolarisButton
+          @text={{action.text}}
+          @disabled={{action.disabled}}
+          @loading={{action.loading}}
+          @primary={{enabled}}
+          @onClick={{action "fireAction" action}}
+        />
       {{/if}}
     </div>
   </div>
-{{/polaris-card}}
+</PolarisCard>
