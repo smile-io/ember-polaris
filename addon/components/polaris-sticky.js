@@ -79,7 +79,7 @@ export default Component.extend({
    * @type {HTMLElement}
    * @private
    */
-  placeHolderNode: computed(function() {
+  placeHolderNode: computed('element', 'placeHolderNodeId', function() {
     return this.get('element').querySelector(
       `#${this.get('placeHolderNodeId')}`
     );
@@ -90,7 +90,7 @@ export default Component.extend({
    * @type {HTMLElement}
    * @private
    */
-  stickyNode: computed(function() {
+  stickyNode: computed('element', 'stickyNodeId', function() {
     return this.get('element').querySelector(`#${this.get('stickyNodeId')}`);
   }),
 

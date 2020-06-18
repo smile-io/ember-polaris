@@ -62,7 +62,7 @@ export default Component.extend({
   /**
    * @private
    */
-  draggerY: computed('alpha', 'sliderHeight', function() {
+  draggerY: computed('alpha', 'draggerHeight', 'sliderHeight', function() {
     const { alpha, sliderHeight, draggerHeight } = this.getProperties(
       'alpha',
       'sliderHeight',

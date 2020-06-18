@@ -83,7 +83,7 @@ export default Component.extend({
   /**
    * @private
    */
-  spinnerClass: computed('normalizedSize', function() {
+  spinnerClass: computed('normalizedColor', 'normalizedSize', function() {
     return [
       'Polaris-Spinner',
       `Polaris-Spinner--color${classify(this.get('normalizedColor'))}`,

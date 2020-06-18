@@ -478,7 +478,7 @@ export default Component.extend({
     return describedBy.join(' ');
   }).readOnly(),
 
-  ariaLabelledBy: computed('id', function() {
+  ariaLabelledBy: computed('id', 'prefix', 'suffix', function() {
     let { id, prefix, suffix } = this.getProperties('id', 'prefix', 'suffix');
     let labelledBy = [`${id}Label`];
 

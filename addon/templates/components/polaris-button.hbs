@@ -15,6 +15,7 @@
         Render an `<a>` so toggling disabled/enabled state changes only the
         `href` attribute instead of replacing the whole element.
       --}}
+      {{!-- template-lint-disable link-href-attributes --}}
       <a id={{id}} class={{classes}} aria-label={{accessibilityLabel}} data-test-id={{dataTestId}}>
         {{#if hasBlock}}
           {{#component contentComponent}}

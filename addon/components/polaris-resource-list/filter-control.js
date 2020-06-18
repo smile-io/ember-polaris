@@ -128,7 +128,7 @@ export default Component.extend(context.ConsumerMixin, {
     });
   }).readOnly(),
 
-  textFieldLabel: computed(function() {
+  textFieldLabel: computed('context.resourceName.plural', function() {
     return `Search ${this.get(
       'context.resourceName.plural'
     ).toLocaleLowerCase()}`;

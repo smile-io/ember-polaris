@@ -230,7 +230,7 @@ export default Component.extend({
    * @type {String}
    * @private
    */
-  describedBy: computed('error', 'helpText', function() {
+  describedBy: computed('_id', 'error', 'helpText', function() {
     let { error, helpText, _id: id } = this.getProperties(
       'error',
       'helpText',

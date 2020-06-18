@@ -246,17 +246,22 @@ export default Component.extend({
    * @private
    * @type {String}
    */
-  customerImageSource: computed('customer', 'nameString', function() {
-    if (!this.get('customer')) {
-      return null;
-    }
+  customerImageSource: computed(
+    'avatarSourcePath',
+    'customer',
+    'nameString',
+    function() {
+      if (!this.get('customer')) {
+        return null;
+      }
 
-    let nameString = this.get('nameString');
-    let avatarIndex = isEmpty(nameString)
-      ? 0
-      : nameString.charCodeAt(0) % avatarImages.length;
-    return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
-  }).readOnly(),
+      let nameString = this.get('nameString');
+      let avatarIndex = isEmpty(nameString)
+        ? 0
+        : nameString.charCodeAt(0) % avatarImages.length;
+      return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
+    }
+  ).readOnly(),
 
   /**
    * Flag controlling whether the avatar initials should be rendered
