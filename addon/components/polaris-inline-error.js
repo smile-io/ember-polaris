@@ -1,12 +1,11 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-inline-error';
 import { assert } from '@ember/debug';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-inline-error';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisInlineError extends Component {
   /**
    * Unique identifier of the invalid form field that the message describes
    *
@@ -15,7 +14,7 @@ export default Component.extend({
    * @public
    * @required
    */
-  fieldID: null,
+  fieldID = null;
 
   /**
    * Content briefly explaining how to resolve the invalid form field input.
@@ -24,16 +23,16 @@ export default Component.extend({
    * @default null
    * @public
    */
-  message: null,
+  message = null;
 
-  dataTestInlineError: true,
-  dataTestInlineErrorIcon: true,
+  dataTestInlineError = true;
+  dataTestInlineErrorIcon = true;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     assert(
       '[polaris-inline-error] Missing required `fieldID` param!',
-      this.get('fieldID')
+      this.fieldID
     );
-  },
-});
+  }
+}
