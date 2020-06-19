@@ -16,12 +16,6 @@ module('Integration | Component | polaris banner', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    this.actions = {};
-    this.send = (actionName, ...args) =>
-      this.actions[actionName].apply(this, args);
-  });
-
-  hooks.beforeEach(function() {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
@@ -272,9 +266,9 @@ module('Integration | Component | polaris banner', function(hooks) {
     );
 
     let dismissed = false;
-    this.actions.dismiss = () => (dismissed = true);
+    this.dismiss = () => (dismissed = true);
 
-    await render(hbs`{{polaris-banner onDismiss=(action "dismiss")}}`);
+    await render(hbs`{{polaris-banner onDismiss=(action dismiss)}}`);
 
     banner = assert.dom(bannerSelector);
     dismissWrapper = assert.dom(`${bannerSelector} ${dismissSelector}`);
@@ -307,40 +301,39 @@ module('Integration | Component | polaris banner', function(hooks) {
     let bannerContentSelector = `${bannerSelector} ${contentSelector}`;
     let bannerActionsSelector = `${bannerContentSelector} ${actionsSelector}`;
 
-    let actions = assert.dom(bannerActionsSelector);
+    assert
+      .dom(bannerActionsSelector)
+      .doesNotExist(
+        'banner without actions - does not render the actions container'
+      );
 
-    actions.doesNotExist(
-      'banner without actions - does not render the actions container'
+    this.set('primaryAction', () =>
+      assert.ok(true, 'triggers primaryAction handler')
     );
-
-    let mainActionFired = false;
-    this.actions.mainAction = () => (mainActionFired = true);
-
-    let secActionFired = false;
-    this.actions.secAction = () => (secActionFired = true);
-
-    await render(hbs`{{polaris-banner
-      secondaryAction=(hash text="View" onAction=(action "secAction"))
-    }}`);
-
-    actions = assert.dom(`${bannerContentSelector} ${actionsSelector}`);
-
-    actions.doesNotExist(
-      'banner with `secondaryAction` only - does not render the actions container'
+    this.set('secondaryAction', () =>
+      assert.ok(true, 'triggers secondaryAction handler')
     );
 
     await render(hbs`{{polaris-banner
-      action=(hash text="Edit" onAction=(action "mainAction"))
+      secondaryAction=(hash text="View" onAction=(action secondaryAction))
     }}`);
 
-    actions = assert.dom(bannerActionsSelector);
+    assert
+      .dom(`${bannerContentSelector} ${actionsSelector}`)
+      .doesNotExist(
+        'banner with `secondaryAction` only - does not render the actions container'
+      );
+
+    await render(hbs`{{polaris-banner
+      primaryAction=(hash text="Edit" onAction=(action primaryAction))
+    }}`);
 
     let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
     let actionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
-
     let secondaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction`;
-
-    actions.exists('banner with `action` only - renders actions container');
+    assert
+      .dom(bannerActionsSelector)
+      .exists('banner with `action` only - renders actions container');
     assert
       .dom(actionBtnSelector)
       .exists('banner with `action` only - renders `action` button');
@@ -357,24 +350,20 @@ module('Integration | Component | polaris banner', function(hooks) {
     });
 
     await render(hbs`{{polaris-banner
-      action=(hash
+      primaryAction=(hash
         text="Edit"
         loading=mainActionLoading
         disabled=mainActionDisabled
-        onAction=(action "mainAction")
+        onAction=(action primaryAction)
       )
       secondaryAction=(hash
         text="View"
-        onAction=(action "secAction")
+        onAction=(action secondaryAction)
       )
     }}`);
 
-    actions = assert.dom(actionsSelector);
-
     let actionBtn = assert.dom(actionBtnSelector);
-
     let secondaryActionBtn = assert.dom(secondaryActionBtnSelector);
-
     actionBtn.exists('banner with actions - renders `action` button');
     actionBtn.hasClass(
       'Polaris-Button--loading',
@@ -389,7 +378,6 @@ module('Integration | Component | polaris banner', function(hooks) {
       'Polaris-Button--loading',
       'banner with actions - `action` button exits loading state'
     );
-
     actionBtn.isDisabled(
       'banner with actions - `action` button becomes disabled'
     );
@@ -406,28 +394,7 @@ module('Integration | Component | polaris banner', function(hooks) {
       'banner with actions - renders correct `secondaryAction` button text'
     );
 
-    this.set('mainActionDisabled', false);
     await click(actionBtnSelector);
-
-    assert.ok(
-      mainActionFired,
-      "banner with actions - clicking `action` button - trigger `action`'s action"
-    );
-    assert.notOk(
-      secActionFired,
-      "banner with actions - clicking `action` button - does not trigger `secondaryAction`'s action"
-    );
-
-    mainActionFired = false;
     await click(secondaryActionBtnSelector);
-
-    assert.ok(
-      secActionFired,
-      "banner with actions - clicking `secondaryAction` button - trigger `secondaryAction`'s action"
-    );
-    assert.notOk(
-      mainActionFired,
-      "banner with actions - clicking `secondaryAction` button - does not trigger `action`'s action"
-    );
   });
 });

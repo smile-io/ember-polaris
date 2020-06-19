@@ -72,12 +72,13 @@ export default class PolarisBanner extends Component {
 
   /**
    * Action for banner.
+   * NOTE: This is the equivalent for Shopify's `action` argument.
    *
    * @type {Object}
    * @default null
    * @public
    */
-  action = null;
+  primaryAction = null;
 
   /**
    * Displays a secondary action.

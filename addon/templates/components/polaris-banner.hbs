@@ -30,7 +30,7 @@
       </div>
     {{/if}}
 
-    {{#if (or hasBlock @text @action)}}
+    {{#if (or hasBlock @text @primaryAction)}}
       <div
         class="Polaris-Banner__Content"
         id={{this.contentId}}
@@ -43,17 +43,17 @@
           {{@text}}
         {{/if}}
 
-        {{#if @action}}
+        {{#if @primaryAction}}
           <div class="Polaris-Banner__Actions">
             <PolarisButtonGroup>
               <div class="Polaris-Banner__PrimaryAction">
                 <PolarisButton
                   @outline={{true}}
                   @size={{if @withinContentContainer "slim"}}
-                  @text={{action.text}}
-                  @disabled={{action.disabled}}
-                  @loading={{action.loading}}
-                  @onClick={{fn this.triggerAction @action}}
+                  @text={{@primaryAction.text}}
+                  @disabled={{@primaryAction.disabled}}
+                  @loading={{@primaryAction.loading}}
+                  @onClick={{fn this.triggerAction @primaryAction}}
                 />
               </div>
 
