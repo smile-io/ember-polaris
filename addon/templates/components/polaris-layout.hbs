@@ -1,5 +1,5 @@
 {{#if sectioned}}
-  {{#polaris-layout/section}}
+  <PolarisLayout::Section>
     {{#if hasBlock}}
       {{yield
         (hash
@@ -10,7 +10,7 @@
     {{else}}
       {{text}}
     {{/if}}
-  {{/polaris-layout/section}}
+  </PolarisLayout::Section>
 {{else}}
   {{#if hasBlock}}
     {{yield
