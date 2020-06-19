@@ -1,21 +1,25 @@
 import Component from '@ember/component';
+import {
+  attributeBindings,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
-export default Component.extend({
-  tagName: 'form',
-  attributeBindings: [
-    'acceptCharset',
-    'action',
-    'autoCompleteInputs:autocomplete',
-    'encType:enctype',
-    'method',
-    'name',
-    'noValidate:novalidate',
-    'target',
-  ],
-  layout,
-
+@tagName('form')
+@attributeBindings(
+  'acceptCharset',
+  'action',
+  'autoCompleteInputs:autocomplete',
+  'encType:enctype',
+  'method',
+  'name',
+  'noValidate:novalidate',
+  'target'
+)
+@templateLayout(layout)
+export default class PolarisForm extends Component {
   /**
    * Space separated list of character encodings
    *
@@ -23,7 +27,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  acceptCharset: null,
+  acceptCharset = null;
 
   /**
    * Where to send form-data on submittal
@@ -32,7 +36,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  action: null,
+  action = null;
 
   /**
    * Grants the broswer the ability to autocomplete input elements
@@ -41,7 +45,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  autoComplete: null,
+  autoComplete = null;
 
   /**
    * Media type when submiting content to server
@@ -50,7 +54,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  encType: null,
+  encType = null;
 
   /**
    * Toggles if form submits on Enter keypress. Defaults to true.
@@ -59,7 +63,7 @@ export default Component.extend({
    * @default true
    * @public
    */
-  implicitSubmit: true,
+  implicitSubmit = true;
 
   /**
    * Method used to submit form.
@@ -69,7 +73,7 @@ export default Component.extend({
    * @default 'post'
    * @public
    */
-  method: 'post',
+  method = 'post';
 
   /**
    * A unique name for the form
@@ -78,7 +82,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Whether or not form is validated when submitting
@@ -87,7 +91,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  noValidate: null,
+  noValidate = null;
 
   /**
    * Blocks the default form action
@@ -96,7 +100,7 @@ export default Component.extend({
    * @default true
    * @public
    */
-  preventDefault: true,
+  preventDefault = true;
 
   /**
    * Where to display response after form submittal
@@ -105,7 +109,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  target: null,
+  target = null;
 
   /**
    * Callback when form is submitted
@@ -114,11 +118,12 @@ export default Component.extend({
    * @params {event} HTMLFormElement
    * @public
    */
-  onSubmit() {},
+  onSubmit() {}
 
-  'data-test-form': true,
+  'data-test-form' = true;
 
-  autoCompleteInputs: normalizeAutoCompleteProperty('autoComplete'),
+  @normalizeAutoCompleteProperty('autoComplete')
+  autoCompleteInputs;
 
   submit(event) {
     let { preventDefault = true, onSubmit } = this.getProperties(
@@ -132,5 +137,5 @@ export default Component.extend({
 
     event.preventDefault();
     onSubmit(event);
-  },
-});
+  }
+}
