@@ -1,23 +1,12 @@
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
-import {
-  attributeBindings,
-  classNameBindings,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { idVariation, helpTextId } from '../../utils/id';
-import { wrapChildren, rejectNodesByClassName } from '../../utils/dom';
+import AutoWrapper from '../../-private/auto-wrapper';
 
-@attributeBindings(
-  'role',
-  'titleID:aria-labelledby',
-  'helpTextID:aria-describedby'
-)
-@classNameBindings(
-  'condensed:Polaris-FormLayout--condensed:Polaris-FormLayout--grouped'
-)
+@tagName('')
 @templateLayout(layout)
 export default class PolarisFormLayoutGroup extends Component {
   /**
@@ -56,10 +45,7 @@ export default class PolarisFormLayoutGroup extends Component {
    */
   helpText = null;
 
-  role = 'group';
-  'data-test-form-layout-group' = true;
-
-  @(computed('elementId', 'title').readOnly())
+  @computed('elementId', 'title')
   get titleID() {
     if (isBlank(this.title)) {
       return null;
@@ -68,7 +54,7 @@ export default class PolarisFormLayoutGroup extends Component {
     return idVariation(this.elementId, 'Title');
   }
 
-  @(computed('elementId', 'helpText').readOnly())
+  @computed('elementId', 'helpText')
   get helpTextID() {
     if (isBlank(this.helpText)) {
       return null;
@@ -77,21 +63,37 @@ export default class PolarisFormLayoutGroup extends Component {
     return helpTextId(this.elementId);
   }
 
-  didRender() {
-    super.didRender(...arguments);
+  // didRender() {
+  //   super.didRender(...arguments);
 
-    let itemsContainer = this.element.querySelector(
-      '.Polaris-FormLayout__Items'
+  //   let itemsContainer = this.element.querySelector(
+  //     '.Polaris-FormLayout__Items'
+  //   );
+
+  //   let nodesToWrap = rejectNodesByClassName(
+  //     itemsContainer.children,
+  //     'Polaris-FormLayout__Item'
+  //   );
+  //   let wrapper = document.createElement('div');
+
+  //   wrapper.classList.add('Polaris-FormLayout__Item');
+  //   wrapper.setAttribute('data-test-form-layout-item', true);
+  //   wrapChildren(nodesToWrap, wrapper);
+  // }
+
+  @action
+  setupAutoWrapper(formLayouItemsElement) {
+    this.autoWrapper = new AutoWrapper(
+      formLayouItemsElement,
+      'Polaris-FormLayout__Item',
+      {
+        'data-test-form-layout-item': '',
+      }
     );
+  }
 
-    let nodesToWrap = rejectNodesByClassName(
-      itemsContainer.children,
-      'Polaris-FormLayout__Item'
-    );
-    let wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-FormLayout__Item');
-    wrapper.setAttribute('data-test-form-layout-item', true);
-    wrapChildren(nodesToWrap, wrapper);
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
   }
 }

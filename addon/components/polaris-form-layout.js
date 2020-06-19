@@ -1,10 +1,8 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { action } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form-layout';
-import { wrapChildren } from '../utils/dom';
+import AutoWrapper from '../-private/auto-wrapper';
 
 /**
  * Polaris form layout component.
@@ -12,7 +10,7 @@ import { wrapChildren } from '../utils/dom';
  *
  * @component polaris-form-layout
  */
-@classNames('Polaris-FormLayout')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisFormLayout extends Component {
   /**
@@ -24,24 +22,25 @@ export default class PolarisFormLayout extends Component {
    */
   text = null;
 
-  'data-test-form-layout' = true;
+  @action
+  setupAutoWrapper(formLayoutElement) {
+    this.autoWrapper = new AutoWrapper(
+      formLayoutElement,
+      'Polaris-FormLayout__Item',
+      {
+        'data-test-form-layout-item': '',
+      },
+      (elem) => {
+        return (
+          !elem.classList.contains('Polaris-FormLayout__Item') &&
+          elem.getAttribute('role') !== 'group'
+        );
+      }
+    );
+  }
 
-  didRender() {
-    super.didRender(...arguments);
-
-    // Wrap each child element that isn't already a group or an item.
-    let childrenToWrap = (elems) =>
-      [...elems].filter(
-        (el) =>
-          !el.classList.contains('Polaris-FormLayout__Item') &&
-          el.getAttribute('role') !== 'group'
-      );
-
-    let nodesToWrap = childrenToWrap(this.element.children);
-    var wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-FormLayout__Item');
-    wrapper.setAttribute('data-test-form-layout-item', true);
-    wrapChildren(nodesToWrap, wrapper);
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
   }
 }
