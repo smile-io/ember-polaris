@@ -24,7 +24,6 @@ export default class Annotation extends Component {
 
   @(computed('description').readOnly())
   get hasStringDescription() {
-    let description = this.get('description');
-    return typeof description === 'string';
+    return typeof this.description === 'string';
   }
 }
