@@ -1,5 +1,16 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+{{#let (element (or @tagName "h3")) as |Subheading|}}
+  <Subheading
+    class="Polaris-Subheading"
+    aria-label={{this.ariaLabel}}
+    {{did-insert this.setAriaLabel}}
+    ...attributes
+  >
+    <RenderDetector @onRender={{this.updateAriaLabel}}>
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{@text}}
+      {{/if}}
+    </RenderDetector>
+  </Subheading>
+{{/let}}

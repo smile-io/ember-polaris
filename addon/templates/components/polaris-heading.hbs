@@ -1,5 +1,9 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+{{#let (element (or @tagName "h2")) as |Heading|}}
+  <Heading class="Polaris-Heading" ...attributes>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </Heading>
+{{/let}}
