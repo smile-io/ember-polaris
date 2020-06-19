@@ -1,6 +1,6 @@
 ember-polaris
 ==============================================================================
-[![Build Status](https://github.com/smile-io/ember-polaris/workflows/ci/badge.svg)](https://github.com/smile-io/ember-polaris/actions)
+[![](https://github.com/smile-io/ember-polaris/workflows/CI/badge.svg)](https://github.com/smile-io/ember-polaris/actions)
 
 ![image](https://user-images.githubusercontent.com/5737342/26935493-c8c81c76-4c74-11e7-90dd-ff8b0fdc434e.png)
 
