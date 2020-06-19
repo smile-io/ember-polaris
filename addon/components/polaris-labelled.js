@@ -61,7 +61,6 @@ export default class PolarisLabelledComponent extends Component {
    * @type {String}
    * @public
    */
-  @computed('_id')
   get id() {
     if (this._id) {
       return this._id;
