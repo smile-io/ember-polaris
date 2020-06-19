@@ -1,11 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import {
-  classNames,
-  classNameBindings,
-  tagName,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { action, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-tag';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
@@ -15,9 +10,7 @@ import { handleMouseUpByBlurring } from '../utils/focus';
  *
  * @component polaris-tag
  */
-@tagName('span')
-@classNames('Polaris-Tag')
-@classNameBindings('disabled:Polaris-Tag--disabled')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisTag extends Component {
   /**
@@ -28,19 +21,17 @@ export default class PolarisTag extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default: null
    * @public
    */
-  text = null;
+  text;
 
   /**
    * Disables the tag.
    *
    * @type {boolean}
-   * @default: false
    * @public
    */
-  disabled = false;
+  disabled;
 
   /**
    * Callback when tag is removed
@@ -52,16 +43,14 @@ export default class PolarisTag extends Component {
   onRemove() {}
 
   /**
-   * The tag text. When inline-form, will match `text`, otherwise will read the
+   * The tag title. When inline-form, will match `text`, otherwise will read the
    * block for this.
    *
    * @type {String}
-   * @default null
    */
-  tagText = null;
+  tagText = '';
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
-  'data-test-tag' = true;
 
   /**
    * String to be used as the `remove` button's `aria-label`
@@ -72,18 +61,24 @@ export default class PolarisTag extends Component {
    */
   @(computed('tagText').readOnly())
   get buttonLabel() {
-    return `Remove ${this.get('tagText')}`;
+    return `Remove ${this.tagText}`;
   }
 
-  updateTagText() {
-    // Read the tag text so we can use this for the aria-label.
-    // We access the element's `textContent` so that this still works in block usage.
-    let tagText = this.get('element.textContent') || '';
-    this.set('tagText', tagText.trim());
-  }
-
-  didRender() {
-    super.didRender(...arguments);
+  @action
+  setTagText(element) {
+    this.set('_tagElement', element);
     this.updateTagText();
+  }
+
+  @action
+  updateTagText() {
+    if (!this._tagElement) {
+      return;
+    }
+    // Read the tag text so we can use this for the title.
+    // We access the element's `textContent` so that this still works in block usage.
+    let tagText =
+      this._tagElement.querySelector('.Polaris-Tag__TagText').textContent || '';
+    this.set('tagText', tagText.trim());
   }
 }
