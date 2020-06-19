@@ -1,6 +1,11 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import {
+  classNames,
+  classNameBindings,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import layout from '../templates/components/polaris-text-container';
 
 const allowedSpacings = ['tight', 'loose'];
@@ -8,13 +13,10 @@ const allowedSpacings = ['tight', 'loose'];
 /**
  * Undocumented Polaris text container component.
  */
-export default Component.extend({
-  classNames: ['Polaris-TextContainer'],
-
-  classNameBindings: ['spacingClass'],
-
-  layout,
-
+@classNames('Polaris-TextContainer')
+@classNameBindings('spacingClass')
+@templateLayout(layout)
+export default class PolarisTextContainer extends Component {
   /**
    * The text to display.
    *
@@ -27,7 +29,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * The amount of vertical spacing children will get between them.
@@ -37,17 +39,18 @@ export default Component.extend({
    * @default null
    * @public
    */
-  spacing: null,
+  spacing = null;
 
   /**
    * @private
    */
-  spacingClass: computed('spacing', function() {
+  @(computed('spacing').readOnly())
+  get spacingClass() {
     let spacing = this.get('spacing');
     if (allowedSpacings.indexOf(spacing) > -1) {
       return `Polaris-TextContainer--spacing${classify(spacing)}`;
     }
 
     return null;
-  }).readOnly(),
-});
+  }
+}
