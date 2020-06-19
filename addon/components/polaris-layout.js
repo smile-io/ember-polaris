@@ -1,11 +1,8 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-layout';
 
-@classNames('Polaris-Layout')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisLayout extends Component {
   /**
@@ -25,8 +22,7 @@ export default class PolarisLayout extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default null
    * @public
    */
-  text = null;
+  text;
 }

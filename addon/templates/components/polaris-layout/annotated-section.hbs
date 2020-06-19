@@ -1,11 +1,13 @@
-<div class="Polaris-Layout__AnnotationWrapper">
-  <PolarisLayout::Annotation @title={{title}} @description={{description}} />
+<div class="Polaris-Layout__AnnotatedSection" ...attributes>
+  <div class="Polaris-Layout__AnnotationWrapper">
+    <PolarisLayout::Annotation @title={{@title}} @description={{@description}} />
 
-  <PolarisLayout::AnnotationContent>
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{text}}
-    {{/if}}
-  </PolarisLayout::AnnotationContent>
+    <PolarisLayout::AnnotationContent>
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{@text}}
+      {{/if}}
+    </PolarisLayout::AnnotationContent>
+  </div>
 </div>

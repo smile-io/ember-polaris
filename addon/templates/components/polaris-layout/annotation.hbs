@@ -1,15 +1,17 @@
-<PolarisTextContainer>
-  <PolarisHeading @text={{title}} />
+<div class="Polaris-Layout__Annotation" ...attributes>
+  <PolarisTextContainer>
+    <PolarisHeading @text={{@title}} />
 
-  {{#if description}}
-    <div data-test-annotation-description class="Polaris-Layout__AnnotationDescription">
-      {{#if hasStringDescription}}
-        <p>
-          {{description}}
-        </p>
-      {{else if description}}
-        {{render-content description}}
-      {{/if}}
-    </div>
-  {{/if}}
-</PolarisTextContainer>
+    {{#if @description}}
+      <div data-test-annotation-description class="Polaris-Layout__AnnotationDescription">
+        {{#if this.hasStringDescription}}
+          <p>
+            {{@description}}
+          </p>
+        {{else if @description}}
+          {{render-content @description}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </PolarisTextContainer>
+</div>

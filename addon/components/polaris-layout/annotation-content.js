@@ -1,13 +1,10 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-layout/annotation-content';
 
-@classNames('Polaris-Layout__AnnotationContent')
+@tagName('')
 @templateLayout(layout)
-export default class AnnotationContent extends Component {
+export default class PolarisLayoutAnnotationContent extends Component {
   /**
    * Inner content of the section
    *
@@ -16,8 +13,7 @@ export default class AnnotationContent extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default null
    * @public
    */
-  text = null;
+  text;
 }
