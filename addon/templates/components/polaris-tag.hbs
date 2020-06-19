@@ -15,8 +15,5 @@
   onclick={{action onRemove}}
   onmouseup={{action handleMouseUpByBlurring}}
 >
-  {{polaris-icon
-    data-test-tag-button-icon=true
-    source="cancel-small"
-  }}
+  <PolarisIcon @data-test-tag-button-icon={{true}} @source="cancel-small" />
 </button>
