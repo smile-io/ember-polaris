@@ -32,7 +32,7 @@ export default class PolarisTextContainer extends Component {
    */
   spacing;
 
-  @(computed('spacing').readOnly())
+  @computed('spacing')
   get spacingClass() {
     if (allowedSpacings.indexOf(this.spacing) > -1) {
       return `Polaris-TextContainer--spacing${classify(this.spacing)}`;
