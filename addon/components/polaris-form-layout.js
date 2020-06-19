@@ -1,4 +1,8 @@
 import Component from '@ember/component';
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form-layout';
 import { wrapChildren } from '../utils/dom';
 
@@ -8,25 +12,22 @@ import { wrapChildren } from '../utils/dom';
  *
  * @component polaris-form-layout
  */
-export default Component.extend({
-  classNames: ['Polaris-FormLayout'],
-
-  layout,
-
+@classNames('Polaris-FormLayout')
+@templateLayout(layout)
+export default class PolarisFormLayout extends Component {
   /**
    * The content to display inside the layout
    *
-   * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
-  'data-test-form-layout': true,
+  'data-test-form-layout' = true;
 
   didRender() {
-    this._super(...arguments);
+    super.didRender(...arguments);
 
     // Wrap each child element that isn't already a group or an item.
     let childrenToWrap = (elems) =>
@@ -42,5 +43,5 @@ export default Component.extend({
     wrapper.classList.add('Polaris-FormLayout__Item');
     wrapper.setAttribute('data-test-form-layout-item', true);
     wrapChildren(nodesToWrap, wrapper);
-  },
-});
+  }
+}
