@@ -1,20 +1,21 @@
 import Component from '@ember/component';
+import {
+  classNames,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import layout from '../templates/components/polaris-layout';
 
-export default Component.extend({
-  classNames: ['Polaris-Layout'],
-
-  layout,
-
+@classNames('Polaris-Layout')
+@templateLayout(layout)
+export default class PolarisLayout extends Component {
   /**
    * Automatically adds sections to layout
    *
-   * @property sectioned
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
-  sectioned: false,
+  sectioned = false;
 
   /**
    * The content to display inside the layout
@@ -23,10 +24,9 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
-  text: null,
-});
+  text = null;
+}
