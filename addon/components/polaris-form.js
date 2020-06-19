@@ -1,23 +1,10 @@
 import Component from '@ember/component';
-import {
-  attributeBindings,
-  tagName,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { action } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
-@tagName('form')
-@attributeBindings(
-  'acceptCharset',
-  'action',
-  'autoCompleteInputs:autocomplete',
-  'encType:enctype',
-  'method',
-  'name',
-  'noValidate:novalidate',
-  'target'
-)
+@tagName('')
 @templateLayout(layout)
 export default class PolarisForm extends Component {
   /**
@@ -120,17 +107,12 @@ export default class PolarisForm extends Component {
    */
   onSubmit() {}
 
-  'data-test-form' = true;
-
   @normalizeAutoCompleteProperty('autoComplete')
   autoCompleteInputs;
 
-  submit(event) {
-    let { preventDefault = true, onSubmit } = this.getProperties(
-      'preventDefault',
-      'onSubmit'
-    );
-
+  @action
+  handleSubmit(event) {
+    let { preventDefault, onSubmit } = this;
     if (!preventDefault) {
       return;
     }
