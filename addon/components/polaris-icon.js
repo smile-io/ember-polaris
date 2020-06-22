@@ -1,27 +1,13 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
-import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import {
-  classNames,
-  attributeBindings,
-  classNameBindings,
-  tagName,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
 
 // TODO: look into importing icons properly.
-@tagName('span')
-@attributeBindings('accessibilityLabel:aria-label')
-@classNames('Polaris-Icon')
-@classNameBindings(
-  'colorClass',
-  'isColored:Polaris-Icon--isColored',
-  'backdrop:Polaris-Icon--hasBackdrop'
-)
+@tagName('')
 @templateLayout(layout)
 export default class PolarisIcon extends Component.extend(SvgHandling) {
   /**
@@ -71,46 +57,22 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
    */
   sourcePath = 'polaris';
 
-  'data-test-icon' = true;
-
   /**
    * Whether the component should leave space for an icon
    *
    * @type {Boolean}
    */
-  @(equal('source', 'placeholder').readOnly())
+  @equal('source', 'placeholder')
   showPlaceholder;
-
-  /**
-   * Class to apply to color the icon
-   *
-   * @type {String}
-   */
-  @(computed('color').readOnly())
-  get colorClass() {
-    let color = this.get('color');
-
-    if (isEmpty(color)) {
-      return null;
-    }
-
-    return `Polaris-Icon--color${classify(color)}`;
-  }
 
   /**
    * Whether a color has been specified for the icon
    *
    * @type {Boolean}
    */
-  @(computed('color').readOnly())
+  @computed('color')
   get isColored() {
-    let color = this.get('color');
-
-    if (isEmpty(color)) {
-      return false;
-    }
-
-    return color !== 'white';
+    return this.color && this.color !== 'white';
   }
 
   /**
@@ -118,14 +80,25 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
    *
    * @type {String}
    */
-  @(computed('sourcePath', 'source').readOnly())
+  @computed('sourcePath', 'source')
   get iconSource() {
-    let source = this.get('source');
-    source =
-      source.indexOf('/') === -1
-        ? `${this.get('sourcePath')}/${source}`
-        : source;
+    let { source } = this;
+    return source.indexOf('/') === -1 ? `${this.sourcePath}/${source}` : source;
+  }
 
-    return source;
+  @computed('color', 'isColored', 'backdrop')
+  get classes() {
+    let classes = ['Polaris-Icon'];
+    if (this.color) {
+      classes.push(`Polaris-Icon--color${classify(this.color)}`);
+    }
+    if (this.isColored) {
+      classes.push('Polaris-Icon--isColored');
+    }
+    if (this.backdrop) {
+      classes.push('Polaris-Icon--hasBackdrop');
+    }
+
+    return classes.join(' ');
   }
 }
