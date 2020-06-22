@@ -107,7 +107,7 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
     super.init(...arguments);
 
     deprecate(
-      `[polaris-breadcrumbs] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisIcon] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.class,
       {
         id: 'ember-polaris.polaris-icon.class-arg',
