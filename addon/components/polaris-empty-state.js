@@ -1,52 +1,46 @@
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-empty-state';
 
 /**
  * Polaris empty state component.
  * See https://polaris.shopify.com/components/structure/empty-state
  */
-export default Component.extend({
-  classNames: ['Polaris-EmptyState'],
-  classNameBindings: ['imageContained:Polaris-EmptyState--imageContained'],
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisEmptyState extends Component {
   /**
    * The empty state heading
    *
-   * @property heading
    * @type {String}
    * @default null
    */
-  heading: null,
+  heading = null;
 
   /**
    * The image to use for small screens
    *
-   * @property image
    * @type {String}
    * @default null
    */
-  image: null,
+  image = null;
 
   /**
    * The image to use for large screens
    *
-   * @property largeImage
    * @type {String}
    * @default null
    * TODO: not implemented
    */
-  largeImage: null,
+  largeImage = null;
 
   /**
    * The image to use for large screens
    *
-   * @property imageContained
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    */
-  imageContained: false,
+  imageContained = false;
 
   /**
    * Elements to display inside empty state
@@ -55,29 +49,24 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    */
-  text: null,
+  text = null;
 
   /**
    * Primary action for empty state
    *
-   * @property action
    * @type {Object}
    * @default null
    */
-  action: null,
+  action = null;
 
   /**
    * Secondary action for empty state
    *
-   * @property secondaryAction
    * @type {Object}
    * @default null
    */
-  secondaryAction: null,
-
-  'data-test-empty-state': true,
-});
+  secondaryAction = null;
+}
