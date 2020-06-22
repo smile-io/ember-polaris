@@ -1,24 +1,21 @@
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { computedLabelId } from '@smile-io/ember-polaris/utils/id';
 import layout from '../templates/components/polaris-label';
 
 /**
  * Internal Polaris label component.
  */
-export default Component.extend({
-  // Tagless component so that Ember doesn't apply the `id`
-  // attribute to the component's root element.
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisLabel extends Component {
   /**
    * A unique identifier for the label
    *
    * @type {String}
    * @public
    */
-  id: null,
+  id = null;
 
   /**
    * Label content
@@ -30,7 +27,7 @@ export default Component.extend({
    * @type {String|Component}
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Visually hide the label
@@ -39,13 +36,13 @@ export default Component.extend({
    * @default false
    * @public
    */
-  hidden: false,
+  hidden = false;
 
   /**
    * ID for the label element
    *
    * @type {String}
-   * @private
    */
-  labelId: computedLabelId('id').readOnly(),
-});
+  @computedLabelId('id')
+  labelId;
+}
