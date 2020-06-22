@@ -1,11 +1,17 @@
-{{#if showPlaceholder}}
-  <div class="Polaris-Icon__Placeholder"></div>
-{{else}}
-  {{svg-jar
-    iconSource
-    class="Polaris-Icon__Svg"
-    focusable="false"
-    aria-hidden="true"
-    id=svgElementId
-  }}
-{{/if}}
+<span
+  class={{this.classes}}
+  data-test-icon
+  ...attributes
+  aria-label={{@accessibilityLabel}}
+>
+  {{#if this.showPlaceholder}}
+    <div class="Polaris-Icon__Placeholder"></div>
+  {{else}}
+    {{svg-jar this.iconSource
+      class="Polaris-Icon__Svg"
+      focusable="false"
+      aria-hidden="true"
+      id=this.svgElementId
+    }}
+  {{/if}}
+</span>
