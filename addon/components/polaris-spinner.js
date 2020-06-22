@@ -1,93 +1,79 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-spinner';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-spinner';
 
 const allowedColors = ['white', 'teal', 'inkLightest'];
 const colorsForLargeSpinner = ['teal', 'inkLightest'];
 const defaultColor = 'teal';
 
-const allowedSizes = ['small', 'large'];
 const defaultSize = 'large';
+const allowedSizes = ['small', defaultSize];
 
 const spinnerSVGSources = {
   small: '/@smile-io/ember-polaris/images/spinner-small.svg',
   large: '/@smile-io/ember-polaris/images/spinner-large.svg',
 };
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSpinner extends Component {
   /**
    * Color of spinner
    *
-   * @property color
-   * @public
    * @type {String}
    * @default teal
+   * @public
    */
-  color: defaultColor,
+  color = defaultColor;
 
   /**
    * Size of spinner
    *
-   * @property size
-   * @public
    * @type {String}
    * @default large
+   * @public
    */
-  size: defaultSize,
+  size = defaultSize;
 
   /**
    * Accessible label for the spinner
    *
-   * @property accessibilityLabel
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
-  /**
-   * @private
-   */
-  normalizedColor: computed('color', function() {
-    let color = this.get('color');
-    return allowedColors.includes(color) ? color : defaultColor;
-  }).readOnly(),
+  @computed('color')
+  get normalizedColor() {
+    return allowedColors.includes(this.color) ? this.color : defaultColor;
+  }
 
-  /**
-   * @private
-   */
-  normalizedSize: computed('size', 'normalizedColor', function() {
-    let size = this.get('size');
-    if (allowedSizes.includes(size)) {
-      return colorsForLargeSpinner.includes(this.get('normalizedColor'))
-        ? size
+  @computed('size', 'normalizedColor')
+  get normalizedSize() {
+    if (allowedSizes.includes(this.size)) {
+      return colorsForLargeSpinner.includes(this.normalizedColor)
+        ? this.size
         : 'small';
     }
 
     return defaultSize;
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  spinnerSVG: computed('normalizedSize', function() {
-    let size = this.get('normalizedSize') === 'large' ? 'large' : 'small';
+  @computed('normalizedSize')
+  get spinnerSVG() {
+    let size = this.normalizedSize === defaultSize ? 'large' : 'small';
     return spinnerSVGSources[size];
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  spinnerClass: computed('normalizedColor', 'normalizedSize', function() {
+  @computed('normalizedColor', 'normalizedSize')
+  get spinnerClass() {
     return [
       'Polaris-Spinner',
-      `Polaris-Spinner--color${classify(this.get('normalizedColor'))}`,
-      `Polaris-Spinner--size${classify(this.get('normalizedSize'))}`,
+      `Polaris-Spinner--color${classify(this.normalizedColor)}`,
+      `Polaris-Spinner--size${classify(this.normalizedSize)}`,
     ].join(' ');
-  }).readOnly(),
-});
+  }
+}
