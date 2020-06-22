@@ -1,18 +1,17 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';
 import { isGroup } from '@smile-io/ember-polaris/helpers/polaris-select/is-group';
 import layout from '../templates/components/polaris-select';
 
 const PLACEHOLDER_VALUE = '';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSelect extends Component {
   /**
    * List of options or option groups to choose from
    *
@@ -28,22 +27,20 @@ export default Component.extend({
    *  title: String. Title for the group
    *  options: (String|Object)[]. List of options
    *
-   * @property options
    * @type {(String|Object)[]}
-   * @default null
+   * @default []
    * @public
    */
-  options: null,
+  options = [];
 
   /**
    * Label for the select
    *
-   * @property label
    * @type {String}
    * @default null
    * @public
    */
-  label: null,
+  label = null;
 
   /**
    * Adds an action to the label
@@ -53,189 +50,167 @@ export default Component.extend({
    *  text: String. Content the action displays
    *  onAction: Function. Callback when an action takes place
    *
-   * @property labelAction
    * @type {Object}
    * @default null
    * @public
    */
-  labelAction: null,
+  labelAction = null;
 
   /**
    * Visually hide the label
    *
-   * @property labelHidden
    * @type {Boolean}
    * @default false
    * @public
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Show the label to the left of the value, inside the control
    *
-   * @property labelInline
    * @type {Boolean}
    * @default false
    * @public
    */
-  labelInline: false,
+  labelInline = false;
 
   /**
    * Disable input
    *
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Additional text to aide in use
    *
-   * @property helpText
    * @type {String|Component|Object}
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * Example text to display as placeholder
    *
-   * @property placeholder
    * @type {String}
    * @default null
    * @public
    */
-  placeholder: null,
+  placeholder = null;
 
-  /* eslint smile-ember/order-in-components: 'off' */
   /**
    * ID for form input
    *
-   * @property id
    * @type {String}
    * @default null
    * @public
    */
-  id: null,
+  id = null;
 
   /**
    * Name for form input
    *
-   * @property name
    * @type {String}
    * @default null
    * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Value for form input
    *
-   * @property value
    * @type {String}
    * @default ''
    * @public
    */
-  value: '',
+  value = '';
 
   /**
    * Display an error state
    *
-   * @property error
    * @type {String|Component|Boolean}
    * @default null
    * @public
    */
-  error: null,
+  error = null;
 
   /**
    * Callback when selection is changed
    *
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public
    */
-  onChange() {},
+  onChange() {}
 
   /**
    * Callback when select is focussed
    *
-   * @property onFocus
    * @type {Function}
    * @default noop
    * @public
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus is removed
    *
-   * @property onBlur
    * @type {Function}
    * @default noop
    * @public
    */
-  onBlur() {},
+  onBlur() {}
 
   /**
    * Flag indicating whether an error is present
    *
-   * @property hasError
    * @type {Boolean}
-   * @private
    */
-  hasError: bool('error').readOnly(),
+  @bool('error')
+  hasError;
 
   /**
    * Internal ID for form input, with a default value.
    *
-   * @property id
    * @type {String}
-   * @private
    */
   // eslint disable smile-ember/order-in-components
-  _id: computed('id', function() {
-    return this.get('id') || guidFor(this);
-  }).readOnly(),
+  @computed('id')
+  get _id() {
+    return this.id || guidFor(this);
+  }
 
   /**
    * Class names for select element
    *
-   * @property className
    * @type {String}
-   * @private
    */
-  className: computed('error', 'disabled', function() {
+  @computed('error', 'disabled')
+  get className() {
     let classNames = ['Polaris-Select'];
 
-    if (this.get('error')) {
+    if (this.error) {
       classNames.push('Polaris-Select--error');
     }
 
-    if (this.get('disabled')) {
+    if (this.disabled) {
       classNames.push('Polaris-Select--disabled');
     }
 
     return classNames.join(' ');
-  }).readOnly(),
+  }
 
   /**
    * Aria described-by field for accessibility
    *
-   * @property describedBy
    * @type {String}
-   * @private
    */
-  describedBy: computed('_id', 'error', 'helpText', function() {
-    let { error, helpText, _id: id } = this.getProperties(
-      'error',
-      'helpText',
-      '_id'
-    );
+  @computed('_id', 'error', 'helpText')
+  get describedBy() {
+    let { error, helpText, _id: id } = this;
     let describedBy = [];
 
     if (helpText) {
@@ -247,25 +222,20 @@ export default Component.extend({
     }
 
     return describedBy.length ? describedBy.join(' ') : undefined;
-  }).readOnly(),
+  }
 
   /**
    * Options processed into a renderable state.
    *
-   * @property normalizedOptions
    * @type {Object[]}
-   * @private
    */
-  normalizedOptions: computed('options.[]', 'placeholder', function() {
-    let options = this.get('options') || [];
-
-    let normalizedOptions = options.map(normalizeOption);
-
-    let placeholder = this.get('placeholder');
-    if (placeholder) {
+  @computed('options.[]', 'placeholder')
+  get normalizedOptions() {
+    let normalizedOptions = this.options.map(normalizeOption);
+    if (this.placeholder) {
       normalizedOptions = [
         {
-          label: placeholder,
+          label: this.placeholder,
           value: PLACEHOLDER_VALUE,
           disabled: true,
         },
@@ -274,41 +244,32 @@ export default Component.extend({
     }
 
     return normalizedOptions;
-  }).readOnly(),
+  }
 
   /**
    * Gets the text to display in the UI, for the currently selected option
    *
-   * @property selectedOption
    * @type {String}
-   * @private
    */
-  selectedOption: computed(
-    'normalizedOptions.@each.value',
-    'value',
-    function() {
-      let { normalizedOptions: options, value } = this.getProperties(
-        'normalizedOptions',
-        'value'
-      );
-      let flatOptions = flattenOptions(options);
-      let selectedOption = flatOptions.find((option) => value === option.value);
+  @computed('normalizedOptions.@each.value', 'value')
+  get selectedOption() {
+    let { normalizedOptions: options, value } = this;
+    let flatOptions = flattenOptions(options);
+    let selectedOption = flatOptions.find((option) => value === option.value);
 
-      if (selectedOption === undefined) {
-        // Get the first visible option (not the hidden placeholder)
-        selectedOption = flatOptions.find((option) => !option.hidden);
-      }
-
-      return selectedOption ? selectedOption.label : '';
+    if (selectedOption === undefined) {
+      // Get the first visible option (not the hidden placeholder)
+      selectedOption = flatOptions.find((option) => !option.hidden);
     }
-  ).readOnly(),
 
-  actions: {
-    handleChange(e) {
-      this.onChange(e.currentTarget.value, this.get('_id'));
-    },
-  },
-});
+    return selectedOption ? selectedOption.label : '';
+  }
+
+  @action
+  handleChange(e) {
+    this.onChange(e.currentTarget.value, this._id);
+  }
+}
 
 function isString(option) {
   return typeof option === 'string';
