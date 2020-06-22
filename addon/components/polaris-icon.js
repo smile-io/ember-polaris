@@ -3,96 +3,91 @@ import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
+import {
+  classNames,
+  attributeBindings,
+  classNameBindings,
+  tagName,
+  layout as templateLayout,
+} from '@ember-decorators/component';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
 
 // TODO: look into importing icons properly.
-export default Component.extend(SvgHandling, {
-  tagName: 'span',
-
-  attributeBindings: ['accessibilityLabel:aria-label'],
-
-  classNames: ['Polaris-Icon'],
-
-  classNameBindings: [
-    'colorClass',
-    'isColored:Polaris-Icon--isColored',
-    'backdrop:Polaris-Icon--hasBackdrop',
-  ],
-
-  layout,
-
+@tagName('span')
+@attributeBindings('accessibilityLabel:aria-label')
+@classNames('Polaris-Icon')
+@classNameBindings(
+  'colorClass',
+  'isColored:Polaris-Icon--isColored',
+  'backdrop:Polaris-Icon--hasBackdrop'
+)
+@templateLayout(layout)
+export default class PolarisIcon extends Component.extend(SvgHandling) {
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris
    * icons in the namespace specified by `sourcePath` property.
    *
-   * @property source
-   * @public
-   * @type {string}
+   * @type {String}
    * @default null
+   * @public
    */
-  source: null,
+  source = null;
 
   /**
    * Sets the color for the SVG fill
    *
-   * @property color
-   * @public
-   * @type {string}
+   * @type {String}
    * @default null
+   * @public
    */
-  color: null,
+  color = null;
 
   /**
    * Show a backdrop behind the icon
    *
-   * @property backdrop
-   * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
+   * @public
    */
-  backdrop: false,
+  backdrop = false;
 
   /**
    * Descriptive text to be read to screenreaders
    *
-   * @property accessibilityLabel
-   * @public
-   * @type {string}
+   * @type {String}
    * @default null
+   * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * Path under which `ember-svg-jar` serves the Polaris SVG icons
    *
-   * @property sourcePath
-   * @public
-   * @type {string}
+   * @type {String}
    * @default 'polaris'
+   * @public
    */
-  sourcePath: 'polaris',
+  sourcePath = 'polaris';
 
-  'data-test-icon': true,
+  'data-test-icon' = true;
 
   /**
    * Whether the component should leave space for an icon
    *
-   * @property showPlaceholder
-   * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
-  showPlaceholder: equal('source', 'placeholder').readOnly(),
+  @(equal('source', 'placeholder').readOnly())
+  showPlaceholder;
 
   /**
    * Class to apply to color the icon
    *
-   * @property colorClass
-   * @private
-   * @type {string}
+   * @type {String}
    */
-  colorClass: computed('color', function() {
+  @(computed('color').readOnly())
+  get colorClass() {
     let color = this.get('color');
 
     if (isEmpty(color)) {
@@ -100,16 +95,15 @@ export default Component.extend(SvgHandling, {
     }
 
     return `Polaris-Icon--color${classify(color)}`;
-  }).readOnly(),
+  }
 
   /**
    * Whether a color has been specified for the icon
    *
-   * @property isColored
-   * @private
-   * @type {boolean}
+   * @type {Boolean}
    */
-  isColored: computed('color', function() {
+  @(computed('color').readOnly())
+  get isColored() {
     let color = this.get('color');
 
     if (isEmpty(color)) {
@@ -117,16 +111,15 @@ export default Component.extend(SvgHandling, {
     }
 
     return color !== 'white';
-  }).readOnly(),
+  }
 
   /**
    * Final source for the icon SVG
    *
-   * @property iconSource
-   * @private
-   * @type {string}
+   * @type {String}
    */
-  iconSource: computed('sourcePath', 'source', function() {
+  @(computed('sourcePath', 'source').readOnly())
+  get iconSource() {
     let source = this.get('source');
     source =
       source.indexOf('/') === -1
@@ -134,5 +127,5 @@ export default Component.extend(SvgHandling, {
         : source;
 
     return source;
-  }).readOnly(),
-});
+  }
+}
