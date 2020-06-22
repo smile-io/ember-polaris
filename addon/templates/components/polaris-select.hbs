@@ -1,11 +1,4 @@
-{{#polaris-labelled
-  id=_id
-  label=label
-  error=error
-  action=labelAction
-  labelHidden=(or labelInline labelHidden)
-  helpText=helpText
-}}
+<PolarisLabelled @id={{_id}} @label={{label}} @error={{error}} @action={{labelAction}} @labelHidden={{or labelInline labelHidden}} @helpText={{helpText}}>
   <div class={{className}}>
     <select
       data-test-select={{dataTestSelect}}
@@ -59,9 +52,9 @@
       </span>
 
       <span class="Polaris-Select__Icon">
-        {{polaris-icon source="arrow-up-down"}}
+        <PolarisIcon @source="arrow-up-down" />
       </span>
     </div>
     <div class="Polaris-Select__Backdrop"></div>
   </div>
-{{/polaris-labelled}}
+</PolarisLabelled>
