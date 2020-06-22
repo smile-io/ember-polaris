@@ -27,17 +27,15 @@ export default class PolarisSelect extends Component {
    *  title: String. Title for the group
    *  options: (String|Object)[]. List of options
    *
-   * @property options
    * @type {(String|Object)[]}
-   * @default null
+   * @default []
    * @public
    */
-  options = null;
+  options = [];
 
   /**
    * Label for the select
    *
-   * @property label
    * @type {String}
    * @default null
    * @public
@@ -52,7 +50,6 @@ export default class PolarisSelect extends Component {
    *  text: String. Content the action displays
    *  onAction: Function. Callback when an action takes place
    *
-   * @property labelAction
    * @type {Object}
    * @default null
    * @public
@@ -62,7 +59,6 @@ export default class PolarisSelect extends Component {
   /**
    * Visually hide the label
    *
-   * @property labelHidden
    * @type {Boolean}
    * @default false
    * @public
@@ -72,7 +68,6 @@ export default class PolarisSelect extends Component {
   /**
    * Show the label to the left of the value, inside the control
    *
-   * @property labelInline
    * @type {Boolean}
    * @default false
    * @public
@@ -82,7 +77,6 @@ export default class PolarisSelect extends Component {
   /**
    * Disable input
    *
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -92,7 +86,6 @@ export default class PolarisSelect extends Component {
   /**
    * Additional text to aide in use
    *
-   * @property helpText
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -102,18 +95,15 @@ export default class PolarisSelect extends Component {
   /**
    * Example text to display as placeholder
    *
-   * @property placeholder
    * @type {String}
    * @default null
    * @public
    */
   placeholder = null;
 
-  /* eslint smile-ember/order-in-components: 'off' */
   /**
    * ID for form input
    *
-   * @property id
    * @type {String}
    * @default null
    * @public
@@ -123,7 +113,6 @@ export default class PolarisSelect extends Component {
   /**
    * Name for form input
    *
-   * @property name
    * @type {String}
    * @default null
    * @public
@@ -133,7 +122,6 @@ export default class PolarisSelect extends Component {
   /**
    * Value for form input
    *
-   * @property value
    * @type {String}
    * @default ''
    * @public
@@ -143,7 +131,6 @@ export default class PolarisSelect extends Component {
   /**
    * Display an error state
    *
-   * @property error
    * @type {String|Component|Boolean}
    * @default null
    * @public
@@ -153,7 +140,6 @@ export default class PolarisSelect extends Component {
   /**
    * Callback when selection is changed
    *
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public
@@ -163,7 +149,6 @@ export default class PolarisSelect extends Component {
   /**
    * Callback when select is focussed
    *
-   * @property onFocus
    * @type {Function}
    * @default noop
    * @public
@@ -173,7 +158,6 @@ export default class PolarisSelect extends Component {
   /**
    * Callback when focus is removed
    *
-   * @property onBlur
    * @type {Function}
    * @default noop
    * @public
@@ -183,42 +167,36 @@ export default class PolarisSelect extends Component {
   /**
    * Flag indicating whether an error is present
    *
-   * @property hasError
    * @type {Boolean}
-   * @private
    */
-  @(bool('error').readOnly())
+  @bool('error')
   hasError;
 
   /**
    * Internal ID for form input, with a default value.
    *
-   * @property id
    * @type {String}
-   * @private
    */
   // eslint disable smile-ember/order-in-components
-  @(computed('id').readOnly())
+  @computed('id')
   get _id() {
-    return this.get('id') || guidFor(this);
+    return this.id || guidFor(this);
   }
 
   /**
    * Class names for select element
    *
-   * @property className
    * @type {String}
-   * @private
    */
-  @(computed('error', 'disabled').readOnly())
+  @computed('error', 'disabled')
   get className() {
     let classNames = ['Polaris-Select'];
 
-    if (this.get('error')) {
+    if (this.error) {
       classNames.push('Polaris-Select--error');
     }
 
-    if (this.get('disabled')) {
+    if (this.disabled) {
       classNames.push('Polaris-Select--disabled');
     }
 
@@ -228,17 +206,11 @@ export default class PolarisSelect extends Component {
   /**
    * Aria described-by field for accessibility
    *
-   * @property describedBy
    * @type {String}
-   * @private
    */
-  @(computed('_id', 'error', 'helpText').readOnly())
+  @computed('_id', 'error', 'helpText')
   get describedBy() {
-    let { error, helpText, _id: id } = this.getProperties(
-      'error',
-      'helpText',
-      '_id'
-    );
+    let { error, helpText, _id: id } = this;
     let describedBy = [];
 
     if (helpText) {
@@ -255,21 +227,15 @@ export default class PolarisSelect extends Component {
   /**
    * Options processed into a renderable state.
    *
-   * @property normalizedOptions
    * @type {Object[]}
-   * @private
    */
-  @(computed('options.[]', 'placeholder').readOnly())
+  @computed('options.[]', 'placeholder')
   get normalizedOptions() {
-    let options = this.get('options') || [];
-
-    let normalizedOptions = options.map(normalizeOption);
-
-    let placeholder = this.get('placeholder');
-    if (placeholder) {
+    let normalizedOptions = this.options.map(normalizeOption);
+    if (this.placeholder) {
       normalizedOptions = [
         {
-          label: placeholder,
+          label: this.placeholder,
           value: PLACEHOLDER_VALUE,
           disabled: true,
         },
@@ -283,16 +249,11 @@ export default class PolarisSelect extends Component {
   /**
    * Gets the text to display in the UI, for the currently selected option
    *
-   * @property selectedOption
    * @type {String}
-   * @private
    */
-  @(computed('normalizedOptions.@each.value', 'value').readOnly())
+  @computed('normalizedOptions.@each.value', 'value')
   get selectedOption() {
-    let { normalizedOptions: options, value } = this.getProperties(
-      'normalizedOptions',
-      'value'
-    );
+    let { normalizedOptions: options, value } = this;
     let flatOptions = flattenOptions(options);
     let selectedOption = flatOptions.find((option) => value === option.value);
 
@@ -306,7 +267,7 @@ export default class PolarisSelect extends Component {
 
   @action
   handleChange(e) {
-    this.onChange(e.currentTarget.value, this.get('_id'));
+    this.onChange(e.currentTarget.value, this._id);
   }
 }
 
