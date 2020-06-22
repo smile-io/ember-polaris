@@ -1,101 +1,74 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-sticky';
-import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 
 /**
  * Undocumented Polaris sticky component.
  */
-export default Component.extend({
-  layout,
-
-  stickyManager: service(),
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSticky extends Component {
+  @service
+  stickyManager;
 
   /**
    * Element outlining the fixed position boundaries
    *
-   * @property boundingElement
    * @type {HTMLElement}
    * @default null
    * @public
    */
-  boundingElement: null,
+  boundingElement = null;
 
   /**
    * Offset vertical spacing from the top of the scrollable container
    *
-   * @property offset
    * @type {Boolean}
    * @default null
    * @public
    */
-  offset: null,
+  offset = null;
 
   /**
    * Should the element remain in a fixed position when the layout is stacked (smaller screens)
    *
-   * @property disableWhenStacked
    * @type {Boolean}
    * @default null
    * @public
    */
-  disableWhenStacked: null,
+  disableWhenStacked = null;
 
   /**
-   * @property isSticky
    * @type {Boolean}
-   * @default false
-   * @private
    */
-  isSticky: false,
+  isSticky = false;
 
   /**
-   * @property style
    * @type {String}
-   * @default null
-   * @private
    */
-  style: null,
+  style = null;
 
-  /**
-   * @property placeHolderNodeId
-   * @type {String}
-   * @private
-   */
-  placeHolderNodeId: computedIdVariation('elementId', 'PlaceHolder').readOnly(),
+  adjustPlaceHolderNode(add) {
+    let { placeHolderNode, stickyNode } = this;
+    if (placeHolderNode && stickyNode) {
+      placeHolderNode.style.paddingBottom = add
+        ? `${getRectForNode(stickyNode).height}px`
+        : '0px';
+    }
+  }
 
-  /**
-   * @property stickyNodeId
-   * @type {String}
-   * @private
-   */
-  stickyNodeId: computedIdVariation('elementId', 'Sticky').readOnly(),
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.stickyManager.unregisterStickyItem(this.stickyNode);
+  }
 
-  /**
-   * @property placeHolderNode
-   * @type {HTMLElement}
-   * @private
-   */
-  placeHolderNode: computed('element', 'placeHolderNodeId', function() {
-    return this.get('element').querySelector(
-      `#${this.get('placeHolderNodeId')}`
-    );
-  }),
-
-  /**
-   * @property stickyNode
-   * @type {HTMLElement}
-   * @private
-   */
-  stickyNode: computed('element', 'stickyNodeId', function() {
-    return this.get('element').querySelector(`#${this.get('stickyNodeId')}`);
-  }),
-
+  @action
   handlePositioning(stick, top = 0, left = 0, width = 0) {
-    let isSticky = this.get('isSticky');
+    let { isSticky } = this;
 
     if ((stick && !isSticky) || (!stick && isSticky)) {
       this.adjustPlaceHolderNode(stick);
@@ -109,53 +82,36 @@ export default Component.extend({
       : null;
 
     this.set('style', style);
-  },
+  }
 
-  adjustPlaceHolderNode(add) {
-    let { placeHolderNode, stickyNode } = this.getProperties(
-      'placeHolderNode',
-      'stickyNode'
-    );
-    if (placeHolderNode && stickyNode) {
-      placeHolderNode.style.paddingBottom = add
-        ? `${getRectForNode(stickyNode).height}px`
-        : '0px';
-    }
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    let stickyManager = this.get('stickyManager');
-
+  @action
+  registerStickyItem() {
     let {
       stickyNode,
       placeHolderNode,
+      handlePositioning,
       offset,
       boundingElement,
       disableWhenStacked,
-    } = this.getProperties(
-      'stickyNode',
-      'placeHolderNode',
-      'offset',
-      'boundingElement',
-      'disableWhenStacked'
-    );
-    stickyManager.registerStickyItem({
+    } = this;
+
+    this.stickyManager.registerStickyItem({
       stickyNode,
       placeHolderNode,
-      handlePositioning: (...positioningArgs) =>
-        this.handlePositioning(...positioningArgs),
+      handlePositioning,
       offset,
       boundingElement,
       disableWhenStacked,
     });
-  },
+  }
 
-  willDestroyElement() {
-    this._super(...arguments);
+  @action
+  setPlaceHolderNode(element) {
+    this.placeHolderNode = element;
+  }
 
-    let stickyManager = this.get('stickyManager');
-    stickyManager.unregisterStickyItem(this.get('stickyNode'));
-  },
-});
+  @action
+  setStickyNode(element) {
+    this.stickyNode = element;
+  }
+}
