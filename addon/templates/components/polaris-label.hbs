@@ -1,12 +1,13 @@
 <div
   data-test-label
-  class="Polaris-Label {{if hidden "Polaris-Label--hidden"}}"
+  class="Polaris-Label {{if @hidden "Polaris-Label--hidden"}}"
+  ...attributes
 >
-  <label id={{labelId}} htmlFor={{id}} class="Polaris-Label__Text">
+  <label id={{this.labelId}} htmlFor={{@id}} class="Polaris-Label__Text">
     {{#if hasBlock}}
       {{yield}}
     {{else}}
-      {{render-content text}}
+      {{render-content @text}}
     {{/if}}
   </label>
 </div>
