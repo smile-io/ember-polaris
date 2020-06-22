@@ -2,6 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
@@ -100,5 +101,18 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
     }
 
     return classes.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-breadcrumbs] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-icon.class-arg',
+        until: '6.0.0',
+      }
+    );
   }
 }
