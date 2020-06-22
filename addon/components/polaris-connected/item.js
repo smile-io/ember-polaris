@@ -1,49 +1,62 @@
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
-import layout from '../../templates/components/polaris-connected/item';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-connected/item';
 
-export default Component.extend({
-  classNames: ['Polaris-Connected__Item'],
-  classNameBindings: [
-    'focused:Polaris-Connected__Item--focused',
-    'left:Polaris-Connected__Item--connection',
-    'right:Polaris-Connected__Item--connection',
-    'primary:Polaris-Connected__Item--primary',
-  ],
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisConnectedItem extends Component {
   /**
    * The position of the item.
    *
    * Allowed values: 'left', 'right', or 'primary'
    *
-   * @property position
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  position: null,
+  position = null;
 
   /**
    * Whether or not the item is focused.
    *
-   * @property focused
-   * @private
    * @type {Boolean}
    * @default false
    */
-  focused: false,
+  focused = false;
 
-  left: equal('position', 'left').readOnly(),
-  right: equal('position', 'right').readOnly(),
-  primary: equal('position', 'primary').readOnly(),
+  @equal('position', 'left')
+  left;
 
-  focusIn() {
+  @equal('position', 'right')
+  right;
+
+  @equal('position', 'primary')
+  primary;
+
+  @computed('focused', 'primary')
+  get classes() {
+    let classes = ['Polaris-Connected__Item'];
+    if (this.focused) {
+      classes.push('Polaris-Connected__Item--focused');
+    }
+    if (this.primary) {
+      classes.push('Polaris-Connected__Item--primary');
+    } else {
+      classes.push('Polaris-Connected__Item--connection');
+    }
+
+    return classes.join(' ');
+  }
+
+  @action
+  handleFocus() {
     this.set('focused', true);
-  },
+  }
 
-  focusOut() {
+  @action
+  handleBlur() {
     this.set('focused', false);
-  },
-});
+  }
+}
