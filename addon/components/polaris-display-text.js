@@ -12,15 +12,25 @@ import layout from '../templates/components/polaris-display-text';
  *
  *   {{polaris-display-text text="This is some text"}}
  *
- * Customised block usage (note the use of tagName instead of element - this is an ember thing):
+ * Customised block usage (note the use of htmlTag instead of element - this is an ember thing):
  *
- *   {{#polaris-display-text tagName="h1" size="extraLarge"}}
+ *   {{#polaris-display-text htmlTag="h1" size="extraLarge"}}
  *     This is some BIG text
  *   {{/polaris-display-text}}
  */
 @tagName('')
 @templateLayout(layout)
 export default class PolarisDisplayText extends Component {
+  /**
+   * Name of element to use for text
+   * NOTE: Matches polaris-react's `element`
+   *
+   * @type {String}
+   * @default p
+   * @public
+   */
+  htmlTag = 'p';
+
   /**
    * Size of the text
    *
