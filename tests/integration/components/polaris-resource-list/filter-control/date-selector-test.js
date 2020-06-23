@@ -590,34 +590,33 @@ module(
 
     module('onFilterKeyChange', function() {
       test('gets called with consumer filter key when date filter is updated to filter without date predicate', async function(assert) {
-        const initialConsumerFilterKey = 'starts';
-        this.set('initialConsumerFilterKey', initialConsumerFilterKey);
+        this.set('initialConsumerFilterKey', 'starts');
 
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
             filterMinKey="starts_min"
             filterMaxKey="starts_max"
-            filterKey=initialConsumerFilterKey
             onFilterKeyChange=(action (mut changedFilterKey))
           }}
         `);
 
         await triggerChangeEventWithValue('select', DateFilterOption.PastMonth);
 
-        assert.equal(this.get('changedFilterKey'), initialConsumerFilterKey);
+        assert.equal(
+          this.get('changedFilterKey'),
+          this.initialConsumerFilterKey
+        );
       });
 
       test('gets called with max filter key prop when date filter is updated to filter with maximum date predicate (on or before)', async function(assert) {
-        const filterMaxKey = 'starts_max';
-        this.set('filterMaxKey', filterMaxKey);
+        this.set('filterMaxKey', 'starts_max');
 
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
             filterMinKey="starts_min"
-            filterMaxKey="starts_max"
-            filterMaxKey=filterMaxKey
+            filterMaxKey=this.filterMaxKey
             onFilterKeyChange=(action (mut changedFilterKey))
           }}
         `);
@@ -627,26 +626,24 @@ module(
           DateFilterOption.OnOrBefore
         );
 
-        assert.equal(this.get('changedFilterKey'), filterMaxKey);
+        assert.equal(this.get('changedFilterKey'), this.filterMaxKey);
       });
 
       test('gets called with min filter key when date filter is updated to filter with minimum date predicate (on or after)', async function(assert) {
-        const filterMinKey = 'starts_min';
-        this.set('filterMinKey', filterMinKey);
+        this.set('filterMinKey', 'starts_min');
 
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
-            filterMinKey="starts_min"
+            filterMinKey=this.filterMinKey
             filterMaxKey="starts_max"
-            filterMinKey=filterMinKey
             onFilterKeyChange=(action (mut changedFilterKey))
           }}
         `);
 
         await triggerChangeEventWithValue('select', DateFilterOption.OnOrAfter);
 
-        assert.equal(this.get('changedFilterKey'), filterMinKey);
+        assert.equal(this.get('changedFilterKey'), this.filterMinKey);
       });
     });
 
