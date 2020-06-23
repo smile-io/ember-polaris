@@ -462,7 +462,7 @@ module(
         assert.equal(this.get('newDateFilter'), undefined);
       });
 
-      test('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with minimum date predicate (on or after) and current date selection', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with minimum date predicate (on or after) and current date selection', async function(assert) {
         const newDateFilter = DateFilterOption.OnOrAfter;
         const date = '2019-05-28';
         this.set('filterValue', DateFilterOption.OnOrBefore);
@@ -485,7 +485,7 @@ module(
         assert.equal(this.get('newDateFilter'), '2019-05-28');
       });
 
-      test('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with maximum date predicate (on or before) and current date selection', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with maximum date predicate (on or before) and current date selection', async function(assert) {
         const newDateFilter = DateFilterOption.OnOrBefore;
         const date = '2019-05-28';
         this.set('filterValue', DateFilterOption.OnOrAfter);
@@ -508,7 +508,7 @@ module(
         assert.equal(this.get('newDateFilter'), '2019-05-28');
       });
 
-      test('gets called with formatted YYYY-MM-DD date when date is updated in DatePicker', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date is updated in DatePicker', async function(assert) {
         const dateFilter = DateFilterOption.OnOrBefore;
         const date = '2019-05-28';
         this.set('dateFilter', dateFilter);
