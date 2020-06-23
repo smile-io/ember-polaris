@@ -782,7 +782,7 @@ module(
       assert.dom('[data-test-labelled-error]').doesNotExist();
     });
 
-    test('does not display error when date is added in date filed by DatePicker and date field is blurred', async function(assert) {
+    skip('does not display error when date is added in date filed by DatePicker and date field is blurred', async function(assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector
