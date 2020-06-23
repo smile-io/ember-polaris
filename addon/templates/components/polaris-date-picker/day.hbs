@@ -11,9 +11,9 @@
     aria-selected={{this.selected}}
     aria-disabled={{this.disabled}}
     disabled={{this.disabled}}
-    onclick={{action onClick @day}}
-    onmouseover={{action onHover @day}}
-    onfocus={{action onFocus @day}}
+    {{on "click" (fn this.onClick @day)}}
+    {{on "mouseover" (fn this.onHover @day)}}
+    {{on "focus" (fn this.onFocus @day)}}
   >
     {{this.date}}
   </button>

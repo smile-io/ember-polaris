@@ -1,10 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import {
-  classNames,
-  attributeBindings,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-date-picker/month';
 import {
   monthsArray,
@@ -14,8 +10,7 @@ import {
   getWeekdaysOrdered,
 } from '../../utils/dates';
 
-@attributeBindings('role')
-@classNames('Polaris-DatePicker__Month')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisDatePickerMonth extends Component {
   /**
@@ -116,9 +111,6 @@ export default class PolarisDatePickerMonth extends Component {
    */
   weekdayName /* weekday */() {}
 
-  role = 'grid';
-  'data-test-date-picker-month' = true;
-
   @computed('month', 'year')
   get current() {
     let now = new Date();
@@ -156,6 +148,6 @@ export default class PolarisDatePickerMonth extends Component {
   @action
   handleDateClick(day) {
     let range = getNewRange(this.selected, day);
-    this.get('onChange')(range);
+    this.onChange(range);
   }
 }

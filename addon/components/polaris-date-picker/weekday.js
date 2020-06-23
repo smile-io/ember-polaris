@@ -1,15 +1,8 @@
 import Component from '@ember/component';
-import {
-  classNames,
-  attributeBindings,
-  classNameBindings,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-date-picker/weekday';
 
-@attributeBindings('label:aria-label')
-@classNames('Polaris-DatePicker__Weekday')
-@classNameBindings('current:Polaris-DatePicker__Weekday--current')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisDatePickerWeekday extends Component {
   /**
@@ -32,6 +25,4 @@ export default class PolarisDatePickerWeekday extends Component {
    * @public
    */
   current = false;
-
-  'data-test-date-picker-weekday' = true;
 }

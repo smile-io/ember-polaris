@@ -1,10 +1,7 @@
 import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { isNone } from '@ember/utils';
-import {
-  classNames,
-  layout as templateLayout,
-} from '@ember-decorators/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
 import layout from '../templates/components/polaris-date-picker';
 import {
@@ -21,7 +18,7 @@ import {
 
 const weekStartsOn = weekdays.Sunday;
 
-@classNames('Polaris-DatePicker')
+@tagName('')
 @templateLayout(layout)
 export default class PolarisDatePicker extends Component {
   /**
@@ -95,9 +92,7 @@ export default class PolarisDatePicker extends Component {
    */
   @computed('selected')
   get allowRange() {
-    let selected = this.get('selected');
-
-    return selected !== null && !(selected instanceof Date);
+    return this.selected !== null && !(this.selected instanceof Date);
   }
 
   /**
@@ -120,28 +115,20 @@ export default class PolarisDatePicker extends Component {
 
   hoverDate = null;
   focusDate = null;
-  'data-test-date-picker' = true;
 
   @computed('month', 'year')
   get showNextYear() {
-    let { month, year } = this.getProperties('month', 'year');
-
-    return getNextDisplayYear(month, year);
+    return getNextDisplayYear(this.month, this.year);
   }
 
   @computed('month')
   get showNextMonth() {
-    return getNextDisplayMonth(this.get('month'));
+    return getNextDisplayMonth(this.month);
   }
 
   @computed('showNextMonth', 'showNextYear')
   get showNextToNextYear() {
-    let { showNextMonth, showNextYear } = this.getProperties(
-      'showNextMonth',
-      'showNextYear'
-    );
-
-    return getNextDisplayYear(showNextMonth, showNextYear);
+    return getNextDisplayYear(this.showNextMonth, this.showNextYear);
   }
 
   @computed('showNextMonth')
@@ -151,9 +138,7 @@ export default class PolarisDatePicker extends Component {
 
   @computed('month', 'year')
   get showPreviousYear() {
-    let { month, year } = this;
-
-    return getPreviousDisplayYear(month, year);
+    return getPreviousDisplayYear(this.month, this.year);
   }
 
   @computed('month')
@@ -226,10 +211,8 @@ export default class PolarisDatePicker extends Component {
     );
   }
 
-  /**
-   * Events
-   */
-  keyUp({ key }) {
+  @action
+  handleKeyUp({ key }) {
     let { disableDatesBefore, disableDatesAfter, focusDate, selected } = this;
     let range = deriveRange(selected);
     let focusedDate = focusDate || (range && range.start);
@@ -283,7 +266,8 @@ export default class PolarisDatePicker extends Component {
     }
   }
 
-  keyDown(e) {
+  @action
+  handleKeyDown(e) {
     let { key } = e;
 
     if (
@@ -297,9 +281,8 @@ export default class PolarisDatePicker extends Component {
     }
   }
 
-  didReceiveAttrs() {
-    super.didReceiveAttrs(...arguments);
-
+  @action
+  handleSelectedUpdate() {
     let { _previousSelected: previousSelected, selected } = this;
 
     if (
