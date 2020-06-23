@@ -211,13 +211,12 @@ module('Integration | Component | polaris date picker', function(hooks) {
   });
 
   test('it passes a `selected` range argument to the `onChange` action', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     this.setProperties({
       month: MONTH,
       year: YEAR,
       selected: null,
-      onChangeActionFired: false,
       onChange: (selected) => {
         assert.ok(
           selected.start,
@@ -227,7 +226,6 @@ module('Integration | Component | polaris date picker', function(hooks) {
           selected.end,
           '`onChange` receives a range with an `end` attribute'
         );
-        this.set('onChangeActionFired', true);
       },
     });
 
@@ -241,10 +239,6 @@ module('Integration | Component | polaris date picker', function(hooks) {
     `);
 
     await click(daySelector);
-    assert.ok(
-      this.get('onChangeActionFired'),
-      '`onChange` action sends up correct arguments'
-    );
   });
 
   test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', async function(assert) {

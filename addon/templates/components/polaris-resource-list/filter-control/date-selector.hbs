@@ -5,7 +5,7 @@
   @placeholder="Select a filter..."
   @options={{this.dateOptions}}
   @value={{or this.dateFilterOption ""}}
-  @onChange={{fn this.handleDateFilterOptionsChange}}
+  @onChange={{this.handleDateFilterOptionsChange}}
 />
 
 {{#if showDatePredicate}}
@@ -17,8 +17,8 @@
       @prefix={{component "polaris-icon" source="calendar" color="skyDark"}}
       @value={{this.dateTextFieldValue}}
       @error={{this.userInputDateError}}
-      @onChange={{fn this.handleDateFieldChange}}
-      @onBlur={{fn this.handleDateBlur}}
+      @onChange={{this.handleDateFieldChange}}
+      @onBlur={{this.handleDateBlur}}
     />
   </div>
   <div class="Polaris-FilterControl-DateSelector__DatePicker">
@@ -26,8 +26,8 @@
       @selected={{this.selectedDate}}
       @month={{this.datePickerMonth}}
       @year={{this.datePickerYear}}
-      @onChange={{fn this.handleDatePickerChange}}
-      @onMonthChange={{fn this.handleDatePickerMonthChange}}
+      @onChange={{this.handleDatePickerChange}}
+      @onMonthChange={{this.handleDatePickerMonthChange}}
     />
   </div>
 {{/if}}
