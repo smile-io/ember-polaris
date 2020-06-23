@@ -5,24 +5,22 @@ import template from '../../templates/components/polaris-text-field/spinner';
 
 @tagName('')
 @layout(template)
-export default class SpinnerComponent extends Component {
+export default class PolarisTextFieldSpinnerComponent extends Component {
   /**
    * Called when the up/down icons are clicked
    *
-   * @property onChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onChange(/* number */) {}
 
   /**
    * Additional callback when any icon in the component is clicked
    *
-   * @property onClick
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onClick() {}
 
