@@ -1,19 +1,19 @@
-{{#if hasConnection}}
-  <div class="Polaris-Connected" data-test-connected={{dataTestConnected}}>
-    {{#if left}}
-      {{#polaris-connected/item data-test-connected-item="left" position="left"}}
-        {{render-content left}}
-      {{/polaris-connected/item}}
+{{#if this.hasConnection}}
+  <div class="Polaris-Connected" data-test-connected={{this.dataTestConnected}} ...attributes>
+    {{#if @left}}
+      <PolarisConnected::Item data-test-connected-item="left" @position="left">
+        {{render-content @left}}
+      </PolarisConnected::Item>
     {{/if}}
 
-    {{#polaris-connected/item data-test-connected-item="primary" position="primary"}}
+    <PolarisConnected::Item data-test-connected-item="primary" @position="primary">
       {{yield}}
-    {{/polaris-connected/item}}
+    </PolarisConnected::Item>
 
-    {{#if right}}
-      {{#polaris-connected/item data-test-connected-item="right" position="right"}}
-        {{render-content right}}
-      {{/polaris-connected/item}}
+    {{#if @right}}
+      <PolarisConnected::Item data-test-connected-item="right" @position="right">
+        {{render-content @right}}
+      </PolarisConnected::Item>
     {{/if}}
   </div>
 {{else}}
