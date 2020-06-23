@@ -7,11 +7,7 @@
 
 <div data-test-date-picker-week-heading role="rowheader" class="Polaris-DatePicker__WeekHeadings">
   {{#each weekdays as |weekday|}}
-    {{polaris-date-picker/weekday
-      title=weekday.title
-      current=weekday.current
-      label=weekday.label
-    }}
+    <PolarisDatePicker::Weekday @title={{weekday.title}} @current={{weekday.current}} @label={{weekday.label}} />
   {{/each}}
 </div>
 
@@ -19,18 +15,7 @@
   <div data-test-date-picker-week role="row" class="Polaris-DatePicker__Week">
     {{#each week as |day|}}
       {{#if day}}
-        {{polaris-date-picker/day
-          day=day
-          focusedDate=focusedDate
-          selectedDates=selected
-          disableDatesBefore=disableDatesBefore
-          disableDatesAfter=disableDatesAfter
-          hoverDate=hoverDate
-          allowRange=allowRange
-          onFocus=(action onFocus)
-          onClick=(action "handleDateClick" day)
-          onHover=(action onHover)
-        }}
+        <PolarisDatePicker::Day @day={{day}} @focusedDate={{focusedDate}} @selectedDates={{selected}} @disableDatesBefore={{disableDatesBefore}} @disableDatesAfter={{disableDatesAfter}} @hoverDate={{hoverDate}} @allowRange={{allowRange}} @onFocus={{action onFocus}} @onClick={{action "handleDateClick" day}} @onHover={{action onHover}} />
       {{else}}
         <div data-test-date-picker-day-empty class="Polaris-DatePicker__EmptyDay"></div>
       {{/if}}

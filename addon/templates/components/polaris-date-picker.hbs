@@ -1,49 +1,13 @@
 <div data-test-date-picker-header class="Polaris-DatePicker__Header">
-  {{polaris-button
-    plain=true
-    icon="arrow-left"
-    accessibilityLabel=previousMonthLabel
-    onClick=(action "handleMonthChangeClick" showPreviousMonth showPreviousYear)
-  }}
+  <PolarisButton @plain={{true}} @icon="arrow-left" @accessibilityLabel={{previousMonthLabel}} @onClick={{action "handleMonthChangeClick" showPreviousMonth showPreviousYear}} />
 
-  {{polaris-button
-    plain=true
-    icon="arrow-right"
-    accessibilityLabel=nextMonthLabel
-    onClick=(action "handleMonthChangeClick" showNextMonth showNextYear)
-  }}
+  <PolarisButton @plain={{true}} @icon="arrow-right" @accessibilityLabel={{nextMonthLabel}} @onClick={{action "handleMonthChangeClick" showNextMonth showNextYear}} />
 </div>
 
 <div data-test-date-picker-month-container class="Polaris-DatePicker__MonthContainer">
-  {{polaris-date-picker/month
-    month=month
-    year=year
-    selected=(polaris-date-picker/derive-range selected)
-    disableDatesBefore=disableDatesBefore
-    disableDatesAfter=disableDatesAfter
-    allowRange=allowRange
-    hoverDate=hoverDate
-    focusedDate=focusDate
-    weekStartsOn=weekStartsOn
-    onChange=(action "handleDateSelection")
-    onFocus=(action (mut focusDate))
-    onHover=(action (mut hoverDate))
-  }}
+  <PolarisDatePicker::Month @month={{month}} @year={{year}} @selected={{polaris-date-picker/derive-range selected}} @disableDatesBefore={{disableDatesBefore}} @disableDatesAfter={{disableDatesAfter}} @allowRange={{allowRange}} @hoverDate={{hoverDate}} @focusedDate={{focusDate}} @weekStartsOn={{weekStartsOn}} @onChange={{action "handleDateSelection"}} @onFocus={{action (mut focusDate)}} @onHover={{action (mut hoverDate)}} />
 
   {{#if multiMonth}}
-    {{polaris-date-picker/month
-      month=showNextMonth
-      year=showNextYear
-      selected=(polaris-date-picker/derive-range selected)
-      disableDatesBefore=disableDatesBefore
-      disableDatesAfter=disableDatesAfter
-      allowRange=allowRange
-      hoverDate=hoverDate
-      focusedDate=focusDate
-      weekStartsOn=weekStartsOn
-      onChange=(action "handleDateSelection")
-      onFocus=(action (mut focusDate))
-      onHover=(action (mut hoverDate))
-    }}
+    <PolarisDatePicker::Month @month={{showNextMonth}} @year={{showNextYear}} @selected={{polaris-date-picker/derive-range selected}} @disableDatesBefore={{disableDatesBefore}} @disableDatesAfter={{disableDatesAfter}} @allowRange={{allowRange}} @hoverDate={{hoverDate}} @focusedDate={{focusDate}} @weekStartsOn={{weekStartsOn}} @onChange={{action "handleDateSelection"}} @onFocus={{action (mut focusDate)}} @onHover={{action (mut hoverDate)}} />
   {{/if}}
 </div>
