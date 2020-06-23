@@ -1,7 +1,6 @@
-import classic from 'ember-classic-decorator';
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { computed } from '@ember/object';
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-date-picker/day';
 import {
   monthsArray,
@@ -12,104 +11,76 @@ import {
   isDateAfter,
 } from '../../utils/dates';
 
-@classic
 @tagName('')
 @templateLayout(layout)
 export default class PolarisDatePickerDay extends Component {
   /**
-   * @property focusedDate
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   focusedDate = null;
 
   /**
-   * @property day
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   day = null;
 
   /**
-   * @property selectedDates
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
   selectedDates = null;
 
   /**
-   * @property disableDatesBefore
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesBefore = null;
 
   /**
-   * @property disableDatesAfter
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesAfter = null;
 
   /**
-   * @property allowRange
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   allowRange = false;
 
   /**
-   * @property onClick
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onClick /* day */() {}
 
   /**
-   * @property onHover
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onHover /* day */() {}
 
   /**
-   * @property onFocus
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onFocus /* day */() {}
 
-  @(computed(
-    'selected',
-    'disabled',
-    'isDateToday',
-    'inHoveringRange',
-    'inRange'
-  ).readOnly())
+  @computed('selected', 'disabled', 'isDateToday', 'inHoveringRange', 'inRange')
   get dayButtonClasses() {
     let classNames = ['Polaris-DatePicker__Day'];
-    let {
-      selected,
-      disabled,
-      isDateToday,
-      inHoveringRange,
-      inRange,
-    } = this.getProperties(
-      'selected',
-      'disabled',
-      'isDateToday',
-      'inHoveringRange',
-      'inRange'
-    );
+    let { selected, disabled, isDateToday, inHoveringRange, inRange } = this;
 
     if (selected) {
       classNames.push('Polaris-DatePicker__Day--selected');
@@ -130,46 +101,37 @@ export default class PolarisDatePickerDay extends Component {
     return classNames.join(' ');
   }
 
-  @(computed('day').readOnly())
+  @computed('day')
   get date() {
-    let day = this.get('day');
-    return day.getDate();
+    return this.day.getDate();
   }
 
-  @(computed('day').readOnly())
+  @computed('day')
   get isDateToday() {
-    let day = this.get('day');
-    return isSameDay(new Date(), day);
+    return isSameDay(new Date(), this.day);
   }
 
-  @(computed('focusedDate', 'day').readOnly())
+  @computed('focusedDate', 'day')
   get focused() {
-    let { focusedDate, day } = this.getProperties('focusedDate', 'day');
-
+    let { focusedDate, day } = this;
     return focusedDate != null && isSameDay(day, focusedDate);
   }
 
-  @(computed('selectedDates', 'day').readOnly())
+  @computed('selectedDates', 'day')
   get selected() {
-    let { selectedDates, day } = this.getProperties('selectedDates', 'day');
-
+    let { selectedDates, day } = this;
     return selectedDates != null && dateIsSelected(day, selectedDates);
   }
 
-  @(computed('selectedDates', 'day').readOnly())
+  @computed('selectedDates', 'day')
   get inRange() {
-    let selectedDates = this.get('selectedDates');
-    let day = this.get('day');
+    let { selectedDates, day } = this;
     return selectedDates != null && dateIsInRange(day, selectedDates);
   }
 
-  @(computed('day', 'disableDatesBefore', 'disableDatesAfter').readOnly())
+  @computed('day', 'disableDatesBefore', 'disableDatesAfter')
   get disabled() {
-    let { day, disableDatesBefore, disableDatesAfter } = this.getProperties(
-      'day',
-      'disableDatesBefore',
-      'disableDatesAfter'
-    );
+    let { day, disableDatesBefore, disableDatesAfter } = this;
 
     return (
       (disableDatesBefore && isDateBefore(day, disableDatesBefore)) ||
@@ -177,58 +139,40 @@ export default class PolarisDatePickerDay extends Component {
     );
   }
 
-  @(computed('day', 'isDateToday', 'date').readOnly())
+  @computed('day', 'isDateToday', 'date')
   get ariaLabel() {
-    let isDateToday = this.get('isDateToday');
-    let day = this.get('day');
+    let { isDateToday, day, date } = this;
     let month = monthsArray[day.getMonth()];
-    let date = this.get('date');
     let year = day.getFullYear();
 
     return `${isDateToday ? 'Today ' : ''}${month} ${date} ${year}`;
   }
 
-  @(computed(
-    'focused',
-    'selected',
-    'disabled',
-    'date',
-    'isDateToday'
-  ).readOnly())
+  @computed('focused', 'selected', 'disabled', 'date', 'isDateToday')
   get tabIndex() {
-    let { focused, selected, disabled, date, isDateToday } = this.getProperties(
-      'focused',
-      'selected',
-      'disabled',
-      'date',
-      'isDateToday'
-    );
+    let { focused, selected, disabled, date, isDateToday } = this;
 
     return (focused || selected || isDateToday || date === 1) && !disabled
       ? 0
       : -1;
   }
 
-  @(computed('day', 'selectedDates', 'hoverDate', 'allowRange').readOnly())
+  @computed('day', 'selectedDates', 'hoverDate', 'allowRange')
   get inHoveringRange() {
-    let { day, allowRange } = this.getProperties('day', 'allowRange');
+    let { day, allowRange } = this;
 
     if (!allowRange || day === null) {
       return false;
     }
 
-    let { selectedDates = {}, hoverDate } = this.getProperties(
-      'selectedDates',
-      'hoverDate'
-    );
-
+    let { selectedDates = {}, hoverDate } = this;
     const { start, end } = selectedDates;
 
     return isSameDay(start, end) && day > start && day <= hoverDate;
   }
 
-  @(computed('day').readOnly())
+  @computed('day')
   get dataTestDatePickerDate() {
-    return this.get('day').toISOString();
+    return this.day.toISOString();
   }
 }

@@ -1,11 +1,10 @@
-import classic from 'ember-classic-decorator';
+import Component from '@ember/component';
+import { action, computed } from '@ember/object';
 import {
   classNames,
   attributeBindings,
   layout as templateLayout,
 } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import Component from '@ember/component';
 import layout from '../../templates/components/polaris-date-picker/month';
 import {
   monthsArray,
@@ -15,157 +14,134 @@ import {
   getWeekdaysOrdered,
 } from '../../utils/dates';
 
-@classic
 @attributeBindings('role')
 @classNames('Polaris-DatePicker__Month')
 @templateLayout(layout)
 export default class PolarisDatePickerMonth extends Component {
   /**
-   * @property focusedDate
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   focusedDate = null;
 
   /**
-   * @property selected
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
   selected = null;
 
   /**
-   * @property hoverDate
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   hoverDate = null;
 
   /**
-   * @property month
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   month = null;
 
   /**
-   * @property year
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   year = null;
 
   /**
-   * @property disableDatesBefore
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesBefore = null;
 
   /**
-   * @property disableDatesAfter
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesAfter = null;
 
   /**
-   * @property allowRange
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   allowRange = false;
 
   /**
-   * @property weekStartsOn
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   weekStartsOn = null;
 
   /**
-   * @property onChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onChange /* dateRange */() {}
 
   /**
-   * @property onHover
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onHover /* hoverEnd */() {}
 
   /**
-   * @property onFocus
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onFocus /* date */() {}
 
   /**
-   * @property monthName
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   monthName /* month */() {}
 
   /**
-   * @property weekdayName
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   weekdayName /* weekday */() {}
 
   role = 'grid';
   'data-test-date-picker-month' = true;
 
-  @(computed('month', 'year').readOnly())
+  @computed('month', 'year')
   get current() {
     let now = new Date();
     let thisMonth = now.getMonth();
     let thisYear = now.getFullYear();
 
-    return thisMonth === this.get('month') && thisYear === this.get('year');
+    return thisMonth === this.month && thisYear === this.year;
   }
 
-  @(computed('month').readOnly())
+  @computed('month')
   get monthDisplayName() {
-    return monthsArray[this.get('month')];
+    return monthsArray[this.month];
   }
 
-  @(computed('month', 'year', 'weekStartsOn').readOnly())
+  @computed('month', 'year', 'weekStartsOn')
   get weeks() {
-    let { month, year, weekStartsOn } = this.getProperties(
-      'month',
-      'year',
-      'weekStartsOn'
-    );
-
+    let { month, year, weekStartsOn } = this;
     return getWeeksForMonth(month, year, weekStartsOn);
   }
 
-  @(computed('current', 'weekStartsOn').readOnly())
+  @computed('current', 'weekStartsOn')
   get weekdays() {
-    let { current, weekStartsOn } = this.getProperties(
-      'current',
-      'weekStartsOn'
-    );
+    let { current, weekStartsOn } = this;
     let day = new Date().getDay();
 
     return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
@@ -179,8 +155,7 @@ export default class PolarisDatePickerMonth extends Component {
 
   @action
   handleDateClick(day) {
-    let range = getNewRange(this.get('selected'), day);
-
+    let range = getNewRange(this.selected, day);
     this.get('onChange')(range);
   }
 }

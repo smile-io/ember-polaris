@@ -1,11 +1,10 @@
-import classic from 'ember-classic-decorator';
+import { action, computed } from '@ember/object';
+import Component from '@ember/component';
+import { isNone } from '@ember/utils';
 import {
   classNames,
   layout as templateLayout,
 } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import Component from '@ember/component';
-import { isNone } from '@ember/utils';
 import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
 import layout from '../templates/components/polaris-date-picker';
 import {
@@ -22,86 +21,77 @@ import {
 
 const weekStartsOn = weekdays.Sunday;
 
-@classic
 @classNames('Polaris-DatePicker')
 @templateLayout(layout)
 export default class PolarisDatePicker extends Component {
   /**
    * The selected date or range of dates
    *
-   * @property selected
-   * @public
    * @type {Date | Object}
    * @default null
+   * @public
    */
   selected = null;
 
   /**
    * The month to show
    *
-   * @property month
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   month = null;
 
   /**
    * The year to show
    *
-   * @property year
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   year = null;
 
   /**
    * Disable selecting dates before this date
    *
-   * @property disableDatesBefore
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesBefore = null;
 
   /**
    * Disable selecting dates after this
    *
-   * @property disableDatesAfter
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
   disableDatesAfter = null;
 
   /**
    * The selection can span multiple months
    *
-   * @property multiMonth
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   multiMonth = false;
 
   /**
    * First day of week. Sunday by default
    *
-   * @property weekStartsOn
-   * @public
    * @type {String}
    * @default 'Sunday'
+   * @public
    */
   weekStartsOn = weekStartsOn;
 
   /**
    * Allow a range of dates to be selected
    *
-   * @property allowRange
-   * @public
    * @type {Boolean}
+   * @public
    */
   @computed('selected')
   get allowRange() {
@@ -113,20 +103,18 @@ export default class PolarisDatePicker extends Component {
   /**
    * Callback when date is selected
    *
-   * @property title
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onChange /* dateRange */() {}
 
   /**
    * Callback when month is changed
    *
-   * @property onMonthChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onMonthChange /* month, year */() {}
 
@@ -134,19 +122,19 @@ export default class PolarisDatePicker extends Component {
   focusDate = null;
   'data-test-date-picker' = true;
 
-  @(computed('month', 'year').readOnly())
+  @computed('month', 'year')
   get showNextYear() {
     let { month, year } = this.getProperties('month', 'year');
 
     return getNextDisplayYear(month, year);
   }
 
-  @(computed('month').readOnly())
+  @computed('month')
   get showNextMonth() {
     return getNextDisplayMonth(this.get('month'));
   }
 
-  @(computed('showNextMonth', 'showNextYear').readOnly())
+  @computed('showNextMonth', 'showNextYear')
   get showNextToNextYear() {
     let { showNextMonth, showNextYear } = this.getProperties(
       'showNextMonth',
@@ -156,66 +144,54 @@ export default class PolarisDatePicker extends Component {
     return getNextDisplayYear(showNextMonth, showNextYear);
   }
 
-  @(computed('showNextMonth').readOnly())
+  @computed('showNextMonth')
   get showNextToNextMonth() {
-    return getNextDisplayMonth(this.get('showNextMonth'));
+    return getNextDisplayMonth(this.showNextMonth);
   }
 
-  @(computed('month', 'year').readOnly())
+  @computed('month', 'year')
   get showPreviousYear() {
-    let { month, year } = this.getProperties('month', 'year');
+    let { month, year } = this;
 
     return getPreviousDisplayYear(month, year);
   }
 
-  @(computed('month').readOnly())
+  @computed('month')
   get showPreviousMonth() {
-    return getPreviousDisplayMonth(this.get('month'));
+    return getPreviousDisplayMonth(this.month);
   }
 
-  @(computed('showPreviousMonth').readOnly())
+  @computed('showPreviousMonth')
   get previousMonthName() {
-    return monthsArray[this.get('showPreviousMonth')];
+    return monthsArray[this.showPreviousMonth];
   }
 
-  @(computed('multiMonth', 'showNextToNextMonth', 'showNextMonth').readOnly())
+  @computed('multiMonth', 'showNextToNextMonth', 'showNextMonth')
   get nextMonth() {
-    let { multiMonth, showNextToNextMonth, showNextMonth } = this.getProperties(
-      'multiMonth',
-      'showNextToNextMonth',
-      'showNextMonth'
-    );
+    let { multiMonth, showNextToNextMonth, showNextMonth } = this;
 
     return multiMonth
       ? monthsArray[showNextToNextMonth]
       : monthsArray[showNextMonth];
   }
 
-  @(computed('multiMonth', 'showNextToNextYear', 'showNextYear').readOnly())
+  @computed('multiMonth', 'showNextToNextYear', 'showNextYear')
   get nextYear() {
-    let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
-      'multiMonth',
-      'showNextToNextYear',
-      'showNextYear'
-    );
-
-    return multiMonth ? showNextToNextYear : showNextYear;
+    return this.multiMonth ? this.showNextToNextYear : this.showNextYear;
   }
 
-  @(computed('previousMonthName', 'showPreviousYear').readOnly())
+  @computed('previousMonthName', 'showPreviousYear')
   get previousMonthLabel() {
-    return `Show previous month, ${this.get('previousMonthName')} ${this.get(
-      'showPreviousYear'
-    )}`;
+    return `Show previous month, ${this.previousMonthName} ${this.showPreviousYear}`;
   }
 
-  @(computed('nextMonth', 'nextYear').readOnly())
+  @computed('nextMonth', 'nextYear')
   get nextMonthLabel() {
-    return `Show next month, ${this.get('nextMonth')} ${this.get('nextYear')}`;
+    return `Show next month, ${this.nextMonth} ${this.nextYear}`;
   }
 
   setFocusDateAndHandleMonthChange(date) {
-    this.get('onMonthChange')(date.getMonth(), date.getFullYear());
+    this.onMonthChange(date.getMonth(), date.getFullYear());
 
     this.setProperties({
       hoverDate: date,
@@ -254,18 +230,7 @@ export default class PolarisDatePicker extends Component {
    * Events
    */
   keyUp({ key }) {
-    let {
-      disableDatesBefore,
-      disableDatesAfter,
-      focusDate,
-      selected,
-    } = this.getProperties(
-      'disableDatesBefore',
-      'disableDatesAfter',
-      'focusDate',
-      'selected'
-    );
-
+    let { disableDatesBefore, disableDatesAfter, focusDate, selected } = this;
     let range = deriveRange(selected);
     let focusedDate = focusDate || (range && range.start);
 
@@ -335,8 +300,7 @@ export default class PolarisDatePicker extends Component {
   didReceiveAttrs() {
     super.didReceiveAttrs(...arguments);
 
-    let previousSelected = this.get('_previousSelected');
-    let selected = this.get('selected');
+    let { _previousSelected: previousSelected, selected } = this;
 
     if (
       previousSelected &&
@@ -355,13 +319,12 @@ export default class PolarisDatePicker extends Component {
       focusDate: new Date(endDate),
     });
 
-    this.get('onChange')(dateRange);
+    this.onChange(dateRange);
   }
 
   @action
   handleMonthChangeClick(month, year) {
-    this.get('onMonthChange')(month, year);
-
+    this.onMonthChange(month, year);
     this.set('focusDate', null);
   }
 }
