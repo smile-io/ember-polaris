@@ -1,11 +1,11 @@
-{{#polaris-button-group as |group|}}
-  {{#group.item}}
-    {{polaris-button text="Button 1" onClick=(action (mut dummy))}}
-  {{/group.item}}
+<PolarisButtonGroup as |group|>
+  <group.item>
+    <PolarisButton @text="Button 1" @onClick={{action (mut dummy)}} />
+  </group.item>
 
-  {{#group.item}}
-    {{polaris-button text="Button 2" onClick=(action (mut dummy))}}
-  {{/group.item}}
+  <group.item>
+    <PolarisButton @text="Button 2" @onClick={{action (mut dummy)}} />
+  </group.item>
 
-  {{polaris-button text="Button 2" onClick=(action (mut dummy))}}
-{{/polaris-button-group}}
+  <PolarisButton @text="Button 2" @onClick={{action (mut dummy)}} />
+</PolarisButtonGroup>

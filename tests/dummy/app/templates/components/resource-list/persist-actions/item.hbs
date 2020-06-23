@@ -1,28 +1,20 @@
-{{#polaris-resource-list/item
-  itemId=itemId
-  url=item.url
-  accessibilityLabel=accessibilityLabel
-  media=(component
+<PolarisResourceList::Item
+  @itemId={{itemId}}
+  @url={{item.url}}
+  @accessibilityLabel={{accessibilityLabel}}
+  @media={{component
     "polaris-avatar"
     customer=true
     size="medium"
     name=item.name
-  )
-  shortcutActions=(if item.latestOrderUrl
-    (array
-      (hash
-        text="View latest order"
-        url=item.latestOrderUrl
-      )
-    )
-  )
-  persistActions=true
-}}
+  }}
+  @shortcutActions={{if item.latestOrderUrl
+    (array (hash text="View latest order" url=item.latestOrderUrl))
+  }}
+  @persistActions={{true}}
+>
   <h3>
-    {{polaris-text-style
-      variation="strong"
-      text=item.name
-    }}
+    <PolarisTextStyle @variation="strong" @text={{item.name}} />
   </h3>
   <div>{{item.location}}</div>
-{{/polaris-resource-list/item}}
+</PolarisResourceList::Item>
