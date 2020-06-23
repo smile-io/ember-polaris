@@ -25,7 +25,7 @@ module('Integration | Component | polaris display text', function(hooks) {
 
     // Block form with element and size specified.
     await render(hbs`
-      {{#polaris-display-text tagName="h3" size="extraLarge"}}
+      {{#polaris-display-text htmlTag="h3" size="extraLarge"}}
         This is some BIG text
       {{/polaris-display-text}}
     `);

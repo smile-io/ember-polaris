@@ -3,7 +3,7 @@
   data-test-empty-state-details
 >
   <PolarisTextContainer>
-    <PolarisDisplayText @data-test-empty-state-heading={{true}} @size="medium" @text={{@heading}} />
+    <PolarisDisplayText data-test-empty-state-heading @size="medium" @text={{@heading}} />
     <div data-test-empty-state-content class="Polaris-EmptyState__Content">
       {{#if hasBlock}}
         {{yield}}

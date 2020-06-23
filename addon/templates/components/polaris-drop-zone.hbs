@@ -29,7 +29,7 @@
             {{#if (eq this.state.size "extraLarge")}}
               <PolarisDisplayText
                 @size="small"
-                @tagName="p"
+                @htmlTag="p"
                 @text={{this.state.overlayText}}
               />
             {{else if (or (eq this.state.size "medium") (eq this.state.size "large"))}}
@@ -47,7 +47,7 @@
             {{#if (eq this.state.size "extraLarge")}}
               <PolarisDisplayText
                 @size="small"
-                @tagName="p"
+                @htmlTag="p"
                 @text={{this.state.errorOverlayText}}
               />
             {{else if (or (eq this.state.size "medium") (eq this.state.size "large"))}}

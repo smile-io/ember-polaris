@@ -2,7 +2,7 @@
   class={{this.classes}}
   aria-label={{this.ariaLabel}}
   role={{this.role}}
-  data-test-skeleton-page={{true}}
+  data-test-skeleton-page
   ...attributes
 >
   <div
@@ -22,7 +22,7 @@
       >
         <PolarisSkeletonBodyText
           @lines={{1}}
-          data-test-skeleton-page-breadcrumb={{true}}
+          data-test-skeleton-page-breadcrumb
         />
       </div>
     {{/if}}
@@ -35,14 +35,14 @@
         {{#if this.hasTitle}}
           {{#if this.hasTitleText}}
             <PolarisDisplayText
-              data-test-skeleton-page-title-text={{true}}
-              @tagName="h1"
+              data-test-skeleton-page-title-text
+              @htmlTag="h1"
               @size="large"
               @text={{or @title ""}}
             />
           {{else}}
             <PolarisSkeletonDisplayText
-              data-test-skeleton-page-title-text={{true}}
+              data-test-skeleton-page-title-text
               @size="large"
             />
           {{/if}}
@@ -62,7 +62,7 @@
     {{#if this.dummySecondaryActions}}
       <div class="Polaris-SkeletonPage__Actions" data-test-skeleton-page-actions>
         {{#each this.dummySecondaryActions}}
-          <PolarisSkeletonPage::Action data-test-skeleton-page-action={{true}} />
+          <PolarisSkeletonPage::Action data-test-skeleton-page-action />
         {{/each}}
       </div>
     {{/if}}

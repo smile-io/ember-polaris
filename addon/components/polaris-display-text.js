@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-display-text';
 
 /**
@@ -11,28 +12,33 @@ import layout from '../templates/components/polaris-display-text';
  *
  *   {{polaris-display-text text="This is some text"}}
  *
- * Customised block usage (note the use of tagName instead of element - this is an ember thing):
+ * Customised block usage (note the use of htmlTag instead of element - this is an ember thing):
  *
- *   {{#polaris-display-text tagName="h1" size="extraLarge"}}
+ *   {{#polaris-display-text htmlTag="h1" size="extraLarge"}}
  *     This is some BIG text
  *   {{/polaris-display-text}}
  */
-export default Component.extend({
-  tagName: 'p',
-  classNames: ['Polaris-DisplayText'],
-  classNameBindings: ['sizeClassName'],
-
-  layout,
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDisplayText extends Component {
+  /**
+   * Name of element to use for text
+   * NOTE: Matches polaris-react's `element`
+   *
+   * @type {String}
+   * @default p
+   * @public
+   */
+  htmlTag = 'p';
 
   /**
    * Size of the text
    *
-   * @property size
    * @type {String}
    * @default medium
    * @public
    */
-  size: 'medium',
+  size = 'medium';
 
   /**
    * Content to display
@@ -41,20 +47,14 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
-  'data-test-display-text': true,
-
-  /**
-   * @private
-   */
-  sizeClassName: computed('size', function() {
-    const size = this.get('size');
-    return `Polaris-DisplayText--size${classify(size)}`;
-  }).readOnly(),
-});
+  @computed('size')
+  get sizeClassName() {
+    return `Polaris-DisplayText--size${classify(this.size)}`;
+  }
+}
