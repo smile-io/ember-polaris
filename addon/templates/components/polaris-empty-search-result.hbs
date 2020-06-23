@@ -1,10 +1,6 @@
-{{#polaris-stack
-  alignment="center"
-  vertical=true
-  as |stack|
-}}
-  {{#if withIllustration}}
-    {{#stack.item}}
+<PolarisStack @alignment="center" @vertical={{true}} as |stack|>
+  {{#if @withIllustration}}
+    <stack.item>
       {{!-- TODO: replace this with polaris-image when implemented. --}}
       <img
         src="/@smile-io/ember-polaris/illustrations/empty-search.svg"
@@ -12,19 +8,16 @@
         class="Polaris-EmptySearchResult__Image"
         draggable="false"
       >
-    {{/stack.item}}
+    </stack.item>
   {{/if}}
 
-  {{polaris-display-text
-    size="small"
-    text=title
-  }}
+  <PolarisDisplayText @size="small" @text={{@title}} />
 
-  {{#if description}}
-    {{#stack.item}}
-      {{#polaris-text-style variation="subdued"}}
-        <p>{{description}}</p>
-      {{/polaris-text-style}}
-    {{/stack.item}}
+  {{#if @description}}
+    <stack.item>
+      <PolarisTextStyle @variation="subdued">
+        <p>{{@description}}</p>
+      </PolarisTextStyle>
+    </stack.item>
   {{/if}}
-{{/polaris-stack}}
+</PolarisStack>
