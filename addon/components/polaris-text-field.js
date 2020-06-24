@@ -4,6 +4,7 @@ import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/string';
 import { typeOf, isPresent } from '@ember/utils';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import { getCode } from 'ember-keyboard';
 import { runTask, cancelTask } from 'ember-lifeline';
@@ -519,6 +520,15 @@ export default class PolarisTextFieldComponent extends Component {
       height: null,
       id,
     });
+
+    deprecate(
+      `[polaris-text-field] Passing 'dataTestTextField' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-text-field.dataTestTextField-arg',
+        until: '6.0.0',
+      }
+    );
   }
 
   @action
