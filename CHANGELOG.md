@@ -1,4 +1,90 @@
-# ember-polaris Changelog
+# Changelog
+
+## [Unreleased](https://github.com/smile-io/ember-polaris/tree/HEAD)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.1...HEAD)
+
+:boom: Breaking Change
+
+- Upgrade to Ember 3.18 [\#592](https://github.com/smile-io/ember-polaris/pull/592) ([vladucu](https://github.com/vladucu))
+
+:house: Internal
+
+- Configure Renovate [\#595](https://github.com/smile-io/ember-polaris/pull/595) ([renovate[bot]](https://github.com/apps/renovate))
+- Migrate to GitHub actions [\#594](https://github.com/smile-io/ember-polaris/pull/594) ([vladucu](https://github.com/vladucu))
+- \[Security\] Bump websocket-extensions from 0.1.3 to 0.1.4 [\#581](https://github.com/smile-io/ember-polaris/pull/581) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- \[Security\] Bump jquery from 3.4.1 to 3.5.0 [\#559](https://github.com/smile-io/ember-polaris/pull/559) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump broccoli-merge-trees from 3.0.2 to 4.2.0 [\#539](https://github.com/smile-io/ember-polaris/pull/539) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- \[Security\] Bump acorn from 5.7.3 to 5.7.4 [\#525](https://github.com/smile-io/ember-polaris/pull/525) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump node-sass from 4.13.0 to 4.13.1 [\#484](https://github.com/smile-io/ember-polaris/pull/484) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars from 4.0.9 to 4.2.2 [\#482](https://github.com/smile-io/ember-polaris/pull/482) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-resolver from 6.0.0 to 7.0.0 [\#471](https://github.com/smile-io/ember-polaris/pull/471) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @ember/optional-features from 1.1.0 to 1.3.0 [\#470](https://github.com/smile-io/ember-polaris/pull/470) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump eslint-plugin-prettier from 3.1.1 to 3.1.2 [\#466](https://github.com/smile-io/ember-polaris/pull/466) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-babel from 7.13.0 to 7.13.2 [\#465](https://github.com/smile-io/ember-polaris/pull/465) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-try from 1.3.0 to 1.4.0 [\#461](https://github.com/smile-io/ember-polaris/pull/461) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-template-lint from 1.8.2 to 1.10.0 [\#458](https://github.com/smile-io/ember-polaris/pull/458) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-source from 3.14.2 to 3.14.3 [\#457](https://github.com/smile-io/ember-polaris/pull/457) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars from 4.0.8 to 4.0.9 [\#456](https://github.com/smile-io/ember-polaris/pull/456) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump eslint from 6.7.1 to 6.7.2 [\#453](https://github.com/smile-io/ember-polaris/pull/453) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump resolve from 1.12.0 to 1.13.1 [\#441](https://github.com/smile-io/ember-polaris/pull/441) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-resolver from 5.3.0 to 6.0.0 [\#440](https://github.com/smile-io/ember-polaris/pull/440) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-test-selectors from 2.1.0 to 3.0.0 [\#439](https://github.com/smile-io/ember-polaris/pull/439) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump eslint-config-prettier from 6.5.0 to 6.7.0 [\#436](https://github.com/smile-io/ember-polaris/pull/436) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-keyboard from 4.0.0 to 5.0.0 [\#435](https://github.com/smile-io/ember-polaris/pull/435) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-source from 3.13.4 to 3.14.2 [\#434](https://github.com/smile-io/ember-polaris/pull/434) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump eslint from 6.6.0 to 6.7.1 [\#431](https://github.com/smile-io/ember-polaris/pull/431) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-template-lint from 1.8.1 to 1.8.2 [\#430](https://github.com/smile-io/ember-polaris/pull/430) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump husky from 3.0.9 to 3.1.0 [\#428](https://github.com/smile-io/ember-polaris/pull/428) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Linting tweaks [\#423](https://github.com/smile-io/ember-polaris/pull/423) ([vladucu](https://github.com/vladucu))
+- Fix linting issues [\#422](https://github.com/smile-io/ember-polaris/pull/422) ([vladucu](https://github.com/vladucu))
+- Upgrade ember-cli to 3.13 [\#421](https://github.com/smile-io/ember-polaris/pull/421) ([vladucu](https://github.com/vladucu))
+- Bump ember-qunit from 4.5.1 to 4.6.0 [\#420](https://github.com/smile-io/ember-polaris/pull/420) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump prettier from 1.18.2 to 1.19.1 [\#419](https://github.com/smile-io/ember-polaris/pull/419) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump chalk from 2.4.2 to 3.0.0 [\#415](https://github.com/smile-io/ember-polaris/pull/415) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @smile-io/ember-styleguide from 9.1.0 to 9.2.0 [\#414](https://github.com/smile-io/ember-polaris/pull/414) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @ember/optional-features from 1.0.0 to 1.1.0 [\#413](https://github.com/smile-io/ember-polaris/pull/413) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump node-sass from 4.12.0 to 4.13.0 [\#412](https://github.com/smile-io/ember-polaris/pull/412) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars from 4.0.5 to 4.0.8 [\#411](https://github.com/smile-io/ember-polaris/pull/411) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump husky from 3.0.5 to 3.0.9 [\#409](https://github.com/smile-io/ember-polaris/pull/409) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-auto-import from 1.5.2 to 1.5.3 [\#408](https://github.com/smile-io/ember-polaris/pull/408) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-inject-live-reload from 2.0.1 to 2.0.2 [\#407](https://github.com/smile-io/ember-polaris/pull/407) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars from 3.1.0 to 4.0.5 [\#404](https://github.com/smile-io/ember-polaris/pull/404) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars-inline-precompile from 3.0.0 to 3.0.1 [\#403](https://github.com/smile-io/ember-polaris/pull/403) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @ember/jquery from 0.6.1 to 1.1.0 [\#401](https://github.com/smile-io/ember-polaris/pull/401) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-resolver from 5.2.1 to 5.3.0 [\#397](https://github.com/smile-io/ember-polaris/pull/397) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-svg-jar from 1.2.2 to 2.2.3 [\#393](https://github.com/smile-io/ember-polaris/pull/393) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump @ember/optional-features from 0.7.0 to 1.0.0 [\#388](https://github.com/smile-io/ember-polaris/pull/388) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump eslint-plugin-smile-ember from 4.0.0 to 4.1.0 [\#386](https://github.com/smile-io/ember-polaris/pull/386) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-htmlbars-inline-precompile from 2.1.0 to 3.0.0 [\#384](https://github.com/smile-io/ember-polaris/pull/384) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump husky from 3.0.4 to 3.0.5 [\#381](https://github.com/smile-io/ember-polaris/pull/381) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-load-initializers from 2.0.0 to 2.1.0 [\#380](https://github.com/smile-io/ember-polaris/pull/380) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli-babel from 7.10.0 to 7.11.0 [\#378](https://github.com/smile-io/ember-polaris/pull/378) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- \[Security\] Bump mixin-deep from 1.3.1 to 1.3.2 [\#377](https://github.com/smile-io/ember-polaris/pull/377) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- \[Security\] Bump eslint-utils from 1.3.1 to 1.4.2 [\#376](https://github.com/smile-io/ember-polaris/pull/376) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Add dependabot config file and ignore some deps [\#375](https://github.com/smile-io/ember-polaris/pull/375) ([vladucu](https://github.com/vladucu))
+- Update to ember cli 3.12 [\#373](https://github.com/smile-io/ember-polaris/pull/373) ([vladucu](https://github.com/vladucu))
+- Bump husky from 3.0.2 to 3.0.3 [\#367](https://github.com/smile-io/ember-polaris/pull/367) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-resolver from 5.2.0 to 5.2.1 [\#366](https://github.com/smile-io/ember-polaris/pull/366) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-source from 3.10.2 to 3.12.0 [\#357](https://github.com/smile-io/ember-polaris/pull/357) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-cli from 3.10.1 to 3.11.0 [\#349](https://github.com/smile-io/ember-polaris/pull/349) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
+## [v5.2.1](https://github.com/smile-io/ember-polaris/tree/v5.2.1) (August 9, 2019)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.0...v5.2.1)
+
+:bug: Bug Fix
+
+- Fix component definition detection [\#365](https://github.com/smile-io/ember-polaris/pull/365) ([andrewpye](https://github.com/andrewpye))
+
+:house: Internal
+
+- Bump ember-resolver from 5.1.3 to 5.2.0 [\#356](https://github.com/smile-io/ember-polaris/pull/356) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump husky from 3.0.1 to 3.0.2 [\#354](https://github.com/smile-io/ember-polaris/pull/354) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump ember-qunit from 4.4.1 to 4.5.1 [\#352](https://github.com/smile-io/ember-polaris/pull/352) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Bump husky from 3.0.0 to 3.0.1 [\#350](https://github.com/smile-io/ember-polaris/pull/350) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
+
 
 ### v5.2.0 (July 11, 2019)
 - [#342](https://github.com/smile-io/ember-polaris/pull/342) [INTERNAL] Bump fs-extra from 8.0.1 to 8.1.0 & ember-auto-import from 1.4.1 to 1.5.1
