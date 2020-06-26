@@ -394,7 +394,7 @@ export default class PolarisButtonComponent extends Component {
       !this.externalClasses,
       {
         id: 'ember-polaris.polaris-button.externalClasses-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

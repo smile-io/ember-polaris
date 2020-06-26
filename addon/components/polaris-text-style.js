@@ -98,7 +98,7 @@ export default class PolarisTextStyle extends Component {
       !this.classes,
       {
         id: 'ember-polaris.polaris-text-style.classes-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

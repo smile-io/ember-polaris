@@ -139,7 +139,7 @@ export default class PolarisBadge extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-badge.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

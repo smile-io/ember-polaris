@@ -46,7 +46,7 @@ export default class PolarisConnected extends Component {
       this.dataTestConnected === true,
       {
         id: 'ember-polaris.polaris-connected.dataTestConnected-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
     this.dataTestConnected = this.dataTestConnected || true;

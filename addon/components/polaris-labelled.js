@@ -108,7 +108,7 @@ export default class PolarisLabelledComponent extends Component {
       this.dataTestLabelled === true,
       {
         id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
     this.dataTestLabelled = this.dataTestLabelled || true;

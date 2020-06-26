@@ -526,7 +526,7 @@ export default class PolarisTextFieldComponent extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-text-field.dataTestTextField-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

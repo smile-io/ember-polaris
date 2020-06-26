@@ -144,7 +144,7 @@ export default class PolarisStackComponent extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-stack.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

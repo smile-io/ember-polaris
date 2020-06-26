@@ -246,7 +246,7 @@ export default class PolarisAvatar extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-avatar.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }
