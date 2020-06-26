@@ -28,7 +28,6 @@ export default class HuePicker extends Component {
   /**
    * The current hue value
    *
-   * @property hue
    * @type {Number}
    * @default 0
    * @public
@@ -38,7 +37,6 @@ export default class HuePicker extends Component {
   /**
    * Callback when hue is changed
    *
-   * @property onChange
    * @type {function}
    * @default null
    * @public

@@ -25,7 +25,6 @@ export default Mixin.create({
   /**
    * Generated unique ID to be set on the rendered SVG element.
    *
-   * @property svgElementId
    * @type {string}
    */
   svgElementId: computed(function() {
@@ -37,7 +36,6 @@ export default Mixin.create({
 
   /**
    *
-   * @property svgElement
    * @type {DOMNode}
    */
   get svgElement() {

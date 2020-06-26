@@ -13,7 +13,6 @@ export const FilterType = {
 @templateLayout(layout)
 export default class FilterValueSelector extends Component {
   /**
-   * @property filter
    * @type {Object}
    * @default null
    * @public
@@ -21,7 +20,6 @@ export default class FilterValueSelector extends Component {
   filter = null;
 
   /**
-   * @property filterKey
    * @type {String}
    * @default null
    * @public
@@ -29,7 +27,6 @@ export default class FilterValueSelector extends Component {
   filterKey = null;
 
   /**
-   * @property value
    * @type {String}
    * @default null
    * @public
@@ -37,7 +34,6 @@ export default class FilterValueSelector extends Component {
   value = null;
 
   /**
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public
@@ -45,7 +41,6 @@ export default class FilterValueSelector extends Component {
   onChange() {}
 
   /**
-   * @property onFilterKeyChange
    * @type {Function}
    * @default noop
    * @public

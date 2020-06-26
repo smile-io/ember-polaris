@@ -25,7 +25,6 @@ export default class PolarisPopover extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -35,7 +34,6 @@ export default class PolarisPopover extends Component {
   /**
    * The preferred direction to open the popover
    *
-   * @property preferredPosition
    * @type {String}
    * @default 'below'
    * @public
@@ -47,7 +45,6 @@ export default class PolarisPopover extends Component {
    *
    * TODO: not implemented
    *
-   * @property active
    * @type {Boolean}
    * @default false
    * @public
@@ -59,7 +56,6 @@ export default class PolarisPopover extends Component {
    *
    * TODO: not implemented
    *
-   * @property activatorWrapper
    * @type {String}
    * @default null
    * @public
@@ -71,7 +67,6 @@ export default class PolarisPopover extends Component {
    *
    * TODO: not implemented
    *
-   * @property preventAutofocus
    * @type {Boolean}
    * @default false
    * @public
@@ -81,7 +76,6 @@ export default class PolarisPopover extends Component {
   /**
    * Automatically add wrap content in a section
    *
-   * @property sectioned
    * @type {Boolean}
    * @default false
    * @public
@@ -91,7 +85,6 @@ export default class PolarisPopover extends Component {
   /**
    * Allow popover to stretch to the full width of its activator
    *
-   * @property fullWidth
    * @type {Boolean}
    * @default false
    * @public
@@ -101,7 +94,6 @@ export default class PolarisPopover extends Component {
   /**
    * Allow popover to stretch to fit content vertically
    *
-   * @property fullHeight
    * @type {Boolean}
    * @default false
    * @public
@@ -111,7 +103,6 @@ export default class PolarisPopover extends Component {
   /**
    * Callback when popover is closed
    *
-   * @property onClose
    * @type {Function}
    * @default noop
    * @public

@@ -17,7 +17,6 @@ export default class PolarisColorPicker extends Component {
   /**
    * The currently selected color
    *
-   * @property color
    * @type {Object}
    * @default null
    * @public
@@ -27,8 +26,7 @@ export default class PolarisColorPicker extends Component {
   /**
    * Allow user to select an alpha value
    *
-   * @property allowAlpha
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -37,8 +35,7 @@ export default class PolarisColorPicker extends Component {
   /**
    * Callback when color is selected
    *
-   * @property onChange
-   * @type {function}
+   * @type {Function}
    * @default null
    * @public
    */

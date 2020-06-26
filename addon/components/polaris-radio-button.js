@@ -14,7 +14,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Label for the radio button
    *
-   * @property label
    * @type {String|Component}
    * @default null
    * @public
@@ -24,7 +23,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Visually hide the label
    *
-   * @property labelHidden
    * @type {boolean}
    * @default false
    * @public
@@ -34,7 +32,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Radio button is selected
    *
-   * @property checked
    * @type {boolean}
    * @default false
    * @public
@@ -44,7 +41,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Additional text to aid in use
    *
-   * @property helpText
    * @type {string or React.ReactNode}
    * @default null
    * @public
@@ -54,7 +50,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * ID for form input
    *
-   * @property inputId
    * @type {string}
    * @default null
    * @public
@@ -64,7 +59,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Name for form input
    *
-   * @property name
    * @type {string}
    * @default null
    * @public
@@ -74,7 +68,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Value for form input
    *
-   * @property value
    * @type {string}
    * @default null
    * @public
@@ -84,7 +77,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Disable the radio button
    *
-   * @property disabled
    * @type {boolean}
    * @default false
    * @public
@@ -94,7 +86,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Callback when radio button is toggled
    *
-   * @property onChange
    * @type {function}
    * @default noop
    * @public
@@ -104,7 +95,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Callback when radio button is focussed
    *
-   * @property onFocus
    * @type {function}
    * @default noop
    * @public
@@ -114,7 +104,6 @@ export default class PolarisRadioButton extends Component {
   /**
    * Callback when focus is removed
    *
-   * @property onBlur
    * @type {function}
    * @default noop
    * @public

@@ -9,28 +9,24 @@ import layout from '../../templates/components/polaris-data-table/cell';
 @templateLayout(layout)
 export default class Cell extends Component {
   /**
-   * @property height
    * @type {Number}
    * @public
    */
   height = null;
 
   /**
-   * @property text
    * @type {String|Component}
    * @public
    */
   text = null;
 
   /**
-   * @property contentType
    * @type {String}
    * @public
    */
   contentType = null;
 
   /**
-   * @property fixed
    * @type {boolean}
    * @default false
    * @public
@@ -38,7 +34,6 @@ export default class Cell extends Component {
   fixed = false;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
@@ -46,7 +41,6 @@ export default class Cell extends Component {
   truncate = false;
 
   /**
-   * @property header
    * @type {boolean}
    * @default false
    * @public
@@ -54,7 +48,6 @@ export default class Cell extends Component {
   header = false;
 
   /**
-   * @property total
    * @type {boolean}
    * @default false
    * @public
@@ -62,7 +55,6 @@ export default class Cell extends Component {
   total = false;
 
   /**
-   * @property footer
    * @type {boolean}
    * @default false
    * @public
@@ -70,7 +62,6 @@ export default class Cell extends Component {
   footer = false;
 
   /**
-   * @property sorted
    * @type {boolean}
    * @default false
    * @public
@@ -78,7 +69,6 @@ export default class Cell extends Component {
   sorted = false;
 
   /**
-   * @property sortable
    * @type {boolean}
    * @default false
    * @public
@@ -86,21 +76,18 @@ export default class Cell extends Component {
   sortable = false;
 
   /**
-   * @property sortDirection
    * @type {String}
    * @public
    */
   sortDirection = null;
 
   /**
-   * @property defaultSortDirection
    * @type {String}
    * @public
    */
   defaultSortDirection = null;
 
   /**
-   * @property onSort
    * @type {function}
    * @default no-op
    * @public
@@ -108,7 +95,6 @@ export default class Cell extends Component {
   onSort() {}
 
   /**
-   * @property cellClassNames
    * @type {String}
    * @private
    */
@@ -172,7 +158,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property headerClassNames
    * @type {String}
    * @private
    */
@@ -194,7 +179,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property style
    * @type {String}
    * @private
    */
@@ -205,7 +189,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property direction
    * @type {String}
    * @private
    */
@@ -216,7 +199,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property source
    * @type {String}
    * @private
    */
@@ -226,7 +208,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property oppositeDirection
    * @type {String}
    * @private
    */
@@ -236,7 +217,6 @@ export default class Cell extends Component {
   }
 
   /**
-   * @property sortAccessibilityLabel
    * @type {String}
    * @private
    */

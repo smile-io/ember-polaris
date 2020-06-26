@@ -41,7 +41,6 @@ export default class PolarisTextStyle extends Component {
    *
    * Possible values: positive, negative, strong, subdued
    *
-   * @property variation
    * @type {String}
    * @default: null
    * @public
@@ -55,7 +54,6 @@ export default class PolarisTextStyle extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default: null
    * @public

@@ -11,7 +11,6 @@ export default class FilterControl extends Component.extend(
   context.ConsumerMixin
 ) {
   /**
-   * @property searchValue
    * @type {String}
    * @default null
    * @public
@@ -19,7 +18,6 @@ export default class FilterControl extends Component.extend(
   searchValue = null;
 
   /**
-   * @property appliedFilters
    * @type {Object[]}
    * @default null
    * @public
@@ -27,7 +25,6 @@ export default class FilterControl extends Component.extend(
   appliedFilters = null;
 
   /**
-   * @property additionalAction
    * @type {Object}
    * @default null
    * @public
@@ -35,7 +32,6 @@ export default class FilterControl extends Component.extend(
   additionalAction = null;
 
   /**
-   * @property focused
    * @type {Boolean}
    * @default false
    * @public
@@ -43,7 +39,6 @@ export default class FilterControl extends Component.extend(
   focused = false;
 
   /**
-   * @property filters
    * @type {Object[]}
    * @default null
    * @public
@@ -51,7 +46,6 @@ export default class FilterControl extends Component.extend(
   filters = null;
 
   /**
-   * @property onSearchBlur
    * @type {Function}
    * @default noop
    * @public
@@ -59,7 +53,6 @@ export default class FilterControl extends Component.extend(
   onSearchBlur() {}
 
   /**
-   * @property onSearchChange
    * @type {Function}
    * @default noop
    * @public
@@ -67,7 +60,6 @@ export default class FilterControl extends Component.extend(
   onSearchChange() {}
 
   /**
-   * @property onFiltersChange
    * @type {Function}
    * @default noop
    * @public
@@ -81,7 +73,6 @@ export default class FilterControl extends Component.extend(
    * so will try creating an action from `additionalAction.onAction`
    * even if it doesn't exist, which leads to an error.
    *
-   * @property additionalActionButton
    * @type {Object}
    * @private
    */
@@ -114,7 +105,6 @@ export default class FilterControl extends Component.extend(
    * List of appliedFilters in a format
    * for rendering in the template
    *
-   * @property appliedFiltersForRender
    * @type {Object[]}
    * @private
    */

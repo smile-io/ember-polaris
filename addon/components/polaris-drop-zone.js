@@ -32,7 +32,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default null
    * @public
-   * @property id
    */
   id = null;
 
@@ -42,7 +41,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default null
    * @public
-   * @property label
    */
   label = null;
 
@@ -52,7 +50,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Object}
    * @default null
    * @public
-   * @property labelAction
    */
   labelAction = null;
 
@@ -62,7 +59,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property labelHidden
    */
   labelHidden = false;
 
@@ -72,7 +68,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default null
    * @public
-   * @property accept
    */
   accept = null;
 
@@ -82,7 +77,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property active
    */
   active = false;
 
@@ -92,7 +86,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default true
    * @public
-   * @property allowMultiple
    */
   allowMultiple = true;
 
@@ -102,7 +95,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property disabled
    */
   disabled = false;
 
@@ -112,7 +104,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property dropOnPage
    */
   dropOnPage = false;
 
@@ -122,7 +113,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property error
    */
   error = false;
 
@@ -132,7 +122,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default null
    * @public
-   * @property errorOverlayText
    */
   errorOverlayText = null;
 
@@ -142,7 +131,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default false
    * @public
-   * @property openFileDialog
    */
   openFileDialog = false;
 
@@ -152,7 +140,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default true
    * @public
-   * @property outline
    */
   outline = true;
 
@@ -162,7 +149,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Boolean}
    * @default true
    * @public
-   * @property overlay
    */
   overlay = true;
 
@@ -172,7 +158,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default null
    * @public
-   * @property overlayText
    */
   overlayText = null;
 
@@ -182,7 +167,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {String}
    * @default 'file'
    * @public
-   * @property type
    */
   type = 'file';
 
@@ -193,7 +177,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default null
    * @public
-   * @property customValidator
    */
   customValidator = null;
 
@@ -204,7 +187,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default null
    * @public
-   * @property onClick
    */
   onClick = null;
 
@@ -215,7 +197,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragEnter
    */
   onDragEnter() {}
 
@@ -226,7 +207,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragLeave
    */
   onDragLeave() {}
 
@@ -237,7 +217,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragOver
    */
   onDragOver() {}
 
@@ -248,7 +227,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDrop
    */
   onDrop() {}
 
@@ -259,7 +237,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDropAccepted
    */
   onDropAccepted() {}
 
@@ -270,7 +247,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDropRejected
    */
   onDropRejected() {}
 
@@ -281,7 +257,6 @@ export default class PolarisDropZoneComponent extends Component.extend(
    * @type {Function}
    * @default no-op
    * @public
-   * @property onFileDialogClose
    */
   onFileDialogClose() {}
 

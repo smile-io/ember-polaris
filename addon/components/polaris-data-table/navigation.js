@@ -6,28 +6,24 @@ import layout from '../../templates/components/polaris-data-table/navigation';
 @templateLayout(layout)
 export default class Navigation extends Component {
   /**
-   * @property isScrolledFarthestLeft
    * @type {Boolean}
    * @public
    */
   isScrolledFarthestLeft = null;
 
   /**
-   * @property isScrolledFarthestRight
    * @type {Boolean}
    * @public
    */
   isScrolledFarthestRight = null;
 
   /**
-   * @property columnVisibilityData
    * @type {Object[]}
    * @public
    */
   columnVisibilityData = null;
 
   /**
-   * @property navigateTableLeft
    * @type {Function}
    * @default no-op
    * @public
@@ -35,7 +31,6 @@ export default class Navigation extends Component {
   navigateTableLeft() {}
 
   /**
-   * @property navigateTableRight
    * @type {Function}
    * @default no-op
    * @public

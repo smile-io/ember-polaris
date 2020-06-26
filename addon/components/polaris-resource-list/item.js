@@ -13,7 +13,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * Unique identifier for the item
    *
-   * @property itemId
    * @type {String}
    * @default null
    * @public
@@ -23,7 +22,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * Visually hidden text for screen readers
    *
-   * @property accessibilityLabel
    * @type {String}
    * @default null
    * @public
@@ -33,7 +31,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * Id of the element the item onClick controls
    *
-   * @property ariaControls
    * @type {String}
    * @default null
    * @public
@@ -43,7 +40,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * Tells screen reader the controlled element is expanded
    *
-   * @property ariaExpanded
    * @type {Boolean}
    * @default false
    * @public
@@ -51,7 +47,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   ariaExpanded = false;
 
   /**
-   * @property media
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -59,7 +54,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   media = null;
 
   /**
-   * @property persistActions
    * @type {Boolean}
    * @default false
    * @public
@@ -67,7 +61,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   persistActions = false;
 
   /**
-   * @property shortcutActions
    * @type {Object[]}
    * @default null
    * @public
@@ -75,7 +68,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   shortcutActions = null;
 
   /**
-   * @property children
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -83,7 +75,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   children = null;
 
   /**
-   * @property url
    * @type {String}
    * @default null
    * @public
@@ -91,7 +82,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   url = null;
 
   /**
-   * @property onClick
    * @type {Function}
    * @default null
    * @public
@@ -99,7 +89,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   onClick = null;
 
   /**
-   * @property focused
    * @type {Boolean}
    * @default false
    * @private
@@ -107,7 +96,6 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   focused = false;
 
   /**
-   * @property focusedInner
    * @type {Boolean}
    * @default false
    * @private

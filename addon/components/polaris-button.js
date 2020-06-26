@@ -28,7 +28,6 @@ export default class PolarisButtonComponent extends Component {
    * in which case the block content will be used
    * instead of `text`.
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -38,7 +37,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * A destination to link to, rendered in the href attribute of a link
    *
-   * @property url
    * @type {String}
    * @default null
    * @public
@@ -48,7 +46,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * A unique identifier for the button
    *
-   * @property id
    * @type {String}
    * @default null
    * @public
@@ -59,7 +56,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Provides extra visual weight and identifies the primary action in a set of buttons
    *
-   * @property primary
    * @type {Boolean}
    * @default false
    * @public
@@ -69,7 +65,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Indicates a dangerous or potentially negative action
    *
-   * @property destructive
    * @type {Boolean}
    * @default false
    * @public
@@ -79,7 +74,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Disables the button, disallowing merchant interaction
    *
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -89,7 +83,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Replaces button text with a spinner while a background action is being performed
    *
-   * @property loading
    * @type {Boolean}
    * @default false
    * @public
@@ -99,7 +92,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Changes the size of the button, giving it more or less padding
    *
-   * @property size
    * @type {String}
    * @default 'medium'
    * @public
@@ -109,7 +101,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Gives the button a subtle alternative to the default button styling, appropriate for certain backdrops
    *
-   * @property outline
    * @type {Boolean}
    * @default false
    * @public
@@ -119,7 +110,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Allows the button to grow to the width of its container
    *
-   * @property fullWidth
    * @type {Boolean}
    * @default false
    * @public
@@ -129,7 +119,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Displays the button with a disclosure icon
    *
-   * @property disclosure
    * @type {Boolean}
    * @default false
    * @public
@@ -139,7 +128,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Allows the button to submit a form
    *
-   * @property submit
    * @type {Boolean}
    * @default false
    * @public
@@ -149,7 +137,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Renders a button that looks like a link
    *
-   * @property plain
    * @type {Boolean}
    * @default false
    * @public
@@ -159,7 +146,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Makes `plain` and `outline` Button colors (text, borders, icons) the same as the current text color. Also adds an underline to `plain` Buttons
    *
-   * @property monochrome
    * @type {Boolean}
    * @default false
    * @public
@@ -169,7 +155,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Forces url to open in a new tab
    *
-   * @property external
    * @type {Boolean}
    * @default false
    * @public
@@ -179,7 +164,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
    *
-   * @property download
    * @type {String/Boolean}
    * @default null
    * @public
@@ -189,7 +173,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Icon to display to the left of the button content
    *
-   * @property icon
    * @type {String|Component}
    * @default null
    * @public
@@ -199,7 +182,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Visually hidden text for screen readers
    *
-   * @property accessibilityLabel
    * @type {String}
    * @default null
    * @public
@@ -209,7 +191,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Id of the element the button controls
    *
-   * @property ariaControls
    * @type {String}
    * @default null
    * @public
@@ -219,7 +200,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Tells screen reader the controlled element is expanded
    *
-   * @property ariaExpanded
    * @type {Boolean}
    * @default false
    * @public
@@ -229,7 +209,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Tells screen reader the element is pressed
    *
-   * @property ariaPressed
    * @type {Boolean}
    * @default false
    * @public
@@ -239,7 +218,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when clicked
    *
-   * @property onClick
    * @type {Function}
    * @default noop
    * @public
@@ -249,7 +227,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when button becomes focussed
    *
-   * @property onFocus
    * @type {Function}
    * @default noop
    * @public
@@ -259,7 +236,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when focus leaves button
    *
-   * @property onBlur
    * @type {Function}
    * @default noop
    * @public
@@ -269,7 +245,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when a keypress event is registered on the button
    *
-   * @property onKeyPress
    * @type {Function}
    * @default noop
    * @public
@@ -279,7 +254,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when a keyup event is registered on the button
    *
-   * @property onKeyUp
    * @type {Function}
    * @default noop
    * @public
@@ -289,7 +263,6 @@ export default class PolarisButtonComponent extends Component {
   /**
    * Callback when a keydown event is registered on the button
    *
-   * @property onKeyDown
    * @type {Function}
    * @default noop
    * @public

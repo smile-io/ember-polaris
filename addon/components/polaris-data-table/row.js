@@ -8,49 +8,42 @@ import layout from '../../templates/components/polaris-data-table/row';
 @templateLayout(layout)
 export default class Row extends Component {
   /**
-   * @property row
    * @type {Array}
    * @public
    */
   row = null;
 
   /**
-   * @property index
    * @type {Number}
    * @public
    */
   index = null;
 
   /**
-   * @property totals
    * @type {Number[]}
    * @public
    */
   totals = null;
 
   /**
-   * @property heights
    * @type {Number[]}
    * @public
    */
   heights = null;
 
   /**
-   * @property footerContent
    * @type {String|Number|Component}
    * @public
    */
   footerContent = null;
 
   /**
-   * @property contentTypes
    * @type {String[]}
    * @public
    */
   contentTypes = null;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
@@ -58,7 +51,6 @@ export default class Row extends Component {
   truncate = false;
 
   /**
-   * @property bodyCellHeights
    * @type {Number[]}
    * @private
    */

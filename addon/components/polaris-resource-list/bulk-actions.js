@@ -19,7 +19,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {String}
    * @default null
-   * @property accessibilityLabel
    * @public
    */
   accessibilityLabel = null;
@@ -29,7 +28,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {String}
    * @default ''
-   * @property label
    * @public
    */
   label = '';
@@ -39,7 +37,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Boolean|String}
    * @default null
-   * @property selected
    * @public
    */
   selected = null;
@@ -49,7 +46,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Boolean}
    * @default false
-   * @property selectMode
    * @public
    */
   selectMode = false;
@@ -59,7 +55,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Object[]}
    * @default null
-   * @property promotedActions
    * @public
    */
   promotedActions = null;
@@ -69,7 +64,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Object[]}
    * @default null
-   * @property actionsCollection
    * @public
    */
   actionsCollection = null;
@@ -79,7 +73,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {String}
    * @default null
-   * @property paginatedSelectAllText
    * @public
    */
   paginatedSelectAllText = null;
@@ -89,7 +82,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Function}
    * @default null
-   * @property paginatedSelectAllAction
    * @public
    */
   paginatedSelectAllAction = null;
@@ -99,7 +91,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Boolean}
    * @default null
-   * @property disabled
    * @public
    */
   disabled = null;
@@ -109,7 +100,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Function}
    * @default noop
-   * @property onSelectModeToggle
    * @public
    */
   onSelectModeToggle(/* selectMode **/) {}
@@ -119,7 +109,6 @@ export default class BulkActions extends Component.extend(
    *
    * @type {Function}
    * @default noop
-   * @property onToggleAll
    * @public
    */
   onToggleAll() {}

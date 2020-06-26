@@ -21,7 +21,6 @@ export default class PolarisProgressBar extends Component {
    * The progression of certain tasks
    *
    * @public
-   * @property progress
    * @type {Number}
    * @default: 0
    */
@@ -31,7 +30,6 @@ export default class PolarisProgressBar extends Component {
    * Size of progressbar
    *
    * @public
-   * @property size
    * @type {String}
    * @default: 'medium'
    */

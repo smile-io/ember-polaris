@@ -16,7 +16,6 @@ export default class PolarisVisuallyHiddenComponent extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {string}
    * @default: null
    * @public

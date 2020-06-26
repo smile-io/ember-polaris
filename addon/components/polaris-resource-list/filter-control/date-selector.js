@@ -24,7 +24,6 @@ export default class DateSelector extends Component {
   /**
    * Can be 'past', 'future' or 'full'.
    *
-   * @property dateOptionType
    * @type {String}
    * @default 'full'
    * @public
@@ -32,7 +31,6 @@ export default class DateSelector extends Component {
   dateOptionType = 'full';
 
   /**
-   * @property filterValue
    * @type {String}
    * @default null
    * @public
@@ -40,7 +38,6 @@ export default class DateSelector extends Component {
   filterValue = null;
 
   /**
-   * @property filterKey
    * @type {String}
    * @default null
    * @public
@@ -48,7 +45,6 @@ export default class DateSelector extends Component {
   filterKey = null;
 
   /**
-   * @property filterMinKey
    * @type {String}
    * @default null
    * @public
@@ -56,7 +52,6 @@ export default class DateSelector extends Component {
   filterMinKey = null;
 
   /**
-   * @property filterMaxKey
    * @type {String}
    * @default null
    * @public
@@ -64,7 +59,6 @@ export default class DateSelector extends Component {
   filterMaxKey = null;
 
   /**
-   * @property onFilterValueChange
    * @type {Function}
    * @default noop
    * @public
@@ -72,7 +66,6 @@ export default class DateSelector extends Component {
   onFilterValueChange() {}
 
   /**
-   * @property onFilterKeyChange
    * @type {Function}
    * @default noop
    * @public
@@ -80,7 +73,6 @@ export default class DateSelector extends Component {
   onFilterKeyChange() {}
 
   /**
-   * @property selectedDate
    * @type {Date}
    * @default null
    * @private
@@ -88,7 +80,6 @@ export default class DateSelector extends Component {
   selectedDate = null;
 
   /**
-   * @property userInputDate
    * @type {String}
    * @default null
    * @private
@@ -96,7 +87,6 @@ export default class DateSelector extends Component {
   userInputDate = null;
 
   /**
-   * @property userInputDateError
    * @type {String}
    * @default null
    * @private
@@ -106,14 +96,12 @@ export default class DateSelector extends Component {
   /**
    * Month enum value, either string day of month or integer index (0 = Sunday).
    *
-   * @property datePickerMonth
    * @type {String|Number}
    * @private
    */
   datePickerMonth = null;
 
   /**
-   * @property datePickerYear
    * @type {Number}
    * @private
    */
@@ -122,7 +110,6 @@ export default class DateSelector extends Component {
   /**
    * Will be set on initialisation.
    *
-   * @property initialConsumerFilterKey
    * @type {String}
    * @default null
    * @private

@@ -8,30 +8,27 @@ export default class CardSectionComponent extends Component {
   /**
    * Title for the section
    *
-   * @property title
+   * @type {String}
+   * @default null
    * @public
-   * @type {string}
-   * @default: null
    */
   title = null;
 
   /**
    * A less prominent section
    *
-   * @property subdued
+   * @type {Boolean}
+   * @default false
    * @public
-   * @type {boolean}
-   * @default: false
    */
   subdued = false;
 
   /**
    * A full-width section without any padding
    *
-   * @property fullWidth
-   * @public
-   * @type {boolean}
+   * @type {Boolean}
    * @default: false
+   * @public
    */
   fullWidth = false;
 
@@ -42,10 +39,9 @@ export default class CardSectionComponent extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
+   * @type {String}
+   * @default null
    * @public
-   * @type {string}
-   * @default: null
    */
   text = null;
 }

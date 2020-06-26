@@ -8,7 +8,6 @@ import layout from '../../../templates/components/polaris-resource-list/filter-c
 @templateLayout(layout)
 export default class FilterCreator extends Component {
   /**
-   * @property filters
    * @type {Object[]}
    * @default null
    * @public
@@ -18,7 +17,6 @@ export default class FilterCreator extends Component {
   /**
    * Object with `singular` and `plural` properties.
    *
-   * @property resourceName
    * @type {Object}
    * @default null
    * @public
@@ -26,7 +24,6 @@ export default class FilterCreator extends Component {
   resourceName = null;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -34,7 +31,6 @@ export default class FilterCreator extends Component {
   disabled = false;
 
   /**
-   * @property onAddFilter
    * @type {Function}
    * @default noop
    * @public
@@ -42,7 +38,6 @@ export default class FilterCreator extends Component {
   onAddFilter() {}
 
   /**
-   * @property selectedFilter
    * @type {Object}
    * @default null
    * @private
@@ -50,7 +45,6 @@ export default class FilterCreator extends Component {
   selectedFilter = null;
 
   /**
-   * @property selectedFilterKey
    * @type {String}
    * @default null
    * @private
@@ -58,7 +52,6 @@ export default class FilterCreator extends Component {
   selectedFilterKey = null;
 
   /**
-   * @property selectedFilterValue
    * @type {String}
    * @default null
    * @private

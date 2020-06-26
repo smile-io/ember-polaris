@@ -8,7 +8,6 @@ export default class CardSectionHeaderComponent extends Component {
   /**
    * Title for the section
    *
-   * @property title
    * @type {String|Component}
    * @default: null
    * @public
@@ -22,7 +21,6 @@ export default class CardSectionHeaderComponent extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default: null
    * @public

@@ -30,7 +30,6 @@ export default class AlphaPicker extends Component {
   /**
    * The current alpha value
    *
-   * @property alpha
    * @type {Number}
    * @default 1
    */

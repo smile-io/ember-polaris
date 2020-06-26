@@ -13,7 +13,6 @@ export default class DropZoneState {
    *
    * @type {String}
    * @default 'file'
-   * @property type
    */
   type = 'file';
 
@@ -21,7 +20,6 @@ export default class DropZoneState {
    * The size of the dropzone
    * @type {String}
    * @default 'extraLarge'
-   * @property size
    */
   size = 'extraLarge';
 
@@ -29,7 +27,6 @@ export default class DropZoneState {
    * True, when dragging in progress
    * @type {Boolean}
    * @default false
-   * @property dragging
    */
   dragging = false;
 
@@ -37,7 +34,6 @@ export default class DropZoneState {
    * True, when dropzone has errors
    * @type {Boolean}
    * @default false
-   * @property error
    */
   error = false;
 
@@ -45,7 +41,6 @@ export default class DropZoneState {
    * Number of files
    * @type {Number}
    * @default 0
-   * @property numFiles
    */
   numFiles = 0;
 

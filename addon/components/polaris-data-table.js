@@ -31,7 +31,6 @@ export default class PolarisDataTable extends Component.extend(
    * List of data types, which determines content alignment for each column.
    * Data types are "text," which aligns left, or "numeric," which aligns right.
    *
-   * @property columnContentTypes
    * @type {String[]}
    * @public
    */
@@ -40,7 +39,6 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * List of column headings.
    *
-   * @property headings
    * @type {String[]}
    * @public
    */
@@ -50,7 +48,6 @@ export default class PolarisDataTable extends Component.extend(
    * List of numeric column totals, highlighted in the table’s header below column headings.
    * Use empty strings as placeholders for columns with no total.
    *
-   * @property totals
    * @type {Array}
    * @public
    */
@@ -59,7 +56,6 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * Lists of data points which map to table body rows.
    *
-   * @property rows
    * @type {Array[]}
    * @public
    */
@@ -68,7 +64,6 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * Truncate content in first column instead of wrapping.
    *
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
@@ -78,7 +73,6 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * Content centered in the full width cell of the table footer row.
    *
-   * @property footerContent
    * @type {String|Number|Component}
    * @public
    */
@@ -88,7 +82,6 @@ export default class PolarisDataTable extends Component.extend(
    * List of booleans, which maps to whether sorting is enabled or not for each column.
    * Defaults to false for all columns.
    *
-   * @property sortable
    * @type {boolean[]}
    * @public
    */
@@ -98,7 +91,6 @@ export default class PolarisDataTable extends Component.extend(
    * The direction to sort the table rows on first click or keypress of a sortable column heading.
    * Defaults to ascending.
    *
-   * @property defaultSortDirection
    * @type {String}
    * @default 'ascending'
    * @public
@@ -109,7 +101,6 @@ export default class PolarisDataTable extends Component.extend(
    * The index of the heading that the table rows are initially sorted by.
    * Defaults to the first column.
    *
-   * @property initialSortColumnIndex
    * @type {Number}
    * @default 0
    * @public
@@ -119,100 +110,86 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * Callback fired on click or keypress of a sortable column heading.
    *
-   * @property onSort
-   * @type {function}
+   * @type {Function}
    * @default no-op
    * @public
    */
   onSort(/* headingIndex, direction */) {}
 
   /**
-   * @property collapsed
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @private
    */
   collapsed = false;
 
   /**
-   * @property columnVisibilityData
    * @type {Object[]}
    * @private
    */
   columnVisibilityData = [];
 
   /**
-   * @property previousColumn
    * @type {Object}
    * @private
    */
   previousColumn = null;
 
   /**
-   * @property currentColumn
    * @type {Object}
    * @private
    */
   currentColumn = null;
 
   /**
-   * @property sortedColumnIndex
    * @type {Number}
    * @private
    */
   sortedColumnIndex = null;
 
   /**
-   * @property sortDirection
    * @type {String}
    * @private
    */
   sortDirection = null;
 
   /**
-   * @property heights
    * @type {Number[]}
    * @private
    */
   heights = [];
 
   /**
-   * @property fixedColumnWidth
    * @type {Number}
    * @private
    */
   fixedColumnWidth = null;
 
   /**
-   * @property preservedScrollPosition
    * @type {Object}
    * @private
    */
   preservedScrollPosition = {};
 
   /**
-   * @property isScrolledFarthestLeft
    * @type {Boolean}
    * @private
    */
   isScrolledFarthestLeft = true;
 
   /**
-   * @property isScrolledFarthestRight
    * @type {Boolean}
    * @private
    */
   isScrolledFarthestRight = false;
 
   /**
-   * @property totalsRowHeading
    * @type {String}
    * @private
    */
   totalsRowHeading = 'Totals';
 
   /**
-   * @property dataTable
    * @type {HTMLElement}
    * @private
    */
@@ -220,7 +197,6 @@ export default class PolarisDataTable extends Component.extend(
   dataTable;
 
   /**
-   * @property table
    * @type {HTMLElement}
    * @private
    */
@@ -228,7 +204,6 @@ export default class PolarisDataTable extends Component.extend(
   table;
 
   /**
-   * @property scrollContainer
    * @type {HTMLElement}
    * @private
    */
@@ -236,7 +211,6 @@ export default class PolarisDataTable extends Component.extend(
   scrollContainer;
 
   /**
-   * @property scrollContainerStyle
    * @type {String}
    * @private
    */

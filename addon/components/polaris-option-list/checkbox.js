@@ -8,7 +8,6 @@ import layout from '../../templates/components/polaris-option-list/checkbox';
 @templateLayout(layout)
 export default class Checkbox extends Component {
   /**
-   * @property checked
    * @type {Boolean}
    * @default false
    * @public
@@ -16,7 +15,6 @@ export default class Checkbox extends Component {
   checked = false;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -24,7 +22,6 @@ export default class Checkbox extends Component {
   disabled = false;
 
   /**
-   * @property active
    * @type {Boolean}
    * @default false
    * @public
@@ -32,7 +29,6 @@ export default class Checkbox extends Component {
   active = false;
 
   /**
-   * @property name
    * @type {String}
    * @default null
    * @public
@@ -40,7 +36,6 @@ export default class Checkbox extends Component {
   name = null;
 
   /**
-   * @property value
    * @type {String}
    * @default null
    * @public
@@ -48,7 +43,6 @@ export default class Checkbox extends Component {
   value = null;
 
   /**
-   * @property role
    * @type {String}
    * @default null
    * @public
@@ -56,7 +50,6 @@ export default class Checkbox extends Component {
   role = null;
 
   /**
-   * @property checkboxId
    * @type {String}
    * @public
    */
@@ -66,7 +59,6 @@ export default class Checkbox extends Component {
   }
 
   /**
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public

@@ -7,7 +7,6 @@ import layout from '../../templates/components/polaris-option-list/option';
 @templateLayout(layout)
 export default class Option extends Component {
   /**
-   * @property optionId
    * @type {String}
    * @default null
    * @public
@@ -15,7 +14,6 @@ export default class Option extends Component {
   optionId = null;
 
   /**
-   * @property label
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -23,7 +21,6 @@ export default class Option extends Component {
   label = null;
 
   /**
-   * @property value
    * @type {String}
    * @default null
    * @public
@@ -31,7 +28,6 @@ export default class Option extends Component {
   value = null;
 
   /**
-   * @property section
    * @type {Number}
    * @default null
    * @public
@@ -39,7 +35,6 @@ export default class Option extends Component {
   section = null;
 
   /**
-   * @property index
    * @type {Number}
    * @default null
    * @public
@@ -47,7 +42,6 @@ export default class Option extends Component {
   index = null;
 
   /**
-   * @property media
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -55,7 +49,6 @@ export default class Option extends Component {
   media = null;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
@@ -63,7 +56,6 @@ export default class Option extends Component {
   disabled = false;
 
   /**
-   * @property active
    * @type {Boolean}
    * @default false
    * @public
@@ -71,7 +63,6 @@ export default class Option extends Component {
   active = false;
 
   /**
-   * @property select
    * @type {Boolean}
    * @default false
    * @public
@@ -79,7 +70,6 @@ export default class Option extends Component {
   select = false;
 
   /**
-   * @property allowMultiple
    * @type {Boolean}
    * @default false
    * @public
@@ -87,7 +77,6 @@ export default class Option extends Component {
   allowMultiple = false;
 
   /**
-   * @property role
    * @type {String}
    * @default null
    * @public
@@ -95,7 +84,6 @@ export default class Option extends Component {
   role = null;
 
   /**
-   * @property onClick
    * @type {Function}
    * @default noop
    * @public
@@ -103,7 +91,6 @@ export default class Option extends Component {
   onClick() {}
 
   /**
-   * @property focused
    * @type {Boolean}
    * @default false
    * @private

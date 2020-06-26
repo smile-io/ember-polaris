@@ -14,7 +14,6 @@ export default class Slidable extends Component {
   /**
    * The current x position of the dragger
    *
-   * @property draggerX
    * @type {Number}
    * @default 0
    * @public
@@ -24,7 +23,6 @@ export default class Slidable extends Component {
   /**
    * The current y position of the dragger
    *
-   * @property draggerY
    * @type {Number}
    * @default 0
    * @public
@@ -34,7 +32,6 @@ export default class Slidable extends Component {
   /**
    * Callback for the outside world to receive the height of the dragger
    *
-   * @property onDraggerHeightChanged
    * @type {function}
    * @default null
    * @public

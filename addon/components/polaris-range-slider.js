@@ -29,7 +29,6 @@ export default class PolarisRangeSlider extends Component {
    *
    * Defaults to Ember's internal GUID for the component instance
    *
-   * @property {id}
    * @type {String}
    * @public
    */
@@ -41,7 +40,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Label for the range input
    *
-   * @property {label}
    * @type {String}
    * @public
    */
@@ -50,7 +48,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Adds an action to the label
    *
-   * @property {labelAction}
    * @type {Object}
    * @public
    */
@@ -59,7 +56,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Visually hide the label
    *
-   * @property {labelHidden}
    * @type {Boolean}
    * @default false
    * @public
@@ -69,7 +65,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Initial value for range input
    *
-   * @property {value}
    * @type {Number}
    * @default 0
    * @public
@@ -79,7 +74,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Minimum possible value for range input
    *
-   * @property {min}
    * @type {Number}
    * @default 0
    * @public
@@ -89,7 +83,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Maximum possible value for range input
    *
-   * @property {max}
    * @type {Number}
    * @default 100
    * @public
@@ -99,7 +92,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Increment value for range input changes
    *
-   * @property {step}
    * @type {Number}
    * @default null
    * @public
@@ -109,7 +101,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Provide a tooltip while sliding, indicating the current value
    *
-   * @property {output}
    * @type {Boolean}
    * @default false
    * @public
@@ -119,7 +110,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Additional text to aid in use
    *
-   * @property {helpText}
    * @type {String|Component}
    * @public
    */
@@ -128,7 +118,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Display an error message
    *
-   * @property {error}
    * @type {String|Component}
    * @public
    */
@@ -137,7 +126,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Disable input
    *
-   * @property {disabled}
    * @type {Boolean}
    * @default false
    * @public
@@ -147,7 +135,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Element to display before the input
    *
-   * @property prefix
    * @type {String|Component}
    * @default null
    * @public
@@ -157,7 +144,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Element to display after the input
    *
-   * @property suffix
    * @type {String|Component}
    * @default null
    * @public
@@ -167,7 +153,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Callback when the range input is changed
    *
-   * @property {onChange}
    * @type {Function}
    * @default no-op
    * @public
@@ -177,7 +162,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Callback when range input is focused
    *
-   * @property {onFocus}
    * @type {Function}
    * @default no-op
    * @public
@@ -187,7 +171,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Callback when focus is removed
    *
-   * @property {onBlur}
    * @type {Function}
    * @default no-op
    * @public
@@ -199,7 +182,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Class names for the range wrapper div
    *
-   * @property {rangeWrapperClassNames}
    * @type {String}
    * @private
    */
@@ -222,7 +204,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Style for the range wrapper div
    *
-   * @property {rangeWrapperStyle}
    * @type {String}
    * @private
    */
@@ -253,7 +234,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Slider progress percentage
    *
-   * @property {sliderProgress}
    * @type {Number}
    * @private
    */
@@ -266,7 +246,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Stringified boolean flag indicating whether an error is present
    *
-   * @property {hasError}
    * @type {String}
    * @private
    */
@@ -278,7 +257,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Accessibility
    *
-   * @property {ariaDescribedBy}
    * @type {Boolean}
    * @private
    */
@@ -301,7 +279,6 @@ export default class PolarisRangeSlider extends Component {
   /**
    * Boolean flag indicating whether the output value should be displayed
    *
-   * @property {shouldShowOutput}
    * @type {Boolean}
    * @private
    */

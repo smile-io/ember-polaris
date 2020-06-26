@@ -86,28 +86,24 @@ export default class PolarisAvatar extends Component {
    * Path to the Polaris avatar images
    * TODO: read this from config? Need a way to set this by default?
    * @type {String}
-   * @private
    */
   avatarSourcePath = '';
 
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   hasError = false;
 
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   hasLoaded = false;
 
   /**
    * Image source to use (if any)
    * @type {String}
-   * @private
    */
   @or('source', 'customerImageSource')
   finalSource;
@@ -115,7 +111,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Name to use (if any)
    * @type {String}
-   * @private
    */
   @or('name', 'initials')
   nameString;
@@ -123,7 +118,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Whether we have an image to use
    * @type {Boolean}
-   * @private
    */
   @computed('source', 'customer', 'hasError')
   get hasImage() {
@@ -134,7 +128,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Accessibility label to apply to avatar
    * @type {String}
-   * @private
    */
   @computed('accessibilityLabel', 'name', 'initials')
   get label() {
@@ -158,7 +151,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Class name to set avatar style
    * @type {String}
-   * @private
    */
   @computed('nameString')
   get styleClass() {
@@ -174,7 +166,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Class name to set avatar size
    * @type {String}
-   * @private
    */
   @computed('size')
   get sizeClass() {
@@ -189,7 +180,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Class name to hide avatar when loading
    * @type {String}
-   * @private
    */
   @computed('hasImage', 'hasLoaded')
   get hiddenClass() {
@@ -200,7 +190,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Image source when displaying a customer avatar
    * @type {String}
-   * @private
    */
   @computed('avatarSourcePath', 'customer', 'nameString')
   get customerImageSource() {
@@ -218,7 +207,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Flag controlling whether the avatar initials should be rendered
    * @type {Boolean}
-   * @private
    */
   @computed('initials', 'hasImage')
   get shouldShowInitials() {
@@ -229,7 +217,6 @@ export default class PolarisAvatar extends Component {
   /**
    * Flag controlling whether the avatar image should be rendered
    * @type {Boolean}
-   * @private
    */
   @computed('finalSource', 'hasError')
   get shouldShowImage() {

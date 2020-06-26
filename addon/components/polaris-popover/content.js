@@ -8,7 +8,6 @@ export default class Content extends Component {
   /**
    * Automatically add wrap content in a section
    *
-   * @property sectioned
    * @type {Boolean}
    * @default false
    * @public
@@ -18,7 +17,6 @@ export default class Content extends Component {
   /**
    * Allow popover to stretch to the full width of its activator
    *
-   * @property fullWidth
    * @type {Boolean}
    * @default false
    * @public
@@ -28,7 +26,6 @@ export default class Content extends Component {
   /**
    * Allow popover to stretch to fit content vertically
    *
-   * @property fullHeight
    * @type {Boolean}
    * @default false
    * @public
@@ -38,7 +35,6 @@ export default class Content extends Component {
   /**
    * Content wrapper component.
    *
-   * @property contentComponent
    * @type {Component}
    * @default: null
    * @public
@@ -52,7 +48,6 @@ export default class Content extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -62,7 +57,6 @@ export default class Content extends Component {
   /**
    * `ember-basic-dropdown`'s generated ID, used to look up
    *
-   * @property uniqueId
    * @type {String}
    * @default: null
    * @public

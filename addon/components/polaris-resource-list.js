@@ -37,7 +37,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Item data; each item is passed to renderItem
    *
-   * @property items
    * @type {Array}
    * @default null
    * @public
@@ -45,7 +44,6 @@ export default class PolarisResourceList extends Component.extend(
   items = null;
 
   /**
-   * @property filterControl
    * @type {String|Component|Object}
    * @default null
    * @public
@@ -56,7 +54,6 @@ export default class PolarisResourceList extends Component.extend(
    * Name of the resource, such as customers or products
    * Object with `singular` and `plural` properties
    *
-   * @property resourceName
    * @type {Object}
    * @default null
    * @public
@@ -74,7 +71,6 @@ export default class PolarisResourceList extends Component.extend(
    *  disabled
    *  onAction
    *
-   * @property promotedBulkActions
    * @type {Object[]}
    * @default null
    * @public
@@ -98,7 +94,6 @@ export default class PolarisResourceList extends Component.extend(
    *
    * where items is a list of action objects
    *
-   * @property bulkActions
    * @type {Object[]}
    * @default null
    * @public
@@ -109,7 +104,6 @@ export default class PolarisResourceList extends Component.extend(
    * Collection of IDs for the currently selected items
    * Can be either an array of IDs, or the string literal 'All'
    *
-   * @property selectedItems
    * @type {String|String[]}
    * @default null
    * @public
@@ -119,7 +113,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * If there are more items than currently in the list
    *
-   * @property hasMoreItems
    * @type {Boolean}
    * @default false
    * @public
@@ -129,7 +122,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Overlays item list with a spinner while a background action is being performed
    *
-   * @property loading
    * @type {Boolean}
    * @default false
    * @public
@@ -139,7 +131,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Boolean to show or hide the header
    *
-   * @property showHeader
    * @type {Boolean}
    * @default false
    * @public
@@ -149,7 +140,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Current value of the sort control
    *
-   * @property sortValue
    * @type {String}
    * @default null
    * @public
@@ -160,7 +150,6 @@ export default class PolarisResourceList extends Component.extend(
    * Collection of sort options to choose from
    * Properties are the same as for polaris-select's options
    *
-   * @property sortOptions
    * @type {(String|Object)[]}
    * @default null
    * @public
@@ -170,7 +159,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Component to display instead of the sort control
    *
-   * @property alternateTool
    * @type {Component|Object}
    * @default null
    * @public
@@ -182,7 +170,6 @@ export default class PolarisResourceList extends Component.extend(
    * This is in place of the React implementation's
    * renderItem property
    *
-   * @property itemComponent
    * @type {String|Component}
    * @default null
    * @public
@@ -193,7 +180,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Callback when selection is changed
    *
-   * @property onSelectionChange
    * @type {Function}
    * @default null
    * @public
@@ -203,7 +189,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Function to customize the unique ID for each item
    *
-   * @property idForItem
    * @type {Function}
    * @default null
    * @public
@@ -213,7 +198,6 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * Callback when sort option is changed
    *
-   * @property onSortChange
    * @type {Function}
    * @default noop
    * @public
@@ -221,7 +205,6 @@ export default class PolarisResourceList extends Component.extend(
   onSortChange() {}
 
   /**
-   * @property selectMode
    * @type {Boolean}
    * @default false
    * @private
@@ -229,7 +212,6 @@ export default class PolarisResourceList extends Component.extend(
   selectMode = false;
 
   /**
-   * @property loadingPosition
    * @type {Number}
    * @default 0
    * @private
@@ -240,7 +222,6 @@ export default class PolarisResourceList extends Component.extend(
    * Reference to the `ul` element that makes up the main list.
    * This is used in place of the React implementation's `listRef`.
    *
-   * @property listNode
    * @type {HTMLUListElement}
    * @default null
    * @private
@@ -248,7 +229,6 @@ export default class PolarisResourceList extends Component.extend(
   listNode = null;
 
   /**
-   * @property defaultResourceName
    * @type {Object}
    * @private
    */
@@ -258,7 +238,6 @@ export default class PolarisResourceList extends Component.extend(
    * Internal property used to recreate React implementation's
    * `componentDidUpdate` behaviour.
    *
-   * @property previousLoading
    * @type {Boolean}
    * @private
    */
@@ -268,7 +247,6 @@ export default class PolarisResourceList extends Component.extend(
    * Internal property used to recreate React implementation's
    * `componentWillReceiveProps` behaviour.
    *
-   * @property previousSelectedItems
    * @type {String|String[]}
    * @private
    */

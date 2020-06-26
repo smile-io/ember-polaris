@@ -8,7 +8,6 @@ const MathRandomStubber = EmberObject.extend({
   /**
    * The sequence of "random" numbers to return.
    *
-   * @property sequence
    * @public
    * @type {Array}
    */
@@ -17,7 +16,6 @@ const MathRandomStubber = EmberObject.extend({
   /**
    * Index of the last number returned.
    *
-   * @property lastNumberIndex
    * @private
    * @type {Number}
    */
@@ -26,7 +24,6 @@ const MathRandomStubber = EmberObject.extend({
   /**
    * Original Math.random to restore later.
    *
-   * @property originalMathRandom
    * @private
    * @type {function}
    */

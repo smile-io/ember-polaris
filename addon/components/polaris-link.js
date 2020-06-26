@@ -13,7 +13,6 @@ export default class PolarisLink extends Component {
   /**
    * The url to link to
    *
-   * @property url
    * @type {String}
    * @default null
    * @public
@@ -23,7 +22,6 @@ export default class PolarisLink extends Component {
   /**
    * The content to display inside link
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
@@ -33,7 +31,6 @@ export default class PolarisLink extends Component {
   /**
    * Use for a links that open a different site
    *
-   * @property external
    * @type {Boolean}
    * @default false
    * @public
@@ -43,7 +40,6 @@ export default class PolarisLink extends Component {
   /**
    * Makes the link color the same as the current text color and adds an underline
    *
-   * @property monochrome
    * @type {Boolean}
    * @default false
    * @public
@@ -53,7 +49,6 @@ export default class PolarisLink extends Component {
   /**
    * Callback when a link is clicked
    *
-   * @property onClick
    * @type {Function}
    * @default noop
    * @public

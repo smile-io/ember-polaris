@@ -12,7 +12,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * Title content for the card
    *
-   * @property title
    * @type {String|Component}
    * @default: null
    * @public
@@ -26,7 +25,6 @@ export default class PolarisCardComponent extends Component {
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default: null
    * @public
@@ -36,7 +34,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * A less prominent card
    *
-   * @property subdued
    * @type {Boolean}
    * @default: false
    * @public
@@ -46,7 +43,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * Auto wrap content in section
    *
-   * @property sectioned
    * @type {Boolean}
    * @default: false
    * @public
@@ -56,7 +52,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * Card header actions
    *
-   * @property headerActions
    * @type {Action[]}
    * @default: null
    * @public
@@ -66,7 +61,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * Primary action in the card footer
    *
-   * @property primaryFooterAction
    * @type {Action}
    * @default: null
    */
@@ -75,7 +69,6 @@ export default class PolarisCardComponent extends Component {
   /**
    * Secondary action in the card footer
    *
-   * @property secondaryFooterAction
    * @type {Action}
    * @default: null
    */

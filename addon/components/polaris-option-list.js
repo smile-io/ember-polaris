@@ -15,7 +15,6 @@ export default class PolarisOptionList extends Component {
    * A unique identifier for the option list
    * Defaults to Ember's GUID for this component instance
    *
-   * @property id
    * @type {String}
    * @public
    */
@@ -27,7 +26,6 @@ export default class PolarisOptionList extends Component {
   /**
    * List title
    *
-   * @property title
    * @type {String}
    * @default null
    * @public
@@ -44,7 +42,6 @@ export default class PolarisOptionList extends Component {
    *  id {String} Unique identifier for the option
    *  media {String|Component|Object} Media to display to the left of the option content
    *
-   * @property options
    * @type {Object[]}
    * @default null
    * @public
@@ -54,7 +51,6 @@ export default class PolarisOptionList extends Component {
   /**
    * Defines a specific role attribute for the list itself
    *
-   * @property role
    * @type {String}
    * @default null
    * @public
@@ -64,7 +60,6 @@ export default class PolarisOptionList extends Component {
   /**
    * Defines a specific role attribute for each option in the list
    *
-   * @property optionRole
    * @type {String}
    * @default null
    * @public
@@ -77,7 +72,6 @@ export default class PolarisOptionList extends Component {
    *  options {Object[]} Collection of options within the section
    *  title {String} Section title
    *
-   * @property sections
    * @type {Object[]}
    * @default null
    * @public
@@ -87,7 +81,6 @@ export default class PolarisOptionList extends Component {
   /**
    * The selected options
    *
-   * @property selected
    * @type {String[]}
    * @default null
    * @public
@@ -97,7 +90,6 @@ export default class PolarisOptionList extends Component {
   /**
    * Allow more than one option to be selected
    *
-   * @property allowMultiple
    * @type {Boolean}
    * @default false
    * @public
@@ -107,7 +99,6 @@ export default class PolarisOptionList extends Component {
   /**
    * Callback when selection is changed
    *
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public
@@ -115,7 +106,6 @@ export default class PolarisOptionList extends Component {
   onChange() {}
 
   /**
-   * @property normalizedOptions
    * @type {Object[]}
    * @private
    */

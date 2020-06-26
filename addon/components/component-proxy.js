@@ -20,7 +20,6 @@ export default Component.extend({
 
   /**
    * Dynamically-generated layout to render the proxied component.
-   * @private
    */
   layout: computed('componentName', 'propsString', function() {
     let { componentName, propsString } = this;
@@ -54,14 +53,12 @@ export default Component.extend({
   /**
    * List of properties that were previously set via the `props` hash.
    * @type {Array}
-   * @private
    */
   propNames: null,
 
   /**
    * String representing the properties to pass to the proxied component.
    * @type {String}
-   * @private
    */
   propsString: computed('propNames.[]', function() {
     let propNames = this.propNames || [];

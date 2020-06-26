@@ -35,7 +35,6 @@ export default class FileUploadComponent extends Component {
    * @type {String}
    * @default `Add file`
    * @public
-   * @property actionTitle
    */
   @computed('type')
   get actionTitle() {
@@ -49,7 +48,6 @@ export default class FileUploadComponent extends Component {
    * @type {String}
    * @default `or drop files to upload`
    * @public
-   * @property actionHint
    */
   @computed('type')
   get actionHint() {

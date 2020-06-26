@@ -7,28 +7,24 @@ import layout from '../../templates/components/polaris-data-table/total';
 @templateLayout(layout)
 export default class Total extends Component {
   /**
-   * @property total
    * @type {String|Number|Component}
    * @public
    */
   total = null;
 
   /**
-   * @property index
    * @type {Number}
    * @public
    */
   index = null;
 
   /**
-   * @property heights
    * @type {Number[]}
    * @public
    */
   heights = null;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
@@ -36,14 +32,12 @@ export default class Total extends Component {
   truncate = false;
 
   /**
-   * @property totalsRowHeading
    * @type {String}
    * @public
    */
   totalsRowHeading = null;
 
   /**
-   * @property contentType
    * @type {String}
    * @private
    */
