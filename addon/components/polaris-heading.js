@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-heading';
 
@@ -10,9 +11,9 @@ import template from '../templates/components/polaris-heading';
  *
  *   {{polaris-heading text="This is a heading"}}
  *
- * Customised block usage (note the use of tagName instead of element - this is an ember thing):
+ * Customised block usage (note the use of htmlTag instead of element - this is an ember thing):
  *
- *   {{#polaris-heading tagName="em"}}
+ *   {{#polaris-heading htmlTag="em"}}
  *     This is an emphasised heading
  *   {{/polaris-heading}}
  */
@@ -31,4 +32,27 @@ export default class PolarisHeadingComponent extends Component {
    * @public
    */
   text = null;
+
+  /**
+   * Name of element to use for text
+   * NOTE: Matches polaris-react's `element`
+   *
+   * @type {String}
+   * @default h2
+   * @public
+   */
+  htmlTag = 'h2';
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-heading] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      !this.tagName,
+      {
+        id: 'ember-polaris.polaris-heading.tagName-arg',
+        until: '7.0.0',
+      }
+    );
+  }
 }

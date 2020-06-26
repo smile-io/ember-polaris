@@ -3,6 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
+const headingSelector = '[data-test-polaris-heading]';
+
 module('Integration | Component | polaris heading', function(hooks) {
   setupRenderingTest(hooks);
 
@@ -10,32 +12,48 @@ module('Integration | Component | polaris heading', function(hooks) {
     // Inline form with defaults.
     await render(hbs`{{polaris-heading text="This is a heading"}}`);
 
-    let headingSelector = 'h2.Polaris-Heading';
-    let heading = assert.dom('h2.Polaris-Heading');
-    heading.exists(
-      { count: 1 },
-      'inline with defaults - renders one h2 heading'
-    );
+    assert
+      .dom(headingSelector)
+      .exists({ count: 1 }, 'inline with defaults - renders one h2 heading');
+    assert
+      .dom(headingSelector)
+      .hasText(
+        'This is a heading',
+        'inline with defaults - renders correct text'
+      );
+    assert.dom(headingSelector).hasTagName('h2', 'renders correct element');
 
-    heading.hasText(
-      'This is a heading',
-      'inline with defaults - renders correct text'
-    );
-
-    // Block form with element specified.
+    // Block form with element specified using deprecated form
     await render(hbs`
       {{#polaris-heading tagName="em"}}
         This is an emphasised heading
       {{/polaris-heading}}
     `);
 
-    headingSelector = 'em.Polaris-Heading';
-    heading = assert.dom(headingSelector);
+    assert
+      .dom(headingSelector)
+      .hasText(
+        'This is an emphasised heading',
+        'block with customisation - renders correct text'
+      );
+    assert
+      .dom(headingSelector)
+      .hasTagName('em', 'block with customisation - renders correct element');
 
-    heading.exists({ count: 1 });
-    heading.hasText(
-      'This is an emphasised heading',
-      'block with customisation - renders correct text'
-    );
+    await render(hbs`
+      <PolarisHeading @htmlTag="em">
+        This is an emphasised heading
+      </PolarisHeading>
+    `);
+
+    assert
+      .dom(headingSelector)
+      .hasText(
+        'This is an emphasised heading',
+        'block with customisation - renders correct text'
+      );
+    assert
+      .dom(headingSelector)
+      .hasTagName('em', 'block with customisation - renders correct element');
   });
 });

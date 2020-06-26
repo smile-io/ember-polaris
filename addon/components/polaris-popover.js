@@ -164,7 +164,7 @@ export default class PolarisPopover extends Component {
     let component;
 
     // Hack to get the component's container
-    // element since this component uses `tagName: ''`
+    // element since this component is tagless
     // https://github.com/emberjs/rfcs/issues/168#issue-178381310
     if (ViewUtils && ViewUtils.getViewBounds) {
       component = ViewUtils.getViewBounds(this).parentElement;

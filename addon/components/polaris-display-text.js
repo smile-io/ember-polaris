@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-display-text';
 
@@ -52,6 +53,19 @@ export default class PolarisDisplayText extends Component {
    * @public
    */
   text = null;
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-display-text] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      !this.tagName,
+      {
+        id: 'ember-polaris.polaris-display-text.tagName-arg',
+        until: '7.0.0',
+      }
+    );
+  }
 
   @computed('size')
   get sizeClassName() {

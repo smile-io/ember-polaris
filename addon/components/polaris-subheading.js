@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-subheading';
 
@@ -11,9 +12,9 @@ import layout from '../templates/components/polaris-subheading';
  *
  *   {{polaris-subheading text="This is a subheading"}}
  *
- * Customised block usage (note the use of tagName instead of element - this is an ember thing):
+ * Customised block usage (note the use of htmlTag instead of element - this is an ember thing):
  *
- *   {{#polaris-subheading tagName="u"}}
+ *   {{#polaris-subheading htmlTag="u"}}
  *     This is an underlined subheading
  *   {{/polaris-subheading}}
  */
@@ -32,6 +33,19 @@ export default class PolarisSubheadingComponent extends Component {
    * @public
    */
   text = null;
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[polaris-subheading] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      !this.tagName,
+      {
+        id: 'ember-polaris.polaris-subheading.tagName-arg',
+        until: '7.0.0',
+      }
+    );
+  }
 
   @action
   setAriaLabel(element) {
