@@ -91,9 +91,7 @@ export default class PolarisTextFieldResizerComponent extends Component {
     let { currentHeight, onHeightChange } = this;
 
     if (newHeight !== currentHeight) {
-      this.scheduleTask('actions', () => {
-        onHeightChange(newHeight);
-      });
+      onHeightChange(newHeight);
     }
   }
 

@@ -44,7 +44,7 @@
           spellcheck={{@spellCheck}}
           value={{this.normalizedValue}}
           class={{this.inputClassName}}
-          aria-multiline={{@multiline}}
+          aria-multiline={{if @multiline "true"}}
           aria-describedby={{this.ariaDescribedBy}}
           aria-label={{@label}}
           aria-labelledby={{this.ariaLabelledBy}}
@@ -95,7 +95,7 @@
         <PolarisTextField::Resizer
           @contents={{or this.normalizedValue @placeholder}}
           @currentHeight={{this.height}}
-          @minimumLines={{@minimumLines}}
+          @minimumLines={{this.minimumLines}}
           @onHeightChange={{this.handleExpandingResize}}
         />
       {{/if}}
