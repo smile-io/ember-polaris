@@ -44,11 +44,11 @@
           spellcheck={{@spellCheck}}
           value={{this.normalizedValue}}
           class={{this.inputClassName}}
-          aria-multiline={{if @multiline "true"}}
+          aria-multiline={{if @multiline "true" "false"}}
           aria-describedby={{this.ariaDescribedBy}}
           aria-label={{@label}}
           aria-labelledby={{this.ariaLabelledBy}}
-          aria-invalid={{this.ariaInvalid}}
+          aria-invalid={{if this.ariaInvalid "true" "false"}}
           aria-owns={{@ariaOwns}}
           aria-activedescendant={{@ariaActiveDescendant}}
           aria-autocomplete={{@ariaAutocomplete}}

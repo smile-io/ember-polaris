@@ -15,7 +15,7 @@
   {{did-insert this.handleHeightCheck}}
   {{did-update this.handleHeightCheck @contents @currentHeight @minimumLines}}
 >
-  <div class="Polaris-TextField__DummyInput" {{did-insert this.this.setContentNode}}>{{this.finalContents}}</div>
+  <div class="Polaris-TextField__DummyInput" {{did-insert this.setContentNode}}>{{this.finalContents}}</div>
 
   {{#if @minimumLines}}
     <div class="Polaris-TextField__DummyInput" {{did-insert this.setMinimumLinesNode}}>{{this.contentsForMinimumLines}}</div>
