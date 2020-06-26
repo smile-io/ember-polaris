@@ -51,11 +51,11 @@ export default class AlphaPicker extends Component {
    */
   @(computed('color.{hue,saturation,brightness}').readOnly())
   get colorLayerStyle() {
-    const color = this.get('color');
+    const { color } = this;
     const { red, green, blue } = hsbaToRgba(color);
-
     const rgb = `${red}, ${green}, ${blue}`;
     const background = `linear-gradient(to top, rgba(${rgb}, 0) 18px, rgba(${rgb}, 1) calc(100% - 18px))`;
+
     return htmlSafe(`background: ${background};`);
   }
 

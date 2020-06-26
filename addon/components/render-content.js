@@ -14,7 +14,7 @@ export default Component.extend({
   contentIsComponentHash: notEmpty('content.componentName').readOnly(),
 
   contentIsComponentDefinition: computed('content', function() {
-    return isComponentDefinition(this.get('content'));
+    return isComponentDefinition(this.content);
   }).readOnly(),
 }).reopenClass({
   positionalParams: ['content'],

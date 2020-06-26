@@ -72,13 +72,15 @@ module('Integration | Component | polaris-text-field', function(hooks) {
 
     let input = assert.dom(inputSelector);
     input.hasClass('Polaris-TextField__Input', 'input has correct class');
-    input.hasNoAttribute(
+    input.hasAttribute(
       'aria-multiline',
-      'input element has no aria-multiline attribute'
+      'false',
+      'input element has aria-multiline attribute set to `false`'
     );
-    input.hasNoAttribute(
+    input.hasAttribute(
       'aria-invalid',
-      'input element has no aria-invalid attribute'
+      'false',
+      'input element has no aria-invalid attribute set to `false`'
     );
     input.hasNoClass(
       'Polaris-TextField__Input--suffixed',
@@ -233,7 +235,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .dom(inputSelector)
         .hasAttribute(
           'aria-invalid',
-          '',
+          'true',
           'input has aria-invalid attribute true'
         );
 
@@ -254,7 +256,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .dom(inputSelector)
         .hasAttribute(
           'aria-invalid',
-          '',
+          'true',
           'input has aria-invalid attribute true'
         );
     });
@@ -294,7 +296,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .dom(inputSelector)
         .hasAttribute(
           'aria-invalid',
-          '',
+          'true',
           'input has aria-invalid attribute true'
         );
       assert
@@ -539,7 +541,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .dom(inputSelector)
       .hasAttribute(
         'aria-multiline',
-        '',
+        'true',
         'input element has aria-multiline attribute'
       );
     assert.dom(resizerSelector).exists('when true - renders a resizer');

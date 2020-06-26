@@ -1,79 +1,50 @@
-{{#polaris-page
-  title="This is the application route"
-  breadcrumbs=(array
-    (hash
-      content="Test Route"
-      url="/test"
-    )
-  )
-  primaryAction=(hash
+<PolarisPage
+  @title="This is the application route"
+  @breadcrumbs={{array (hash content="Test Route" url="/test")}}
+  @primaryAction={{hash
     text="Primary"
     onAction=(action (mut primaryClicked) true)
-  )
-  secondaryActions=(array
-    (hash
-      text="Secondary 1"
-      onAction=(action (mut secondary1Clicked) true)
-    )
-    (hash
-      text="Secondary 2"
-      onAction=(action (mut secondary2Clicked) true)
-    )
-  )
-  actionGroups=(array
+  }}
+  @secondaryActions={{array
+    (hash text="Secondary 1" onAction=(action (mut secondary1Clicked) true))
+    (hash text="Secondary 2" onAction=(action (mut secondary2Clicked) true))
+  }}
+  @actionGroups={{array
     (hash
       title="Action group with details"
       actions=(array
-        (hash
-          text="Group action 1.1"
-          onAction=(action (mut group1Button1Clicked) true)
-        )
-        (hash
-          text="Group action 1.2"
-          onAction=(action (mut group1Button2Clicked) true)
-        )
+        (hash text="Group action 1.1" onAction=(action (mut group1Button1Clicked) true))
+        (hash text="Group action 1.2" onAction=(action (mut group1Button2Clicked) true))
       )
-      details=(component
-        "polaris-text-style"
-        variation="positive"
-        text="This is an action group with details"
-      )
+      details=(component "polaris-text-style" variation="positive" text="This is an action group with details")
     )
     (hash
       title="Action group with actions"
       actions=(array
-        (hash
-          text="Group action 2.1"
-          onAction=(action (mut group2Button1Clicked) true)
-        )
-        (hash
-          text="Group action 2.2"
-          onAction=(action (mut group2Button2Clicked) true)
-        )
+        (hash text="Group action 2.1" onAction=(action (mut group2Button1Clicked) true))
+        (hash text="Group action 2.2" onAction=(action (mut group2Button2Clicked) true))
       )
     )
-  )
-}}
-
-  {{#polaris-list as |list|}}
+  }}
+>
+  <PolarisList as |list|>
     {{#each model as |testPage|}}
-      {{#list.item}}
-        {{#link-to testPage.path}}
+      <list.item>
+        <LinkTo @route={{testPage.path}}>
           {{testPage.text}}
-        {{/link-to}}
-      {{/list.item}}
+        </LinkTo>
+      </list.item>
     {{/each}}
-  {{/polaris-list}}
+  </PolarisList>
 
-  {{polaris-link
-    url="https://github.com/smile-io/ember-polaris"
-    external=true
-    text="Ember Polaris on GitHub"
-  }}
+  <PolarisLink
+    @url="https://github.com/smile-io/ember-polaris"
+    @external={{true}}
+    @text="Ember Polaris on GitHub"
+  />
 
-  {{key-event-listener
-    key="KeyM"
-    onKeyDown=(action (mut application.hideMagicSection) (not application.hideMagicSection))
-  }}
-
-{{/polaris-page}}
+  <KeyEventListener
+    @key="KeyM"
+    @onKeyDown={{action (mut application.hideMagicSection) (not application.hideMagicSection)}}
+  />
+</PolarisPage>

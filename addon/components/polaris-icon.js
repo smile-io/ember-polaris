@@ -111,7 +111,7 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
       !this.class,
       {
         id: 'ember-polaris.polaris-icon.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

@@ -162,7 +162,7 @@ export default class PolarisAvatar extends Component {
    */
   @computed('nameString')
   get styleClass() {
-    let nameString = this.get('nameString');
+    let { nameString } = this;
     let styleIndex = isEmpty(nameString)
       ? 0
       : nameString.charCodeAt(0) % styleClasses.length;
@@ -178,7 +178,7 @@ export default class PolarisAvatar extends Component {
    */
   @computed('size')
   get sizeClass() {
-    let size = this.get('size');
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
@@ -194,7 +194,6 @@ export default class PolarisAvatar extends Component {
   @computed('hasImage', 'hasLoaded')
   get hiddenClass() {
     let { hasImage, hasLoaded } = this;
-
     return hasImage && !hasLoaded ? 'Polaris-Avatar--hidden' : null;
   }
 
@@ -205,15 +204,15 @@ export default class PolarisAvatar extends Component {
    */
   @computed('avatarSourcePath', 'customer', 'nameString')
   get customerImageSource() {
-    if (!this.get('customer')) {
+    if (!this.customer) {
       return null;
     }
 
-    let nameString = this.get('nameString');
+    let { nameString } = this;
     let avatarIndex = isEmpty(nameString)
       ? 0
       : nameString.charCodeAt(0) % avatarImages.length;
-    return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
+    return `${this.avatarSourcePath}/avatar-${++avatarIndex}.svg`;
   }
 
   /**
@@ -246,7 +245,7 @@ export default class PolarisAvatar extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-avatar.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

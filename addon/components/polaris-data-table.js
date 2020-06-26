@@ -242,18 +242,18 @@ export default class PolarisDataTable extends Component.extend(
    */
   @(computed('footerContent', 'heights.[]').readOnly())
   get scrollContainerStyle() {
-    if (isBlank(this.get('footerContent'))) {
+    if (isBlank(this.footerContent)) {
       return null;
     }
 
-    return htmlSafe(`margin-bottom: ${this.get('heights.lastObject')}px;`);
+    return htmlSafe(`margin-bottom: ${this.heights.lastObject}px;`);
   }
 
   resetScrollPosition() {
-    let scrollContainer = this.get('scrollContainer');
+    let { scrollContainer } = this;
 
     if (scrollContainer) {
-      let { left, top } = this.get('preservedScrollPosition');
+      let { left, top } = this.preservedScrollPosition;
 
       if (left) {
         scrollContainer.scrollLeft = left;
@@ -346,13 +346,11 @@ export default class PolarisDataTable extends Component.extend(
   }
 
   scrollListener() {
-    if (this.get('isDestroying') || this.get('isDestroyed')) {
+    if (this.isDestroying || this.isDestroyed) {
       return;
     }
 
-    this.setProperties(
-      this.calculateColumnVisibilityData(this.get('collapsed'))
-    );
+    this.setProperties(this.calculateColumnVisibilityData(this.collapsed));
   }
 
   tallestCellHeights() {
@@ -426,13 +424,11 @@ export default class PolarisDataTable extends Component.extend(
 
       // TODO: use run loop instead of `requestAnimationFrame` here?
       requestAnimationFrame(() => {
-        if (this.get('isDestroying') || this.get('isDestroyed')) {
+        if (this.isDestroying || this.isDestroyed) {
           return;
         }
 
-        this.setProperties(
-          this.calculateColumnVisibilityData(this.get('collapsed'))
-        );
+        this.setProperties(this.calculateColumnVisibilityData(this.collapsed));
       });
     }
   }

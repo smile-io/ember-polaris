@@ -2,20 +2,21 @@
 <div
   data-test-text-field-spinner
   class="Polaris-TextField__Spinner"
-  aria-hidden="true"
-  onclick={{action onClick}}
+  aria-hidden
+  ...attributes
+  {{on "click" this.onClick}}
 >
   <div
     data-test-text-field-spinner-incr-button
     role="button"
     class="Polaris-TextField__Segment"
     tabindex="-1"
-    onclick={{action onChange 1}}
-    onmousedown={{action "handleMouseDown" (action onChange 1)}}
-    onmouseup={{action onMouseUp}}
+    {{on "click" (fn @onChange 1)}}
+    {{on "mousedown" (fn this.handleMouseDown (fn @onChange 1))}}
+    {{on "mouseup" this.onMouseUp}}
   >
     <div class="Polaris-TextField__SpinnerIcon">
-      {{polaris-icon source="caret-up"}}
+      <PolarisIcon @source="caret-up" />
     </div>
   </div>
 
@@ -24,12 +25,12 @@
     role="button"
     class="Polaris-TextField__Segment"
     tabindex="-1"
-    onclick={{action onChange -1}}
-    onmousedown={{action "handleMouseDown" (action onChange -1)}}
-    onmouseup={{action onMouseUp}}
+    {{on "click" (fn @onChange -1)}}
+    {{on "mousedown" (fn this.handleMouseDown (fn @onChange -1))}}
+    {{on "mouseup" this.onMouseUp}}
   >
     <div class="Polaris-TextField__SpinnerIcon">
-      {{polaris-icon source="caret-down"}}
+      <PolarisIcon @source="caret-down" />
     </div>
   </div>
 </div>

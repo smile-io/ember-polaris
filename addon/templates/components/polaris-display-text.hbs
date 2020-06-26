@@ -1,4 +1,4 @@
-{{#let (element (or @htmlTag "p")) as |DisplayText|}}
+{{#let (element (or @htmlTag @tagName "p")) as |DisplayText|}}
   <DisplayText
     class="Polaris-DisplayText {{this.sizeClassName}}"
     data-test-display-text

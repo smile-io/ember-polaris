@@ -1,25 +1,22 @@
-{{#polaris-layout as |layout|}}
-  {{#layout.annotatedSection
-    title="Test Details"
-    description="A good description goes here"
-  }}
-    {{#polaris-card sectioned=true}}
-      {{#polaris-form-layout as |formLayout|}}
-        {{#formLayout.group}}
-          {{polaris-text-field
-            label="First name"
-            placeholder="e.g. SpongeBob"
-            value=firstName
-            onChange=(action (mut firstName))
-          }}
-          {{polaris-text-field
-            label="Last name"
-            placeholder="e.g. SquarePants"
-            value=lastName
-            onChange=(action (mut lastName))
-          }}
-        {{/formLayout.group}}
-      {{/polaris-form-layout}}
-    {{/polaris-card}}
-  {{/layout.annotatedSection}}
-{{/polaris-layout}}
+<PolarisLayout as |layout|>
+  <layout.annotatedSection @title="Test Details" @description="A good description goes here">
+    <PolarisCard @sectioned={{true}}>
+      <PolarisFormLayout as |formLayout|>
+        <formLayout.group>
+          <PolarisTextField
+            @label="First name"
+            @placeholder="e.g. SpongeBob"
+            @value={{firstName}}
+            @onChange={{action (mut firstName)}}
+          />
+          <PolarisTextField
+            @label="Last name"
+            @placeholder="e.g. SquarePants"
+            @value={{lastName}}
+            @onChange={{action (mut lastName)}}
+          />
+        </formLayout.group>
+      </PolarisFormLayout>
+    </PolarisCard>
+  </layout.annotatedSection>
+</PolarisLayout>

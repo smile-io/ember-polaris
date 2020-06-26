@@ -1,23 +1,11 @@
-{{polaris-resource-list
-  resourceName=(hash
+<PolarisResourceList
+  @resourceName={{hash
     singular="customer"
     plural="customers"
-  )
-  items=(array
-    (hash
-      id=341
-      url="customers/341"
-      name="Mae Jemison"
-      location="Decatur, USA"
-      latestOrderUrl="orders/1456"
-    )
-    (hash
-      id=256
-      url="customers/256"
-      name="Ellen Ochoa"
-      location="Los Angeles, USA"
-      latestOrderUrl="orders/1457"
-    )
-  )
-  itemComponent="resource-list/persist-actions/item"
-}}
+  }}
+  @items={{array
+    (hash id=341 url="customers/341" name="Mae Jemison" location="Decatur, USA" latestOrderUrl="orders/1456")
+    (hash id=256 url="customers/256" name="Ellen Ochoa" location="Los Angeles, USA" latestOrderUrl="orders/1457")
+  }}
+  @itemComponent="resource-list/persist-actions/item"
+/>

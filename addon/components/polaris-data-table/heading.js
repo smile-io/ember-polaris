@@ -94,7 +94,7 @@ export default class Heading extends Component {
    */
   @(computed('truncate', 'heights.[]').readOnly())
   get height() {
-    return !this.get('truncate') ? this.get('heights.firstObject') : undefined;
+    return !this.truncate ? this.heights.firstObject : undefined;
   }
 
   /**
@@ -104,6 +104,6 @@ export default class Heading extends Component {
    */
   @(computed('isSorted', 'sortDirection').readOnly())
   get direction() {
-    return this.get('isSorted') ? this.get('sortDirection') : 'none';
+    return this.isSorted ? this.sortDirection : 'none';
   }
 }

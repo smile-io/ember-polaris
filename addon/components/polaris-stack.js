@@ -74,7 +74,7 @@ export default class PolarisStackComponent extends Component {
 
   @computed('spacing')
   get spacingClassName() {
-    const spacing = this.get('spacing');
+    const { spacing } = this;
     if (isBlank(spacing)) {
       return null;
     }
@@ -84,7 +84,7 @@ export default class PolarisStackComponent extends Component {
 
   @computed('alignment')
   get alignmentClassName() {
-    const alignment = this.get('alignment');
+    const { alignment } = this;
     if (isBlank(alignment)) {
       return null;
     }
@@ -94,7 +94,7 @@ export default class PolarisStackComponent extends Component {
 
   @computed('distribution')
   get distributionClassName() {
-    const distribution = this.get('distribution');
+    const { distribution } = this;
     if (isBlank(distribution) || distribution === 'baseline') {
       return null;
     }
@@ -144,7 +144,7 @@ export default class PolarisStackComponent extends Component {
       !this.class,
       {
         id: 'ember-polaris.polaris-stack.class-arg',
-        until: '6.0.0',
+        until: '7.0.0',
       }
     );
   }

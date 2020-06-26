@@ -60,7 +60,7 @@ export default class Slidable extends Component {
    * @private
    */
   handleMove(event) {
-    if (!this.get('isDragging')) {
+    if (!this.isDragging) {
       return;
     }
 
@@ -98,12 +98,12 @@ export default class Slidable extends Component {
    * @private
    */
   handleDraggerMove(clientX, clientY) {
-    const moveHandler = this.get('onChange');
+    const { onChange: moveHandler } = this;
     if (typeof moveHandler !== 'function') {
       return;
     }
 
-    const element = this.get('sliderElement');
+    const { sliderElement: element } = this;
     if (isNone(element)) {
       return;
     }
@@ -120,7 +120,7 @@ export default class Slidable extends Component {
   setElementAndTriggerHeightChanged(element) {
     this.set('sliderElement', element);
 
-    const onDraggerHeightChanged = this.get('onDraggerHeightChanged');
+    const { onDraggerHeightChanged } = this;
     if (typeOf(onDraggerHeightChanged) === 'function') {
       // Publish the height of our dragger.
       const draggerElement = element.querySelector(

@@ -1,4 +1,4 @@
-{{#polaris-resource-list/provider value=this.context}}
+<PolarisResourceList::Provider @value={{this.context}}>
   {{#with
     (component "polaris-resource-list/loading-overlay"
       loading=@loading
@@ -165,4 +165,4 @@
       {{/if}}
     </div>
   {{/with}}
-{{/polaris-resource-list/provider}}
+</PolarisResourceList::Provider>

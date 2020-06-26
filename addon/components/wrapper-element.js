@@ -17,14 +17,11 @@ export default Component.extend({
   blacklistedAttributeBindings,
 
   updateAttributeBindings() {
-    if (isBlank(this.get('tagName'))) {
+    if (isBlank(this.tagName)) {
       return;
     }
 
-    let { attrs, blacklistedAttributeBindings } = this.getProperties(
-      'attrs',
-      'blacklistedAttributeBindings'
-    );
+    let { attrs, blacklistedAttributeBindings } = this;
 
     let newAttributeBindings = Object.keys(attrs)
       .filter((attr) => {

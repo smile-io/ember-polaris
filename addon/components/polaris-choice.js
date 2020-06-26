@@ -30,17 +30,6 @@ export default class PolarisChoice extends Component {
   label = null;
 
   /**
-   * Component to render for the choice's label
-   *
-   * DEPRECATED: pass the component as `label` instead.
-   *
-   * @type {String | Component}
-   * @default null
-   * @public
-   */
-  labelComponent = null;
-
-  /**
    * Whether the associated form control is disabled
    *
    * @type {Boolean}

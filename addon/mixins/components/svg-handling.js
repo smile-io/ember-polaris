@@ -41,11 +41,11 @@ export default Mixin.create({
    * @type {DOMNode}
    */
   get svgElement() {
-    return document.querySelector(`#${this.get('svgElementId')}`);
+    return document.querySelector(`#${this.svgElementId}`);
   },
 
   removeFillsFromSvgElement() {
-    this.removeSvgFills(this.get('svgElement'));
+    this.removeSvgFills(this.svgElement);
   },
 
   /**

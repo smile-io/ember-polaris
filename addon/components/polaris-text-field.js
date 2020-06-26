@@ -4,9 +4,10 @@ import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { htmlSafe } from '@ember/string';
 import { typeOf, isPresent } from '@ember/utils';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import { getCode } from 'ember-keyboard';
-import { runTask, cancelTask, runDisposables } from 'ember-lifeline';
+import { runTask, cancelTask } from 'ember-lifeline';
 import template from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
 
@@ -25,80 +26,72 @@ export default class PolarisTextFieldComponent extends Component {
   /**
    * ID for the input
    *
-   * @property id
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   id = null;
 
   /**
    * Text to display before value
    *
-   * @property prefix
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
   prefix = null;
 
   /**
    * Text to display after value
    *
-   * @property suffix
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
   suffix = null;
 
   /**
    * Hint text to display
    *
-   * @property placeholder
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   placeholder = null;
 
   /**
    * Initial value for the input
    *
-   * @property value
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   value = null;
 
   /**
    * Additional hint text to display
    *
-   * @property helpText
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
   helpText = null;
 
   /**
    * Label for the input
    *
-   * @property label
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   label = null;
 
   /**
    * Adds an action to the label
    *
-   * @property labelAction
-   * @public
    * @type {Object}
    * @default null
+   * @public
    *
    * Currently supports:
    * { onAction, text, accessibilityLabel }
@@ -108,140 +101,126 @@ export default class PolarisTextFieldComponent extends Component {
   /**
    * Visually hide the label
    *
-   * @property labelHidden
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
   labelHidden = false;
 
   /**
    * Disable the input
    *
-   * @property disabled
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   disabled = null;
 
   /**
    * Disable editing of the input
    *
-   * @property readOnly
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   readOnly = null;
 
   /**
    * Automatically focus the input
    *
-   * @property autoFocus
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   autoFocus = null;
 
   /**
    * Force the focus state on the input
    *
-   * @property focused
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   focused = null;
 
   /**
    * Allow for multiple lines of input
    *
-   * @property multiline
-   * @public
    * @type {Boolean|Number}
    * @default null
+   * @public
    */
   multiline = null;
 
   /**
    * Error to display beneath the label
    *
-   * @property error
-   * @public
    * @type {String|Component|Boolean|(String|Component)[]}
    * @default null
+   * @public
    */
   error = null;
 
   /**
    * An element connected to the right of the input
    *
-   * @property connectedRight
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
   connectedRight = null;
 
   /**
    * An element connected to the left of the input
    *
-   * @property connectedLeft
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
   connectedLeft = null;
 
   /**
    * Determine type of input
    *
-   * @property type
-   * @public
    * @type {String}
    * @default text
+   * @public
    */
   type = 'text';
 
   /**
    * Name of the input
    *
-   * @property name
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   name = null;
 
   /**
    * Defines a specific role attribute for the input
    *
-   * @property role
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   role = null;
 
   /**
    * Limit increment value for numeric and date-time inputs
    *
-   * @property step
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   step = null;
 
   /**
    * Enable automatic completion by the browser
    *
-   * @property autoComplete
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   autoComplete = null;
 
@@ -249,20 +228,18 @@ export default class PolarisTextFieldComponent extends Component {
    * Mimics the behavior of the native HTML attribute,
    * limiting how high the spinner can increment the value
    *
-   * @property max
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   max = null;
 
   /**
    * Maximum character length for an input
    *
-   * @property maxLength
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   maxLength = null;
 
@@ -270,120 +247,108 @@ export default class PolarisTextFieldComponent extends Component {
    * Mimics the behavior of the native HTML attribute,
    * limiting how low the spinner can decrement the value
    *
-   * @property min
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   min = null;
 
   /**
    * Minimum character length for an input
    *
-   * @property minLength
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
   minLength = null;
 
   /**
    * A regular expression to check the value against
    *
-   * @property pattern
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   pattern = null;
 
   /**
    * Indicate whether value should have spelling checked
    *
-   * @property spellCheck
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   spellCheck = null;
 
   /**
    * Indicates the id of a component owned by the input
    *
-   * @property ariaOwns
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   ariaOwns = null;
 
   /**
    * Indicates the id of a component controlled by the input
    *
-   * @property ariaControls
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   ariaControls = null;
 
   /**
    * Indicates the id of a related component's visually focused element ot the input
    *
-   * @property ariaActiveDescendant
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   ariaActiveDescendant = null;
 
   /**
    * Indicates what kind of user input completion suggestions are provided
    *
-   * @property ariaAutocomplete
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
   ariaAutocomplete = null;
 
   /**
    * Indicates whether or not the character count should be displayed
    *
-   * @property showCharacterCount
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
   showCharacterCount = false;
 
   /**
    * Callback when value is changed
    *
-   * @property onChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onChange(/* value, id */) {}
 
   /**
    * Callback when input is focused
    *
-   * @property onFocus
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onFocus() {}
 
   /**
    * Callback when focus is removed
    *
-   * @property onBlur
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
   onBlur() {}
 
@@ -545,10 +510,52 @@ export default class PolarisTextFieldComponent extends Component {
     return this.focused || false;
   }
 
-  setInput() {
-    this.set('input', document.querySelector(`[id='${this.id}']`));
+  init() {
+    super.init(...arguments);
+
+    let { id } = this;
+    id = id || `TextField-${guidFor(this)}`;
+
+    this.setProperties({
+      height: null,
+      id,
+    });
+
+    deprecate(
+      `[polaris-text-field] Passing 'dataTestTextField' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.class,
+      {
+        id: 'ember-polaris.polaris-text-field.dataTestTextField-arg',
+        until: '7.0.0',
+      }
+    );
   }
 
+  @action
+  handleFocusChange() {
+    let { wasFocused, focused, input } = this;
+
+    if (!wasFocused && focused) {
+      input.focus();
+    } else if (wasFocused && !focused) {
+      input.blur();
+    }
+
+    this.set('wasFocused', focused);
+  }
+
+  @action
+  setInput(element) {
+    this.set('input', element);
+
+    if (!this.focused) {
+      return;
+    }
+
+    this.input.focus();
+  }
+
+  @action
   handleButtonPress(onChange) {
     let minInterval = 50;
     let decrementBy = 10;
@@ -567,51 +574,9 @@ export default class PolarisTextFieldComponent extends Component {
     this.buttonPressTaskId = runTask(this, onChangeInterval, interval);
   }
 
+  @action
   handleButtonRelease() {
     cancelTask(this, this.buttonPressTaskId);
-  }
-
-  init() {
-    super.init(...arguments);
-
-    let { id } = this;
-    id = id || `TextField-${guidFor(this)}`;
-
-    this.setProperties({
-      height: null,
-      id,
-    });
-  }
-
-  didInsertElement() {
-    super.didInsertElement(...arguments);
-
-    this.setInput();
-
-    if (!this.focused) {
-      return;
-    }
-
-    this.input.focus();
-  }
-
-  didUpdateAttrs() {
-    super.didUpdateAttrs(...arguments);
-
-    let { wasFocused, focused, input } = this;
-
-    if (!wasFocused && focused) {
-      input.focus();
-    } else if (wasFocused && !focused) {
-      input.blur();
-    }
-
-    this.set('wasFocused', focused);
-  }
-
-  willDestroyElement() {
-    super.willDestroyElement(...arguments);
-    runDisposables(this);
   }
 
   @action
