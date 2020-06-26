@@ -119,7 +119,7 @@ export default class PolarisActionListItem extends Component {
 
   @computed('image')
   get imageBackgroundStyle() {
-    let url = this.get('image');
+    let { image: url } = this;
     return url ? htmlSafe(`background-image: url(${url})`) : '';
   }
 }

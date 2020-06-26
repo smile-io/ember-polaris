@@ -200,7 +200,7 @@ export default class Cell extends Component {
    */
   @(computed('height').readOnly())
   get style() {
-    let height = this.get('height');
+    let { height } = this;
     return height ? htmlSafe(`height: ${height}px`) : undefined;
   }
 
@@ -212,7 +212,6 @@ export default class Cell extends Component {
   @(computed('sorted', 'sortDirection', 'defaultSortDirection').readOnly())
   get direction() {
     let { sorted, sortDirection, defaultSortDirection } = this;
-
     return sorted ? sortDirection : defaultSortDirection;
   }
 
@@ -223,7 +222,7 @@ export default class Cell extends Component {
    */
   @(computed('direction').readOnly())
   get source() {
-    return `caret-${this.get('direction') === 'ascending' ? 'up' : 'down'}`;
+    return `caret-${this.direction === 'ascending' ? 'up' : 'down'}`;
   }
 
   /**
@@ -233,9 +232,7 @@ export default class Cell extends Component {
    */
   @(computed('sortDirection').readOnly())
   get oppositeDirection() {
-    return this.get('sortDirection') === 'ascending'
-      ? 'descending'
-      : 'ascending';
+    return this.sortDirection === 'ascending' ? 'descending' : 'ascending';
   }
 
   /**

@@ -67,7 +67,7 @@ export default class PolarisLink extends Component {
   get linkClass() {
     let linkClasses = ['Polaris-Link'];
 
-    if (this.get('monochrome')) {
+    if (this.monochrome) {
       linkClasses.push('Polaris-Link--monochrome');
     }
 

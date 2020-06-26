@@ -18,19 +18,19 @@ export default class PolarisActionList extends Component {
    * Collection of actions for list
    *
    * @type {Array}
-   * @default null
+   * @default []
    * @public
    */
-  items = null;
+  items = [];
 
   /**
    * Collection of sectioned action items
    *
    * @type {Array}
-   * @default null
+   * @default []
    * @public
    */
-  sections = null;
+  sections = [];
 
   /**
    * Defines a specific role attribute for each action in the list
@@ -63,12 +63,12 @@ export default class PolarisActionList extends Component {
   get finalSections() {
     let finalSections = [];
 
-    let items = this.get('items');
+    let { items } = this;
     if (isPresent(items)) {
       finalSections.push({ items });
     }
 
-    let sections = this.get('sections') || [];
+    let { sections } = this;
     assert(
       `ember-polaris::polaris-action-list - sections must be an array, you passed ${sections}`,
       isArray(sections)

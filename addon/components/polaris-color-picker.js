@@ -54,7 +54,7 @@ export default class PolarisColorPicker extends Component {
    */
   @(computed('color.{hue,alpha}').readOnly())
   get colorLayerStyle() {
-    const { hue, alpha = 1 } = this.get('color');
+    const { hue, alpha = 1 } = this.color;
     const { red, green, blue } = hsbaToRgba({
       hue,
       saturation: 1,
