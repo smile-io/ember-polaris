@@ -195,10 +195,7 @@ module('Integration | Component | polaris link', function(hooks) {
       assert.notOk(true, "click event doesn't bubble to the parent");
     this.handleClick = (event) => {
       assert.ok(true, '@onClick handler is fired');
-      assert.notOk(
-        event,
-        'click event is not passed as argument to @onClick handler'
-      );
+      assert.notOk(event, 'click event is not curried to @onClick handler');
     };
 
     await render(hbs`
@@ -225,10 +222,7 @@ module('Integration | Component | polaris link', function(hooks) {
       assert.notOk(true, "click event doesn't bubble to the parent");
     this.handleClick = (event) => {
       assert.ok(true, '@onClick handler is fired');
-      assert.notOk(
-        event,
-        'click event is not passed as argument to @onClick handler'
-      );
+      assert.notOk(event, 'click event is not curried to @onClick handler');
     };
 
     await render(hbs`

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-link';
 
@@ -72,5 +72,10 @@ export default class PolarisLink extends Component {
     }
 
     return linkClasses.join(' ');
+  }
+
+  @action
+  handleClick(/* event */) {
+    this.onClick();
   }
 }
