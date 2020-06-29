@@ -235,31 +235,21 @@ module('Integration | Component | polaris-button', function(hooks) {
     module('onClick()', function() {
       test('is called when the button is clicked', async function(assert) {
         this.set('handleClick', (_myArg, event) => {
-          assert.ok(true, 'triggers onClick handler');
-          assert.ok(
-            event instanceof MouseEvent,
-            'receives the MouseEvent as last argument'
-          );
+          assert.ok(true, 'triggers @onClick handler');
+          assert.notOk(event, 'does not curry click event to @onClick');
         });
 
-        await render(
-          hbs`{{polaris-button onClick=(action handleClick "myArg")}}`
-        );
+        await render(hbs`{{polaris-button onClick=this.handleClick}}`);
         await click('button');
       });
 
       test('is called when the link is clicked', async function(assert) {
-        this.set('handleClick', (_myArg, event) => {
-          assert.ok(true, 'triggers onClick handler');
-          assert.ok(
-            event instanceof MouseEvent,
-            'receives the MouseEvent as last argument'
-          );
+        this.set('handleClick', (event) => {
+          assert.ok(true, 'triggers @onClick handler');
+          assert.notOk(event, 'does not curry click event to @onClick');
         });
 
-        await render(
-          hbs`{{polaris-button onClick=(action handleClick "myArg") url="#"}}`
-        );
+        await render(hbs`{{polaris-button onClick=this.handleClick url="#"}}`);
         await click('[data-polaris-unstyled]');
       });
     });

@@ -147,6 +147,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
   @action
   handleClick(event) {
     event.stopPropagation();
-    this.onClick(event);
+    this.onClick();
   }
 }

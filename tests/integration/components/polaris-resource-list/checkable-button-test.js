@@ -56,17 +56,21 @@ module(
     });
 
     test('onToggleAll action works', async function(assert) {
-      this.set('toggled', false);
+      assert.expect(2);
+
+      this.set('handleToggle', (event) => {
+        assert.ok(true, 'triggers @onToggleAll handler');
+        assert.notOk(
+          event,
+          'does not curry click event to the @onToggleAll handler'
+        );
+      });
 
       await render(hbs`
-      {{polaris-resource-list/checkable-button
-        onToggleAll=(action (mut toggled) true)
-      }}
-    `);
+        {{polaris-resource-list/checkable-button onToggleAll=this.handleToggle}}
+      `);
 
       await click(componentSelector);
-
-      assert.ok(this.get('toggled'), 'onToggleAll action fires');
     });
   }
 );

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
@@ -370,5 +370,10 @@ export default class PolarisButtonComponent extends Component {
         until: '7.0.0',
       }
     );
+  }
+
+  @action
+  handleClick(/* event */) {
+    this.onClick();
   }
 }

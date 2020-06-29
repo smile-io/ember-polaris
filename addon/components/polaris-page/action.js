@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-page/action';
@@ -66,8 +66,6 @@ export default class ActionComponent extends Component {
    */
   onAction() {}
 
-  type = 'button';
-
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   @computed('text', 'icon')
@@ -87,5 +85,10 @@ export default class ActionComponent extends Component {
     }
 
     return classes.join(' ');
+  }
+
+  @action
+  handleClick(/* event */) {
+    this.onAction();
   }
 }

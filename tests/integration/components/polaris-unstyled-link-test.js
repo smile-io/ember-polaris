@@ -45,8 +45,8 @@ module('Integration | Component | polaris-unstyled-link', function(hooks) {
     assert.expect(2);
 
     this.set('handleClick', (event) => {
-      assert.ok(true, 'triggers onClick action');
-      assert.ok(event instanceof MouseEvent);
+      assert.ok(true, 'triggers @onClick handler');
+      assert.notOk(event, 'does not curry click event to the @onClick handler');
     });
 
     await render(hbs`

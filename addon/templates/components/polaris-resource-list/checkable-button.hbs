@@ -1,12 +1,7 @@
 {{!-- template-lint-disable no-invalid-interactive --}}
 <div
-  {{on "click" (fn (or @onToggleAll this.onToggleAll))}}
-  class="Polaris-ResourceList-CheckableButton
-    {{if this.plain "Polaris-ResourceList-CheckableButton__CheckableButton--plain"}}
-    {{if this.shouldApplySelectModeClass "Polaris-ResourceList-CheckableButton__CheckableButton--selectMode"}}
-    {{if this.shouldApplySelectedClass "Polaris-ResourceList-CheckableButton__CheckableButton--selected"}}
-    {{if this.shouldApplyMeasuringClass "Polaris-ResourceList-CheckableButton__CheckableButton--measuring"}}
-  "
+  class={{this.classes}}
+  {{on "click" this.toggleAll}}
   ...attributes
 >
   <div class="Polaris-ResourceList-CheckableButton__Checkbox">
