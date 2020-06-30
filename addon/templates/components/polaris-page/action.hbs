@@ -4,7 +4,7 @@
   class={{this.classes}}
   aria-label={{@accessibilityLabel}}
   disabled={{@disabled}}
-  {{on "click" this.handleClick}}
+  {{on "click" (stop-propagation this.handleClick)}}
   {{on "mouseup" this.handleMouseUpByBlurring}}
 >
   {{#if (or @icon @disclosure)}}

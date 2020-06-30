@@ -111,7 +111,8 @@ export default class CheckableButton extends Component {
   }
 
   @action
-  toggleAll(/* event */) {
+  toggleAll(event) {
+    event.stopPropagation();
     this.onToggleAll();
   }
 }

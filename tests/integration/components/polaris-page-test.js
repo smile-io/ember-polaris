@@ -218,21 +218,26 @@ module('Integration | Component | polaris page', function(hooks) {
     this.actions.secondaryAction2 = () => {
       secondaryAction2Fired = true;
     };
+    this.handleWrapperClick = () =>
+      assert.notOk(true, "click event doesn't bubble");
 
     await render(hbs`
-      {{polaris-page
-        title="This is the title"
-        secondaryActions=(array
-          (hash
-            text="First secondary action"
-            onAction=(action "secondaryAction1")
+      {{!-- template-lint-disable no-invalid-interactive--}}
+      <div {{on "click" this.handleWrapperClick}}>
+        {{polaris-page
+          title="This is the title"
+          secondaryActions=(array
+            (hash
+              text="First secondary action"
+              onAction=(action "secondaryAction1")
+            )
+            (hash
+              text="Second secondary action"
+              onAction=(action "secondaryAction2")
+            )
           )
-          (hash
-            text="Second secondary action"
-            onAction=(action "secondaryAction2")
-          )
-        )
-      }}
+        }}
+      </div>
     `);
 
     assert
