@@ -234,32 +234,34 @@ module('Integration | Component | polaris-button', function(hooks) {
 
     module('onClick()', function() {
       test('is called when the button is clicked', async function(assert) {
-        this.set('handleClick', (_myArg, event) => {
-          assert.ok(true, 'triggers onClick handler');
-          assert.ok(
-            event instanceof MouseEvent,
-            'receives the MouseEvent as last argument'
-          );
-        });
+        this.handleWrapperClick = () =>
+          assert.notOk(true, "click event doesn't bubble");
+        this.handleClick = (event) => {
+          assert.ok(true, 'triggers @onClick handler');
+          assert.notOk(event, 'does not curry click event to @onClick');
+        };
 
-        await render(
-          hbs`{{polaris-button onClick=(action handleClick "myArg")}}`
-        );
+        await render(hbs`
+          {{!-- template-lint-disable no-invalid-interactive--}}
+          <div {{on "click" this.handleWrapperClick}}>{{polaris-button onClick=this.handleClick}}</div>
+        `);
+
         await click('button');
       });
 
       test('is called when the link is clicked', async function(assert) {
-        this.set('handleClick', (_myArg, event) => {
-          assert.ok(true, 'triggers onClick handler');
-          assert.ok(
-            event instanceof MouseEvent,
-            'receives the MouseEvent as last argument'
-          );
-        });
+        this.handleWrapperClick = () =>
+          assert.notOk("click event doesn't bubble");
+        this.handleClick = (event) => {
+          assert.ok(true, 'triggers @onClick handler');
+          assert.notOk(event, 'does not curry click event to @onClick');
+        };
 
-        await render(
-          hbs`{{polaris-button onClick=(action handleClick "myArg") url="#"}}`
-        );
+        await render(hbs`
+          {{!-- template-lint-disable no-invalid-interactive--}}
+          <div {{on "click" this.handleWrapperClick}}>{{polaris-button onClick=this.handleClick url="#"}}</div>
+        `);
+
         await click('[data-polaris-unstyled]');
       });
     });

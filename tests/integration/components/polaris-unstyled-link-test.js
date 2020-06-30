@@ -44,16 +44,21 @@ module('Integration | Component | polaris-unstyled-link', function(hooks) {
   test('supports onClick action', async function(assert) {
     assert.expect(2);
 
-    this.set('handleClick', (event) => {
-      assert.ok(true, 'triggers onClick action');
-      assert.ok(event instanceof MouseEvent);
-    });
+    this.handleWrapperClick = () =>
+      assert.notOk(true, "click event doesn't bubble");
+    this.handleClick = (event) => {
+      assert.ok(true, 'triggers @onClick handler');
+      assert.notOk(event, 'does not curry click event to the @onClick handler');
+    };
 
     await render(hbs`
-      <PolarisUnstyledLink
-        data-test="unstyled-link"
-        @onClick={{action handleClick}}
-      />
+      {{!-- template-lint-disable no-invalid-interactive--}}
+      <div {{on "click" this.handleWrapperClick}}>
+        <PolarisUnstyledLink
+          data-test="unstyled-link"
+          @onClick={{action handleClick}}
+        />
+      </div>
     `);
 
     await click(linkSelector);

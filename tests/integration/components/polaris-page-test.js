@@ -146,11 +146,16 @@ module('Integration | Component | polaris page', function(hooks) {
   });
 
   test('it handles primary action correctly when supplied', async function(assert) {
-    let primaryActionFired = false;
-    this.actions.primaryActionFired = () => {
-      primaryActionFired = true;
-    };
+    assert.expect(8);
+
     this.setProperties({
+      handleClick: (event) => {
+        assert.ok(true, 'triggers @onAction handler');
+        assert.notOk(
+          event,
+          'does not curry click event to the @onAction handler'
+        );
+      },
       primaryActionDisabled: true,
       primaryActionLoading: false,
     });
@@ -160,47 +165,48 @@ module('Integration | Component | polaris page', function(hooks) {
         title="This is the title"
         primaryAction=(hash
           text="Take action!"
-          disabled=primaryActionDisabled
-          loading=primaryActionLoading
-          onAction=(action "primaryActionFired")
+          disabled=this.primaryActionDisabled
+          loading=this.primaryActionLoading
+          onAction=this.handleClick
         )
       }}
     `);
 
-    const primaryButtons = assert.dom(primaryButtonSelector);
-    primaryButtons.exists({ count: 1 }, 'renders one primary button');
-
-    primaryButtons.hasText(
-      'Take action!',
-      'uses correct text on primary button'
-    );
-
-    primaryButtons.isDisabled('primary action button is initially disabled');
-    primaryButtons.hasNoClass(
-      'Polaris-Button--loading',
-      'primary action button is not initially in loading state'
-    );
+    assert
+      .dom(primaryButtonSelector)
+      .exists({ count: 1 }, 'renders one primary button');
+    assert
+      .dom(primaryButtonSelector)
+      .hasText('Take action!', 'uses correct text on primary button');
+    assert
+      .dom(primaryButtonSelector)
+      .isDisabled('primary action button is initially disabled');
+    assert
+      .dom(primaryButtonSelector)
+      .hasNoClass(
+        'Polaris-Button--loading',
+        'primary action button is not initially in loading state'
+      );
 
     this.setProperties({
       primaryActionDisabled: false,
       primaryActionLoading: true,
     });
 
-    primaryButtons.hasClass(
-      'Polaris-Button--loading',
-      'primary action button goes into loading state'
-    );
+    assert
+      .dom(primaryButtonSelector)
+      .hasClass(
+        'Polaris-Button--loading',
+        'primary action button goes into loading state'
+      );
 
     this.set('primaryActionLoading', false);
 
-    primaryButtons.isNotDisabled('primary action button becomes enabled');
-    assert.notOk(
-      primaryActionFired,
-      "hasn't fired primary action before clicking button"
-    );
+    assert
+      .dom(primaryButtonSelector)
+      .isNotDisabled('primary action button becomes enabled');
 
     await click(primaryButtonSelector);
-    assert.ok(primaryActionFired, 'fires primary action on click');
   });
 
   test('it handles secondary actions correctly when supplied', async function(assert) {
@@ -212,21 +218,26 @@ module('Integration | Component | polaris page', function(hooks) {
     this.actions.secondaryAction2 = () => {
       secondaryAction2Fired = true;
     };
+    this.handleWrapperClick = () =>
+      assert.notOk(true, "click event doesn't bubble");
 
     await render(hbs`
-      {{polaris-page
-        title="This is the title"
-        secondaryActions=(array
-          (hash
-            text="First secondary action"
-            onAction=(action "secondaryAction1")
+      {{!-- template-lint-disable no-invalid-interactive--}}
+      <div {{on "click" this.handleWrapperClick}}>
+        {{polaris-page
+          title="This is the title"
+          secondaryActions=(array
+            (hash
+              text="First secondary action"
+              onAction=(action "secondaryAction1")
+            )
+            (hash
+              text="Second secondary action"
+              onAction=(action "secondaryAction2")
+            )
           )
-          (hash
-            text="Second secondary action"
-            onAction=(action "secondaryAction2")
-          )
-        )
-      }}
+        }}
+      </div>
     `);
 
     assert

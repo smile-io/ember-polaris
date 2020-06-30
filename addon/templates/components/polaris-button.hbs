@@ -1,4 +1,4 @@
-{{#with
+{{#let
   (component
     "polaris-button/content"
     text=@text
@@ -40,10 +40,10 @@
         @external={{@external}}
         @download={{@download}}
         @ariaLabel={{@accessibilityLabel}}
-        @onClick={{action this.onClick}}
-        @onFocus={{action this.onFocus}}
-        @onBlur={{action this.onBlur}}
-        @onMouseUp={{action this.handleMouseUpByBlurring}}
+        @onClick={{this.handleClick}}
+        @onFocus={{this.onFocus}}
+        @onBlur={{this.onBlur}}
+        @onMouseUp={{this.handleMouseUpByBlurring}}
         ...attributes
       >
         {{#if hasBlock}}
@@ -68,7 +68,7 @@
       aria-controls={{@ariaControls}}
       aria-expanded={{if @ariaExpanded "true"}}
       aria-pressed={{if @ariaPressed "true"}}
-      {{on "click" this.onClick}}
+      {{on "click" (stop-propagation this.handleClick)}}
       {{on "focus" this.onFocus}}
       {{on "blur" this.onBlur}}
       {{on "keydown" this.onKeyDown}}
@@ -86,4 +86,4 @@
       {{/if}}
     </button>
   {{/if}}
-{{/with}}
+{{/let}}

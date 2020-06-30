@@ -3,7 +3,7 @@
     class={{this.linkClass}}
     @url={{@url}}
     @external={{@external}}
-    @onClick={{fn (or @onClick this.onClick)}}
+    @onClick={{this.handleClick}}
   >
     {{#if hasBlock}}
       {{yield}}
@@ -15,7 +15,7 @@
   <button
     type="button"
     class={{this.linkClass}}
-    {{on "click" (stop-propagation (or @onClick this.onClick))}}
+    {{on "click" (stop-propagation this.handleClick)}}
   >
     {{#if hasBlock}}
       {{yield}}

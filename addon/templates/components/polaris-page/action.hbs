@@ -1,10 +1,10 @@
 {{! TODO: support url }}
 <button
+  type="button"
   class={{this.classes}}
   aria-label={{@accessibilityLabel}}
   disabled={{@disabled}}
-  type={{this.type}}
-  {{on "click" this.onAction}}
+  {{on "click" (stop-propagation this.handleClick)}}
   {{on "mouseup" this.handleMouseUpByBlurring}}
 >
   {{#if (or @icon @disclosure)}}
