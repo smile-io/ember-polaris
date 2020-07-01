@@ -42,7 +42,7 @@ export default class PolarisTextStyle extends Component {
    * Possible values: positive, negative, strong, subdued
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   variation = null;
@@ -55,7 +55,7 @@ export default class PolarisTextStyle extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   text = null;
@@ -67,17 +67,11 @@ export default class PolarisTextStyle extends Component {
    */
   classes = '';
 
-  /**
-   * @private
-   */
   @(computed('variation').readOnly())
   get elementTagName() {
     return variationElement(this.variation);
   }
 
-  /**
-   * @private
-   */
   @(computed('variation', 'classes').readOnly())
   get textStyleClasses() {
     let { variation, classes } = this;

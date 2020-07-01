@@ -1,6 +1,6 @@
 {{#let (element (or @htmlTag @tagName "h3")) as |Subheading|}}
   <Subheading
-    class="Polaris-Subheading"
+    class="Polaris-Subheading {{@class}}"
     aria-label={{this.ariaLabel}}
     {{did-insert this.setAriaLabel}}
     ...attributes

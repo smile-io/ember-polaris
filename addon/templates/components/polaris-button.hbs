@@ -18,7 +18,7 @@
       {{!-- template-lint-disable link-href-attributes --}}
       <a
         id={{this.id}}
-        class={{this.classes}}
+        class={{this.cssClasses}}
         aria-label={{@accessibilityLabel}}
         data-test-id={{@dataTestId}}
         ...attributes
@@ -33,7 +33,7 @@
       </a>
     {{else}}
       <PolarisUnstyledLink
-        class={{this.classes}}
+        class={{this.cssClasses}}
         id={{this.id}}
         @dataTestId={{@dataTestId}}
         @url={{@url}}
@@ -59,7 +59,7 @@
     <button
       id={{this.id}}
       data-test-id={{@dataTestId}}
-      class={{this.classes}}
+      class={{this.cssClasses}}
       disabled={{this.isDisabled}}
       type={{if @submit "submit" "button"}}
       role={{if @loading "alert"}}

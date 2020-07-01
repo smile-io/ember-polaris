@@ -1,5 +1,5 @@
 <div
-  class="Polaris-ButtonGroup__Item {{if @plain "Polaris-ButtonGroup__Item--plain"}} {{if this.focused "Polaris-ButtonGroup__Item--focused"}}"
+  class={{this.cssClasses}}
   data-test-button-group-item
   role="button"
   {{on "focus" this.handleFocus}}

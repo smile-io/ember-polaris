@@ -1,5 +1,5 @@
 <div
-  class={{if @condensed "Polaris-FormLayout--condensed" "Polaris-FormLayout--grouped"}}
+  class="{{@class}} {{if @condensed "Polaris-FormLayout--condensed" "Polaris-FormLayout--grouped"}}"
   data-test-form-layout-group
   aria-labelledby={{this.titleID}}
   aria-describedby={{this.helpTextID}}

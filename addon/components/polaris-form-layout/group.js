@@ -5,10 +5,13 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { idVariation, helpTextId } from '../../utils/id';
 import AutoWrapper from '../../-private/auto-wrapper';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisFormLayoutGroup extends Component {
+export default class PolarisFormLayoutGroup extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Elements to display inside group item
    *
@@ -62,24 +65,6 @@ export default class PolarisFormLayoutGroup extends Component {
 
     return helpTextId(this.elementId);
   }
-
-  // didRender() {
-  //   super.didRender(...arguments);
-
-  //   let itemsContainer = this.element.querySelector(
-  //     '.Polaris-FormLayout__Items'
-  //   );
-
-  //   let nodesToWrap = rejectNodesByClassName(
-  //     itemsContainer.children,
-  //     'Polaris-FormLayout__Item'
-  //   );
-  //   let wrapper = document.createElement('div');
-
-  //   wrapper.classList.add('Polaris-FormLayout__Item');
-  //   wrapper.setAttribute('data-test-form-layout-item', true);
-  //   wrapChildren(nodesToWrap, wrapper);
-  // }
 
   @action
   setupAutoWrapper(formLayouItemsElement) {

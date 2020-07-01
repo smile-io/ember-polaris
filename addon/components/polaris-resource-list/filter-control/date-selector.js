@@ -75,21 +75,18 @@ export default class DateSelector extends Component {
   /**
    * @type {Date}
    * @default null
-   * @private
    */
   selectedDate = null;
 
   /**
    * @type {String}
    * @default null
-   * @private
    */
   userInputDate = null;
 
   /**
    * @type {String}
    * @default null
-   * @private
    */
   userInputDateError = null;
 
@@ -97,13 +94,11 @@ export default class DateSelector extends Component {
    * Month enum value, either string day of month or integer index (0 = Sunday).
    *
    * @type {String|Number}
-   * @private
    */
   datePickerMonth = null;
 
   /**
    * @type {Number}
-   * @private
    */
   datePickerYear = null;
 
@@ -112,7 +107,6 @@ export default class DateSelector extends Component {
    *
    * @type {String}
    * @default null
-   * @private
    */
   initialConsumerFilterKey = null;
 

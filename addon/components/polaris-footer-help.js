@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-footer-help';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris footer help component.
@@ -8,7 +9,9 @@ import layout from '../templates/components/polaris-footer-help';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisFooterHelp extends Component {
+export default class PolarisFooterHelp extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display inside the layout.
    *

@@ -50,15 +50,9 @@ export default class PolarisActionList extends Component {
    */
   onActionAnyItem() {}
 
-  /**
-   * @private
-   */
   @gt('finalSections.length', 1)
   hasMultipleSections;
 
-  /**
-   * @private
-   */
   @computed('items', 'sections.[]')
   get finalSections() {
     let finalSections = [];

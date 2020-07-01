@@ -1,12 +1,14 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { deprecate } from '@ember/application/deprecations';
 import { layout, tagName } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-stack/item';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class StackItemComponent extends Component {
+export default class StackItemComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Elements to display inside stack item
    *
@@ -26,28 +28,15 @@ export default class StackItemComponent extends Component {
   fill = false;
 
   @computed('fill', 'class')
-  get classes() {
-    let classNames = ['Polaris-Stack__Item'];
+  get cssClasses() {
+    let cssClasses = ['Polaris-Stack__Item'];
     if (this.fill) {
-      classNames.push('Polaris-Stack__Item--fill');
+      cssClasses.push('Polaris-Stack__Item--fill');
     }
     if (this.class) {
-      classNames.push(this.class);
+      cssClasses.push(this.class);
     }
 
-    return classNames.join(' ');
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[polaris-stack/item] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-stack-item.class-arg',
-        until: '7.0.0',
-      }
-    );
+    return cssClasses.join(' ');
   }
 }

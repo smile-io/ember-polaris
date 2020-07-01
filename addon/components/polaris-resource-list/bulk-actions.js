@@ -5,6 +5,7 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../../templates/components/polaris-resource-list/bulk-actions';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 const MAX_PROMOTED_ACTIONS = 2;
 
@@ -12,7 +13,8 @@ const MAX_PROMOTED_ACTIONS = 2;
 @templateLayout(layout)
 export default class BulkActions extends Component.extend(
   ContextBoundEventListenersMixin,
-  ContextBoundTasksMixin
+  ContextBoundTasksMixin,
+  TaglessCssDeprecation
 ) {
   /**
    * Visually hidden text for screen readers
@@ -258,6 +260,24 @@ export default class BulkActions extends Component.extend(
     }
 
     return combinedActions;
+  }
+
+  @computed('selectMode', 'class')
+  get cssClasses() {
+    let cssClasses = [
+      'Polaris-ResourceList-BulkActions__Group',
+      'Polaris-ResourceList-BulkActions__Group--smallScreen',
+    ];
+    if (this.selectMode) {
+      cssClasses.push('Polaris-ResourceList-BulkActions__Group--entered');
+    } else {
+      cssClasses.push('Polaris-ResourceList-BulkActions__Group--exited');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 
   get moreActionsNode() {

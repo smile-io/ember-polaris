@@ -1,15 +1,18 @@
 import Component from '@ember/component';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-card/section-header';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class CardSectionHeaderComponent extends Component {
+export default class CardSectionHeaderComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Title for the section
    *
    * @type {String|Component}
-   * @default: null
+   * @default null
    * @public
    */
   title = null;
@@ -22,7 +25,7 @@ export default class CardSectionHeaderComponent extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   text = null;

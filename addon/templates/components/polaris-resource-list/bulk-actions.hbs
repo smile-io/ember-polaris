@@ -1,13 +1,8 @@
 <div
   data-test-bulk-actions="true"
-  class="Polaris-ResourceList-BulkActions__Group
-    Polaris-ResourceList-BulkActions__Group--smallScreen
-    {{if @selectMode
-      "Polaris-ResourceList-BulkActions__Group--entered"
-      "Polaris-ResourceList-BulkActions__Group--exited"
-    }}
-  "
+  class={{this.cssClasses}}
   {{did-insert this.insertBulkActions}}
+  ...attributes
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     <PolarisResourceList::CheckableButton

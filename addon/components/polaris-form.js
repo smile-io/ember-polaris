@@ -3,10 +3,13 @@ import { action } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisForm extends Component {
+export default class PolarisForm extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Space separated list of character encodings
    *

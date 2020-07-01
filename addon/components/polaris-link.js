@@ -55,9 +55,6 @@ export default class PolarisLink extends Component {
    */
   onClick() {}
 
-  /**
-   * @private
-   */
   @(computed('class', 'monochrome').readOnly())
   get linkClass() {
     let linkClasses = ['Polaris-Link'];

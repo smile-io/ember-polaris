@@ -1,15 +1,16 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-button-group/item';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class Item extends Component {
+export default class Item extends Component.extend(TaglessCssDeprecation) {
   /**
    * Elements to display inside group item
    *
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
@@ -18,7 +19,7 @@ export default class Item extends Component {
   /**
    * Use a plain style for the group item
    *
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
    * @public
    */
@@ -27,11 +28,26 @@ export default class Item extends Component {
   /**
    * Whether the group item is focused
    *
-   * @type {boolean}
+   * @type {Boolean}
    * @default false
-   * @private
    */
   focused = false;
+
+  @computed('plain', 'focused', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-ButtonGroup__Item'];
+    if (this.plain) {
+      cssClasses.push('Polaris-ButtonGroup__Item--plain');
+    }
+    if (this.focused) {
+      cssClasses.push('Polaris-ButtonGroup__Item--focused');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
 
   @action
   handleFocus() {

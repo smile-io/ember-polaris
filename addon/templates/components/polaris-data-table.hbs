@@ -1,5 +1,5 @@
 <div
-  class={{if this.collapsed "Polaris-DataTable--collapsed"}}
+  class="{{if this.collapsed "Polaris-DataTable--collapsed"}} {{@class}}"
   {{did-insert this.insertDataTable}}
   {{did-update this.updateDataTable @footerContent @truncate}}
   ...attributes

@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-subheading';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris subheading component.
@@ -20,7 +21,9 @@ import layout from '../templates/components/polaris-subheading';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSubheadingComponent extends Component {
+export default class PolarisSubheadingComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display inside the heading
    *

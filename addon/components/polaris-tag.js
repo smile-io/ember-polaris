@@ -3,6 +3,7 @@ import { action, computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-tag';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris tag component.
@@ -12,7 +13,9 @@ import { handleMouseUpByBlurring } from '../utils/focus';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisTag extends Component {
+export default class PolarisTag extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display inside the tag.
    *

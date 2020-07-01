@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
-import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
@@ -293,7 +292,7 @@ export default class PolarisButtonComponent extends Component {
     'fullWidth',
     'isIconOnly'
   )
-  get classes() {
+  get cssClasses() {
     let {
       class: externalClasses,
       primary,
@@ -307,56 +306,48 @@ export default class PolarisButtonComponent extends Component {
       fullWidth,
       isIconOnly,
     } = this;
-    let classes = ['Polaris-Button'];
+    let cssClasses = ['Polaris-Button'];
 
-    if (isPresent(externalClasses)) {
-      classes.push(externalClasses);
+    if (externalClasses) {
+      cssClasses.push(externalClasses);
     }
-
     if (primary) {
-      classes.push('Polaris-Button--primary');
+      cssClasses.push('Polaris-Button--primary');
     }
-
     if (outline) {
-      classes.push('Polaris-Button--outline');
+      cssClasses.push('Polaris-Button--outline');
     }
-
     if (destructive) {
-      classes.push('Polaris-Button--destructive');
+      cssClasses.push('Polaris-Button--destructive');
     }
-
     if (isDisabled) {
-      classes.push('Polaris-Button--disabled');
+      cssClasses.push('Polaris-Button--disabled');
     }
-
     if (loading) {
-      classes.push('Polaris-Button--loading');
+      cssClasses.push('Polaris-Button--loading');
     }
-
     if (plain) {
-      classes.push('Polaris-Button--plain');
+      cssClasses.push('Polaris-Button--plain');
     }
-
     if (monochrome) {
-      classes.push('Polaris-Button--monochrome');
+      cssClasses.push('Polaris-Button--monochrome');
     }
 
     if (size && size !== DEFAULT_SIZE) {
       size = SIZES[size] || null;
       if (size) {
-        classes.push(`Polaris-Button--size${classify(size)}`);
+        cssClasses.push(`Polaris-Button--size${classify(size)}`);
       }
     }
 
     if (fullWidth) {
-      classes.push('Polaris-Button--fullWidth');
+      cssClasses.push('Polaris-Button--fullWidth');
     }
-
     if (isIconOnly) {
-      classes.push('Polaris-Button--iconOnly');
+      cssClasses.push('Polaris-Button--iconOnly');
     }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 
   init() {

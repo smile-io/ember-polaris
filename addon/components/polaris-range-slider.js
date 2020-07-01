@@ -183,29 +183,27 @@ export default class PolarisRangeSlider extends Component {
    * Class names for the range wrapper div
    *
    * @type {String}
-   * @private
    */
   @(computed('error', 'disabled').readOnly())
   get rangeWrapperClassNames() {
     let { error, disabled } = this;
-    let classNames = ['Polaris-RangeSlider'];
+    let cssClasses = ['Polaris-RangeSlider'];
 
     if (error) {
-      classNames.push('Polaris-RangeSlider--error');
+      cssClasses.push('Polaris-RangeSlider--error');
     }
 
     if (disabled) {
-      classNames.push('Polaris-RangeSlider--disabled');
+      cssClasses.push('Polaris-RangeSlider--disabled');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   /**
    * Style for the range wrapper div
    *
    * @type {String}
-   * @private
    */
   @(computed('min', 'max', 'value', 'sliderProgress').readOnly())
   get rangeWrapperStyle() {
@@ -235,7 +233,6 @@ export default class PolarisRangeSlider extends Component {
    * Slider progress percentage
    *
    * @type {Number}
-   * @private
    */
   @(computed('min', 'max', 'value').readOnly())
   get sliderProgress() {
@@ -247,7 +244,6 @@ export default class PolarisRangeSlider extends Component {
    * Stringified boolean flag indicating whether an error is present
    *
    * @type {String}
-   * @private
    */
   @(computed('error').readOnly())
   get hasError() {
@@ -258,7 +254,6 @@ export default class PolarisRangeSlider extends Component {
    * Accessibility
    *
    * @type {Boolean}
-   * @private
    */
   @(computed('error', 'helpText', 'id').readOnly())
   get ariaDescribedBy() {
@@ -280,7 +275,6 @@ export default class PolarisRangeSlider extends Component {
    * Boolean flag indicating whether the output value should be displayed
    *
    * @type {Boolean}
-   * @private
    */
   @(computed('disabled', 'output').readOnly())
   get shouldShowOutput() {

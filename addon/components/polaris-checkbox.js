@@ -135,13 +135,13 @@ export default class PolarisCheckbox extends Component {
 
   @computed('isIndeterminate')
   get checkboxClasses() {
-    let classNames = ['Polaris-Checkbox__Input'];
+    let cssClasses = ['Polaris-Checkbox__Input'];
 
     if (this.isIndeterminate) {
-      classNames.push('Polaris-Checkbox__Input--indeterminate');
+      cssClasses.push('Polaris-Checkbox__Input--indeterminate');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('inputId')

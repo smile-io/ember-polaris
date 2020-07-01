@@ -17,6 +17,7 @@ import {
   mediumSizeWidthLimit,
   largeSizeWidthLimit,
 } from '../utils/drop-zone';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
@@ -24,7 +25,8 @@ const iconAlertCircle = 'alert-circle';
 @tagName('')
 @layout(template)
 export default class PolarisDropZoneComponent extends Component.extend(
-  ContextBoundEventListenersMixin
+  ContextBoundEventListenersMixin,
+  TaglessCssDeprecation
 ) {
   /**
    * ID for file input
@@ -272,7 +274,7 @@ export default class PolarisDropZoneComponent extends Component.extend(
   @or('active', 'state.dragging')
   isDragging;
 
-  @computed('outline', 'isDragging', 'state.error', 'sizeClass')
+  @computed('outline', 'isDragging', 'state.error', 'sizeClass', 'class')
   get dropZoneClasses() {
     let {
       outline,
@@ -281,21 +283,25 @@ export default class PolarisDropZoneComponent extends Component.extend(
       sizeClass,
     } = this;
 
-    let classNames = ['Polaris-DropZone', sizeClass];
+    let cssClasses = ['Polaris-DropZone', sizeClass];
 
     if (outline) {
-      classNames.push('Polaris-DropZone--hasOutline');
+      cssClasses.push('Polaris-DropZone--hasOutline');
     }
 
     if (isDragging) {
-      classNames.push('Polaris-DropZone--isDragging');
+      cssClasses.push('Polaris-DropZone--isDragging');
     }
 
     if (error) {
-      classNames.push('Polaris-DropZone--hasError');
+      cssClasses.push('Polaris-DropZone--hasError');
     }
 
-    return classNames.join(' ');
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 
   @computed('state.size')

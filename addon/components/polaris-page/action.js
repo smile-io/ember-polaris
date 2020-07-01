@@ -4,10 +4,13 @@ import { isBlank } from '@ember/utils';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-page/action';
 import { handleMouseUpByBlurring } from '../../utils/focus';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class ActionComponent extends Component {
+export default class ActionComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {String}
    * @default null
@@ -73,18 +76,22 @@ export default class ActionComponent extends Component {
     return this.icon && isBlank(this.text);
   }
 
-  @computed('isIconOnly', 'disabled')
-  get classes() {
-    let classes = ['Polaris-Header-Action'];
+  @computed('isIconOnly', 'disabled', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Header-Action'];
     if (this.isIconOnly) {
-      classes.push('Polaris-Header-Action--iconOnly');
+      cssClasses.push('Polaris-Header-Action--iconOnly');
     }
 
     if (this.disabled) {
-      classes.push('Polaris-Header-Action--disabled');
+      cssClasses.push('Polaris-Header-Action--disabled');
     }
 
-    return classes.join(' ');
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 
   @action

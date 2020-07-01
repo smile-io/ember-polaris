@@ -10,6 +10,7 @@ import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../templates/components/polaris-data-table';
 import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 function elementLookup(selector) {
   return computed('dataTableElement', function() {
@@ -25,7 +26,8 @@ function elementLookup(selector) {
 @templateLayout(layout)
 export default class PolarisDataTable extends Component.extend(
   ContextBoundEventListenersMixin,
-  ContextBoundTasksMixin
+  ContextBoundTasksMixin,
+  TaglessCssDeprecation
 ) {
   /**
    * List of data types, which determines content alignment for each column.
@@ -119,100 +121,84 @@ export default class PolarisDataTable extends Component.extend(
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   collapsed = false;
 
   /**
    * @type {Object[]}
-   * @private
    */
   columnVisibilityData = [];
 
   /**
    * @type {Object}
-   * @private
    */
   previousColumn = null;
 
   /**
    * @type {Object}
-   * @private
    */
   currentColumn = null;
 
   /**
    * @type {Number}
-   * @private
    */
   sortedColumnIndex = null;
 
   /**
    * @type {String}
-   * @private
    */
   sortDirection = null;
 
   /**
    * @type {Number[]}
-   * @private
    */
   heights = [];
 
   /**
    * @type {Number}
-   * @private
    */
   fixedColumnWidth = null;
 
   /**
    * @type {Object}
-   * @private
    */
   preservedScrollPosition = {};
 
   /**
    * @type {Boolean}
-   * @private
    */
   isScrolledFarthestLeft = true;
 
   /**
    * @type {Boolean}
-   * @private
    */
   isScrolledFarthestRight = false;
 
   /**
    * @type {String}
-   * @private
    */
   totalsRowHeading = 'Totals';
 
   /**
    * @type {HTMLElement}
-   * @private
    */
   @(elementLookup('.Polaris-DataTable').readOnly())
   dataTable;
 
   /**
    * @type {HTMLElement}
-   * @private
    */
   @(elementLookup('.Polaris-DataTable__Table').readOnly())
   table;
 
   /**
    * @type {HTMLElement}
-   * @private
    */
   @(elementLookup('.Polaris-DataTable__ScrollContainer').readOnly())
   scrollContainer;
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('footerContent', 'heights.[]').readOnly())
   get scrollContainerStyle() {

@@ -373,43 +373,38 @@ export default class PolarisTextFieldComponent extends Component {
   )
   get textFieldClasses() {
     let { normalizedValue, disabled, readOnly, error, multiline, focus } = this;
-    let classes = ['Polaris-TextField'];
+    let cssClasses = ['Polaris-TextField'];
 
     if (normalizedValue) {
-      classes.push('Polaris-TextField--hasValue');
+      cssClasses.push('Polaris-TextField--hasValue');
     }
-
     if (disabled) {
-      classes.push('Polaris-TextField--disabled');
+      cssClasses.push('Polaris-TextField--disabled');
     }
-
     if (readOnly) {
-      classes.push('Polaris-TextField--readOnly');
+      cssClasses.push('Polaris-TextField--readOnly');
     }
-
     if (error) {
-      classes.push('Polaris-TextField--error');
+      cssClasses.push('Polaris-TextField--error');
     }
-
     if (multiline) {
-      classes.push('Polaris-TextField--multiline');
+      cssClasses.push('Polaris-TextField--multiline');
     }
-
     if (focus) {
-      classes.push('Polaris-TextField--focus');
+      cssClasses.push('Polaris-TextField--focus');
     }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('suffix')
   get inputClassName() {
-    let classes = ['Polaris-TextField__Input'];
+    let cssClasses = ['Polaris-TextField__Input'];
     if (this.suffix) {
-      classes.push('Polaris-TextField__Input--suffixed');
+      cssClasses.push('Polaris-TextField__Input--suffixed');
     }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('error', 'helpText', 'id')
@@ -490,13 +485,13 @@ export default class PolarisTextFieldComponent extends Component {
 
   @computed('multiline')
   get characterCountClassName() {
-    let classNames = ['Polaris-TextField__CharacterCount'];
+    let cssClasses = ['Polaris-TextField__CharacterCount'];
 
     if (this.multiline) {
-      classNames.push('Polaris-TextField__AlignFieldBottom');
+      cssClasses.push('Polaris-TextField__AlignFieldBottom');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('maxLength', 'characterCount')

@@ -110,17 +110,11 @@ export default class PolarisRadioButton extends Component {
    */
   onBlur() {}
 
-  /**
-   * @private
-   */
   @(computed('inputId').readOnly())
   get _id() {
     return this.inputId || `polaris-radio-button-${guidFor(this)}`;
   }
 
-  /**
-   * @private
-   */
   @(computed('helpText', '_id').readOnly())
   get describedBy() {
     return this.helpText ? `${this._id}HelpText` : null;

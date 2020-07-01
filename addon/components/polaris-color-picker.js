@@ -6,6 +6,7 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../utils/math';
 import { hsbaToRgba } from '../utils/color';
 import layout from '../templates/components/polaris-color-picker';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris color picker component.
@@ -13,7 +14,9 @@ import layout from '../templates/components/polaris-color-picker';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisColorPicker extends Component {
+export default class PolarisColorPicker extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The currently selected color
    *
@@ -41,14 +44,8 @@ export default class PolarisColorPicker extends Component {
    */
   onChange = null;
 
-  /**
-   * @private
-   */
   pickerSize = null;
 
-  /**
-   * @private
-   */
   @(computed('color.{hue,alpha}').readOnly())
   get colorLayerStyle() {
     const { hue, alpha = 1 } = this.color;
@@ -62,9 +59,6 @@ export default class PolarisColorPicker extends Component {
     return htmlSafe(`background-color: ${backgroundColor};`);
   }
 
-  /**
-   * @private
-   */
   @(computed('color.saturation', 'pickerSize').readOnly())
   get draggerX() {
     const {
@@ -74,9 +68,6 @@ export default class PolarisColorPicker extends Component {
     return clamp(saturation * pickerSize, 0, pickerSize);
   }
 
-  /**
-   * @private
-   */
   @(computed('color.brightness', 'pickerSize').readOnly())
   get draggerY() {
     const {

@@ -2,12 +2,15 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-body-text';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const defaultLines = 3;
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonBodyTextComponent extends Component {
+export default class PolarisSkeletonBodyTextComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Number of lines to display
    *

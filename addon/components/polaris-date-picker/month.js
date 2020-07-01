@@ -9,10 +9,13 @@ import {
   abbreviationForWeekday,
   getWeekdaysOrdered,
 } from '../../utils/dates';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDatePickerMonth extends Component {
+export default class PolarisDatePickerMonth extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {Date}
    * @default null

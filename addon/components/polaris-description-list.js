@@ -1,10 +1,13 @@
 import Component from '@ember/component';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-description-list';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDescriptionList extends Component {
+export default class PolarisDescriptionList extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Collection of items for list
    *

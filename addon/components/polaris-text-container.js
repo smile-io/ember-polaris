@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-text-container';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const allowedSpacings = ['tight', 'loose'];
 
@@ -11,7 +12,9 @@ const allowedSpacings = ['tight', 'loose'];
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisTextContainer extends Component {
+export default class PolarisTextContainer extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The text to display.
    *

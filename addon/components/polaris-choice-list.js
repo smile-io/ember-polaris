@@ -6,6 +6,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { tagName, layout } from '@ember-decorators/component';
 import { errorId } from '../utils/id';
 import template from '../templates/components/polaris-choice-list';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 // Wrapper class to add an `isSelected` flag to the supplied choices.
 class CheckedChoice extends ObjectProxy {
@@ -24,7 +25,9 @@ class CheckedChoice extends ObjectProxy {
  */
 @tagName('')
 @layout(template)
-export default class PolarisChoiceList extends Component {
+export default class PolarisChoiceList extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Label for list of choices
    *

@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-card';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris card component.
@@ -8,12 +9,14 @@ import template from '../templates/components/polaris-card';
  */
 @tagName('')
 @layout(template)
-export default class PolarisCardComponent extends Component {
+export default class PolarisCardComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Title content for the card
    *
    * @type {String|Component}
-   * @default: null
+   * @default null
    * @public
    */
   title = null;
@@ -26,7 +29,7 @@ export default class PolarisCardComponent extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   text = null;
@@ -35,7 +38,7 @@ export default class PolarisCardComponent extends Component {
    * A less prominent card
    *
    * @type {Boolean}
-   * @default: false
+   * @default false
    * @public
    */
   subdued = false;
@@ -44,7 +47,7 @@ export default class PolarisCardComponent extends Component {
    * Auto wrap content in section
    *
    * @type {Boolean}
-   * @default: false
+   * @default false
    * @public
    */
   sectioned = false;
@@ -53,7 +56,7 @@ export default class PolarisCardComponent extends Component {
    * Card header actions
    *
    * @type {Action[]}
-   * @default: null
+   * @default null
    * @public
    */
   headerActions = null;
@@ -62,7 +65,7 @@ export default class PolarisCardComponent extends Component {
    * Primary action in the card footer
    *
    * @type {Action}
-   * @default: null
+   * @default null
    */
   primaryFooterAction = null;
 
@@ -70,7 +73,7 @@ export default class PolarisCardComponent extends Component {
    * Secondary action in the card footer
    *
    * @type {Action}
-   * @default: null
+   * @default null
    */
   secondaryFooterAction = null;
 }

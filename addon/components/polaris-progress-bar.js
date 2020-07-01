@@ -4,6 +4,7 @@ import { classify, htmlSafe } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-progress-bar';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -16,13 +17,15 @@ const defaultSize = 'medium';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisProgressBar extends Component {
+export default class PolarisProgressBar extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The progression of certain tasks
    *
    * @public
    * @type {Number}
-   * @default: 0
+   * @default 0
    */
   progress = 0;
 
@@ -31,13 +34,10 @@ export default class PolarisProgressBar extends Component {
    *
    * @public
    * @type {String}
-   * @default: 'medium'
+   * @default 'medium'
    */
   size = defaultSize;
 
-  /**
-   * @private
-   */
   @(computed('size').readOnly())
   get sizeClass() {
     let { size } = this;
@@ -48,9 +48,6 @@ export default class PolarisProgressBar extends Component {
     return `Polaris-ProgressBar--size${classify(size)}`;
   }
 
-  /**
-   * @private
-   */
   @(computed('progress').readOnly())
   get parsedProgress() {
     let { progress } = this;
@@ -71,9 +68,6 @@ export default class PolarisProgressBar extends Component {
     return parsedProgress;
   }
 
-  /**
-   * @private
-   */
   @(computed('parsedProgress').readOnly())
   get progressStyle() {
     let { parsedProgress } = this;

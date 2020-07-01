@@ -3,6 +3,7 @@ import { computed, action } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-unstyled-link';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -12,7 +13,9 @@ import template from '../templates/components/polaris-unstyled-link';
  */
 @tagName('')
 @layout(template)
-export default class PolarisUnstyledLinkComponent extends Component {
+export default class PolarisUnstyledLinkComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Content to display inside the link
    *
@@ -131,14 +134,6 @@ export default class PolarisUnstyledLinkComponent extends Component {
       !this.id,
       {
         id: 'ember-polaris.polaris-unstyled-link.id-arg',
-        until: '7.0.0',
-      }
-    );
-    deprecate(
-      `[polaris-unstyled-link] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-unstyled-link.class-arg',
         until: '7.0.0',
       }
     );

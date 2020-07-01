@@ -83,7 +83,6 @@ export default class PolarisLabelledComponent extends Component {
    * ID for the help text div
    *
    * @type {String}
-   * @private
    */
   @computedHelpTextId('id')
   helpTextId;
@@ -92,7 +91,6 @@ export default class PolarisLabelledComponent extends Component {
    * Flag indicating whether to render the error component
    *
    * @type {Boolean}
-   * @private
    */
   @computed('error')
   get shouldRenderError() {

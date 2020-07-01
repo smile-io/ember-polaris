@@ -99,22 +99,22 @@ export default class PolarisActionListItem extends Component {
 
   @computed('destructive', 'disabled', 'active')
   get itemClasses() {
-    let classNames = ['Polaris-ActionList__Item'];
+    let cssClasses = ['Polaris-ActionList__Item'];
     let { destructive, disabled, active } = this;
 
     if (destructive) {
-      classNames.push('Polaris-ActionList--destructive');
+      cssClasses.push('Polaris-ActionList--destructive');
     }
 
     if (disabled) {
-      classNames.push('Polaris-ActionList--disabled');
+      cssClasses.push('Polaris-ActionList--disabled');
     }
 
     if (active) {
-      classNames.push('Polaris-ActionList--active');
+      cssClasses.push('Polaris-ActionList--active');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('image')

@@ -63,32 +63,20 @@ export default class Heading extends Component {
   defaultSortDirection = null;
 
   /**
-   * @type {function}
+   * @type {Function}
    * @default no-op
    * @public
    */
   defaultOnSort() {}
 
-  /**
-   * @type {boolean}
-   * @private
-   */
   @(equal('headingIndex', 0).readOnly())
   isFixed;
 
-  /**
-   * @type {Number}
-   * @private
-   */
   @(computed('truncate', 'heights.[]').readOnly())
   get height() {
     return !this.truncate ? this.heights.firstObject : undefined;
   }
 
-  /**
-   * @type {String}
-   * @private
-   */
   @(computed('isSorted', 'sortDirection').readOnly())
   get direction() {
     return this.isSorted ? this.sortDirection : 'none';

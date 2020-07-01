@@ -2,15 +2,18 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { classify } from '@ember/string';
-import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 // TODO: look into importing icons properly.
 @tagName('')
 @templateLayout(layout)
-export default class PolarisIcon extends Component.extend(SvgHandling) {
+export default class PolarisIcon extends Component.extend(
+  SvgHandling,
+  TaglessCssDeprecation
+) {
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris
@@ -87,32 +90,22 @@ export default class PolarisIcon extends Component.extend(SvgHandling) {
     return source.indexOf('/') === -1 ? `${this.sourcePath}/${source}` : source;
   }
 
-  @computed('color', 'isColored', 'backdrop')
-  get classes() {
-    let classes = ['Polaris-Icon'];
+  @computed('color', 'isColored', 'backdrop', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Icon'];
     if (this.color) {
-      classes.push(`Polaris-Icon--color${classify(this.color)}`);
+      cssClasses.push(`Polaris-Icon--color${classify(this.color)}`);
     }
     if (this.isColored) {
-      classes.push('Polaris-Icon--isColored');
+      cssClasses.push('Polaris-Icon--isColored');
     }
     if (this.backdrop) {
-      classes.push('Polaris-Icon--hasBackdrop');
+      cssClasses.push('Polaris-Icon--hasBackdrop');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
     }
 
-    return classes.join(' ');
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[PolarisIcon] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-icon.class-arg',
-        until: '7.0.0',
-      }
-    );
+    return cssClasses.join(' ');
   }
 }
