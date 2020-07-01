@@ -1,9 +1,4 @@
-<div
-  class="Polaris-Card__Section
-    {{if @subdued "Polaris-Card__Section--subdued"}}
-    {{if @fullWidth "Polaris-Card__Section--fullWidth"}}"
-  ...attributes
->
+<div class={{this.cssClasses}} ...attributes>
   {{#let (component "polaris-card/section-header") as |Header|}}
     {{#if @title}}
       <Header @title={{@title}} />

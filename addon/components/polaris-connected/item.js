@@ -3,10 +3,13 @@ import { action, computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-connected/item';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class PolarisConnectedItem extends Component {
+export default class PolarisConnectedItem extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The position of the item.
    *
@@ -35,19 +38,22 @@ export default class PolarisConnectedItem extends Component {
   @equal('position', 'primary')
   primary;
 
-  @computed('focused', 'primary')
-  get classes() {
-    let classes = ['Polaris-Connected__Item'];
+  @computed('focused', 'primary', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Connected__Item'];
     if (this.focused) {
-      classes.push('Polaris-Connected__Item--focused');
+      cssClasses.push('Polaris-Connected__Item--focused');
     }
     if (this.primary) {
-      classes.push('Polaris-Connected__Item--primary');
+      cssClasses.push('Polaris-Connected__Item--primary');
     } else {
-      classes.push('Polaris-Connected__Item--connection');
+      cssClasses.push('Polaris-Connected__Item--connection');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
     }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 
   @action

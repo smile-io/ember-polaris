@@ -2,14 +2,7 @@
 <div
   data-test-id="item-wrapper"
   data-href={{@url}}
-  class="Polaris-ResourceList-Item
-    {{if this.focused "Polaris-ResourceList-Item--focused"}}
-    {{if this.selectable "Polaris-ResourceList-Item--selectable"}}
-    {{if this.selected "Polaris-ResourceList-Item--selected"}}
-    {{if this.selectMode "Polaris-ResourceList-Item--selectMode"}}
-    {{if @persistActions "Polaris-ResourceList-Item--persistActions"}}
-    {{if this.focusedInner "Polaris-ResourceList-Item--focusedInner"}}
-  "
+  class={{this.cssClasses}}
   {{on "click" this.handleClick}}
   {{on "focusin" this.handleFocus}}
   {{on "focusout" this.handleBlur}}

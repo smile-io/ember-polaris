@@ -207,14 +207,12 @@ export default class PolarisResourceList extends Component.extend(
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   selectMode = false;
 
   /**
    * @type {Number}
    * @default 0
-   * @private
    */
   loadingPosition = 0;
 
@@ -224,13 +222,11 @@ export default class PolarisResourceList extends Component.extend(
    *
    * @type {HTMLUListElement}
    * @default null
-   * @private
    */
   listNode = null;
 
   /**
    * @type {Object}
-   * @private
    */
   defaultResourceName = null;
 
@@ -239,7 +235,6 @@ export default class PolarisResourceList extends Component.extend(
    * `componentDidUpdate` behaviour.
    *
    * @type {Boolean}
-   * @private
    */
   previousLoading = false;
 
@@ -248,7 +243,6 @@ export default class PolarisResourceList extends Component.extend(
    * `componentWillReceiveProps` behaviour.
    *
    * @type {String|String[]}
-   * @private
    */
   previousSelectedItems = null;
 

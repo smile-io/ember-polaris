@@ -2,10 +2,11 @@ import { action } from '@ember/object';
 import Component from '@ember/component';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-option-list/option';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Option extends Component {
+export default class Option extends Component.extend(TaglessCssDeprecation) {
   /**
    * @type {String}
    * @default null
@@ -93,7 +94,6 @@ export default class Option extends Component {
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   focused = false;
 

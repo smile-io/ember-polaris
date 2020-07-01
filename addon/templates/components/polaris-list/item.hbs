@@ -1,7 +1,7 @@
-<li class="Polaris-List__Item" ...attributes>
+<li class="Polaris-List__Item {{@class}}" ...attributes>
   {{#if hasBlock}}
     {{yield}}
   {{else}}
-    {{text}}
+    {{@text}}
   {{/if}}
 </li>

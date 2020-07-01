@@ -3,10 +3,10 @@ import { computed, action } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { isBlank } from '@ember/utils';
 import { classify } from '@ember/string';
-import { deprecate } from '@ember/application/deprecations';
 import { layout, tagName } from '@ember-decorators/component';
 import template from '../templates/components/polaris-stack';
 import AutoWrapper from '../-private/auto-wrapper';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris stack component.
@@ -14,7 +14,9 @@ import AutoWrapper from '../-private/auto-wrapper';
  */
 @tagName('')
 @layout(template)
-export default class PolarisStackComponent extends Component {
+export default class PolarisStackComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Elements to display inside stack
    *
@@ -110,43 +112,30 @@ export default class PolarisStackComponent extends Component {
     'noWrap',
     'class'
   )
-  get classes() {
-    let classNames = ['Polaris-Stack'];
+  get cssClasses() {
+    let cssClasses = ['Polaris-Stack'];
 
     let { spacingClassName, alignmentClassName, distributionClassName } = this;
     if (spacingClassName) {
-      classNames.push(spacingClassName);
+      cssClasses.push(spacingClassName);
     }
     if (alignmentClassName) {
-      classNames.push(alignmentClassName);
+      cssClasses.push(alignmentClassName);
     }
     if (distributionClassName) {
-      classNames.push(distributionClassName);
+      cssClasses.push(distributionClassName);
     }
     if (this.vertical) {
-      classNames.push('Polaris-Stack--vertical');
+      cssClasses.push('Polaris-Stack--vertical');
     }
     if (this.noWrap) {
-      classNames.push('Polaris-Stack--noWrap');
+      cssClasses.push('Polaris-Stack--noWrap');
     }
     if (this.class) {
-      classNames.push(this.class);
+      cssClasses.push(this.class);
     }
 
-    return classNames.join(' ');
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[polaris-stack] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-stack.class-arg',
-        until: '7.0.0',
-      }
-    );
+    return cssClasses.join(' ');
   }
 
   @action

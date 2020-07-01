@@ -6,11 +6,12 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import $Ember from 'jquery';
 import layout from '../../templates/components/polaris-color-picker/slidable';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
 @tagName('')
 @templateLayout(layout)
-export default class Slidable extends Component {
+export default class Slidable extends Component.extend(TaglessCssDeprecation) {
   /**
    * The current x position of the dragger
    *
@@ -38,14 +39,8 @@ export default class Slidable extends Component {
    */
   onDraggerHeightChanged = null;
 
-  /**
-   * @private
-   */
   isDragging = false;
 
-  /**
-   * @private
-   */
   @(computed('draggerX', 'draggerY').readOnly())
   get draggerStyle() {
     const { draggerX, draggerY } = this;
@@ -53,9 +48,6 @@ export default class Slidable extends Component {
     return htmlSafe(`transform: ${transform};`);
   }
 
-  /**
-   * @private
-   */
   handleMove(event) {
     if (!this.isDragging) {
       return;
@@ -76,9 +68,6 @@ export default class Slidable extends Component {
     this.handleDraggerMove(event.clientX, event.clientY);
   }
 
-  /**
-   * @private
-   */
   handleDragEnd() {
     this.set('isDragging', false);
 
@@ -91,9 +80,6 @@ export default class Slidable extends Component {
     $Ember(window).off('touchcancel');
   }
 
-  /**
-   * @private
-   */
   handleDraggerMove(clientX, clientY) {
     const { onChange: moveHandler } = this;
     if (typeof moveHandler !== 'function') {

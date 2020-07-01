@@ -8,6 +8,7 @@ import { tagName, layout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 // TODO icon-update: use new icon names here when @shopify/polaris-icons
 // is consumable by Ember apps.
@@ -42,7 +43,9 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  */
 @tagName('')
 @layout(template)
-export default class PolarisBanner extends Component {
+export default class PolarisBanner extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Title content for the banner.
    *
@@ -162,6 +165,27 @@ export default class PolarisBanner extends Component {
     }
 
     return `Polaris-Banner--status${capitalize(status)}`;
+  }
+
+  @computed('statusClass', 'hasDismiss', 'withinContentContainer', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Banner'];
+    if (this.statusClass) {
+      cssClasses.push(this.statusClass);
+    }
+    if (this.hasDismiss) {
+      cssClasses.push('Polaris-Banner--hasDismiss');
+    }
+    if (this.withinContentContainer) {
+      cssClasses.push('Polaris-Banner--withinContentContainer');
+    } else {
+      cssClasses.push('Polaris-Banner--withinPage');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 
   @action

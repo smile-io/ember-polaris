@@ -47,10 +47,10 @@ export default class PolarisList extends Component {
    */
   @(computed('listType').readOnly())
   get listElementClass() {
-    let classNames = ['Polaris-List'];
+    let cssClasses = ['Polaris-List'];
     let { listType } = this;
-    classNames.push(`Polaris-List--type${classify(listType)}`);
+    cssClasses.push(`Polaris-List--type${classify(listType)}`);
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 }

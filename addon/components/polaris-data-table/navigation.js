@@ -1,21 +1,24 @@
 import Component from '@ember/component';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/navigation';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Navigation extends Component {
+export default class Navigation extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {Boolean}
    * @public
    */
-  isScrolledFarthestLeft = null;
+  isScrolledFarthestLeft = false;
 
   /**
    * @type {Boolean}
    * @public
    */
-  isScrolledFarthestRight = null;
+  isScrolledFarthestRight = false;
 
   /**
    * @type {Object[]}

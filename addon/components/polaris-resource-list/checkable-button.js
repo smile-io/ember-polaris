@@ -3,10 +3,13 @@ import { action, computed } from '@ember/object';
 import { not, and } from '@ember/object/computed';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-resource-list/checkable-button';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class CheckableButton extends Component {
+export default class CheckableButton extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {String}
    * @default null
@@ -82,32 +85,36 @@ export default class CheckableButton extends Component {
     'plain',
     'shouldApplySelectModeClass',
     'shouldApplySelectedClass',
-    'shouldApplyMeasuringClass'
+    'shouldApplyMeasuringClass',
+    'class'
   )
-  get classes() {
-    let classes = ['Polaris-ResourceList-CheckableButton'];
+  get cssClasses() {
+    let cssClasses = ['Polaris-ResourceList-CheckableButton'];
     if (this.plain) {
-      classes.push(
+      cssClasses.push(
         'Polaris-ResourceList-CheckableButton__CheckableButton--plain'
       );
     }
     if (this.shouldApplySelectModeClass) {
-      classes.push(
+      cssClasses.push(
         'Polaris-ResourceList-CheckableButton__CheckableButton--selectMode'
       );
     }
     if (this.shouldApplySelectedClass) {
-      classes.push(
+      cssClasses.push(
         'Polaris-ResourceList-CheckableButton__CheckableButton--selected'
       );
     }
     if (this.shouldApplyMeasuringClass) {
-      classes.push(
+      cssClasses.push(
         'Polaris-ResourceList-CheckableButton__CheckableButton--measuring'
       );
     }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 
   @action

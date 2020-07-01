@@ -4,6 +4,7 @@ import { classify } from '@ember/string';
 import { warn } from '@ember/debug';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-thumbnail';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -14,12 +15,14 @@ const defaultSize = 'medium';
  */
 @tagName('')
 @layout(template)
-export default class PolarisThumbnailComponent extends Component {
+export default class PolarisThumbnailComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Size of thumbnail
    *
    * @type {String}
-   * @default: 'medium'
+   * @default 'medium'
    * @public
    */
   size = defaultSize;
@@ -28,7 +31,7 @@ export default class PolarisThumbnailComponent extends Component {
    * URL for the image
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   source = null;
@@ -37,7 +40,7 @@ export default class PolarisThumbnailComponent extends Component {
    * Alt text for the thumbnail image
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   alt = null;

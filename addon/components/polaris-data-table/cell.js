@@ -96,7 +96,6 @@ export default class Cell extends Component {
 
   /**
    * @type {String}
-   * @private
    */
   @(computed(
     'fixed',
@@ -109,7 +108,7 @@ export default class Cell extends Component {
     'sortable'
   ).readOnly())
   get cellClassNames() {
-    let classNames = ['Polaris-DataTable__Cell'];
+    let cssClasses = ['Polaris-DataTable__Cell'];
 
     let {
       fixed,
@@ -123,43 +122,42 @@ export default class Cell extends Component {
     } = this;
 
     if (fixed) {
-      classNames.push('Polaris-DataTable__Cell--fixed');
+      cssClasses.push('Polaris-DataTable__Cell--fixed');
 
       if (truncate) {
-        classNames.push('Polaris-DataTable__Cell--truncated');
+        cssClasses.push('Polaris-DataTable__Cell--truncated');
       }
     }
 
     if (header) {
-      classNames.push('Polaris-DataTable__Cell--header');
+      cssClasses.push('Polaris-DataTable__Cell--header');
     }
 
     if (total) {
-      classNames.push('Polaris-DataTable__Cell--total');
+      cssClasses.push('Polaris-DataTable__Cell--total');
     }
 
     if (footer) {
-      classNames.push('Polaris-DataTable__Cell--footer');
+      cssClasses.push('Polaris-DataTable__Cell--footer');
     }
 
     if (contentType === 'numeric') {
-      classNames.push('Polaris-DataTable__Cell--numeric');
+      cssClasses.push('Polaris-DataTable__Cell--numeric');
     }
 
     if (sorted) {
-      classNames.push('Polaris-DataTable__Cell--sorted');
+      cssClasses.push('Polaris-DataTable__Cell--sorted');
     }
 
     if (sortable) {
-      classNames.push('Polaris-DataTable__Cell--sortable');
+      cssClasses.push('Polaris-DataTable__Cell--sortable');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('header', 'contentType').readOnly())
   get headerClassNames() {
@@ -169,18 +167,17 @@ export default class Cell extends Component {
       return '';
     }
 
-    let classNames = ['Polaris-DataTable__Heading'];
+    let cssClasses = ['Polaris-DataTable__Heading'];
 
     if (contentType === 'text') {
-      classNames.push('Polaris-DataTable__Heading--left');
+      cssClasses.push('Polaris-DataTable__Heading--left');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('height').readOnly())
   get style() {
@@ -190,7 +187,6 @@ export default class Cell extends Component {
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('sorted', 'sortDirection', 'defaultSortDirection').readOnly())
   get direction() {
@@ -200,7 +196,6 @@ export default class Cell extends Component {
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('direction').readOnly())
   get source() {
@@ -209,7 +204,6 @@ export default class Cell extends Component {
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('sortDirection').readOnly())
   get oppositeDirection() {
@@ -218,7 +212,6 @@ export default class Cell extends Component {
 
   /**
    * @type {String}
-   * @private
    */
   @(computed('sorted', 'oppositeDirection', 'direction').readOnly())
   get sortAccessibilityLabel() {

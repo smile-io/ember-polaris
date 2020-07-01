@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form-layout';
 import AutoWrapper from '../-private/auto-wrapper';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris form layout component.
@@ -12,7 +13,9 @@ import AutoWrapper from '../-private/auto-wrapper';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisFormLayout extends Component {
+export default class PolarisFormLayout extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display inside the layout
    *

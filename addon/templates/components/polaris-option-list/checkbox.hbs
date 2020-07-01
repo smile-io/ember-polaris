@@ -1,4 +1,7 @@
-<div class="Polaris-OptionList-Checkbox {{if @active "Polaris-OptionList-Checkbox--active"}}" ...attributes>
+<div
+  class="Polaris-OptionList-Checkbox {{@class}} {{if @active "Polaris-OptionList-Checkbox--active"}}"
+  ...attributes
+>
   <input
     id={{or @checkboxId this.checkboxId}}
     name={{@name}}

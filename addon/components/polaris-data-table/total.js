@@ -37,10 +37,6 @@ export default class Total extends Component {
    */
   totalsRowHeading = null;
 
-  /**
-   * @type {String}
-   * @private
-   */
   @computed('total', 'index')
   get contentType() {
     let { total, index } = this;

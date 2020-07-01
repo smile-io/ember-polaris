@@ -4,6 +4,7 @@ import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-drop-zone/file-upload';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 const iconDragDrop = 'drag-drop';
 const fileUpload = '/@smile-io/ember-polaris/images/file-upload.svg';
@@ -18,7 +19,9 @@ const fileUploadStrings = {
 
 @tagName('')
 @layout(template)
-export default class FileUploadComponent extends Component {
+export default class FileUploadComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   iconDragDrop = iconDragDrop;
   fileUpload = fileUpload;
   imageUpload = imageUpload;
@@ -57,12 +60,12 @@ export default class FileUploadComponent extends Component {
 
   @computed('size')
   get imageClasses() {
-    let classes = ['Polaris-DropZone-FileUpload__Image'];
+    let cssClasses = ['Polaris-DropZone-FileUpload__Image'];
     let { size } = this;
     if (['extraLarge', 'large'].includes(size)) {
-      classes.push(`Polaris-DropZone-FileUpload--size${classify(size)}`);
+      cssClasses.push(`Polaris-DropZone-FileUpload--size${classify(size)}`);
     }
 
-    return classes.join(' ');
+    return cssClasses.join(' ');
   }
 }

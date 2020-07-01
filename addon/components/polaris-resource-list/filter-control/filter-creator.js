@@ -40,21 +40,18 @@ export default class FilterCreator extends Component {
   /**
    * @type {Object}
    * @default null
-   * @private
    */
   selectedFilter = null;
 
   /**
    * @type {String}
    * @default null
-   * @private
    */
   selectedFilterKey = null;
 
   /**
    * @type {String}
    * @default null
-   * @private
    */
   selectedFilterValue = null;
 

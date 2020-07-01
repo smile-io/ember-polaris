@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-visually-hidden';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris Visually hidden component.
@@ -8,7 +9,9 @@ import template from '../templates/components/polaris-visually-hidden';
  */
 @tagName('')
 @layout(template)
-export default class PolarisVisuallyHiddenComponent extends Component {
+export default class PolarisVisuallyHiddenComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to be hidden visually
    *
@@ -17,7 +20,7 @@ export default class PolarisVisuallyHiddenComponent extends Component {
    * instead of `text`
    *
    * @type {string}
-   * @default: null
+   * @default null
    * @public
    */
   text = null;

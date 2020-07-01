@@ -7,10 +7,13 @@ import { isEmpty } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-pagination';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisPagination extends Component {
+export default class PolarisPagination extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * A more subdued control for use in headers
    *
@@ -103,18 +106,20 @@ export default class PolarisPagination extends Component {
    */
   onPrevious() {}
 
-  /** @private */
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  /** @private */
   @(not('hasPrevious').readOnly())
   isPreviousDisabled;
 
-  /** @private */
   @(not('hasNext').readOnly())
   isNextDisabled;
 
-  /** @private */
+  @(and('hasNext', 'hasNextKeysConfigured', 'onNext').readOnly())
+  isNextKeyListenerEnabled;
+
+  @(and('hasPrevious', 'hasPreviousKeysConfigured', 'onPrevious').readOnly())
+  isPreviousKeyListenerEnabled;
+
   @(computed('nextKeys.[]').readOnly())
   get hasNextKeysConfigured() {
     let { nextKeys } = this;
@@ -131,7 +136,6 @@ export default class PolarisPagination extends Component {
     return true;
   }
 
-  /** @private */
   @(computed('previousKeys.[]').readOnly())
   get hasPreviousKeysConfigured() {
     let { previousKeys } = this;
@@ -147,12 +151,4 @@ export default class PolarisPagination extends Component {
 
     return true;
   }
-
-  /** @private */
-  @(and('hasNext', 'hasNextKeysConfigured', 'onNext').readOnly())
-  isNextKeyListenerEnabled;
-
-  /** @private */
-  @(and('hasPrevious', 'hasPreviousKeysConfigured', 'onPrevious').readOnly())
-  isPreviousKeyListenerEnabled;
 }

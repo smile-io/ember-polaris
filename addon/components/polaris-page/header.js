@@ -3,10 +3,13 @@ import { computed } from '@ember/object';
 import { or, gt } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-page/header';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class HeaderComponent extends Component {
+export default class HeaderComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Page title, in large type
    *
@@ -154,31 +157,36 @@ export default class HeaderComponent extends Component {
     'separator',
     'hasBreadcrumbs',
     'hasSecondaryActions',
-    'hasRollup'
+    'hasRollup',
+    'class'
   )
-  get classes() {
-    let classes = ['Polaris-Page-Header'];
+  get cssClasses() {
+    let cssClasses = ['Polaris-Page-Header'];
 
     if (this.titleHidden) {
-      classes.push('Polaris-Page-Header__Title--hidden');
+      cssClasses.push('Polaris-Page-Header__Title--hidden');
     }
 
     if (this.separator) {
-      classes.push('Polaris-Page-Header__Header--hasSeparator');
+      cssClasses.push('Polaris-Page-Header__Header--hasSeparator');
     }
 
     if (this.hasBreadcrumbs) {
-      classes.push('Polaris-Page-Header__Header--hasBreadcrumbs');
+      cssClasses.push('Polaris-Page-Header__Header--hasBreadcrumbs');
     }
 
     if (this.hasSecondaryActions) {
-      classes.push('Polaris-Page-Header__Header--hasSecondaryActions');
+      cssClasses.push('Polaris-Page-Header__Header--hasSecondaryActions');
     }
 
     if (this.hasRollup) {
-      classes.push('Polaris-Page-Header__Header--hasRollup');
+      cssClasses.push('Polaris-Page-Header__Header--hasRollup');
     }
 
-    return classes.join(' ');
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 }

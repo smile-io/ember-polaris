@@ -1,11 +1,12 @@
 {{! TODO: support url }}
 <button
   type="button"
-  class={{this.classes}}
+  class={{this.cssClasses}}
   aria-label={{@accessibilityLabel}}
   disabled={{@disabled}}
   {{on "click" (stop-propagation this.handleClick)}}
   {{on "mouseup" this.handleMouseUpByBlurring}}
+  ...attributes
 >
   {{#if (or @icon @disclosure)}}
     <span class="Polaris-Header-Action__ActionContent">

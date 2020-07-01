@@ -1,8 +1,9 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-button-group';
 import AutoWrapper from '../-private/auto-wrapper';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris button group component.
@@ -10,7 +11,9 @@ import AutoWrapper from '../-private/auto-wrapper';
  */
 @tagName('')
 @layout(template)
-export default class PolarisButtonGroup extends Component {
+export default class PolarisButtonGroup extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Button components
    *
@@ -50,6 +53,25 @@ export default class PolarisButtonGroup extends Component {
    * @public
    */
   connectedTop = false;
+
+  @computed('segmented', 'fullWidth', 'connectedTop', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-ButtonGroup'];
+    if (this.segmented) {
+      cssClasses.push('Polaris-ButtonGroup--segmented');
+    }
+    if (this.fullWidth) {
+      cssClasses.push('Polaris-ButtonGroup--fullWidth');
+    }
+    if (this.connectedTop) {
+      cssClasses.push('Polaris-ButtonGroup--connectedTop');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
 
   @action
   setupAutoWrapper(element) {

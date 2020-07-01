@@ -3,9 +3,9 @@ import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-avatar';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -27,7 +27,9 @@ const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 @tagName('')
 @layout(template)
-export default class PolarisAvatar extends Component {
+export default class PolarisAvatar extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Size of avatar
    *
@@ -222,19 +224,6 @@ export default class PolarisAvatar extends Component {
   get shouldShowImage() {
     let { finalSource, hasError } = this;
     return finalSource && !hasError;
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[polaris-avatar] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-avatar.class-arg',
-        until: '7.0.0',
-      }
-    );
   }
 
   @action

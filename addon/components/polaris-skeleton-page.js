@@ -3,10 +3,13 @@ import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-page';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonPageComponent extends Component {
+export default class PolarisSkeletonPageComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Page title, in large type
    *
@@ -121,16 +124,19 @@ export default class PolarisSkeletonPageComponent extends Component {
     return new Array(Math.max(secondaryActions, 0));
   }
 
-  @computed('fullWidth', 'singleColumn')
-  get classes() {
-    let classNames = ['Polaris-SkeletonPage__Page'];
+  @computed('fullWidth', 'singleColumn', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-SkeletonPage__Page'];
     if (this.fullWidth) {
-      classNames.push('Polaris-SkeletonPage--fullWidth');
+      cssClasses.push('Polaris-SkeletonPage--fullWidth');
     }
     if (this.singleColumn) {
-      classNames.push('Polaris-SkeletonPage--singleColumn');
+      cssClasses.push('Polaris-SkeletonPage--singleColumn');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 }

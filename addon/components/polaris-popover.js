@@ -109,18 +109,12 @@ export default class PolarisPopover extends Component {
    */
   onClose() {}
 
-  /**
-   * @private
-   */
   triggerStyle = htmlSafe(`
     display: inline-block;
     overflow: inherit;
     border: none;
   `);
 
-  /**
-   * @private
-   */
   @computed('preferredPosition')
   get verticalPosition() {
     // If `preferredPosition` is set to `mostSpace`, the value
@@ -149,7 +143,6 @@ export default class PolarisPopover extends Component {
    * Checks the dropdown activator's location on
    * screen to determine which vertical direction
    * has more space to open the dropdown.
-   * @private
    */
   getMostVerticalSpace() {
     let component;

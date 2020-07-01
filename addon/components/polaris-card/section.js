@@ -1,10 +1,14 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-card/section';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class CardSectionComponent extends Component {
+export default class CardSectionComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Title for the section
    *
@@ -27,7 +31,7 @@ export default class CardSectionComponent extends Component {
    * A full-width section without any padding
    *
    * @type {Boolean}
-   * @default: false
+   * @default false
    * @public
    */
   fullWidth = false;
@@ -44,4 +48,20 @@ export default class CardSectionComponent extends Component {
    * @public
    */
   text = null;
+
+  @computed('subdued', 'fullWidth', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Card__Section'];
+    if (this.subdued) {
+      cssClasses.push('Polaris-Card__Section--subdued');
+    }
+    if (this.fullWidth) {
+      cssClasses.push('Polaris-Card__Section--fullWidth');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
 }

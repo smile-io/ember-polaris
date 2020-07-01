@@ -79,26 +79,26 @@ export default class PolarisDatePickerDay extends Component {
 
   @computed('selected', 'disabled', 'isDateToday', 'inHoveringRange', 'inRange')
   get dayButtonClasses() {
-    let classNames = ['Polaris-DatePicker__Day'];
+    let cssClasses = ['Polaris-DatePicker__Day'];
     let { selected, disabled, isDateToday, inHoveringRange, inRange } = this;
 
     if (selected) {
-      classNames.push('Polaris-DatePicker__Day--selected');
+      cssClasses.push('Polaris-DatePicker__Day--selected');
     }
 
     if (disabled) {
-      classNames.push('Polaris-DatePicker__Day--disabled');
+      cssClasses.push('Polaris-DatePicker__Day--disabled');
     }
 
     if (isDateToday) {
-      classNames.push('Polaris-DatePicker__Day--today');
+      cssClasses.push('Polaris-DatePicker__Day--today');
     }
 
     if (inHoveringRange || inRange) {
-      classNames.push('Polaris-DatePicker__Day--inRange');
+      cssClasses.push('Polaris-DatePicker__Day--inRange');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   @computed('day')

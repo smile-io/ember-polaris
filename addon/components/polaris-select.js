@@ -190,17 +190,17 @@ export default class PolarisSelect extends Component {
    */
   @computed('error', 'disabled')
   get className() {
-    let classNames = ['Polaris-Select'];
+    let cssClasses = ['Polaris-Select'];
 
     if (this.error) {
-      classNames.push('Polaris-Select--error');
+      cssClasses.push('Polaris-Select--error');
     }
 
     if (this.disabled) {
-      classNames.push('Polaris-Select--disabled');
+      cssClasses.push('Polaris-Select--disabled');
     }
 
-    return classNames.join(' ');
+    return cssClasses.join(' ');
   }
 
   /**

@@ -15,7 +15,7 @@ export default class PolarisChoice extends Component {
    * A unique identifier for the choice
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   inputId = null;
@@ -24,7 +24,7 @@ export default class PolarisChoice extends Component {
    * Label for the choice
    *
    * @type {String|Component}
-   * @default: null
+   * @default null
    * @public
    */
   label = null;
@@ -33,7 +33,7 @@ export default class PolarisChoice extends Component {
    * Whether the associated form control is disabled
    *
    * @type {Boolean}
-   * @default: null
+   * @default null
    * @public
    */
   disabled = null;
@@ -42,7 +42,7 @@ export default class PolarisChoice extends Component {
    * Display an error message
    *
    * @type {String|Boolean}
-   * @default: null
+   * @default null
    * @public
    */
   error = null;
@@ -51,7 +51,7 @@ export default class PolarisChoice extends Component {
    * Visually hide the label
    *
    * @type {boolean}
-   * @default: false
+   * @default false
    * @public
    */
   labelHidden = false;
@@ -60,7 +60,7 @@ export default class PolarisChoice extends Component {
    * Additional text to aide in use
    *
    * @type {String|Component|Object}
-   * @default: null
+   * @default null
    * @public
    */
   helpText = null;

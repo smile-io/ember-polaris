@@ -3,6 +3,7 @@ import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-option-list';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris option list component.
@@ -10,7 +11,9 @@ import layout from '../templates/components/polaris-option-list';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisOptionList extends Component {
+export default class PolarisOptionList extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * A unique identifier for the option list
    * Defaults to Ember's GUID for this component instance
@@ -107,7 +110,6 @@ export default class PolarisOptionList extends Component {
 
   /**
    * @type {Object[]}
-   * @private
    */
   @(computed('options.[]', 'sections.[]', 'title').readOnly())
   get normalizedOptions() {
@@ -142,19 +144,10 @@ function createNormalizedOptions(options, sections, title) {
     let section = { options: [], title };
     return sections == null ? [] : [section, ...sections];
   }
+
   if (sections == null) {
-    return [
-      {
-        title,
-        options,
-      },
-    ];
+    return [{ title, options }];
   }
-  return [
-    {
-      title,
-      options,
-    },
-    ...sections,
-  ];
+
+  return [{ title, options }, ...sections];
 }

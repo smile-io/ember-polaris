@@ -1,9 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
-import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-page';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris page component.
@@ -11,7 +11,9 @@ import template from '../templates/components/polaris-page';
  */
 @tagName('')
 @layout(template)
-export default class PolarisPageComponent extends Component {
+export default class PolarisPageComponent extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Page title, in large type
    *
@@ -156,33 +158,20 @@ export default class PolarisPageComponent extends Component {
   hasHeaderContent;
 
   @computed('fullWidth', 'singleColumn', 'class')
-  get classes() {
-    let classes = ['Polaris-Page'];
+  get cssClasses() {
+    let cssClasses = ['Polaris-Page'];
     if (this.fullWidth) {
-      classes.push('Polaris-Page--fullWidth');
+      cssClasses.push('Polaris-Page--fullWidth');
     }
 
     if (this.singleColumn) {
-      classes.push('Polaris-Page--singleColumn');
+      cssClasses.push('Polaris-Page--singleColumn');
     }
 
     if (this.class) {
-      classes.push(this.class);
+      cssClasses.push(this.class);
     }
 
-    return classes.join(' ');
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[polaris-page] Passing 'class' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-page.class-arg',
-        until: '7.0.0',
-      }
-    );
+    return cssClasses.join(' ');
   }
 }

@@ -4,6 +4,7 @@ import { isArray } from '@ember/array';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-page-actions';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 /**
  * Polaris page actions component.
@@ -11,7 +12,9 @@ import layout from '../templates/components/polaris-page-actions';
  */
 @tagName('')
 @templateLayout(layout)
-export default class PolarisPageActions extends Component {
+export default class PolarisPageActions extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The primary action for the page
    *

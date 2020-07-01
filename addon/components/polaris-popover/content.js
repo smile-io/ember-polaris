@@ -36,7 +36,7 @@ export default class Content extends Component {
    * Content wrapper component.
    *
    * @type {Component}
-   * @default: null
+   * @default null
    * @public
    */
   contentComponent = null;
@@ -58,7 +58,7 @@ export default class Content extends Component {
    * `ember-basic-dropdown`'s generated ID, used to look up
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   uniqueId = null;

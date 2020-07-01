@@ -6,10 +6,14 @@ import layout from '../../templates/components/polaris-resource-list/item';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Item extends Component.extend(context.ConsumerMixin) {
+export default class Item extends Component.extend(
+  context.ConsumerMixin,
+  TaglessCssDeprecation
+) {
   /**
    * Unique identifier for the item
    *
@@ -91,14 +95,12 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   focused = false;
 
   /**
    * @type {Boolean}
    * @default false
-   * @private
    */
   focusedInner = false;
 
@@ -125,6 +127,42 @@ export default class Item extends Component.extend(context.ConsumerMixin) {
       ((Array.isArray(selectedItems) && selectedItems.includes(itemId)) ||
         selectedItems === SELECT_ALL_ITEMS)
     );
+  }
+
+  @computed(
+    'focused',
+    'selectable',
+    'selected',
+    'selectMode',
+    'persistActions',
+    'focusedInner',
+    'class'
+  )
+  get cssClasses() {
+    let cssClasses = ['Polaris-ResourceList-Item'];
+    if (this.focused) {
+      cssClasses.push('Polaris-ResourceList-Item--focused');
+    }
+    if (this.selectable) {
+      cssClasses.push('Polaris-ResourceList-Item--selectable');
+    }
+    if (this.selected) {
+      cssClasses.push('Polaris-ResourceList-Item--selected');
+    }
+    if (this.selectMode) {
+      cssClasses.push('Polaris-ResourceList-Item--selectMode');
+    }
+    if (this.persistActions) {
+      cssClasses.push('Polaris-ResourceList-Item--persistActions');
+    }
+    if (this.focusedInner) {
+      cssClasses.push('Polaris-ResourceList-Item--focusedInner');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
   }
 
   @action

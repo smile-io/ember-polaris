@@ -6,6 +6,7 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../../utils/math';
 import { hsbaToRgba } from '../../utils/color';
 import layout from '../../templates/components/polaris-color-picker/alpha-picker';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 const VERTICAL_PADDING = 13;
 
@@ -26,7 +27,9 @@ function alphaForOffset(offset, sliderHeight) {
 
 @tagName('')
 @templateLayout(layout)
-export default class AlphaPicker extends Component {
+export default class AlphaPicker extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The current alpha value
    *
@@ -35,19 +38,9 @@ export default class AlphaPicker extends Component {
    */
   alpha = 1;
 
-  /**
-   * @private
-   */
   sliderHeight = null;
-
-  /**
-   * @private
-   */
   draggerHeight = null;
 
-  /**
-   * @private
-   */
   @(computed('color.{hue,saturation,brightness}').readOnly())
   get colorLayerStyle() {
     const { color } = this;
@@ -58,9 +51,6 @@ export default class AlphaPicker extends Component {
     return htmlSafe(`background: ${background};`);
   }
 
-  /**
-   * @private
-   */
   @(computed('alpha', 'draggerHeight', 'sliderHeight').readOnly())
   get draggerY() {
     const { alpha, sliderHeight, draggerHeight } = this;

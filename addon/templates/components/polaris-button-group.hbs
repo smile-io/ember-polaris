@@ -1,5 +1,5 @@
 <div
-  class="Polaris-ButtonGroup {{if @segmented "Polaris-ButtonGroup--segmented"}} {{if @fullWidth "Polaris-ButtonGroup--fullWidth"}} {{if @connectedTop "Polaris-ButtonGroup--connectedTop"}}"
+  class={{this.cssClasses}}
   data-test-button-group
   {{did-insert this.setupAutoWrapper}}
   {{will-destroy this.teardownAutoWrapper}}

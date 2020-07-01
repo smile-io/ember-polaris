@@ -74,7 +74,6 @@ export default class FilterControl extends Component.extend(
    * even if it doesn't exist, which leads to an error.
    *
    * @type {Object}
-   * @private
    */
   @(computed(
     'additionalAction.{text,accessibilityLabel,url,external,destructive,icon,loading,onAction}',
@@ -106,7 +105,6 @@ export default class FilterControl extends Component.extend(
    * for rendering in the template
    *
    * @type {Object[]}
-   * @private
    */
   @(computed('appliedFilters.[]').readOnly())
   get appliedFiltersForRender() {

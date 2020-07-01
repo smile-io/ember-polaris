@@ -3,10 +3,11 @@ import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/row';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Row extends Component {
+export default class Row extends Component.extend(TaglessCssDeprecation) {
   /**
    * @type {Array}
    * @public
@@ -52,7 +53,6 @@ export default class Row extends Component {
 
   /**
    * @type {Number[]}
-   * @private
    */
   @(computed('totals.[]', 'heights.[]', 'footerContent').readOnly())
   get bodyCellHeights() {

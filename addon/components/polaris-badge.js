@@ -3,9 +3,9 @@ import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
-import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-badge';
+import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -34,7 +34,9 @@ const DEFAULT_SIZE = SIZES.medium;
  */
 @tagName('')
 @layout(template)
-export default class PolarisBadge extends Component {
+export default class PolarisBadge extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display inside the badge.
    *
@@ -43,7 +45,7 @@ export default class PolarisBadge extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   text = null;
@@ -52,7 +54,7 @@ export default class PolarisBadge extends Component {
    * Set the color of the badge for the given status.
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   status = null;
@@ -61,7 +63,7 @@ export default class PolarisBadge extends Component {
    * Render a pip showing the progress of a given task.
    *
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
   progress = null;
@@ -70,7 +72,7 @@ export default class PolarisBadge extends Component {
    * Medium or small size. Use `small` only in the main navigation of an app frame..
    *
    * @type {String}
-   * @default: 'medium'
+   * @default 'medium'
    * @public
    */
   size = DEFAULT_SIZE;
@@ -129,18 +131,5 @@ export default class PolarisBadge extends Component {
     }
 
     return `Polaris-Badge--status${classify(status)}`;
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[polaris-badge] Passing 'class' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.class,
-      {
-        id: 'ember-polaris.polaris-badge.class-arg',
-        until: '7.0.0',
-      }
-    );
   }
 }

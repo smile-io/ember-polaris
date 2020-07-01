@@ -4,6 +4,7 @@ import { typeOf } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../../utils/math';
 import layout from '../../templates/components/polaris-color-picker/hue-picker';
+import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 const VERTICAL_PADDING = 13;
 
@@ -24,7 +25,7 @@ function hueForOffset(offset, sliderHeight) {
 
 @tagName('')
 @templateLayout(layout)
-export default class HuePicker extends Component {
+export default class HuePicker extends Component.extend(TaglessCssDeprecation) {
   /**
    * The current hue value
    *
@@ -43,19 +44,9 @@ export default class HuePicker extends Component {
    */
   onChange = null;
 
-  /**
-   * @private
-   */
   sliderHeight = null;
-
-  /**
-   * @private
-   */
   draggerHeight = null;
 
-  /**
-   * @private
-   */
   @(computed('draggerHeight', 'hue', 'sliderHeight').readOnly())
   get draggerY() {
     const { hue, sliderHeight, draggerHeight } = this;
