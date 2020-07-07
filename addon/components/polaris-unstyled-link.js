@@ -130,6 +130,14 @@ export default class PolarisUnstyledLinkComponent extends Component.extend(
       }
     );
     deprecate(
+      `[polaris-unstyled-link] Passing 'dataPolarisUnstyled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.dataPolarisUnstyled,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.dataPolarisUnstyled-arg',
+        until: '7.0.0',
+      }
+    );
+    deprecate(
       `[polaris-unstyled-link] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.id,
       {
