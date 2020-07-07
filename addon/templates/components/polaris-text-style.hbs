@@ -1,5 +1,9 @@
 {{#let (element (if (eq this.elementTagName "code") "code" "span")) as |TextStyle|}}
-  <TextStyle class={{this.textStyleClasses}} data-test-text-style="true" ...attributes>
+  <TextStyle
+    class={{this.textStyleClasses}}
+    data-test-text-style={{or @dataTestTextStyle ""}}
+    ...attributes
+  >
     {{#if hasBlock}}
       {{yield}}
     {{else}}
