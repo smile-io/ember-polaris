@@ -15,7 +15,7 @@ const defaultSize = 'medium';
  */
 @tagName('')
 @layout(template)
-export default class PolarisThumbnailComponent extends Component.extend(
+export default class PolarisThumbnail extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

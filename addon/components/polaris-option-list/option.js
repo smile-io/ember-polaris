@@ -6,7 +6,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Option extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisOptionListOption extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {String}
    * @default null

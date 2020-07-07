@@ -6,7 +6,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class Label extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisChoiceLabel extends Component.extend(
+  TaglessCssDeprecation
+) {
   @computed('labelHidden', 'disabled', 'class')
   get cssClasses() {
     let cssClasses = ['Polaris-Choice'];

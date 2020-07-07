@@ -5,7 +5,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class ActionIconComponent extends Component.extend(
+export default class PolarisPageActionIcon extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

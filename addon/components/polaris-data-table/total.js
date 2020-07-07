@@ -5,7 +5,7 @@ import layout from '../../templates/components/polaris-data-table/total';
 
 @tagName('')
 @templateLayout(layout)
-export default class Total extends Component {
+export default class PolarisDataTableTotal extends Component {
   /**
    * @type {String|Number|Component}
    * @public

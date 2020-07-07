@@ -25,7 +25,9 @@ function hueForOffset(offset, sliderHeight) {
 
 @tagName('')
 @templateLayout(layout)
-export default class HuePicker extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisColorPickerHuePicker extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The current hue value
    *

@@ -11,7 +11,7 @@ import template from '../templates/components/polaris-labelled';
  */
 @tagName('')
 @layout(template)
-export default class PolarisLabelledComponent extends Component {
+export default class PolarisLabelled extends Component {
   /**
    * Text for the label
    *

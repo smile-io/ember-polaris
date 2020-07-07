@@ -11,7 +11,7 @@ export const FilterType = {
 
 @tagName('')
 @templateLayout(layout)
-export default class FilterValueSelector extends Component {
+export default class PolarisResourceListFilterControlFilterValueSelector extends Component {
   /**
    * @type {Object}
    * @default null

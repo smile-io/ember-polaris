@@ -10,7 +10,7 @@ const allowedSizes = ['small', defaultSize, 'large', 'extraLarge'];
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonDisplayTextComponent extends Component.extend(
+export default class PolarisSkeletonDisplayText extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

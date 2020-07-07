@@ -5,7 +5,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class CardSectionHeaderComponent extends Component.extend(
+export default class PolarisCardSectionHeader extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

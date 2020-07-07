@@ -19,7 +19,7 @@ const fileUploadStrings = {
 
 @tagName('')
 @layout(template)
-export default class FileUploadComponent extends Component.extend(
+export default class PolarisDropZoneFileUpload extends Component.extend(
   TaglessCssDeprecation
 ) {
   iconDragDrop = iconDragDrop;

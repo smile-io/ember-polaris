@@ -27,7 +27,7 @@ function alphaForOffset(offset, sliderHeight) {
 
 @tagName('')
 @templateLayout(layout)
-export default class AlphaPicker extends Component.extend(
+export default class PolarisColorPickerAlphaPicker extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

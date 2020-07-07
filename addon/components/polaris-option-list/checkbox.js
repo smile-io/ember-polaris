@@ -7,7 +7,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Checkbox extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisOptionListCheckbox extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {Boolean}
    * @default false

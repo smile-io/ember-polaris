@@ -20,7 +20,7 @@ function replaceEntity(entity) {
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisTextFieldResizerComponent extends Component.extend(
+export default class PolarisTextFieldResizer extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

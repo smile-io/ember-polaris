@@ -20,7 +20,7 @@ export const DateFilterOption = {
 
 @tagName('')
 @templateLayout(layout)
-export default class DateSelector extends Component {
+export default class PolarisResourceListFilterControlDateSelector extends Component {
   /**
    * Can be 'past', 'future' or 'full'.
    *

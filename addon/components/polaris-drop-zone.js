@@ -24,7 +24,7 @@ const iconAlertCircle = 'alert-circle';
 
 @tagName('')
 @layout(template)
-export default class PolarisDropZoneComponent extends Component.extend(
+export default class PolarisDropZone extends Component.extend(
   ContextBoundEventListenersMixin,
   TaglessCssDeprecation
 ) {

@@ -7,7 +7,7 @@ import layout from '../../templates/components/polaris-data-table/cell';
 
 @tagName('')
 @templateLayout(layout)
-export default class Cell extends Component {
+export default class PolarisDataTableCell extends Component {
   /**
    * @type {Number}
    * @public

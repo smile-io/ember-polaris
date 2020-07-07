@@ -13,7 +13,7 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  */
 @tagName('')
 @layout(template)
-export default class PolarisUnstyledLinkComponent extends Component.extend(
+export default class PolarisUnstyledLink extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

@@ -11,7 +11,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
 @tagName('')
 @templateLayout(layout)
-export default class Slidable extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisColorPickerSlidable extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The current x position of the dragger
    *

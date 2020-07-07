@@ -10,7 +10,7 @@ const allowedSizes = ['small', defaultSize, 'large'];
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonThumbnailComponent extends Component.extend(
+export default class PolarisSkeletonThumbnail extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

@@ -5,7 +5,7 @@ import { handleMouseUpByBlurring } from '../../../utils/focus';
 
 @tagName('')
 @templateLayout(layout)
-export default class BulkActionButton extends Component {
+export default class PolarisResourceListBulkActionsBulkActionButton extends Component {
   /**
    * Content the action displays
    *

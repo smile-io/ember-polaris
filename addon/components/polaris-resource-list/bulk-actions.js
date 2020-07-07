@@ -11,7 +11,7 @@ const MAX_PROMOTED_ACTIONS = 2;
 
 @tagName('')
 @templateLayout(layout)
-export default class BulkActions extends Component.extend(
+export default class PolarisResourceListBulkActions extends Component.extend(
   ContextBoundEventListenersMixin,
   ContextBoundTasksMixin,
   TaglessCssDeprecation

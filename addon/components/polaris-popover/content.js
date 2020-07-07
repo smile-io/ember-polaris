@@ -4,7 +4,7 @@ import layout from '../../templates/components/polaris-popover/content';
 
 @tagName('')
 @templateLayout(layout)
-export default class Content extends Component {
+export default class PolarisPopoverContent extends Component {
   /**
    * Automatically add wrap content in a section
    *

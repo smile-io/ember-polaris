@@ -5,7 +5,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Item extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisListItem extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * The content to display for this list item
    *

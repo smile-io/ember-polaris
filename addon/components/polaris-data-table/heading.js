@@ -6,7 +6,7 @@ import layout from '../../templates/components/polaris-data-table/heading';
 
 @tagName('')
 @templateLayout(layout)
-export default class Heading extends Component {
+export default class PolarisDataTableHeading extends Component {
   /**
    * @type {String}
    * @public

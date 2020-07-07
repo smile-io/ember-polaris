@@ -6,7 +6,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Annotation extends Component.extend(
+export default class PolarisLayoutAnnotation extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

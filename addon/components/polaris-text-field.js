@@ -22,7 +22,7 @@ const dpl = (num) => (num.toString().split('.')[1] || []).length;
  */
 @tagName('')
 @layout(template)
-export default class PolarisTextFieldComponent extends Component {
+export default class PolarisTextField extends Component {
   /**
    * ID for the input
    *

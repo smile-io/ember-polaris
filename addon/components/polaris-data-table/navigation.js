@@ -5,7 +5,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Navigation extends Component.extend(
+export default class PolarisDataTableNavigation extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

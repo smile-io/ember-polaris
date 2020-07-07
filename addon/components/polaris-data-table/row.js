@@ -7,7 +7,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Row extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisDataTableRow extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * @type {Array}
    * @public

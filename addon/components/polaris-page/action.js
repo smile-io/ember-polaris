@@ -8,7 +8,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class ActionComponent extends Component.extend(
+export default class PolarisPageAction extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

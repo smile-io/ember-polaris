@@ -9,7 +9,7 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  */
 @tagName('')
 @layout(template)
-export default class PolarisVisuallyHiddenComponent extends Component.extend(
+export default class PolarisVisuallyHidden extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

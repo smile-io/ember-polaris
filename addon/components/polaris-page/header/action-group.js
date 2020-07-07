@@ -5,7 +5,7 @@ import TaglessCssDeprecation from '../../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class ActionGroupComponent extends Component.extend(
+export default class PolarisPageHeaderActionGroup extends Component.extend(
   TaglessCssDeprecation
 ) {
   title = null;

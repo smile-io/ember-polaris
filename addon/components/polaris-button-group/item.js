@@ -6,7 +6,9 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @layout(template)
-export default class Item extends Component.extend(TaglessCssDeprecation) {
+export default class PolarisButtonGroupItem extends Component.extend(
+  TaglessCssDeprecation
+) {
   /**
    * Elements to display inside group item
    *

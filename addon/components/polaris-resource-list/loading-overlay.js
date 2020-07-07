@@ -7,7 +7,7 @@ import layout from '../../templates/components/polaris-resource-list/loading-ove
  */
 @tagName('')
 @templateLayout(layout)
-export default class LoadingOverlay extends Component {
+export default class PolarisResourceListLoadingOverlay extends Component {
   loading = false;
   spinnerStyle = null;
   spinnerSize = null;

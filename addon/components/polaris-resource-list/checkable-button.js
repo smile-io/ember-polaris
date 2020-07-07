@@ -7,7 +7,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class CheckableButton extends Component.extend(
+export default class PolarisResourceListCheckableButton extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

@@ -5,7 +5,7 @@ import template from '../../templates/components/polaris-button/content';
 
 @tagName('')
 @layout(template)
-export default class ContentComponent extends Component {
+export default class PolarisButtonContent extends Component {
   @computed('primary', 'destructive')
   get spinnerColor() {
     let { primary, destructive } = this;

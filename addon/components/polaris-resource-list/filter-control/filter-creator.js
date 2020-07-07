@@ -6,7 +6,7 @@ import layout from '../../../templates/components/polaris-resource-list/filter-c
 
 @tagName('')
 @templateLayout(layout)
-export default class FilterCreator extends Component {
+export default class PolarisResourceListFilterControlFilterCreator extends Component {
   /**
    * @type {Object[]}
    * @default null

@@ -8,7 +8,7 @@ const defaultLines = 3;
 
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonBodyTextComponent extends Component.extend(
+export default class PolarisSkeletonBodyText extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

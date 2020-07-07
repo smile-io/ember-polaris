@@ -20,7 +20,7 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  */
 @tagName('')
 @layout(template)
-export default class PolarisHeadingComponent extends Component.extend(
+export default class PolarisHeading extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

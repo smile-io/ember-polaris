@@ -10,7 +10,7 @@ import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
 
 @tagName('')
 @templateLayout(layout)
-export default class Item extends Component.extend(
+export default class PolarisResourceListItem extends Component.extend(
   context.ConsumerMixin,
   TaglessCssDeprecation
 ) {

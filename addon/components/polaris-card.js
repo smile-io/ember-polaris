@@ -9,7 +9,7 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  */
 @tagName('')
 @layout(template)
-export default class PolarisCardComponent extends Component.extend(
+export default class PolarisCard extends Component.extend(
   TaglessCssDeprecation
 ) {
   /**

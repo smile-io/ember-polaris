@@ -20,7 +20,7 @@ const DEFAULT_SIZE = 'medium';
  */
 @tagName('')
 @layout(template)
-export default class PolarisButtonComponent extends Component {
+export default class PolarisButton extends Component {
   /**
    * The content to display inside the button.
    * This component can be used in block form,
