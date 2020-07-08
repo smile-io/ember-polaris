@@ -234,8 +234,7 @@ module('Integration | Component | polaris-button', function(hooks) {
 
     module('onClick()', function() {
       test('is called when the button is clicked', async function(assert) {
-        this.handleWrapperClick = () =>
-          assert.notOk(true, "click event doesn't bubble");
+        this.handleWrapperClick = () => assert.ok(true, 'click event bubbles');
         this.handleClick = (event) => {
           assert.ok(true, 'triggers @onClick handler');
           assert.notOk(event, 'does not curry click event to @onClick');
