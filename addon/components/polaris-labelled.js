@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { or } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
@@ -34,7 +35,7 @@ export default class PolarisLabelled extends Component {
    * @type {Object}
    * @public
    */
-  action = null;
+  primaryAction = null;
 
   /**
    * Additional hint text to display
@@ -87,6 +88,9 @@ export default class PolarisLabelled extends Component {
   @computedHelpTextId('id')
   helpTextId;
 
+  @or('primaryAction', 'action')
+  mainAction;
+
   /**
    * Flag indicating whether to render the error component
    *
@@ -101,6 +105,14 @@ export default class PolarisLabelled extends Component {
   init() {
     super.init(...arguments);
 
+    deprecate(
+      `[PolarisLabelled] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-labelled.action-arg',
+        until: '7.0.0',
+      }
+    );
     deprecate(
       `[PolarisLabelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       this.dataTestLabelled === true,
