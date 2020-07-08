@@ -354,7 +354,7 @@ export default class PolarisButton extends Component {
     super.init(...arguments);
 
     deprecate(
-      `[polaris-button] Passing 'externalClasses' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisButton] Passing 'externalClasses' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.externalClasses,
       {
         id: 'ember-polaris.polaris-button.externalClasses-arg',

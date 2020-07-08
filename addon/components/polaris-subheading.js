@@ -41,7 +41,7 @@ export default class PolarisSubheading extends Component.extend(
     super.init(...arguments);
 
     deprecate(
-      `[polaris-subheading] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      `[PolarisSubheading] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
       !this.tagName,
       {
         id: 'ember-polaris.polaris-subheading.tagName-arg',

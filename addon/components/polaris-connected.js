@@ -42,7 +42,7 @@ export default class PolarisConnected extends Component {
     super.init(...arguments);
 
     deprecate(
-      `[polaris-connected] Passing 'dataTestConnected' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisConnected] Passing 'dataTestConnected' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       this.dataTestConnected === true,
       {
         id: 'ember-polaris.polaris-connected.dataTestConnected-arg',

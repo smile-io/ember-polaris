@@ -122,7 +122,7 @@ export default class PolarisUnstyledLink extends Component.extend(
     super.init(...arguments);
 
     deprecate(
-      `[polaris-unstyled-link] Passing 'dataTestId' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisUnstyledLink] Passing 'dataTestId' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.dataTestId,
       {
         id: 'ember-polaris.polaris-unstyled-link.dataTestId-arg',
@@ -130,7 +130,7 @@ export default class PolarisUnstyledLink extends Component.extend(
       }
     );
     deprecate(
-      `[polaris-unstyled-link] Passing 'dataPolarisUnstyled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisUnstyledLink] Passing 'dataPolarisUnstyled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.dataPolarisUnstyled,
       {
         id: 'ember-polaris.polaris-unstyled-link.dataPolarisUnstyled-arg',
@@ -138,7 +138,7 @@ export default class PolarisUnstyledLink extends Component.extend(
       }
     );
     deprecate(
-      `[polaris-unstyled-link] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisUnstyledLink] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.id,
       {
         id: 'ember-polaris.polaris-unstyled-link.id-arg',

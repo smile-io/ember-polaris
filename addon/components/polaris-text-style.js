@@ -86,7 +86,7 @@ export default class PolarisTextStyle extends Component {
     super.init(...arguments);
 
     deprecate(
-      `[polaris-text-style] Passing 'classes' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisTextStyle] Passing 'classes' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.classes,
       {
         id: 'ember-polaris.polaris-text-style.classes-arg',
@@ -94,7 +94,7 @@ export default class PolarisTextStyle extends Component {
       }
     );
     deprecate(
-      `[polaris-text-style] Passing 'dataTestTextStyle' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisTextStyle] Passing 'dataTestTextStyle' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.dataTestTextStyle,
       {
         id: 'ember-polaris.polaris-text-style.dataTestTextStyle-arg',

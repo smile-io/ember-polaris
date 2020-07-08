@@ -61,7 +61,7 @@ export default class PolarisDisplayText extends Component.extend(
     super.init(...arguments);
 
     deprecate(
-      `[polaris-display-text] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      `[PolarisDisplayText] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
       !this.tagName,
       {
         id: 'ember-polaris.polaris-display-text.tagName-arg',

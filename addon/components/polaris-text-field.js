@@ -517,7 +517,7 @@ export default class PolarisTextField extends Component {
     });
 
     deprecate(
-      `[polaris-text-field] Passing 'dataTestTextField' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisTextField] Passing 'dataTestTextField' argument is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       !this.class,
       {
         id: 'ember-polaris.polaris-text-field.dataTestTextField-arg',

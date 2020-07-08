@@ -102,7 +102,7 @@ export default class PolarisLabelled extends Component {
     super.init(...arguments);
 
     deprecate(
-      `[polaris-labelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      `[PolarisLabelled] Passing 'dataTestLabelled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
       this.dataTestLabelled === true,
       {
         id: 'ember-polaris.polaris-labelled.dataTestLabelled-arg',
