@@ -15,15 +15,14 @@ import {
   weekdays,
   isSameDay,
 } from '../utils/dates';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const weekStartsOn = weekdays.Sunday;
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDatePicker extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisDatePicker extends Component {
   /**
    * The selected date or range of dates
    *

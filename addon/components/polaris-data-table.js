@@ -10,7 +10,7 @@ import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../templates/components/polaris-data-table';
 import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 function elementLookup(selector) {
   return computed('dataTableElement', function() {
@@ -22,12 +22,12 @@ function elementLookup(selector) {
  * Polaris data table component.
  * See https://polaris.shopify.com/components/lists-and-tables/data-table
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
 export default class PolarisDataTable extends Component.extend(
   ContextBoundEventListenersMixin,
-  ContextBoundTasksMixin,
-  TaglessCssDeprecation
+  ContextBoundTasksMixin
 ) {
   /**
    * List of data types, which determines content alignment for each column.

@@ -5,13 +5,12 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-form-layout/group';
 import { idVariation, helpTextId } from '../../utils/id';
 import AutoWrapper from '../../-private/auto-wrapper';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisFormLayoutGroup extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisFormLayoutGroup extends Component {
   /**
    * Elements to display inside group item
    *

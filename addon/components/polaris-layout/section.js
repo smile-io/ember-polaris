@@ -2,13 +2,12 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-layout/section';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisLayoutSection extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisLayoutSection extends Component {
   text = null;
   secondary = false;
   fullWidth = false;

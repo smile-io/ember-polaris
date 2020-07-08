@@ -4,13 +4,12 @@ import { isBlank } from '@ember/utils';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-page/action';
 import { handleMouseUpByBlurring } from '../../utils/focus';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisPageAction extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisPageAction extends Component {
   /**
    * @type {String}
    * @default null

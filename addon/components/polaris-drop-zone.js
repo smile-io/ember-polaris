@@ -17,16 +17,16 @@ import {
   mediumSizeWidthLimit,
   largeSizeWidthLimit,
 } from '../utils/drop-zone';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
 export default class PolarisDropZone extends Component.extend(
-  ContextBoundEventListenersMixin,
-  TaglessCssDeprecation
+  ContextBoundEventListenersMixin
 ) {
   /**
    * ID for file input

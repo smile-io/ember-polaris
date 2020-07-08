@@ -3,13 +3,12 @@ import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-page';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonPage extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisSkeletonPage extends Component {
   /**
    * Page title, in large type
    *

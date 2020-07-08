@@ -3,17 +3,16 @@ import { or } from '@ember/object/computed';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-empty-state';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris empty state component.
  * See https://polaris.shopify.com/components/structure/empty-state
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisEmptyState extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisEmptyState extends Component {
   /**
    * The empty state heading
    *

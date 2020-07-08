@@ -3,13 +3,12 @@ import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/row';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDataTableRow extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisDataTableRow extends Component {
   /**
    * @type {Array}
    * @public

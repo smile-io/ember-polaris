@@ -5,16 +5,16 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
 import layout from '../../templates/components/polaris-resource-list/bulk-actions';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const MAX_PROMOTED_ACTIONS = 2;
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
 export default class PolarisResourceListBulkActions extends Component.extend(
   ContextBoundEventListenersMixin,
-  ContextBoundTasksMixin,
-  TaglessCssDeprecation
+  ContextBoundTasksMixin
 ) {
   /**
    * Visually hidden text for screen readers

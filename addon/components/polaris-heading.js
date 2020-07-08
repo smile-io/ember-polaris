@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-heading';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris heading component.
@@ -18,11 +18,10 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  *     This is an emphasised heading
  *   {{/polaris-heading}}
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisHeading extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisHeading extends Component {
   /**
    * The content to display inside the heading
    *

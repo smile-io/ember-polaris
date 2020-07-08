@@ -7,13 +7,12 @@ import { isEmpty } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-pagination';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisPagination extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisPagination extends Component {
   /**
    * A more subdued control for use in headers
    *

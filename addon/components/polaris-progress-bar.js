@@ -4,7 +4,7 @@ import { classify, htmlSafe } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-progress-bar';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -15,11 +15,10 @@ const defaultSize = 'medium';
  *
  * @component polaris-progress-bar
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisProgressBar extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisProgressBar extends Component {
   /**
    * The progression of certain tasks
    *

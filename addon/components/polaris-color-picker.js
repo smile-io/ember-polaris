@@ -6,17 +6,16 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../utils/math';
 import { hsbaToRgba } from '../utils/color';
 import layout from '../templates/components/polaris-color-picker';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris color picker component.
  * See https://polaris.shopify.com/components/forms/color-picker
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisColorPicker extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisColorPicker extends Component {
   /**
    * The currently selected color
    *

@@ -2,13 +2,12 @@ import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-button-group/item';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisButtonGroupItem extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisButtonGroupItem extends Component {
   /**
    * Elements to display inside group item
    *

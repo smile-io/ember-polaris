@@ -3,13 +3,12 @@ import { action, computed } from '@ember/object';
 import { not, and } from '@ember/object/computed';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-resource-list/checkable-button';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisResourceListCheckableButton extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisResourceListCheckableButton extends Component {
   /**
    * @type {String}
    * @default null

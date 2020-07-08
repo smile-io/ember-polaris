@@ -5,7 +5,7 @@ import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-badge';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -32,11 +32,10 @@ const DEFAULT_SIZE = SIZES.medium;
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisBadge extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisBadge extends Component {
   /**
    * The content to display inside the badge.
    *

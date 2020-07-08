@@ -3,13 +3,12 @@ import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-option-list/checkbox';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisOptionListCheckbox extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisOptionListCheckbox extends Component {
   /**
    * @type {Boolean}
    * @default false

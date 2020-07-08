@@ -4,7 +4,7 @@ import { classify } from '@ember/string';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-display-text';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris display text component.
@@ -20,11 +20,10 @@ import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
  *     This is some BIG text
  *   {{/polaris-display-text}}
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDisplayText extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisDisplayText extends Component {
   /**
    * Name of element to use for text
    * NOTE: Matches polaris-react's `element`

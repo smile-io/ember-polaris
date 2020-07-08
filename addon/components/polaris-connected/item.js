@@ -3,13 +3,12 @@ import { action, computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-connected/item';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisConnectedItem extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisConnectedItem extends Component {
   /**
    * The position of the item.
    *
