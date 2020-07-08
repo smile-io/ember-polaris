@@ -1,4 +1,6 @@
 import Component from '@ember/component';
+import { or } from '@ember/object/computed';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-empty-state';
 import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
@@ -63,7 +65,7 @@ export default class PolarisEmptyState extends Component.extend(
    * @type {Object}
    * @default null
    */
-  action = null;
+  primaryAction = null;
 
   /**
    * Secondary action for empty state
@@ -72,4 +74,20 @@ export default class PolarisEmptyState extends Component.extend(
    * @default null
    */
   secondaryAction = null;
+
+  @or('primaryAction', 'action')
+  mainAction;
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisEmptyState] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-empty-state.action-arg',
+        until: '7.0.0',
+      }
+    );
+  }
 }

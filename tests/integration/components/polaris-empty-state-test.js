@@ -26,7 +26,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
         heading="Empty State Here"
         image="http://www.somewhere.com/some-image.jpg"
         text="I'm some inline text"
-        action=(hash
+        primaryAction=(hash
           text="Do something"
           onAction=(action "doSomething")
         )
@@ -71,7 +71,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
       {{#polaris-empty-state
         heading="Empty State Here"
         image="http://www.somewhere.com/some-image.jpg"
-        action=(hash
+        primaryAction=(hash
           text="Do something"
           onAction=(action "doSomething")
         )
@@ -132,7 +132,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
         heading="Empty State Here"
         image="http://www.somewhere.com/some-image.jpg"
         text="I'm some inline text"
-        action=(hash
+        primaryAction=(hash
           text="Main action"
           onAction=(action "mainAction")
         )
@@ -203,7 +203,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
         image="http://www.somewhere.com/some-image.jpg"
         text="I'm some inline text"
         imageContained=imageContained
-        action=(hash
+        primaryAction=(hash
           text="Do something"
           onAction=(action "doSomething")
         )
