@@ -54,7 +54,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
   test('it renders the correct HTML in block usage with action supplied', async function(assert) {
     await render(hbs`
       {{#polaris-setting-toggle
-        action=(hash
+        primaryAction=(hash
           text="Take action!"
         )
       }}
@@ -102,7 +102,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     await render(hbs`
       {{polaris-setting-toggle
         enabled=enabled
-        action=(hash
+        primaryAction=(hash
           text="Flip the switch"
         )
       }}
@@ -132,7 +132,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     await render(hbs`
       {{polaris-setting-toggle
         enabled=enabled
-        action=(hash
+        primaryAction=(hash
           text="Flip the switch"
           onAction=(action (mut actionFired) true)
         )
@@ -151,7 +151,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
 
     await render(hbs`
       {{polaris-setting-toggle
-        action=(hash
+        primaryAction=(hash
           text="Toggle"
           loading=isLoading
           disabled=isDisabled
