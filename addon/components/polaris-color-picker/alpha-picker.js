@@ -6,7 +6,7 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../../utils/math';
 import { hsbaToRgba } from '../../utils/color';
 import layout from '../../templates/components/polaris-color-picker/alpha-picker';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const VERTICAL_PADDING = 13;
 
@@ -25,11 +25,10 @@ function alphaForOffset(offset, sliderHeight) {
   return clamp(1 - selectionHeight / slidableArea, 0, 1);
 }
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisColorPickerAlphaPicker extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisColorPickerAlphaPicker extends Component {
   /**
    * The current alpha value
    *

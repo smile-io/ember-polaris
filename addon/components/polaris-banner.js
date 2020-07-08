@@ -1,14 +1,15 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
+import { bool, or } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 // TODO icon-update: use new icon names here when @shopify/polaris-icons
 // is consumable by Ember apps.
@@ -41,11 +42,10 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisBanner extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisBanner extends Component {
   /**
    * Title content for the banner.
    *
@@ -113,6 +113,9 @@ export default class PolarisBanner extends Component.extend(
 
   @bool('onDismiss')
   hasDismiss;
+
+  @or('primaryAction', 'action')
+  mainAction;
 
   @computed('status')
   get role() {
@@ -186,6 +189,19 @@ export default class PolarisBanner extends Component.extend(
     }
 
     return cssClasses.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisBanner] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-banner.action-arg',
+        until: '7.0.0',
+      }
+    );
   }
 
   @action

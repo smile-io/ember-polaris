@@ -9,14 +9,14 @@
         {{@label}}
       </PolarisLabel>
 
-      {{#if @action}}
+      {{#if this.mainAction}}
         <PolarisButton
           @plain={{true}}
-          @text={{@action.text}}
-          @disabled={{@action.disabled}}
-          @loading={{@action.loading}}
-          @accessibilityLabel={{@action.accessibilityLabel}}
-          @onClick={{action @action.onAction}}
+          @text={{this.mainAction.text}}
+          @disabled={{this.mainAction.disabled}}
+          @loading={{this.mainAction.loading}}
+          @accessibilityLabel={{this.mainAction.accessibilityLabel}}
+          @onClick={{this.mainAction.onAction}}
         />
       {{/if}}
     </div>

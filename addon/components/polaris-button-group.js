@@ -3,17 +3,16 @@ import { action, computed } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-button-group';
 import AutoWrapper from '../-private/auto-wrapper';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris button group component.
  * See https://polaris.shopify.com/components/actions/button-group
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisButtonGroup extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisButtonGroup extends Component {
   /**
    * Button components
    *

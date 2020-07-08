@@ -5,15 +5,13 @@ import { classify } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-icon';
 import SvgHandling from '../mixins/components/svg-handling';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 // TODO: look into importing icons properly.
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisIcon extends Component.extend(
-  SvgHandling,
-  TaglessCssDeprecation
-) {
+export default class PolarisIcon extends Component.extend(SvgHandling) {
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris

@@ -6,14 +6,13 @@ import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import $Ember from 'jquery';
 import layout from '../../templates/components/polaris-color-picker/slidable';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisColorPickerSlidable extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisColorPickerSlidable extends Component {
   /**
    * The current x position of the dragger
    *

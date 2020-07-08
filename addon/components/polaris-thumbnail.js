@@ -4,7 +4,7 @@ import { classify } from '@ember/string';
 import { warn } from '@ember/debug';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-thumbnail';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -13,11 +13,10 @@ const defaultSize = 'medium';
  * Polaris thumbnail component.
  * See https://polaris.shopify.com/components/images-and-icons/thumbnail
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisThumbnail extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisThumbnail extends Component {
   /**
    * Size of thumbnail
    *

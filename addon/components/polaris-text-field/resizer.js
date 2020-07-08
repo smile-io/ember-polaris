@@ -3,7 +3,7 @@ import { computed, action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-text-field/resizer';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const REPLACE_REGEX = /[\n&<>]/g;
 
@@ -18,11 +18,10 @@ function replaceEntity(entity) {
   return ENTITIES_TO_REPLACE[entity] || entity;
 }
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisTextFieldResizer extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisTextFieldResizer extends Component {
   /**
    * The value of the textarea
    *

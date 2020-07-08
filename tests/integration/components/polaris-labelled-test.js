@@ -58,7 +58,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       onAction: () => this.set('actionFired', true),
     });
     await render(
-      hbs`{{polaris-labelled id="MyLabelled" label="Label" action=action}}`
+      hbs`{{polaris-labelled id="MyLabelled" label="Label" primaryAction=action}}`
     );
 
     const actionButtonSelector = 'button.Polaris-Button';
@@ -77,7 +77,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       {{polaris-labelled
         id="MyThing"
         label="My thing"
-        action=(hash
+        primaryAction=(hash
           text="My action"
           onAction=(action (mut actionFired) true)
         )

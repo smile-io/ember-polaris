@@ -1,13 +1,12 @@
 import Component from '@ember/component';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-date-picker/weekday';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisDatePickerWeekday extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisDatePickerWeekday extends Component {
   /**
    * @type {String}
    * @default null

@@ -1,17 +1,16 @@
 import Component from '@ember/component';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-card';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris card component.
  * See https://polaris.shopify.com/components/structure/card
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisCard extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisCard extends Component {
   /**
    * Title content for the card
    *

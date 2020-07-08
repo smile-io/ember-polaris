@@ -4,7 +4,7 @@ import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-drop-zone/file-upload';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const iconDragDrop = 'drag-drop';
 const fileUpload = '/@smile-io/ember-polaris/images/file-upload.svg';
@@ -17,11 +17,10 @@ const fileUploadStrings = {
   actionHintImage: 'or drop images to upload',
 };
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisDropZoneFileUpload extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisDropZoneFileUpload extends Component {
   iconDragDrop = iconDragDrop;
   fileUpload = fileUpload;
   imageUpload = imageUpload;

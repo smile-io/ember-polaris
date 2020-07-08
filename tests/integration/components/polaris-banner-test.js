@@ -295,7 +295,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     assert.ok(dismissed, 'banner dismissable - fires dismiss action');
   });
 
-  test('it supports `action` and `secondaryAction`', async function(assert) {
+  test('it supports `primaryAction` and `secondaryAction`', async function(assert) {
     await render(hbs`{{polaris-banner text="Some content text"}}`);
 
     let bannerContentSelector = `${bannerSelector} ${contentSelector}`;
@@ -329,13 +329,13 @@ module('Integration | Component | polaris banner', function(hooks) {
     }}`);
 
     let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
-    let actionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
+    let primaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
     let secondaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > button.Polaris-Banner__SecondaryAction`;
     assert
       .dom(bannerActionsSelector)
       .exists('banner with `action` only - renders actions container');
     assert
-      .dom(actionBtnSelector)
+      .dom(primaryActionBtnSelector)
       .exists('banner with `action` only - renders `action` button');
 
     assert
@@ -362,10 +362,10 @@ module('Integration | Component | polaris banner', function(hooks) {
       )
     }}`);
 
-    let actionBtn = assert.dom(actionBtnSelector);
+    let primaryActionBtn = assert.dom(primaryActionBtnSelector);
     let secondaryActionBtn = assert.dom(secondaryActionBtnSelector);
-    actionBtn.exists('banner with actions - renders `action` button');
-    actionBtn.hasClass(
+    primaryActionBtn.exists('banner with actions - renders `action` button');
+    primaryActionBtn.hasClass(
       'Polaris-Button--loading',
       'banner with actions - `action` button starts in loading state'
     );
@@ -374,14 +374,14 @@ module('Integration | Component | polaris banner', function(hooks) {
       mainActionLoading: false,
       mainActionDisabled: true,
     });
-    actionBtn.hasNoClass(
+    primaryActionBtn.hasNoClass(
       'Polaris-Button--loading',
       'banner with actions - `action` button exits loading state'
     );
-    actionBtn.isDisabled(
+    primaryActionBtn.isDisabled(
       'banner with actions - `action` button becomes disabled'
     );
-    actionBtn.hasText(
+    primaryActionBtn.hasText(
       'Edit',
       'banner with actions - renders correct `action` button text'
     );
@@ -394,7 +394,32 @@ module('Integration | Component | polaris banner', function(hooks) {
       'banner with actions - renders correct `secondaryAction` button text'
     );
 
-    await click(actionBtnSelector);
+    await click(primaryActionBtnSelector);
     await click(secondaryActionBtnSelector);
+  });
+
+  test('it has backwards support for `action` as `primaryAction`', async function(assert) {
+    this.set('primaryAction', () =>
+      assert.ok(true, 'triggers primaryAction handler')
+    );
+
+    await render(hbs`{{polaris-banner
+      action=(hash text="Edit" onAction=(action primaryAction))
+    }}`);
+
+    let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
+    let primaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
+
+    assert
+      .dom(primaryActionBtnSelector)
+      .exists('banner with actions - renders `action` button');
+    assert
+      .dom(primaryActionBtnSelector)
+      .hasText(
+        'Edit',
+        'banner with actions - renders correct `action` button text'
+      );
+
+    await click(primaryActionBtnSelector);
   });
 });

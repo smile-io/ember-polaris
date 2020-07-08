@@ -3,13 +3,12 @@ import { computed, action } from '@ember/object';
 import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import template from '../templates/components/polaris-breadcrumbs';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisBreadcrumbs extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisBreadcrumbs extends Component {
   /**
    * Collection of breadcrumbs
    *

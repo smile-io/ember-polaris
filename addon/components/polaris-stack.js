@@ -6,17 +6,16 @@ import { classify } from '@ember/string';
 import { layout, tagName } from '@ember-decorators/component';
 import template from '../templates/components/polaris-stack';
 import AutoWrapper from '../-private/auto-wrapper';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris stack component.
  * See https://polaris.shopify.com/components/structure/stack
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisStack extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisStack extends Component {
   /**
    * Elements to display inside stack
    *

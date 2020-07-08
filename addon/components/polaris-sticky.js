@@ -5,16 +5,15 @@ import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-sticky';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Undocumented Polaris sticky component.
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSticky extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisSticky extends Component {
   @service
   stickyManager;
 

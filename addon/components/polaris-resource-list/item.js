@@ -6,13 +6,13 @@ import layout from '../../templates/components/polaris-resource-list/item';
 import { context } from '@smile-io/ember-polaris/components/polaris-resource-list';
 import { computedIdVariation } from '@smile-io/ember-polaris/utils/id';
 import { SELECT_ALL_ITEMS } from '../polaris-resource-list';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
 export default class PolarisResourceListItem extends Component.extend(
-  context.ConsumerMixin,
-  TaglessCssDeprecation
+  context.ConsumerMixin
 ) {
   /**
    * Unique identifier for the item

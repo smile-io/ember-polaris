@@ -5,23 +5,23 @@
 >
   <div data-test-empty-state-section class="Polaris-EmptyState__Section">
     <div class="Polaris-EmptyState__DetailsContainer">
-      {{#with
+      {{#let
         (component "polaris-empty-state/details"
           heading=@heading
           text=@text
-          action=@action
+          primaryAction=this.mainAction
           secondaryAction=@secondaryAction
         )
-        as |detailsComponent|
+        as |Details|
       }}
         {{#if hasBlock}}
-          {{#component detailsComponent}}
+          <Details>
             {{yield}}
-          {{/component}}
+          </Details>
         {{else}}
-          {{component detailsComponent}}
+          <Details />
         {{/if}}
-      {{/with}}
+      {{/let}}
     </div>
 
     <div class="Polaris-EmptyState__ImageContainer">

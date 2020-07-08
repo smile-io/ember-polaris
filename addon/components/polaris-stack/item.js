@@ -2,13 +2,12 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { layout, tagName } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-stack/item';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisStackItem extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisStackItem extends Component {
   /**
    * Elements to display inside stack item
    *

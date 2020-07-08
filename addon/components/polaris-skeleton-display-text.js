@@ -3,16 +3,15 @@ import { computed } from '@ember/object';
 import { classify } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-display-text';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const defaultSize = 'medium';
 const allowedSizes = ['small', defaultSize, 'large', 'extraLarge'];
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonDisplayText extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisSkeletonDisplayText extends Component {
   /**
    * Size of the text
    *

@@ -3,17 +3,16 @@ import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-option-list';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris option list component.
  * See https://polaris.shopify.com/components/lists-and-tables/option-list
  */
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisOptionList extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisOptionList extends Component {
   /**
    * A unique identifier for the option list
    * Defaults to Ember's GUID for this component instance

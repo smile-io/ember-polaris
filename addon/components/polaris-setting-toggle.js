@@ -1,5 +1,7 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
+import { or } from '@ember/object/computed';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-setting-toggle';
@@ -31,7 +33,7 @@ export default class PolarisSettingToggle extends Component {
    * @default null
    * @public
    */
-  action = null;
+  primaryAction = null;
 
   /**
    * Sets toggle state to enabled or disabled
@@ -40,6 +42,22 @@ export default class PolarisSettingToggle extends Component {
    * @public
    */
   enabled;
+
+  @or('primaryAction', 'action')
+  mainAction;
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisSettingToggle] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-seting-toggle.action-arg',
+        until: '7.0.0',
+      }
+    );
+  }
 
   @action
   fireAction(primaryAction) {

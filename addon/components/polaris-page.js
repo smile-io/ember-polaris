@@ -3,17 +3,16 @@ import { computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-page';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris page component.
  * See https://polaris.shopify.com/components/structure/page
  */
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisPage extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisPage extends Component {
   /**
    * Page title, in large type
    *

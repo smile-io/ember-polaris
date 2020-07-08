@@ -3,13 +3,12 @@ import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-skeleton-page/action';
-import TaglessCssDeprecation from '../../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
+@deprecateClassArgument
 @tagName('')
 @templateLayout(layout)
-export default class PolarisSkeletonPageAction extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisSkeletonPageAction extends Component {
   @computed()
   get width() {
     return Math.round(Math.random() * 40 + 60);

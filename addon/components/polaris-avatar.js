@@ -5,7 +5,7 @@ import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-avatar';
-import TaglessCssDeprecation from '../mixins/tagless-css-deprecation';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -25,11 +25,10 @@ const avatarImages = [
 
 const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
+@deprecateClassArgument
 @tagName('')
 @layout(template)
-export default class PolarisAvatar extends Component.extend(
-  TaglessCssDeprecation
-) {
+export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
    *
