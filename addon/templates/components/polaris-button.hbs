@@ -68,7 +68,7 @@
       aria-controls={{@ariaControls}}
       aria-expanded={{if @ariaExpanded "true"}}
       aria-pressed={{if @ariaPressed "true"}}
-      {{on "click" (stop-propagation this.handleClick)}}
+      {{on "click" this.handleClick}}
       {{on "focus" this.onFocus}}
       {{on "blur" this.onBlur}}
       {{on "keydown" this.onKeyDown}}
