@@ -14,7 +14,7 @@
     </div>
   </PolarisTextContainer>
 
-  {{#if action}}
+  {{#if this.mainAction}}
     <div class="Polaris-EmptyState__Actions">
       <PolarisStack
         data-test-empty-state-actions={{true}}
@@ -24,8 +24,8 @@
         <PolarisButton
           @primary={{true}}
           @size="large"
-          @text={{@action.text}}
-          @onClick={{@action.onAction}}
+          @text={{this.mainAction.text}}
+          @onClick={{this.mainAction.onAction}}
         />
 
         {{#if @secondaryAction}}
@@ -33,7 +33,7 @@
             <PolarisButton
               @plain={{true}}
               @text={{@secondaryAction.text}}
-              @onClick={{action @secondaryAction.onAction}}
+              @onClick={{@secondaryAction.onAction}}
             />
           </stack.item>
         {{/if}}
