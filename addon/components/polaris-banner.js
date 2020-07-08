@@ -1,9 +1,10 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
+import { bool, or } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
 import template from '../templates/components/polaris-banner';
@@ -114,6 +115,9 @@ export default class PolarisBanner extends Component.extend(
   @bool('onDismiss')
   hasDismiss;
 
+  @or('primaryAction', 'action')
+  mainAction;
+
   @computed('status')
   get role() {
     let { status } = this;
@@ -186,6 +190,19 @@ export default class PolarisBanner extends Component.extend(
     }
 
     return cssClasses.join(' ');
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisBanner] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-banner.action-arg',
+        until: '7.0.0',
+      }
+    );
   }
 
   @action
