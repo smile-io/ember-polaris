@@ -9,13 +9,13 @@
     </div>
 
     <div class="Polaris-SettingAction__Action">
-      {{#if @action}}
+      {{#if this.mainAction}}
         <PolarisButton
-          @text={{@action.text}}
-          @disabled={{@action.disabled}}
-          @loading={{@action.loading}}
+          @text={{this.mainAction.text}}
+          @disabled={{this.mainAction.disabled}}
+          @loading={{this.mainAction.loading}}
           @primary={{@enabled}}
-          @onClick={{fn this.fireAction @action}}
+          @onClick={{fn this.fireAction this.mainAction}}
         />
       {{/if}}
     </div>
