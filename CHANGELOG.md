@@ -4,16 +4,29 @@
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.1...HEAD)
 
+
 :boom: Breaking Change
 
+**All components** have been converted into tag-less components.
+If you relied on any functionality that just worked in Ember with with non-tagless components *(ex: passing `class` argument, `tagName`, etc)*, these will no longer work. We've tried to keep backwards support as much as possible, especially with `class` arguments. Feel free to open a fix if you notice anything could have better backwards support.
+
 - Misc updates for v6 [\#620](https://github.com/smile-io/ember-polaris/pull/620) ([vladucu](https://github.com/vladucu))
-- Modernize display-text component [\#617](https://github.com/smile-io/ember-polaris/pull/617) ([vladucu](https://github.com/vladucu))
 - Upgrade to Ember 3.18 [\#592](https://github.com/smile-io/ember-polaris/pull/592) ([vladucu](https://github.com/vladucu))
 
 :house: Internal
 
+- Update linting tools [\#637](https://github.com/smile-io/ember-polaris/pull/637) ([renovate[bot]](https://github.com/apps/renovate))
+- Update Node.js to v12.18.2 [\#636](https://github.com/smile-io/ember-polaris/pull/636) ([renovate[bot]](https://github.com/apps/renovate))
+- Pin dependencies [\#635](https://github.com/smile-io/ember-polaris/pull/635) ([renovate[bot]](https://github.com/apps/renovate))
+- Update build tools \(major\) [\#632](https://github.com/smile-io/ember-polaris/pull/632) ([renovate[bot]](https://github.com/apps/renovate))
+- Add deprecations for v6 [\#634](https://github.com/smile-io/ember-polaris/pull/634) ([vladucu](https://github.com/vladucu))
+- Update dependency ember-cli-htmlbars to v5 [\#626](https://github.com/smile-io/ember-polaris/pull/626) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency ember-cli-code-coverage to v1.0.0-beta.9 [\#622](https://github.com/smile-io/ember-polaris/pull/622) ([renovate[bot]](https://github.com/apps/renovate))
+- Improve backwards compatibility support [\#631](https://github.com/smile-io/ember-polaris/pull/631) ([vladucu](https://github.com/vladucu))
+- Stop currying click event to action handlers [\#630](https://github.com/smile-io/ember-polaris/pull/630) ([vladucu](https://github.com/vladucu))
 - Modernize date-picker component [\#619](https://github.com/smile-io/ember-polaris/pull/619) ([vladucu](https://github.com/vladucu))
 - Modernize description-list component [\#618](https://github.com/smile-io/ember-polaris/pull/618) ([vladucu](https://github.com/vladucu))
+- Modernize display-text component [\#617](https://github.com/smile-io/ember-polaris/pull/617) ([vladucu](https://github.com/vladucu))
 - Modernize empty-search-result component [\#616](https://github.com/smile-io/ember-polaris/pull/616) ([vladucu](https://github.com/vladucu))
 - Modernize connected component [\#615](https://github.com/smile-io/ember-polaris/pull/615) ([vladucu](https://github.com/vladucu))
 - Modernize empty-state component [\#614](https://github.com/smile-io/ember-polaris/pull/614) ([vladucu](https://github.com/vladucu))
@@ -70,6 +83,7 @@
 - Refactor polaris-breadcrumbs component [\#446](https://github.com/smile-io/ember-polaris/pull/446) ([vladucu](https://github.com/vladucu))
 - Refactor polaris-banner component [\#445](https://github.com/smile-io/ember-polaris/pull/445) ([vladucu](https://github.com/vladucu))
 - Refactor smaller misc components [\#424](https://github.com/smile-io/ember-polaris/pull/424) ([vladucu](https://github.com/vladucu))
+
 
 
 ## [v5.2.1](https://github.com/smile-io/ember-polaris/tree/v5.2.1) (August 9, 2019)
