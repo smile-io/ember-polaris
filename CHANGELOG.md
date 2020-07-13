@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/smile-io/ember-polaris/tree/HEAD)
+## [v6.0.0-beta.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0-beta.0)
 
-[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.1...HEAD)
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.1...v6.0.0-beta.0)
 
 
 :boom: Breaking Change
