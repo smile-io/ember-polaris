@@ -1,10 +1,18 @@
-{{#if hasBlock}}
-  {{yield
-    (hash
-      group=(component "polaris-form-layout/group")
-      item=(component "polaris-form-layout/item")
-    )
-  }}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  class="Polaris-FormLayout {{@class}}"
+  data-test-form-layout
+  ...attributes
+  {{did-insert this.setupAutoWrapper}}
+  {{will-destroy this.teardownAutoWrapper}}
+>
+  {{#if hasBlock}}
+    {{yield
+      (hash
+        group=(component "polaris-form-layout/group")
+        item=(component "polaris-form-layout/item")
+      )
+    }}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>

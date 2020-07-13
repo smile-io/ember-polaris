@@ -1,13 +1,15 @@
-{{#if title}}
-  {{#if (is-component-definition title)}}
-    {{render-content title}}
-  {{else}}
-    {{polaris-subheading text=title}}
+<div class="Polaris-Card__SectionHeader {{@class}}" ...attributes>
+  {{#if @title}}
+    {{#if (is-component-definition @title)}}
+      {{render-content @title}}
+    {{else}}
+      <PolarisSubheading @text={{@title}} />
+    {{/if}}
   {{/if}}
-{{/if}}
 
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>

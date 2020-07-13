@@ -1,29 +1,31 @@
-{{#polaris-stack
-  spacing="tight"
-  distribution=(if showSecondaryActions "equalSpacing" "trailing")
-}}
-  {{#if showSecondaryActions}}
-    {{#polaris-button-group}}
-      {{#each secondaryActions as |secondaryAction|}}
-        {{polaris-button
-          text=secondaryAction.text
-          disabled=secondaryAction.disabled
-          loading=secondaryAction.loading
-          destructive=secondaryAction.destructive
-          icon=secondaryAction.icon
-          onClick=(action "fireAction" secondaryAction)
-        }}
-      {{/each}}
-    {{/polaris-button-group}}
-  {{/if}}
+<div class="Polaris-PageActions {{@class}}" ...attributes>
+  <PolarisStack
+    @spacing="tight"
+    @distribution={{if this.showSecondaryActions "equalSpacing" "trailing"}}
+  >
+    {{#if this.showSecondaryActions}}
+      <PolarisButtonGroup>
+        {{#each @secondaryActions as |secondaryAction|}}
+          <PolarisButton
+            @text={{secondaryAction.text}}
+            @disabled={{secondaryAction.disabled}}
+            @loading={{secondaryAction.loading}}
+            @destructive={{secondaryAction.destructive}}
+            @icon={{secondaryAction.icon}}
+            @onClick={{fn this.fireAction secondaryAction}}
+          />
+        {{/each}}
+      </PolarisButtonGroup>
+    {{/if}}
 
-  {{#if primaryAction}}
-    {{polaris-button
-      primary=true
-      disabled=primaryAction.disabled
-      loading=primaryAction.loading
-      text=primaryAction.text
-      onClick=(action "fireAction" primaryAction)
-    }}
-  {{/if}}
-{{/polaris-stack}}
+    {{#if @primaryAction}}
+      <PolarisButton
+        @primary={{true}}
+        @disabled={{@primaryAction.disabled}}
+        @loading={{@primaryAction.loading}}
+        @text={{@primaryAction.text}}
+        @onClick={{fn this.fireAction @primaryAction}}
+      />
+    {{/if}}
+  </PolarisStack>
+</div>

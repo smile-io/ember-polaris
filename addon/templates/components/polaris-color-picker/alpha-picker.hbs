@@ -1,7 +1,12 @@
-<div class="Polaris-ColorPicker__ColorLayer" style={{colorLayerStyle}} />
-{{polaris-color-picker/slidable
-  draggerX=0
-  draggerY=draggerY
-  onDraggerHeightChanged=(action (mut draggerHeight))
-  onChange=(action "handleChange")
-}}
+<div
+  class="Polaris-ColorPicker__AlphaPicker {{@class}}"
+  {{did-insert this.setSliderHeight}}
+>
+  <div class="Polaris-ColorPicker__ColorLayer" style={{this.colorLayerStyle}} />
+  <PolarisColorPicker::Slidable
+    @draggerX={{0}}
+    @draggerY={{this.draggerY}}
+    @onDraggerHeightChanged={{action (mut this.draggerHeight)}}
+    @onChange={{fn this.handleChange}}
+  />
+</div>

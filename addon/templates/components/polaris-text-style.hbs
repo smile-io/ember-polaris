@@ -1,29 +1,13 @@
-{{!--
-  Unfortunately we can't pass tagName to this wrapper element
-  and need to use two different paths as below. This is because
-  Glimmer will reuse the component instance even if elementTagName
-  changes, which will break because tagName cannot be updated on a
-  component instance once that instance has been created :sadface:
---}}
-{{#with (component "wrapper-element"
-  class=textStyleClasses
-  data-test-text-style=dataTestTextStyle
-) as |wrapperElementComponent|}}
-  {{#if (eq elementTagName "code")}}
-    {{#component wrapperElementComponent tagName="code"}}
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    {{/component}}
-  {{else}}
-    {{#component wrapperElementComponent tagName="span"}}
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{text}}
-      {{/if}}
-    {{/component}}
-  {{/if}}
-{{/with}}
+{{#let (element (if (eq this.elementTagName "code") "code" "span")) as |TextStyle|}}
+  <TextStyle
+    class={{this.textStyleClasses}}
+    data-test-text-style={{or @dataTestTextStyle ""}}
+    ...attributes
+  >
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </TextStyle>
+{{/let}}

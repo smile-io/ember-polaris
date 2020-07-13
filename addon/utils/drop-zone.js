@@ -56,5 +56,6 @@ function isDragEvent(event) {
 }
 
 function isChangeEvent(event) {
-  return Object.prototype.hasOwnProperty.call(event, 'target');
+  // eslint-disable-next-line no-prototype-builtins
+  return event.hasOwnProperty('target') || Boolean(event.target);
 }

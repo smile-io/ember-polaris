@@ -1,5 +1,11 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  data-test-stack-item={{true}}
+  class={{this.cssClasses}}
+  ...attributes
+>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</div>

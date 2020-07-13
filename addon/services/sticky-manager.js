@@ -1,79 +1,70 @@
 import Service from '@ember/service';
-import { A as EmberArray } from '@ember/array';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { throttleTask, runDisposables } from 'ember-lifeline';
 import tokens from '@shopify/polaris-tokens';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import stackedContent from '@smile-io/ember-polaris/utils/breakpoints';
 
-export default Service.extend(ContextBoundEventListenersMixin, {
+export default class StickyManager extends Service.extend(
+  ContextBoundEventListenersMixin
+) {
   /**
-   * @property stickyItems
    * @type {Object[]}
-   * @private
    */
-  stickyItems: EmberArray(),
+  stickyItems = [];
 
   /**
-   * @property stuckItems
    * @type {Object[]}
-   * @private
    */
-  stuckItems: EmberArray(),
+  stuckItems = [];
 
   /**
-   * @property container
    * @type {Document|HTMLElement}
-   * @private
    */
-  container: null,
+  container = null;
 
   registerStickyItem(stickyItem) {
-    this.get('stickyItems').push(stickyItem);
-  },
+    this.stickyItems.push(stickyItem);
+  }
 
   unregisterStickyItem(nodeToRemove) {
-    let stickyItems = this.get('stickyItems');
-    let nodeIndex = stickyItems.findIndex(
+    let nodeIndex = this.stickyItems.findIndex(
       ({ stickyNode }) => nodeToRemove === stickyNode
     );
-    stickyItems.splice(nodeIndex, 1);
-  },
+    this.stickyItems.splice(nodeIndex, 1);
+  }
 
   setContainer(el) {
     this.set('container', el);
     this.addEventListener(el, 'scroll', this.handleScroll);
     this.addEventListener(window, 'resize', this.handleResize);
     this.manageStickyItems();
-  },
+  }
 
   removeScrollListener() {
-    let container = this.get('container');
-    if (container) {
-      this.removeEventListener(container, 'scroll', this.handleScroll);
+    if (this.container) {
+      this.removeEventListener(this.container, 'scroll', this.handleScroll);
       this.removeEventListener(window, 'resize', this.handleResize);
     }
-  },
+  }
 
   handleResize() {
-    throttleTask(this, 'manageStickyItems', 50, false);
-  },
+    throttleTask(this, 'manageStickyItems', 40, false);
+  }
 
   handleScroll() {
-    throttleTask(this, 'manageStickyItems', 50, false);
-  },
+    throttleTask(this, 'manageStickyItems', 40, false);
+  }
 
   manageStickyItems() {
-    let stickyItems = this.get('stickyItems');
-    if (stickyItems.length <= 0) {
+    if (this.stickyItems.length <= 0) {
       return;
     }
 
-    let container = this.get('container');
-    let scrollTop = scrollTopFor(container);
-    let containerTop = getRectForNode(container).top;
+    let scrollTop = scrollTopFor(this.container);
+    let containerTop = getRectForNode(this.container).top;
 
-    stickyItems.forEach((stickyItem) => {
+    this.stickyItems.forEach((stickyItem) => {
       let { handlePositioning } = stickyItem;
 
       let { sticky, top, left, width } = this.evaluateStickyItem(
@@ -86,7 +77,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
 
       handlePositioning(sticky, top, left, width);
     });
-  },
+  }
 
   evaluateStickyItem(stickyItem, scrollTop, containerTop) {
     let {
@@ -140,7 +131,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
       left,
       width,
     };
-  },
+  }
 
   updateStuckItems(item, sticky) {
     let { stickyNode } = item;
@@ -149,24 +140,22 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     } else if (!sticky && this.isNodeStuck(stickyNode)) {
       this.removeStuckItem(item);
     }
-  },
+  }
 
   addStuckItem(stickyItem) {
-    this.get('stuckItems').push(stickyItem);
-  },
+    this.stuckItems.push(stickyItem);
+  }
 
   removeStuckItem(stickyItem) {
-    let stuckItems = this.get('stuckItems');
     let { stickyNode: nodeToRemove } = stickyItem;
-    let nodeIndex = stuckItems.findIndex(
+    let nodeIndex = this.stuckItems.findIndex(
       ({ stickyNode }) => nodeToRemove === stickyNode
     );
-    stuckItems.splice(nodeIndex, 1);
-  },
+    this.stuckItems.splice(nodeIndex, 1);
+  }
 
   getOffset(node) {
-    let stuckItems = this.get('stuckItems');
-    let stuckNodesLength = stuckItems.get('length');
+    let stuckNodesLength = this.stuckItems.length;
     if (stuckNodesLength === 0) {
       return 0;
     }
@@ -176,7 +165,7 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     let nodeRect = getRectForNode(node);
 
     while (count < stuckNodesLength) {
-      let stuckNode = stuckItems[count].stickyNode;
+      let stuckNode = this.stuckItems[count].stickyNode;
       if (stuckNode !== node) {
         let stuckNodeRect = getRectForNode(stuckNode);
         if (!horizontallyOverlaps(nodeRect, stuckNodeRect)) {
@@ -189,18 +178,18 @@ export default Service.extend(ContextBoundEventListenersMixin, {
     }
 
     return offset;
-  },
+  }
 
   isNodeStuck(node) {
-    let nodeFound = this.get('stuckItems').findIndex(
+    let nodeFound = this.stuckItems.findIndex(
       ({ stickyNode }) => node === stickyNode
     );
 
     return nodeFound >= 0;
-  },
+  }
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
     /*
      * The original `StickyManager` React code doesn't default this to `document`,
@@ -208,18 +197,17 @@ export default Service.extend(ContextBoundEventListenersMixin, {
      * This default value is here to recreate this behaviour without having to
      * implement `AppProvider`.
      */
-    let container = this.get('container') || document;
+    let container = this.container || document;
     if (container) {
       this.setContainer(container);
     }
-  },
+  }
 
   willDestroy() {
-    this._super(...arguments);
-
+    super.willDestroy(...arguments);
     runDisposables(this);
-  },
-});
+  }
+}
 
 function isDocument(node) {
   return node === document;

@@ -1,8 +1,15 @@
-{{#polaris-drop-zone
-  type="image"
-  accept="image/jpeg,image/png"
-  onDrop=(action "drop")
+<PolarisButton
+  @text="Open drop-zone"
+  @onClick={{action (mut openDropzone) true}}
+/>
+
+<PolarisDropZone
+  @type="image"
+  @accept="image/jpeg,image/png"
+  @openFileDialog={{openDropzone}}
+  @onFileDialogClose={{action (mut openDropzone) false}}
+  @onDrop={{action "drop"}}
   as |dropZone|
-}}
-  {{dropZone.fileUpload}}
-{{/polaris-drop-zone}}
+>
+  <dropZone.fileUpload />
+</PolarisDropZone>

@@ -1,97 +1,91 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
 import { and } from '@ember/object/computed';
+import { action, get, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/filter-control/filter-creator';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisResourceListFilterControlFilterCreator extends Component {
   /**
-   * @property filters
    * @type {Object[]}
    * @default null
    * @public
    */
-  filters: null,
+  filters = null;
 
   /**
    * Object with `singular` and `plural` properties.
    *
-   * @property resourceName
    * @type {Object}
    * @default null
    * @public
    */
-  resourceName: null,
+  resourceName = null;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
-   * @property onAddFilter
    * @type {Function}
    * @default noop
    * @public
    */
-  onAddFilter() {},
+  onAddFilter() {}
 
   /**
-   * @property selectedFilter
    * @type {Object}
    * @default null
-   * @private
    */
-  selectedFilter: null,
+  selectedFilter = null;
 
   /**
-   * @property selectedFilterKey
    * @type {String}
    * @default null
-   * @private
    */
-  selectedFilterKey: null,
+  selectedFilterKey = null;
 
   /**
-   * @property selectedFilterValue
    * @type {String}
    * @default null
-   * @private
    */
-  selectedFilterValue: null,
+  selectedFilterValue = null;
 
-  canAddFilter: and(
+  @(and(
     'selectedFilter',
     'selectedFilterKey',
     'selectedFilterValue'
-  ).readOnly(),
+  ).readOnly())
+  canAddFilter;
 
-  selectLabel: computed('resourceName.plural', function() {
-    return `Show all ${this.get('resourceName.plural')} where:`;
-  }).readOnly(),
+  @(computed('resourceName.plural').readOnly())
+  get selectLabel() {
+    return `Show all ${this.resourceName.plural} where:`;
+  }
 
-  filterOptions: computed('filters.@each.{key,label}', function() {
-    return this.get('filters').map(({ key, label }) => ({
+  @(computed('filters.@each.{key,label}').readOnly())
+  get filterOptions() {
+    return this.filters.map(({ key, label }) => ({
       value: key,
       label,
     }));
-  }).readOnly(),
+  }
 
+  @action
   handleButtonFocus(...args) {
     let event = args[0];
-    if (!this.get('node') && event) {
+    if (!this.node && event) {
       this.set('node', event.target);
     }
-  },
+  }
 
+  @action
   handleFilterKeyChange(filterKey) {
-    let filters = this.get('filters');
+    let { filters } = this;
 
     let foundFilter = filters.find((filter) => {
       let minKey = get(filter, 'minKey');
@@ -125,21 +119,19 @@ export default Component.extend({
       selectedFilterKey: filterKey,
       selectedFilterValue: undefined,
     });
-  },
+  }
 
+  @action
   handleAddFilter(popover) {
-    let { onAddFilter, selectedFilterKey } = this.getProperties(
-      'onAddFilter',
-      'selectedFilterKey'
-    );
+    let { onAddFilter, selectedFilterKey } = this;
 
-    if (!onAddFilter || !this.get('canAddFilter') || !selectedFilterKey) {
+    if (!onAddFilter || !this.canAddFilter || !selectedFilterKey) {
       return;
     }
 
     onAddFilter({
       key: selectedFilterKey,
-      value: this.get('selectedFilterValue') || '',
+      value: this.selectedFilterValue || '',
     });
     this.setProperties({
       selectedFilter: undefined,
@@ -148,9 +140,9 @@ export default Component.extend({
 
     popover.close();
 
-    let node = this.get('node');
+    let { node } = this;
     if (node != null) {
       node.focus();
     }
-  },
-});
+  }
+}

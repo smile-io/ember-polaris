@@ -1,20 +1,20 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-card/section-header';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-card/section-header';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-Card__SectionHeader'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisCardSectionHeader extends Component {
   /**
    * Title for the section
    *
-   * @property title
    * @type {String|Component}
-   * @default: null
+   * @default null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Inner content of the section
@@ -23,10 +23,9 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
-  text: null,
-});
+  text = null;
+}

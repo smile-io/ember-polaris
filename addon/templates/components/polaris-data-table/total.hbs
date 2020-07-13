@@ -1,12 +1,8 @@
-{{polaris-data-table/cell
-  total=true
-  truncate=truncate
-  height=(get heights 1)
-  fixed=(eq index 0)
-  text=(if
-    (eq index 0)
-    totalsRowHeading
-    total
-  )
-  contentType=contentType
-}}
+<PolarisDataTable::Cell
+  @total={{true}}
+  @truncate={{@truncate}}
+  @height={{get @heights 1}}
+  @fixed={{eq @index 0}}
+  @text={{if (eq @index 0) @totalsRowHeading total}}
+  @contentType={{this.contentType}}
+/>

@@ -1,5 +1,7 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+<div class="Polaris-Layout__AnnotationContent {{@class}}" ...attributes>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>

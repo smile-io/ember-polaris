@@ -2,7 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import { classify } from '@ember/string';
-import layout from '../../templates/components/polaris-drop-zone/file-upload';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-drop-zone/file-upload';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const iconDragDrop = 'drag-drop';
 const fileUpload = '/@smile-io/ember-polaris/images/file-upload.svg';
@@ -15,10 +17,19 @@ const fileUploadStrings = {
   actionHintImage: 'or drop images to upload',
 };
 
-export default Component.extend({
-  classNames: ['Polaris-DropZone-FileUpload'],
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisDropZoneFileUpload extends Component {
+  iconDragDrop = iconDragDrop;
+  fileUpload = fileUpload;
+  imageUpload = imageUpload;
 
-  layout,
+  @readOnly('context.type')
+  type;
+
+  @readOnly('context.size')
+  size;
 
   /**
    * String that appears in file upload
@@ -26,12 +37,12 @@ export default Component.extend({
    * @type {String}
    * @default `Add file`
    * @public
-   * @property actionTitle
    */
-  actionTitle: computed('type', function() {
-    let type = this.get('type');
+  @computed('type')
+  get actionTitle() {
+    let { type } = this;
     return fileUploadStrings[`actionTitle${classify(type)}`];
-  }),
+  }
 
   /**
    * String that appears in file upload
@@ -39,30 +50,21 @@ export default Component.extend({
    * @type {String}
    * @default `or drop files to upload`
    * @public
-   * @property actionHint
    */
-  actionHint: computed('type', function() {
-    let type = this.get('type');
+  @computed('type')
+  get actionHint() {
+    let { type } = this;
     return fileUploadStrings[`actionHint${classify(type)}`];
-  }),
+  }
 
-  iconDragDrop,
-
-  fileUpload,
-
-  imageUpload,
-
-  type: readOnly('context.type'),
-
-  size: readOnly('context.size'),
-
-  imageClasses: computed('size', function() {
-    let classes = ['Polaris-DropZone-FileUpload__Image'];
-    let size = this.get('size');
+  @computed('size')
+  get imageClasses() {
+    let cssClasses = ['Polaris-DropZone-FileUpload__Image'];
+    let { size } = this;
     if (['extraLarge', 'large'].includes(size)) {
-      classes.push(`Polaris-DropZone-FileUpload--size${classify(size)}`);
+      cssClasses.push(`Polaris-DropZone-FileUpload--size${classify(size)}`);
     }
 
-    return classes.join(' ');
-  }).readOnly(),
-});
+    return cssClasses.join(' ');
+  }
+}

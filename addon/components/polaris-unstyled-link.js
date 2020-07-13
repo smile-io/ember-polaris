@@ -1,7 +1,9 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import layout from '../templates/components/polaris-unstyled-link';
-import mapEventToAction from '../utils/map-event-to-action';
+import { computed, action } from '@ember/object';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-unstyled-link';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -9,108 +11,144 @@ import mapEventToAction from '../utils/map-event-to-action';
  * component behaviour provided by the React
  * implementation at this point.
  */
-export default Component.extend({
-  tagName: 'a',
-
-  attributeBindings: [
-    'url:href',
-    'dataPolarisUnstyled:data-polaris-unstyled',
-    'download',
-    'target',
-    'rel',
-    'ariaLabel:aria-label',
-    'ariaDescribedBy:aria-describedby',
-    'tabIndex:tabindex',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisUnstyledLink extends Component {
   /**
    * Content to display inside the link
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * A destination to link to
    *
-   * @property url
    * @type {String}
    * @default null
    * @public
    *
    */
-  url: null,
+  url = null;
 
   /**
    * Forces url to open in a new tab
    *
-   * @property external
    * @type {Boolean}
    * @default false
    * @public
    */
-  external: false,
+  external = false;
 
   /**
    * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
    *
-   * @property download
    * @type {String|Boolean}
    * @default null
    * @public
    */
-  download: null,
+  download = null;
 
   /**
    * Accessibility label
    *
-   * @property ariaLabel
    * @type {String}
    * @default null
    * @public
    */
-  ariaLabel: null,
+  ariaLabel = null;
 
   /**
-   * @property ariaDescribedBy
    * @type {String}
    * @default null
    * @public
    */
-  ariaDescribedBy: null,
+  ariaDescribedBy = null;
 
   /**
    * Callback when a link is clicked
    *
-   * @property onClick
    * @type {Function}
    * @default noop
    * @public
    */
-  onClick() {},
+  onClick() {}
 
   /**
-   * @private
+   * Callback when a link is focused
+   *
+   * @type {Function}
+   * @default noop
+   * @public
    */
-  dataPolarisUnstyled: 'true',
+  onFocus() {}
 
-  dataTestId: null,
+  /**
+   * Callback when a link is blured
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onBlur() {}
 
-  click: mapEventToAction('onClick', {
-    preventDefault: false,
-    stopPropagation: true,
-  }),
+  /**
+   * Callback for mouseup event
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onMouseUp() {}
 
-  target: computed('external', function() {
-    return this.get('external') ? '_blank' : null;
-  }).readOnly(),
+  /** @deprecated */
+  dataTestId = null;
 
-  rel: computed('external', function() {
-    return this.get('external') ? 'noopener noreferrer' : null;
-  }).readOnly(),
-});
+  @computed('external')
+  get target() {
+    return this.external ? '_blank' : null;
+  }
+
+  @computed('external')
+  get rel() {
+    return this.external ? 'noopener noreferrer' : null;
+  }
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisUnstyledLink] Passing 'dataTestId' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.dataTestId,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.dataTestId-arg',
+        until: '7.0.0',
+      }
+    );
+    deprecate(
+      `[PolarisUnstyledLink] Passing 'dataPolarisUnstyled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.dataPolarisUnstyled,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.dataPolarisUnstyled-arg',
+        until: '7.0.0',
+      }
+    );
+    deprecate(
+      `[PolarisUnstyledLink] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      !this.id,
+      {
+        id: 'ember-polaris.polaris-unstyled-link.id-arg',
+        until: '7.0.0',
+      }
+    );
+  }
+
+  @action
+  handleClick(event) {
+    event.stopPropagation();
+    this.onClick();
+  }
+}

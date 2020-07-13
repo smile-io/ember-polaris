@@ -1,14 +1,15 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed, setProperties } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { classify } from '@ember/string';
 import { throttle, scheduleOnce } from '@ember/runloop';
 import { isNone, isPresent } from '@ember/utils';
+import { guidFor } from '@ember/object/internals';
+import { layout, tagName } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
-import { guidFor } from '@ember/object/internals';
-import layout from '../templates/components/polaris-drop-zone';
-import State from '../-private/drop-zone-state';
+import template from '../templates/components/polaris-drop-zone';
+import DropZoneState from '../-private/drop-zone-state';
 import {
   fileAccepted,
   getDataTransferFiles,
@@ -16,22 +17,25 @@ import {
   mediumSizeWidthLimit,
   largeSizeWidthLimit,
 } from '../utils/drop-zone';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const iconDragDrop = 'drag-drop';
 const iconAlertCircle = 'alert-circle';
 
-export default Component.extend(ContextBoundEventListenersMixin, {
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisDropZone extends Component.extend(
+  ContextBoundEventListenersMixin
+) {
   /**
    * ID for file input
    *
    * @type {String}
    * @default null
    * @public
-   * @property id
    */
-  id: null,
+  id = null;
 
   /**
    * Label for the file input
@@ -39,9 +43,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
-   * @property label
    */
-  label: null,
+  label = null;
 
   /**
    * Adds an action to the label
@@ -49,9 +52,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Object}
    * @default null
    * @public
-   * @property labelAction
    */
-  labelAction: null,
+  labelAction = null;
 
   /**
    * Visually hide the label
@@ -59,9 +61,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property labelHidden
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Allowed file types
@@ -69,9 +70,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
-   * @property accept
    */
-  accept: null,
+  accept = null;
 
   /**
    *  Sets an active state
@@ -79,9 +79,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property active
    */
-  active: false,
+  active = false;
 
   /**
    * Allows multiple files to be uploaded
@@ -89,9 +88,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
-   * @property allowMultiple
    */
-  allowMultiple: true,
+  allowMultiple = true;
 
   /**
    * Sets a disabled state
@@ -99,9 +97,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property disabled
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Allows a file to be dropped anywhere on the page
@@ -109,9 +106,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property dropOnPage
    */
-  dropOnPage: false,
+  dropOnPage = false;
 
   /**
    * Sets an error state
@@ -119,9 +115,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property error
    */
-  error: false,
+  error = false;
 
   /**
    * Text that appears in the overlay when set in error state
@@ -129,9 +124,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
-   * @property errorOverlayText
    */
-  errorOverlayText: null,
+  errorOverlayText = null;
 
   /**
    * Sets the default file dialog state
@@ -139,9 +133,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default false
    * @public
-   * @property openFileDialog
    */
-  openFileDialog: false,
+  openFileDialog = false;
 
   /**
    *  Displays an outline border
@@ -149,9 +142,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
-   * @property outline
    */
-  outline: true,
+  outline = true;
 
   /**
    * Displays an overlay on hover
@@ -159,9 +151,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Boolean}
    * @default true
    * @public
-   * @property overlay
    */
-  overlay: true,
+  overlay = true;
 
   /**
    * Text that appears in the overlay
@@ -169,9 +160,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default null
    * @public
-   * @property overlayText
    */
-  overlayText: null,
+  overlayText = null;
 
   /**
    * Whether is a file or an image, `file` | `image`.
@@ -179,9 +169,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {String}
    * @default 'file'
    * @public
-   * @property type
    */
-  type: 'file',
+  type = 'file';
 
   /**
    * Adds custom validations
@@ -190,9 +179,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default null
    * @public
-   * @property customValidator
    */
-  customValidator: null,
+  customValidator = null;
 
   /**
    * Callback triggered on click
@@ -201,9 +189,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default null
    * @public
-   * @property onClick
    */
-  onClick: null,
+  onClick = null;
 
   /**
    * Callback triggered when one or more files entered the drag area
@@ -212,9 +199,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragEnter
    */
-  onDragEnter() {},
+  onDragEnter() {}
 
   /**
    * Callback triggered when one or more files left the drag area
@@ -223,9 +209,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragLeave
    */
-  onDragLeave() {},
+  onDragLeave() {}
 
   /**
    * Callback triggered when one or more files are dragging over the drag area
@@ -234,9 +219,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDragOver
    */
-  onDragOver() {},
+  onDragOver() {}
 
   /**
    * Callback triggered on any file drop
@@ -245,9 +229,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDrop
    */
-  onDrop() {},
+  onDrop() {}
 
   /**
    * Callback triggered when at least one of the files dropped was accepted
@@ -256,9 +239,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDropAccepted
    */
-  onDropAccepted() {},
+  onDropAccepted() {}
 
   /**
    * Callback triggered when at least one of the files dropped was rejected
@@ -267,9 +249,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onDropRejected
    */
-  onDropRejected() {},
+  onDropRejected() {}
 
   /**
    * Callback triggered when the file dialog is canceled
@@ -278,77 +259,72 @@ export default Component.extend(ContextBoundEventListenersMixin, {
    * @type {Function}
    * @default no-op
    * @public
-   * @property onFileDialogClose
    */
-  onFileDialogClose() {},
+  onFileDialogClose() {}
 
-  iconDragDrop,
+  iconDragDrop = iconDragDrop;
+  iconAlertCircle = iconAlertCircle;
+  dragTargets = [];
 
-  iconAlertCircle,
+  @computed()
+  get state() {
+    return new DropZoneState();
+  }
 
-  isDragging: or('active', 'state.dragging').readOnly(),
+  @or('active', 'state.dragging')
+  isDragging;
 
-  state: computed(function() {
-    return State.create();
-  }).readOnly(),
+  @computed('outline', 'isDragging', 'state.error', 'sizeClass', 'class')
+  get dropZoneClasses() {
+    let {
+      outline,
+      isDragging,
+      state: { error },
+      sizeClass,
+    } = this;
 
-  dropZoneClasses: computed(
-    'outline',
-    'isDragging',
-    'state.error',
-    'sizeClass',
-    function() {
-      let { outline, isDragging, state, sizeClass } = this.getProperties(
-        'outline',
-        'isDragging',
-        'state',
-        'sizeClass'
-      );
+    let cssClasses = ['Polaris-DropZone', sizeClass];
 
-      let classNames = ['Polaris-DropZone', sizeClass];
-      let error = state.get('error');
-
-      if (outline) {
-        classNames.push('Polaris-DropZone--hasOutline');
-      }
-
-      if (isDragging) {
-        classNames.push('Polaris-DropZone--isDragging');
-      }
-
-      if (error) {
-        classNames.push('Polaris-DropZone--hasError');
-      }
-
-      return classNames.join(' ');
+    if (outline) {
+      cssClasses.push('Polaris-DropZone--hasOutline');
     }
-  ),
 
-  fileInputNode: computed('element', 'state.id', function() {
-    return this.element.querySelector(
-      `input[id='${this.get('state.id')}-input']`
-    );
-  }).readOnly(),
+    if (isDragging) {
+      cssClasses.push('Polaris-DropZone--isDragging');
+    }
 
-  ariaDisabled: computed('disabled', function() {
-    return isPresent(this.get('disabled')) ? 'true' : null;
-  }).readOnly(),
+    if (error) {
+      cssClasses.push('Polaris-DropZone--hasError');
+    }
 
-  sizeClass: computed('state.size', function() {
-    let size = this.get('state.size');
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
+
+  @computed('state.size')
+  get sizeClass() {
+    let { size } = this.state;
     return `Polaris-DropZone--size${classify(size)}`;
-  }).readOnly(),
+  }
 
-  showDragOverlay: computed('isDragging', 'state.error', 'overlay', function() {
-    let error = this.get('state.error');
-    let { isDragging, overlay } = this.getProperties('isDragging', 'overlay');
+  @computed('isDragging', 'state.error', 'overlay')
+  get showDragOverlay() {
+    let {
+      isDragging,
+      overlay,
+      state: { error },
+    } = this;
 
     return isDragging && !error && overlay;
-  }).readOnly(),
+  }
 
   /**
    * Event handlers
    */
+  @action
   handleDrop(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -360,15 +336,8 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       onDropRejected,
       allowMultiple,
       state,
-    } = this.getProperties(
-      'disabled',
-      'onDrop',
-      'onDropAccepted',
-      'onDropRejected',
-      'allowMultiple',
-      'state'
-    );
-    let numFiles = state.get('numFiles');
+    } = this;
+    let { numFiles } = state;
 
     if (disabled || (!allowMultiple && numFiles > 0)) {
       return;
@@ -378,12 +347,12 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       fileList
     );
 
-    this.dragTargets = [];
+    this.set('dragTargets', []);
 
-    state.setProperties({
+    setProperties(state, {
       dragging: false,
       error: rejectedFiles.length > 0,
-      numFiles: state.get('numFiles') + acceptedFiles.length,
+      numFiles: state.numFiles + acceptedFiles.length,
     });
 
     onDrop(files, acceptedFiles, rejectedFiles);
@@ -397,20 +366,15 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     }
 
     event.target.value = '';
-  },
+  }
 
   handleDragEnter(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragEnter, allowMultiple, state } = this.getProperties(
-      'disabled',
-      'onDragEnter',
-      'allowMultiple',
-      'state'
-    );
+    let { disabled, onDragEnter, allowMultiple, state } = this;
 
-    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
+    if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
     }
 
@@ -419,83 +383,70 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       this.dragTargets.push(event.target);
     }
 
-    if (state.get('dragging')) {
+    if (state.dragging) {
       return false;
     }
 
     let { rejectedFiles } = this.getValidatedFiles(fileList);
-
-    state.setProperties({
+    setProperties(state, {
       dragging: true,
       error: rejectedFiles.length > 0,
     });
 
     onDragEnter();
-  },
+  }
 
   handleDragOver(event) {
     event.preventDefault();
     event.stopPropagation();
 
-    let { disabled, onDragOver, allowMultiple, state } = this.getProperties(
-      'disabled',
-      'onDragOver',
-      'allowMultiple',
-      'state'
-    );
+    let { disabled, onDragOver, allowMultiple, state } = this;
 
-    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
+    if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
     }
 
     onDragOver();
 
     return false;
-  },
+  }
 
   handleDragLeave(event) {
     event.preventDefault();
 
-    let {
-      disabled,
-      onDragLeave,
-      allowMultiple,
-      dropNode,
-      state,
-    } = this.getProperties(
-      'disabled',
-      'onDragLeave',
-      'allowMultiple',
-      'dropNode',
-      'state'
-    );
+    let { disabled, onDragLeave, allowMultiple, dropNode, state } = this;
 
-    if (disabled || (!allowMultiple && state.get('numFiles') > 0)) {
+    if (disabled || (!allowMultiple && state.numFiles > 0)) {
       return;
     }
 
-    this.dragTargets = this.dragTargets.filter((el) => {
-      return el !== event.target && dropNode && dropNode.contains(el);
-    });
+    this.set(
+      'dragTargets',
+      this.dragTargets.filter((el) => {
+        return el !== event.target && dropNode && dropNode.contains(el);
+      })
+    );
 
     if (this.dragTargets.length > 0) {
       return;
     }
 
-    state.setProperties({
+    setProperties(state, {
       dragging: false,
       error: false,
     });
 
     onDragLeave();
-  },
+  }
 
   adjustSize() {
     throttle(
       this,
       function() {
-        let node = this.get('node');
-        let size = this.get('state.size');
+        let {
+          node,
+          state: { size },
+        } = this;
         let width = getRectForNode(node).width;
 
         if (width < smallSizeWidthLimit) {
@@ -510,15 +461,10 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       },
       50
     );
-  },
+  }
 
   getValidatedFiles(files) {
-    let { accept, allowMultiple, customValidator } = this.getProperties(
-      'accept',
-      'allowMultiple',
-      'customValidator'
-    );
-
+    let { accept, allowMultiple, customValidator } = this;
     let acceptedFiles = [];
     let rejectedFiles = [];
 
@@ -545,10 +491,93 @@ export default Component.extend(ContextBoundEventListenersMixin, {
       acceptedFiles,
       rejectedFiles,
     };
-  },
+  }
 
+  getDerivedStateFromProps() {
+    let { id, error, type, overlayText, errorOverlayText } = this.state;
+
+    let newId = this.id || guidFor(this);
+    if (id !== null && id !== newId) {
+      this.set('state.id', newId);
+    }
+
+    if (error !== this.error) {
+      this.set('state.error', this.error);
+    }
+
+    let newType = this.type;
+    if (isPresent(newType) && newType !== type) {
+      this.set('state.type', newType);
+    }
+
+    let newOverlayText = this.overlayText;
+    if (isPresent(newOverlayText) && newOverlayText !== overlayText) {
+      this.set('state.overlayText', newOverlayText);
+    }
+
+    let newErrorOverlayText = this.errorOverlayText;
+    if (
+      isPresent(newErrorOverlayText) &&
+      newErrorOverlayText !== errorOverlayText
+    ) {
+      this.set('state.errorOverlayText', newErrorOverlayText);
+    }
+  }
+
+  open() {
+    let { fileInputNode } = this;
+    if (isNone(fileInputNode)) {
+      return;
+    }
+
+    fileInputNode.click();
+  }
+
+  /**
+   * Component life-cycle hooks
+   */
+  didReceiveAttrs() {
+    super.didReceiveAttrs(...arguments);
+    this.getDerivedStateFromProps();
+  }
+
+  /**
+   * NOTE: if the component is rendered with `openFileDialog = true`, this will
+   * not work as expected: the file chooser is not opened because of how the HTML
+   * input element works. This should be a user activation.
+   *
+   * Following warning will be logged
+   * `File chooser dialog can only be shown with a user activation.`
+   */
+  @action
+  triggerFileDialog() {
+    if (!this.openFileDialog) {
+      return;
+    }
+
+    this.open();
+
+    let close = this.onFileDialogClose;
+    if (close) {
+      scheduleOnce('afterRender', close);
+    }
+  }
+
+  @action
+  setNode(dropzoneContainer) {
+    let { dropOnPage } = this;
+
+    this.setProperties({
+      node: dropzoneContainer,
+      dropNode: dropOnPage ? document : dropzoneContainer,
+    });
+
+    this.adjustSize();
+  }
+
+  @action
   setupEvents() {
-    let dropNode = this.get('dropNode');
+    let { dropNode } = this;
     if (isNone(dropNode)) {
       return;
     }
@@ -559,125 +588,27 @@ export default Component.extend(ContextBoundEventListenersMixin, {
     this.addEventListener(dropNode, 'dragleave', this.handleDragLeave);
 
     this.addEventListener(window, 'resize', this.adjustSize);
-  },
+  }
 
-  setNode() {
-    let dropOnPage = this.get('dropOnPage');
-    let dropzoneContainer = this.element.querySelector('.Polaris-DropZone');
+  @action
+  handleClick(event) {
+    let {
+      onClick,
+      disabled,
+      allowMultiple,
+      state: { numFiles },
+    } = this;
 
-    this.setProperties({
-      node: dropzoneContainer,
-      dropNode: dropOnPage ? document : dropzoneContainer,
-    });
-
-    this.adjustSize();
-  },
-
-  getDerivedStateFromProps() {
-    let { id, error, type, overlayText, errorOverlayText } = this.get(
-      'state'
-    ).getProperties('id', 'error', 'type', 'overlayText', 'errorOverlayText');
-
-    let newId = this.get('id') || guidFor(this);
-    if (id !== null && id !== newId) {
-      this.set('state.id', newId);
-    }
-
-    if (error !== this.get('error')) {
-      this.set('state.error', this.get('error'));
-    }
-
-    let newType = this.get('type');
-    if (isPresent(newType) && newType !== type) {
-      this.set('state.type', newType);
-    }
-
-    let newOverlayText = this.get('overlayText');
-    if (isPresent(newOverlayText) && newOverlayText !== overlayText) {
-      this.set('state.overlayText', newOverlayText);
-    }
-
-    let newErrorOverlayText = this.get('errorOverlayText');
-    if (
-      isPresent(newErrorOverlayText) &&
-      newErrorOverlayText !== errorOverlayText
-    ) {
-      this.set('state.errorOverlayText', newErrorOverlayText);
-    }
-  },
-
-  open() {
-    let fileInputNode = this.get('fileInputNode');
-
-    if (isNone(fileInputNode)) {
+    if (disabled || (!allowMultiple && numFiles > 0)) {
       return;
     }
 
-    fileInputNode.click();
-  },
+    return onClick ? onClick(event) : this.open();
+  }
 
-  triggerFileDialog() {
-    this.open();
-
-    let close = this.get('onFileDialogClose');
-
-    if (close) {
-      scheduleOnce('afterRender', close);
-    }
-  },
-
-  /**
-   * Component life-cycle hooks
-   */
-  init() {
-    this._super(...arguments);
-    this.dragTargets = [];
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.getDerivedStateFromProps();
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    this.setNode();
-    this.set('state.error', this.get('error'));
-    this.setupEvents();
-
-    if (this.get('openFileDialog')) {
-      this.triggerFileDialog();
-    }
-  },
-
-  didUpdateAttrs() {
-    this._super(...arguments);
-
-    if (this.get('openFileDialog')) {
-      this.triggerFileDialog();
-    }
-  },
-
-  actions: {
-    handleClick(event) {
-      let { onClick, disabled, allowMultiple } = this.getProperties(
-        'onClick',
-        'disabled',
-        'allowMultiple'
-      );
-      let numFiles = this.get('state.numFiles');
-
-      if (disabled || (!allowMultiple && numFiles > 0)) {
-        return;
-      }
-
-      return onClick ? onClick(event) : this.open();
-    },
-
-    handleDragStart(event) {
-      event.preventDefault();
-      event.stopPropagation();
-    },
-  },
-});
+  @action
+  handleDragStart(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}

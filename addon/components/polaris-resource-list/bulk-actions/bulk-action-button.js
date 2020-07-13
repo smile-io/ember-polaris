@@ -1,12 +1,11 @@
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../../templates/components/polaris-resource-list/bulk-actions/bulk-action-button';
 import { handleMouseUpByBlurring } from '../../../utils/focus';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisResourceListBulkActionsBulkActionButton extends Component {
   /**
    * Content the action displays
    *
@@ -14,7 +13,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  content: null,
+  content = null;
 
   /**
    * Visually hidden text for screen readers
@@ -23,7 +22,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * A destination to link to, rendered in the action
@@ -32,7 +31,7 @@ export default Component.extend({
    * @default null
    * @public
    */
-  url: null,
+  url = null;
 
   /**
    * Forces url to open in a new tab
@@ -41,7 +40,7 @@ export default Component.extend({
    * @default false
    * @public
    */
-  external: false,
+  external = false;
 
   /**
    * Should the action be disabled
@@ -50,21 +49,21 @@ export default Component.extend({
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * @type {Boolean}
    * @default false
    * @public
    */
-  disclosure: false,
+  disclosure = false;
 
   /**
    * @type {Function}
    * @default noop
    * @public
    */
-  handleMeasurement() {},
+  handleMeasurement() {}
 
   /**
    * Callback when an action takes place
@@ -73,7 +72,7 @@ export default Component.extend({
    * @default noop
    * @public
    */
-  onAction() {},
+  onAction() {}
 
-  handleMouseUpByBlurring,
-});
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
+}

@@ -1,120 +1,110 @@
-{{#with (component "polaris-page/header/rollup"
-    hasRollup=hasRollup
-    secondaryActions=secondaryActions
-    actionGroupSections=actionGroupsAsActionListSections
-  )
-  as |rollupComponent|
-}}
-  {{#if hasNavigation}}
-    <div class="Polaris-Page-Header__Navigation">
-      {{#if breadcrumbs}}
-        {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
-
-        {{component rollupComponent}}
-      {{/if}}
-    </div>
-  {{/if}}
-
-  {{!-- Add a "main content" div if we have a primary action. --}}
-  {{#wrapper-element
-    tagName=(if primaryAction "div" "")
-    class=(if primaryAction "Polaris-Page-Header__MainContent")
-  }}
-    {{!--
-      Create a reusable button component for the primary action if we have one,
-      otherwise create a "no-op" empty component to use in its place.
-      Note that we do not pass the `onClick` action in here because it causes
-      the template to blow up if no primary action is supplied.
-    --}}
-    {{! template-lint-disable attribute-indentation }}
-    {{!-- TODO remove rule above once linter handles this correctly --}}
-    {{#with
-      (if primaryAction
-        (component "polaris-button"
-          primary=shouldRenderPrimaryActionAsPrimary
-          text=primaryAction.text
-          disabled=primaryAction.disabled
-          loading=primaryAction.loading
-          destructive=primaryAction.destructive
-        )
-        (component "wrapper-element" tagName="")
+<div class={{this.cssClasses}} ...attributes>
+  {{#let
+    (component
+      "polaris-page/header/rollup"
+      hasRollup=this.hasRollup
+      secondaryActions=@secondaryActions
+      actionGroupSections=this.actionGroupsAsActionListSections
+    )
+    (element (if @primaryAction "div" ""))
+    (element (if @primaryAction "div" ""))
+    (if @primaryAction
+      (component
+        "polaris-button"
+        primary=this.shouldRenderPrimaryActionAsPrimary
+        text=@primaryAction.text
+        disabled=@primaryAction.disabled
+        loading=@primaryAction.loading
+        destructive=@primaryAction.destructive
       )
-      as |primaryActionButton|
-    }}
-      {{!-- Add a "title and actions" wrapper div if we have a primary action. --}}
-      {{#wrapper-element
-        tagName=(if primaryAction "div" "")
-        class=(if primaryAction "Polaris-Page-Header__TitleAndActions")
-      }}
+      (component "wrapper-element" tagName="")
+    )
+    as |Rollup MainContent TitleAndActions PrimaryActionButton|
+  }}
+    {{#if this.hasNavigation}}
+      <div class="Polaris-Page-Header__Navigation">
+        {{#if @breadcrumbs}}
+          <PolarisBreadcrumbs @breadcrumbs={{@breadcrumbs}} />
+          <Rollup />
+        {{/if}}
+      </div>
+    {{/if}}
+
+    {{! Add a "main content" div if we have a primary action. }}
+    <MainContent class="Polaris-Page-Header__MainContent">
+      {{! Add a "title and actions" wrapper div if we have a primary action. }}
+      <TitleAndActions class="Polaris-Page-Header__TitleAndActions">
         <div class="Polaris-Page-Header__TitleAndRollup">
           <div class="Polaris-Page-Header__Title">
             <div>
-              {{#polaris-display-text tagName="h1" size="large"}}
-                {{title}}
-              {{/polaris-display-text}}
+              <PolarisDisplayText
+                @htmlTag="h1"
+                @size="large"
+                @text={{@title}}
+              />
             </div>
 
             <div>
-              {{#if titleMetadata}}
-                {{render-content titleMetadata}}
+              {{#if @titleMetadata}}
+                {{render-content @titleMetadata}}
               {{/if}}
             </div>
           </div>
 
-          {{#unless hasBreadcrumbs}}
-            {{component rollupComponent}}
+          {{#unless this.hasBreadcrumbs}}
+            <Rollup />
           {{/unless}}
         </div>
 
-        {{#if (or primaryAction hasSecondaryActions hasActionGroups)}}
+        {{#if (or @primaryAction this.hasSecondaryActions this.hasActionGroups)}}
           <div class="Polaris-Page-Header__Actions">
-            {{#if (or hasSecondaryActions hasActionGroups)}}
+            {{#if (or this.hasSecondaryActions this.hasActionGroups)}}
               <div class="Polaris-Page-Header__SecondaryActions">
                 <div class="Polaris-Page-Header__IndividualActions">
-                  {{#each secondaryActions as |secondaryAction|}}
+                  {{#each @secondaryActions as |secondaryAction|}}
                     <div class="Polaris-Page-Header__IndividualAction">
-                      {{polaris-page/action
-                        text=secondaryAction.text
-                        disclosure=secondaryAction.disclosure
-                        url=secondaryAction.url
-                        external=secondaryAction.external
-                        icon=secondaryAction.icon
-                        accessibilityLabel=secondaryAction.accessibilityLabel
-                        disabled=secondaryAction.disabled
-                        onAction=(action secondaryAction.onAction)
-                      }}
+                      <PolarisPage::Action
+                        @text={{secondaryAction.text}}
+                        @disclosure={{secondaryAction.disclosure}}
+                        @url={{secondaryAction.url}}
+                        @external={{secondaryAction.external}}
+                        @icon={{secondaryAction.icon}}
+                        @accessibilityLabel={{secondaryAction.accessibilityLabel}}
+                        @disabled={{secondaryAction.disabled}}
+                        @onAction={{action secondaryAction.onAction}}
+                      />
                     </div>
                   {{/each}}
 
-                  {{#each actionGroups as |actionGroup|}}
+                  {{#each @actionGroups as |actionGroup|}}
                     <div class="Polaris-Page-Header__IndividualAction">
-                      {{polaris-page/header/action-group
-                        title=actionGroup.title
-                        icon=actionGroup.icon
-                        groupActions=actionGroup.actions
-                        details=actionGroup.details
-                      }}
+                      <PolarisPage::Header::ActionGroup
+                        @title={{actionGroup.title}}
+                        @icon={{actionGroup.icon}}
+                        @groupActions={{actionGroup.actions}}
+                        @details={{actionGroup.details}}
+                      />
                     </div>
                   {{/each}}
                 </div>
               </div>
             {{/if}}
 
-            {{#if primaryAction}}
+            {{#if @primaryAction}}
               <div class="Polaris-Page-Header__PrimaryAction">
-                {{component primaryActionButton onClick=(action primaryAction.onAction)}}
+                <PrimaryActionButton @onClick={{action @primaryAction.onAction}} />
               </div>
             {{/if}}
           </div>
         {{/if}}
-      {{/wrapper-element}}
+      </TitleAndActions>
 
-      {{#if primaryAction}}
-        {{!-- Primary action gets rendered twice, with one getting hidden based on media queries. --}}
+      {{#if @primaryAction}}
+        {{! Primary action gets rendered twice, with one getting hidden based on media queries. }}
         <div class="Polaris-Page-Header__PrimaryAction">
-          {{component primaryActionButton onClick=(action primaryAction.onAction)}}
+          <PrimaryActionButton @onClick={{action @primaryAction.onAction}} />
         </div>
       {{/if}}
-    {{/with}}
-  {{/wrapper-element}}
-{{/with}}
+    </MainContent>
+  {{/let}}
+</div>

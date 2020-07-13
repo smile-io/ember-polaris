@@ -1,90 +1,77 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-page/header';
 import { computed } from '@ember/object';
-import { gt, or } from '@ember/object/computed';
+import { or, gt } from '@ember/object/computed';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-page/header';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-Page-Header'],
-  classNameBindings: [
-    'titleHidden:Polaris-Page-Header__Title--hidden',
-    'hasBreadcrumbs:Polaris-Page-Header__Header--hasBreadcrumbs',
-    'hasRollup:Polaris-Page-Header__Header--hasRollup',
-    'separator:Polaris-Page-Header__Header--hasSeparator',
-    'hasSecondaryActions:Polaris-Page-Header__Header--hasSecondaryActions',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisPageHeader extends Component {
   /**
    * Page title, in large type
    *
-   * @property title
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Important and non-interactive status information shown immediately after the title
    *
-   * @property titleMetadata
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
-  titleMetadata: null,
+  titleMetadata = null;
 
   /**
    * Visually hide the title (stand-alone app use only)
    *
-   * @property titleHidden
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  titleHidden: false,
+  titleHidden = false;
 
   /**
    * Application icon for identifying embedded applications
    *
-   * @property icon
-   * @public
    * @type {String}
    * @default null
+   * @public
    * TODO: not implemented yet
    */
-  icon: null,
+  icon = null;
 
   /**
    * Collection of breadcrumbs
    *
-   * @property breadcrumbs
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  breadcrumbs: null,
+  breadcrumbs = null;
 
   /**
    * Adds a border to the bottom of the page header (stand-alone app use only)
    *
-   * @property separator
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  separator: false,
+  separator = false;
 
   /**
    * Collection of secondary page-level actions
    *
-   * @property secondaryActions
-   * @public
    * @type {Array}
    * @default null
+   * @public
    */
-  secondaryActions: null,
+  secondaryActions = null;
 
   /**
    * Collection of page-level groups of secondary actions
@@ -97,70 +84,108 @@ export default Component.extend({
    * @property {String|Component|Object} details Action details
    * @property {Function} onActionAnyItem Callback when any action takes place
    *
-   * @property actionGroups
-   * @public
    * @type {Object[]}
    * @default null
+   * @public
    */
-  actionGroups: null,
+  actionGroups = null;
 
   /**
    * Primary page-level action
    *
-   * @property primaryAction
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
-  primaryAction: null,
+  primaryAction = null;
 
   /**
    * Page-level pagination (stand-alone app use only)
    *
-   * @property pagination
-   * @public
    * @type {Object}
    * @default null
+   * @public
    * TODO: not implemented yet
    */
-  pagination: null,
+  pagination = null;
 
-  /**
-   * Computed properties.
-   */
-  hasBreadcrumbs: gt('breadcrumbs.length', 0).readOnly(),
-  hasNavigation: or('hasBreadcrumbs', 'pagination').readOnly(),
-  hasActions: or('primaryAction', 'secondaryActions').readOnly(),
-  hasSecondaryActions: gt('secondaryActions.length', 0).readOnly(),
-  hasActionGroups: gt('actionGroups.length', 0).readOnly(),
+  @gt('breadcrumbs.length', 0)
+  hasBreadcrumbs;
 
-  shouldRenderPrimaryActionAsPrimary: computed(
-    'primaryAction.primary',
-    function() {
-      let primaryAction = this.get('primaryAction');
+  @or('hasBreadcrumbs', 'pagination')
+  hasNavigation;
 
-      return (
-        primaryAction &&
-        (primaryAction.primary === undefined ? true : primaryAction.primary)
-      );
-    }
-  ).readOnly(),
+  @or('primaryAction', 'secondaryActions')
+  hasActions;
 
-  hasRollup: computed(
-    'secondaryActions.length',
-    'actionGroups.length',
-    function() {
-      let secondaryActions = this.get('secondaryActions') || [];
-      let actionGroups = this.get('actionGroups') || [];
+  @gt('secondaryActions.length', 0)
+  hasSecondaryActions;
 
-      return secondaryActions.length + actionGroups.length >= 1;
-    }
-  ).readOnly(),
+  @gt('actionGroups.length', 0)
+  hasActionGroups;
 
-  actionGroupsAsActionListSections: computed('actionGroups.[]', function() {
-    let actionGroups = this.get('actionGroups') || [];
+  @computed('primaryAction.primary')
+  get shouldRenderPrimaryActionAsPrimary() {
+    let { primaryAction } = this;
+
+    return (
+      primaryAction &&
+      (primaryAction.primary === undefined ? true : primaryAction.primary)
+    );
+  }
+
+  @computed('secondaryActions.length', 'actionGroups.length')
+  get hasRollup() {
+    let secondaryActions = this.secondaryActions || [];
+    let actionGroups = this.actionGroups || [];
+
+    return secondaryActions.length + actionGroups.length >= 1;
+  }
+
+  @computed('actionGroups.[]')
+  get actionGroupsAsActionListSections() {
+    let actionGroups = this.actionGroups || [];
+
     return actionGroups.map(({ title, actions }) => {
       return { title, items: actions };
     });
-  }).readOnly(),
-});
+  }
+
+  @computed(
+    'titleHidden',
+    'separator',
+    'hasBreadcrumbs',
+    'hasSecondaryActions',
+    'hasRollup',
+    'class'
+  )
+  get cssClasses() {
+    let cssClasses = ['Polaris-Page-Header'];
+
+    if (this.titleHidden) {
+      cssClasses.push('Polaris-Page-Header__Title--hidden');
+    }
+
+    if (this.separator) {
+      cssClasses.push('Polaris-Page-Header__Header--hasSeparator');
+    }
+
+    if (this.hasBreadcrumbs) {
+      cssClasses.push('Polaris-Page-Header__Header--hasBreadcrumbs');
+    }
+
+    if (this.hasSecondaryActions) {
+      cssClasses.push('Polaris-Page-Header__Header--hasSecondaryActions');
+    }
+
+    if (this.hasRollup) {
+      cssClasses.push('Polaris-Page-Header__Header--hasRollup');
+    }
+
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
+}

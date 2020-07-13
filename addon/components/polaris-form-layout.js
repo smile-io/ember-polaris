@@ -1,6 +1,9 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-form-layout';
-import { wrapChildren } from '../utils/dom';
+import AutoWrapper from '../-private/auto-wrapper';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris form layout component.
@@ -8,39 +11,38 @@ import { wrapChildren } from '../utils/dom';
  *
  * @component polaris-form-layout
  */
-export default Component.extend({
-  classNames: ['Polaris-FormLayout'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisFormLayout extends Component {
   /**
    * The content to display inside the layout
    *
-   * @property text
-   * @type {string}
+   * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
-  'data-test-form-layout': true,
+  @action
+  setupAutoWrapper(formLayoutElement) {
+    this.autoWrapper = new AutoWrapper(
+      formLayoutElement,
+      'Polaris-FormLayout__Item',
+      {
+        'data-test-form-layout-item': '',
+      },
+      (elem) => {
+        return (
+          !elem.classList.contains('Polaris-FormLayout__Item') &&
+          elem.getAttribute('role') !== 'group'
+        );
+      }
+    );
+  }
 
-  didRender() {
-    this._super(...arguments);
-
-    // Wrap each child element that isn't already a group or an item.
-    let childrenToWrap = (elems) =>
-      [...elems].filter(
-        (el) =>
-          !el.classList.contains('Polaris-FormLayout__Item') &&
-          el.getAttribute('role') !== 'group'
-      );
-
-    let nodesToWrap = childrenToWrap(this.element.children);
-    var wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-FormLayout__Item');
-    wrapper.setAttribute('data-test-form-layout-item', true);
-    wrapChildren(nodesToWrap, wrapper);
-  },
-});
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
+  }
+}

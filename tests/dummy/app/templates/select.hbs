@@ -1,36 +1,29 @@
 {{!--
   Ember port of the React test at https://codesandbox.io/s/53q709kxo4
 --}}
-{{#polaris-page title="Select test"}}
-  {{#polaris-card sectioned=true}}
-    {{polaris-select
-      label="Select test"
-      labelAction=(hash
+<PolarisPage @title="Select test">
+  <PolarisCard @sectioned={{true}}>
+    <PolarisSelect
+      @label="Select test"
+      @labelAction={{hash
         text="Clear"
         onAction=(action (mut value) null)
-      )
-      options=(array
+      }}
+      @options={{array
         "Single string"
         (hash
           title="Group"
           options=(array
             "Group string"
-            (hash
-              value="Group object (disabled)"
-              label="Group object (disabled)"
-              disabled=true
-            )
+            (hash value="Group object (disabled)" label="Group object (disabled)" disabled=true)
           )
         )
-        (hash
-          value="Single object (enabled)"
-          label="Single object (enabled)"
-        )
-      )
-      value=(or value "")
-      placeholder="Select a value"
-      helpText=(if value (concat "Selected: " value))
-      onChange=(action (mut value))
-    }}
-  {{/polaris-card}}
-{{/polaris-page}}
+        (hash value="Single object (enabled)" label="Single object (enabled)")
+      }}
+      @value={{or value ""}}
+      @placeholder="Select a value"
+      @helpText={{if value (concat "Selected: " value)}}
+      @onChange={{action (mut value)}}
+    />
+  </PolarisCard>
+</PolarisPage>

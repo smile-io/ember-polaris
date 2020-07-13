@@ -1,90 +1,72 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/row';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  tagName: 'tr',
-  classNames: ['Polaris-DataTable__TableRow'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDataTableRow extends Component {
   /**
-   * @property row
    * @type {Array}
    * @public
    */
-  row: null,
+  row = null;
 
   /**
-   * @property index
    * @type {Number}
    * @public
    */
-  index: null,
+  index = null;
 
   /**
-   * @property totals
    * @type {Number[]}
    * @public
    */
-  totals: null,
+  totals = null;
 
   /**
-   * @property heights
    * @type {Number[]}
    * @public
    */
-  heights: null,
+  heights = null;
 
   /**
-   * @property footerContent
    * @type {String|Number|Component}
    * @public
    */
-  footerContent: null,
+  footerContent = null;
 
   /**
-   * @property contentTypes
    * @type {String[]}
    * @public
    */
-  contentTypes: null,
+  contentTypes = null;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
    */
-  truncate: false,
-
-  'data-test-data-table-row': true,
+  truncate = false;
 
   /**
-   * @property bodyCellHeights
    * @type {Number[]}
-   * @private
    */
-  bodyCellHeights: computed(
-    'totals.[]',
-    'heights.[]',
-    'footerContent',
-    function() {
-      let { totals, heights, footerContent } = this.getProperties(
-        'totals',
-        'heights',
-        'footerContent'
-      );
-      let bodyCellHeights = isPresent(totals)
-        ? heights.slice(2)
-        : heights.slice(1);
+  @(computed('totals.[]', 'heights.[]', 'footerContent').readOnly())
+  get bodyCellHeights() {
+    let { totals, heights, footerContent } = this;
 
-      if (footerContent) {
-        bodyCellHeights.pop();
-      }
+    let bodyCellHeights = isPresent(totals)
+      ? heights.slice(2)
+      : heights.slice(1);
 
-      return bodyCellHeights;
+    if (footerContent) {
+      bodyCellHeights.pop();
     }
-  ).readOnly(),
-});
+
+    return bodyCellHeights;
+  }
+}

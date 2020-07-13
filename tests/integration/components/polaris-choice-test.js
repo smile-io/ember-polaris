@@ -74,6 +74,11 @@ module('Integration | Component | polaris choice', function(hooks) {
     'svg'
   );
 
+  const labelComponentSelector = buildNestedSelector(
+    labelContentSelector,
+    'div.test-label-component'
+  );
+
   test('it renders the correct HTML when no error or helpText are provided', async function(assert) {
     await render(hbs`
       {{#polaris-choice inputId="test-choice" label="This is my label"}}
@@ -260,167 +265,65 @@ module('Integration | Component | polaris choice', function(hooks) {
     );
   });
 
-  test('it handles label components correctly when no description is present', async function(assert) {
-    this.setProperties({
-      label: null,
-      labelComponent: 'test-label',
-    });
+  test('it handles label correctly when no description is present', async function(assert) {
+    await render(hbs`
+      {{polaris-choice label="some label"}}
+    `);
+
+    assert.dom(labelContentSelector).exists('renders the label');
+    assert
+      .dom(labelContentSelector)
+      .hasText(
+        'some label',
+        'with label as plain string - renders the correct label content'
+      );
 
     await render(hbs`
       {{polaris-choice
-        label=label
-        labelComponent=labelComponent
+        label=(component "test-label" text="test label component from component")
       }}
     `);
 
-    let labelContent = assert.dom(labelContentSelector);
-    labelContent.exists('renders the label');
-
-    const labelComponentSelector = buildNestedSelector(
-      labelContentSelector,
-      'div.test-label-component'
-    );
-    let labelComponent = assert.dom(labelComponentSelector);
-
-    labelComponent.exists(
-      'with label component string - renders the label component'
-    );
-    labelContent.hasText(
-      'test label component',
-      'with label component string - renders the correct label content'
-    );
-
-    this.set('label', 'literal label');
-    labelContent.hasText(
-      'test label component',
-      'with label component string and label - renders the correct label content'
-    );
-
-    this.set('labelComponent', null);
-    labelContent.hasText(
-      'literal label',
-      'with label - renders the correct label content'
-    );
-
-    this.setProperties({
-      label: null,
-      useLabelComponent: true,
-    });
-    await render(hbs`
-      {{polaris-choice
-        label=label
-        labelComponent=(if useLabelComponent (
-          component "test-label" text="test label component from component closure"
-        ))
-      }}
-    `);
-
-    labelContent = assert.dom(labelContentSelector);
-    assert.ok(labelContent, 'renders the label');
-
-    labelComponent = assert.dom(labelComponentSelector);
-    assert.ok(
-      labelComponent,
-      'with label component closure - renders the label component'
-    );
-    labelContent.hasText(
-      'test label component from component closure',
-      'with label component closure - renders the correct label content'
-    );
-
-    this.set('label', 'literal label');
-    labelContent.hasText(
-      'test label component from component closure',
-      'with label component closure and label - renders the correct label content'
-    );
-
-    this.set('useLabelComponent', false);
-    labelContent.hasText(
-      'literal label',
-      'with label - renders the correct label content'
-    );
+    assert
+      .dom(labelComponentSelector)
+      .exists('with label as component - renders the label component');
+    assert
+      .dom(labelContentSelector)
+      .hasText(
+        'test label component from component',
+        'with label component - renders the correct label content'
+      );
   });
 
   test('it handles label components correctly when a description is supplied', async function(assert) {
-    this.setProperties({
-      label: null,
-      labelComponent: 'test-label',
-    });
-
     await render(hbs`
       {{polaris-choice
-        label=label
-        labelComponent=labelComponent
+        label="some label"
         description="testing label components"
       }}
     `);
 
-    let labelContent = assert.dom(labelContentSelector);
-    assert.ok(labelContent, 'renders the label');
+    assert
+      .dom(labelContentSelector)
+      .exists('with label as plain string - renders the label');
 
-    const labelComponentSelector = buildNestedSelector(
-      labelContentSelector,
-      'div.test-label-component'
-    );
-    let labelComponent = assert.dom(labelComponentSelector);
-    assert.ok(
-      labelComponent,
-      'with label component string - renders the label component'
-    );
-    labelContent.hasText(
-      'test label component',
-      'with label component string - renders the correct label content'
-    );
-
-    this.set('label', 'literal label');
-    labelContent.hasText(
-      'test label component',
-      'with label component string and label - renders the correct label content'
-    );
-
-    this.set('labelComponent', null);
-    labelContent.hasText(
-      'literal label',
-      'with label - renders the correct label content'
-    );
-
-    this.setProperties({
-      label: null,
-      useLabelComponent: true,
-    });
     await render(hbs`
       {{polaris-choice
-        label=label
-        labelComponent=(if useLabelComponent (
-          component "test-label" text="test label component from component closure"
-        ))
+        label=(component "test-label" text="test label component from component")
       }}
     `);
 
-    labelContent = assert.dom(labelContentSelector);
-    assert.ok(labelContent, 'renders the label');
+    assert.dom(labelContentSelector).exists('renders the label');
 
-    labelComponent = assert.dom(labelComponentSelector);
-    assert.ok(
-      labelComponent,
-      'with label component closure - renders the label component'
-    );
-    labelContent.hasText(
-      'test label component from component closure',
-      'with label component closure - renders the correct label content'
-    );
-
-    this.set('label', 'literal label');
-    labelContent.hasText(
-      'test label component from component closure',
-      'with label component closure and label - renders the correct label content'
-    );
-
-    this.set('useLabelComponent', false);
-    labelContent.hasText(
-      'literal label',
-      'with label - renders the correct label content'
-    );
+    assert
+      .dom(labelComponentSelector)
+      .exists('with label as component - renders the label component');
+    assert
+      .dom(labelContentSelector)
+      .hasText(
+        'test label component from component',
+        'with label as component - renders the correct label content'
+      );
   });
 
   test('it handles the disabled attribute correctly', async function(assert) {

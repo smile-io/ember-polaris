@@ -58,7 +58,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       onAction: () => this.set('actionFired', true),
     });
     await render(
-      hbs`{{polaris-labelled id="MyLabelled" label="Label" action=action}}`
+      hbs`{{polaris-labelled id="MyLabelled" label="Label" primaryAction=action}}`
     );
 
     const actionButtonSelector = 'button.Polaris-Button';
@@ -77,7 +77,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
       {{polaris-labelled
         id="MyThing"
         label="My thing"
-        action=(hash
+        primaryAction=(hash
           text="My action"
           onAction=(action (mut actionFired) true)
         )
@@ -85,5 +85,22 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     `);
 
     assert.dom('label div').doesNotExist();
+  });
+
+  test('supports passing a data-test attribute', async function(assert) {
+    await render(hbs`
+      {{polaris-labelled dataTestLabelled=dataTestLabelled}}
+    `);
+    // Deprecated
+    assert.dom('[data-test-labelled]').exists();
+
+    this.set('dataTestLabelled', 'testing');
+    // Deprecated
+    assert.dom('[data-test-labelled=testing]').exists();
+
+    await render(hbs`
+      <PolarisLabelled data-test="labelled-testing" />
+    `);
+    assert.dom('[data-test=labelled-testing]').exists();
   });
 });

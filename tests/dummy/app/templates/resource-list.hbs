@@ -1,38 +1,23 @@
-{{#polaris-page title="Resource list examples" singleColumn=true}}
-  {{#polaris-card sectioned=true}}
-    {{polaris-select
-      label="Example type"
-      placeholder="Select"
-      options=(array
-        (hash
-          label="Simple resource list"
-          value="simple"
-        )
-        (hash
-          label="Resource list with bulk actions"
-          value="bulk-actions"
-        )
-        (hash
-          label="Resource list with sorting"
-          value="sorting"
-        )
-        (hash
-          label="Resource list with filtering"
-          value="filtering"
-        )
-        (hash
-          label="Resource list with persistent item shortcut actions"
-          value="persist-actions"
-        )
-      )
-      value=(or exampleType "")
-      onChange=(action (mut exampleType))
-    }}
-  {{/polaris-card}}
+<PolarisPage @title="Resource list examples" @singleColumn={{true}}>
+  <PolarisCard @sectioned={{true}}>
+    <PolarisSelect
+      @label="Example type"
+      @placeholder="Select"
+      @options={{array
+        (hash label="Simple resource list" value="simple")
+        (hash label="Resource list with bulk actions" value="bulk-actions")
+        (hash label="Resource list with sorting" value="sorting")
+        (hash label="Resource list with filtering" value="filtering")
+        (hash label="Resource list with persistent item shortcut actions" value="persist-actions")
+      }}
+      @value={{or exampleType ""}}
+      @onChange={{action (mut exampleType)}}
+    />
+  </PolarisCard>
 
   {{#if exampleType}}
-    {{#polaris-card}}
+    <PolarisCard>
       {{component (concat "resource-list/" exampleType)}}
-    {{/polaris-card}}
+    </PolarisCard>
   {{/if}}
-{{/polaris-page}}
+</PolarisPage>

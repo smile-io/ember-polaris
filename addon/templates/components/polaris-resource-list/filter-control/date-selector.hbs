@@ -1,33 +1,33 @@
-{{polaris-select
-  dataTestSelect="date-selector"
-  label="Select a value"
-  labelHidden=true
-  placeholder="Select a filter..."
-  options=dateOptions
-  value=(or dateFilterOption "")
-  onChange=(action handleDateFilterOptionsChange)
-}}
+<PolarisSelect
+  @dataTestSelect="date-selector"
+  @label="Select a value"
+  @labelHidden={{true}}
+  @placeholder="Select a filter..."
+  @options={{this.dateOptions}}
+  @value={{or this.dateFilterOption ""}}
+  @onChange={{this.handleDateFilterOptionsChange}}
+/>
 
 {{#if showDatePredicate}}
   <div class="Polaris-FilterControl-DateSelector__DateTextField">
-    {{polaris-text-field
-      label="Date"
-      placeholder="YYYY-MM-DD"
-      autoComplete=false
-      prefix=(component "polaris-icon" source="calendar" color="skyDark")
-      value=dateTextFieldValue
-      error=userInputDateError
-      onChange=(action handleDateFieldChange)
-      onBlur=(action handleDateBlur)
-    }}
+    <PolarisTextField
+      @label="Date"
+      @placeholder="YYYY-MM-DD"
+      @autoComplete={{false}}
+      @prefix={{component "polaris-icon" source="calendar" color="skyDark"}}
+      @value={{this.dateTextFieldValue}}
+      @error={{this.userInputDateError}}
+      @onChange={{this.handleDateFieldChange}}
+      @onBlur={{this.handleDateBlur}}
+    />
   </div>
   <div class="Polaris-FilterControl-DateSelector__DatePicker">
-    {{polaris-date-picker
-      selected=selectedDate
-      month=datePickerMonth
-      year=datePickerYear
-      onChange=(action handleDatePickerChange)
-      onMonthChange=(action handleDatePickerMonthChange)
-    }}
+    <PolarisDatePicker
+      @selected={{this.selectedDate}}
+      @month={{this.datePickerMonth}}
+      @year={{this.datePickerYear}}
+      @onChange={{this.handleDatePickerChange}}
+      @onMonthChange={{this.handleDatePickerMonthChange}}
+    />
   </div>
 {{/if}}

@@ -1,79 +1,67 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-page';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-export default Component.extend({
-  attributeBindings: ['role', 'ariaLabel:aria-label'],
-
-  classNames: ['Polaris-SkeletonPage__Page'],
-
-  classNameBindings: [
-    'fullWidth:Polaris-SkeletonPage--fullWidth',
-    'singleColumn:Polaris-SkeletonPage--singleColumn',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSkeletonPage extends Component {
   /**
    * Page title, in large type
    *
-   * @property title
-   * @public
    * @type {String}
    * @default ''
+   * @public
    */
-  title: '',
+  title = '';
 
   /**
    * Remove the normal max-width on the page
    *
-   * @property fullwidth
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  fullwidth: false,
+  fullwidth = false;
 
   /**
    * Decreases the maximum layout width. Intended for single-column layouts
    *
-   * @property singleColumn
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  singleColumn: false,
+  singleColumn = false;
 
   /**
    * Shows a skeleton over the primary action
    *
-   * @property primaryAction
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  primaryAction: false,
+  primaryAction = false;
 
   /**
    * Number of secondary page-level actions to display
    *
-   * @property secondaryActions
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
-  secondaryActions: null,
+  secondaryActions = null;
 
   /**
    * Shows a skeleton over the breadcrumb
    *
-   * @property breadcrumbs
-   * @public
    * @type {Boolean}
    * @default null
+   * @public
    */
-  breadcrumbs: null,
+  breadcrumbs = null;
 
   /**
    * The contents of the page
@@ -82,66 +70,72 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  text: null,
-
-  'data-test-skeleton-page': true,
+  text = null;
 
   /**
    * The role of this component, for accessibility purposes
    *
-   * @property role
-   * @private
    * @type {String}
    */
-  role: 'status',
+  role = 'status';
 
   /**
    * The accessibility label of this component
    *
-   * @property ariaLabel
-   * @private
    * @type {String}
    */
-  ariaLabel: 'Page loading',
+  ariaLabel = 'Page loading';
 
   /**
    * Whether the page has an actual text title to display
    *
-   * @property hasTitleText
-   * @private
    * @type {Boolean}
    */
-  hasTitleText: notEmpty('title').readOnly(),
+  @notEmpty('title')
+  hasTitleText;
 
   /**
    * Whether the page should display any kind of title
    *
-   * @property hasTitle
-   * @private
    * @type {Boolean}
    */
-  hasTitle: computed('title', function() {
-    return this.get('title') !== null;
-  }).readOnly(),
+  @computed('title')
+  get hasTitle() {
+    return this.title !== null;
+  }
 
   /**
    * Array of dummy secondary actions to iterate over in template
    *
-   * @property dummySecondaryActions
-   * @private
    * @type {Array}
    */
-  dummySecondaryActions: computed('secondaryActions', function() {
-    let secondaryActions = parseInt(this.get('secondaryActions'));
+  @computed('secondaryActions')
+  get dummySecondaryActions() {
+    let secondaryActions = parseInt(this.secondaryActions);
     if (isNaN(secondaryActions)) {
       return null;
     }
 
     return new Array(Math.max(secondaryActions, 0));
-  }).readOnly(),
-});
+  }
+
+  @computed('fullWidth', 'singleColumn', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-SkeletonPage__Page'];
+    if (this.fullWidth) {
+      cssClasses.push('Polaris-SkeletonPage--fullWidth');
+    }
+    if (this.singleColumn) {
+      cssClasses.push('Polaris-SkeletonPage--singleColumn');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
+
+    return cssClasses.join(' ');
+  }
+}

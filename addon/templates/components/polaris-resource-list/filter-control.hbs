@@ -1,36 +1,36 @@
-{{#polaris-form-layout}}
-  {{polaris-text-field
-    labelHidden=true
-    connectedLeft=(if filters
-      (component
-        "polaris-resource-list/filter-control/filter-creator"
-        resourceName=context.resourceName
-        filters=filters
-        disabled=context.selectMode
-        onAddFilter=(action handleAddFilter)
+<PolarisFormLayout>
+  <PolarisTextField
+    @labelHidden={{true}}
+    @connectedLeft={{if @filters
+      (component "polaris-resource-list/filter-control/filter-creator"
+        resourceName=this.context.resourceName
+        filters=@filters
+        disabled=this.context.selectMode
+        onAddFilter=(fn this.handleAddFilter)
       )
-    )
-    connectedRight=additionalActionButton
-    label=textFieldLabel
-    placeholder=textFieldLabel
-    prefix=(component "polaris-icon" source="search" color="skyDark")
-    value=searchValue
-    focused=focused
-    disabled=context.selectMode
-    onChange=(action onSearchChange)
-    onBlur=(action onSearchBlur)
-  }}
-  {{#if appliedFilters}}
+    }}
+    @connectedRight={{this.additionalActionButton}}
+    @label={{this.textFieldLabel}}
+    @placeholder={{this.textFieldLabel}}
+    @prefix={{component "polaris-icon" source="search" color="skyDark"}}
+    @value={{@searchValue}}
+    @focused={{@focused}}
+    @disabled={{this.context.selectMode}}
+    @onChange={{fn (or @onSearchChange this.onSearchChange)}}
+    @onBlur={{fn (or @onSearchBlur this.onSearchBlur)}}
+  />
+
+  {{#if @appliedFilters}}
     <ul class="Polaris-ResourceList-FilterControl__AppliedFilters">
-      {{#each appliedFiltersForRender as |appliedFilterForRender|}}
+      {{#each this.appliedFiltersForRender as |appliedFilterForRender|}}
         <li class="Polaris-ResourceList-FilterControl__AppliedFilter">
-          {{polaris-tag
-            text=appliedFilterForRender.label
-            disabled=context.selectMode
-            onRemove=(action handleRemoveFilter appliedFilterForRender)
-          }}
+          <PolarisTag
+            @text={{appliedFilterForRender.label}}
+            @disabled={{this.context.selectMode}}
+            @onRemove={{fn this.handleRemoveFilter appliedFilterForRender}}
+          />
         </li>
       {{/each}}
     </ul>
   {{/if}}
-{{/polaris-form-layout}}
+</PolarisFormLayout>

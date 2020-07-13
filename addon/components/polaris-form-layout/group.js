@@ -1,101 +1,83 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-form-layout/group';
+import { action, computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
-import { computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../../templates/components/polaris-form-layout/group';
 import { idVariation, helpTextId } from '../../utils/id';
-import { wrapChildren, rejectNodesByClassName } from '../../utils/dom';
+import AutoWrapper from '../../-private/auto-wrapper';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  attributeBindings: [
-    'role',
-    'titleID:aria-labelledby',
-    'helpTextID:aria-describedby',
-  ],
-
-  classNameBindings: [
-    'condensed:Polaris-FormLayout--condensed:Polaris-FormLayout--grouped',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisFormLayoutGroup extends Component {
   /**
    * Elements to display inside group item
    *
-   * @property text
    * @type {string}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * Condensed field group
    *
-   * @property condensed
    * @type {boolean}
    * @default false
    * @public
    */
-  condensed: false,
+  condensed = false;
 
   /**
    * Form layout group title
    *
-   * @property title
    * @type {String}
    * @default null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Form layout help text
    *
-   * @property helpText
    * @type {String|Component}
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
-  /**
-   * @private
-   */
-  role: 'group',
-
-  'data-test-form-layout-group': true,
-
-  titleID: computed('elementId', 'title', function() {
-    if (isBlank(this.get('title'))) {
-      return;
+  @computed('elementId', 'title')
+  get titleID() {
+    if (isBlank(this.title)) {
+      return null;
     }
 
-    return idVariation(this.get('elementId'), 'Title');
-  }).readOnly(),
+    return idVariation(this.elementId, 'Title');
+  }
 
-  helpTextID: computed('elementId', 'helpText', function() {
-    if (isBlank(this.get('helpText'))) {
-      return;
+  @computed('elementId', 'helpText')
+  get helpTextID() {
+    if (isBlank(this.helpText)) {
+      return null;
     }
 
-    return helpTextId(this.get('elementId'));
-  }).readOnly(),
+    return helpTextId(this.elementId);
+  }
 
-  didRender() {
-    this._super(...arguments);
-
-    let itemsContainer = this.element.querySelector(
-      '.Polaris-FormLayout__Items'
+  @action
+  setupAutoWrapper(formLayouItemsElement) {
+    this.autoWrapper = new AutoWrapper(
+      formLayouItemsElement,
+      'Polaris-FormLayout__Item',
+      {
+        'data-test-form-layout-item': '',
+      }
     );
+  }
 
-    let nodesToWrap = rejectNodesByClassName(
-      itemsContainer.children,
-      'Polaris-FormLayout__Item'
-    );
-    let wrapper = document.createElement('div');
-
-    wrapper.classList.add('Polaris-FormLayout__Item');
-    wrapper.setAttribute('data-test-form-layout-item', true);
-    wrapChildren(nodesToWrap, wrapper);
-  },
-});
+  @action
+  teardownAutoWrapper() {
+    this.autoWrapper.teardown();
+  }
+}

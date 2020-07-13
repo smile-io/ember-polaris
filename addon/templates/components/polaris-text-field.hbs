@@ -1,121 +1,104 @@
-{{#polaris-labelled
-  dataTestLabelled=dataTestTextField
-  id=id
-  label=label
-  error=error
-  action=labelAction
-  labelHidden=labelHidden
-  helpText=helpText
-}}
-
-  {{#polaris-connected
-    left=connectedLeft
-    right=connectedRight
-  }}
+<PolarisLabelled
+  data-test-labelled={{this.dataTestTextField}}
+  @id={{this.id}}
+  @label={{@label}}
+  @error={{@error}}
+  @primaryAction={{@labelAction}}
+  @labelHidden={{labelHidden}}
+  @helpText={{@helpText}}
+  ...attributes
+>
+  <PolarisConnected @left={{@connectedLeft}} @right={{@connectedRight}}>
     {{! template-lint-disable no-invalid-interactive }}
     <div
       data-test-text-field-wrapper
-      class={{textFieldClasses}}
-      onfocus={{action "handleFocus"}}
-      onblur={{action "handleBlur"}}
-      onclick={{action "handleClick"}}
+      class={{this.textFieldClasses}}
+      {{on "focus" this.handleFocus}}
+      {{on "blur" this.handleBlur}}
+      {{on "click" this.handleClick}}
     >
-
-      {{#if prefix}}
-        <div data-test-text-field-prefix class="Polaris-TextField__Prefix" id="{{id}}Prefix">
-          {{render-content prefix}}
+      {{#if @prefix}}
+        <div data-test-text-field-prefix class="Polaris-TextField__Prefix" id="{{this.id}}Prefix">
+          {{render-content @prefix}}
         </div>
       {{/if}}
 
-      {{! template-lint-disable attribute-indentation }}
-      {{!-- TODO remove rule above once linter handles this correctly --}}
-      {{#with
-        (component "wrapper-element"
-          data-test-text-field-input=true
-          name=name
-          id=id
-          disabled=disabled
-          readonly=readOnly
-          role=role
-          autofocus=autoFocus
-          placeholder=placeholder
-          autocomplete=autoCompleteInputs
-          max=max
-          min=min
-          step=step
-          minlength=minLength
-          maxlength=maxLength
-          spellcheck=spellCheck
-          value=normalizedValue
-          class=inputClassName
-          aria-describedby=ariaDescribedBy
-          aria-label=label
-          aria-labelledby=ariaLabelledBy
-          aria-invalid=ariaInvalid
-          aria-owns=ariaOwns
-          aria-activedescendant=ariaActiveDescendant
-          aria-autocomplete=ariaAutocomplete
-          aria-controls=ariaControls
-          oninput=(action "handleChange")
-          onfocus=(action onFocus)
-          onblur=(action onBlur)
-          onkeypress=(action "handleKeyPress")
-        )
-        as |inputElement|
-      }}
-        {{#if multiline}}
-          {{component
-            inputElement
-            tagName="textarea"
-            aria-multiline=true
-            style=heightStyle
-          }}
-        {{else}}
-          {{component
-            inputElement
-            tagName="input"
-            type=inputType
-          }}
-        {{/if}}
-      {{/with}}
+      {{#let (element (if @multiline "textarea" "input")) as |Input|}}
+        <Input
+          data-test-text-field-input
+          type={{unless @multiline this.inputType}}
+          style={{if @multiline this.heightStyle}}
+          name={{@name}}
+          id={{this.id}}
+          disabled={{@disabled}}
+          readonly={{@readOnly}}
+          role={{@role}}
+          autofocus={{@autoFocus}}
+          placeholder={{@placeholder}}
+          autocomplete={{this.autoCompleteInputs}}
+          max={{@max}}
+          min={{@min}}
+          step={{@step}}
+          minlength={{@minLength}}
+          maxlength={{@maxLength}}
+          spellcheck={{@spellCheck}}
+          value={{this.normalizedValue}}
+          class={{this.inputClassName}}
+          aria-multiline={{if @multiline "true" "false"}}
+          aria-describedby={{this.ariaDescribedBy}}
+          aria-label={{@label}}
+          aria-labelledby={{this.ariaLabelledBy}}
+          aria-invalid={{if this.ariaInvalid "true" "false"}}
+          aria-owns={{@ariaOwns}}
+          aria-activedescendant={{@ariaActiveDescendant}}
+          aria-autocomplete={{@ariaAutocomplete}}
+          aria-controls={{@ariaControls}}
+          {{did-insert this.setInput}}
+          {{did-update this.handleFocusChange @focused}}
+          {{on "input" this.handleChange}}
+          {{on "focus" this.onFocus}}
+          {{on "blur" this.onBlur}}
+          {{on "keypress" this.handleKeyPress}}
+        />
+      {{/let}}
 
-      {{#if suffix}}
-        <div data-test-text-field-suffix class="Polaris-TextField__Suffix" id="{{id}}Suffix">
-          {{render-content suffix}}
+      {{#if @suffix}}
+        <div data-test-text-field-suffix class="Polaris-TextField__Suffix" id="{{this.id}}Suffix">
+          {{render-content @suffix}}
         </div>
       {{/if}}
 
-      {{#if showCharacterCount}}
+      {{#if @showCharacterCount}}
         <div
-          id={{concat id "CharacterCounter"}}
-          class={{characterCountClassName}}
-          aria-label={{characterCountLabel}}
+          id="{{this.id}}CharacterCounter"
+          class={{this.characterCountClassName}}
+          aria-label={{this.characterCountLabel}}
           aria-live="polite"
           aria-atomic="true"
           data-test-text-field-character-count
         >
-          {{characterCountText}}
+          {{this.characterCountText}}
         </div>
       {{/if}}
 
-      {{#if shouldShowSpinner}}
-        {{polaris-text-field/spinner
-          onChange=(action "handleNumberChange")
-          onMouseDown=(action handleButtonPress)
-          onMouseUp=(action handleButtonRelease)
-        }}
+      {{#if this.shouldShowSpinner}}
+        <PolarisTextField::Spinner
+          @onChange={{this.handleNumberChange}}
+          @onMouseDown={{this.handleButtonPress}}
+          @onMouseUp={{this.handleButtonRelease}}
+        />
       {{/if}}
 
       <div class="Polaris-TextField__Backdrop"></div>
 
-      {{#if multiline}}
-        {{polaris-text-field/resizer
-          contents=(or normalizedValue placeholder)
-          currentHeight=height
-          minimumLines=minimumLines
-          onHeightChange=(action "handleExpandingResize")
-        }}
+      {{#if @multiline}}
+        <PolarisTextField::Resizer
+          @contents={{or this.normalizedValue @placeholder}}
+          @currentHeight={{this.height}}
+          @minimumLines={{this.minimumLines}}
+          @onHeightChange={{this.handleExpandingResize}}
+        />
       {{/if}}
     </div>
-  {{/polaris-connected}}
-{{/polaris-labelled}}
+  </PolarisConnected>
+</PolarisLabelled>

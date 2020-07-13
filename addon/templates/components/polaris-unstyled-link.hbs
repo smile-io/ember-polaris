@@ -1,5 +1,26 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+{{!-- template-lint-disable no-positive-tabindex --}}
+<a
+  data-test-unstyled-link
+  data-polaris-unstyled="true"
+  data-test={{@dataTestId}}
+  class={{@class}}
+  id={{@id}}
+  ...attributes
+  href={{@url}}
+  download={{@download}}
+  tabindex={{@tabIndex}}
+  aria-label={{@ariaLabel}}
+  aria-describedby={{@ariaDescribedBy}}
+  target={{this.target}}
+  rel={{this.rel}}
+  {{on "click" this.handleClick}}
+  {{on "focus" this.onFocus}}
+  {{on "blur" this.onBlur}}
+  {{on "mouseup" this.onMouseUp}}
+>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</a>

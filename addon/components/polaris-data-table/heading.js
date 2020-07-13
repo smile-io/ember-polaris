@@ -1,107 +1,84 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/heading';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDataTableHeading extends Component {
   /**
-   * @property heading
    * @type {String}
    * @public
    */
-  heading: null,
+  heading = null;
 
   /**
-   * @property headingIndex
    * @type {Number}
    * @public
    */
-  headingIndex: null,
+  headingIndex = null;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
    */
-  truncate: false,
+  truncate = false;
 
   /**
-   * @property heights
    * @type {Number[]}
    * @public
    */
-  heights: null,
+  heights = null;
 
   /**
-   * @property sortable
    * @type {boolean[]}
    * @public
    */
-  sortable: null,
+  sortable = null;
 
   /**
-   * @property sortedColumnIndex
    * @type {Number}
    * @public
    */
-  sortedColumnIndex: null,
+  sortedColumnIndex = null;
 
   /**
-   * @property sortDirection
    * @type {String}
    * @public
    */
-  sortDirection: null,
+  sortDirection = null;
 
   /**
-   * @property contentTypes
    * @type {String[]}
    * @public
    */
-  contentTypes: null,
+  contentTypes = null;
 
   /**
-   * @property defaultSortDirection
    * @type {String}
    * @public
    */
-  defaultSortDirection: null,
+  defaultSortDirection = null;
 
   /**
-   * @property defaultOnSort
-   * @type {function}
+   * @type {Function}
    * @default no-op
    * @public
    */
-  defaultOnSort() {},
+  defaultOnSort() {}
 
-  /**
-   * @property isFixed
-   * @type {boolean}
-   * @private
-   */
-  isFixed: equal('headingIndex', 0).readOnly(),
+  @(equal('headingIndex', 0).readOnly())
+  isFixed;
 
-  /**
-   * @property height
-   * @type {Number}
-   * @private
-   */
-  height: computed('truncate', 'heights.[]', function() {
-    return !this.get('truncate') ? this.get('heights.firstObject') : undefined;
-  }).readOnly(),
+  @(computed('truncate', 'heights.[]').readOnly())
+  get height() {
+    return !this.truncate ? this.heights.firstObject : undefined;
+  }
 
-  /**
-   * @property direction
-   * @type {String}
-   * @private
-   */
-  direction: computed('isSorted', 'sortDirection', function() {
-    return this.get('isSorted') ? this.get('sortDirection') : 'none';
-  }).readOnly(),
-});
+  @(computed('isSorted', 'sortDirection').readOnly())
+  get direction() {
+    return this.isSorted ? this.sortDirection : 'none';
+  }
+}

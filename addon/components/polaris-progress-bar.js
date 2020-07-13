@@ -2,7 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify, htmlSafe } from '@ember/string';
 import { isPresent } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-progress-bar';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -13,51 +15,41 @@ const defaultSize = 'medium';
  *
  * @component polaris-progress-bar
  */
-export default Component.extend({
-  classNames: ['Polaris-ProgressBar'],
-  classNameBindings: ['sizeClass'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisProgressBar extends Component {
   /**
    * The progression of certain tasks
    *
    * @public
-   * @property progress
    * @type {Number}
-   * @default: 0
+   * @default 0
    */
-  progress: 0,
+  progress = 0;
 
   /**
    * Size of progressbar
    *
    * @public
-   * @property size
    * @type {String}
-   * @default: 'medium'
+   * @default 'medium'
    */
-  size: defaultSize,
+  size = defaultSize;
 
-  'data-test-progress-bar': true,
-
-  /**
-   * @private
-   */
-  sizeClass: computed('size', function() {
-    let size = this.get('size');
+  @(computed('size').readOnly())
+  get sizeClass() {
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
 
     return `Polaris-ProgressBar--size${classify(size)}`;
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  parsedProgress: computed('progress', function() {
-    let progress = this.get('progress');
+  @(computed('progress').readOnly())
+  get parsedProgress() {
+    let { progress } = this;
     let parsedProgress;
 
     if (typeof progress !== 'number') {
@@ -73,17 +65,15 @@ export default Component.extend({
     }
 
     return parsedProgress;
-  }).readOnly(),
+  }
 
-  /**
-   * @private
-   */
-  progressStyle: computed('parsedProgress', function() {
-    let parsedProgress = this.get('parsedProgress');
+  @(computed('parsedProgress').readOnly())
+  get progressStyle() {
+    let { parsedProgress } = this;
     if (isPresent(parsedProgress)) {
       return htmlSafe(`width: ${parsedProgress}%;`);
     }
 
     return null;
-  }).readOnly(),
-});
+  }
+}

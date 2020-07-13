@@ -1,9 +1,13 @@
-{{#if hasBlock}}
-  {{yield
-    (hash
-      item=(component "polaris-stack/item")
-    )
-  }}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  data-test-stack={{true}}
+  class={{this.cssClasses}}
+  {{did-insert this.setupAutoWrapper}}
+  {{will-destroy this.teardownAutoWrapper}}
+  ...attributes
+>
+  {{#if hasBlock}}
+    {{yield (hash item=(component "polaris-stack/item"))}}
+  {{else}}
+    {{text}}
+  {{/if}}
+</div>

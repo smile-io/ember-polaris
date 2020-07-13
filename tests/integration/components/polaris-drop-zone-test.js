@@ -93,6 +93,34 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
   const dropZoneLabelWrapperSelector = '[data-test-labelled]';
   const dropZoneLabelButtonSelector = `${dropZoneLabelWrapperSelector} button`;
 
+  const fileUploadSelector = buildNestedSelector(
+    containerSelector,
+    '.Polaris-DropZone-FileUpload'
+  );
+  const fileUploadStackSelector = buildNestedSelector(
+    fileUploadSelector,
+    '.Polaris-Stack'
+  );
+  const fileUploadStackItemSelector = buildNestedSelector(
+    fileUploadStackSelector,
+    '.Polaris-Stack__Item'
+  );
+  const fileUploadImageSelector = buildNestedSelector(
+    fileUploadStackItemSelector,
+    '.Polaris-DropZone-FileUpload__Image'
+  );
+  const fileUploadButtonTextSelector = buildNestedSelector(
+    fileUploadStackItemSelector,
+    'button.Polaris-Button',
+    '.Polaris-Button__Content',
+    '.Polaris-Button__Text'
+  );
+  const fileUploadCaptionSelector = buildNestedSelector(
+    fileUploadStackItemSelector,
+    '.Polaris-Caption',
+    '.Polaris-TextStyle--variationSubdued'
+  );
+
   test('it renders in inline form', async function(assert) {
     assert.expect(8);
 
@@ -448,28 +476,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
      * Testing dropzone when the `size` is `extraLarge`
      */
     module('when size is extraLarge', function() {
-      const fileUploadSelector = buildNestedSelector(
-        containerSelector,
-        '.Polaris-DropZone-FileUpload'
-      );
-      const fileUploadStackSelector = buildNestedSelector(
-        fileUploadSelector,
-        '.Polaris-Stack'
-      );
-      const fileUploadStackItemSelector = buildNestedSelector(
-        fileUploadStackSelector,
-        '.Polaris-Stack__Item'
-      );
-      const fileUploadImageSelector = buildNestedSelector(
-        fileUploadStackItemSelector,
-        '.Polaris-DropZone-FileUpload__Image'
-      );
-      const fileUploadButtonTextSelector = buildNestedSelector(
-        fileUploadStackItemSelector,
-        'button.Polaris-Button',
-        '.Polaris-Button__Content',
-        'span'
-      );
       const fileUploadTextSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         '.Polaris-TextStyle--variationSubdued'
@@ -508,7 +514,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .dom(fileUploadImageSelector)
           .hasClass(
             'Polaris-DropZone-FileUpload--sizeExtraLarge',
-            '',
             'fileUpload has extra large class'
           );
         assert
@@ -519,6 +524,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .hasText('or drop files to upload', 'fileUpload has correct text');
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)
@@ -550,34 +556,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
 
     module('when size is large', function() {
-      const fileUploadSelector = buildNestedSelector(
-        containerSelector,
-        '.Polaris-DropZone-FileUpload'
-      );
-      const fileUploadStackSelector = buildNestedSelector(
-        fileUploadSelector,
-        '.Polaris-Stack'
-      );
-      const fileUploadStackItemSelector = buildNestedSelector(
-        fileUploadStackSelector,
-        '.Polaris-Stack__Item'
-      );
-      const fileUploadImageSelector = buildNestedSelector(
-        fileUploadStackItemSelector,
-        '.Polaris-DropZone-FileUpload__Image'
-      );
-      const fileUploadButtonTextSelector = buildNestedSelector(
-        fileUploadStackItemSelector,
-        'button.Polaris-Button',
-        '.Polaris-Button__Content',
-        'span'
-      );
-      const fileUploadCaptionSelector = buildNestedSelector(
-        fileUploadStackItemSelector,
-        '.Polaris-Caption',
-        '.Polaris-TextStyle--variationSubdued'
-      );
-
       test('it renders properly with FileUpload', async function(assert) {
         assert.expect(14);
 
@@ -620,7 +598,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           .dom(fileUploadImageSelector)
           .hasClass(
             'Polaris-DropZone-FileUpload--sizeLarge',
-            '',
             'fileUpload has large class'
           );
         assert
@@ -637,6 +614,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
 
         this.set('type', 'image');
+        await settled();
 
         assert
           .dom(fileUploadImageSelector)
@@ -705,18 +683,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
 
     module('when size is medium', function() {
-      const fileUploadSelector = buildNestedSelector(
-        containerSelector,
-        '.Polaris-DropZone-FileUpload'
-      );
-      const fileUploadStackSelector = buildNestedSelector(
-        fileUploadSelector,
-        '.Polaris-Stack'
-      );
-      const fileUploadStackItemSelector = buildNestedSelector(
-        fileUploadStackSelector,
-        '.Polaris-Stack__Item'
-      );
       const fileUploadLinkSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         'button.Polaris-Link'
@@ -822,18 +788,6 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
 
     module('when size is small', function() {
-      const fileUploadSelector = buildNestedSelector(
-        containerSelector,
-        '.Polaris-DropZone-FileUpload'
-      );
-      const fileUploadStackSelector = buildNestedSelector(
-        fileUploadSelector,
-        '.Polaris-Stack'
-      );
-      const fileUploadStackItemSelector = buildNestedSelector(
-        fileUploadStackSelector,
-        '.Polaris-Stack__Item'
-      );
       const fileUploadIconSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         '.Polaris-Icon'
@@ -1033,7 +987,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
 
       // Test that selecting files triggers onDrop
       await render(hbs`{{polaris-drop-zone onDrop=(action drop)}}`);
-      await triggerEvent(inputSelector, 'change', uploadedFiles);
+      await triggerEvent(inputSelector, 'change', { files: uploadedFiles });
 
       // Test with `accept` being set
       expectedAcceptedFiles = uploadedFiles.slice(0, 2);

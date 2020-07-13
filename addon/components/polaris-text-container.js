@@ -1,20 +1,19 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { classify } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-text-container';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSpacings = ['tight', 'loose'];
 
 /**
  * Undocumented Polaris text container component.
  */
-export default Component.extend({
-  classNames: ['Polaris-TextContainer'],
-
-  classNameBindings: ['spacingClass'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisTextContainer extends Component {
   /**
    * The text to display.
    *
@@ -22,32 +21,25 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
-   * @type {string}
-   * @default null
+   * @type {String}
    * @public
    */
-  text: null,
+  text;
 
   /**
    * The amount of vertical spacing children will get between them.
    *
-   * @property spacing
-   * @type {string}
-   * @default null
+   * @type {String}
    * @public
    */
-  spacing: null,
+  spacing;
 
-  /**
-   * @private
-   */
-  spacingClass: computed('spacing', function() {
-    let spacing = this.get('spacing');
-    if (allowedSpacings.indexOf(spacing) > -1) {
-      return `Polaris-TextContainer--spacing${classify(spacing)}`;
+  @computed('spacing')
+  get spacingClass() {
+    if (allowedSpacings.indexOf(this.spacing) > -1) {
+      return `Polaris-TextContainer--spacing${classify(this.spacing)}`;
     }
 
     return null;
-  }).readOnly(),
-});
+  }
+}

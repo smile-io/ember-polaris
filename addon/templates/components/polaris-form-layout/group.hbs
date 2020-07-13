@@ -1,23 +1,37 @@
-{{#if title}}
-  <div id={{titleID}} class="Polaris-FormLayout__Title" data-test-form-layout-group-title>
-    {{title}}
-  </div>
-{{/if}}
+<div
+  class="{{@class}} {{if @condensed "Polaris-FormLayout--condensed" "Polaris-FormLayout--grouped"}}"
+  data-test-form-layout-group
+  aria-labelledby={{this.titleID}}
+  aria-describedby={{this.helpTextID}}
+  ...attributes
+  role="group"
+>
+  {{#if @title}}
+    <div id={{this.titleID}} class="Polaris-FormLayout__Title" data-test-form-layout-group-title>
+      {{@title}}
+    </div>
+  {{/if}}
 
-<div class="Polaris-FormLayout__Items" data-test-form-layout-group-items>
-  {{#if hasBlock}}
-    {{yield
-      (hash
-        item=(component "polaris-form-layout/item")
-      )
-    }}
-  {{else}}
-    {{text}}
+  <div
+    class="Polaris-FormLayout__Items"
+    data-test-form-layout-group-items
+    {{did-insert this.setupAutoWrapper}}
+    {{will-destroy this.teardownAutoWrapper}}
+  >
+    {{#if hasBlock}}
+      {{yield
+        (hash
+          item=(component "polaris-form-layout/item")
+        )
+      }}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </div>
+
+  {{#if @helpText}}
+    <div id={{this.helpTextID}} class="Polaris-FormLayout__HelpText" data-test-form-layout-group-helpText>
+      {{render-content @helpText}}
+    </div>
   {{/if}}
 </div>
-
-{{#if helpText}}
-  <div id={{helpTextID}} class="Polaris-FormLayout__HelpText" data-test-form-layout-group-helpText>
-    {{render-content helpText}}
-  </div>
-{{/if}}

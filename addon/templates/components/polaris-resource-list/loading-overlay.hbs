@@ -1,9 +1,6 @@
-{{#if loading}}
-  <div class="Polaris-ResourceList__SpinnerContainer" style={{spinnerStyle}}>
-    {{polaris-spinner
-      accessibilityLabel="Items are loading"
-      size=spinnerSize
-    }}
+{{#if @loading}}
+  <div class="Polaris-ResourceList__SpinnerContainer" style={{@spinnerStyle}}>
+    <PolarisSpinner @accessibilityLabel="Items are loading" @size={{@spinnerSize}} />
   </div>
   <div class="Polaris-ResourceList__LoadingOverlay"></div>
 {{/if}}

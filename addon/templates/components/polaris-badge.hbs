@@ -1,15 +1,20 @@
-{{#if statusDescription}}
-  {{polaris-visually-hidden text=statusDescription}}
-{{/if}}
+<span
+  class="Polaris-Badge {{this.statusClass}} {{this.progressClass}} {{this.sizeClass}} {{@class}}"
+  ...attributes
+>
+  {{#if this.statusDescription}}
+    <PolarisVisuallyHidden @text={{this.statusDescription}} />
+  {{/if}}
 
-{{#if progressDescription}}
-  <span class="Polaris-Badge__Pip">
-    {{polaris-visually-hidden text=progressDescription}}
-  </span>
-{{/if}}
+  {{#if this.progressDescription}}
+    <span class="Polaris-Badge__Pip">
+      <PolarisVisuallyHidden @text={{this.progressDescription}} />
+    </span>
+  {{/if}}
 
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</span>

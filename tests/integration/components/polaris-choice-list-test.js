@@ -8,7 +8,7 @@ import Component from '@ember/component';
 
 const choiceListSelector = '[data-test-choice-list]';
 const choicesWrapperSelector = '[data-test-choice-list-choices]';
-const choiceSelector = '[data-test-choice]';
+const choiceSelector = '[data-test-choice-label]';
 const radioInputSelector = '[data-test-radio-button-input]';
 const checkboxInputSelector = '[data-test-checkbox-input]';
 const titleSelector = '[data-test-choice-list-title]';

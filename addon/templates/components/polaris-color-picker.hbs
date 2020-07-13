@@ -1,21 +1,27 @@
-<div class="Polaris-ColorPicker__MainColor">
-  <div class="Polaris-ColorPicker__ColorLayer" style={{colorLayerStyle}}></div>
-  {{polaris-color-picker/slidable
-    draggerX=draggerX
-    draggerY=draggerY
-    onChange=(action "draggerMoved")
-  }}
+<div
+  class="Polaris-ColorPicker {{@class}}"
+  {{did-insert this.setPickerSize}}
+  ...attributes
+>
+  <div class="Polaris-ColorPicker__MainColor">
+    <div class="Polaris-ColorPicker__ColorLayer" style={{this.colorLayerStyle}}></div>
+    <PolarisColorPicker::Slidable
+      @draggerX={{this.draggerX}}
+      @draggerY={{this.draggerY}}
+      @onChange={{fn this.draggerMoved}}
+    />
+  </div>
+
+  <PolarisColorPicker::HuePicker
+    @hue={{@color.hue}}
+    @onChange={{fn this.handleHueChange}}
+  />
+
+  {{#if @allowAlpha}}
+    <PolarisColorPicker::AlphaPicker
+      @color={{@color}}
+      @alpha={{@color.alpha}}
+      @onChange={{fn this.handleAlphaChange}}
+    />
+  {{/if}}
 </div>
-
-{{polaris-color-picker/hue-picker
-  hue=color.hue
-  onChange=(action "handleHueChange")
-}}
-
-{{#if allowAlpha}}
-  {{polaris-color-picker/alpha-picker
-    color=color
-    alpha=color.alpha
-    onChange=(action "handleAlphaChange")
-  }}
-{{/if}}

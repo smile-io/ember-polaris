@@ -1,7 +1,22 @@
-{{yield}}
+<form
+  data-test-form
+  class={{@class}}
+  ...attributes
+  acceptCharset={{@acceptCharset}}
+  action={{@action}}
+  autocomplete={{this.autoCompleteInputs}}
+  enctype={{@encType}}
+  method={{or method "post"}}
+  name={{@name}}
+  novalidate={{@noValidate}}
+  target={{@target}}
+  {{on "submit" this.handleSubmit}}
+>
+  {{yield}}
 
-{{#if implicitSubmit}}
-  {{#polaris-visually-hidden}}
-    <button type="submit" aria-hidden="true" data-test-form-button></button>
-  {{/polaris-visually-hidden}}
-{{/if}}
+  {{#if @implicitSubmit}}
+    <PolarisVisuallyHidden>
+      <button type="submit" aria-hidden="true" data-test-form-button></button>
+    </PolarisVisuallyHidden>
+  {{/if}}
+</form>

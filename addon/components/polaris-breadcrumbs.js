@@ -1,52 +1,40 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
+import { computed, action } from '@ember/object';
+import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import layout from '../templates/components/polaris-breadcrumbs';
+import template from '../templates/components/polaris-breadcrumbs';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-export default Component.extend({
-  tagName: 'nav',
-  attributeBindings: ['role'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisBreadcrumbs extends Component {
   /**
    * Collection of breadcrumbs
    *
-   * @property breadcrumbs
-   * @public
    * @type {Array}
-   * @default null
+   * @default []
+   * @public
    */
-  breadcrumbs: null,
+  breadcrumbs = [];
 
-  /**
-   * Role attribute
-   *
-   * @property role
-   * @private
-   * @type {String}
-   * @default 'navigation'
-   */
-  role: 'navigation',
-
-  'data-test-breadcrumbs': true,
-
-  handleMouseUpByBlurring,
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   /**
    * The breadcrumb to render (the last of the list)
    * We're not always guaranteed to get an Ember array,
    * so we can't just use `breadcrumbs.lastObject` in the template.
    *
-   * @property breadcrumb
-   * @private
    * @type {Object}
    */
-  breadcrumb: computed('breadcrumbs.[]', function() {
-    let breadcrumbs = this.get('breadcrumbs') || [];
-    let breadcrumbsCount = get(breadcrumbs, 'length');
-    return breadcrumbsCount && breadcrumbsCount > 0
-      ? breadcrumbs[breadcrumbsCount - 1]
-      : null;
-  }).readOnly(),
-});
+  @computed('breadcrumbs.[]')
+  get breadcrumb() {
+    let { breadcrumbs } = this;
+    return breadcrumbs[breadcrumbs.length - 1];
+  }
+
+  @action
+  handleClick() {
+    this.breadcrumb.onAction();
+  }
+}

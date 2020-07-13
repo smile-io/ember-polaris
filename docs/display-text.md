@@ -18,7 +18,7 @@ Extra-large heading:
 
 ```hbs
 {{#polaris-display-text
-  tagName="h1"
+  htmlTag="h1"
   size="extraLarge"
 }}
   This is a LARGE heading

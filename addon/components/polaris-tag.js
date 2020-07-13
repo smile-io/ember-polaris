@@ -1,7 +1,9 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-tag';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris tag component.
@@ -9,13 +11,10 @@ import { handleMouseUpByBlurring } from '../utils/focus';
  *
  * @component polaris-tag
  */
-export default Component.extend({
-  tagName: 'span',
-  classNames: ['Polaris-Tag'],
-  classNameBindings: ['disabled:Polaris-Tag--disabled'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisTag extends Component {
   /**
    * The content to display inside the tag.
    *
@@ -23,70 +22,65 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
-   * @public
    * @type {String}
-   * @default: null
+   * @public
    */
-  text: null,
+  text;
 
   /**
    * Disables the tag.
    *
-   * @property disabled
-   * @public
    * @type {boolean}
-   * @default: false
+   * @public
    */
-  disabled: false,
+  disabled;
 
   /**
    * Callback when tag is removed
    *
-   * @property onRemove
-   * @public
    * @type {Function}
    * @default no-op
+   * @public
    */
-  onRemove() {},
+  onRemove() {}
 
   /**
-   * The tag text. When inline-form, will match `text`, otherwise will read the
+   * The tag title. When inline-form, will match `text`, otherwise will read the
    * block for this.
    *
-   * @property tagText
-   * @private
    * @type {String}
-   * @default null
    */
-  tagText: null,
+  tagText = '';
 
-  handleMouseUpByBlurring,
-
-  'data-test-tag': true,
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   /**
    * String to be used as the `remove` button's `aria-label`
    * Gets updated after rendering to always use the most up-to-date tag text
    *
-   * @property buttonLabel
-   * @private
    * @type {String}
    * @default null
    */
-  buttonLabel: computed('tagText', function() {
-    return `Remove ${this.get('tagText')}`;
-  }).readOnly(),
+  @(computed('tagText').readOnly())
+  get buttonLabel() {
+    return `Remove ${this.tagText}`;
+  }
 
-  updateTagText() {
-    // Read the tag text so we can use this for the aria-label.
-    // We access the element's `textContent` so that this still works in block usage.
-    let tagText = this.get('element.textContent') || '';
-    this.set('tagText', tagText.trim());
-  },
-
-  didRender() {
-    this._super(...arguments);
+  @action
+  setTagText(element) {
+    this.set('_tagElement', element);
     this.updateTagText();
-  },
-});
+  }
+
+  @action
+  updateTagText() {
+    if (!this._tagElement) {
+      return;
+    }
+    // Read the tag text so we can use this for the title.
+    // We access the element's `textContent` so that this still works in block usage.
+    let tagText =
+      this._tagElement.querySelector('.Polaris-Tag__TagText').textContent || '';
+    this.set('tagText', tagText.trim());
+  }
+}

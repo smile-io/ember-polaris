@@ -2,118 +2,102 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { isNone } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-data-table/cell';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDataTableCell extends Component {
   /**
-   * @property height
    * @type {Number}
    * @public
    */
-  height: null,
+  height = null;
 
   /**
-   * @property text
    * @type {String|Component}
    * @public
    */
-  text: null,
+  text = null;
 
   /**
-   * @property contentType
    * @type {String}
    * @public
    */
-  contentType: null,
+  contentType = null;
 
   /**
-   * @property fixed
    * @type {boolean}
    * @default false
    * @public
    */
-  fixed: false,
+  fixed = false;
 
   /**
-   * @property truncate
    * @type {boolean}
    * @default false
    * @public
    */
-  truncate: false,
+  truncate = false;
 
   /**
-   * @property header
    * @type {boolean}
    * @default false
    * @public
    */
-  header: false,
+  header = false;
 
   /**
-   * @property total
    * @type {boolean}
    * @default false
    * @public
    */
-  total: false,
+  total = false;
 
   /**
-   * @property footer
    * @type {boolean}
    * @default false
    * @public
    */
-  footer: false,
+  footer = false;
 
   /**
-   * @property sorted
    * @type {boolean}
    * @default false
    * @public
    */
-  sorted: false,
+  sorted = false;
 
   /**
-   * @property sortable
    * @type {boolean}
    * @default false
    * @public
    */
-  sortable: false,
+  sortable = false;
 
   /**
-   * @property sortDirection
    * @type {String}
    * @public
    */
-  sortDirection: null,
+  sortDirection = null;
 
   /**
-   * @property defaultSortDirection
    * @type {String}
    * @public
    */
-  defaultSortDirection: null,
+  defaultSortDirection = null;
 
   /**
-   * @property onSort
    * @type {function}
    * @default no-op
    * @public
    */
-  onSort() {},
+  onSort() {}
 
   /**
-   * @property cellClassNames
    * @type {String}
-   * @private
    */
-  cellClassNames: computed(
+  @(computed(
     'fixed',
     'truncate',
     'header',
@@ -121,154 +105,118 @@ export default Component.extend({
     'footer',
     'contentType',
     'sorted',
-    'sortable',
-    function() {
-      let classNames = ['Polaris-DataTable__Cell'];
+    'sortable'
+  ).readOnly())
+  get cellClassNames() {
+    let cssClasses = ['Polaris-DataTable__Cell'];
 
-      let {
-        fixed,
-        truncate,
-        header,
-        total,
-        footer,
-        contentType,
-        sorted,
-        sortable,
-      } = this.getProperties(
-        'fixed',
-        'truncate',
-        'header',
-        'total',
-        'footer',
-        'contentType',
-        'sorted',
-        'sortable'
-      );
+    let {
+      fixed,
+      truncate,
+      header,
+      total,
+      footer,
+      contentType,
+      sorted,
+      sortable,
+    } = this;
 
-      if (fixed) {
-        classNames.push('Polaris-DataTable__Cell--fixed');
+    if (fixed) {
+      cssClasses.push('Polaris-DataTable__Cell--fixed');
 
-        if (truncate) {
-          classNames.push('Polaris-DataTable__Cell--truncated');
-        }
+      if (truncate) {
+        cssClasses.push('Polaris-DataTable__Cell--truncated');
       }
-
-      if (header) {
-        classNames.push('Polaris-DataTable__Cell--header');
-      }
-
-      if (total) {
-        classNames.push('Polaris-DataTable__Cell--total');
-      }
-
-      if (footer) {
-        classNames.push('Polaris-DataTable__Cell--footer');
-      }
-
-      if (contentType === 'numeric') {
-        classNames.push('Polaris-DataTable__Cell--numeric');
-      }
-
-      if (sorted) {
-        classNames.push('Polaris-DataTable__Cell--sorted');
-      }
-
-      if (sortable) {
-        classNames.push('Polaris-DataTable__Cell--sortable');
-      }
-
-      return classNames.join(' ');
     }
-  ).readOnly(),
+
+    if (header) {
+      cssClasses.push('Polaris-DataTable__Cell--header');
+    }
+
+    if (total) {
+      cssClasses.push('Polaris-DataTable__Cell--total');
+    }
+
+    if (footer) {
+      cssClasses.push('Polaris-DataTable__Cell--footer');
+    }
+
+    if (contentType === 'numeric') {
+      cssClasses.push('Polaris-DataTable__Cell--numeric');
+    }
+
+    if (sorted) {
+      cssClasses.push('Polaris-DataTable__Cell--sorted');
+    }
+
+    if (sortable) {
+      cssClasses.push('Polaris-DataTable__Cell--sortable');
+    }
+
+    return cssClasses.join(' ');
+  }
 
   /**
-   * @property headerClassNames
    * @type {String}
-   * @private
    */
-  headerClassNames: computed('header', 'contentType', function() {
-    let { header, contentType } = this.getProperties('header', 'contentType');
+  @(computed('header', 'contentType').readOnly())
+  get headerClassNames() {
+    let { header, contentType } = this;
 
     if (isNone(header)) {
-      return;
+      return '';
     }
 
-    let classNames = ['Polaris-DataTable__Heading'];
+    let cssClasses = ['Polaris-DataTable__Heading'];
 
     if (contentType === 'text') {
-      classNames.push('Polaris-DataTable__Heading--left');
+      cssClasses.push('Polaris-DataTable__Heading--left');
     }
 
-    return classNames.join(' ');
-  }).readOnly(),
+    return cssClasses.join(' ');
+  }
 
   /**
-   * @property style
    * @type {String}
-   * @private
    */
-  style: computed('height', function() {
-    let height = this.get('height');
+  @(computed('height').readOnly())
+  get style() {
+    let { height } = this;
     return height ? htmlSafe(`height: ${height}px`) : undefined;
-  }).readOnly(),
+  }
 
   /**
-   * @property direction
    * @type {String}
-   * @private
    */
-  direction: computed(
-    'sorted',
-    'sortDirection',
-    'defaultSortDirection',
-    function() {
-      let { sorted, sortDirection, defaultSortDirection } = this.getProperties(
-        'sorted',
-        'sortDirection',
-        'defaultSortDirection'
-      );
-
-      return sorted ? sortDirection : defaultSortDirection;
-    }
-  ).readOnly(),
+  @(computed('sorted', 'sortDirection', 'defaultSortDirection').readOnly())
+  get direction() {
+    let { sorted, sortDirection, defaultSortDirection } = this;
+    return sorted ? sortDirection : defaultSortDirection;
+  }
 
   /**
-   * @property source
    * @type {String}
-   * @private
    */
-  source: computed('direction', function() {
-    return `caret-${this.get('direction') === 'ascending' ? 'up' : 'down'}`;
-  }).readOnly(),
+  @(computed('direction').readOnly())
+  get source() {
+    return `caret-${this.direction === 'ascending' ? 'up' : 'down'}`;
+  }
 
   /**
-   * @property oppositeDirection
    * @type {String}
-   * @private
    */
-  oppositeDirection: computed('sortDirection', function() {
-    return this.get('sortDirection') === 'ascending'
-      ? 'descending'
-      : 'ascending';
-  }).readOnly(),
+  @(computed('sortDirection').readOnly())
+  get oppositeDirection() {
+    return this.sortDirection === 'ascending' ? 'descending' : 'ascending';
+  }
 
   /**
-   * @property sortAccessibilityLabel
    * @type {String}
-   * @private
    */
-  sortAccessibilityLabel: computed(
-    'sorted',
-    'oppositeDirection',
-    'direction',
-    function() {
-      let { sorted, oppositeDirection, direction } = this.getProperties(
-        'sorted',
-        'oppositeDirection',
-        'direction'
-      );
+  @(computed('sorted', 'oppositeDirection', 'direction').readOnly())
+  get sortAccessibilityLabel() {
+    let { sorted, oppositeDirection, direction } = this;
 
-      return `sort by ${sorted ? oppositeDirection : direction}`;
-    }
-  ).readOnly(),
-});
+    return `sort by ${sorted ? oppositeDirection : direction}`;
+  }
+}

@@ -1,25 +1,24 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-card';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-card';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris card component.
  * See https://polaris.shopify.com/components/structure/card
  */
-export default Component.extend({
-  classNames: ['Polaris-Card'],
-  classNameBindings: ['subdued:Polaris-Card--subdued'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisCard extends Component {
   /**
    * Title content for the card
    *
-   * @property title
    * @type {String|Component}
-   * @default: null
+   * @default null
    * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Inner content of the card
@@ -28,58 +27,52 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
-   * @default: null
+   * @default null
    * @public
    */
-  text: null,
+  text = null;
 
   /**
    * A less prominent card
    *
-   * @property subdued
    * @type {Boolean}
-   * @default: false
+   * @default false
    * @public
    */
-  subdued: false,
+  subdued = false;
 
   /**
    * Auto wrap content in section
    *
-   * @property sectioned
    * @type {Boolean}
-   * @default: false
+   * @default false
    * @public
    */
-  sectioned: false,
+  sectioned = false;
 
   /**
    * Card header actions
    *
-   * @property headerActions
    * @type {Action[]}
-   * @default: null
+   * @default null
    * @public
    */
-  headerActions: null,
+  headerActions = null;
 
   /**
    * Primary action in the card footer
    *
-   * @property primaryFooterAction
    * @type {Action}
-   * @default: null
+   * @default null
    */
-  primaryFooterAction: null,
+  primaryFooterAction = null;
 
   /**
    * Secondary action in the card footer
    *
-   * @property secondaryFooterAction
    * @type {Action}
-   * @default: null
+   * @default null
    */
-  secondaryFooterAction: null,
-});
+  secondaryFooterAction = null;
+}

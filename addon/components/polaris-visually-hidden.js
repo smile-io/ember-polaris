@@ -1,16 +1,16 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-visually-hidden';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-visually-hidden';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris Visually hidden component.
  * See https://polaris.shopify.com/components/titles-and-text/visually-hidden
  */
-export default Component.extend({
-  tagName: 'span',
-  classNames: ['Polaris-VisuallyHidden'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisVisuallyHidden extends Component {
   /**
    * The content to be hidden visually
    *
@@ -18,10 +18,9 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {string}
-   * @default: null
+   * @default null
    * @public
    */
-  text: null,
-});
+  text = null;
+}

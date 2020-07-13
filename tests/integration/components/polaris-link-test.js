@@ -6,12 +6,6 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | polaris link', function(hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
-    this.actions = {};
-    this.send = (actionName, ...args) =>
-      this.actions[actionName].apply(this, args);
-  });
-
   const linkSelector = 'a.Polaris-Link';
   const linkButtonSelector = 'button.Polaris-Link';
 
@@ -20,29 +14,34 @@ module('Integration | Component | polaris link', function(hooks) {
       hbs`{{polaris-link url="http://www.somewhere.com/" text="This is an inline link"}}`
     );
 
-    const links = assert.dom(linkSelector);
-    links.exists({ count: 1 }, 'renders one link');
+    assert.dom(linkSelector).exists({ count: 1 }, 'renders one link');
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'href',
+        'http://www.somewhere.com/',
+        'renders the correct href'
+      );
+    assert
+      .dom(linkSelector)
+      .hasText('This is an inline link', 'renders the correct link text');
 
-    links.hasAttribute(
-      'href',
-      'http://www.somewhere.com/',
-      'renders the correct href'
-    );
-    links.hasText('This is an inline link', 'renders the correct link text');
-
-    links.hasAttribute(
-      'data-polaris-unstyled',
-      'true',
-      'applies data-polaris-unstyled to the link'
-    );
-    links.doesNotHaveAttribute(
-      'target',
-      'does not set a target attribute on the link'
-    );
-    links.doesNotHaveAttribute(
-      'rel',
-      'does not set a rel attribute on the link'
-    );
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'data-polaris-unstyled',
+        'true',
+        'applies data-polaris-unstyled to the link'
+      );
+    assert
+      .dom(linkSelector)
+      .doesNotHaveAttribute(
+        'target',
+        'does not set a target attribute on the link'
+      );
+    assert
+      .dom(linkSelector)
+      .doesNotHaveAttribute('rel', 'does not set a rel attribute on the link');
   });
 
   test('it renders the correct HTML in basic block usage with a URL', async function(assert) {
@@ -52,28 +51,33 @@ module('Integration | Component | polaris link', function(hooks) {
       {{/polaris-link}}
     `);
 
-    const links = assert.dom(linkSelector);
-    links.exists({ count: 1 }, 'renders one link');
-
-    links.hasAttribute(
-      'href',
-      'http://www.somewhere.com/',
-      'renders the correct href'
-    );
-    links.hasText('This is a block link', 'renders the correct link text');
-    links.hasAttribute(
-      'data-polaris-unstyled',
-      'true',
-      'applies data-polaris-unstyled to the link'
-    );
-    links.doesNotHaveAttribute(
-      'target',
-      'does not set a target attribute on the link'
-    );
-    links.doesNotHaveAttribute(
-      'rel',
-      'does not set a rel attribute on the link'
-    );
+    assert.dom(linkSelector).exists({ count: 1 }, 'renders one link');
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'href',
+        'http://www.somewhere.com/',
+        'renders the correct href'
+      );
+    assert
+      .dom(linkSelector)
+      .hasText('This is a block link', 'renders the correct link text');
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'data-polaris-unstyled',
+        'true',
+        'applies data-polaris-unstyled to the link'
+      );
+    assert
+      .dom(linkSelector)
+      .doesNotHaveAttribute(
+        'target',
+        'does not set a target attribute on the link'
+      );
+    assert
+      .dom(linkSelector)
+      .doesNotHaveAttribute('rel', 'does not set a rel attribute on the link');
   });
 
   test('it renders the correct HTML with external attribute', async function(assert) {
@@ -85,20 +89,21 @@ module('Integration | Component | polaris link', function(hooks) {
       }}
     `);
 
-    const links = assert.dom(linkSelector);
-    links.exists({ count: 1 }, 'renders one link');
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'target',
+        '_blank',
+        'sets the correct target attribute on the link'
+      );
 
-    links.hasAttribute(
-      'target',
-      '_blank',
-      'sets the correct target attribute on the link'
-    );
-
-    links.hasAttribute(
-      'rel',
-      'noopener noreferrer',
-      'sets the correct rel attribute on the link'
-    );
+    assert
+      .dom(linkSelector)
+      .hasAttribute(
+        'rel',
+        'noopener noreferrer',
+        'sets the correct rel attribute on the link'
+      );
   });
 
   test('it renders the correct HTML with monochrome attribute', async function(assert) {
@@ -110,25 +115,26 @@ module('Integration | Component | polaris link', function(hooks) {
       }}
     `);
 
-    const links = assert.dom(linkSelector);
-    links.exists({ count: 1 }, 'renders one link');
-
-    links.hasClass(
-      'Polaris-Link--monochrome',
-      'sets the monochrome class on the link'
-    );
+    assert
+      .dom(linkSelector)
+      .hasClass(
+        'Polaris-Link--monochrome',
+        'sets the monochrome class on the link'
+      );
   });
 
   test('it renders the correct HTML in basic inline usage without a URL', async function(assert) {
     await render(hbs`{{polaris-link text="This is an inline link button"}}`);
 
-    const linkButtons = assert.dom(linkButtonSelector);
-    linkButtons.exists({ count: 1 }, 'renders one link button');
-
-    linkButtons.hasText(
-      'This is an inline link button',
-      'renders the correct link text'
-    );
+    assert
+      .dom(linkButtonSelector)
+      .exists({ count: 1 }, 'renders one link button');
+    assert
+      .dom(linkButtonSelector)
+      .hasText(
+        'This is an inline link button',
+        'renders the correct link text'
+      );
   });
 
   test('it renders the correct HTML in basic block usage without a URL', async function(assert) {
@@ -138,44 +144,38 @@ module('Integration | Component | polaris link', function(hooks) {
       {{/polaris-link}}
     `);
 
-    const linkButton = assert.dom(linkButtonSelector);
-
-    linkButton.exists({ count: 1 }, 'renders one link button');
-
-    linkButton.hasText(
-      'This is a block link button',
-      'renders the correct link text'
-    );
+    assert
+      .dom(linkButtonSelector)
+      .exists({ count: 1 }, 'renders one link button');
+    assert
+      .dom(linkButtonSelector)
+      .hasText('This is a block link button', 'renders the correct link text');
   });
 
   test('it handles click events correctly', async function(assert) {
-    let clickHandlerCalled = false;
-    this.actions.click = () => (clickHandlerCalled = true);
+    this.handleClick = () => assert.ok('onClick is fired correctly');
 
-    await render(hbs`{{polaris-link onClick=(action "click")}}`);
+    await render(hbs`{{polaris-link onClick=this.handleClick}}`);
 
     assert
       .dom(linkButtonSelector)
       .exists({ count: 1 }, 'renders one link button');
 
     await click(linkButtonSelector);
-    assert.ok(clickHandlerCalled, 'click handler fired');
   });
 
   test('clicking a link navigates but does not bubble to the parent', async function(assert) {
     // Reset the hash part of the browser URL to keep this test valid on reruns.
     window.location.hash = 'linkNotClicked';
 
-    let parentHandlerCalled = false;
-    this.actions.parentClicked = () => (parentHandlerCalled = true);
+    this.handleParentClicked = () => assert.notOk("click event doesn't bubble");
 
     await render(hbs`
-      <div {{action (action "parentClicked")}}>
+      {{!-- template-lint-disable no-invalid-interactive --}}
+      <div {{on "click" this.handleParentClicked}}>
         {{polaris-link url="#linkClicked"}}
       </div>
     `);
-
-    assert.dom(linkSelector).exists({ count: 1 }, 'renders one link');
 
     await click(linkSelector);
     assert.equal(
@@ -183,27 +183,29 @@ module('Integration | Component | polaris link', function(hooks) {
       '#linkClicked',
       'app navigates to specified URL'
     );
-    assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
   });
 
   test('clicking a link fires the onClick handler if present', async function(assert) {
     // Reset the hash part of the browser URL to keep this test valid on reruns.
     window.location.hash = 'linkNotClicked';
 
-    this.set('clickHandlerCalled', false);
-    let parentHandlerCalled = false;
-    this.actions.parentClicked = () => (parentHandlerCalled = true);
+    assert.expect(3);
+
+    this.handleParentClicked = () =>
+      assert.notOk(true, "click event doesn't bubble to the parent");
+    this.handleClick = (event) => {
+      assert.ok(true, '@onClick handler is fired');
+      assert.notOk(event, 'click event is not curried to @onClick handler');
+    };
 
     await render(hbs`
-      <div {{action (action "parentClicked")}}>
+      <div {{on "click" this.handleParentClicked}}>
         {{polaris-link
           url="#linkClicked"
-          onClick=(action (mut clickHandlerCalled) true)
+          onClick=this.handleClick
         }}
       </div>
     `);
-
-    assert.dom(linkSelector).exists({ count: 1 }, 'renders one link');
 
     await click(linkSelector);
     assert.equal(
@@ -211,20 +213,21 @@ module('Integration | Component | polaris link', function(hooks) {
       '#linkClicked',
       'app navigates to specified URL'
     );
-    assert.ok(this.get('clickHandlerCalled'), 'link click handler is fired');
-    assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
   });
 
   test('clicking a link button performs the button action but does not bubble to the parent', async function(assert) {
-    let parentHandlerCalled = false;
-    let buttonHandlerCalled = false;
+    assert.expect(3);
 
-    this.actions.parentClicked = () => (parentHandlerCalled = true);
-    this.actions.buttonClicked = () => (buttonHandlerCalled = true);
+    this.handleParentClicked = () =>
+      assert.notOk(true, "click event doesn't bubble to the parent");
+    this.handleClick = (event) => {
+      assert.ok(true, '@onClick handler is fired');
+      assert.notOk(event, 'click event is not curried to @onClick handler');
+    };
 
     await render(hbs`
-      <div {{action (action "parentClicked")}}>
-        {{polaris-link onClick=(action "buttonClicked")}}
+      <div {{on "click" this.handleParentClicked}}>
+        {{polaris-link onClick=this.handleClick}}
       </div>
     `);
 
@@ -233,8 +236,6 @@ module('Integration | Component | polaris link', function(hooks) {
       .exists({ count: 1 }, 'renders one link button');
 
     await click(linkButtonSelector);
-    assert.ok(buttonHandlerCalled, 'button click handler is fired');
-    assert.notOk(parentHandlerCalled, 'parent click handler is not fired');
   });
 
   test('it applies passed-in classes to the rendered element when rendering a link', async function(assert) {

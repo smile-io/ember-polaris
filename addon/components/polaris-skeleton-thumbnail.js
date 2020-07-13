@@ -1,36 +1,38 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { capitalize } from '@ember/string';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
+import layout from '../templates/components/polaris-skeleton-thumbnail';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-const allowedSizes = ['small', 'medium', 'large'];
+const defaultSize = 'medium';
+const allowedSizes = ['small', defaultSize, 'large'];
 
-export default Component.extend({
-  classNames: ['Polaris-SkeletonThumbnail'],
-  classNameBindings: ['sizeClass'],
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSkeletonThumbnail extends Component {
   /**
    * Size of the thumbnail
    *
-   * @property size
    * @type {String}
    * @default 'medium'
    * @public
    */
-  size: 'medium',
+  size = defaultSize;
 
   /**
    * Class to apply the thumbnail size.
    *
-   * @property sizeClass
    * @type {String}
-   * @private
    */
-  sizeClass: computed('size', function() {
-    let size = this.get('size');
+  @computed('size')
+  get sizeClass() {
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
-      size = 'medium';
+      size = defaultSize;
     }
 
     return `Polaris-SkeletonThumbnail--size${capitalize(size)}`;
-  }).readOnly(),
-});
+  }
+}

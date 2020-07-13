@@ -1,41 +1,37 @@
 import Component from '@ember/component';
-import layout from '../../templates/components/polaris-text-field/spinner';
+import { action } from '@ember/object';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../../templates/components/polaris-text-field/spinner';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisTextFieldSpinner extends Component {
   /**
    * Called when the up/down icons are clicked
    *
-   * @property onChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onChange(/* number */) {},
+  onChange(/* number */) {}
 
   /**
    * Additional callback when any icon in the component is clicked
    *
-   * @property onClick
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onClick() {},
+  onClick() {}
 
-  onMouseDown(/* onChange */) {},
+  onMouseDown(/* onChange */) {}
+  onMouseUp() {}
 
-  onMouseUp() {},
-
-  actions: {
-    handleMouseDown(onChange, event) {
-      if (event.button !== 0) {
-        return;
-      }
-      this.onMouseDown(onChange);
-    },
-  },
-});
+  @action
+  handleMouseDown(onChange, event) {
+    if (event.button !== 0) {
+      return;
+    }
+    this.onMouseDown(onChange);
+  }
+}

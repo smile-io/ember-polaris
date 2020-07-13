@@ -1,3 +1,5 @@
-{{#each dummyLines}}
-  <div class="Polaris-SkeletonBodyText"></div>
-{{/each}}
+<div class="Polaris-SkeletonBodyText__SkeletonBodyTextContainer {{@class}} " ...attributes>
+  {{#each this.dummyLines}}
+    <div class="Polaris-SkeletonBodyText"></div>
+  {{/each}}
+</div>

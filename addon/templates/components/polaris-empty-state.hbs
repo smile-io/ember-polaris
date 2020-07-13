@@ -1,34 +1,38 @@
-<div data-test-empty-state-section class="Polaris-EmptyState__Section">
-  <div class="Polaris-EmptyState__DetailsContainer">
-    {{! template-lint-disable attribute-indentation}}
-    {{!-- TODO remove rule above once linter handles this correctly --}}
-    {{#with
-      (component "polaris-empty-state/details"
-        heading=heading
-        text=text
-        action=action
-        secondaryAction=secondaryAction
-      )
-      as |detailsComponent|
-    }}
-      {{#if hasBlock}}
-        {{#component detailsComponent}}
-          {{yield}}
-        {{/component}}
-      {{else}}
-        {{component detailsComponent}}
-      {{/if}}
-    {{/with}}
-  </div>
+<div
+  class="Polaris-EmptyState {{@class}} {{if @imageContained "Polaris-EmptyState--imageContained"}}"
+  data-test-empty-state
+  ...attributes
+>
+  <div data-test-empty-state-section class="Polaris-EmptyState__Section">
+    <div class="Polaris-EmptyState__DetailsContainer">
+      {{#let
+        (component "polaris-empty-state/details"
+          heading=@heading
+          text=@text
+          primaryAction=this.mainAction
+          secondaryAction=@secondaryAction
+        )
+        as |Details|
+      }}
+        {{#if hasBlock}}
+          <Details>
+            {{yield}}
+          </Details>
+        {{else}}
+          <Details />
+        {{/if}}
+      {{/let}}
+    </div>
 
-  <div class="Polaris-EmptyState__ImageContainer">
-    {{!-- TODO: replace this with polaris-image when implemented. --}}
-    <img
-      data-test-empty-state-image
-      role="presentation"
-      alt=""
-      class="Polaris-EmptyState__Image"
-      src={{image}}
-    >
+    <div class="Polaris-EmptyState__ImageContainer">
+      {{!-- TODO: replace this with polaris-image when implemented. --}}
+      <img
+        data-test-empty-state-image
+        role="presentation"
+        alt=""
+        class="Polaris-EmptyState__Image"
+        src={{@image}}
+      >
+    </div>
   </div>
 </div>

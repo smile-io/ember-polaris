@@ -1,41 +1,31 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-layout/annotation';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-Layout__Annotation'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisLayoutAnnotation extends Component {
   /**
    * Title for the section
    *
-   * @property title
    * @type {String}
-   * @default null
    * @public
    */
-  title: null,
+  title;
 
   /**
    * Description for the section
    *
-   * @property description
    * @type {String|Component|Object}
-   * @default null
    * @public
    */
-  description: null,
+  description;
 
-  /**
-   * Whether the `description` is a string
-   *
-   * @property hasStringDescription
-   * @type {Boolean}
-   * @private
-   */
-  hasStringDescription: computed('description', function() {
-    let description = this.get('description');
-    return typeof description === 'string';
-  }).readOnly(),
-});
+  @(computed('description').readOnly())
+  get hasStringDescription() {
+    return typeof this.description === 'string';
+  }
+}

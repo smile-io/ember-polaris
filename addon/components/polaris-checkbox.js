@@ -1,240 +1,182 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { guidFor } from '@ember/object/internals';
+import { action, computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
-import { deprecate } from '@ember/debug';
-import layout from '../templates/components/polaris-checkbox';
+import { guidFor } from '@ember/object/internals';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-checkbox';
 
 /**
  * Polaris checkbox component.
  * See https://polaris.shopify.com/components/forms/checkbox
  */
-export default Component.extend({
-  // Tagless component, renders a `polaris-choice` component internally.
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisCheckbox extends Component {
   /**
    * Label for the checkbox
    *
-   * @property label
    * @type {String|Component}
    * @default null
    * @public
    */
-  label: null,
-
-  /**
-   * Component to render for the checkbox's label
-   *
-   * DEPRECATED: pass the component as `label` instead.
-   *
-   * @property labelComponent
-   * @type {String | Component}
-   * @default null
-   * @deprecated
-   * @public
-   */
-  labelComponent: null,
+  label = null;
 
   /**
    * Visually hide the label
    *
-   * @property labelHidden
    * @type {Boolean}
    * @default false
    * @public
    */
-  labelHidden: false,
+  labelHidden = false;
 
   /**
    * Checkbox is selected. `indeterminate` shows a horizontal line in the checkbox
    *
-   * @property checked
    * @type {Boolean/String}
    * @default false
    * @public
    */
-  checked: false,
+  checked = false;
 
   /**
    * Additional text to aide in use
    *
-   * @property helpText
    * @type {String}
    * @default null
    * @public
    */
-  helpText: null,
+  helpText = null;
 
   /**
    * ID for form input
    *
-   * @property inputId
    * @type {String}
    * @default null
    * @public
    */
-  inputId: null,
+  inputId = null;
 
   /**
    * Name for form input
    *
-   * @property name
    * @type {String}
    * @default null
    * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Value for form input
    *
-   * @property value
    * @type {String}
    * @default null
    * @public
    */
-  value: null,
+  value = null;
 
   /**
    * Display an error state
    *
-   * @property error
    * @type {String|Boolean}
    * @default null
    * @public
    */
-  error: null,
+  error = null;
 
   /**
    * Disable the checkbox
    *
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
    * Callback when checkbox is toggled
    *
-   * @property onChange
    * @type {function}
    * @default noop
    * @public
    */
-  onChange() {},
+  onChange() {}
 
   /**
    * Callback when checkbox is focussed
    *
-   * @property onFocus
    * @type {function}
    * @default noop
    * @public
    */
-  onFocus() {},
+  onFocus() {}
 
   /**
    * Callback when focus is removed
    *
-   * @property onBlur
    * @type {function}
    * @default noop
    * @public
    */
-  onBlur() {},
+  onBlur() {}
 
-  /**
-   * @private
-   */
-  isIndeterminate: equal('checked', 'indeterminate').readOnly(),
+  @equal('checked', 'indeterminate')
+  isIndeterminate;
 
-  /**
-   * @private
-   */
-  isChecked: computed('isIndeterminate', 'checked', function() {
-    return !this.get('isIndeterminate') && Boolean(this.get('checked'));
-  }).readOnly(),
+  @computed('isIndeterminate', 'checked')
+  get isChecked() {
+    return !this.isIndeterminate && Boolean(this.checked);
+  }
 
-  /**
-   * @private
-   */
-  checkedState: computed('isIndeterminate', 'isChecked', function() {
-    return this.get('isIndeterminate') ? 'mixed' : `${this.get('isChecked')}`;
-  }).readOnly(),
+  @computed('isIndeterminate', 'isChecked')
+  get checkedState() {
+    return this.isIndeterminate ? 'mixed' : `${this.isChecked}`;
+  }
 
-  /**
-   * @private
-   */
-  checkboxClasses: computed('isIndeterminate', function() {
-    let classNames = ['Polaris-Checkbox__Input'];
+  @computed('isIndeterminate')
+  get checkboxClasses() {
+    let cssClasses = ['Polaris-Checkbox__Input'];
 
-    if (this.get('isIndeterminate')) {
-      classNames.push('Polaris-Checkbox__Input--indeterminate');
+    if (this.isIndeterminate) {
+      cssClasses.push('Polaris-Checkbox__Input--indeterminate');
     }
 
-    return classNames.join(' ');
-  }).readOnly(),
+    return cssClasses.join(' ');
+  }
 
-  /**
-   * @private
-   */
-  _id: computed('inputId', function() {
-    return this.get('inputId') || `polaris-checkbox-${guidFor(this)}`;
-  }).readOnly(),
+  @computed('inputId')
+  get _id() {
+    return this.inputId || `polaris-checkbox-${guidFor(this)}`;
+  }
 
-  /**
-   * @private
-   */
-  describedBy: computed('error', 'helpText', '_id', function() {
+  @computed('error', 'helpText', '_id')
+  get describedBy() {
     let describedBy = [];
-    const { error, helpText } = this.getProperties('error', 'helpText');
+    const { error, helpText } = this;
 
     if (error) {
-      describedBy.push(`${this.get('_id')}Error`);
+      describedBy.push(`${this._id}Error`);
     }
 
     if (helpText) {
-      describedBy.push(`${this.get('_id')}HelpText`);
+      describedBy.push(`${this._id}HelpText`);
     }
 
     return describedBy.length ? describedBy.join(' ') : undefined;
-  }).readOnly(),
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
+  @action
+  handleChange(event) {
+    let { onChange, inputId, checked } = this;
+    if (onChange == null) {
+      return;
+    }
 
-    deprecate(
-      'Passing an explicit `labelComponent` to `polaris-checkbox` is deprecated - pass the component as `label` instead',
-      !this.get('labelComponent'),
-      {
-        id: 'ember-polaris.polaris-checkbox.label-component',
-        until: '2.0.0',
-      }
-    );
-  },
+    let { currentTarget } = event;
+    onChange(currentTarget.checked, inputId);
 
-  actions: {
-    handleChange(event) {
-      let { onChange, inputId, checked } = this.getProperties(
-        'onChange',
-        'inputId',
-        'checked'
-      );
-      if (onChange == null) {
-        return;
-      }
-
-      let { currentTarget } = event;
-      onChange(currentTarget.checked, inputId);
-
-      if (checked && !currentTarget.checked) {
-        currentTarget.focus();
-      }
-    },
-  },
-});
+    if (checked && !currentTarget.checked) {
+      currentTarget.focus();
+    }
+  }
+}

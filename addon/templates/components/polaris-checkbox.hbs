@@ -1,37 +1,37 @@
-{{#polaris-choice
-  inputId=_id
-  label=label
-  labelComponent=labelComponent
-  labelHidden=labelHidden
-  helpText=helpText
-  error=error
-  disabled=disabled
-}}
-  <span class="Polaris-Checkbox {{if error "Polaris-Checkbox--error"}}">
+<PolarisChoice
+  @inputId={{this._id}}
+  @label={{@label}}
+  @labelHidden={{this.labelHidden}}
+  @helpText={{@helpText}}
+  @error={{@error}}
+  @disabled={{this.disabled}}
+  ...attributes
+>
+  <span class="Polaris-Checkbox {{if @error "Polaris-Checkbox--error"}}">
     <input
       data-test-checkbox-input
-      data-test-checkbox-input-checked={{isChecked}}
+      data-test-checkbox-input-checked={{this.isChecked}}
       type="checkbox"
       role="checkbox"
-      id={{_id}}
+      id={{this._id}}
       name={{name}}
       value={{value}}
-      checked={{isChecked}}
-      disabled={{disabled}}
-      class={{checkboxClasses}}
-      aria-checked={{checkedState}}
-      aria-invalid={{if error "true" "false"}}
-      aria-describedby={{describedBy}}
-      indeterminate={{if isIndeterminate "true"}}
-      onchange={{action "handleChange"}}
-      onfocus={{action onFocus}}
-      onblur={{action onBlur}}
+      checked={{this.isChecked}}
+      disabled={{this.disabled}}
+      class={{this.checkboxClasses}}
+      aria-checked={{this.checkedState}}
+      aria-invalid={{if @error "true" "false"}}
+      aria-describedby={{this.describedBy}}
+      indeterminate={{if this.isIndeterminate "true"}}
+      onchange={{this.handleChange}}
+      onfocus={{this.onFocus}}
+      onblur={{this.onBlur}}
     >
 
     <span class="Polaris-Checkbox__Backdrop"></span>
 
     <span class="Polaris-Checkbox__Icon">
-      {{polaris-icon source=(if isIndeterminate "subtract" "checkmark")}}
+      <PolarisIcon @source={{if this.isIndeterminate "subtract" "checkmark"}} />
     </span>
   </span>
-{{/polaris-choice}}
+</PolarisChoice>

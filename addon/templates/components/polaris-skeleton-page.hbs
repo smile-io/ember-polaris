@@ -1,49 +1,78 @@
 <div
-  class="Polaris-SkeletonPage__Header {{if breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}} {{if dummySecondaryActions "Polaris-SkeletonPage__Header--hasSecondaryActions"}}"
-  data-test-skeleton-page-header
+  class={{this.cssClasses}}
+  aria-label={{this.ariaLabel}}
+  role={{this.role}}
+  data-test-skeleton-page
+  ...attributes
 >
-  {{#if breadcrumbs}}
-    <div class="Polaris-SkeletonPage__BreadcrumbAction" style="width: 60px;" data-test-skeleton-page-breadcrumbs>
-      {{polaris-skeleton-body-text lines=1 data-test-skeleton-page-breadcrumb=true}}
-    </div>
-  {{/if}}
+  <div
+    class="Polaris-SkeletonPage__Header
+      {{if @breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
+      {{if
+        this.dummySecondaryActions
+        "Polaris-SkeletonPage__Header--hasSecondaryActions"
+      }}"
+    data-test-skeleton-page-header
+  >
+    {{#if @breadcrumbs}}
+      <div
+        class="Polaris-SkeletonPage__BreadcrumbAction"
+        style="width: 60px;"
+        data-test-skeleton-page-breadcrumbs
+      >
+        <PolarisSkeletonBodyText
+          @lines={{1}}
+          data-test-skeleton-page-breadcrumb
+        />
+      </div>
+    {{/if}}
 
-  <div data-test-skeleton-page-title-primary-action class="Polaris-SkeletonPage__TitleAndPrimaryAction">
-    <div data-test-skeleton-page-title class="Polaris-SkeletonPage__Title">
-      {{#if hasTitle}}
-        {{#if hasTitleText}}
-          {{polaris-display-text
-            data-test-skeleton-page-title-text=true
-            tagName="h1"
-            size="large"
-            text=title
-          }}
-        {{else}}
-          {{polaris-skeleton-display-text data-test-skeleton-page-title-text=true size="large"}}
+    <div
+      data-test-skeleton-page-title-primary-action
+      class="Polaris-SkeletonPage__TitleAndPrimaryAction"
+    >
+      <div data-test-skeleton-page-title class="Polaris-SkeletonPage__Title">
+        {{#if this.hasTitle}}
+          {{#if this.hasTitleText}}
+            <PolarisDisplayText
+              data-test-skeleton-page-title-text
+              @htmlTag="h1"
+              @size="large"
+              @text={{or @title ""}}
+            />
+          {{else}}
+            <PolarisSkeletonDisplayText
+              data-test-skeleton-page-title-text
+              @size="large"
+            />
+          {{/if}}
         {{/if}}
+      </div>
+
+      {{#if @primaryAction}}
+        <div
+          class="Polaris-SkeletonPage__PrimaryAction"
+          data-test-skeleton-page-primary-action
+        >
+          <PolarisSkeletonDisplayText @size="large" />
+        </div>
       {{/if}}
     </div>
 
-    {{#if primaryAction}}
-      <div class="Polaris-SkeletonPage__PrimaryAction" data-test-skeleton-page-primary-action>
-        {{polaris-skeleton-display-text size="large"}}
+    {{#if this.dummySecondaryActions}}
+      <div class="Polaris-SkeletonPage__Actions" data-test-skeleton-page-actions>
+        {{#each this.dummySecondaryActions}}
+          <PolarisSkeletonPage::Action data-test-skeleton-page-action />
+        {{/each}}
       </div>
     {{/if}}
   </div>
 
-  {{#if dummySecondaryActions}}
-    <div class="Polaris-SkeletonPage__Actions" data-test-skeleton-page-actions>
-      {{#each dummySecondaryActions}}
-        {{polaris-skeleton-page/action data-test-skeleton-page-action=true}}
-      {{/each}}
-    </div>
-  {{/if}}
-</div>
-
-<div class="Polaris-SkeletonPage__Content" data-test-skeleton-page-content>
-  {{#if hasBlock}}
-    {{yield}}
-  {{else}}
-    {{text}}
-  {{/if}}
+  <div class="Polaris-SkeletonPage__Content" data-test-skeleton-page-content>
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </div>
 </div>

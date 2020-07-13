@@ -1,31 +1,31 @@
-{{#polaris-labelled
-  id=_id
-  label=label
-  error=error
-  action=labelAction
-  labelHidden=(or labelInline labelHidden)
-  helpText=helpText
-}}
+<PolarisLabelled
+  @id={{this._id}}
+  @label={{@label}}
+  @error={{@error}}
+  @primaryAction={{@labelAction}}
+  @labelHidden={{or @labelInline @labelHidden}}
+  @helpText={{@helpText}}
+>
   <div class={{className}}>
     <select
       data-test-select={{dataTestSelect}}
       class="Polaris-Select__Input"
-      id={{_id}}
-      name={{name}}
-      value={{value}}
-      disabled={{disabled}}
-      aria-invalid={{if hasError "true" "false"}}
-      aria-describedby={{describedBy}}
-      onfocus={{action onFocus}}
-      onblur={{action onBlur}}
-      onchange={{action "handleChange"}}
+      id={{this._id}}
+      name={{@name}}
+      value={{this.value}}
+      disabled={{@disabled}}
+      aria-invalid={{if this.hasError "true" "false"}}
+      aria-describedby={{this.describedBy}}
+      {{on "focus" this.onFocus}}
+      {{on "blur" this.onBlur}}
+      {{on "change" this.handleChange}}
     >
-      {{#each normalizedOptions as |optionOrGroup|}}
+      {{#each this.normalizedOptions as |optionOrGroup|}}
         {{#if (polaris-select/is-group optionOrGroup)}}
           <optgroup label={{optionOrGroup.title}}>
             {{#each optionOrGroup.options as |opt|}}
               <option
-                selected={{eq opt.value value}}
+                selected={{eq opt.value this.value}}
                 value={{opt.value}}
                 disabled={{opt.disabled}}
                 hidden={{opt.hidden}}
@@ -36,7 +36,7 @@
           </optgroup>
         {{else}}
           <option
-            selected={{eq optionOrGroup.value value}}
+            selected={{eq optionOrGroup.value this.value}}
             value={{optionOrGroup.value}}
             disabled={{optionOrGroup.disabled}}
             hidden={{optionOrGroup.hidden}}
@@ -48,20 +48,20 @@
     </select>
 
     <div class="Polaris-Select__Content" aria-hidden>
-      {{#if labelInline}}
+      {{#if @labelInline}}
         <span class="Polaris-Select__InlineLabel">
-          {{label}}
+          {{@label}}
         </span>
       {{/if}}
 
       <span class="Polaris-Select__SelectedOption">
-        {{selectedOption}}
+        {{this.selectedOption}}
       </span>
 
       <span class="Polaris-Select__Icon">
-        {{polaris-icon source="arrow-up-down"}}
+        <PolarisIcon @source="arrow-up-down" />
       </span>
     </div>
     <div class="Polaris-Select__Backdrop"></div>
   </div>
-{{/polaris-labelled}}
+</PolarisLabelled>

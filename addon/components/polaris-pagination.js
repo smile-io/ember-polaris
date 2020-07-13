@@ -1,173 +1,153 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { not, and } from '@ember/object/computed';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { computed } from '@ember/object';
-import { and, not } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-pagination';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-export default Component.extend({
-  tagName: 'nav',
-
-  attributeBindings: ['accessibilityLabel:aria-label'],
-
-  classNames: ['Polaris-Pagination'],
-
-  classNameBindings: ['plain:Polaris-Pagination--plain'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisPagination extends Component {
   /**
    * A more subdued control for use in headers
    *
-   * @property plain
    * @type {Boolean}
    * @default false
    * @public
    */
-  plain: false,
+  plain = false;
 
   /**
    * The URL of the next page
    *
    * TODO not implemented
-   * @property nextUrl
    * @type {String}
    * @default null
    * @public
    */
-  nextUrl: null,
+  nextUrl = null;
 
   /**
    * The URL of the previous page
    *
    * TODO not implemented
-   * @property previousUrl
    * @type {String}
    * @default null
    * @public
    */
-  previousUrl: null,
+  previousUrl = null;
 
   /**
    * Whether there is a next page to show
    *
-   * @property hasNext
    * @type {Boolean}
    * @default false
    * @public
    */
-  hasNext: false,
+  hasNext = false;
 
   /**
    * Whether there is a previous page to show
    *
-   * @property hasPrevious
    * @type {Boolean}
    * @default false
    * @public
    */
-  hasPrevious: false,
+  hasPrevious = false;
 
   /**
    * Visually hidden text for screen readers
    *
-   * @property accessibilityLabel
    * @type {string}
    * @default 'Pagination'
    * @public
    */
-  accessibilityLabel: 'Pagination',
+  accessibilityLabel = 'Pagination';
 
   /**
    * Keyboard shortcuts for the previous button
    *
-   * @property previousKeys
    * @type {KeyEvent.code[]}
    * @default null
    * @public
    */
-  previousKeys: null,
+  previousKeys = null;
 
   /**
    * Keyboard shortcuts for the next button
    *
-   * @property nextKeys
    * @type {KeyEvent.code[]}
    * @default null
    * @public
    */
-  nextKeys: null,
+  nextKeys = null;
 
   /**
    * Callback when next button is clicked
    *
-   * @property onNext
    * @type {function}
    * @default no-op
    * @public
    */
-  onNext() {},
+  onNext() {}
 
   /**
    * Callback when previous button is clicked
    *
-   * @property onPrevious
    * @type {function}
    * @default no-op
    * @public
    */
-  onPrevious() {},
+  onPrevious() {}
 
-  /** @private */
-  handleMouseUpByBlurring,
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  /** @private */
-  isPreviousDisabled: not('hasPrevious').readOnly(),
+  @(not('hasPrevious').readOnly())
+  isPreviousDisabled;
 
-  /** @private */
-  isNextDisabled: not('hasNext').readOnly(),
+  @(not('hasNext').readOnly())
+  isNextDisabled;
 
-  /** @private */
-  hasNextKeysConfigured: computed('nextKeys.[]', function() {
-    if (isEmpty(this.nextKeys)) {
+  @(and('hasNext', 'hasNextKeysConfigured', 'onNext').readOnly())
+  isNextKeyListenerEnabled;
+
+  @(and('hasPrevious', 'hasPreviousKeysConfigured', 'onPrevious').readOnly())
+  isPreviousKeyListenerEnabled;
+
+  @(computed('nextKeys.[]').readOnly())
+  get hasNextKeysConfigured() {
+    let { nextKeys } = this;
+
+    if (isEmpty(nextKeys)) {
       return false;
     }
 
     assert(
       'ember-polaris:polaris-pagination `nextKeys` should be an array',
-      isArray(this.nextKeys)
+      isArray(nextKeys)
     );
 
     return true;
-  }).readOnly(),
+  }
 
-  /** @private */
-  hasPreviousKeysConfigured: computed('previousKeys.[]', function() {
-    if (isEmpty(this.previousKeys)) {
+  @(computed('previousKeys.[]').readOnly())
+  get hasPreviousKeysConfigured() {
+    let { previousKeys } = this;
+
+    if (isEmpty(previousKeys)) {
       return false;
     }
 
     assert(
       'ember-polaris:polaris-pagination `previousKeys` should be an array',
-      isArray(this.previousKeys)
+      isArray(previousKeys)
     );
 
     return true;
-  }).readOnly(),
-
-  /** @private */
-  isNextKeyListenerEnabled: and(
-    'hasNext',
-    'hasNextKeysConfigured',
-    'onNext'
-  ).readOnly(),
-
-  /** @private */
-  isPreviousKeyListenerEnabled: and(
-    'hasPrevious',
-    'hasPreviousKeysConfigured',
-    'onPrevious'
-  ).readOnly(),
-});
+  }
+}

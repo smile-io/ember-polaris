@@ -1,20 +1,38 @@
 import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-layout/section';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-Layout__Section'],
-  classNameBindings: [
-    'secondary:Polaris-Layout__Section--secondary',
-    'fullWidth:Polaris-Layout__Section--fullWidth',
-    'oneHalf:Polaris-Layout__Section--oneHalf',
-    'oneThird:Polaris-Layout__Section--oneThird',
-  ],
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisLayoutSection extends Component {
+  text = null;
+  secondary = false;
+  fullWidth = false;
+  oneHalf = false;
+  oneThird = false;
 
-  layout,
+  @computed('secondary', 'fullWidth', 'oneHalf', 'oneThird', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Layout__Section'];
+    if (this.secondary) {
+      cssClasses.push('Polaris-Layout__Section--secondary');
+    }
+    if (this.fullWidth) {
+      cssClasses.push('Polaris-Layout__Section--fullWidth');
+    }
+    if (this.oneHalf) {
+      cssClasses.push('Polaris-Layout__Section--oneHalf');
+    }
+    if (this.oneThird) {
+      cssClasses.push('Polaris-Layout__Section--oneThird');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
 
-  text: null,
-  secondary: false,
-  fullWidth: false,
-  oneHalf: false,
-  oneThird: false,
-});
+    return cssClasses.join(' ');
+  }
+}

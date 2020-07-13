@@ -1,36 +1,35 @@
-{{#each normalizedOptions as |normalizedOption sectionIndex|}}
-  <li>
-    {{#if normalizedOption.title}}
-      <p class="Polaris-OptionList__Title" role={{role}}>
-        {{normalizedOption.title}}
-      </p>
-    {{/if}}
+<ul role={{@role}} class="Polaris-OptionList {{@class}}" ...attributes>
+  {{#each this.normalizedOptions as |normalizedOption sectionIndex|}}
+    <li>
+      {{#if normalizedOption.title}}
+        <p class="Polaris-OptionList__Title" role={{@role}}>
+          {{normalizedOption.title}}
+        </p>
+      {{/if}}
 
-    <ul
-      class="Polaris-OptionList__Options"
-      id={{id}}
-      role={{role}}
-      aria-multiselectable={{allowMultiple}}
-    >
-      {{#each normalizedOption.options as |option optionIndex|}}
-        {{polaris-option-list/option
-          value=option.value
-          label=option.label
-          disabled=option.disabled
-          active=option.active
-          optionId=(or
-            option.id
-            (concat id "-" sectionIndex "-" optionIndex)
-          )
-          media=option.media
-          section=sectionIndex
-          index=optionIndex
-          onClick=(action "handleClick")
-          select=(array-contains selected option.value)
-          allowMultiple=allowMultiple
-          role=optionRole
-        }}
-      {{/each}}
-    </ul>
-  </li>
-{{/each}}
+      <ul
+        class="Polaris-OptionList__Options"
+        id={{or @id this.id}}
+        role={{@role}}
+        aria-multiselectable={{@allowMultiple}}
+      >
+        {{#each normalizedOption.options as |option optionIndex|}}
+          <PolarisOptionList::Option
+            @value={{option.value}}
+            @label={{option.label}}
+            @disabled={{option.disabled}}
+            @active={{option.active}}
+            @optionId={{or option.id (concat (or @id this.id) "-" sectionIndex "-" optionIndex)}}
+            @media={{option.media}}
+            @section={{sectionIndex}}
+            @index={{optionIndex}}
+            @onClick={{fn this.handleClick}}
+            @select={{array-contains @selected option.value}}
+            @allowMultiple={{@allowMultiple}}
+            @role={{@optionRole}}
+          />
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+</ul>

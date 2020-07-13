@@ -1,42 +1,40 @@
-{{#if (eq size "small")}}
-  {{#polaris-stack vertical=true spacing="tight"}}
-    {{polaris-icon
-      color="inkLightest"
-      source=iconDragDrop
-    }}
-  {{/polaris-stack}}
-{{else if (eq size "medium")}}
-  {{#polaris-stack vertical=true spacing="tight"}}
-    {{polaris-link text=actionTitle}}
-    {{polaris-caption text=actionHint}}
-  {{/polaris-stack}}
-{{else if (eq size "large")}}
-  {{#polaris-stack vertical=true spacing="tight"}}
-    {{#if (eq type "file")}}
-      <img class={{imageClasses}} src={{fileUpload}} alt="">
-    {{/if}}
+<div class="Polaris-DropZone-FileUpload {{@class}}" ...attributes>
+  {{#if (eq this.size "small")}}
+    <PolarisStack @vertical={{true}} @spacing="tight">
+      <PolarisIcon
+        @color="inkLightest"
+        @source={{this.iconDragDrop}}
+      />
+    </PolarisStack>
+  {{else if (eq this.size "medium")}}
+    <PolarisStack @vertical={{true}} @spacing="tight">
+      <PolarisLink @text={{this.actionTitle}} />
+      <PolarisCaption @text={{this.actionHint}} />
+    </PolarisStack>
+  {{else if (eq this.size "large")}}
+    <PolarisStack @vertical={{true}} @spacing="tight">
+      {{#if (eq this.type "file")}}
+        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
+      {{else if (eq this.type "image")}}
+        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
+      {{/if}}
 
-    {{#if (eq type "image")}}
-      <img class={{imageClasses}} src={{imageUpload}} alt="">
-    {{/if}}
+      <PolarisButton @size="slim" @text={{this.actionTitle}} />
 
-    {{polaris-button size="slim" text=actionTitle}}
+      <PolarisCaption>
+        <PolarisTextStyle @variation="subdued" @text={{this.actionHint}} />
+      </PolarisCaption>
+    </PolarisStack>
+  {{else if (eq this.size "extraLarge")}}
+    <PolarisStack @vertical={{true}}>
+      {{#if (eq this.type "file")}}
+        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
+      {{else if (eq this.type "image")}}
+        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
+      {{/if}}
 
-    {{#polaris-caption}}
-      {{polaris-text-style variation="subdued" text=actionHint}}
-    {{/polaris-caption}}
-  {{/polaris-stack}}
-{{else if (eq size "extraLarge")}}
-  {{#polaris-stack vertical=true}}
-    {{#if (eq type "file")}}
-      <img class={{imageClasses}} src={{fileUpload}} alt="">
-    {{/if}}
-
-    {{#if (eq type "image")}}
-      <img class={{imageClasses}} src={{imageUpload}} alt="">
-    {{/if}}
-
-    {{polaris-button text=actionTitle}}
-    {{polaris-text-style variation="subdued" text=actionHint}}
-  {{/polaris-stack}}
-{{/if}}
+      <PolarisButton @text={{this.actionTitle}} />
+      <PolarisTextStyle @variation="subdued" @text={{this.actionHint}} />
+    </PolarisStack>
+  {{/if}}
+</div>

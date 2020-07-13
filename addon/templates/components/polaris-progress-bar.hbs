@@ -1,17 +1,23 @@
-<progress
-  data-test-progress-bar-progress
-  class="Polaris-ProgressBar__Progress"
-  max="100"
-  value={{parsedProgress}}
->
-</progress>
-
 <div
-  data-test-progress-bar-indicator
-  class="Polaris-ProgressBar__Indicator"
-  style={{progressStyle}}
+  data-test-progress-bar
+  class="Polaris-ProgressBar {{@class}} {{this.sizeClass}}"
+  ...attributes
 >
-  <span data-test-progress-bar-indicator-label class="Polaris-ProgressBar__Label">
-    {{parsedProgress}}%
-  </span>
+  <progress
+    data-test-progress-bar-progress
+    class="Polaris-ProgressBar__Progress"
+    max="100"
+    value={{this.parsedProgress}}
+  >
+  </progress>
+
+  <div
+    data-test-progress-bar-indicator
+    class="Polaris-ProgressBar__Indicator"
+    style={{progressStyle}}
+  >
+    <span data-test-progress-bar-indicator-label class="Polaris-ProgressBar__Label">
+      {{this.parsedProgress}}%
+    </span>
+  </div>
 </div>

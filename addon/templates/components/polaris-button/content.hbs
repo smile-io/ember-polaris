@@ -1,36 +1,38 @@
-{{#if loading}}
-  <span class="Polaris-Button__Spinner">
-    {{polaris-spinner
-      size="small"
-      color=spinnerColor
-      accessibilityLabel="Loading"
-    }}
-  </span>
-{{/if}}
+<span class="Polaris-Button__Content">
+  {{#if @loading}}
+    <span class="Polaris-Button__Spinner">
+      <PolarisSpinner
+        @size="small"
+        @accessibilityLabel="Loading"
+        @color={{this.spinnerColor}}
+      />
+    </span>
+  {{/if}}
 
-{{#if icon}}
-  <span class="Polaris-Button__Icon">
-    {{#if (is-component-definition icon)}}
-      {{render-content icon}}
-    {{else}}
-      {{polaris-icon source=(if loading "placeholder" icon)}}
-    {{/if}}
-  </span>
-{{/if}}
+  {{#if @icon}}
+    <span class="Polaris-Button__Icon">
+      {{#if (is-component-definition @icon)}}
+        {{render-content @icon}}
+      {{else}}
+        <PolarisIcon @source={{if @loading "placeholder" @icon}} />
+      {{/if}}
+    </span>
+  {{/if}}
 
-{{#if (or text hasBlock)}}
-  {{!-- TODO: prevent rendering empty span here if block is empty. --}}
-  <span class="Polaris-Button__Text">
-    {{#if hasBlock}}
-      {{yield}}
-    {{else}}
-      {{text}}
-    {{/if}}
-  </span>
-{{/if}}
+  {{#if (or @text hasBlock)}}
+    {{!-- TODO: prevent rendering empty span here if block is empty. --}}
+    <span class="Polaris-Button__Text">
+      {{#if hasBlock}}
+        {{yield}}
+      {{else}}
+        {{text}}
+      {{/if}}
+    </span>
+  {{/if}}
 
-{{#if disclosure}}
-  <span class="Polaris-Button__Icon">
-    {{polaris-icon source=(if loading "placeholder" "caret-down")}}
-  </span>
-{{/if}}
+  {{#if @disclosure}}
+    <span class="Polaris-Button__Icon">
+      <PolarisIcon @source={{if @loading "placeholder" "caret-down"}} />
+    </span>
+  {{/if}}
+</span>

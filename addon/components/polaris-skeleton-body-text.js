@@ -1,37 +1,36 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-skeleton-body-text';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const defaultLines = 3;
 
-export default Component.extend({
-  classNames: ['Polaris-SkeletonBodyText__SkeletonBodyTextContainer'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSkeletonBodyText extends Component {
   /**
    * Number of lines to display
    *
-   * @property lines
-   * @public
    * @type {Number}
    * @default 3
+   * @public
    */
-  lines: defaultLines,
+  lines = defaultLines;
 
   /**
    * Array of dummy lines to iterate over in template
    *
-   * @property dummyLines
-   * @private
    * @type {Array}
    */
-  dummyLines: computed('lines', function() {
-    let lines = parseInt(this.get('lines'));
+  @computed('lines')
+  get dummyLines() {
+    let lines = parseInt(this.lines);
     if (isNaN(lines)) {
       lines = defaultLines;
     }
 
     return new Array(Math.max(lines, 0));
-  }).readOnly(),
-});
+  }
+}

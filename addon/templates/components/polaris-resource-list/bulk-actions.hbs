@@ -1,67 +1,62 @@
 <div
-  class="Polaris-ResourceList-BulkActions__Group
-    Polaris-ResourceList-BulkActions__Group--smallScreen
-    {{if selectMode
-      "Polaris-ResourceList-BulkActions__Group--entered"
-      "Polaris-ResourceList-BulkActions__Group--exited"
-    }}
-  "
+  data-test-bulk-actions="true"
+  class={{this.cssClasses}}
+  {{did-insert this.insertBulkActions}}
+  ...attributes
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
-    {{polaris-resource-list/checkable-button
-      accessibilityLabel=accessibilityLabel
-      label=label
-      selected=selected
-      selectMode=selectMode
-      measuring=measuring
-      disabled=disabled
-      onToggleAll=(action onToggleAll)
-    }}
+    <PolarisResourceList::CheckableButton
+      @accessibilityLabel={{@accessibilityLabel}}
+      @label={{@label}}
+      @selected={{@selected}}
+      @selectMode={{@selectMode}}
+      @measuring={{this.measuring}}
+      @disabled={{@disabled}}
+      @onToggleAll={{fn (or @onToggleAll this.onToggleAll)}}
+    />
 
-    {{#if hasActions}}
+    {{#if this.hasActions}}
       <div class="Polaris-ResourceList-BulkActions__Popover">
-        {{#polaris-popover as |popover|}}
-          {{#popover.activator}}
-            {{polaris-resource-list/bulk-actions/bulk-action-button
-              content="Actions"
-            }}
-          {{/popover.activator}}
+        <PolarisPopover as |popover|>
+          <popover.activator>
+            <PolarisResourceList::BulkActions::BulkActionButton @content="Actions" />
+          </popover.activator>
 
-          {{#popover.content}}
-            {{polaris-action-list
-              items=promotedActions
-              sections=actionSections
-              onActionAnyItem=(action popover.close)
-            }}
-          {{/popover.content}}
-        {{/polaris-popover}}
+          <popover.content>
+            <PolarisActionList
+              @items={{@promotedActions}}
+              @sections={{this.actionSections}}
+              @onActionAnyItem={{action popover.close}}
+            />
+          </popover.content>
+        </PolarisPopover>
       </div>
     {{/if}}
 
     <button
       class="Polaris-ResourceList-BulkActions__Button Polaris-ResourceList-BulkActions__Button--cancel"
       type="button"
-      onclick={{action "setSelectMode" false}}
+      {{on "click" (fn this.setSelectMode false)}}
     >
       Cancel
     </button>
   </div>
 
-  {{#if (or paginatedSelectAllAction (and paginatedSelectAllText paginatedSelectAllAction))}}
+  {{#if (or @paginatedSelectAllAction (and @paginatedSelectAllText @paginatedSelectAllAction))}}
     <div class="Polaris-ResourceList-BulkActions__PaginatedSelectAll">
-      {{#if (and paginatedSelectAllText paginatedSelectAllAction)}}
-        <span aria-live="polite">{{paginatedSelectAllText}}</span>
+      {{#if (and @paginatedSelectAllText @paginatedSelectAllAction)}}
+        <span aria-live="polite">{{@paginatedSelectAllText}}</span>
       {{else}}
-        {{paginatedSelectAllText}}
+        {{@paginatedSelectAllText}}
       {{/if}}
 
-      {{#if paginatedSelectAllAction}}
-        {{polaris-button
-          plain=true
-          disabled=disabled
-          text=paginatedSelectAllAction.content
-          onClick=(action paginatedSelectAllAction.onAction)
-        }}
+      {{#if @paginatedSelectAllAction}}
+        <PolarisButton
+          @plain={{true}}
+          @disabled={{@disabled}}
+          @text={{@paginatedSelectAllAction.content}}
+          @onClick={{action @paginatedSelectAllAction.onAction}}
+        />
       {{/if}}
     </div>
   {{/if}}
@@ -70,74 +65,74 @@
 <div
   class="Polaris-ResourceList-BulkActions__Group
     Polaris-ResourceList-BulkActions__Group--largeScreen
-    {{if measuring "Polaris-ResourceList-BulkActions__Group--measuring"}}
-    {{if selectMode
+    {{if this.measuring "Polaris-ResourceList-BulkActions__Group--measuring"}}
+    {{if @selectMode
       "Polaris-ResourceList-BulkActions__Group--entered"
       "Polaris-ResourceList-BulkActions__Group--exited"
     }}
   "
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
-    {{polaris-resource-list/checkable-button
-      accessibilityLabel=accessibilityLabel
-      label=label
-      selected=selected
-      selectMode=selectMode
-      measuring=measuring
-      disabled=disabled
-      onToggleAll=(action onToggleAll)
-    }}
+    <PolarisResourceList::CheckableButton
+      @accessibilityLabel={{@accessibilityLabel}}
+      @label={{@label}}
+      @selected={{@selected}}
+      @selectMode={{@selectMode}}
+      @measuring={{this.measuring}}
+      @disabled={{@disabled}}
+      @onToggleAll={{fn (or @onToggleAll this.onToggleAll)}}
+    />
 
-    {{#each promotedActionsToRender as |promotedAction|}}
-      {{polaris-resource-list/bulk-actions/bulk-action-button
-        content=promotedAction.content
-        onAction=(action promotedAction.onAction)
-        handleMeasurement=(action "handleMeasurement")
-      }}
+    {{#each this.promotedActionsToRender as |promotedAction|}}
+      <PolarisResourceList::BulkActions::BulkActionButton
+        @content={{promotedAction.content}}
+        @onAction={{action promotedAction.onAction}}
+        @handleMeasurement={{fn this.handleMeasurement}}
+      />
     {{/each}}
 
-    {{#if shouldRenderActionsPopover}}
+    {{#if this.shouldRenderActionsPopover}}
       <div class="Polaris-ResourceList-BulkActions__Popover">
-        {{#polaris-popover as |popover|}}
-          {{#component (if disabled
+        <PolarisPopover as |popover|>
+          {{#component (if @disabled
             (component "wrapper-element" tagName="")
             popover.activator
           )}}
-            {{polaris-resource-list/bulk-actions/bulk-action-button
-              content=activatorLabel
-              disabled=disabled
-            }}
+            <PolarisResourceList::BulkActions::BulkActionButton
+              @content={{this.activatorLabel}}
+              @disabled={{@disabled}}
+            />
           {{/component}}
 
-          {{#popover.content}}
-            {{polaris-action-list
-              sections=combinedActions
-              onActionAnyItem=(action popover.close)
-            }}
-          {{/popover.content}}
-        {{/polaris-popover}}
+          <popover.content>
+            <PolarisActionList
+              @sections={{this.combinedActions}}
+              @onActionAnyItem={{action popover.close}}
+            />
+          </popover.content>
+        </PolarisPopover>
       </div>
     {{/if}}
   </div>
 
   {{#if (or
-    paginatedSelectAllAction
-    (and paginatedSelectAllText paginatedSelectAllAction)
+    @paginatedSelectAllAction
+    (and @paginatedSelectAllText @paginatedSelectAllAction)
   )}}
     <div class="Polaris-ResourceList-BulkActions__PaginatedSelectAll">
-      {{#if (and paginatedSelectAllText paginatedSelectAllAction)}}
-        <span aria-live="polite">{{paginatedSelectAllText}}</span>
+      {{#if (and @paginatedSelectAllText @paginatedSelectAllAction)}}
+        <span aria-live="polite">{{@paginatedSelectAllText}}</span>
       {{else}}
-        {{paginatedSelectAllText}}
+        {{@paginatedSelectAllText}}
       {{/if}}
 
-      {{#if paginatedSelectAllAction}}
-        {{polaris-button
-          plain=true
-          disabled=disabled
-          text=paginatedSelectAllAction.content
-          onClick=(action paginatedSelectAllAction.onAction)
-        }}
+      {{#if @paginatedSelectAllAction}}
+        <PolarisButton
+          @plain={{true}}
+          @disabled={{@disabled}}
+          @text={{@paginatedSelectAllAction.content}}
+          @onClick={{action @paginatedSelectAllAction.onAction}}
+        />
       {{/if}}
     </div>
   {{/if}}

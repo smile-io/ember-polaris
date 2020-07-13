@@ -1,20 +1,20 @@
-{{#polaris-labelled
-  dataTestLabelled=dataTestRangeSlider
-  id=id
-  label=label
-  error=error
-  action=labelAction
-  labelHidden=labelHidden
-  helpText=helpText
-}}
+<PolarisLabelled
+  @dataTestLabelled={{this.dataTestRangeSlider}}
+  @id={{or @id this.id}}
+  @label={{@label}}
+  @error={{@error}}
+  @primaryAction={{@labelAction}}
+  @labelHidden={{@labelHidden}}
+  @helpText={{@helpText}}
+>
   <div
     data-test-range-slider-wrapper
-    class={{rangeWrapperClassNames}}
-    style={{rangeWrapperStyle}}
+    class={{this.rangeWrapperClassNames}}
+    style={{this.rangeWrapperStyle}}
   >
-    {{#if prefix}}
+    {{#if @prefix}}
       <div data-test-range-slider-prefix class="Polaris-RangeSlider__Prefix">
-        {{render-content prefix}}
+        {{render-content @prefix}}
       </div>
     {{/if}}
 
@@ -23,40 +23,40 @@
         data-test-range-slider-input
         type="range"
         class="Polaris-RangeSlider__Input"
-        id={{id}}
-        name={{id}}
-        min={{min}}
-        max={{max}}
-        step={{step}}
-        value={{value}}
-        disabled={{disabled}}
-        oninput={{action "handleChange"}}
-        onfocus={{action onFocus}}
-        onblur={{action onBlur}}
-        aria-valuemin={{min}}
-        aria-valuemax={{max}}
-        aria-valuenow={{value}}
-        aria-invalid={{hasError}}
-        aria-describedby={{ariaDescribedBy}}
+        id={{or @id this.id}}
+        name={{or @id this.id}}
+        min={{or @min this.min}}
+        max={{or @max this.max}}
+        step={{@step}}
+        value={{@value}}
+        disabled={{@disabled}}
+        oninput={{fn this.handleChange}}
+        onfocus={{fn (or @onFocus this.onFocus)}}
+        onblur={{fn (or @onBlur this.onBlur)}}
+        aria-valuemin={{or @min this.min}}
+        aria-valuemax={{or @max this.max}}
+        aria-valuenow={{@value}}
+        aria-invalid={{this.hasError}}
+        aria-describedby={{this.ariaDescribedBy}}
       >
 
-      {{#if shouldShowOutput}}
+      {{#if this.shouldShowOutput}}
         <output
           data-test-range-slider-output
-          htmlFor={{id}}
+          htmlFor={{or @id this.id}}
           class="Polaris-RangeSlider__Output"
         >
           <div class="Polaris-RangeSlider__OutputBubble">
-            <span class="Polaris-RangeSlider__OutputText">{{value}}</span>
+            <span class="Polaris-RangeSlider__OutputText">{{@value}}</span>
           </div>
         </output>
       {{/if}}
     </div>
 
-    {{#if suffix}}
+    {{#if @suffix}}
       <div data-test-range-slider-suffix class="Polaris-RangeSlider__Suffix">
-        {{render-content suffix}}
+        {{render-content @suffix}}
       </div>
     {{/if}}
   </div>
-{{/polaris-labelled}}
+</PolarisLabelled>

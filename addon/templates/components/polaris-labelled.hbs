@@ -1,37 +1,42 @@
-<div class={{if labelHidden "Polaris-Labelled--hidden"}} data-test-labelled={{dataTestLabelled}}>
-  {{#if label}}
+<div
+  class={{if @labelHidden "Polaris-Labelled--hidden"}}
+  data-test-labelled={{this.dataTestLabelled}}
+  ...attributes
+>
+  {{#if @label}}
     <div class="Polaris-Labelled__LabelWrapper">
-      {{#polaris-label
-        id=id
-        hidden=false
-      }}
-        {{label}}
-      {{/polaris-label}}
+      <PolarisLabel @id={{this.id}} @hidden={{false}}>
+        {{@label}}
+      </PolarisLabel>
 
-      {{#if action}}
-        {{polaris-button
-          plain=true
-          text=action.text
-          disabled=action.disabled
-          loading=action.loading
-          accessibilityLabel=action.accessibilityLabel
-          onClick=(action action.onAction)
-        }}
+      {{#if this.mainAction}}
+        <PolarisButton
+          @plain={{true}}
+          @text={{this.mainAction.text}}
+          @disabled={{this.mainAction.disabled}}
+          @loading={{this.mainAction.loading}}
+          @accessibilityLabel={{this.mainAction.accessibilityLabel}}
+          @onClick={{this.mainAction.onAction}}
+        />
       {{/if}}
     </div>
   {{/if}}
 
   {{yield}}
 
-  {{#if shouldRenderError}}
+  {{#if this.shouldRenderError}}
     <div data-test-labelled-error class="Polaris-Labelled__Error">
-      {{polaris-inline-error message=error fieldID=id}}
+      <PolarisInlineError @message={{@error}} @fieldID={{this.id}} />
     </div>
   {{/if}}
 
-  {{#if helpText}}
-    <div data-test-label-help-text id={{helpTextId}} class="Polaris-Labelled__HelpText">
-      {{render-content helpText}}
+  {{#if @helpText}}
+    <div
+      data-test-label-help-text
+      class="Polaris-Labelled__HelpText"
+      id={{this.helpTextId}}
+    >
+      {{render-content @helpText}}
     </div>
   {{/if}}
 </div>

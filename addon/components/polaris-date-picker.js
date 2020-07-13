@@ -1,6 +1,7 @@
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isNone } from '@ember/utils';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { deriveRange } from '../helpers/polaris-date-picker/derive-range';
 import layout from '../templates/components/polaris-date-picker';
 import {
@@ -14,226 +15,184 @@ import {
   weekdays,
   isSameDay,
 } from '../utils/dates';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const weekStartsOn = weekdays.Sunday;
 
-export default Component.extend({
-  classNames: ['Polaris-DatePicker'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDatePicker extends Component {
   /**
    * The selected date or range of dates
    *
-   * @property selected
-   * @public
    * @type {Date | Object}
    * @default null
+   * @public
    */
-  selected: null,
+  selected = null;
 
   /**
    * The month to show
    *
-   * @property month
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
-  month: null,
+  month = null;
 
   /**
    * The year to show
    *
-   * @property year
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
-  year: null,
+  year = null;
 
   /**
    * Disable selecting dates before this date
    *
-   * @property disableDatesBefore
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  disableDatesBefore: null,
+  disableDatesBefore = null;
 
   /**
    * Disable selecting dates after this
    *
-   * @property disableDatesAfter
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  disableDatesAfter: null,
+  disableDatesAfter = null;
 
   /**
    * The selection can span multiple months
    *
-   * @property multiMonth
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  multiMonth: false,
+  multiMonth = false;
 
   /**
    * First day of week. Sunday by default
    *
-   * @property weekStartsOn
-   * @public
    * @type {String}
    * @default 'Sunday'
+   * @public
    */
-  weekStartsOn,
+  weekStartsOn = weekStartsOn;
 
   /**
    * Allow a range of dates to be selected
    *
-   * @property allowRange
-   * @public
    * @type {Boolean}
+   * @public
    */
-  allowRange: computed('selected', function() {
-    let selected = this.get('selected');
-
-    return selected !== null && !(selected instanceof Date);
-  }),
+  @computed('selected')
+  get allowRange() {
+    return this.selected !== null && !(this.selected instanceof Date);
+  }
 
   /**
    * Callback when date is selected
    *
-   * @property title
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onChange(/* dateRange */) {},
+  onChange /* dateRange */() {}
 
   /**
    * Callback when month is changed
    *
-   * @property onMonthChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onMonthChange(/* month, year */) {},
+  onMonthChange /* month, year */() {}
 
-  hoverDate: null,
+  hoverDate = null;
+  focusDate = null;
 
-  focusDate: null,
+  @computed('month', 'year')
+  get showNextYear() {
+    return getNextDisplayYear(this.month, this.year);
+  }
 
-  'data-test-date-picker': true,
+  @computed('month')
+  get showNextMonth() {
+    return getNextDisplayMonth(this.month);
+  }
 
-  showNextYear: computed('month', 'year', function() {
-    let { month, year } = this.getProperties('month', 'year');
+  @computed('showNextMonth', 'showNextYear')
+  get showNextToNextYear() {
+    return getNextDisplayYear(this.showNextMonth, this.showNextYear);
+  }
 
-    return getNextDisplayYear(month, year);
-  }).readOnly(),
+  @computed('showNextMonth')
+  get showNextToNextMonth() {
+    return getNextDisplayMonth(this.showNextMonth);
+  }
 
-  showNextMonth: computed('month', function() {
-    return getNextDisplayMonth(this.get('month'));
-  }).readOnly(),
+  @computed('month', 'year')
+  get showPreviousYear() {
+    return getPreviousDisplayYear(this.month, this.year);
+  }
 
-  showNextToNextYear: computed('showNextMonth', 'showNextYear', function() {
-    let { showNextMonth, showNextYear } = this.getProperties(
-      'showNextMonth',
-      'showNextYear'
-    );
+  @computed('month')
+  get showPreviousMonth() {
+    return getPreviousDisplayMonth(this.month);
+  }
 
-    return getNextDisplayYear(showNextMonth, showNextYear);
-  }).readOnly(),
+  @computed('showPreviousMonth')
+  get previousMonthName() {
+    return monthsArray[this.showPreviousMonth];
+  }
 
-  showNextToNextMonth: computed('showNextMonth', function() {
-    return getNextDisplayMonth(this.get('showNextMonth'));
-  }).readOnly(),
+  @computed('multiMonth', 'showNextToNextMonth', 'showNextMonth')
+  get nextMonth() {
+    let { multiMonth, showNextToNextMonth, showNextMonth } = this;
 
-  showPreviousYear: computed('month', 'year', function() {
-    let { month, year } = this.getProperties('month', 'year');
+    return multiMonth
+      ? monthsArray[showNextToNextMonth]
+      : monthsArray[showNextMonth];
+  }
 
-    return getPreviousDisplayYear(month, year);
-  }).readOnly(),
+  @computed('multiMonth', 'showNextToNextYear', 'showNextYear')
+  get nextYear() {
+    return this.multiMonth ? this.showNextToNextYear : this.showNextYear;
+  }
 
-  showPreviousMonth: computed('month', function() {
-    return getPreviousDisplayMonth(this.get('month'));
-  }).readOnly(),
+  @computed('previousMonthName', 'showPreviousYear')
+  get previousMonthLabel() {
+    return `Show previous month, ${this.previousMonthName} ${this.showPreviousYear}`;
+  }
 
-  previousMonthName: computed('showPreviousMonth', function() {
-    return monthsArray[this.get('showPreviousMonth')];
-  }).readOnly(),
-
-  nextMonth: computed(
-    'multiMonth',
-    'showNextToNextMonth',
-    'showNextMonth',
-    function() {
-      let {
-        multiMonth,
-        showNextToNextMonth,
-        showNextMonth,
-      } = this.getProperties(
-        'multiMonth',
-        'showNextToNextMonth',
-        'showNextMonth'
-      );
-
-      return multiMonth
-        ? monthsArray[showNextToNextMonth]
-        : monthsArray[showNextMonth];
-    }
-  ).readOnly(),
-
-  nextYear: computed(
-    'multiMonth',
-    'showNextToNextYear',
-    'showNextYear',
-    function() {
-      let { multiMonth, showNextToNextYear, showNextYear } = this.getProperties(
-        'multiMonth',
-        'showNextToNextYear',
-        'showNextYear'
-      );
-
-      return multiMonth ? showNextToNextYear : showNextYear;
-    }
-  ).readOnly(),
-
-  previousMonthLabel: computed(
-    'previousMonthName',
-    'showPreviousYear',
-    function() {
-      return `Show previous month, ${this.get('previousMonthName')} ${this.get(
-        'showPreviousYear'
-      )}`;
-    }
-  ).readOnly(),
-
-  nextMonthLabel: computed('nextMonth', 'nextYear', function() {
-    return `Show next month, ${this.get('nextMonth')} ${this.get('nextYear')}`;
-  }).readOnly(),
+  @computed('nextMonth', 'nextYear')
+  get nextMonthLabel() {
+    return `Show next month, ${this.nextMonth} ${this.nextYear}`;
+  }
 
   setFocusDateAndHandleMonthChange(date) {
-    this.get('onMonthChange')(date.getMonth(), date.getFullYear());
+    this.onMonthChange(date.getMonth(), date.getFullYear());
 
     this.setProperties({
       hoverDate: date,
       focusDate: date,
     });
-  },
+  }
 
   handleFocus(date) {
     this.set('focusDate', date);
-  },
+  }
 
   resetFocus() {
     this.set('focusDate', null);
-  },
+  }
 
   isSameSelectedDate(previousSelection, currentSelection) {
     if (previousSelection == null || currentSelection == null) {
@@ -252,24 +211,11 @@ export default Component.extend({
       isSameDay(previousSelection.start, currentSelection.start) &&
       isSameDay(previousSelection.end, currentSelection.end)
     );
-  },
+  }
 
-  /**
-   * Events
-   */
-  keyUp({ key }) {
-    let {
-      disableDatesBefore,
-      disableDatesAfter,
-      focusDate,
-      selected,
-    } = this.getProperties(
-      'disableDatesBefore',
-      'disableDatesAfter',
-      'focusDate',
-      'selected'
-    );
-
+  @action
+  handleKeyUp({ key }) {
+    let { disableDatesBefore, disableDatesAfter, focusDate, selected } = this;
     let range = deriveRange(selected);
     let focusedDate = focusDate || (range && range.start);
 
@@ -320,9 +266,10 @@ export default Component.extend({
         this.setFocusDateAndHandleMonthChange(yesterday);
       }
     }
-  },
+  }
 
-  keyDown(e) {
+  @action
+  handleKeyDown(e) {
     let { key } = e;
 
     if (
@@ -334,13 +281,11 @@ export default Component.extend({
       e.preventDefault();
       e.stopPropagation();
     }
-  },
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-
-    let previousSelected = this.get('_previousSelected');
-    let selected = this.get('selected');
+  @action
+  handleSelectedUpdate() {
+    let { _previousSelected: previousSelected, selected } = this;
 
     if (
       previousSelected &&
@@ -348,24 +293,23 @@ export default Component.extend({
     ) {
       this.resetFocus();
     }
-  },
+  }
 
-  actions: {
-    handleDateSelection(dateRange) {
-      let { end: endDate } = dateRange;
+  @action
+  handleDateSelection(dateRange) {
+    let { end: endDate } = dateRange;
 
-      this.setProperties({
-        hoverDate: endDate,
-        focusDate: new Date(endDate),
-      });
+    this.setProperties({
+      hoverDate: endDate,
+      focusDate: new Date(endDate),
+    });
 
-      this.get('onChange')(dateRange);
-    },
+    this.onChange(dateRange);
+  }
 
-    handleMonthChangeClick(month, year) {
-      this.get('onMonthChange')(month, year);
-
-      this.set('focusDate', null);
-    },
-  },
-});
+  @action
+  handleMonthChangeClick(month, year) {
+    this.onMonthChange(month, year);
+    this.set('focusDate', null);
+  }
+}

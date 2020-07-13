@@ -1,9 +1,16 @@
-<div class="Polaris-ResourceList-CheckableButton__Checkbox">
-  {{polaris-checkbox
-    labelHidden=true
-    label=accessibilityLabel
-    checked=selected
-    disabled=disabled
-  }}
+{{!-- template-lint-disable no-invalid-interactive --}}
+<div
+  class={{this.cssClasses}}
+  {{on "click" this.toggleAll}}
+  ...attributes
+>
+  <div class="Polaris-ResourceList-CheckableButton__Checkbox">
+    <PolarisCheckbox
+      @labelHidden={{true}}
+      @label={{@accessibilityLabel}}
+      @checked={{@selected}}
+      @disabled={{@disabled}}
+    />
+  </div>
+  <span class="Polaris-ResourceList-CheckableButton__Label">{{@label}}</span>
 </div>
-<span class="Polaris-ResourceList-CheckableButton__Label">{{label}}</span>

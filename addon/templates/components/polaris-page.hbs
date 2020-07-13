@@ -1,22 +1,24 @@
-{{#if hasHeaderContent}}
-  {{polaris-page/header
-    title=title
-    titleMetadata=titleMetadata
-    titleHidden=titleHidden
-    icon=icon
-    breadcrumbs=breadcrumbs
-    separator=separator
-    secondaryActions=secondaryActions
-    actionGroups=actionGroups
-    primaryAction=primaryAction
-    pagination=pagination
-  }}
-{{/if}}
-
-<div class="Polaris-Page__Content">
-  {{#if hasBlock}}
-    {{yield}}
-  {{else}}
-    {{text}}
+<div class={{this.cssClasses}} ...attributes>
+  {{#if this.hasHeaderContent}}
+    <PolarisPage::Header
+      @title={{@title}}
+      @titleMetadata={{@titleMetadata}}
+      @titleHidden={{@titleHidden}}
+      @icon={{@icon}}
+      @breadcrumbs={{@breadcrumbs}}
+      @separator={{@separator}}
+      @secondaryActions={{@secondaryActions}}
+      @actionGroups={{@actionGroups}}
+      @primaryAction={{@primaryAction}}
+      @pagination={{@pagination}}
+    />
   {{/if}}
+
+  <div class="Polaris-Page__Content">
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </div>
 </div>

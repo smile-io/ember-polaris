@@ -17,7 +17,7 @@ export function isComponentDefinition(content) {
 
   return (
     isPreOctaneComponentDefinition ||
-    content.constructor.name === 'CurriedComponentDefinition'
+    content.constructor?.name === 'CurriedComponentDefinition'
   );
 }
 

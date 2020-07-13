@@ -1,49 +1,43 @@
 {{#component
-  (if url
+  (if @url
     (component "polaris-unstyled-link"
       class="Polaris-ResourceList-BulkActions__Button"
-      external=external
-      url=url
+      external=@external
+      url=@url
     )
     (component "wrapper-element"
       tagName="button"
       type="button"
-      disabled=disabled
+      disabled=@disabled
       class=(concat
         "Polaris-ResourceList-BulkActions__Button"
-        (if disabled " Polaris-ResourceList-BulkActions--disabled")
+        (if @disabled " Polaris-ResourceList-BulkActions--disabled")
       )
-      click=(action onAction)
+      click=(fn (or @onAction this.onAction))
     )
   )
-  ariaLabel=accessibilityLabel
-  mouseUp=handleMouseUpByBlurring
+  ariaLabel=@accessibilityLabel
+  onMouseUp=this.handleMouseUpByBlurring
 }}
-  {{#component
-    (if disclosure
-      (component "wrapper-element"
-        tagName="span"
-        class="Polaris-ResourceList-BulkActions__ActionContent"
-      )
-      (component "wrapper-element"
-        tagName=""
-      )
-    )
-  }}
-    {{#wrapper-element
-      tagName=(if disclosure "span" "")
-    }}
-      {{#if hasBlock}}
-        {{yield}}
-      {{else}}
-        {{render-content content}}
-      {{/if}}
-    {{/wrapper-element}}
+  {{#let (element (if @disclosure "span" "")) as |OuterWrapper|}}
+    <OuterWrapper
+      class="Polaris-ResourceList-BulkActions__ActionContent"
+    >
+      {{#let (element (if @disclosure "span" "")) as |InnerWrapper|}}
+        <InnerWrapper>
+          {{#if hasBlock}}
+            {{yield}}
+          {{else}}
+            {{render-content @content}}
+          {{/if}}
+        </InnerWrapper>
+      {{/let}}
 
-    {{#if disclosure}}
-      <span class="Polaris-ResourceList-BulkActions__ActionIcon">
-        {{polaris-icon source="caret-down"}}
-      </span>
-    {{/if}}
-  {{/component}}
+      {{#if @disclosure}}
+        <span class="Polaris-ResourceList-BulkActions__ActionIcon">
+          <PolarisIcon @source="caret-down" />
+        </span>
+      {{/if}}
+    </OuterWrapper>
+  {{/let}}
 {{/component}}

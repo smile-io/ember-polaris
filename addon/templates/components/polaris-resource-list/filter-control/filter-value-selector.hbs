@@ -1,41 +1,49 @@
-{{#if (eq filter.type FilterType.Select)}}
-  {{#polaris-stack vertical=true as |stack|}}
-    {{#if showOperatorOptions}}
-      {{#stack.item}}
-        {{render-content operatorOptionsMarkup}}
-      {{/stack.item}}
-    {{/if}}
-    {{polaris-select
-      dataTestSelect="filter"
-      label=selectedFilterLabel
-      options=filter.options
-      placeholder="Select a filter..."
-      value=(or value "")
-      onChange=(action onChange)
-    }}
-  {{/polaris-stack}}
-{{else if (eq filter.type FilterType.TextField)}}
-  {{#polaris-stack vertical=true as |stack|}}
-    {{#if showOperatorOptions}}
-      {{#stack.item}}
-        {{render-content operatorOptionsMarkup}}
-      {{/stack.item}}
-    {{/if}}
-    {{polaris-text-field
-      label=selectedFilterLabel
-      value=value
-      type=filter.textFieldType
-      onChange=(action onChange)
-    }}
-  {{/polaris-stack}}
-{{else if (eq filter.type FilterType.DateSelector)}}
-  {{polaris-resource-list/filter-control/date-selector
-    dateOptionType=filter.dateOptionType
-    filterValue=value
-    filterKey=filterKey
-    filterMinKey=filter.minKey
-    filterMaxKey=filter.maxKey
-    onFilterValueChange=(action onChange)
-    onFilterKeyChange=(action onFilterKeyChange)
-  }}
-{{/if}}
+<span {{did-insert this.insertFilterValueSelector}}>
+  {{#if (eq @filter.type FilterType.Select)}}
+    <PolarisStack
+      @vertical={{true}}
+      as |stack|
+    >
+      {{#if this.showOperatorOptions}}
+        <stack.item>
+          {{render-content this.operatorOptionsMarkup}}
+        </stack.item>
+      {{/if}}
+      <PolarisSelect
+        @dataTestSelect="filter"
+        @label={{this.selectedFilterLabel}}
+        @options={{@filter.options}}
+        @placeholder="Select a filter..."
+        @value={{or @value ""}}
+        @onChange={{fn (or @onChange this.onChange)}}
+      />
+    </PolarisStack>
+  {{else if (eq @filter.type FilterType.TextField)}}
+    <PolarisStack
+      @vertical={{true}}
+      as |stack|
+    >
+      {{#if this.showOperatorOptions}}
+        <stack.item>
+          {{render-content this.operatorOptionsMarkup}}
+        </stack.item>
+      {{/if}}
+      <PolarisTextField
+        @label={{this.selectedFilterLabel}}
+        @value={{@value}}
+        @type={{@filter.textFieldType}}
+        @onChange={{fn (or @onChange this.onChange)}}
+      />
+    </PolarisStack>
+  {{else if (eq @filter.type FilterType.DateSelector)}}
+    <PolarisResourceList::FilterControl::DateSelector
+      @dateOptionType={{@filter.dateOptionType}}
+      @filterValue={{@value}}
+      @filterKey={{@filterKey}}
+      @filterMinKey={{@filter.minKey}}
+      @filterMaxKey={{@filter.maxKey}}
+      @onFilterValueChange={{fn (or @onChange this.onChange)}}
+      @onFilterKeyChange={{fn (or @onFilterKeyChange this.onFilterKeyChange)}}
+    />
+  {{/if}}
+</span>

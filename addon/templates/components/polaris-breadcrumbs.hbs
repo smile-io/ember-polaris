@@ -1,28 +1,35 @@
-{{#if breadcrumb.url}}
-  {{#polaris-unstyled-link
-    class="Polaris-Breadcrumbs__Breadcrumb"
-    url=breadcrumb.url
-    mouseUp=handleMouseUpByBlurring
-  }}
-    <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-      {{polaris-icon source="chevron-left"}}
-    </span>
-    <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-      {{breadcrumb.content}}
-    </span>
-  {{/polaris-unstyled-link}}
-{{else}}
-  <button
-    class="Polaris-Breadcrumbs__Breadcrumb"
-    type="button"
-    onmouseup={{handleMouseUpByBlurring}}
-    {{action breadcrumb.onAction}}
-  >
-    <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-      {{polaris-icon source="chevron-left"}}
-    </span>
-    <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-      {{breadcrumb.content}}
-    </span>
-  </button>
-{{/if}}
+<nav
+  role="navigation"
+  class={{@class}}
+  data-test-breadcrumbs
+  ...attributes
+>
+  {{#if this.breadcrumb.url}}
+    <PolarisUnstyledLink
+      class="Polaris-Breadcrumbs__Breadcrumb"
+      @url={{this.breadcrumb.url}}
+      @onMouseUp={{this.handleMouseUpByBlurring}}
+    >
+      <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
+        <PolarisIcon @source="chevron-left" />
+      </span>
+      <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+        {{this.breadcrumb.content}}
+      </span>
+    </PolarisUnstyledLink>
+  {{else}}
+    <button
+      class="Polaris-Breadcrumbs__Breadcrumb"
+      type="button"
+      {{on "click" this.handleClick}}
+      {{on "mouseup" this.handleMouseUpByBlurring}}
+    >
+      <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
+        <PolarisIcon @source="chevron-left" />
+      </span>
+      <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+        {{this.breadcrumb.content}}
+      </span>
+    </button>
+  {{/if}}
+</nav>

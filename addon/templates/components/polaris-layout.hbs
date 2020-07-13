@@ -1,5 +1,18 @@
-{{#if sectioned}}
-  {{#polaris-layout/section}}
+<div class="Polaris-Layout {{@class}}" ...attributes>
+  {{#if this.sectioned}}
+    <PolarisLayout::Section>
+      {{#if hasBlock}}
+        {{yield
+          (hash
+            section=(component "polaris-layout/section")
+            annotatedSection=(component "polaris-layout/annotated-section")
+          )
+        }}
+      {{else}}
+        {{@text}}
+      {{/if}}
+    </PolarisLayout::Section>
+  {{else}}
     {{#if hasBlock}}
       {{yield
         (hash
@@ -8,18 +21,7 @@
         )
       }}
     {{else}}
-      {{text}}
+      {{@text}}
     {{/if}}
-  {{/polaris-layout/section}}
-{{else}}
-  {{#if hasBlock}}
-    {{yield
-      (hash
-        section=(component "polaris-layout/section")
-        annotatedSection=(component "polaris-layout/annotated-section")
-      )
-    }}
-  {{else}}
-    {{text}}
   {{/if}}
-{{/if}}
+</div>

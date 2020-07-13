@@ -1,12 +1,15 @@
 import Component from '@ember/component';
-import layout from '../templates/components/polaris-banner';
-import { computed } from '@ember/object';
-import { bool } from '@ember/object/computed';
+import { action, computed } from '@ember/object';
+import { bool, or } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
 import { invokeAction } from 'ember-invoke-action';
+import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 // TODO icon-update: use new icon names here when @shopify/polaris-icons
 // is consumable by Ember apps.
@@ -39,83 +42,64 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
-export default Component.extend({
-  attributeBindings: [
-    'tabIndex',
-    'role',
-    'ariaLive:aria-live',
-    'contentId:aria-describedby',
-    'headingId:aria-labelledby',
-    'data-test-banner',
-  ],
-
-  classNames: ['Polaris-Banner'],
-
-  classNameBindings: [
-    'statusClass',
-    'hasDismiss:Polaris-Banner--hasDismiss',
-    'withinContentContainer:Polaris-Banner--withinContentContainer:Polaris-Banner--withinPage',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisBanner extends Component {
   /**
    * Title content for the banner.
    *
-   * @property title
    * @type {String}
    * @default null
+   * @public
    */
-  title: null,
+  title = null;
 
   /**
    * Icon to display in the banner.
    *
-   * @property icon
    * @type {String}
    * @default null
+   * @public
    */
-  icon: null,
+  icon = null;
 
   /**
    * Sets the status of the banner.
    *
-   * @property status
    * @type {String}
    * @default null
+   * @public
    */
-  status: null,
+  status = null;
 
   /**
    * Action for banner.
+   * NOTE: This is the equivalent for Shopify's `action` argument.
    *
-   * @property action
    * @type {Object}
    * @default null
+   * @public
    */
-  action: null,
+  primaryAction = null;
 
   /**
    * Displays a secondary action.
    *
-   * @property secondaryAction
    * @type {Object}
    * @default null
+   * @public
    */
-  secondaryAction: null,
+  secondaryAction = null;
 
   /**
    * Callback when banner is dismissed
    *
-   * @property onDismiss
    * @type {Func}
    * @default null
+   * @public
    */
-  onDismiss: null,
-
-  tabIndex: '0',
-
-  ariaLive: 'polite',
+  onDismiss = null;
 
   /**
    * Temporary workaround for not having appProvider/withAppProvider equivalents implemented yet.
@@ -123,80 +107,115 @@ export default Component.extend({
    *
    * TODO implement appProvider/withAppProvider
    */
-  withinContentContainer: false,
+  withinContentContainer = false;
 
-  mouseUp: handleMouseUpByBlurring,
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
-  'data-test-banner': '',
+  @bool('onDismiss')
+  hasDismiss;
 
-  hasDismiss: bool('onDismiss').readOnly(),
+  @or('primaryAction', 'action')
+  mainAction;
 
-  role: computed('status', function() {
-    let status = this.get('status');
+  @computed('status')
+  get role() {
+    let { status } = this;
     if (status === 'warning' || status === 'critical') {
       return 'alert';
     }
 
     return 'status';
-  }).readOnly(),
+  }
 
-  iconName: computed('icon', 'status', function() {
-    let icon = this.get('icon');
+  @computed('icon', 'status')
+  get iconName() {
+    let { icon, status } = this;
     if (isPresent(icon)) {
       return icon;
     }
 
-    let status = this.get('status');
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
 
     return bannerIcons[status].iconName;
-  }).readOnly(),
+  }
 
-  iconColor: computed('status', function() {
-    let status = this.get('status');
+  @computed('status')
+  get iconColor() {
+    let { status } = this;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
 
     return bannerIcons[status].color;
-  }).readOnly(),
+  }
 
-  headingId: computed('title', function() {
-    if (isBlank(this.get('title'))) {
-      return;
+  @computed('title')
+  get headingId() {
+    if (isBlank(this.title)) {
+      return null;
     }
 
     return `${guidFor(this)}-heading`;
-  }).readOnly(),
+  }
 
-  statusClass: computed('status', function() {
-    let status = this.get('status');
+  @computed('status')
+  get statusClass() {
+    let { status } = this;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
-      return;
+      return null;
     }
 
     return `Polaris-Banner--status${capitalize(status)}`;
-  }).readOnly(),
+  }
 
-  didRender() {
-    this._super(...arguments);
+  @computed('statusClass', 'hasDismiss', 'withinContentContainer', 'class')
+  get cssClasses() {
+    let cssClasses = ['Polaris-Banner'];
+    if (this.statusClass) {
+      cssClasses.push(this.statusClass);
+    }
+    if (this.hasDismiss) {
+      cssClasses.push('Polaris-Banner--hasDismiss');
+    }
+    if (this.withinContentContainer) {
+      cssClasses.push('Polaris-Banner--withinContentContainer');
+    } else {
+      cssClasses.push('Polaris-Banner--withinPage');
+    }
+    if (this.class) {
+      cssClasses.push(this.class);
+    }
 
-    let hasContentWrapper = isPresent(
-      this.element.querySelector('div.Polaris-Banner__Content')
-    );
-    let contentId = hasContentWrapper ? `${guidFor(this)}-content` : null;
-    this.set('contentId', contentId);
-  },
+    return cssClasses.join(' ');
+  }
 
-  actions: {
-    triggerAction(action, event) {
-      if (event) {
-        event.stopPropagation();
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisBanner] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
+      !this.action,
+      {
+        id: 'ember-polaris.polaris-banner.action-arg',
+        until: '7.0.0',
       }
+    );
+  }
 
-      return invokeAction(this, action.onAction);
-    },
-  },
-});
+  @action
+  triggerAction(actionObj, event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    return invokeAction(this, actionObj.onAction);
+  }
+
+  @action
+  setContentId(element, [value]) {
+    value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
+    this.set('contentId', value);
+  }
+}

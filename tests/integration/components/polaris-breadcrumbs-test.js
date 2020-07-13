@@ -83,4 +83,43 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       'action does not append click event to invoked action args'
     );
   });
+
+  test('supports passing a @class argument for backwards compatibility', async function(assert) {
+    this.set('breadcrumbs', [
+      {
+        content,
+        url: '/',
+      },
+    ]);
+    await render(hbs`
+      {{polaris-breadcrumbs breadcrumbs=breadcrumbs  class="custom-class"}}
+    `);
+
+    assert
+      .dom('[data-test-breadcrumbs]')
+      .hasClass(
+        'custom-class',
+        'applies `class` when used in curly-brackets form'
+      );
+
+    await render(hbs`
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} @class="custom-class" />
+    `);
+    assert
+      .dom('[data-test-breadcrumbs]')
+      .hasClass(
+        'custom-class',
+        'applies `@class` when used in angle-brackets form'
+      );
+
+    await render(hbs`
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} class="custom-class" />
+    `);
+    assert
+      .dom('[data-test-breadcrumbs]')
+      .hasClass(
+        'custom-class',
+        'applies `class` when used in angle-brackets form'
+      );
+  });
 });

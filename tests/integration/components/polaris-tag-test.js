@@ -46,29 +46,25 @@ module('Integration | Component | polaris tag', function(hooks) {
 
       assert
         .dom(buildNestedSelector(tagSelector, tagButtonSelector))
-        .exists('renders tag button');
+        .doesNotExist('does not render a tag button');
+
+      this.set('text', 'Retail');
       assert
-        .dom(tagButtonSelector)
+        .dom(tagTextSelector)
         .hasAttribute(
-          'aria-label',
-          `Remove ${tag}`,
-          'button has correct aria-label'
-        );
-      assert
-        .dom(buildNestedSelector(tagButtonSelector, tagButtonIconSelector))
-        .exists('renders button icon');
-      assert
-        .dom(buildNestedSelector(tagButtonIconSelector, 'svg'))
-        .hasAttribute(
-          'data-icon-source',
-          'polaris/cancel-small',
-          'it uses the correct polaris/cancel-small icon as the icon source'
+          'title',
+          'Retail',
+          'tag text has correct title attribute after tag change'
         );
     });
   });
 
   test('it handles the disabled attribute correctly', async function(assert) {
-    await render(hbs`{{polaris-tag disabled=disabled}}`);
+    this.set('remove', () => {});
+
+    await render(
+      hbs`{{polaris-tag disabled=disabled onRemove=(action remove)}}`
+    );
 
     // Check the component when no value for `disabled` is given.
     assert
@@ -101,17 +97,40 @@ module('Integration | Component | polaris tag', function(hooks) {
       );
   });
 
-  test('it calls an `onRemove` action when the button is clicked', async function(assert) {
+  test('it handles tag removing correctly', async function(assert) {
     this.set('remove', () => {
       assert.ok('button clicked - onRemove action is called');
     });
+    this.set('tag', tag);
 
     await render(hbs`
       {{polaris-tag
+        text=tag
         onRemove=(action remove)
       }}
     `);
 
     await click(tagButtonSelector);
+
+    assert
+      .dom(buildNestedSelector(tagSelector, tagButtonSelector))
+      .exists('renders a tag button');
+    assert
+      .dom(tagButtonSelector)
+      .hasAttribute(
+        'aria-label',
+        `Remove ${tag}`,
+        'button has correct aria-label'
+      );
+    assert
+      .dom(buildNestedSelector(tagButtonSelector, tagButtonIconSelector))
+      .exists('renders button icon');
+    assert
+      .dom(buildNestedSelector(tagButtonIconSelector, 'svg'))
+      .hasAttribute(
+        'data-icon-source',
+        'polaris/cancel-small',
+        'it uses the correct polaris/cancel-small icon as the icon source'
+      );
   });
 });

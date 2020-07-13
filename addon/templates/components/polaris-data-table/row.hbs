@@ -1,9 +1,11 @@
-{{#each row as |cellText cellIndex|}}
-  {{polaris-data-table/cell
-    height=(get bodyCellHeights index)
-    text=cellText
-    contentType=(get contentTypes cellIndex)
-    fixed=(eq cellIndex 0)
-    truncate=truncate
-  }}
-{{/each}}
+<tr class="Polaris-DataTable__TableRow {{@class}}" data-test-data-table-row="true" ...attributes>
+  {{#each @row as |cellText cellIndex|}}
+    <PolarisDataTable::Cell
+      @height={{get this.bodyCellHeights index}}
+      @text={{cellText}}
+      @contentType={{get @contentTypes cellIndex}}
+      @fixed={{eq cellIndex 0}}
+      @truncate={{@truncate}}
+    />
+  {{/each}}
+</tr>

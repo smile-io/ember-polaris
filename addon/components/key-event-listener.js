@@ -22,10 +22,9 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
 
   /**
    * The key (or key combination) that triggers the keyDown/keyPress/keyUp event
-   * @property key
    * @type {KeyboardEvent.code} https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code
-   * @public
    * @default null
+   * @public
    * @required
    */
   key: null,
@@ -34,10 +33,9 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyPress` event that gets
    * triggered when `key` is pressed
    *
-   * @property onKeyPress
    * @type {Function}
-   * @public
    * @default null
+   * @public
    */
   onKeyPress: null,
 
@@ -45,10 +43,9 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyDown` event that gets
    * triggered when `key` is pressed
    *
-   * @property onKeyDown
    * @type {Function}
-   * @public
    * @default null
+   * @public
    */
   onKeyDown: null,
 
@@ -56,10 +53,9 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
    * Corresponds to the native `onKeyUp` event that gets
    * triggered when `key` is pressed
    *
-   * @property onKeyUp
    * @type {Function}
-   * @public
    * @default null
+   * @public
    */
   onKeyUp: null,
 

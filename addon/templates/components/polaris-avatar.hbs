@@ -1,29 +1,36 @@
-{{#if shouldShowInitials}}
-  <span class="Polaris-Avatar__Initials">
-    <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
-      <text
-        x="50%"
-        y="50%"
-        dy="0.35em"
-        fill="currentColor"
-        font-size="26"
-        text-anchor="middle"
-      >
-        {{initials}}
-      </text>
-    </svg>
-  </span>
-{{/if}}
+<span
+  role="img"
+  aria-label={{this.label}}
+  class="Polaris-Avatar {{if this.hasImage "Polaris-Avatar--hasImage"}} {{this.styleClass}} {{this.sizeClass}} {{this.hiddenClass}} {{@class}}"
+  {{did-update this.resetImage @source}}
+  ...attributes
+>
+  {{#if this.shouldShowInitials}}
+    <span class="Polaris-Avatar__Initials">
+      <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
+        <text
+          x="50%"
+          y="50%"
+          dy="0.35em"
+          fill="currentColor"
+          font-size="26"
+          text-anchor="middle"
+        >
+          {{@initials}}
+        </text>
+      </svg>
+    </span>
+  {{/if}}
 
-{{#if shouldShowImage}}
-  {{!-- TODO: replace this with polaris-image when implemented. --}}
-  <img
-    {{! template-lint-disable no-invalid-interactive }}
-    class="Polaris-Avatar__Image"
-    src={{finalSource}}
-    alt=""
-    role="presentation"
-    onload={{action "handleLoad"}}
-    onerror={{action "handleError"}}
-  >
-{{/if}}
+  {{#if this.shouldShowImage}}
+    {{!-- TODO: replace this with polaris-image when implemented. --}}
+    <img
+      class="Polaris-Avatar__Image"
+      src={{this.finalSource}}
+      alt=""
+      role="presentation"
+      onload={{fn this.handleLoad}}
+      onerror={{fn this.handleError}}
+    >
+  {{/if}}
+</span>

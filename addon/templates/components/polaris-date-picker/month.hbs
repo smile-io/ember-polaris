@@ -1,39 +1,46 @@
 <div
-  data-test-date-picker-title
-  class="Polaris-DatePicker__Title {{if current "Polaris-DatePicker__Month--current"}}"
+  class="Polaris-DatePicker__Month {{@class}}"
+  role="grid"
+  data-test-date-picker-month
+  ...attributes
 >
-  {{monthDisplayName}} {{year}}
-</div>
+  <div
+    data-test-date-picker-title
+    class="Polaris-DatePicker__Title {{if this.current "Polaris-DatePicker__Month--current"}}"
+  >
+    {{this.monthDisplayName}} {{@year}}
+  </div>
 
-<div data-test-date-picker-week-heading role="rowheader" class="Polaris-DatePicker__WeekHeadings">
-  {{#each weekdays as |weekday|}}
-    {{polaris-date-picker/weekday
-      title=weekday.title
-      current=weekday.current
-      label=weekday.label
-    }}
-  {{/each}}
-</div>
-
-{{#each weeks as |week|}}
-  <div data-test-date-picker-week role="row" class="Polaris-DatePicker__Week">
-    {{#each week as |day|}}
-      {{#if day}}
-        {{polaris-date-picker/day
-          day=day
-          focusedDate=focusedDate
-          selectedDates=selected
-          disableDatesBefore=disableDatesBefore
-          disableDatesAfter=disableDatesAfter
-          hoverDate=hoverDate
-          allowRange=allowRange
-          onFocus=(action onFocus)
-          onClick=(action "handleDateClick" day)
-          onHover=(action onHover)
-        }}
-      {{else}}
-        <div data-test-date-picker-day-empty class="Polaris-DatePicker__EmptyDay"></div>
-      {{/if}}
+  <div data-test-date-picker-week-heading role="rowheader" class="Polaris-DatePicker__WeekHeadings">
+    {{#each this.weekdays as |weekday|}}
+      <PolarisDatePicker::Weekday
+        @title={{weekday.title}}
+        @current={{weekday.current}}
+        @label={{weekday.label}}
+      />
     {{/each}}
   </div>
-{{/each}}
+
+  {{#each this.weeks as |week|}}
+    <div data-test-date-picker-week role="row" class="Polaris-DatePicker__Week">
+      {{#each week as |day|}}
+        {{#if day}}
+          <PolarisDatePicker::Day
+            @day={{day}}
+            @focusedDate={{@focusedDate}}
+            @selectedDates={{@selected}}
+            @disableDatesBefore={{@disableDatesBefore}}
+            @disableDatesAfter={{@disableDatesAfter}}
+            @hoverDate={{@hoverDate}}
+            @allowRange={{@allowRange}}
+            @onFocus={{@onFocus}}
+            @onClick={{fn this.handleDateClick day}}
+            @onHover={{@onHover}}
+          />
+        {{else}}
+          <div data-test-date-picker-day-empty class="Polaris-DatePicker__EmptyDay"></div>
+        {{/if}}
+      {{/each}}
+    </div>
+  {{/each}}
+</div>

@@ -1,11 +1,14 @@
-<span class="Polaris-Choice__Control">
-  {{yield}}
-</span>
+<label
+  for={{@inputId}}
+  class={{this.cssClasses}}
+  data-test-choice-label
+  ...attributes
+>
+  <span class="Polaris-Choice__Control">
+    {{yield}}
+  </span>
 
-<span class="Polaris-Choice__Label">
-  {{#if labelComponent}}
-    {{component labelComponent}}
-  {{else}}
-    {{render-content label}}
-  {{/if}}
-</span>
+  <span class="Polaris-Choice__Label">
+    {{render-content @label}}
+  </span>
+</label>

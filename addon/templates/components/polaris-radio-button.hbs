@@ -1,27 +1,27 @@
-{{#polaris-choice
-  inputId=_id
-  label=label
-  labelHidden=labelHidden
-  disabled=disabled
-  helpText=helpText
-}}
-  <span data-test-radio-button class="Polaris-RadioButton">
+<PolarisChoice
+  @inputId={{this._id}}
+  @label={{@label}}
+  @labelHidden={{@labelHidden}}
+  @disabled={{@disabled}}
+  @helpText={{@helpText}}
+>
+  <span data-test-radio-button="true" class="Polaris-RadioButton">
     <input
       data-test-radio-button-input
       type="radio"
       class="Polaris-RadioButton__Input"
-      id={{_id}}
-      name={{name}}
-      value={{value}}
-      checked={{checked}}
-      disabled={{disabled}}
-      aria-describedby={{describedBy}}
-      onchange={{action onChange value="target.value"}}
-      onfocus={{action onFocus}}
-      onblur={{action onBlur}}
+      id={{this._id}}
+      name={{@name}}
+      value={{@value}}
+      checked={{@checked}}
+      disabled={{@disabled}}
+      aria-describedby={{this.describedBy}}
+      {{on "change" this.handleChange}}
+      {{on "focus" (or @onFocus this.onFocus)}}
+      {{on "blur" (or @onBlur this.onBlur)}}
     >
 
-    <span data-test-radio-button-backdrop class="Polaris-RadioButton__Backdrop"></span>
-    <span data-test-radio-button-icon class="Polaris-RadioButton__Icon"></span>
+    <span data-test-radio-button-backdrop="true" class="Polaris-RadioButton__Backdrop"></span>
+    <span data-test-radio-button-icon="true" class="Polaris-RadioButton__Icon"></span>
   </span>
-{{/polaris-choice}}
+</PolarisChoice>

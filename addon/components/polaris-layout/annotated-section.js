@@ -1,30 +1,27 @@
 import Component from '@ember/component';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-layout/annotated-section';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-Layout__AnnotatedSection'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisLayoutAnnotatedSection extends Component {
   /**
    * Title for the section
    *
-   * @property title
    * @type {String}
-   * @default: null
    * @public
    */
-  title: null,
+  title;
 
   /**
    * Description for the section
    *
-   * @property description
    * @type {String|Component|Object}
-   * @default: null
    * @public
    */
-  description: null,
+  description;
 
   /**
    * Inner content of the section
@@ -33,10 +30,8 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
-   * @default: null
    * @public
    */
-  text: null,
-});
+  text;
+}

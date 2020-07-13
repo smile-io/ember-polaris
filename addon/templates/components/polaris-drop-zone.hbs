@@ -1,57 +1,59 @@
-{{! template-lint-disable no-invalid-interactive }}
-
-{{#with (if label
-  (component "polaris-labelled"
-    id=id
-    label=label
-    labelHidden=labelHidden
-    action=labelAction
-  )
-  (component "wrapper-element"
-    tagName=""
-  )
-) as |wrapper|}}
-  {{#component wrapper}}
+{{#let (if @label
+  (component "polaris-labelled")
+  (component "wrapper-element" tagName="")
+) as |Wrapper|}}
+  <Wrapper
+    @id={{@id}}
+    @label={{@label}}
+    @labelHidden={{@labelHidden}}
+    @primaryAction={{@labelAction}}
+  >
     <div
       data-test-drop-zone
-      class={{dropZoneClasses}}
-      aria-disabled={{ariaDisabled}}
-      onclick={{action "handleClick"}}
-      ondragstart={{action "handleDragStart"}}
+      class={{this.dropZoneClasses}}
+      aria-disabled={{if @disabled "true"}}
+      role="button"
+      {{on "click" this.handleClick}}
+      {{on "dragstart" this.handleDragStart}}
+      {{did-insert this.setNode}}
+      {{did-insert this.setupEvents}}
+      {{did-insert this.triggerFileDialog this.openFileDialog}}
+      {{did-update this.triggerFileDialog this.openFileDialog}}
+      ...attributes
     >
-      {{#if showDragOverlay}}
+      {{#if this.showDragOverlay}}
         <div data-test-drop-zone-overlay class="Polaris-DropZone__Overlay">
-          {{#polaris-stack vertical=true spacing="tight"}}
-            {{polaris-icon color="indigo" source=iconDragDrop}}
+          <PolarisStack @vertical={{true}} @spacing="tight">
+            <PolarisIcon @color="indigo" @source={{this.iconDragDrop}} />
 
-            {{#if (eq state.size "extraLarge")}}
-              {{polaris-display-text
-                size="small"
-                tagName="p"
-                text=state.overlayText
-              }}
-            {{else if (or (eq state.size "medium") (eq state.size "large"))}}
-              {{polaris-caption text=state.overlayText}}
+            {{#if (eq this.state.size "extraLarge")}}
+              <PolarisDisplayText
+                @size="small"
+                @htmlTag="p"
+                @text={{this.state.overlayText}}
+              />
+            {{else if (or (eq this.state.size "medium") (eq this.state.size "large"))}}
+              <PolarisCaption @text={{this.state.overlayText}} />
             {{/if}}
-          {{/polaris-stack}}
+          </PolarisStack>
         </div>
       {{/if}}
 
-      {{#if (and state.dragging state.error)}}
+      {{#if (and this.state.dragging this.state.error)}}
         <div data-test-drop-zone-overlay class="Polaris-DropZone__Overlay">
-          {{#polaris-stack vertical=true spacing="tight"}}
-            {{polaris-icon color="red" source=iconAlertCircle}}
+          <PolarisStack @vertical={{true}} @spacing="tight">
+            <PolarisIcon @color="red" @source={{this.iconAlertCircle}} />
 
-            {{#if (eq state.size "extraLarge")}}
-              {{polaris-display-text
-                size="small"
-                tagName="p"
-                text=state.errorOverlayText
-              }}
-            {{else if (or (eq state.size "medium") (eq state.size "large"))}}
-              {{polaris-caption text=state.errorOverlayText}}
+            {{#if (eq this.state.size "extraLarge")}}
+              <PolarisDisplayText
+                @size="small"
+                @htmlTag="p"
+                @text={{this.state.errorOverlayText}}
+              />
+            {{else if (or (eq this.state.size "medium") (eq this.state.size "large"))}}
+              <PolarisCaption @text={{this.state.errorOverlayText}} />
             {{/if}}
-          {{/polaris-stack}}
+          </PolarisStack>
         </div>
       {{/if}}
 
@@ -60,26 +62,28 @@
           (hash
             fileUpload=(component "polaris-drop-zone/file-upload"
               context=(hash
-                type=(readonly state.type)
-                size=(readonly state.size)
+                type=(readonly this.state.type)
+                size=(readonly this.state.size)
               )
             )
           )
         }}
       </div>
 
-      {{#polaris-visually-hidden}}
+      <PolarisVisuallyHidden>
+        {{!-- template-lint-disable no-nested-interactive --}}
         <input
           data-test-drop-zone-hidden-input
-          id={{concat state.id "-input"}}
           type="file"
           autocomplete="off"
-          accept={{accept}}
-          disabled={{disabled}}
-          multiple={{allowMultiple}}
-          onchange={{action handleDrop}}
+          id="{{this.state.id}}-input"
+          accept={{@accept}}
+          disabled={{@disabled}}
+          multiple={{this.allowMultiple}}
+          {{did-insert (action (mut this.fileInputNode))}}
+          {{on "change" this.handleDrop}}
         >
-      {{/polaris-visually-hidden}}
+      </PolarisVisuallyHidden>
     </div>
-  {{/component}}
-{{/with}}
+  </Wrapper>
+{{/let}}

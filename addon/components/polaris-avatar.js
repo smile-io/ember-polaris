@@ -1,9 +1,11 @@
 import Component from '@ember/component';
-import { isEmpty } from '@ember/utils';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import layout from '../templates/components/polaris-avatar';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-avatar';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -23,164 +25,114 @@ const avatarImages = [
 
 const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-export default Component.extend({
-  tagName: 'span',
-  attributeBindings: ['role', 'label:aria-label'],
-  classNames: ['Polaris-Avatar'],
-  classNameBindings: [
-    'styleClass',
-    'sizeClass',
-    'hiddenClass',
-    'hasImage:Polaris-Avatar--hasImage',
-  ],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@layout(template)
+export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
    *
-   * @property size
-   * @public
    * @type {String}
    * @default 'medium'
+   * @public
    */
-  size: defaultSize,
+  size = defaultSize;
 
   /**
    * The name of the person
    *
-   * @property name
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  name: null,
+  name = null;
 
   /**
    * Initials of person to display
    *
-   * @property initials
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  initials: null,
+  initials = null;
 
   /**
    * Whether the avatar is for a customer
    *
-   * @property customer
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  customer: false,
+  customer = false;
 
   /**
    * URL of the avatar image which falls back to initials if the image fails to load
    *
-   * @property source
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  source: null,
+  source = null;
 
   /**
    * Accessible label for the avatar image
    *
-   * @property accessibilityLabel
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  accessibilityLabel: null,
+  accessibilityLabel = null;
 
   /**
    * Path to the Polaris avatar images
    * TODO: read this from config? Need a way to set this by default?
-   * @property avatarSourcePath
-   * @private
    * @type {String}
    */
-  avatarSourcePath: '',
+  avatarSourcePath = '';
 
   /**
-   * Role attribute value
-   * @property role
-   * @private
-   * @type {String}
-   */
-  role: 'img',
-
-  /**
-   * @property hasError
    * @type {Boolean}
    * @default false
-   * @private
    */
-  hasError: false,
+  hasError = false;
 
   /**
-   * @property hasLoaded
    * @type {Boolean}
    * @default false
-   * @private
    */
-  hasLoaded: false,
-
-  /**
-   * @property prevSource
-   * @type {String}
-   * @default null
-   * @private
-   */
-  prevSource: null,
+  hasLoaded = false;
 
   /**
    * Image source to use (if any)
-   * @property finalSource
-   * @private
    * @type {String}
    */
-  finalSource: or('source', 'customerImageSource').readOnly(),
+  @or('source', 'customerImageSource')
+  finalSource;
 
   /**
    * Name to use (if any)
-   * @property nameString
-   * @private
    * @type {String}
    */
-  nameString: or('name', 'initials').readOnly(),
+  @or('name', 'initials')
+  nameString;
 
   /**
    * Whether we have an image to use
-   * @property
-   * @private
    * @type {Boolean}
    */
-  hasImage: computed('source', 'customer', 'hasError', function() {
-    let { source, customer, hasError } = this.getProperties(
-      'source',
-      'customer',
-      'hasError'
-    );
-
+  @computed('source', 'customer', 'hasError')
+  get hasImage() {
+    let { source, customer, hasError } = this;
     return (source || customer) && !hasError;
-  }).readOnly(),
+  }
 
   /**
    * Accessibility label to apply to avatar
-   * @property label
-   * @private
    * @type {String}
    */
-  label: computed('accessibilityLabel', 'name', 'initials', function() {
-    let { accessibilityLabel, name, initials } = this.getProperties(
-      'accessibilityLabel',
-      'name',
-      'initials'
-    );
+  @computed('accessibilityLabel', 'name', 'initials')
+  get label() {
+    let { accessibilityLabel, name, initials } = this;
 
     if (accessibilityLabel) {
       return accessibilityLabel;
@@ -195,116 +147,99 @@ export default Component.extend({
     }
 
     return 'Avatar';
-  }).readOnly(),
+  }
 
   /**
    * Class name to set avatar style
-   * @property styleClass
-   * @private
    * @type {String}
    */
-  styleClass: computed('nameString', function() {
-    let nameString = this.get('nameString');
+  @computed('nameString')
+  get styleClass() {
+    let { nameString } = this;
     let styleIndex = isEmpty(nameString)
       ? 0
       : nameString.charCodeAt(0) % styleClasses.length;
     let style = styleClasses[styleIndex];
 
     return `Polaris-Avatar--style${classify(style)}`;
-  }).readOnly(),
+  }
 
   /**
    * Class name to set avatar size
-   * @property sizeClass
-   * @private
    * @type {String}
    */
-  sizeClass: computed('size', function() {
-    let size = this.get('size');
+  @computed('size')
+  get sizeClass() {
+    let { size } = this;
     if (allowedSizes.indexOf(size) === -1) {
       size = defaultSize;
     }
 
     return `Polaris-Avatar--size${classify(size)}`;
-  }).readOnly(),
+  }
 
   /**
    * Class name to hide avatar when loading
-   * @property hiddenClass
-   * @private
    * @type {String}
    */
-  hiddenClass: computed('hasImage', 'hasLoaded', function() {
+  @computed('hasImage', 'hasLoaded')
+  get hiddenClass() {
     let { hasImage, hasLoaded } = this;
-
     return hasImage && !hasLoaded ? 'Polaris-Avatar--hidden' : null;
-  }).readOnly(),
+  }
 
   /**
    * Image source when displaying a customer avatar
-   * @property customerImageSource
-   * @private
    * @type {String}
    */
-  customerImageSource: computed(
-    'avatarSourcePath',
-    'customer',
-    'nameString',
-    function() {
-      if (!this.get('customer')) {
-        return null;
-      }
-
-      let nameString = this.get('nameString');
-      let avatarIndex = isEmpty(nameString)
-        ? 0
-        : nameString.charCodeAt(0) % avatarImages.length;
-      return `${this.get('avatarSourcePath')}/avatar-${++avatarIndex}.svg`;
+  @computed('avatarSourcePath', 'customer', 'nameString')
+  get customerImageSource() {
+    if (!this.customer) {
+      return null;
     }
-  ).readOnly(),
+
+    let { nameString } = this;
+    let avatarIndex = isEmpty(nameString)
+      ? 0
+      : nameString.charCodeAt(0) % avatarImages.length;
+    return `${this.avatarSourcePath}/avatar-${++avatarIndex}.svg`;
+  }
 
   /**
    * Flag controlling whether the avatar initials should be rendered
-   * @property shouldShowInitials
-   * @private
    * @type {Boolean}
    */
-  shouldShowInitials: computed('initials', 'hasImage', function() {
-    let { initials, hasImage } = this.getProperties('initials', 'hasImage');
+  @computed('initials', 'hasImage')
+  get shouldShowInitials() {
+    let { initials, hasImage } = this;
     return initials && !hasImage;
-  }).readOnly(),
+  }
 
   /**
    * Flag controlling whether the avatar image should be rendered
-   * @property shouldShowImage
-   * @private
    * @type {Boolean}
    */
-  shouldShowImage: computed('finalSource', 'hasError', function() {
-    let { finalSource, hasError } = this.getProperties(
-      'finalSource',
-      'hasError'
-    );
+  @computed('finalSource', 'hasError')
+  get shouldShowImage() {
+    let { finalSource, hasError } = this;
     return finalSource && !hasError;
-  }).readOnly(),
+  }
 
-  didReceiveAttrs() {
-    if (this.source !== this.prevSource) {
-      this.setProperties({
-        prevSource: this.source,
-        hasError: false,
-        hasLoaded: false,
-      });
-    }
-  },
+  @action
+  handleError() {
+    this.setProperties({ hasError: true, hasLoaded: false });
+  }
 
-  actions: {
-    handleError() {
-      this.setProperties({ hasError: true, hasLoaded: false });
-    },
+  @action
+  handleLoad() {
+    this.setProperties({ hasLoaded: true, hasError: false });
+  }
 
-    handleLoad() {
-      this.setProperties({ hasLoaded: true, hasError: false });
-    },
-  },
-});
+  @action
+  resetImage() {
+    this.setProperties({
+      hasError: false,
+      hasLoaded: false,
+    });
+  }
+}

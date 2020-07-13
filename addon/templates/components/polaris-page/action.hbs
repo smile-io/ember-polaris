@@ -1,16 +1,26 @@
-{{!-- TODO: support url --}}
-{{#if (or icon disclosure)}}
-  <span class="Polaris-Header-Action__ActionContent">
-    {{#if icon}}
-      {{polaris-page/action-icon icon=icon}}
-    {{/if}}
+{{! TODO: support url }}
+<button
+  type="button"
+  class={{this.cssClasses}}
+  aria-label={{@accessibilityLabel}}
+  disabled={{@disabled}}
+  {{on "click" (stop-propagation this.handleClick)}}
+  {{on "mouseup" this.handleMouseUpByBlurring}}
+  ...attributes
+>
+  {{#if (or @icon @disclosure)}}
+    <span class="Polaris-Header-Action__ActionContent">
+      {{#if @icon}}
+        <PolarisPage::ActionIcon @icon={{@icon}} />
+      {{/if}}
 
-    <span>{{text}}</span>
+      <span>{{@text}}</span>
 
-    {{#if disclosure}}
-      {{polaris-page/action-icon icon="caret-down"}}
-    {{/if}}
-  </span>
-{{else}}
-  {{text}}
-{{/if}}
+      {{#if @disclosure}}
+        <PolarisPage::ActionIcon @icon="caret-down" />
+      {{/if}}
+    </span>
+  {{else}}
+    {{@text}}
+  {{/if}}
+</button>

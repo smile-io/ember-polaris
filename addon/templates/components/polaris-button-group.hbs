@@ -1,9 +1,17 @@
-{{#if hasBlock}}
-  {{yield
-    (hash
-      item=(component "polaris-button-group/item")
-    )
-  }}
-{{else}}
-  {{text}}
-{{/if}}
+<div
+  class={{this.cssClasses}}
+  data-test-button-group
+  {{did-insert this.setupAutoWrapper}}
+  {{will-destroy this.teardownAutoWrapper}}
+  ...attributes
+>
+  {{#if hasBlock}}
+    {{yield
+      (hash
+        item=(component "polaris-button-group/item")
+      )
+    }}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</div>

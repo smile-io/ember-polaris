@@ -1,22 +1,21 @@
-{{polaris-button
-  plain=true
-  icon="chevron-left"
-  disabled=isScrolledFarthestLeft
-  accessibilityLabel="Scroll table left one column"
-  onClick=(action navigateTableLeft)
-}}
+<div class="Polaris-DataTable__Navigation {{@class}}" ...attributes>
+  <PolarisButton
+    @plain={{true}}
+    @icon="chevron-left"
+    @disabled={{@isScrolledFarthestLeft}}
+    @accessibilityLabel="Scroll table left one column"
+    @onClick={{fn this.navigateTableLeft}}
+  />
 
-{{#each columnVisibilityData as |column|}}
-  <div
-    class="Polaris-DataTable__Pip {{if column.isVisible "Polaris-DataTable__Pip--visible"}}"
-  >
-  </div>
-{{/each}}
+  {{#each @columnVisibilityData as |column|}}
+    <div class="Polaris-DataTable__Pip {{if column.isVisible "Polaris-DataTable__Pip--visible"}}"></div>
+  {{/each}}
 
-{{polaris-button
-  plain=true
-  icon="chevron-right"
-  disabled=isScrolledFarthestRight
-  accessibilityLabel="Scroll table right one column"
-  onClick=(action navigateTableRight)
-}}
+  <PolarisButton
+    @plain={{true}}
+    @icon="chevron-right"
+    @disabled={{@isScrolledFarthestRight}}
+    @accessibilityLabel="Scroll table right one column"
+    @onClick={{fn this.navigateTableRight}}
+  />
+</div>

@@ -1,76 +1,69 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-option-list/checkbox';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  classNames: ['Polaris-OptionList-Checkbox'],
-  classNameBindings: ['active:Polaris-OptionList-Checkbox--active'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisOptionListCheckbox extends Component {
   /**
-   * @property checked
    * @type {Boolean}
    * @default false
    * @public
    */
-  checked: false,
+  checked = false;
 
   /**
-   * @property disabled
    * @type {Boolean}
    * @default false
    * @public
    */
-  disabled: false,
+  disabled = false;
 
   /**
-   * @property active
    * @type {Boolean}
    * @default false
    * @public
    */
-  active: false,
+  active = false;
 
   /**
-   * @property name
    * @type {String}
    * @default null
    * @public
    */
-  name: null,
+  name = null;
 
   /**
-   * @property value
    * @type {String}
    * @default null
    * @public
    */
-  value: null,
+  value = null;
 
   /**
-   * @property role
    * @type {String}
    * @default null
    * @public
    */
-  role: null,
+  role = null;
 
   /**
-   * @property checkboxId
    * @type {String}
    * @public
    */
-  checkboxId: computed(function() {
+  @computed
+  get checkboxId() {
     return guidFor(this);
-  }),
+  }
 
   /**
-   * @property onChange
    * @type {Function}
    * @default noop
    * @public
    */
-  onChange() {},
-});
+  onChange() {}
+}

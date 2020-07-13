@@ -1,10 +1,11 @@
 {{!-- TODO: replace this with polaris-image when implemented. --}}
 <img
   alt=""
-  src={{spinnerSVG}}
-  class={{spinnerClass}}
+  class={{this.spinnerClass}}
   draggable="false"
   role="status"
-  aria-label={{accessibilityLabel}}
   data-test-spinner
+  ...attributes
+  src={{this.spinnerSVG}}
+  aria-label={{@accessibilityLabel}}
 >

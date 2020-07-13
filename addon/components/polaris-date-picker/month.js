@@ -1,6 +1,7 @@
 import Component from '@ember/component';
+import { action, computed } from '@ember/object';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-date-picker/month';
-import { computed } from '@ember/object';
 import {
   monthsArray,
   getWeeksForMonth,
@@ -8,157 +9,133 @@ import {
   abbreviationForWeekday,
   getWeekdaysOrdered,
 } from '../../utils/dates';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-export default Component.extend({
-  attributeBindings: ['role'],
-
-  classNames: ['Polaris-DatePicker__Month'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisDatePickerMonth extends Component {
   /**
-   * @property focusedDate
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  focusedDate: null,
+  focusedDate = null;
 
   /**
-   * @property selected
-   * @public
    * @type {Object}
    * @default null
+   * @public
    */
-  selected: null,
+  selected = null;
 
   /**
-   * @property hoverDate
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  hoverDate: null,
+  hoverDate = null;
 
   /**
-   * @property month
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
-  month: null,
+  month = null;
 
   /**
-   * @property year
-   * @public
    * @type {Number}
    * @default null
+   * @public
    */
-  year: null,
+  year = null;
 
   /**
-   * @property disableDatesBefore
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  disableDatesBefore: null,
+  disableDatesBefore = null;
 
   /**
-   * @property disableDatesAfter
-   * @public
    * @type {Date}
    * @default null
+   * @public
    */
-  disableDatesAfter: null,
+  disableDatesAfter = null;
 
   /**
-   * @property allowRange
-   * @public
    * @type {Boolean}
    * @default false
+   * @public
    */
-  allowRange: false,
+  allowRange = false;
 
   /**
-   * @property weekStartsOn
-   * @public
    * @type {String}
    * @default null
+   * @public
    */
-  weekStartsOn: null,
+  weekStartsOn = null;
 
   /**
-   * @property onChange
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onChange(/* dateRange */) {},
+  onChange /* dateRange */() {}
 
   /**
-   * @property onHover
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onHover(/* hoverEnd */) {},
+  onHover /* hoverEnd */() {}
 
   /**
-   * @property onFocus
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  onFocus(/* date */) {},
+  onFocus /* date */() {}
 
   /**
-   * @property monthName
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  monthName(/* month */) {},
+  monthName /* month */() {}
 
   /**
-   * @property weekdayName
-   * @public
    * @type {Function}
    * @default noop
+   * @public
    */
-  weekdayName(/* weekday */) {},
+  weekdayName /* weekday */() {}
 
-  role: 'grid',
-
-  'data-test-date-picker-month': true,
-
-  current: computed('month', 'year', function() {
+  @computed('month', 'year')
+  get current() {
     let now = new Date();
     let thisMonth = now.getMonth();
     let thisYear = now.getFullYear();
 
-    return thisMonth === this.get('month') && thisYear === this.get('year');
-  }).readOnly(),
+    return thisMonth === this.month && thisYear === this.year;
+  }
 
-  monthDisplayName: computed('month', function() {
-    return monthsArray[this.get('month')];
-  }).readOnly(),
+  @computed('month')
+  get monthDisplayName() {
+    return monthsArray[this.month];
+  }
 
-  weeks: computed('month', 'year', 'weekStartsOn', function() {
-    let { month, year, weekStartsOn } = this.getProperties(
-      'month',
-      'year',
-      'weekStartsOn'
-    );
-
+  @computed('month', 'year', 'weekStartsOn')
+  get weeks() {
+    let { month, year, weekStartsOn } = this;
     return getWeeksForMonth(month, year, weekStartsOn);
-  }).readOnly(),
+  }
 
-  weekdays: computed('current', 'weekStartsOn', function() {
-    let { current, weekStartsOn } = this.getProperties(
-      'current',
-      'weekStartsOn'
-    );
+  @computed('current', 'weekStartsOn')
+  get weekdays() {
+    let { current, weekStartsOn } = this;
     let day = new Date().getDay();
 
     return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
@@ -168,13 +145,11 @@ export default Component.extend({
         label: weekday,
       };
     });
-  }).readOnly(),
+  }
 
-  actions: {
-    handleDateClick(day) {
-      let range = getNewRange(this.get('selected'), day);
-
-      this.get('onChange')(range);
-    },
-  },
-});
+  @action
+  handleDateClick(day) {
+    let range = getNewRange(this.selected, day);
+    this.onChange(range);
+  }
+}

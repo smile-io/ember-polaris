@@ -1,9 +1,9 @@
 import Component from '@ember/component';
+import { computed, action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { computed } from '@ember/object';
-import ContextBoundTasksMixin from 'ember-lifeline/mixins/run';
-import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-text-field/resizer';
+import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
 const REPLACE_REGEX = /[\n&<>]/g;
 
@@ -18,119 +18,92 @@ function replaceEntity(entity) {
   return ENTITIES_TO_REPLACE[entity] || entity;
 }
 
-export default Component.extend(
-  ContextBoundTasksMixin,
-  ContextBoundEventListenersMixin,
-  {
-    attributeBindings: ['ariaHidden:aria-hidden'],
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisTextFieldResizer extends Component {
+  /**
+   * The value of the textarea
+   *
+   * @type {String}
+   * @default null
+   * @public
+   */
+  contents = null;
 
-    classNames: ['Polaris-TextField__Resizer'],
+  /**
+   * The height (in px) of the textarea
+   *
+   * @type {Number}
+   * @default null
+   * @public
+   */
+  currentHeight = null;
 
-    layout,
+  /**
+   * The multiline value of the textarea if
+   * a numeric value was passed-in to the polaris-text-field
+   *
+   * @type {Number}
+   * @default null
+   * @public
+   */
+  minimumLines = null;
 
-    /**
-     * The value of the textarea
-     *
-     * @property contents
-     * @public
-     * @type {String}
-     * @default null
-     */
-    contents: null,
+  /**
+   * Callback when the height of the resize container changes
+   *
+   * @type {Function}
+   * @default noop
+   * @public
+   */
+  onHeightChange /* height */() {}
 
-    /**
-     * The height (in px) of the textarea
-     *
-     * @property currentHeight
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    currentHeight: null,
+  @computed('contents')
+  get finalContents() {
+    let { contents } = this;
+    contents = contents
+      ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
+      : '<br>';
 
-    /**
-     * The multiline value of the textarea if
-     * a numeric value was passed-in to the polaris-text-field
-     *
-     * @property minimumLines
-     * @public
-     * @type {Number}
-     * @default null
-     */
-    minimumLines: null,
-
-    /**
-     * Callback when the height of the resize container changes
-     *
-     * @property onHeightChange
-     * @public
-     * @type {Function}
-     * @default noop
-     */
-    onHeightChange(/* height */) {},
-
-    ariaHidden: 'true',
-
-    'data-test-text-field-resizer': true,
-
-    finalContents: computed('contents', function() {
-      let contents = this.get('contents');
-
-      contents = contents
-        ? `${contents.replace(REPLACE_REGEX, replaceEntity)}<br>`
-        : '<br>';
-
-      return htmlSafe(contents);
-    }).readOnly(),
-
-    contentsForMinimumLines: computed('minimumLines', function() {
-      let minimumLines = this.get('minimumLines');
-      let content = '';
-
-      for (let line = 0; line < minimumLines; line++) {
-        content = `${content}<br>`;
-      }
-
-      return htmlSafe(content);
-    }).readOnly(),
-
-    handleHeightCheck() {
-      let [contentNode, minimumLinesNode] = this.element.querySelectorAll(
-        '.Polaris-TextField__DummyInput'
-      );
-
-      if (!contentNode || !minimumLinesNode) {
-        return;
-      }
-
-      let contentHeight = contentNode.offsetHeight;
-      let minimumHeight = minimumLinesNode.offsetHeight;
-      let newHeight = Math.max(contentHeight, minimumHeight);
-      let { currentHeight, onHeightChange } = this.getProperties(
-        'currentHeight',
-        'onHeightChange'
-      );
-
-      if (newHeight !== currentHeight) {
-        this.scheduleTask('actions', () => {
-          onHeightChange(newHeight);
-        });
-      }
-    },
-
-    addResizeHandler() {
-      this.addEventListener('resize', this.handleHeightCheck);
-    },
-
-    didInsertElement() {
-      this._super(...arguments);
-      this.handleHeightCheck();
-      this.addResizeHandler();
-    },
-
-    didUpdateAttrs() {
-      this._super(...arguments);
-      this.handleHeightCheck();
-    },
+    return htmlSafe(contents);
   }
-);
+
+  @computed('minimumLines')
+  get contentsForMinimumLines() {
+    let content = '';
+
+    for (let line = 0; line < this.minimumLines; line++) {
+      content = `${content}<br>`;
+    }
+
+    return htmlSafe(content);
+  }
+
+  @action
+  handleHeightCheck() {
+    let { contentNode, minimumLinesNode } = this;
+    if (!contentNode || !minimumLinesNode) {
+      return;
+    }
+
+    let contentHeight = contentNode.offsetHeight;
+    let minimumHeight = minimumLinesNode.offsetHeight;
+    let newHeight = Math.max(contentHeight, minimumHeight);
+    let { currentHeight, onHeightChange } = this;
+
+    if (newHeight !== currentHeight) {
+      onHeightChange(newHeight);
+    }
+  }
+
+  @action
+  setContentNode(element) {
+    this.set('contentNode', element);
+  }
+
+  @action
+  setMinimumLinesNode(element) {
+    this.set('minimumLinesNode', element);
+  }
+}

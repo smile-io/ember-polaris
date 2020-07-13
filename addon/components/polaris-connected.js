@@ -1,40 +1,54 @@
 import Component from '@ember/component';
 import { or } from '@ember/object/computed';
-import layout from '../templates/components/polaris-connected';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout } from '@ember-decorators/component';
+import template from '../templates/components/polaris-connected';
 
-export default Component.extend({
-  tagName: '',
-
-  layout,
-
+@tagName('')
+@layout(template)
+export default class PolarisConnected extends Component {
   /**
    * An element connected to the left of the yielded content
    *
-   * @property left
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
-  left: null,
+  left = null;
 
   /**
    * An element connected to the right of the yielded content
    *
-   * @property right
-   * @public
    * @type {String|Component}
    * @default null
+   * @public
    */
-  right: null,
-
-  dataTestConnected: true,
+  right = null;
 
   /**
    * Whether or not a `left` or `right` connection has been passed-in
    *
-   * @property hasConnection
-   * @private
    * @type {Boolean}
    */
-  hasConnection: or('left', 'right').readOnly(),
-});
+  @or('left', 'right')
+  hasConnection;
+
+  /**
+   * @deprecated
+   */
+  dataTestConnected = true;
+
+  init() {
+    super.init(...arguments);
+
+    deprecate(
+      `[PolarisConnected] Passing 'dataTestConnected' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
+      this.dataTestConnected === true,
+      {
+        id: 'ember-polaris.polaris-connected.dataTestConnected-arg',
+        until: '7.0.0',
+      }
+    );
+    this.dataTestConnected = this.dataTestConnected || true;
+  }
+}

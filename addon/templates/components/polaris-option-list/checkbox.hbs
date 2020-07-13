@@ -1,16 +1,21 @@
-<input
-  id={{checkboxId}}
-  name={{name}}
-  value={{value}}
-  type="checkbox"
-  checked={{checked}}
-  disabled={{disabled}}
-  class="Polaris-OptionList-Checkbox__Input"
-  aria-checked={{checked}}
-  onchange={{action onChange}}
-  role={{role}}
+<div
+  class="Polaris-OptionList-Checkbox {{@class}} {{if @active "Polaris-OptionList-Checkbox--active"}}"
+  ...attributes
 >
-<div class="Polaris-OptionList-Checkbox__Backdrop"></div>
-<div class="Polaris-OptionList-Checkbox__Icon">
-  {{polaris-icon source="checkmark"}}
+  <input
+    id={{or @checkboxId this.checkboxId}}
+    name={{@name}}
+    value={{@value}}
+    type="checkbox"
+    checked={{@checked}}
+    disabled={{@disabled}}
+    class="Polaris-OptionList-Checkbox__Input"
+    aria-checked={{@checked}}
+    role={{@role}}
+    {{on "change" (or @onChange this.onChange)}}
+  >
+  <div class="Polaris-OptionList-Checkbox__Backdrop"></div>
+  <div class="Polaris-OptionList-Checkbox__Icon">
+    <PolarisIcon @source="checkmark" />
+  </div>
 </div>

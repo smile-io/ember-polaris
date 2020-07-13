@@ -1,22 +1,24 @@
-{{#polaris-popover as |popover|}}
-  {{#popover.activator}}
-    {{polaris-page/action
-      disclosure=true
-      icon=icon
-      text=title
-    }}
-  {{/popover.activator}}
+<div class="Polaris-Header-ActionGroup {{@class}}" ...attributes>
+  <PolarisPopover as |popover|>
+    <popover.activator>
+      <PolarisPage::Action
+        @disclosure={{true}}
+        @icon={{@icon}}
+        @text={{@title}}
+      />
+    </popover.activator>
 
-  {{#popover.content}}
-    {{polaris-action-list
-      items=groupActions
-      onActionAnyItem=(action popover.close)
-    }}
+    <popover.content>
+      <PolarisActionList
+        @items={{@groupActions}}
+        @onActionAnyItem={{action popover.close}}
+      />
 
-    {{#if details}}
-      <div class="Polaris-Header-ActionGroup__Details">
-        {{render-content details}}
-      </div>
-    {{/if}}
-  {{/popover.content}}
-{{/polaris-popover}}
+      {{#if @details}}
+        <div class="Polaris-Header-ActionGroup__Details">
+          {{render-content @details}}
+        </div>
+      {{/if}}
+    </popover.content>
+  </PolarisPopover>
+</div>

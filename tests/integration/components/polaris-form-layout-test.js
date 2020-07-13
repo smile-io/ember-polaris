@@ -54,7 +54,7 @@ module('Integration | Component | polaris form layout', function(hooks) {
           id=firstGroupId
           title=title
           helpText=helpText
-        as |group|
+          as |group|
         }}
           {{#group.item}}
             <div>Default group item 1</div>
@@ -126,6 +126,7 @@ module('Integration | Component | polaris form layout', function(hooks) {
         { count: 2 },
         'first group - renders the correct number of items'
       );
+
     assert
       .dom(`${firstGroupItemSelector}:nth-child(1)`)
       .hasText(

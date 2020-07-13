@@ -1,77 +1,84 @@
-{{polaris-data-table/navigation
-  columnVisibilityData=columnVisibilityData
-  isScrolledFarthestLeft=isScrolledFarthestLeft
-  isScrolledFarthestRight=isScrolledFarthestRight
-  navigateTableLeft=(action "navigateTable" "left")
-  navigateTableRight=(action "navigateTable" "right")
-}}
-{{! template-lint-disable attribute-indentation }}
-{{!-- TODO remove rule above once linter handles this correctly --}}
 <div
-  class="Polaris-DataTable {{if collapsed "Polaris-DataTable--collapsed"}} {{if footerContent "Polaris-DataTable--hasFooter"}}"
+  class="{{if this.collapsed "Polaris-DataTable--collapsed"}} {{@class}}"
+  {{did-insert this.insertDataTable}}
+  {{did-update this.updateDataTable @footerContent @truncate}}
+  ...attributes
 >
-  <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
-    {{! template-lint-disable table-groups }}
-    <table class="Polaris-DataTable__Table">
-      <thead>
-        <tr>
-          {{#each headings as |heading headingIndex|}}
-            {{polaris-data-table/heading
-              heading=heading
-              headingIndex=headingIndex
-              truncate=truncate
-              heights=heights
-              sortable=sortable
-              sortedColumnIndex=(or sortedColumnIndex initialSortColumnIndex)
-              sortDirection=sortDirection
-              contentTypes=columnContentTypes
-              defaultSortDirection=defaultSortDirection
-              defaultOnSort=(action "defaultOnSort")
-            }}
-          {{/each}}
-        </tr>
-
-        {{#if totals}}
+  <PolarisDataTable::Navigation
+    @columnVisibilityData={{this.columnVisibilityData}}
+    @isScrolledFarthestLeft={{this.isScrolledFarthestLeft}}
+    @isScrolledFarthestRight={{this.isScrolledFarthestRight}}
+    @navigateTableLeft={{fn this.navigateTable "left"}}
+    @navigateTableRight={{fn this.navigateTable "right"}}
+  />
+  {{! template-lint-disable attribute-indentation }}
+  {{!-- TODO remove rule above once linter handles this correctly --}}
+  <div
+    class="Polaris-DataTable {{if this.collapsed "Polaris-DataTable--collapsed"}} {{if @footerContent "Polaris-DataTable--hasFooter"}}"
+  >
+    <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
+      {{! template-lint-disable table-groups }}
+      <table class="Polaris-DataTable__Table">
+        <thead>
           <tr>
-            {{#each totals as |total index|}}
-              {{polaris-data-table/total
-                total=total
-                index=index
-                heights=heights
-                truncate=truncate
-                totalsRowHeading=totalsRowHeading
-              }}
+            {{#each @headings as |heading headingIndex|}}
+              <PolarisDataTable::Heading
+                @heading={{heading}}
+                @headingIndex={{headingIndex}}
+                @truncate={{@truncate}}
+                @heights={{this.heights}}
+                @sortable={{@sortable}}
+                @sortedColumnIndex={{or this.sortedColumnIndex @initialSortColumnIndex 0}}
+                @sortDirection={{this.sortDirection}}
+                @contentTypes={{@columnContentTypes}}
+                @defaultSortDirection={{@defaultSortDirection}}
+                @defaultOnSort={{fn this.defaultOnSort}}
+              />
             {{/each}}
           </tr>
+
+          {{#if @totals}}
+            <tr>
+              {{#each @totals as |total index|}}
+                <PolarisDataTable::Total
+                  @total={{total}}
+                  @index={{index}}
+                  @heights={{this.heights}}
+                  @truncate={{@truncate}}
+                  @totalsRowHeading={{this.totalsRowHeading}}
+                />
+              {{/each}}
+            </tr>
+          {{/if}}
+        </thead>
+
+        <tbody>
+          {{#each @rows as |row index|}}
+            <PolarisDataTable::Row
+              @row={{row}}
+              @index={{index}}
+              @totals={{@totals}}
+              @heights={{this.heights}}
+              @footerContent={{@footerContent}}
+              @contentTypes={{@columnContentTypes}}
+              @truncate={{@truncate}}
+            />
+          {{/each}}
+        </tbody>
+
+        {{#if @footerContent}}
+          <tfoot class="Polaris-DataTable__TableFoot">
+            <tr>
+              <PolarisDataTable::Cell
+                @footer={{true}}
+                @height={{this.heights.lastObject}}
+                @text={{@footerContent}}
+                @truncate={{@truncate}}
+              />
+            </tr>
+          </tfoot>
         {{/if}}
-      </thead>
-
-      <tbody>
-        {{#each rows as |row index|}}
-          {{polaris-data-table/row
-            row=row
-            index=index
-            totals=totals
-            heights=heights
-            footerContent=footerContent
-            contentTypes=columnContentTypes
-            truncate=truncate
-          }}
-        {{/each}}
-      </tbody>
-
-      {{#if footerContent}}
-        <tfoot class="Polaris-DataTable__TableFoot">
-          <tr>
-            {{polaris-data-table/cell
-              footer=true
-              height=heights.lastObject
-              text=footerContent
-              truncate=truncate
-            }}
-          </tr>
-        </tfoot>
-      {{/if}}
-    </table>
+      </table>
+    </div>
   </div>
 </div>

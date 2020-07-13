@@ -1,5 +1,13 @@
-{{#if hasBlock}}
-  {{yield}}
-{{else}}
-  {{text}}
-{{/if}}
+{{#let (element (or @htmlTag @tagName "p")) as |DisplayText|}}
+  <DisplayText
+    class="Polaris-DisplayText {{this.sizeClassName}} {{@class}}"
+    data-test-display-text
+    ...attributes
+  >
+    {{#if hasBlock}}
+      {{yield}}
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </DisplayText>
+{{/let}}

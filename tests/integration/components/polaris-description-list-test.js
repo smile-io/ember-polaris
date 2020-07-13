@@ -81,37 +81,6 @@ module('Integration | Component | polaris description list', function(hooks) {
       );
   });
 
-  test('it renders items with explicit `termComponent` and `descriptionComponent` attributes', async function(assert) {
-    await render(hbs`
-      {{polaris-description-list
-        items=(array
-          (hash
-            termComponent=(component "stub-term-component")
-            descriptionComponent=(component "stub-description-component")
-          )
-        )
-      }}
-    `);
-
-    assert
-      .dom(componentSelector)
-      .exists({ count: 1 }, 'it renders a description list component');
-
-    assert
-      .dom(stubTermSelector)
-      .exists(
-        { count: 1 },
-        'it renders a component passed as a `termComponent` attribute'
-      );
-
-    assert
-      .dom(stubDescriptionSelector)
-      .exists(
-        { count: 1 },
-        'it renders a component passed as a `descriptionComponent` attribute'
-      );
-  });
-
   test('it renders items with `term` and `description` components', async function(assert) {
     await render(hbs`
       {{polaris-description-list
@@ -132,14 +101,14 @@ module('Integration | Component | polaris description list', function(hooks) {
       .dom(stubTermSelector)
       .exists(
         { count: 1 },
-        'it renders a component passed as a `termComponent` attribute'
+        'it renders a component passed as a `term` attribute'
       );
 
     assert
       .dom(stubDescriptionSelector)
       .exists(
         { count: 1 },
-        'it renders a component passed as a `descriptionComponent` attribute'
+        'it renders a component passed as a `description` attribute'
       );
   });
 });

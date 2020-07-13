@@ -20,13 +20,9 @@ export default Component.extend({
 
   /**
    * Dynamically-generated layout to render the proxied component.
-   * @private
    */
   layout: computed('componentName', 'propsString', function() {
-    let { componentName, propsString } = this.getProperties(
-      'componentName',
-      'propsString'
-    );
+    let { componentName, propsString } = this;
 
     return compile(`
       {{#if hasBlock}}
@@ -57,17 +53,15 @@ export default Component.extend({
   /**
    * List of properties that were previously set via the `props` hash.
    * @type {Array}
-   * @private
    */
   propNames: null,
 
   /**
    * String representing the properties to pass to the proxied component.
    * @type {String}
-   * @private
    */
   propsString: computed('propNames.[]', function() {
-    let propNames = this.get('propNames') || [];
+    let propNames = this.propNames || [];
     return propNames.reduce((propsString, propName) => {
       return `${propsString} ${propName}=${propName}`;
     }, '');
@@ -77,8 +71,8 @@ export default Component.extend({
     // Unset any properties that were set previously and are now undefined,
     // spread the new passed-in props hash into our component's context,
     // and make a note of which properties are currently set.
-    let oldPropNames = this.get('propNames') || [];
-    let props = this.get('props') || {};
+    let oldPropNames = this.propNames || [];
+    let props = this.props || {};
     let propNames = Object.keys(props);
 
     let propsToUnset = oldPropNames.reduce((propsToUnset, propName) => {

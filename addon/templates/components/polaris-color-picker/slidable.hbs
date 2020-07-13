@@ -1,1 +1,9 @@
-<div class="Polaris-ColorPicker__Dragger" style={{draggerStyle}}></div>
+{{!-- template-lint-disable no-invalid-interactive --}}
+<div
+  class="Polaris-ColorPicker__Slidable {{@class}}"
+  {{on "mousedown" this.startDrag}}
+  {{on "touchstart" this.startDrag}}
+  {{did-insert this.setElementAndTriggerHeightChanged}}
+>
+  <div class="Polaris-ColorPicker__Dragger" style={{this.draggerStyle}}></div>
+</div>

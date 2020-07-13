@@ -5,7 +5,19 @@
   This is because of the `white-space: pre-wrap` style applied by Polaris,
   which replicates the white space/wrapping behaviour of the textarea control.
 --}}
-<div class="Polaris-TextField__DummyInput">{{finalContents}}</div>
-{{#if minimumLines}}
-  <div class="Polaris-TextField__DummyInput">{{contentsForMinimumLines}}</div>
-{{/if}}
+{{!-- template-lint-disable no-invalid-interactive --}}
+<div
+  class="Polaris-TextField__Resizer {{@class}}"
+  aria-hidden="true"
+  data-test-text-field-resizer
+  ...attributes
+  {{on "resize" this.handleHeightCheck}}
+  {{did-insert this.handleHeightCheck}}
+  {{did-update this.handleHeightCheck @contents @currentHeight @minimumLines}}
+>
+  <div class="Polaris-TextField__DummyInput" {{did-insert this.setContentNode}}>{{this.finalContents}}</div>
+
+  {{#if @minimumLines}}
+    <div class="Polaris-TextField__DummyInput" {{did-insert this.setMinimumLinesNode}}>{{this.contentsForMinimumLines}}</div>
+  {{/if}}
+</div>

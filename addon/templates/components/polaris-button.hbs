@@ -1,81 +1,89 @@
-{{#with
-  (component "polaris-button/content"
-    text=text
-    primary=primary
-    destructive=destructive
-    loading=loading
-    disclosure=disclosure
-    icon=icon
-  )
-  as |contentComponent|
+{{#let
+  (component
+    "polaris-button/content"
+    text=@text
+    primary=@primary
+    destructive=@destructive
+    loading=@loading
+    disclosure=@disclosure
+    icon=@icon
+  ) as |Content|
 }}
-  {{#if url}}
-    {{#if isDisabled}}
-      {{!--
+  {{#if @url}}
+    {{#if this.isDisabled}}
+      {{!
         Render an `<a>` so toggling disabled/enabled state changes only the
         `href` attribute instead of replacing the whole element.
-      --}}
+      }}
       {{!-- template-lint-disable link-href-attributes --}}
-      <a id={{id}} class={{classes}} aria-label={{accessibilityLabel}} data-test-id={{dataTestId}}>
+      <a
+        id={{this.id}}
+        class={{this.cssClasses}}
+        aria-label={{@accessibilityLabel}}
+        data-test-id={{@dataTestId}}
+        ...attributes
+      >
         {{#if hasBlock}}
-          {{#component contentComponent}}
+          <Content>
             {{yield}}
-          {{/component}}
+          </Content>
         {{else}}
-          {{component contentComponent}}
+          <Content />
         {{/if}}
       </a>
     {{else}}
-      {{#polaris-unstyled-link
-        dataTestId=dataTestId
-        id=id
-        url=url
-        external=external
-        download=download
-        onClick=(action onClick)
-        focusIn=(action onFocus)
-        focusOut=(action onBlur)
-        mouseUp=handleMouseUpByBlurring
-        class=classes
-        ariaLabel=accessibilityLabel
-      }}
+      <PolarisUnstyledLink
+        class={{this.cssClasses}}
+        id={{this.id}}
+        @dataTestId={{@dataTestId}}
+        @url={{@url}}
+        @external={{@external}}
+        @download={{@download}}
+        @ariaLabel={{@accessibilityLabel}}
+        @onClick={{this.handleClick}}
+        @onFocus={{this.onFocus}}
+        @onBlur={{this.onBlur}}
+        @onMouseUp={{this.handleMouseUpByBlurring}}
+        ...attributes
+      >
         {{#if hasBlock}}
-          {{#component contentComponent}}
+          <Content>
             {{yield}}
-          {{/component}}
+          </Content>
         {{else}}
-          {{component contentComponent}}
+          <Content />
         {{/if}}
-      {{/polaris-unstyled-link}}
+      </PolarisUnstyledLink>
     {{/if}}
   {{else}}
     <button
-      data-test-id={{dataTestId}}
-      id={{id}}
-      type={{type}}
-      onclick={{action "invokeMouseAction" "onClick"}}
-      onfocus={{action "invokeMouseAction" "onFocus"}}
-      onblur={{action "invokeMouseAction" "onBlur"}}
-      onkeydown={{action onKeyDown}}
-      onkeyup={{action onKeyUp}}
-      onkeypress={{action onKeyPress}}
-      onmouseup={{handleMouseUpByBlurring}}
-      class={{classes}}
-      disabled={{isDisabled}}
-      aria-label={{accessibilityLabel}}
-      aria-controls={{ariaControls}}
-      aria-expanded={{ariaExpandedValue}}
-      aria-pressed={{ariaPressedValue}}
-      role={{if loading "alert"}}
-      aria-busy={{if loading "true"}}
+      id={{this.id}}
+      data-test-id={{@dataTestId}}
+      class={{this.cssClasses}}
+      disabled={{this.isDisabled}}
+      type={{if @submit "submit" "button"}}
+      role={{if @loading "alert"}}
+      aria-busy={{if this.loading "true"}}
+      aria-label={{@accessibilityLabel}}
+      aria-controls={{@ariaControls}}
+      aria-expanded={{if @ariaExpanded "true"}}
+      aria-pressed={{if @ariaPressed "true"}}
+      {{on "click" this.handleClick}}
+      {{on "focus" this.onFocus}}
+      {{on "blur" this.onBlur}}
+      {{on "keydown" this.onKeyDown}}
+      {{on "keyup" this.onKeyUp}}
+      {{on "keypress" this.onKeyPress}}
+      {{on "mouseup" this.handleMouseUpByBlurring}}
+      ...attributes
     >
       {{#if hasBlock}}
-        {{#component contentComponent}}
+        <Content>
           {{yield}}
-        {{/component}}
+        </Content>
       {{else}}
-        {{component contentComponent}}
+        <Content />
       {{/if}}
     </button>
   {{/if}}
-{{/with}}
+{{/let}}

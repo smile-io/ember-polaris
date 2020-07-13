@@ -1,5 +1,9 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
+import { deprecate } from '@ember/application/deprecations';
+import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-subheading';
+import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Polaris subheading component.
@@ -9,21 +13,16 @@ import layout from '../templates/components/polaris-subheading';
  *
  *   {{polaris-subheading text="This is a subheading"}}
  *
- * Customised block usage (note the use of tagName instead of element - this is an ember thing):
+ * Customised block usage (note the use of htmlTag instead of element - this is an ember thing):
  *
- *   {{#polaris-subheading tagName="u"}}
+ *   {{#polaris-subheading htmlTag="u"}}
  *     This is an underlined subheading
  *   {{/polaris-subheading}}
  */
-export default Component.extend({
-  tagName: 'h3',
-
-  attributeBindings: ['ariaLabel:aria-label'],
-
-  classNames: ['Polaris-Subheading'],
-
-  layout,
-
+@deprecateClassArgument
+@tagName('')
+@templateLayout(layout)
+export default class PolarisSubheading extends Component {
   /**
    * The content to display inside the heading
    *
@@ -31,22 +30,38 @@ export default Component.extend({
    * in which case the block content will be used
    * instead of `text`
    *
-   * @property text
    * @type {String}
    * @default null
    * @public
    */
-  text: null,
+  text = null;
 
-  /**
-   * @private
-   */
-  ariaLabel: null,
+  init() {
+    super.init(...arguments);
 
-  didRender() {
-    this._super(...arguments);
+    deprecate(
+      `[PolarisSubheading] Passing 'tagName' argument is deprecated! Use '@htmlTag' instead`,
+      !this.tagName,
+      {
+        id: 'ember-polaris.polaris-subheading.tagName-arg',
+        until: '7.0.0',
+      }
+    );
+  }
+
+  @action
+  setAriaLabel(element) {
+    this.set('_subheadingElement', element);
+    this.updateAriaLabel();
+  }
+
+  @action
+  updateAriaLabel() {
+    if (!this._subheadingElement) {
+      return;
+    }
 
     // Update ariaLabel with the new content.
-    this.set('ariaLabel', this.element.textContent.trim());
-  },
-});
+    this.set('ariaLabel', this._subheadingElement.textContent.trim());
+  }
+}
