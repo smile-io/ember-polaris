@@ -5865,7 +5865,7 @@ ember-template-recast@^4.1.4:
     tmp "^0.1.0"
     workerpool "^5.0.4"
 
-ember-test-selectors@^3.0.0:
+ember-test-selectors@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-test-selectors/-/ember-test-selectors-3.0.0.tgz#5be818cd4c10a3154e72ac5abc982e712c3514bf"
   integrity sha512-yKCURzLx+mQfqL4ts4oIYobXZVhOAXDwsObdVVTY9+UuzH0xdZEpIx37nCXV7UugP/vCoaUN3YruYZKgqxWQpg==
