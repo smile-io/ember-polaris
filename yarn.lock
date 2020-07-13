@@ -5558,7 +5558,7 @@ ember-resolver@^8.0.0:
     ember-cli-version-checker "^5.0.2"
     resolve "^1.15.1"
 
-ember-rfc176-data@^0.3.1, ember-rfc176-data@^0.3.12, ember-rfc176-data@^0.3.13:
+ember-rfc176-data@^0.3.1, ember-rfc176-data@^0.3.13:
   version "0.3.13"
   resolved "https://registry.yarnpkg.com/ember-rfc176-data/-/ember-rfc176-data-0.3.13.tgz#ed1712a26e65fec703655f35410414aa1982cf3b"
   integrity sha512-m9JbwQlT6PjY7x/T8HslnXP7Sz9bx/pz3FrNfNi2NesJnbNISly0Lix6NV1fhfo46572cpq4jrM+/6yYlMefTQ==
@@ -5636,16 +5636,16 @@ ember-svg-jar@^2.2.3:
     mkdirp "^0.5.1"
     path-posix "^1.0.0"
 
-ember-template-lint@^2.6.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-2.8.0.tgz#01ddc6daf9c8497fe5cfcc55cde25f203a7d8bd3"
-  integrity sha512-tK4aJewdmtVUGSnX/1MR6TuSFAhmIL/CUsUeW33pQsf324l96XzhPP+66G06vjWw8iLW2zK2Rbh5HnEL+IDZsA==
+ember-template-lint@2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ember-template-lint/-/ember-template-lint-2.9.0.tgz#0580468e052c53451c1e983578beb7ee59885141"
+  integrity sha512-O+SeYRcG1Ka1VvHIOzRShYq4ZP9hjnOifpat/5ZOElEN40avv+YhOq5iCLZIUtRN3ryceP1W0Pmsnxuaqsq0Pg==
   dependencies:
     chalk "^4.0.0"
     ember-template-recast "^4.1.4"
     find-up "^4.1.0"
     get-stdin "^8.0.0"
-    globby "^11.0.0"
+    globby "^11.0.1"
     is-valid-glob "^1.0.0"
     micromatch "^4.0.2"
     resolve "^1.17.0"
@@ -5919,13 +5919,14 @@ eslint-config-prettier@^6.5.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-ember@8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.4.0.tgz#bf66c1abf76b1039c8c253bf755b06382dd5c2b9"
-  integrity sha512-jzSpyA3+aQrEHydo3Tz8cNAbgmtYVlp0eSe8X52OsHYLdVc7i4vzMwA+ptfO06dzpLQNHWW5ziprB5hoAEt95A==
+eslint-plugin-ember@8.9.1:
+  version "8.9.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-8.9.1.tgz#6d76440bd7bb1954ed61c7ebbb1a1cd8c8e1afa6"
+  integrity sha512-A7TFksLfLLoQEWOHCvJX6SvxxL99yDEPwDZIh28TOgwsPsXpVYJNk22UT5ZrufUyVtdnOH4IsF3jIkRIIE91IA==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
-    ember-rfc176-data "^0.3.12"
+    ember-rfc176-data "^0.3.13"
+    lodash.kebabcase "^4.1.1"
     snake-case "^3.0.3"
 
 eslint-plugin-es@^3.0.0:
@@ -5948,10 +5949,10 @@ eslint-plugin-node@^11.1.0:
     resolve "^1.10.1"
     semver "^6.1.0"
 
-eslint-plugin-prettier@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.2.tgz#432e5a667666ab84ce72f945c72f77d996a5c9ba"
-  integrity sha512-GlolCC9y3XZfv3RQfwGew7NnuFDKsfI4lbvRK+PIIo23SFH+LemGs4cKwzAaRa+Mdb+lQO/STaIayno8T5sJJA==
+eslint-plugin-prettier@3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.4.tgz#168ab43154e2ea57db992a2cd097c828171f75c2"
+  integrity sha512-jZDa8z76klRqo+TdGDTFJSavwbnWK2ZpqGKNZ+VvweMW516pDUMmQ2koXvxEE4JhzNvTv+radye/bWGBmA6jmg==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -7127,7 +7128,7 @@ globby@10.0.0:
     merge2 "^1.2.3"
     slash "^3.0.0"
 
-globby@^11.0.0:
+globby@^11.0.0, globby@^11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/globby/-/globby-11.0.1.tgz#9a2bf107a068f3ffeabc49ad702c79ede8cfd357"
   integrity sha512-iH9RmgwCmUJHi2z5o2l3eTtGBtXek1OYlHrbcxOYugyHLmAsZrPj43OtHThd62Buh/Vv6VyCBD2bdyWcGNQqoQ==
@@ -8814,6 +8815,11 @@ lodash.istypedarray@^3.0.0:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
   integrity sha1-yaR3SYYHUB2OhJTSg7h8OSgc72I=
+
+lodash.kebabcase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
+  integrity sha1-hImxyw0p/4gZXM7KRI/21swpXDY=
 
 lodash.keys@^3.0.0:
   version "3.1.2"
