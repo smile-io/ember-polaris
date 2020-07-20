@@ -1,5 +1,16 @@
 # Changelog
 
+
+## [v6.0.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.0-beta.0...v6.0.0)
+
+:bug: Bugfixes
+
+- Fix yielded `section` on sectioned `PolarisCard` [\#642](https://github.com/smile-io/ember-polaris/pull/642) ([andrewpye](https://github.com/andrewpye))
+
+
+
 ## [v6.0.0-beta.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0-beta.0)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v5.2.1...v6.0.0-beta.0)
