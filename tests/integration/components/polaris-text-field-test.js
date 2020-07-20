@@ -34,10 +34,10 @@ const connectedLeftSelector = '[data-test-connected-item="left"]';
 const connectedRightSelector = '[data-test-connected-item="right"]';
 const characterCounterSelector = '[data-test-text-field-character-count]';
 
-module('Integration | Component | polaris-text-field', function(hooks) {
+module('Integration | Component | polaris-text-field', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correctly by default', async function(assert) {
+  test('it renders correctly by default', async function (assert) {
     this.set('label', label);
 
     await render(hbs`
@@ -88,7 +88,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     );
   });
 
-  test('it supports focused property', async function(assert) {
+  test('it supports focused property', async function (assert) {
     await render(hbs`{{polaris-text-field focused=false}}`);
 
     assert
@@ -114,7 +114,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .isFocused('when focused is true - input is focused');
   });
 
-  test('it handles action callbacks correctly', async function(assert) {
+  test('it handles action callbacks correctly', async function (assert) {
     this.set('callback', (name) => assert.step(name));
 
     await render(hbs`
@@ -132,8 +132,8 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     assert.verifySteps(['change', 'focus', 'blur'], 'invokes callbacks');
   });
 
-  module('id', function() {
-    test('when provided', async function(assert) {
+  module('id', function () {
+    test('when provided', async function (assert) {
       await render(hbs`{{polaris-text-field id="myId"}}`);
 
       assert
@@ -141,7 +141,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .hasAttribute('id', 'myId', 'sets it on the input element');
     });
 
-    test('when not provided', async function(assert) {
+    test('when not provided', async function (assert) {
       await render(hbs`{{polaris-text-field}}`);
 
       assert
@@ -154,8 +154,8 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     });
   });
 
-  module('autoComplete', function() {
-    test('defaults to no autoComplete attribute', async function(assert) {
+  module('autoComplete', function () {
+    test('defaults to no autoComplete attribute', async function (assert) {
       await render(hbs`{{polaris-text-field}}`);
 
       assert
@@ -166,7 +166,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         );
     });
 
-    test('sets autoComplete to "off" when false', async function(assert) {
+    test('sets autoComplete to "off" when false', async function (assert) {
       await render(hbs`{{polaris-text-field autoComplete=false}}`);
 
       assert
@@ -174,7 +174,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .hasAttribute('autoComplete', 'off', 'input has autoComplete off');
     });
 
-    test('sets autoComplete to "on" when true', async function(assert) {
+    test('sets autoComplete to "on" when true', async function (assert) {
       await render(hbs`{{polaris-text-field autoComplete=true}}`);
 
       assert
@@ -183,7 +183,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     });
   });
 
-  test('it support helpText property', async function(assert) {
+  test('it support helpText property', async function (assert) {
     this.set('helpText', helpText);
 
     await render(hbs`
@@ -201,7 +201,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .hasAttribute('id', helpTextId, 'help text id is correct');
   });
 
-  test('it support readOnly property', async function(assert) {
+  test('it support readOnly property', async function (assert) {
     await render(hbs`
       {{polaris-text-field
         readOnly=true
@@ -216,8 +216,8 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       );
   });
 
-  module('error', function() {
-    test('works with a string|component', async function(assert) {
+  module('error', function () {
+    test('works with a string|component', async function (assert) {
       await render(hbs`
         {{polaris-text-field
           id="myId"
@@ -261,7 +261,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         );
     });
 
-    test('it connects the input to the error', async function(assert) {
+    test('it connects the input to the error', async function (assert) {
       await render(hbs`
         {{polaris-text-field
           error="Some error"
@@ -274,7 +274,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         .hasText('Some error', 'error label has correct text');
     });
 
-    test('it connects the input to an error rendered separately', async function(assert) {
+    test('it connects the input to an error rendered separately', async function (assert) {
       this.setProperties({
         errorMessage: 'Some error',
         textFieldID: 'collectionRuleType',
@@ -308,7 +308,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         );
     });
 
-    test('it connects the input to both an error and help text', async function(assert) {
+    test('it connects the input to both an error and help text', async function (assert) {
       this.setProperties({
         errorMessage: 'Some error',
         textFieldID: 'collectionRuleType',
@@ -333,8 +333,8 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     });
   });
 
-  module('type', function() {
-    test('it sets type correctly', async function(assert) {
+  module('type', function () {
+    test('it sets type correctly', async function (assert) {
       this.set('type', 'email');
 
       await render(hbs`{{polaris-text-field type=type}}`);
@@ -354,8 +354,8 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         );
     });
 
-    module('when type is number', function() {
-      test('it handles incrementing/decrementing correctly', async function(assert) {
+    module('when type is number', function () {
+      test('it handles incrementing/decrementing correctly', async function (assert) {
         this.setProperties({
           value: 1,
           id: 'myId',
@@ -409,7 +409,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
           .doesNotExist('does not render spinner when disabled');
       });
 
-      test('it handles incrementing from no value', async function(assert) {
+      test('it handles incrementing from no value', async function (assert) {
         await render(hbs`
           {{polaris-text-field
             type="number"
@@ -422,7 +422,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         assert.equal(this.value, 1);
       });
 
-      test('it uses step property when provided', async function(assert) {
+      test('it uses step property when provided', async function (assert) {
         await render(hbs`
           {{polaris-text-field
             type="number"
@@ -437,7 +437,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         assert.equal(this.value, 8);
       });
 
-      test('it respects a min value', async function(assert) {
+      test('it respects a min value', async function (assert) {
         this.set('value', 2);
 
         await render(hbs`
@@ -464,7 +464,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         assert.equal(this.value, 2, 'does not decrement value below min one');
       });
 
-      test('it respects a max value', async function(assert) {
+      test('it respects a max value', async function (assert) {
         this.set('value', 2);
 
         await render(hbs`
@@ -491,7 +491,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         assert.equal(this.value, 1, 'decrements value');
       });
 
-      test('increments correctly when a value step or both are float numbers', async function(assert) {
+      test('increments correctly when a value step or both are float numbers', async function (assert) {
         this.set('value', 2);
 
         await render(hbs`
@@ -507,7 +507,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
         assert.equal(this.value, 4.064, 'decrements value correctly');
       });
 
-      test('decrements correctly when a value step or both are float numbers', async function(assert) {
+      test('decrements correctly when a value step or both are float numbers', async function (assert) {
         this.set('value', 2);
 
         await render(hbs`
@@ -525,7 +525,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     });
   });
 
-  test('it supports `multiline` property', async function(assert) {
+  test('it supports `multiline` property', async function (assert) {
     await render(hbs`
       {{polaris-text-field
         multiline=true
@@ -553,7 +553,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       );
   });
 
-  test('it sets aria labels on the input element', async function(assert) {
+  test('it sets aria labels on the input element', async function (assert) {
     await render(hbs`
       {{polaris-text-field
         ariaOwns="Aria owns"
@@ -573,7 +573,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     assert.dom(inputSelector).hasAttribute('aria-controls', 'Aria controls');
   });
 
-  test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function(assert) {
+  test('it renders a prefix and suffix when `prefix` or `suffix` is present', async function (assert) {
     this.setProperties({
       prefix,
       suffix,
@@ -624,7 +624,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
     );
   });
 
-  test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function(assert) {
+  test('it renders as a connected component when `connectedLeft` or `connectedRight` is present', async function (assert) {
     await render(hbs`
       {{polaris-text-field
         connectedLeft=(component "polaris-text-field" label="Left connected")
@@ -643,7 +643,7 @@ module('Integration | Component | polaris-text-field', function(hooks) {
       .hasText('Right connected', 'render connected right correctly');
   });
 
-  test('it displays number of characters entered in an input field', async function(assert) {
+  test('it displays number of characters entered in an input field', async function (assert) {
     await render(hbs`
       {{polaris-text-field
         value="test"

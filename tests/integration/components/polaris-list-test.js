@@ -4,7 +4,7 @@ import { findAll, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris list', function(hooks) {
+module('Integration | Component | polaris list', function (hooks) {
   setupRenderingTest(hooks);
 
   const listSelector = '.Polaris-List';
@@ -13,7 +13,7 @@ module('Integration | Component | polaris list', function(hooks) {
     'li.Polaris-List__Item'
   );
 
-  test('it renders the correct HTML', async function(assert) {
+  test('it renders the correct HTML', async function (assert) {
     await render(hbs`
       {{#polaris-list type=type as |list|}}
         {{#each items as |item|}}

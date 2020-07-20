@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris text container', function(hooks) {
+module('Integration | Component | polaris text container', function (hooks) {
   setupRenderingTest(hooks);
 
   const textContainerSelector = 'div.Polaris-TextContainer';
 
-  test('it renders the correct HTML in inline form', async function(assert) {
+  test('it renders the correct HTML in inline form', async function (assert) {
     await render(
       hbs`{{polaris-text-container text="This is some inline text"}}`
     );
@@ -21,7 +21,7 @@ module('Integration | Component | polaris text container', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML in block form', async function(assert) {
+  test('it renders the correct HTML in block form', async function (assert) {
     await render(
       hbs`{{#polaris-text-container}}This is some block text{{/polaris-text-container}}`
     );
@@ -34,7 +34,7 @@ module('Integration | Component | polaris text container', function(hooks) {
     );
   });
 
-  test('it handles spacing correctly', async function(assert) {
+  test('it handles spacing correctly', async function (assert) {
     await render(hbs`{{polaris-text-container spacing=spacing}}`);
 
     const textContainer = assert.dom(textContainerSelector);

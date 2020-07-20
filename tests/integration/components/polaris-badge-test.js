@@ -4,12 +4,12 @@ import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris badge', function(hooks) {
+module('Integration | Component | polaris badge', function (hooks) {
   setupRenderingTest(hooks);
 
   const badgeSelector = '.Polaris-Badge';
 
-  test('it renders the correct HTML in basic inline usage', async function(assert) {
+  test('it renders the correct HTML in basic inline usage', async function (assert) {
     await render(hbs`{{polaris-badge text="Inline badge"}}`);
 
     assert.dom(badgeSelector).exists({ count: 1 }, 'renders one badge');
@@ -18,7 +18,7 @@ module('Integration | Component | polaris badge', function(hooks) {
       .hasText('Inline badge', 'renders the correct badge content');
   });
 
-  test('it renders the correct HTML in basic block usage', async function(assert) {
+  test('it renders the correct HTML in basic block usage', async function (assert) {
     await render(hbs`
       {{#polaris-badge}}
         Block badge
@@ -31,7 +31,7 @@ module('Integration | Component | polaris badge', function(hooks) {
       .hasText('Block badge', 'renders the correct badge content');
   });
 
-  test('it renders the correct HTML when status is set', async function(assert) {
+  test('it renders the correct HTML when status is set', async function (assert) {
     await render(hbs`
       {{#polaris-badge status=status}}
         Block badge
@@ -159,7 +159,7 @@ module('Integration | Component | polaris badge', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML when progress is set', async function(assert) {
+  test('it renders the correct HTML when progress is set', async function (assert) {
     await render(hbs`
       {{#polaris-badge progress=progress}}
         Block badge
@@ -284,7 +284,7 @@ module('Integration | Component | polaris badge', function(hooks) {
       );
   });
 
-  test('supports passing a @class argument for backwards compatibility', async function(assert) {
+  test('supports passing a @class argument for backwards compatibility', async function (assert) {
     await render(hbs`
       {{polaris-badge class="custom-class"}}
     `);

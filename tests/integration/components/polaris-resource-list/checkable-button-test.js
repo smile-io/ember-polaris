@@ -13,10 +13,10 @@ const labelSelector = '.Polaris-ResourceList-CheckableButton__Label';
 
 module(
   'Integration | Component | polaris-resource-list/checkable-button',
-  function(hooks) {
+  function (hooks) {
     setupRenderingTest(hooks);
 
-    test('it correctly handles its attributes', async function(assert) {
+    test('it correctly handles its attributes', async function (assert) {
       this.setProperties({
         label,
         accessibilityLabel,
@@ -55,7 +55,7 @@ module(
         );
     });
 
-    test('onToggleAll action works', async function(assert) {
+    test('onToggleAll action works', async function (assert) {
       assert.expect(2);
 
       this.handleWrapperClick = () =>

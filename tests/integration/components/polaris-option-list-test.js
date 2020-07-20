@@ -52,14 +52,14 @@ const defaultProps = {
   selected: [],
 };
 
-module('Integration | Component | polaris-option-list', function(hooks) {
+module('Integration | Component | polaris-option-list', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.set('defaultProps', defaultProps);
   });
 
-  test('renders options and sections', async function(assert) {
+  test('renders options and sections', async function (assert) {
     const { options, sections } = defaultProps;
     await render(hbs`
       {{polaris-option-list
@@ -76,7 +76,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(options, sections) });
   });
 
-  test('renders sections', async function(assert) {
+  test('renders sections', async function (assert) {
     const { sections } = defaultProps;
     const options = [];
     this.set('options', options);
@@ -95,7 +95,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(options, sections) });
   });
 
-  test('renders options', async function(assert) {
+  test('renders options', async function (assert) {
     const { options } = defaultProps;
     const sections = [];
     this.set('sections', sections);
@@ -114,7 +114,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(options, sections) });
   });
 
-  test('re-renders with new options passed in', async function(assert) {
+  test('re-renders with new options passed in', async function (assert) {
     const { sections, options } = defaultProps;
     this.set('options', options);
     await render(hbs`
@@ -146,7 +146,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(newOptions, sections) });
   });
 
-  test('re-renders with new sections passed in', async function(assert) {
+  test('re-renders with new sections passed in', async function (assert) {
     const { sections, options } = defaultProps;
     this.set('sections', sections);
     await render(hbs`
@@ -182,7 +182,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(options, newSections) });
   });
 
-  test('re-renders with new options and new sections passed in', async function(assert) {
+  test('re-renders with new options and new sections passed in', async function (assert) {
     const { options, sections } = defaultProps;
     this.setProperties({ options, sections });
     await render(hbs`
@@ -233,7 +233,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(newOptions, newSections) });
   });
 
-  test('re-renders with undefined options', async function(assert) {
+  test('re-renders with undefined options', async function (assert) {
     const { sections, options } = defaultProps;
     this.set('options', options);
     await render(hbs`
@@ -253,7 +253,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions([], sections) });
   });
 
-  test('re-renders with undefined sections', async function(assert) {
+  test('re-renders with undefined sections', async function (assert) {
     const { sections, options } = defaultProps;
     this.set('sections', sections);
     await render(hbs`
@@ -273,7 +273,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(options, []) });
   });
 
-  test('re-renders with undefined options and new sections', async function(assert) {
+  test('re-renders with undefined options and new sections', async function (assert) {
     const { options, sections } = defaultProps;
     this.setProperties({ options, sections });
     await render(hbs`
@@ -312,7 +312,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(undefined, newSections) });
   });
 
-  test('re-renders with new options and undefined sections', async function(assert) {
+  test('re-renders with new options and undefined sections', async function (assert) {
     const { options, sections } = defaultProps;
     this.setProperties({ options, sections });
     await render(hbs`
@@ -347,7 +347,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
       .exists({ count: totalOptions(newOptions, undefined) });
   });
 
-  test('calls onChange with options and sections', async function(assert) {
+  test('calls onChange with options and sections', async function (assert) {
     const { options, sections } = defaultProps;
     await render(hbs`
       {{polaris-option-list
@@ -368,8 +368,8 @@ module('Integration | Component | polaris-option-list', function(hooks) {
     ]);
   });
 
-  module('allowMultiple', function() {
-    test('renders options and sections', async function(assert) {
+  module('allowMultiple', function () {
+    test('renders options and sections', async function (assert) {
       const { options, sections } = defaultProps;
       await render(hbs`
         {{polaris-option-list
@@ -387,7 +387,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(options, sections) });
     });
 
-    test('renders sections', async function(assert) {
+    test('renders sections', async function (assert) {
       const { sections } = defaultProps;
       const options = [];
       this.set('options', options);
@@ -407,7 +407,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(options, sections) });
     });
 
-    test('renders options', async function(assert) {
+    test('renders options', async function (assert) {
       const { options } = defaultProps;
       const sections = [];
       this.set('sections', sections);
@@ -427,7 +427,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(options, sections) });
     });
 
-    test('re-renders with new options passed in', async function(assert) {
+    test('re-renders with new options passed in', async function (assert) {
       const { sections, options } = defaultProps;
       this.set('options', options);
       await render(hbs`
@@ -460,7 +460,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(newOptions, sections) });
     });
 
-    test('re-renders with new sections passed in', async function(assert) {
+    test('re-renders with new sections passed in', async function (assert) {
       const { sections, options } = defaultProps;
       this.set('sections', sections);
       await render(hbs`
@@ -497,7 +497,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(options, newSections) });
     });
 
-    test('re-renders with new options and new sections passed in', async function(assert) {
+    test('re-renders with new options and new sections passed in', async function (assert) {
       const { options, sections } = defaultProps;
       this.setProperties({ options, sections });
       await render(hbs`
@@ -549,7 +549,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(newOptions, newSections) });
     });
 
-    test('re-renders with undefined options', async function(assert) {
+    test('re-renders with undefined options', async function (assert) {
       const { sections, options } = defaultProps;
       this.set('options', options);
       await render(hbs`
@@ -570,7 +570,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions([], sections) });
     });
 
-    test('re-renders with undefined sections', async function(assert) {
+    test('re-renders with undefined sections', async function (assert) {
       const { sections, options } = defaultProps;
       this.set('sections', sections);
       await render(hbs`
@@ -591,7 +591,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(options, []) });
     });
 
-    test('re-renders with undefined options and new sections', async function(assert) {
+    test('re-renders with undefined options and new sections', async function (assert) {
       const { options, sections } = defaultProps;
       this.setProperties({ options, sections });
       await render(hbs`
@@ -631,7 +631,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(undefined, newSections) });
     });
 
-    test('re-renders with new options and undefined sections', async function(assert) {
+    test('re-renders with new options and undefined sections', async function (assert) {
       const { options, sections } = defaultProps;
       this.setProperties({ options, sections });
       await render(hbs`
@@ -667,8 +667,8 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         .exists({ count: totalOptions(newOptions, undefined) });
     });
 
-    module('onChange', function() {
-      test('selects an item when nothing was selected', async function(assert) {
+    module('onChange', function () {
+      test('selects an item when nothing was selected', async function (assert) {
         const { options, sections } = defaultProps;
         await render(hbs`
           {{polaris-option-list
@@ -690,7 +690,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         ]);
       });
 
-      test('selects an item when multiple items are selected', async function(assert) {
+      test('selects an item when multiple items are selected', async function (assert) {
         const { options, sections } = defaultProps;
         const selected = ['11', '8'];
         this.set('selected', selected);
@@ -715,7 +715,7 @@ module('Integration | Component | polaris-option-list', function(hooks) {
         ]);
       });
 
-      test('deselects an item when it is already selected', async function(assert) {
+      test('deselects an item when it is already selected', async function (assert) {
         const { options, sections } = defaultProps;
         const selected = ['10', '8', '5'];
         this.set('selected', selected);

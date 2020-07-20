@@ -4,7 +4,7 @@ import { click, find, findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris color picker', function(hooks) {
+module('Integration | Component | polaris color picker', function (hooks) {
   setupRenderingTest(hooks);
 
   const colorPickerSelector = 'div.Polaris-ColorPicker';
@@ -29,7 +29,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
     'div.Polaris-ColorPicker__Dragger'
   );
 
-  test('it renders the correct HTML with default attributes', async function(assert) {
+  test('it renders the correct HTML with default attributes', async function (assert) {
     this.set('color', {
       hue: 40,
       saturation: 0.5,
@@ -88,7 +88,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
     alphaPickers.doesNotExist('does not render an alpha picker');
   });
 
-  test('it renders the correct HTML with allowAlpha set', async function(assert) {
+  test('it renders the correct HTML with allowAlpha set', async function (assert) {
     this.set('color', {
       hue: 214,
       saturation: 0.7,
@@ -172,7 +172,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
     );
   });
 
-  skip('it updates correctly when draggers are moved', async function(assert) {
+  skip('it updates correctly when draggers are moved', async function (assert) {
     assert.expect(18);
     const getTransform = (elem) => find(elem).style.transform;
 
@@ -192,7 +192,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
     `);
 
     // Helpers.
-    const assertDraggerPosition = function(
+    const assertDraggerPosition = function (
       dragger,
       expectedX,
       expectedY,
@@ -206,7 +206,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
       );
     };
 
-    const assertHsbaColor = function(color, colorValue, label) {
+    const assertHsbaColor = function (color, colorValue, label) {
       let { hue, saturation, brightness, alpha } = colorValue;
 
       assert.equal(
@@ -231,7 +231,7 @@ module('Integration | Component | polaris color picker', function(hooks) {
       );
     };
 
-    const clickElementAtPosition = async function(element, x, y) {
+    const clickElementAtPosition = async function (element, x, y) {
       // Click an element some fractional distance across its width and height.
       const { left, top } = element.parentNode.getBoundingClientRect();
 

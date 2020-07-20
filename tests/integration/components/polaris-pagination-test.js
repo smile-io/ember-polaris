@@ -11,15 +11,15 @@ const paginationSelector = 'nav.Polaris-Pagination';
 const prevBtnSelector = '[data-test-prev-btn]';
 const nextBtnSelector = '[data-test-next-btn]';
 
-module('Integration | Component | polaris pagination', function(hooks) {
+module('Integration | Component | polaris pagination', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
     initialize();
   });
 
-  test('it renders defaults correctly', async function(assert) {
+  test('it renders defaults correctly', async function (assert) {
     await render(hbs`{{polaris-pagination}}`);
 
     assert.dom(paginationSelector).exists('inline-mode - renders correctly');
@@ -56,7 +56,7 @@ module('Integration | Component | polaris pagination', function(hooks) {
       );
   });
 
-  test('it renders plain mode correctly', async function(assert) {
+  test('it renders plain mode correctly', async function (assert) {
     await render(hbs`{{polaris-pagination plain=true}}`);
 
     assert
@@ -67,7 +67,7 @@ module('Integration | Component | polaris pagination', function(hooks) {
       );
   });
 
-  test('it handles pagination with previous / next buttons enabled as expected', async function(assert) {
+  test('it handles pagination with previous / next buttons enabled as expected', async function (assert) {
     await render(hbs`{{polaris-pagination
       hasPrevious=true
       hasNext=true
@@ -82,7 +82,7 @@ module('Integration | Component | polaris pagination', function(hooks) {
       .isNotDisabled('inline-mode - has next button enabled');
   });
 
-  test('it handles a11y ', async function(assert) {
+  test('it handles a11y ', async function (assert) {
     await render(
       hbs`{{polaris-pagination accessibilityLabel="Accessible to all"}}`
     );
@@ -96,7 +96,7 @@ module('Integration | Component | polaris pagination', function(hooks) {
       );
   });
 
-  test('it fires events correctly', async function(assert) {
+  test('it fires events correctly', async function (assert) {
     this.set('clickAction', (msg) => assert.step(msg));
 
     await render(hbs`{{polaris-pagination
@@ -129,7 +129,7 @@ module('Integration | Component | polaris pagination', function(hooks) {
       .isNotFocused('after clicking previous button, button is not focussed');
   });
 
-  test(`it supports navigation via 'nextKeys' & 'previousKeys'`, async function(assert) {
+  test(`it supports navigation via 'nextKeys' & 'previousKeys'`, async function (assert) {
     this.setProperties({
       clickAction: (msg, { code }) => assert.step(`${msg}:${code}`),
       hasPrevious: true,

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris subheading', function(hooks) {
+module('Integration | Component | polaris subheading', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the correct HTML', async function(assert) {
+  test('it renders the correct HTML', async function (assert) {
     // Inline form with defaults.
     await render(hbs`{{polaris-subheading text="This is a subheading"}}`);
 

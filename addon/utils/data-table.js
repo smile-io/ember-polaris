@@ -1,5 +1,5 @@
 export function measureColumn(tableData) {
-  return function(column, index) {
+  return function (column, index) {
     const {
       firstVisibleColumnIndex,
       tableLeftVisibleEdge: tableStart,

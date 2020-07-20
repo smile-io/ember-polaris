@@ -46,10 +46,10 @@ const colors = [
   'purple',
 ];
 
-module('Integration | Component | polaris icon', function(hooks) {
+module('Integration | Component | polaris icon', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
@@ -60,7 +60,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     'svg.Polaris-Icon__Svg'
   );
 
-  test('it renders the specified icon correctly', async function(assert) {
+  test('it renders the specified icon correctly', async function (assert) {
     await render(hbs`{{polaris-icon source="notes"}}`);
 
     assert.dom(iconSelector).exists({ count: 1 }, 'renders one icon component');
@@ -85,7 +85,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     );
   });
 
-  test('it applies colors correctly', async function(assert) {
+  test('it applies colors correctly', async function (assert) {
     assert.expect(2 + colors.length * 3);
 
     await render(hbs`{{polaris-icon source="add" color=color}}`);
@@ -137,7 +137,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     });
   });
 
-  test('it handles backdrop correctly', async function(assert) {
+  test('it handles backdrop correctly', async function (assert) {
     await render(hbs`{{polaris-icon source="add" backdrop=backdrop}}`);
 
     // Check default setting.
@@ -162,7 +162,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     );
   });
 
-  test('it handles accessibilityLabel correctly', async function(assert) {
+  test('it handles accessibilityLabel correctly', async function (assert) {
     await render(
       hbs`{{polaris-icon source="add" accessibilityLabel=accessibilityLabel}}`
     );
@@ -183,7 +183,7 @@ module('Integration | Component | polaris icon', function(hooks) {
     );
   });
 
-  test('it handles placeholder icons correctly', async function(assert) {
+  test('it handles placeholder icons correctly', async function (assert) {
     await render(hbs`{{polaris-icon source="placeholder"}}`);
 
     const iconPlaceholderSelector = buildNestedSelector(

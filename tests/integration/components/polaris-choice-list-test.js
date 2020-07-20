@@ -24,14 +24,14 @@ const choiceWithDescriptionSelector = buildNestedSelector(
 const helpTextSelector = '[data-test-choice-help-text]';
 const choiceErrorSelector = '[data-test-choice-list-error]';
 
-module('Integration | Component | polaris-choice-list', function(hooks) {
+module('Integration | Component | polaris-choice-list', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function(/* assert */) {
+  hooks.beforeEach(function (/* assert */) {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
-  test('it renders the correct HTML when allowMultiple is false', async function(assert) {
+  test('it renders the correct HTML when allowMultiple is false', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         name="test-single-choice-list"
@@ -124,7 +124,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when allowMultiple is true', async function(assert) {
+  test('it renders the correct HTML when allowMultiple is true', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         name="test-multiple-choice-list"
@@ -220,7 +220,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     );
   });
 
-  test('it handles title and titleHidden attributes correctly', async function(assert) {
+  test('it handles title and titleHidden attributes correctly', async function (assert) {
     this.setProperties({
       title: 'Original title',
       titleHidden: false,
@@ -273,7 +273,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     );
   });
 
-  test('it handles choice selection correctly when allowMultiple is false', async function(assert) {
+  test('it handles choice selection correctly when allowMultiple is false', async function (assert) {
     this.set('selected', ['two']);
     this.set('choices', [
       {
@@ -337,7 +337,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     );
   });
 
-  test('it handles choice selection correctly when allowMultiple is true', async function(assert) {
+  test('it handles choice selection correctly when allowMultiple is true', async function (assert) {
     this.set('selected', ['one', 'three']);
     this.set('choices', [
       {
@@ -438,7 +438,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     );
   });
 
-  test('it handles choice helpText correctly when allowMultiple is false', async function(assert) {
+  test('it handles choice helpText correctly when allowMultiple is false', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         allowMultiple=false
@@ -491,7 +491,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       );
   });
 
-  test('it handles choice helpText correctly when allowMultiple is true', async function(assert) {
+  test('it handles choice helpText correctly when allowMultiple is true', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         allowMultiple=true
@@ -544,7 +544,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
       );
   });
 
-  test('it handles choice disabled correctly when allowMultiple is false', async function(assert) {
+  test('it handles choice disabled correctly when allowMultiple is false', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         allowMultiple=false
@@ -571,7 +571,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
   });
 
-  test('it handles choice disabled correctly when allowMultiple is true', async function(assert) {
+  test('it handles choice disabled correctly when allowMultiple is true', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         allowMultiple=true
@@ -600,7 +600,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     assert.notOk(choiceControls[1].disabled, 'second choice is enabled');
   });
 
-  test('it renders an error when `error` is present', async function(assert) {
+  test('it renders an error when `error` is present', async function (assert) {
     await render(hbs`
       {{polaris-choice-list
         error="oh noes!"
@@ -616,7 +616,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     assert.dom(choiceErrorSelector).exists();
   });
 
-  test('it updates the list of selected choices when a new `selected` array is passed in', async function(assert) {
+  test('it updates the list of selected choices when a new `selected` array is passed in', async function (assert) {
     this.set('selected', ['one']);
     await render(hbs`
       {{polaris-choice-list
@@ -639,7 +639,7 @@ module('Integration | Component | polaris-choice-list', function(hooks) {
     assert.dom('.Polaris-RadioButton__Input:checked').hasValue('two');
   });
 
-  test('it supports choice children components aka renderChildren', async function(assert) {
+  test('it supports choice children components aka renderChildren', async function (assert) {
     this.owner.register(
       'component:dummy-component',
       Component.extend({

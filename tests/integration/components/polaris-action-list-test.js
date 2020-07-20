@@ -46,14 +46,14 @@ const itemIconSelector = buildNestedSelector(
   'svg'
 );
 
-module('Integration | Component | polaris action list', function(hooks) {
+module('Integration | Component | polaris action list', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
-  test('it renders the correct HTML in basic usage', async function(assert) {
+  test('it renders the correct HTML in basic usage', async function (assert) {
     await render(hbs`
       {{polaris-action-list
         items=(array
@@ -86,7 +86,7 @@ module('Integration | Component | polaris action list', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML when using icons', async function(assert) {
+  test('it renders the correct HTML when using icons', async function (assert) {
     await render(hbs`
       {{polaris-action-list
         items=(array
@@ -162,7 +162,7 @@ module('Integration | Component | polaris action list', function(hooks) {
       );
   });
 
-  test('it handles item actions correctly', async function(assert) {
+  test('it handles item actions correctly', async function (assert) {
     let action1Fired = false;
     this.set('action1', () => {
       action1Fired = true;
@@ -202,7 +202,7 @@ module('Integration | Component | polaris action list', function(hooks) {
     );
   });
 
-  test('it does not bubble item actions', async function(assert) {
+  test('it does not bubble item actions', async function (assert) {
     this.setProperties({
       parentActionFired: false,
       action1Fired: false,
@@ -243,7 +243,7 @@ module('Integration | Component | polaris action list', function(hooks) {
     );
   });
 
-  test('it handles the "any item" action correctly', async function(assert) {
+  test('it handles the "any item" action correctly', async function (assert) {
     this.setProperties({
       itemActionFired: false,
       anyItemActionCount: 0,
@@ -292,7 +292,7 @@ module('Integration | Component | polaris action list', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when using sections', async function(assert) {
+  test('it renders the correct HTML when using sections', async function (assert) {
     this.set('sections', [
       {
         title: 'Section 2',
@@ -435,7 +435,7 @@ module('Integration | Component | polaris action list', function(hooks) {
       .hasText('Section 3 item', 'third section item renders the correct text');
   });
 
-  test('item actions nested in a form do not trigger the form to submit', async function(assert) {
+  test('item actions nested in a form do not trigger the form to submit', async function (assert) {
     this.setProperties({
       formSubmitted: false,
       nestedActionFired: false,
@@ -459,7 +459,7 @@ module('Integration | Component | polaris action list', function(hooks) {
     assert.notOk(this.get('formSubmitted'), 'form submit action is not fired');
   });
 
-  test('renders helpText when the helpText prop is defined', async function(assert) {
+  test('renders helpText when the helpText prop is defined', async function (assert) {
     await render(hbs`
       {{polaris-action-list
         items=(array

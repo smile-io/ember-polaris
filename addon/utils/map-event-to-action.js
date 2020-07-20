@@ -8,7 +8,7 @@ const defaultOptions = {
 
 export default function mapEventToAction(actionName, options, ...args) {
   options = assign({}, defaultOptions, options);
-  return function(event) {
+  return function (event) {
     if (options.preventDefault) {
       event.preventDefault();
     }

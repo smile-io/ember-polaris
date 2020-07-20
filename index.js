@@ -18,7 +18,7 @@ module.exports = {
     },
   },
 
-  included: function(/* app */) {
+  included: function (/* app */) {
     this._super.included.apply(this, arguments);
   },
 

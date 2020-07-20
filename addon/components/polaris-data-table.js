@@ -13,7 +13,7 @@ import { measureColumn, getPrevAndCurrentColumns } from '../utils/data-table';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 function elementLookup(selector) {
-  return computed('dataTableElement', function() {
+  return computed('dataTableElement', function () {
     return this.dataTableElement.querySelector(selector);
   });
 }

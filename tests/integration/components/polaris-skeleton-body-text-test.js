@@ -4,7 +4,9 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris skeleton body text', function(hooks) {
+module('Integration | Component | polaris skeleton body text', function (
+  hooks
+) {
   setupRenderingTest(hooks);
 
   const containerSelector =
@@ -14,7 +16,7 @@ module('Integration | Component | polaris skeleton body text', function(hooks) {
     'div.Polaris-SkeletonBodyText'
   );
 
-  test('it renders the specified number of lines', async function(assert) {
+  test('it renders the specified number of lines', async function (assert) {
     await render(hbs`{{polaris-skeleton-body-text lines=lines}}`);
 
     assert

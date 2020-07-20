@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris text style', function(hooks) {
+module('Integration | Component | polaris text style', function (hooks) {
   setupRenderingTest(hooks);
 
   const textStyleSelector = '[data-test-text-style]';
 
-  test('it renders the correct HTML in inline usage with default attributes', async function(assert) {
+  test('it renders the correct HTML in inline usage with default attributes', async function (assert) {
     await render(hbs`{{polaris-text-style text="Inline styled text"}}`);
 
     assert
@@ -46,7 +46,7 @@ module('Integration | Component | polaris text style', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML in block usage with default attributes', async function(assert) {
+  test('it renders the correct HTML in block usage with default attributes', async function (assert) {
     await render(
       hbs`{{#polaris-text-style}}Block styled text{{/polaris-text-style}}`
     );
@@ -86,7 +86,7 @@ module('Integration | Component | polaris text style', function(hooks) {
       );
   });
 
-  test('it handles the variation attribute correctly', async function(assert) {
+  test('it handles the variation attribute correctly', async function (assert) {
     this.set('variation', 'positive');
 
     await render(hbs`{{polaris-text-style variation=variation}}`);
@@ -157,7 +157,7 @@ module('Integration | Component | polaris text style', function(hooks) {
     );
   });
 
-  test('it supports passing custom style classes', async function(assert) {
+  test('it supports passing custom style classes', async function (assert) {
     await render(hbs`
       {{polaris-text-style
         classes="custom-class"

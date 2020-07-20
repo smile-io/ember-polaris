@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-module('Integration | Component | polaris footer help', function(hooks) {
+module('Integration | Component | polaris footer help', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
@@ -27,7 +27,7 @@ module('Integration | Component | polaris footer help', function(hooks) {
     'div.Polaris-FooterHelp__Text'
   );
 
-  test('it renders the correct HTML in inline usage', async function(assert) {
+  test('it renders the correct HTML in inline usage', async function (assert) {
     await render(hbs`{{polaris-footer-help text="Looking for help?"}}`);
 
     assert
@@ -67,7 +67,7 @@ module('Integration | Component | polaris footer help', function(hooks) {
     footerHelpTexts.hasText('Looking for help?', 'renders the correct text');
   });
 
-  test('it renders the correct HTML in block usage', async function(assert) {
+  test('it renders the correct HTML in block usage', async function (assert) {
     await render(hbs`
       {{#polaris-footer-help}}
         Looking for help?

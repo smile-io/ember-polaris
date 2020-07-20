@@ -12,14 +12,14 @@ const contentSelector = 'div.Polaris-Banner__Content';
 const dismissSelector = 'div.Polaris-Banner__Dismiss';
 const actionsSelector = 'div.Polaris-Banner__Actions';
 
-module('Integration | Component | polaris banner', function(hooks) {
+module('Integration | Component | polaris banner', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
-  test('it renders correctly in basic usage', async function(assert) {
+  test('it renders correctly in basic usage', async function (assert) {
     await render(hbs`{{polaris-banner}}`);
 
     let banner = assert.dom(bannerSelector);
@@ -72,7 +72,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     );
   });
 
-  test('it renders banner heading correctly', async function(assert) {
+  test('it renders banner heading correctly', async function (assert) {
     await render(hbs`{{polaris-banner title=title}}`);
 
     let bannerHeadingSelector = `${bannerSelector} ${headingSelector}`;
@@ -100,7 +100,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     );
   });
 
-  test('it handles banner content correctly', async function(assert) {
+  test('it handles banner content correctly', async function (assert) {
     let contentText =
       'Use your finance report to get detailed information about your business.';
 
@@ -149,7 +149,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     );
   });
 
-  test('it handles banner status correctly', async function(assert) {
+  test('it handles banner status correctly', async function (assert) {
     await render(hbs`{{polaris-banner status=status}}`);
 
     let banner = assert.dom(bannerSelector);
@@ -250,7 +250,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     );
   });
 
-  test('it handles dismissable banner correctly', async function(assert) {
+  test('it handles dismissable banner correctly', async function (assert) {
     await render(hbs`{{polaris-banner}}`);
 
     let banner = assert.dom(bannerSelector);
@@ -295,7 +295,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     assert.ok(dismissed, 'banner dismissable - fires dismiss action');
   });
 
-  test('it supports `primaryAction` and `secondaryAction`', async function(assert) {
+  test('it supports `primaryAction` and `secondaryAction`', async function (assert) {
     await render(hbs`{{polaris-banner text="Some content text"}}`);
 
     let bannerContentSelector = `${bannerSelector} ${contentSelector}`;
@@ -398,7 +398,7 @@ module('Integration | Component | polaris banner', function(hooks) {
     await click(secondaryActionBtnSelector);
   });
 
-  test('it has backwards support for `action` as `primaryAction`', async function(assert) {
+  test('it has backwards support for `action` as `primaryAction`', async function (assert) {
     this.set('primaryAction', () =>
       assert.ok(true, 'triggers primaryAction handler')
     );

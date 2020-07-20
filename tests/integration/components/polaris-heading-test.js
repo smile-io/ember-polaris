@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 
 const headingSelector = '[data-test-polaris-heading]';
 
-module('Integration | Component | polaris heading', function(hooks) {
+module('Integration | Component | polaris heading', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the correct HTML', async function(assert) {
+  test('it renders the correct HTML', async function (assert) {
     // Inline form with defaults.
     await render(hbs`{{polaris-heading text="This is a heading"}}`);
 

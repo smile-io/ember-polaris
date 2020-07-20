@@ -5,7 +5,7 @@ import Component from '@ember/component';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris-range-slider', function(hooks) {
+module('Integration | Component | polaris-range-slider', function (hooks) {
   setupRenderingTest(hooks);
 
   const dataTestRangeSlider = 'range-slider';
@@ -17,7 +17,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
   const sliderPrefixSelector = '[data-test-range-slider-prefix]';
   const sliderSuffixSelector = '[data-test-range-slider-suffix]';
 
-  test('it allows specific props to pass through properties on the input', async function(assert) {
+  test('it allows specific props to pass through properties on the input', async function (assert) {
     this.setProperties({
       label: 'RangeSlider',
       value: '15',
@@ -61,7 +61,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderInputSelector).hasAttribute('aria-valuenow', this.value);
   });
 
-  test('it calls `onChange` with the new value when the value is changed', async function(assert) {
+  test('it calls `onChange` with the new value when the value is changed', async function (assert) {
     this.set('valueChanged', (newValue, inputId) => {
       assert.equal(newValue, 40);
       assert.equal(inputId, 'MyRangeSlider');
@@ -79,7 +79,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     await fillIn(sliderInputSelector, 40);
   });
 
-  test('`onFocus` is called when the input is focused', async function(assert) {
+  test('`onFocus` is called when the input is focused', async function (assert) {
     this.set('inputFocused', () => {
       assert.ok(true);
     });
@@ -95,7 +95,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     await triggerEvent(sliderInputSelector, 'focus');
   });
 
-  test('`onBlur` is called when the input is blurred', async function(assert) {
+  test('`onBlur` is called when the input is blurred', async function (assert) {
     this.set('inputBlurred', () => {
       assert.ok(true);
     });
@@ -111,7 +111,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     await triggerEvent(sliderInputSelector, 'blur');
   });
 
-  test('it sets the id on the input when an ID is passed', async function(assert) {
+  test('it sets the id on the input when an ID is passed', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -123,7 +123,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderInputSelector).hasAttribute('id', 'MyRangeSlider');
   });
 
-  test('it sets a random id on the input when none is passed', async function(assert) {
+  test('it sets a random id on the input when none is passed', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -134,7 +134,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderInputSelector).hasAttribute('id');
   });
 
-  test('it connects the input to the output when output is rendered', async function(assert) {
+  test('it connects the input to the output when output is rendered', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -149,7 +149,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderOutputSelector).hasAttribute('for', inputId);
   });
 
-  test('output contains correct value text when output is rendered', async function(assert) {
+  test('output contains correct value text when output is rendered', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -161,7 +161,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderOutputSelector).hasText('50');
   });
 
-  test('it connects the input to the help text when help text is supplied', async function(assert) {
+  test('it connects the input to the help text when help text is supplied', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -177,7 +177,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(`#${helpTextId}`).hasText('Some help');
   });
 
-  test('it marks the input as invalid when an error is present', async function(assert) {
+  test('it marks the input as invalid when an error is present', async function (assert) {
     this.owner.register(
       'component:my-error-component',
       Component.extend({
@@ -207,7 +207,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(sliderInputSelector).hasAttribute('aria-invalid', 'true');
   });
 
-  test('it connects the input to the error when an error is present', async function(assert) {
+  test('it connects the input to the error when an error is present', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -221,7 +221,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(`#${errorId}`).hasText('Some error');
   });
 
-  test('it connects the input to both an error and help text when both error and help text are present', async function(assert) {
+  test('it connects the input to both an error and help text when both error and help text are present', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"
@@ -239,7 +239,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
     assert.dom(`#${descriptions[0]}`).hasText('Some error');
   });
 
-  test('it support prefix', async function(assert) {
+  test('it support prefix', async function (assert) {
     this.set('text', 'prefix text');
 
     await render(hbs`
@@ -262,7 +262,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       );
   });
 
-  test('it support suffix', async function(assert) {
+  test('it support suffix', async function (assert) {
     this.set('text', 'suffix text');
 
     await render(hbs`
@@ -285,7 +285,7 @@ module('Integration | Component | polaris-range-slider', function(hooks) {
       );
   });
 
-  test('it sets the correct css custom properties', async function(assert) {
+  test('it sets the correct css custom properties', async function (assert) {
     await render(hbs`
       {{polaris-range-slider
         label="RangeSlider"

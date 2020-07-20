@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris form layout', function(hooks) {
+module('Integration | Component | polaris form layout', function (hooks) {
   setupRenderingTest(hooks);
 
   const formLayoutSelector = '[data-test-form-layout]';
@@ -15,7 +15,7 @@ module('Integration | Component | polaris form layout', function(hooks) {
   const formLayoutGroupHelpTextSelector =
     '[data-test-form-layout-group-helpText]';
 
-  test('it renders the correct HTML in basic usage', async function(assert) {
+  test('it renders the correct HTML in basic usage', async function (assert) {
     await render(hbs`
       {{#polaris-form-layout as |formLayout|}}
         {{#formLayout.item}}
@@ -41,7 +41,7 @@ module('Integration | Component | polaris form layout', function(hooks) {
       .hasText('Item 2', 'second item - has the correct content');
   });
 
-  test('it renders the correct HTML when using groups', async function(assert) {
+  test('it renders the correct HTML when using groups', async function (assert) {
     this.setProperties({
       title: 'Group title',
       helpText: 'Group helpText',

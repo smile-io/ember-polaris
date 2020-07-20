@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris-inline-error', function(hooks) {
+module('Integration | Component | polaris-inline-error', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correctly', async function(assert) {
+  test('it renders correctly', async function (assert) {
     this.setProperties({
       message: "Message can't be blank",
       fieldID: 'uniqueID',
@@ -46,7 +46,7 @@ module('Integration | Component | polaris-inline-error', function(hooks) {
       .doesNotExist('does not renders when message is not truthy');
   });
 
-  test('works with `message` being a component', async function(assert) {
+  test('works with `message` being a component', async function (assert) {
     this.setProperties({
       message: "Message can't be blank",
       fieldID: 'uniqueID',

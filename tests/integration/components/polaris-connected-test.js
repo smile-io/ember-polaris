@@ -23,10 +23,10 @@ const rightContentSelector = buildNestedSelector(
   '.Polaris-Connected__Item--connection:last-of-type'
 );
 
-module('Integration | Component | polaris-connected', function(hooks) {
+module('Integration | Component | polaris-connected', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it does not render any connected elements if `left` or `right` attributes are missing', async function(assert) {
+  test('it does not render any connected elements if `left` or `right` attributes are missing', async function (assert) {
     this.setProperties({
       primary: yieldedContent,
     });
@@ -60,7 +60,7 @@ module('Integration | Component | polaris-connected', function(hooks) {
       .hasText(yieldedContent, 'block content value is correct');
   });
 
-  test('it renders yielded content inside the primary content div', async function(assert) {
+  test('it renders yielded content inside the primary content div', async function (assert) {
     this.setProperties({
       left: leftContent,
       right: rightContent,
@@ -86,7 +86,7 @@ module('Integration | Component | polaris-connected', function(hooks) {
       .hasText(yieldedContent, 'the block content renders correctly');
   });
 
-  test('it renders connected blocks when `left` and `right` are passed-in', async function(assert) {
+  test('it renders connected blocks when `left` and `right` are passed-in', async function (assert) {
     this.setProperties({
       left: leftContent,
       right: rightContent,
