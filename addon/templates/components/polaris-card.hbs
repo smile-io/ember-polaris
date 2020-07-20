@@ -44,7 +44,7 @@
     {{#if @sectioned}}
       <Section>
         {{#if hasBlock}}
-          {{yield (hash section=section)}}
+          {{yield (hash section=Section Section=Section)}}
         {{else}}
           {{text}}
         {{/if}}
