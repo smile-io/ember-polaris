@@ -132,11 +132,7 @@ export default class PolarisPopover extends Component {
   }
 
   set verticalPosition(value) {
-    if (value === ABOVE || value === BELOW) {
-      return value;
-    }
-
-    return null;
+    this.preferredPosition = value;
   }
 
   /**

@@ -69,9 +69,9 @@ export default class PolarisLabelled extends Component {
 
     return guidFor(this);
   }
+
   set id(value) {
     this._id = value;
-    return value;
   }
 
   /**
