@@ -3,13 +3,13 @@ import { render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris caption', function(hooks) {
+module('Integration | Component | polaris caption', function (hooks) {
   setupRenderingTest(hooks);
 
   const caption = 'Received April 21, 2017';
   const componentSelector = 'p.Polaris-Caption';
 
-  test('it renders the correct HTML with inline usage', async function(assert) {
+  test('it renders the correct HTML with inline usage', async function (assert) {
     this.set('text', caption);
     await render(hbs`{{polaris-caption text=text}}`);
 
@@ -19,7 +19,7 @@ module('Integration | Component | polaris caption', function(hooks) {
     captionNode.hasText(caption, 'it renders the correct caption text');
   });
 
-  test('it renders the correct HTML with block usage', async function(assert) {
+  test('it renders the correct HTML with block usage', async function (assert) {
     this.set('caption', caption);
     await render(hbs`
       {{#polaris-caption}}

@@ -3,14 +3,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris skeleton display text', function(
+module('Integration | Component | polaris skeleton display text', function (
   hooks
 ) {
   setupRenderingTest(hooks);
 
   const textSelector = 'div.Polaris-SkeletonDisplayText__DisplayText';
 
-  test('it renders the correct size', async function(assert) {
+  test('it renders the correct size', async function (assert) {
     await render(hbs`{{polaris-skeleton-display-text size=size}}`);
 
     let text = assert.dom(textSelector);

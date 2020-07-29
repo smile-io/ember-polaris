@@ -4,10 +4,10 @@ import { findAll, click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris popover', function(hooks) {
+module('Integration | Component | polaris popover', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
@@ -31,7 +31,7 @@ module('Integration | Component | polaris popover', function(hooks) {
     'div.Polaris-Popover__Pane.Polaris-Scrollable.Polaris-Scrollable--vertical'
   );
 
-  test('it renders the correct HTML with default attributes', async function(assert) {
+  test('it renders the correct HTML with default attributes', async function (assert) {
     await render(hbs`
       {{#polaris-popover as |popover|}}
         {{#popover.activator}}
@@ -138,7 +138,7 @@ module('Integration | Component | polaris popover', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with sectioned attribute', async function(assert) {
+  test('it renders the correct HTML with sectioned attribute', async function (assert) {
     await render(hbs`
       {{#polaris-popover sectioned=true as |popover|}}
         {{#popover.activator}}
@@ -167,7 +167,7 @@ module('Integration | Component | polaris popover', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML with preferredPosition attribute', async function(assert) {
+  test('it renders the correct HTML with preferredPosition attribute', async function (assert) {
     assert.expect(2);
 
     this.set('preferredPosition', 'above');
@@ -204,7 +204,7 @@ module('Integration | Component | polaris popover', function(hooks) {
     assert.ok(contentBelow, 'renders popover content below the trigger');
   });
 
-  test('it calls a passed-in onClose action when closed', async function(assert) {
+  test('it calls a passed-in onClose action when closed', async function (assert) {
     this.set('onCloseCalled', false);
 
     this.actions.close = () => {

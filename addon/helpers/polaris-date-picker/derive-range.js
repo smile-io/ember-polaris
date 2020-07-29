@@ -9,6 +9,6 @@ export function deriveRange(selected) {
   return selected;
 }
 
-export default helper(function([selected]) {
+export default helper(function ([selected]) {
   return deriveRange(selected);
 });

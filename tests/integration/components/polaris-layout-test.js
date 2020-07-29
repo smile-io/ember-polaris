@@ -27,10 +27,10 @@ const headerSelector = `${layoutAnnotationWrapperSelector} ${buildNestedSelector
 const contentSelector = `${layoutAnnotationWrapperSelector} div.Polaris-Layout__AnnotationContent`;
 const descriptionSelector = `${layoutAnnotationWrapperSelector} [data-test-annotation-description]`;
 
-module('Integration | Component | polaris layout', function(hooks) {
+module('Integration | Component | polaris layout', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the correct HTML in basic usage', async function(assert) {
+  test('it renders the correct HTML in basic usage', async function (assert) {
     // Test inline form.
     await render(hbs`{{polaris-layout text="This is an inline layout"}}`);
 
@@ -140,7 +140,7 @@ module('Integration | Component | polaris layout', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML when using sections', async function(assert) {
+  test('it renders the correct HTML when using sections', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.section text="This is an inline section"}}
@@ -314,7 +314,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when no title, text or description are passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when no title, text or description are passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection}}
@@ -337,7 +337,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     contents.hasText('', 'renders correct content');
   });
 
-  test('it renders the correct HTML when a title and no text or description are passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when a title and no text or description are passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection
@@ -366,7 +366,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when a title and text and no description are passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when a title and text and no description are passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection
@@ -396,7 +396,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when text and description string and no title are passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when text and description string and no title are passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection
@@ -426,7 +426,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when text and description string and title are passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when text and description string and title are passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection
@@ -457,7 +457,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when description component is passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when description component is passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection
@@ -473,7 +473,7 @@ module('Integration | Component | polaris layout', function(hooks) {
     assert.dom(descriptionSelector).exists({ count: 1 });
   });
 
-  test('it renders the correct HTML when description hash is passed to annotated section', async function(assert) {
+  test('it renders the correct HTML when description hash is passed to annotated section', async function (assert) {
     await render(hbs`
       {{#polaris-layout as |layout|}}
         {{layout.annotatedSection

@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris callout card', function(hooks) {
+module('Integration | Component | polaris callout card', function (hooks) {
   setupRenderingTest(hooks);
 
   const calloutCardSelector = buildNestedSelector(
@@ -35,7 +35,7 @@ module('Integration | Component | polaris callout card', function(hooks) {
     'img.Polaris-CalloutCard__Image'
   );
 
-  test('it renders the correct HTML in inline form without secondary action', async function(assert) {
+  test('it renders the correct HTML in inline form without secondary action', async function (assert) {
     await render(hbs`
       {{polaris-callout-card
         title="This is an inline callout card"
@@ -86,7 +86,7 @@ module('Integration | Component | polaris callout card', function(hooks) {
     images.hasAttribute('alt', '', 'renders an empty image title');
   });
 
-  test('it renders the correct HTML in block form with secondary action', async function(assert) {
+  test('it renders the correct HTML in block form with secondary action', async function (assert) {
     await render(hbs`
       {{#polaris-callout-card
         title="This is a block callout card"
@@ -165,7 +165,7 @@ module('Integration | Component | polaris callout card', function(hooks) {
     images.hasAttribute('alt', '', 'renders an empty image title');
   });
 
-  test('it handles actions correctly', async function(assert) {
+  test('it handles actions correctly', async function (assert) {
     this.setProperties({
       primaryActionFired: false,
       secondaryActionFired: false,
@@ -202,7 +202,7 @@ module('Integration | Component | polaris callout card', function(hooks) {
     );
   });
 
-  test('it is dismissed', async function(assert) {
+  test('it is dismissed', async function (assert) {
     await render(hbs`
       {{polaris-callout-card
         primaryAction=(hash

@@ -10,10 +10,10 @@ import {
 } from 'ember-keyboard';
 import { compileTemplate } from '@ember/template-compilation';
 
-module('Integration | Component | key-event-listener', function(hooks) {
+module('Integration | Component | key-event-listener', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     initialize();
   });
 
@@ -24,7 +24,7 @@ module('Integration | Component | key-event-listener', function(hooks) {
   };
 
   Object.keys(interactionTriggerMap).forEach((interaction) => {
-    test(`it can handle ${interaction}`, async function(assert) {
+    test(`it can handle ${interaction}`, async function (assert) {
       this.set('onKeyInteraction', () => assert.step(interaction));
 
       let template = compileTemplate(
@@ -36,7 +36,7 @@ module('Integration | Component | key-event-listener', function(hooks) {
       assert.verifySteps([interaction], `${interaction} should work`);
     });
 
-    test(`it can handle dynamic actions with ${interaction}`, async function(assert) {
+    test(`it can handle dynamic actions with ${interaction}`, async function (assert) {
       this.setProperties({
         onKeyInteraction: (msg) => assert.step(msg),
         isEverythingGood: false,
@@ -64,7 +64,7 @@ module('Integration | Component | key-event-listener', function(hooks) {
     });
   });
 
-  test(`it can handle multiple event listeners`, async function(assert) {
+  test(`it can handle multiple event listeners`, async function (assert) {
     this.set('onKeyInteraction', (msg) => assert.step(msg));
 
     await render(

@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 
 const content = 'Content value';
 
-module('Integration | Component | polaris-breadcrumbs', function(hooks) {
+module('Integration | Component | polaris-breadcrumbs', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
@@ -29,7 +29,7 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       .hasText(content, 'has correct content text');
   });
 
-  test('it renders an unstyled link when `breadcrumb.url` attribute is present', async function(assert) {
+  test('it renders an unstyled link when `breadcrumb.url` attribute is present', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
@@ -46,7 +46,7 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       .exists('it renders an unstyled link component');
   });
 
-  test('it renders a button when `breadcrumb.url` attribute is not present', async function(assert) {
+  test('it renders a button when `breadcrumb.url` attribute is not present', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
@@ -63,7 +63,7 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
       .exists('it renders a button');
   });
 
-  test('it does not append the click event to the invoked action args', async function(assert) {
+  test('it does not append the click event to the invoked action args', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
@@ -84,7 +84,7 @@ module('Integration | Component | polaris-breadcrumbs', function(hooks) {
     );
   });
 
-  test('supports passing a @class argument for backwards compatibility', async function(assert) {
+  test('supports passing a @class argument for backwards compatibility', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,

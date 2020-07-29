@@ -19,10 +19,10 @@ const rows = [
 ];
 const footerContent = ['', '', '', 255, '$155,830.00'];
 
-module('Integration | Component | polaris-data-table', function(hooks) {
+module('Integration | Component | polaris-data-table', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.setProperties({
       sortable,
       columnContentTypes,
@@ -32,7 +32,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     });
   });
 
-  test('it renders all table body rows', async function(assert) {
+  test('it renders all table body rows', async function (assert) {
     await render(hbs`
       {{polaris-data-table
         columnContentTypes=columnContentTypes
@@ -45,7 +45,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     assert.dom('[data-test-data-table-row]').exists({ count: 3 });
   });
 
-  test('it defaults to non-sorting column headings', async function(assert) {
+  test('it defaults to non-sorting column headings', async function (assert) {
     await render(hbs`
       {{polaris-data-table
         columnContentTypes=columnContentTypes
@@ -59,7 +59,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     assert.equal(sortableHeadings.length, 0);
   });
 
-  test('initial sort column defaults to first column if not specified', async function(assert) {
+  test('initial sort column defaults to first column if not specified', async function (assert) {
     this.set('firstColumnSortable', [true, true, false, false, true, false]);
     await render(hbs`
       {{polaris-data-table
@@ -76,7 +76,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     assert.dom(firstHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
   });
 
-  test('it sets specified initial sort column', async function(assert) {
+  test('it sets specified initial sort column', async function (assert) {
     await render(hbs`
       {{polaris-data-table
         columnContentTypes=columnContentTypes
@@ -91,7 +91,7 @@ module('Integration | Component | polaris-data-table', function(hooks) {
     assert.dom(fifthHeadingCell).hasClass('Polaris-DataTable__Cell--sorted');
   });
 
-  test('it accepts both text and component definitions as cell contents', async function(assert) {
+  test('it accepts both text and component definitions as cell contents', async function (assert) {
     await render(hbs`
       {{polaris-data-table
         columnContentTypes=(array

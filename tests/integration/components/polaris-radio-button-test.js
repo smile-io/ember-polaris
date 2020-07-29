@@ -22,10 +22,10 @@ const MockPolarisChoiceComponent = Component.extend({
   layout: hbs`{{yield}}`,
 });
 
-module('Integration | Component | polaris radio button', function(hooks) {
+module('Integration | Component | polaris radio button', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:polaris-choice', MockPolarisChoiceComponent);
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
@@ -37,7 +37,7 @@ module('Integration | Component | polaris radio button', function(hooks) {
   const radioButtonBackdropSelector = '[data-test-radio-button-backdrop]';
   const radioButtonIconSelector = '[data-test-radio-button-icon]';
 
-  test('it renders the correct HTML', async function(assert) {
+  test('it renders the correct HTML', async function (assert) {
     await render(hbs`
       {{polaris-radio-button
         inputId="some-radio-button-id"
@@ -100,7 +100,7 @@ module('Integration | Component | polaris radio button', function(hooks) {
       .exists({ count: 1 }, 'renders one radio button icon wrapper');
   });
 
-  test('it handles the disabled attribute correctly', async function(assert) {
+  test('it handles the disabled attribute correctly', async function (assert) {
     this.set('disabled', true);
     await render(hbs`{{polaris-radio-button disabled=disabled}}`);
 
@@ -112,7 +112,7 @@ module('Integration | Component | polaris radio button', function(hooks) {
     input.isNotDisabled('radio input is not disabled when disabled is false');
   });
 
-  test("it sets the input's aria-describedby attribute correctly", async function(assert) {
+  test("it sets the input's aria-describedby attribute correctly", async function (assert) {
     this.set('helpText', 'some help text');
     await render(hbs`
       {{polaris-radio-button
@@ -138,7 +138,7 @@ module('Integration | Component | polaris radio button', function(hooks) {
     );
   });
 
-  test('it handles events correctly', async function(assert) {
+  test('it handles events correctly', async function (assert) {
     this.setProperties({
       selectedValue: 'none',
       focusFired: false,

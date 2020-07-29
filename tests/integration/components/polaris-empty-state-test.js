@@ -4,10 +4,10 @@ import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris empty state', function(hooks) {
+module('Integration | Component | polaris empty state', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
@@ -19,7 +19,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
   const actionsSelector = '[data-test-empty-state-actions]';
   const imageSelector = '[data-test-empty-state-image]';
 
-  test('it renders the correct HTML in basic inline usage', async function(assert) {
+  test('it renders the correct HTML in basic inline usage', async function (assert) {
     this.actions.doSomething = () => {};
     await render(hbs`
       {{polaris-empty-state
@@ -65,7 +65,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
       .hasAttribute('alt', '', 'renders an empty image title');
   });
 
-  test('it renders the correct HTML in basic block usage', async function(assert) {
+  test('it renders the correct HTML in basic block usage', async function (assert) {
     this.actions.doSomething = () => {};
     await render(hbs`
       {{#polaris-empty-state
@@ -116,7 +116,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
       .hasAttribute('alt', '', 'renders an empty image title');
   });
 
-  test('it handles actions correctly', async function(assert) {
+  test('it handles actions correctly', async function (assert) {
     this.setProperties({
       mainActionFired: false,
       secondaryActionFired: false,
@@ -193,7 +193,7 @@ module('Integration | Component | polaris empty state', function(hooks) {
     );
   });
 
-  test('it handles the imageContained attribute correctly', async function(assert) {
+  test('it handles the imageContained attribute correctly', async function (assert) {
     this.set('imageContained', false);
 
     this.actions.doSomething = () => {};

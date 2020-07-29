@@ -3,10 +3,10 @@ import { setupApplicationTest } from 'ember-qunit';
 import { module, test } from 'qunit';
 import { keyDown } from 'ember-keyboard/test-support/test-helpers';
 
-module('Acceptance | key event listener test', function(hooks) {
+module('Acceptance | key event listener test', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('hidden easter egg works with key m only on index page', async function(assert) {
+  test('hidden easter egg works with key m only on index page', async function (assert) {
     await visit('/');
 
     let easterEggBanner = '[data-test-banner="easter-egg-banner"]';

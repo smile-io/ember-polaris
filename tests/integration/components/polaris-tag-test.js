@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-module('Integration | Component | polaris tag', function(hooks) {
+module('Integration | Component | polaris tag', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
@@ -28,7 +28,7 @@ module('Integration | Component | polaris tag', function(hooks) {
   };
 
   Object.keys(usageTests).forEach((usage) => {
-    test(`it renders the correct HTML in ${usage} usage`, async function(assert) {
+    test(`it renders the correct HTML in ${usage} usage`, async function (assert) {
       this.set('text', tag);
       await render(usageTests[usage]);
 
@@ -59,7 +59,7 @@ module('Integration | Component | polaris tag', function(hooks) {
     });
   });
 
-  test('it handles the disabled attribute correctly', async function(assert) {
+  test('it handles the disabled attribute correctly', async function (assert) {
     this.set('remove', () => {});
 
     await render(
@@ -97,7 +97,7 @@ module('Integration | Component | polaris tag', function(hooks) {
       );
   });
 
-  test('it handles tag removing correctly', async function(assert) {
+  test('it handles tag removing correctly', async function (assert) {
     this.set('remove', () => {
       assert.ok('button clicked - onRemove action is called');
     });

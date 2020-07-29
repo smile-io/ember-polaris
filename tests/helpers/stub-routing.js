@@ -29,7 +29,7 @@ const StubbedRoutingService = Service.extend({
   },
 });
 
-export default function(registry, availableRoutes) {
+export default function (registry, availableRoutes) {
   StubbedRoutingService.reopenClass({
     _availableRoutes: availableRoutes,
   });

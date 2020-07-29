@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { findAll, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris stack', function(hooks) {
+module('Integration | Component | polaris stack', function (hooks) {
   setupRenderingTest(hooks);
 
   const stackSelector = 'div.Polaris-Stack';
   const stackItemSelector = 'div.Polaris-Stack__Item';
 
-  test('it renders the correct HTML with default attributes', async function(assert) {
+  test('it renders the correct HTML with default attributes', async function (assert) {
     await render(hbs`
       {{#polaris-stack}}
         <p>Paragraph</p>
@@ -73,7 +73,7 @@ module('Integration | Component | polaris stack', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML with vertical attribute', async function(assert) {
+  test('it renders the correct HTML with vertical attribute', async function (assert) {
     this.set('vertical', true);
     await render(hbs`{{polaris-stack vertical=vertical}}`);
 
@@ -94,7 +94,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with spacing attribute', async function(assert) {
+  test('it renders the correct HTML with spacing attribute', async function (assert) {
     this.set('spacing', null);
     await render(hbs`{{polaris-stack spacing=spacing}}`);
 
@@ -130,7 +130,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with alignment attribute', async function(assert) {
+  test('it renders the correct HTML with alignment attribute', async function (assert) {
     this.set('alignment', null);
     await render(hbs`{{polaris-stack alignment=alignment}}`);
 
@@ -182,7 +182,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with distribution attribute', async function(assert) {
+  test('it renders the correct HTML with distribution attribute', async function (assert) {
     this.set('distribution', 'baseline');
     await render(hbs`{{polaris-stack distribution=distribution}}`);
 
@@ -234,7 +234,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with wrap attribute', async function(assert) {
+  test('it renders the correct HTML with wrap attribute', async function (assert) {
     await render(hbs`{{polaris-stack wrap=wrap}}`);
 
     const stack = find(stackSelector);
@@ -259,7 +259,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       .hasClass('Polaris-Stack--noWrap', 'wrap=false - adds the no-wrap class');
   });
 
-  test('it renders the correct HTML in block usage', async function(assert) {
+  test('it renders the correct HTML in block usage', async function (assert) {
     await render(hbs`
       {{#polaris-stack as |stack|}}
         {{#stack.item fill=true}}
@@ -327,7 +327,7 @@ module('Integration | Component | polaris stack', function(hooks) {
       );
   });
 
-  test('backwards compatibility - allows a custom class to be applied', async function(assert) {
+  test('backwards compatibility - allows a custom class to be applied', async function (assert) {
     await render(hbs`
       {{#polaris-stack class="stack-class" as |stack|}}
         {{stack.item class="stack-item-class"}}

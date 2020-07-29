@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris link', function(hooks) {
+module('Integration | Component | polaris link', function (hooks) {
   setupRenderingTest(hooks);
 
   const linkSelector = 'a.Polaris-Link';
   const linkButtonSelector = 'button.Polaris-Link';
 
-  test('it renders the correct HTML in basic inline usage with a URL', async function(assert) {
+  test('it renders the correct HTML in basic inline usage with a URL', async function (assert) {
     await render(
       hbs`{{polaris-link url="http://www.somewhere.com/" text="This is an inline link"}}`
     );
@@ -44,7 +44,7 @@ module('Integration | Component | polaris link', function(hooks) {
       .doesNotHaveAttribute('rel', 'does not set a rel attribute on the link');
   });
 
-  test('it renders the correct HTML in basic block usage with a URL', async function(assert) {
+  test('it renders the correct HTML in basic block usage with a URL', async function (assert) {
     await render(hbs`
       {{#polaris-link url="http://www.somewhere.com/"}}
         This is a block link
@@ -80,7 +80,7 @@ module('Integration | Component | polaris link', function(hooks) {
       .doesNotHaveAttribute('rel', 'does not set a rel attribute on the link');
   });
 
-  test('it renders the correct HTML with external attribute', async function(assert) {
+  test('it renders the correct HTML with external attribute', async function (assert) {
     await render(hbs`
       {{polaris-link
         url="http://www.somewhere.com/"
@@ -106,7 +106,7 @@ module('Integration | Component | polaris link', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML with monochrome attribute', async function(assert) {
+  test('it renders the correct HTML with monochrome attribute', async function (assert) {
     await render(hbs`
       {{polaris-link
         url="http://www.somewhere.com/"
@@ -123,7 +123,7 @@ module('Integration | Component | polaris link', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML in basic inline usage without a URL', async function(assert) {
+  test('it renders the correct HTML in basic inline usage without a URL', async function (assert) {
     await render(hbs`{{polaris-link text="This is an inline link button"}}`);
 
     assert
@@ -137,7 +137,7 @@ module('Integration | Component | polaris link', function(hooks) {
       );
   });
 
-  test('it renders the correct HTML in basic block usage without a URL', async function(assert) {
+  test('it renders the correct HTML in basic block usage without a URL', async function (assert) {
     await render(hbs`
       {{#polaris-link}}
         This is a block link button
@@ -152,7 +152,7 @@ module('Integration | Component | polaris link', function(hooks) {
       .hasText('This is a block link button', 'renders the correct link text');
   });
 
-  test('it handles click events correctly', async function(assert) {
+  test('it handles click events correctly', async function (assert) {
     this.handleClick = () => assert.ok('onClick is fired correctly');
 
     await render(hbs`{{polaris-link onClick=this.handleClick}}`);
@@ -164,7 +164,7 @@ module('Integration | Component | polaris link', function(hooks) {
     await click(linkButtonSelector);
   });
 
-  test('clicking a link navigates but does not bubble to the parent', async function(assert) {
+  test('clicking a link navigates but does not bubble to the parent', async function (assert) {
     // Reset the hash part of the browser URL to keep this test valid on reruns.
     window.location.hash = 'linkNotClicked';
 
@@ -185,7 +185,7 @@ module('Integration | Component | polaris link', function(hooks) {
     );
   });
 
-  test('clicking a link fires the onClick handler if present', async function(assert) {
+  test('clicking a link fires the onClick handler if present', async function (assert) {
     // Reset the hash part of the browser URL to keep this test valid on reruns.
     window.location.hash = 'linkNotClicked';
 
@@ -215,7 +215,7 @@ module('Integration | Component | polaris link', function(hooks) {
     );
   });
 
-  test('clicking a link button performs the button action but does not bubble to the parent', async function(assert) {
+  test('clicking a link button performs the button action but does not bubble to the parent', async function (assert) {
     assert.expect(3);
 
     this.handleParentClicked = () =>
@@ -238,7 +238,7 @@ module('Integration | Component | polaris link', function(hooks) {
     await click(linkButtonSelector);
   });
 
-  test('it applies passed-in classes to the rendered element when rendering a link', async function(assert) {
+  test('it applies passed-in classes to the rendered element when rendering a link', async function (assert) {
     this.set('class', 'my-link click-me');
     await render(
       hbs`{{polaris-link class=class url="http://www.somewhere.com/"}}`
@@ -256,7 +256,7 @@ module('Integration | Component | polaris link', function(hooks) {
     link.hasNoClass('my-link');
   });
 
-  test('it applies passed-in classes to the rendered element when rendering a button', async function(assert) {
+  test('it applies passed-in classes to the rendered element when rendering a button', async function (assert) {
     this.set('class', 'my-button press-me');
     await render(hbs`{{polaris-link class=class}}`);
 

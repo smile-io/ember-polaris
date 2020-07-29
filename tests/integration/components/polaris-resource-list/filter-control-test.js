@@ -86,15 +86,15 @@ async function triggerAddFilter(filter) {
 
 module(
   'Integration | Component | polaris-resource-list/filter-control',
-  function(hooks) {
+  function (hooks) {
     setupRenderingTest(hooks);
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       this.set('mockDefaultContext', mockDefaultContext);
     });
 
-    module('searchValue', function() {
-      test('renders with TextField by default', async function(assert) {
+    module('searchValue', function () {
+      test('renders with TextField by default', async function (assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/filter-control}}
@@ -104,7 +104,7 @@ module(
         assert.dom('.Polaris-TextField').exists();
       });
 
-      test('renders with searchValue as its value', async function(assert) {
+      test('renders with searchValue as its value', async function (assert) {
         const searchValue = 'search value';
         this.set('searchValue', searchValue);
         await render(hbs`
@@ -126,8 +126,8 @@ module(
           this.set('mockAppliedFilters', mockAppliedFilters);
         },
       },
-      function() {
-        test('renders the same number of Tag as appliedFilters', async function(assert) {
+      function () {
+        test('renders the same number of Tag as appliedFilters', async function (assert) {
           await render(hbs`
             {{#polaris-resource-list/provider value=mockDefaultContext}}
               {{polaris-resource-list/filter-control
@@ -141,7 +141,7 @@ module(
             .exists({ count: mockAppliedFilters.length });
         });
 
-        test('calls onFiltersChange without the applied filter when user clicks remove on the appliedFilter', async function(assert) {
+        test('calls onFiltersChange without the applied filter when user clicks remove on the appliedFilter', async function (assert) {
           await render(hbs`
             {{#polaris-resource-list/provider value=mockDefaultContext}}
               {{polaris-resource-list/filter-control
@@ -158,7 +158,7 @@ module(
           ]);
         });
 
-        test('renders the provided applied filter string when applied filter label exist', async function(assert) {
+        test('renders the provided applied filter string when applied filter label exist', async function (assert) {
           const appliedFilterLabel = 'shorten electronic';
           const filter = {
             key: 'filterKey1',
@@ -196,7 +196,7 @@ module(
             );
         });
 
-        test('renders the provided applied filter string when filter value exist in FilterSelect as an option string', async function(assert) {
+        test('renders the provided applied filter string when filter value exist in FilterSelect as an option string', async function (assert) {
           const filterValue = 'Bundle';
           const filter = {
             key: 'filterKey1',
@@ -227,7 +227,7 @@ module(
             .hasText(`${filter.label} ${filter.operatorText} ${filterValue}`);
         });
 
-        test('renders the provided applied filter string when filter value exist in FilterSelect as an option object', async function(assert) {
+        test('renders the provided applied filter string when filter value exist in FilterSelect as an option object', async function (assert) {
           const filterValue = 'Electronic';
           const filter = {
             key: 'filterKey1',
@@ -263,7 +263,7 @@ module(
             .hasText(`${filter.label} ${filter.operatorText} ${filterValue}`);
         });
 
-        test('renders the provided applied filter string when filter value cannot be found in FilterSelect options', async function(assert) {
+        test('renders the provided applied filter string when filter value cannot be found in FilterSelect options', async function (assert) {
           const appliedFilterValue = 'new Bundle';
           const filter = {
             key: 'filterKey1',
@@ -296,7 +296,7 @@ module(
             );
         });
 
-        test('renders the provided applied filter string when filter is a FilterTextField', async function(assert) {
+        test('renders the provided applied filter string when filter is a FilterTextField', async function (assert) {
           const appliedFilterValue = 'new Bundle';
           const filter = {
             key: 'filterKey2',
@@ -328,7 +328,7 @@ module(
             );
         });
 
-        test('only renders the provided localized applied filter string when filter is a FilterDateSelector without date predicate', async function(assert) {
+        test('only renders the provided localized applied filter string when filter is a FilterDateSelector without date predicate', async function (assert) {
           const appliedFilterValue = DateFilterOption.PastWeek;
 
           const filter = {
@@ -365,7 +365,7 @@ module(
             );
         });
 
-        test('renders the provided localized applied filter string when filter is a FilterDateSelector with minimum date predicate (on or after)', async function(assert) {
+        test('renders the provided localized applied filter string when filter is a FilterDateSelector with minimum date predicate (on or after)', async function (assert) {
           const selectedDate = '2018-09-16';
           const filter = {
             key: 'starts',
@@ -401,7 +401,7 @@ module(
             .hasText(`${filter.label} ${expectedLocalizedLabel}`);
         });
 
-        test('renders the provided localized applied filter string when filter is a FilterDateSelector with maximum date predicate (on or before)', async function(assert) {
+        test('renders the provided localized applied filter string when filter is a FilterDateSelector with maximum date predicate (on or before)', async function (assert) {
           const selectedDate = '2018-09-16';
           const filter = {
             key: 'starts',
@@ -437,7 +437,7 @@ module(
             .hasText(`${filter.label} ${expectedLocalizedLabel}`);
         });
 
-        test('renders applied filter value when filter is a FilterDateSelector with invalid date predicate', async function(assert) {
+        test('renders applied filter value when filter is a FilterDateSelector with invalid date predicate', async function (assert) {
           const selectedDate = 'INVALID';
           const filter = {
             key: 'starts',
@@ -471,7 +471,7 @@ module(
             .hasText(`${filter.label} ${expectedLocalizedLabel}`);
         });
 
-        test('renders the provided applied filter string when filter uses operators with filter label', async function(assert) {
+        test('renders the provided applied filter string when filter uses operators with filter label', async function (assert) {
           const appliedFilterValue = '20';
           const appliedFilterKey = 'times_used';
           const appliedFilterLabel = 'is';
@@ -517,7 +517,7 @@ module(
             );
         });
 
-        test('renders the provided applied filter string when filter uses operators without filter label', async function(assert) {
+        test('renders the provided applied filter string when filter uses operators without filter label', async function (assert) {
           const appliedFilterValue = '20';
           const appliedFilterKey = 'times_used';
           const appliedOperatorOptionLabel = 'equal to';
@@ -561,7 +561,7 @@ module(
             );
         });
 
-        test('renders the provided applied filter string when filter key cannot be found', async function(assert) {
+        test('renders the provided applied filter string when filter key cannot be found', async function (assert) {
           const appliedFilterValue = 'new Bundle';
           const appliedFilters = {
             key: 'filter key',
@@ -580,7 +580,7 @@ module(
           assert.dom('.Polaris-Tag').hasText(appliedFilterValue);
         });
 
-        test('renders a ul element containing an li element', async function(assert) {
+        test('renders a ul element containing an li element', async function (assert) {
           const appliedFilterValue = 'new Bundle';
           const appliedFilters = {
             key: 'filter key',
@@ -601,8 +601,8 @@ module(
       }
     );
 
-    module('additionalAction', function() {
-      test('renders no connectedRight prop on TextField if there is no additionalAction', async function(assert) {
+    module('additionalAction', function () {
+      test('renders no connectedRight prop on TextField if there is no additionalAction', async function (assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/filter-control}}
@@ -612,7 +612,7 @@ module(
         assert.dom('[data-test-connected-item="right"]').doesNotExist();
       });
 
-      test('renders Button if there is additionalAction', async function(assert) {
+      test('renders Button if there is additionalAction', async function (assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/filter-control
@@ -632,7 +632,7 @@ module(
     });
 
     module('focused', () => {
-      test('passes its value to focus of TextField', async function(assert) {
+      test('passes its value to focus of TextField', async function (assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/filter-control
@@ -657,8 +657,8 @@ module(
           this.set('mockFilters', mockFilters);
         },
       },
-      function() {
-        test('renders no <FilterCreator/> if there are no filters', async function(assert) {
+      function () {
+        test('renders no <FilterCreator/> if there are no filters', async function (assert) {
           await render(hbs`
             {{#polaris-resource-list/provider value=mockDefaultContext}}
               {{polaris-resource-list/filter-control}}
@@ -668,7 +668,7 @@ module(
           assert.dom('[data-test-connected-item="left"]').doesNotExist();
         });
 
-        test('renders <FilterCreator/> if there is filters', async function(assert) {
+        test('renders <FilterCreator/> if there is filters', async function (assert) {
           await render(hbs`
             {{#polaris-resource-list/provider value=mockDefaultContext}}
               {{polaris-resource-list/filter-control
@@ -680,7 +680,7 @@ module(
           assert.dom('[data-test-id="filter-activator"]').exists();
         });
 
-        test('renders <FilterCreator/> with filters', async function(assert) {
+        test('renders <FilterCreator/> with filters', async function (assert) {
           let receivedFilters = null;
           this.owner.register(
             'component:polaris-resource-list/filter-control/filter-creator',
@@ -704,8 +704,8 @@ module(
       }
     );
 
-    module('onSearchBlur()', function() {
-      test('calls onSearchBlur when onBlur is triggered', async function(assert) {
+    module('onSearchBlur()', function () {
+      test('calls onSearchBlur when onBlur is triggered', async function (assert) {
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/filter-control
@@ -721,8 +721,8 @@ module(
       });
     });
 
-    module('onSearchChange()', function() {
-      test('calls onSearchChange with the new searchValue when onChange is triggered', async function(assert) {
+    module('onSearchChange()', function () {
+      test('calls onSearchChange with the new searchValue when onChange is triggered', async function (assert) {
         const newSearchValue = 'new search value';
         await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
@@ -748,8 +748,8 @@ module(
           });
         },
       },
-      function() {
-        test('gets call with the new filter when FilterCreator.onAddFilter is triggered', async function(assert) {
+      function () {
+        test('gets call with the new filter when FilterCreator.onAddFilter is triggered', async function (assert) {
           const newFilter = {
             key: 'filterKey2',
             value: 'new value',
@@ -773,7 +773,7 @@ module(
           ]);
         });
 
-        test('does not get call if the new filter already exist when FilterCreator.onAddFilter is triggered', async function(assert) {
+        test('does not get call if the new filter already exist when FilterCreator.onAddFilter is triggered', async function (assert) {
           const newFilter = mockAppliedFilters[0];
           await render(hbs`
             {{#polaris-resource-list/provider value=mockDefaultContext}}

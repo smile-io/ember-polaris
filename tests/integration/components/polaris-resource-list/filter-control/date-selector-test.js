@@ -79,22 +79,22 @@ function hackDatePickerToFireOnChangeWithValue(value) {
 
 module(
   'Integration | Component | polaris-resource-list/filter-control/date-selector',
-  function(hooks) {
+  function (hooks) {
     let origGetTimezoneOffset;
 
-    hooks.beforeEach(function() {
+    hooks.beforeEach(function () {
       origGetTimezoneOffset = Date.prototype.getTimezoneOffset;
       Date.prototype.getTimezoneOffset = () => -540;
     });
 
-    hooks.afterEach(function() {
+    hooks.afterEach(function () {
       Date.prototype.getTimezoneOffset = origGetTimezoneOffset;
     });
 
     setupRenderingTest(hooks);
 
-    module('dateOptionType', function() {
-      test('builds date filters Select options for past option type', async function(assert) {
+    module('dateOptionType', function () {
+      test('builds date filters Select options for past option type', async function (assert) {
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
@@ -114,7 +114,7 @@ module(
         );
       });
 
-      test('builds date filters Select options for future option type', async function(assert) {
+      test('builds date filters Select options for future option type', async function (assert) {
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
@@ -134,7 +134,7 @@ module(
         );
       });
 
-      test('builds date filters Select options for full option type', async function(assert) {
+      test('builds date filters Select options for full option type', async function (assert) {
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
@@ -154,7 +154,7 @@ module(
         );
       });
 
-      test('defaults to full date filters Select options when option type is missing', async function(assert) {
+      test('defaults to full date filters Select options when option type is missing', async function (assert) {
         await render(hbs`
           {{polaris-resource-list/filter-control/date-selector
             filterKey="starts"
@@ -174,8 +174,8 @@ module(
       });
     });
 
-    module('filterValue', function() {
-      test('sets option in date filters Select', async function(assert) {
+    module('filterValue', function () {
+      test('sets option in date filters Select', async function (assert) {
         const dateFilterValue = DateFilterOption.PastMonth;
         this.set('dateFilterValue', dateFilterValue);
 
@@ -191,7 +191,7 @@ module(
         assert.dom('select').hasValue(dateFilterValue);
       });
 
-      test('displays DatePicker when filterValue is filter with minimum date predicate (on or after)', async function(assert) {
+      test('displays DatePicker when filterValue is filter with minimum date predicate (on or after)', async function (assert) {
         this.set('dateFilterValue', DateFilterOption.OnOrAfter);
 
         await render(hbs`
@@ -206,7 +206,7 @@ module(
         assert.dom('.Polaris-DatePicker').exists();
       });
 
-      test('displays DatePicker when filterValue is filter with maximum date predicate (on or before)', async function(assert) {
+      test('displays DatePicker when filterValue is filter with maximum date predicate (on or before)', async function (assert) {
         this.set('dateFilterValue', DateFilterOption.OnOrBefore);
 
         await render(hbs`
@@ -221,7 +221,7 @@ module(
         assert.dom('.Polaris-DatePicker').exists();
       });
 
-      test('does not display DatePicker when filterValue is filter without date predicate', async function(assert) {
+      test('does not display DatePicker when filterValue is filter without date predicate', async function (assert) {
         this.set('dateFilterValue', DateFilterOption.PastMonth);
 
         await render(hbs`
@@ -236,7 +236,7 @@ module(
         assert.dom('.Polaris-DatePicker').doesNotExist();
       });
 
-      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function (assert) {
         const filterValue = 'coming_week';
         this.set('filterValue', filterValue);
 
@@ -253,8 +253,8 @@ module(
       });
     });
 
-    module('filterKey and filterMaxKey', function() {
-      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+    module('filterKey and filterMaxKey', function () {
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function (assert) {
         const filterValue = 'coming_week';
         const filterKey = 'before';
         const filterMaxKey = 'before';
@@ -284,10 +284,10 @@ module(
           );
         },
       },
-      function() {
+      function () {
         // Skipping these tests for the time being since they pass when
         // dev tools is open but time out otherwise :wat:
-        skip('sets the selected date with negative timezone offset on DatePicker and TextField', async function(assert) {
+        skip('sets the selected date with negative timezone offset on DatePicker and TextField', async function (assert) {
           const nextUserInputDate = '2019-01-01';
           const timezoneOffset = -540;
           const timezoneOffsetInHours = Math.abs(timezoneOffset / 60);
@@ -322,7 +322,7 @@ module(
           assert.dom(textFieldInputSelector).hasValue(nextUserInputDate);
         });
 
-        skip('sets the selected date with fringe timezone offset on DatePicker and TextField', async function(assert) {
+        skip('sets the selected date with fringe timezone offset on DatePicker and TextField', async function (assert) {
           const nextUserInputDate = '2019-01-01';
           Date.prototype.getTimezoneOffset = () => -720;
 
@@ -352,7 +352,7 @@ module(
           assert.dom(textFieldInputSelector).hasValue(nextUserInputDate);
         });
 
-        skip('sets the selected date with positive timezone offset on DatePicker and TextField', async function(assert) {
+        skip('sets the selected date with positive timezone offset on DatePicker and TextField', async function (assert) {
           const nextUserInputDate = '2019-01-01';
           const timezoneOffset = 300;
           const timezoneOffsetInHours = Math.abs(timezoneOffset / 60);
@@ -389,8 +389,8 @@ module(
       }
     );
 
-    module('filterKey and filterMinKey', function() {
-      test('is used to calculate dateFilterOption and gets passed to Select as value', async function(assert) {
+    module('filterKey and filterMinKey', function () {
+      test('is used to calculate dateFilterOption and gets passed to Select as value', async function (assert) {
         const filterValue = 'filter value';
         const filterKey = 'after';
         const filterMinKey = 'after';
@@ -408,8 +408,8 @@ module(
       });
     });
 
-    module('onFilterValueChange', function() {
-      test('gets called with new filter value when date filter is updated to filter without date predicate', async function(assert) {
+    module('onFilterValueChange', function () {
+      test('gets called with new filter value when date filter is updated to filter without date predicate', async function (assert) {
         const newDateFilter = DateFilterOption.PastMonth;
 
         await render(hbs`
@@ -426,7 +426,7 @@ module(
         assert.equal(this.get('newDateFilter'), newDateFilter);
       });
 
-      test('gets called with undefined when date filter is updated to filter with minimum date predicate (on or after) and no current date selection', async function(assert) {
+      test('gets called with undefined when date filter is updated to filter with minimum date predicate (on or after) and no current date selection', async function (assert) {
         const newDateFilter = DateFilterOption.OnOrAfter;
         this.set('newDateFilter', newDateFilter);
 
@@ -444,7 +444,7 @@ module(
         assert.equal(this.get('newDateFilter'), undefined);
       });
 
-      test('gets called with undefined when date filter is updated to filter with maximum date predicate (on or before) and no current date selection', async function(assert) {
+      test('gets called with undefined when date filter is updated to filter with maximum date predicate (on or before) and no current date selection', async function (assert) {
         const newDateFilter = DateFilterOption.OnOrBefore;
         this.set('newDateFilter', newDateFilter);
 
@@ -462,7 +462,7 @@ module(
         assert.equal(this.get('newDateFilter'), undefined);
       });
 
-      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with minimum date predicate (on or after) and current date selection', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with minimum date predicate (on or after) and current date selection', async function (assert) {
         const newDateFilter = DateFilterOption.OnOrAfter;
         const date = '2019-05-28';
         this.set('filterValue', DateFilterOption.OnOrBefore);
@@ -485,7 +485,7 @@ module(
         assert.equal(this.get('newDateFilter'), '2019-05-28');
       });
 
-      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with maximum date predicate (on or before) and current date selection', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date filter is updated to filter with maximum date predicate (on or before) and current date selection', async function (assert) {
         const newDateFilter = DateFilterOption.OnOrBefore;
         const date = '2019-05-28';
         this.set('filterValue', DateFilterOption.OnOrAfter);
@@ -508,7 +508,7 @@ module(
         assert.equal(this.get('newDateFilter'), '2019-05-28');
       });
 
-      skip('gets called with formatted YYYY-MM-DD date when date is updated in DatePicker', async function(assert) {
+      skip('gets called with formatted YYYY-MM-DD date when date is updated in DatePicker', async function (assert) {
         const dateFilter = DateFilterOption.OnOrBefore;
         const date = '2019-05-28';
         this.set('dateFilter', dateFilter);
@@ -538,7 +538,7 @@ module(
        * `this.get('newDateFilter')` returns `undefined`
        * as if there's a timing error of some sort.
        */
-      skip('gets called with date when date is updated in TextField with YYYY-MM-DD date and TextField is blurred', async function(assert) {
+      skip('gets called with date when date is updated in TextField with YYYY-MM-DD date and TextField is blurred', async function (assert) {
         const dateFilter = DateFilterOption.OnOrBefore;
         const date = '2019-08-22';
         this.set('dateFilter', dateFilter);
@@ -563,7 +563,7 @@ module(
        * Skipping this test for now as well since it seems to fail
        * for similar timing-ish reasons as the one above.
        */
-      skip('gets called with undefined when date is updated in TextField with invalid date and TextField is blurred', async function(assert) {
+      skip('gets called with undefined when date is updated in TextField with invalid date and TextField is blurred', async function (assert) {
         const dateFilter = DateFilterOption.OnOrBefore;
         const invalidDate = '2019/08/22';
         this.setProperties({
@@ -588,8 +588,8 @@ module(
       });
     });
 
-    module('onFilterKeyChange', function() {
-      test('gets called with consumer filter key when date filter is updated to filter without date predicate', async function(assert) {
+    module('onFilterKeyChange', function () {
+      test('gets called with consumer filter key when date filter is updated to filter without date predicate', async function (assert) {
         this.set('initialConsumerFilterKey', 'starts');
 
         await render(hbs`
@@ -609,7 +609,7 @@ module(
         );
       });
 
-      test('gets called with max filter key prop when date filter is updated to filter with maximum date predicate (on or before)', async function(assert) {
+      test('gets called with max filter key prop when date filter is updated to filter with maximum date predicate (on or before)', async function (assert) {
         this.set('filterMaxKey', 'starts_max');
 
         await render(hbs`
@@ -629,7 +629,7 @@ module(
         assert.equal(this.get('changedFilterKey'), this.filterMaxKey);
       });
 
-      test('gets called with min filter key when date filter is updated to filter with minimum date predicate (on or after)', async function(assert) {
+      test('gets called with min filter key when date filter is updated to filter with minimum date predicate (on or after)', async function (assert) {
         this.set('filterMinKey', 'starts_min');
 
         await render(hbs`
@@ -647,7 +647,7 @@ module(
       });
     });
 
-    test('resets date in DatePicker when user removes date in TextField', async function(assert) {
+    test('resets date in DatePicker when user removes date in TextField', async function (assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector
@@ -668,7 +668,7 @@ module(
      * in my GMT+2 time zone: the date returned is the day
      * before the one selected.
      */
-    skip('updates selected date in DatePicker when user enters a valid date in TextField and field is blurred', async function(assert) {
+    skip('updates selected date in DatePicker when user enters a valid date in TextField and field is blurred', async function (assert) {
       const validUserInputDate = '2020-08-30';
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
@@ -694,7 +694,7 @@ module(
         );
     });
 
-    test('does not update selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(assert) {
+    test('does not update selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function (assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector
@@ -711,7 +711,7 @@ module(
       assert.dom(selectedDaySelector).doesNotExist();
     });
 
-    test('resets selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function(assert) {
+    test('resets selected date in DatePicker when user enters an invalid date in TextField and field is blurred', async function (assert) {
       const invalidUserInputDate = '08/20/2020';
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
@@ -732,7 +732,7 @@ module(
       assert.dom(selectedDaySelector).doesNotExist();
     });
 
-    test('removes date field error when invalid date is replaced by valid date in TextField', async function(assert) {
+    test('removes date field error when invalid date is replaced by valid date in TextField', async function (assert) {
       const validUserInputDate = '2020-08-30';
       const invalidUserInputDate = '08/30/2020';
       this.set('filterValue', DateFilterOption.OnOrBefore);
@@ -759,7 +759,7 @@ module(
       assert.dom('[data-test-labelled-error]').doesNotExist();
     });
 
-    test('removes date field error when new date is selected in DatePicker', async function(assert) {
+    test('removes date field error when new date is selected in DatePicker', async function (assert) {
       const invalidUserInputDate = '08/30/2020';
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
@@ -782,7 +782,7 @@ module(
       assert.dom('[data-test-labelled-error]').doesNotExist();
     });
 
-    skip('does not display error when date is added in date filed by DatePicker and date field is blurred', async function(assert) {
+    skip('does not display error when date is added in date filed by DatePicker and date field is blurred', async function (assert) {
       this.set('filterValue', DateFilterOption.OnOrBefore);
       await render(hbs`
         {{polaris-resource-list/filter-control/date-selector

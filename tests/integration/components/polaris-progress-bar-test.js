@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris progress bar', function(hooks) {
+module('Integration | Component | polaris progress bar', function (hooks) {
   setupRenderingTest(hooks);
 
   const barSelector = '[data-test-progress-bar]';
@@ -12,7 +12,7 @@ module('Integration | Component | polaris progress bar', function(hooks) {
   const barIndicatorSelector = '[data-test-progress-bar-indicator]';
   const barIndicatorLabelSelector = '[data-test-progress-bar-indicator-label]';
 
-  test('it renders the correct HTML when progress and size are set', async function(assert) {
+  test('it renders the correct HTML when progress and size are set', async function (assert) {
     this.set('progress', 23);
     let percentStyle = `width: ${this.progress}%;`;
     let percentLabel = `${this.progress}%`;
@@ -77,7 +77,7 @@ module('Integration | Component | polaris progress bar', function(hooks) {
       .hasText(percentLabel, 'indicator label has correct text');
   });
 
-  test('it renders a correctly-sized progress bar', async function(assert) {
+  test('it renders a correctly-sized progress bar', async function (assert) {
     this.set('size', '');
     await render(hbs`{{polaris-progress-bar size=size}}`);
 
@@ -130,7 +130,7 @@ module('Integration | Component | polaris progress bar', function(hooks) {
       );
   });
 
-  test('it correctly handles out-of-bounds progress values', async function(assert) {
+  test('it correctly handles out-of-bounds progress values', async function (assert) {
     this.set('progress', -23);
     await render(hbs`{{polaris-progress-bar progress=progress}}`);
 

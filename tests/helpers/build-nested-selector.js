@@ -1,3 +1,3 @@
-export default function(...selectors) {
+export default function (...selectors) {
   return selectors.join('>');
 }

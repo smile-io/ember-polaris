@@ -1,8 +1,8 @@
 import { computed } from '@ember/object';
 
 function makeComputedIdGenerator(idGenerator) {
-  return function(idPath, variation) {
-    return computed(idPath, function() {
+  return function (idPath, variation) {
+    return computed(idPath, function () {
       return idGenerator(this.get(idPath), variation);
     });
   };

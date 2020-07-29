@@ -16,10 +16,10 @@ const TestLabelComponent = Component.extend({
   text: 'test label component',
 });
 
-module('Integration | Component | polaris choice', function(hooks) {
+module('Integration | Component | polaris choice', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
     this.owner.register('component:test-label', TestLabelComponent);
   });
@@ -79,7 +79,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     'div.test-label-component'
   );
 
-  test('it renders the correct HTML when no error or helpText are provided', async function(assert) {
+  test('it renders the correct HTML when no error or helpText are provided', async function (assert) {
     await render(hbs`
       {{#polaris-choice inputId="test-choice" label="This is my label"}}
         <span class="test-control">This is a test control</span>
@@ -113,7 +113,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when helpText is provided', async function(assert) {
+  test('it renders the correct HTML when helpText is provided', async function (assert) {
     await render(hbs`
       <div class="choice-with-description-wrapper">
         {{#polaris-choice
@@ -162,7 +162,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML when an error is provided', async function(assert) {
+  test('it renders the correct HTML when an error is provided', async function (assert) {
     await render(hbs`
       <div class="choice-with-description-wrapper">
         {{#polaris-choice
@@ -219,7 +219,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     );
   });
 
-  test('it handles the labelHidden attribute correctly', async function(assert) {
+  test('it handles the labelHidden attribute correctly', async function (assert) {
     this.set('labelHidden', true);
     await render(hbs`
       {{polaris-choice
@@ -265,7 +265,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     );
   });
 
-  test('it handles label correctly when no description is present', async function(assert) {
+  test('it handles label correctly when no description is present', async function (assert) {
     await render(hbs`
       {{polaris-choice label="some label"}}
     `);
@@ -295,7 +295,7 @@ module('Integration | Component | polaris choice', function(hooks) {
       );
   });
 
-  test('it handles label components correctly when a description is supplied', async function(assert) {
+  test('it handles label components correctly when a description is supplied', async function (assert) {
     await render(hbs`
       {{polaris-choice
         label="some label"
@@ -326,7 +326,7 @@ module('Integration | Component | polaris choice', function(hooks) {
       );
   });
 
-  test('it handles the disabled attribute correctly', async function(assert) {
+  test('it handles the disabled attribute correctly', async function (assert) {
     let disabledClass = 'Polaris-Choice--disabled';
 
     this.set('disabled', true);
@@ -346,7 +346,7 @@ module('Integration | Component | polaris choice', function(hooks) {
     assert.dom(labelSelector).hasNoClass(disabledClass);
   });
 
-  test('it allows passing a component as the helpText property', async function(assert) {
+  test('it allows passing a component as the helpText property', async function (assert) {
     await render(hbs`
       {{polaris-choice
         inputId="help-text-component-test"

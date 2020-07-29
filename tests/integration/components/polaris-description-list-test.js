@@ -18,10 +18,10 @@ const stubDescriptionComponent = Component.extend({
   classNames: [stubDescriptionClass],
 });
 
-module('Integration | Component | polaris description list', function(hooks) {
+module('Integration | Component | polaris description list', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:stub-term-component', stubTermComponent);
     this.owner.register(
       'component:stub-description-component',
@@ -56,7 +56,7 @@ module('Integration | Component | polaris description list', function(hooks) {
     'dt + dd'
   );
 
-  test('it renders the correct HTML when items are passed in', async function(assert) {
+  test('it renders the correct HTML when items are passed in', async function (assert) {
     const itemsLength = items.length;
 
     this.set('items', items);
@@ -81,7 +81,7 @@ module('Integration | Component | polaris description list', function(hooks) {
       );
   });
 
-  test('it renders items with `term` and `description` components', async function(assert) {
+  test('it renders items with `term` and `description` components', async function (assert) {
     await render(hbs`
       {{polaris-description-list
         items=(array

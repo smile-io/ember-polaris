@@ -4,10 +4,10 @@ import { render, click } from '@ember/test-helpers';
 import Component from '@ember/component';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris-labelled', function(hooks) {
+module('Integration | Component | polaris-labelled', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     // Register a simple component to test rendering with.
     this.owner.register(
       'component:my-component',
@@ -17,7 +17,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     );
   });
 
-  test('passes relevant attrs along to the label', async function(assert) {
+  test('passes relevant attrs along to the label', async function (assert) {
     await render(hbs`{{polaris-labelled id="my-label" label="Label"}}`);
 
     const labelSelector = '.Polaris-Label label';
@@ -25,7 +25,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom(labelSelector).hasText('Label');
   });
 
-  test('renders error markup when provided with a value', async function(assert) {
+  test('renders error markup when provided with a value', async function (assert) {
     await render(
       hbs`{{polaris-labelled id="my-labelled" label="Label" error="Error message"}}`
     );
@@ -33,7 +33,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom('#my-labelledError').hasText('Error message');
   });
 
-  test('renders no error markup when provided with a boolean value', async function(assert) {
+  test('renders no error markup when provided with a boolean value', async function (assert) {
     await render(
       hbs`{{polaris-labelled id="my-labelled" label="Label" error=true}}`
     );
@@ -41,7 +41,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom('.Polaris-InlineError').doesNotExist();
   });
 
-  test('renders the content as a child outside of the label', async function(assert) {
+  test('renders the content as a child outside of the label', async function (assert) {
     await render(hbs`
       {{#polaris-labelled}}
         {{my-component}}
@@ -51,7 +51,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom('.my-component').exists();
   });
 
-  test('renders a plain button with the specified attributes when given an action', async function(assert) {
+  test('renders a plain button with the specified attributes when given an action', async function (assert) {
     this.set('action', {
       text: 'My action',
       accessibilityLabel: 'My action with more description',
@@ -72,7 +72,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.ok(this.get('actionFired'));
   });
 
-  test('does not render any block-level elements in the label element when given an action', async function(assert) {
+  test('does not render any block-level elements in the label element when given an action', async function (assert) {
     await render(hbs`
       {{polaris-labelled
         id="MyThing"
@@ -87,7 +87,7 @@ module('Integration | Component | polaris-labelled', function(hooks) {
     assert.dom('label div').doesNotExist();
   });
 
-  test('supports passing a data-test attribute', async function(assert) {
+  test('supports passing a data-test attribute', async function (assert) {
     await render(hbs`
       {{polaris-labelled dataTestLabelled=dataTestLabelled}}
     `);

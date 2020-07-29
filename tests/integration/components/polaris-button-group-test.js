@@ -11,10 +11,10 @@ const buttonSelector = buildNestedSelector(
   'button.Polaris-Button'
 );
 
-module('Integration | Component | polaris button group', function(hooks) {
+module('Integration | Component | polaris button group', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the correct HTML with default attributes', async function(assert) {
+  test('it renders the correct HTML with default attributes', async function (assert) {
     await render(hbs`
       {{#polaris-button-group}}
         {{polaris-button text="Button 1"}}
@@ -31,7 +31,7 @@ module('Integration | Component | polaris button group', function(hooks) {
       .exists({ count: 2 }, 'renders the correct number of wrapped buttons');
   });
 
-  test('it renders the correct HTML with segmented attribute', async function(assert) {
+  test('it renders the correct HTML with segmented attribute', async function (assert) {
     this.set('segmented', true);
     await render(hbs`{{polaris-button-group segmented=segmented}}`);
 
@@ -48,7 +48,7 @@ module('Integration | Component | polaris button group', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML with fullWidth attribute', async function(assert) {
+  test('it renders the correct HTML with fullWidth attribute', async function (assert) {
     this.set('fullWidth', true);
     await render(hbs`{{polaris-button-group fullWidth=fullWidth}}`);
 
@@ -65,7 +65,7 @@ module('Integration | Component | polaris button group', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML with connectedTop attribute', async function(assert) {
+  test('it renders the correct HTML with connectedTop attribute', async function (assert) {
     this.set('connectedTop', true);
     await render(hbs`{{polaris-button-group connectedTop=connectedTop}}`);
 
@@ -82,7 +82,7 @@ module('Integration | Component | polaris button group', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML in block usage', async function(assert) {
+  test('it renders the correct HTML in block usage', async function (assert) {
     await render(hbs`
       {{#polaris-button-group as |buttonGroup|}}
         {{#buttonGroup.item plain=true}}
@@ -149,7 +149,7 @@ module('Integration | Component | polaris button group', function(hooks) {
       );
   });
 
-  test('it handles focused buttons correctly', async function(assert) {
+  test('it handles focused buttons correctly', async function (assert) {
     await render(hbs`
       {{#polaris-button-group as |buttonGroup|}}
         {{#buttonGroup.item}}

@@ -4,14 +4,14 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris thumbnail', function(hooks) {
+module('Integration | Component | polaris thumbnail', function (hooks) {
   setupRenderingTest(hooks);
 
   const SRC = 'image.jpg';
   const ALT = 'Polaris thumbnail component';
   const THUMB_SELECTOR = 'span.Polaris-Thumbnail';
 
-  test('it renders the correct HTML when all attributes are passed in', async function(assert) {
+  test('it renders the correct HTML when all attributes are passed in', async function (assert) {
     this.setProperties({
       src: SRC,
       alt: ALT,
@@ -45,7 +45,7 @@ module('Integration | Component | polaris thumbnail', function(hooks) {
     image.hasAttribute('alt', ALT, 'correct alt text is applied to image node');
   });
 
-  test('it renders a correctly-sized thumbnail', async function(assert) {
+  test('it renders a correctly-sized thumbnail', async function (assert) {
     await render(hbs`{{polaris-thumbnail}}`);
 
     let thumbnailSpan = assert.dom(THUMB_SELECTOR);
@@ -124,7 +124,7 @@ module('Integration | Component | polaris thumbnail', function(hooks) {
     );
   });
 
-  test('it does not apply alt text if `alt` is not passed in', async function(assert) {
+  test('it does not apply alt text if `alt` is not passed in', async function (assert) {
     await render(hbs`{{polaris-thumbnail}}`);
 
     let imageSelector = buildNestedSelector(
@@ -140,7 +140,7 @@ module('Integration | Component | polaris thumbnail', function(hooks) {
       );
   });
 
-  test('it does not apply src if `source` is not passed in', async function(assert) {
+  test('it does not apply src if `source` is not passed in', async function (assert) {
     await render(hbs`{{polaris-thumbnail}}`);
 
     let imageSelector = buildNestedSelector(

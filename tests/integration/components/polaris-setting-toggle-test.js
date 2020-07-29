@@ -4,7 +4,7 @@ import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris setting toggle', function(hooks) {
+module('Integration | Component | polaris setting toggle', function (hooks) {
   setupRenderingTest(hooks);
 
   const settingActionSelector = buildNestedSelector(
@@ -25,7 +25,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     'button.Polaris-Button'
   );
 
-  test('it renders the correct HTML in inline usage with default attributes', async function(assert) {
+  test('it renders the correct HTML in inline usage with default attributes', async function (assert) {
     await render(hbs`{{polaris-setting-toggle text="Inline setting toggle"}}`);
 
     assert
@@ -51,7 +51,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
       .doesNotExist('does not render any setting action buttons');
   });
 
-  test('it renders the correct HTML in block usage with action supplied', async function(assert) {
+  test('it renders the correct HTML in block usage with action supplied', async function (assert) {
     await render(hbs`
       {{#polaris-setting-toggle
         primaryAction=(hash
@@ -97,7 +97,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     );
   });
 
-  test('it handles the enabled attribute correctly', async function(assert) {
+  test('it handles the enabled attribute correctly', async function (assert) {
     this.set('enabled', true);
     await render(hbs`
       {{polaris-setting-toggle
@@ -127,7 +127,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     );
   });
 
-  test('it handles the supplied action correctly', async function(assert) {
+  test('it handles the supplied action correctly', async function (assert) {
     this.set('actionFired', false);
     await render(hbs`
       {{polaris-setting-toggle
@@ -143,7 +143,7 @@ module('Integration | Component | polaris setting toggle', function(hooks) {
     assert.ok(this.get('actionFired'), 'fires the action when button clicked');
   });
 
-  test("it obeys the passed-in action hash's loading and disabled flags", async function(assert) {
+  test("it obeys the passed-in action hash's loading and disabled flags", async function (assert) {
     this.setProperties({
       isLoading: true,
       isDisabled: false,

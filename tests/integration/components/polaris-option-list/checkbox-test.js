@@ -11,16 +11,16 @@ const defaultProps = {
   value: 'checkbox',
 };
 
-module('Integration | Component | polaris-option-list/checkbox', function(
+module('Integration | Component | polaris-option-list/checkbox', function (
   hooks
 ) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.set('defaultProps', defaultProps);
   });
 
-  test('sets pass through props for input', async function(assert) {
+  test('sets pass through props for input', async function (assert) {
     await render(hbs`
         {{polaris-option-list/checkbox
           checked=defaultProps.checked
@@ -36,7 +36,7 @@ module('Integration | Component | polaris-option-list/checkbox', function(
     assert.dom('input').hasValue(defaultProps.value);
   });
 
-  test('calls onChange', async function(assert) {
+  test('calls onChange', async function (assert) {
     await render(hbs`
         {{polaris-option-list/checkbox
           checked=defaultProps.checked

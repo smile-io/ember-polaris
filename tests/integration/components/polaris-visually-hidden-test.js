@@ -3,12 +3,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris visually hidden', function(hooks) {
+module('Integration | Component | polaris visually hidden', function (hooks) {
   setupRenderingTest(hooks);
 
   const visuallyHiddenSelector = '[data-test="visually-hidden-test"]';
 
-  test('it renders the correct HTML in basic inline usage', async function(assert) {
+  test('it renders the correct HTML in basic inline usage', async function (assert) {
     await render(hbs`
       <PolarisVisuallyHidden
         data-test="visually-hidden-test"
@@ -27,7 +27,7 @@ module('Integration | Component | polaris visually hidden', function(hooks) {
     );
   });
 
-  test('it renders the correct HTML in basic block usage', async function(assert) {
+  test('it renders the correct HTML in basic block usage', async function (assert) {
     await render(hbs`
       <PolarisVisuallyHidden data-test="visually-hidden-test">
         Block visually hidden content

@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
-module('Integration | Component | polaris date picker', function(hooks) {
+module('Integration | Component | polaris date picker', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
@@ -86,7 +86,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
 
   const daySelectedSelector = `.${DAY_SELECTED_CLASS}`;
 
-  test('it renders the correct date-picker HTML', async function(assert) {
+  test('it renders the correct date-picker HTML', async function (assert) {
     /**
      * Assertions made in this test are based
      * off a set month of February 2018, with
@@ -186,7 +186,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
       .hasText('7', 'it renders February 7th as the selected date');
   });
 
-  test('it calls a passed-in `onChange` action when a new date is chosen', async function(assert) {
+  test('it calls a passed-in `onChange` action when a new date is chosen', async function (assert) {
     this.setProperties({
       month: MONTH,
       year: YEAR,
@@ -210,7 +210,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
     );
   });
 
-  test('it passes a `selected` range argument to the `onChange` action', async function(assert) {
+  test('it passes a `selected` range argument to the `onChange` action', async function (assert) {
     assert.expect(2);
 
     this.setProperties({
@@ -241,7 +241,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
     await click(daySelector);
   });
 
-  test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', async function(assert) {
+  test('it calls a passed-in `onMonthChange` action when next or prev btn clicked', async function (assert) {
     this.setProperties({
       month: MONTH,
       year: YEAR,
@@ -273,7 +273,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
     );
   });
 
-  test('it passes `month` and `year` arguments to the `onMonthChange` action', async function(assert) {
+  test('it passes `month` and `year` arguments to the `onMonthChange` action', async function (assert) {
     assert.expect(3);
 
     let expectedMonth = MONTH + 1;
@@ -315,7 +315,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
     );
   });
 
-  test('it displays two months at a time when `multiMonth` is true', async function(assert) {
+  test('it displays two months at a time when `multiMonth` is true', async function (assert) {
     this.setProperties({
       month: MONTH,
       year: YEAR,
@@ -337,7 +337,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
       .exists({ count: 2 }, 'it renders 2 months when `multiMonth` is true');
   });
 
-  test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', async function(assert) {
+  test('it disables certain days when `disableDatesBefore` and `disableDatesAfter` values are passed in', async function (assert) {
     const DISABLE_BEFORE = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
     const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
     const DISABLE_BEFORE_SELECTOR = '[aria-label="February 4 2018"]';
@@ -376,7 +376,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
       );
   });
 
-  test('it does not fire actions when disabled days are clicked', async function(assert) {
+  test('it does not fire actions when disabled days are clicked', async function (assert) {
     const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
     const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
 
@@ -409,7 +409,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
     );
   });
 
-  test('it applies an `inRange` class to days between the selected range', async function(assert) {
+  test('it applies an `inRange` class to days between the selected range', async function (assert) {
     const RANGE_START = new Date('Mon Feb 05 2018 00:00:00 GMT-0500 (EST)');
     const RANGE_END = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
     const IN_RANGE_SELECTOR = '[aria-label="February 7 2018"]';
@@ -439,7 +439,7 @@ module('Integration | Component | polaris date picker', function(hooks) {
       );
   });
 
-  test('it applies a `today` class to the day representing the current day', async function(assert) {
+  test('it applies a `today` class to the day representing the current day', async function (assert) {
     const TODAY = new Date();
     const TODAY_MONTH = TODAY.getMonth();
     const TODAY_DATE = TODAY.getDate();

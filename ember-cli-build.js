@@ -7,7 +7,7 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 // ex: @shopify/polaris/styles/foundation/colors.scss#57
 const nodeSass = require('node-sass');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     'ember-cli-babel': {
       includePolyfill: true,

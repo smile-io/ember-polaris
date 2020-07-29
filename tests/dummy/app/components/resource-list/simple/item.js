@@ -11,7 +11,7 @@ export default Component.extend({
   item: null,
   itemId: null,
 
-  accessibilityLabel: computed('item.name', function() {
+  accessibilityLabel: computed('item.name', function () {
     return `View details for ${this.get('item.name')}`;
   }).readOnly(),
 });

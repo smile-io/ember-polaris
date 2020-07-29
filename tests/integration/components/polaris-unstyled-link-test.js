@@ -3,13 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris-unstyled-link', function(hooks) {
+module('Integration | Component | polaris-unstyled-link', function (hooks) {
   setupRenderingTest(hooks);
 
   const linkSelector = '[data-test=unstyled-link]';
 
-  module('external', function() {
-    test('adds rel and target attributes', async function(assert) {
+  module('external', function () {
+    test('adds rel and target attributes', async function (assert) {
       await render(hbs`
         {{polaris-unstyled-link external=true url="https://shopify.com"}}
       `);
@@ -18,22 +18,22 @@ module('Integration | Component | polaris-unstyled-link', function(hooks) {
     });
   });
 
-  module('download', function() {
-    test('adds true as a boolean attribute', async function(assert) {
+  module('download', function () {
+    test('adds true as a boolean attribute', async function (assert) {
       await render(hbs`
         {{polaris-unstyled-link download=true url="https://shopify.com"}}
       `);
       assert.dom('a').hasAttribute('download', 'true');
     });
 
-    test('adds the provided string', async function(assert) {
+    test('adds the provided string', async function (assert) {
       await render(hbs`
         {{polaris-unstyled-link download="file.txt" url="https://shopify.com"}}
       `);
       assert.dom('a').hasAttribute('download', 'file.txt');
     });
 
-    test('does not add the attribute when not set', async function(assert) {
+    test('does not add the attribute when not set', async function (assert) {
       await render(hbs`
         {{polaris-unstyled-link url="https://shopify.com"}}
       `);
@@ -41,7 +41,7 @@ module('Integration | Component | polaris-unstyled-link', function(hooks) {
     });
   });
 
-  test('supports onClick action', async function(assert) {
+  test('supports onClick action', async function (assert) {
     assert.expect(2);
 
     this.handleWrapperClick = () =>
@@ -64,7 +64,7 @@ module('Integration | Component | polaris-unstyled-link', function(hooks) {
     await click(linkSelector);
   });
 
-  test('supports passing data attributes', async function(assert) {
+  test('supports passing data attributes', async function (assert) {
     await render(hbs`
       <PolarisUnstyledLink
         @dataTestId="test-deprecated-way"

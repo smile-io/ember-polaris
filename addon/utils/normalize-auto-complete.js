@@ -19,7 +19,7 @@ export function normalizeAutoComplete(autoComplete) {
  * @param {String} autoCompleteProperty
  */
 export function normalizeAutoCompleteProperty(autoCompleteProperty) {
-  return computed(autoCompleteProperty, function() {
+  return computed(autoCompleteProperty, function () {
     let autoComplete = this.get(autoCompleteProperty);
     return normalizeAutoComplete(autoComplete);
   }).readOnly();

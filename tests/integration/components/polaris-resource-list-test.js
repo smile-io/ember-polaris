@@ -65,15 +65,15 @@ const ItemComponent = Component.extend({
     {{/polaris-resource-list/item}}
   `,
 
-  accessibilityLabel: computed('item.title', function() {
+  accessibilityLabel: computed('item.title', function () {
     return `View details for ${this.get('item.title')}`;
   }).readOnly(),
 });
 
-module('Integration | Component | polaris-resource-list', function(hooks) {
+module('Integration | Component | polaris-resource-list', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.setProperties({
       itemsNoID,
       singleItemNoID,
@@ -96,8 +96,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     this.owner.register('component:item-component', ItemComponent);
   });
 
-  module('itemComponent', function() {
-    test('renders list items', async function(assert) {
+  module('itemComponent', function () {
+    test('renders list items', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -107,7 +107,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('li').exists({ count: 3 });
     });
 
-    test('renders custom markup', async function(assert) {
+    test('renders custom markup', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -118,15 +118,15 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('Selectable', function() {
-    test('does not render bulk actions if the promotedBulkActions and the bulkActions props are not provided', async function(assert) {
+  module('Selectable', function () {
+    test('does not render bulk actions if the promotedBulkActions and the bulkActions props are not provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
       `);
       assert.dom('[data-test-bulk-actions]').doesNotExist();
     });
 
-    test('does render bulk actions if the promotedBulkActions prop is provided', async function(assert) {
+    test('does render bulk actions if the promotedBulkActions prop is provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -137,7 +137,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-bulk-actions]').exists();
     });
 
-    test('renders bulk actions if the bulkActions prop is provided', async function(assert) {
+    test('renders bulk actions if the bulkActions prop is provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -161,8 +161,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         );
       },
     },
-    function() {
-      test('does not add a prop of paginatedSelectAllAction to BulkActions if omitted', async function(assert) {
+    function () {
+      test('does not add a prop of paginatedSelectAllAction to BulkActions if omitted', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=itemsNoID
@@ -173,7 +173,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.notOk(this.get('paginatedSelectAllAction'));
       });
 
-      test('adds a prop of paginatedSelectAllAction to BulkActions if included', async function(assert) {
+      test('adds a prop of paginatedSelectAllAction to BulkActions if included', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=itemsNoID
@@ -187,9 +187,9 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     }
   );
 
-  module('resourceName', function() {
-    module('resoureName.singular', function() {
-      test('renders default singular resource name when resourceName isn’t provided', async function(assert) {
+  module('resourceName', function () {
+    module('resoureName.singular', function () {
+      test('renders default singular resource name when resourceName isn’t provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             showHeader=true
@@ -202,7 +202,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           .hasText('Showing 1 item');
       });
 
-      test('renders the given singular resource name when resourceName is provided', async function(assert) {
+      test('renders the given singular resource name when resourceName is provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=singleItemNoID
@@ -217,8 +217,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       });
     });
 
-    module('resoureName.plural', function() {
-      test('renders default plural resource name when resourceName isn’t provided', async function(assert) {
+    module('resoureName.plural', function () {
+      test('renders default plural resource name when resourceName isn’t provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list items=itemsNoID itemComponent="item-component" showHeader=true}}
         `);
@@ -227,7 +227,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           .hasText('Showing 2 items');
       });
 
-      test('renders the given plural resource name when resourceName is provided', async function(assert) {
+      test('renders the given plural resource name when resourceName is provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=itemsNoID
@@ -243,8 +243,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('headerTitle', function() {
-    test('prints loading text when loading is true', async function(assert) {
+  module('headerTitle', function () {
+    test('prints loading text when loading is true', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=singleItemWithID
@@ -272,8 +272,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         );
       },
     },
-    function() {
-      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it isn’t selected', async function(assert) {
+    function () {
+      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it isn’t selected', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=singleItemWithID
@@ -284,7 +284,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.equal(this.get('accessibilityLabel'), 'Select item');
       });
 
-      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it is selected ', async function(assert) {
+      test('provides the BulkActions with the right accessibilityLabel if there’s 1 item and it is selected ', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=singleItemWithID
@@ -296,7 +296,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.equal(this.get('accessibilityLabel'), 'Deselect item');
       });
 
-      test('provides the BulkActions with the right accessibilityLabel if there are multiple items and they are selected', async function(assert) {
+      test('provides the BulkActions with the right accessibilityLabel if there are multiple items and they are selected', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -308,7 +308,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.equal(this.get('accessibilityLabel'), 'Deselect all 3 items');
       });
 
-      test('provides the BulkActions with the right accessibilityLabel if there’s multiple items and some or none are selected', async function(assert) {
+      test('provides the BulkActions with the right accessibilityLabel if there’s multiple items and some or none are selected', async function (assert) {
         await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -321,22 +321,22 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     }
   );
 
-  module('idForItem()', function() {
-    test('generates a key using the index if there’s no idForItem prop and no ID in data', async function(assert) {
+  module('idForItem()', function () {
+    test('generates a key using the index if there’s no idForItem prop and no ID in data', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=itemsNoID itemComponent="shallow-item-component"}}
       `);
       assert.dom('li:first-of-type').hasAttribute('data-test-item-id', '0');
     });
 
-    test('generates a key using the ID if there’s no idForItem prop but there and ID key in the data', async function(assert) {
+    test('generates a key using the ID if there’s no idForItem prop but there and ID key in the data', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=itemsWithID itemComponent="shallow-item-component"}}
       `);
       assert.dom('li:first-of-type').hasAttribute('data-test-item-id', '5');
     });
 
-    test('generates a key using the idForItem prop callback when one is provided', async function(assert) {
+    test('generates a key using the idForItem prop callback when one is provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           idForItem=(action idForItem)
@@ -350,8 +350,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('onSelectionChange()', function() {
-    test('calls onSelectionChange() when an item is clicked', async function(assert) {
+  module('onSelectionChange()', function () {
+    test('calls onSelectionChange() when an item is clicked', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -368,22 +368,22 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('header markup', function() {
-    test('renders header markup if the list isn’t selectable but the showHeader prop is true', async function(assert) {
+  module('header markup', function () {
+    test('renders header markup if the list isn’t selectable but the showHeader prop is true', async function (assert) {
       await render(hbs`
         {{polaris-resource-list showHeader=true items=itemsWithID itemComponent="item-component"}}
       `);
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
-    test('does not render when items is empty', async function(assert) {
+    test('does not render when items is empty', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=(array) itemComponent="item-component"}}
       `);
       assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
     });
 
-    test('renders when sort options are given', async function(assert) {
+    test('renders when sort options are given', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           sortOptions=sortOptions
@@ -394,7 +394,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
-    test('renders when an alternateTool is provided', async function(assert) {
+    test('renders when an alternateTool is provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           alternateTool=(component "wrapper-element" class="AlternateTool")
@@ -405,7 +405,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
-    test('renders when bulkActions are given', async function(assert) {
+    test('renders when bulkActions are given', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           bulkActions=bulkActions
@@ -416,7 +416,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
-    test('renders when promotedBulkActions are given', async function(assert) {
+    test('renders when promotedBulkActions are given', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           promotedBulkActions=promotedBulkActions
@@ -427,14 +427,14 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('[data-test-id="resource-list-header"]').exists();
     });
 
-    test('does not render when sort options, bulkActions and promotedBulkActions are not given', async function(assert) {
+    test('does not render when sort options, bulkActions and promotedBulkActions are not given', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
       `);
       assert.dom('[data-test-id="resource-list-header"]').doesNotExist();
     });
 
-    test('renders on non-initial load when items are provided', async function(assert) {
+    test('renders on non-initial load when items are provided', async function (assert) {
       this.set('items', []);
       await render(hbs`
         {{polaris-resource-list
@@ -450,8 +450,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('filterControl', function() {
-    test('renders when exist', async function(assert) {
+  module('filterControl', function () {
+    test('renders when exist', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsNoID
@@ -463,11 +463,11 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('emptySearchResult', function() {
+  module('emptySearchResult', function () {
     /**
      * Skipping this test since it passes locally but fails on CI for some reason :(
      */
-    skip('renders when filterControl exists and items is empty', async function(assert) {
+    skip('renders when filterControl exists and items is empty', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=(array)
@@ -478,14 +478,14 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('.Polaris-EmptySearchResult').exists();
     });
 
-    test('does not render when filterControl does not exist', async function(assert) {
+    test('does not render when filterControl does not exist', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=(array) itemComponent="shallow-item-component"}}
       `);
       assert.dom('.Polaris-EmptySearchResult').doesNotExist();
     });
 
-    test('does not render when items is not empty', async function(assert) {
+    test('does not render when items is not empty', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsNoID
@@ -496,7 +496,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('.Polaris-EmptySearchResult').doesNotExist();
     });
 
-    test('does not render when filterControl exists, items is empty, and loading is true', async function(assert) {
+    test('does not render when filterControl exists, items is empty, and loading is true', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=(array)
@@ -508,15 +508,15 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('Sorting', function() {
-    test('does not render a sort select if sortOptions aren’t provided', async function(assert) {
+  module('Sorting', function () {
+    test('does not render a sort select if sortOptions aren’t provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list items=itemsWithID itemComponent="item-component"}}
       `);
       assert.dom('.Polaris-Select').doesNotExist();
     });
 
-    test('renders a sort select if sortOptions are provided', async function(assert) {
+    test('renders a sort select if sortOptions are provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -527,7 +527,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('.Polaris-Select').exists();
     });
 
-    test('does not render a sort select if an alternateTool is provided', async function(assert) {
+    test('does not render a sort select if an alternateTool is provided', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -539,8 +539,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('.Polaris-Select').doesNotExist();
     });
 
-    module('Alternate Tool', function() {
-      test('does not render if an alternateTool is not provided', async function(assert) {
+    module('Alternate Tool', function () {
+      test('does not render if an alternateTool is not provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -550,7 +550,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.dom('.AlternateTool').doesNotExist();
       });
 
-      test('renders if an alternateTool is provided', async function(assert) {
+      test('renders if an alternateTool is provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -561,7 +561,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
         assert.dom('.AlternateTool').exists();
       });
 
-      test('renders even if sortOptions are provided', async function(assert) {
+      test('renders even if sortOptions are provided', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -586,8 +586,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           );
         },
       },
-      function() {
-        test('passes a sortOptions to the Select options', async function(assert) {
+      function () {
+        test('passes a sortOptions to the Select options', async function (assert) {
           await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -612,8 +612,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
           );
         },
       },
-      function() {
-        test('passes a sortValue to the Select value', async function(assert) {
+      function () {
+        test('passes a sortValue to the Select value', async function (assert) {
           await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -628,8 +628,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       }
     );
 
-    module('onSortChange', function() {
-      test('calls onSortChange when the Sort Select changes', async function(assert) {
+    module('onSortChange', function () {
+      test('calls onSortChange when the Sort Select changes', async function (assert) {
         await render(hbs`
           {{polaris-resource-list
             items=itemsWithID
@@ -645,8 +645,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('loading', function() {
-    test('renders a spinner', async function(assert) {
+  module('loading', function () {
+    test('renders a spinner', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=itemsWithID
@@ -661,7 +661,7 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
       assert.dom('.Polaris-ResourceList__SpinnerContainer').exists();
     });
 
-    test('does not render an <Item /> if loading is true and there are no items', async function(assert) {
+    test('does not render an <Item /> if loading is true and there are no items', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=(array)
@@ -675,8 +675,8 @@ module('Integration | Component | polaris-resource-list', function(hooks) {
     });
   });
 
-  module('BulkActions', function() {
-    test('renders on initial load when items are selected', async function(assert) {
+  module('BulkActions', function () {
+    test('renders on initial load when items are selected', async function (assert) {
       await render(hbs`
         {{polaris-resource-list
           items=singleItemWithID

@@ -3,15 +3,15 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | polaris-select', function(hooks) {
+module('Integration | Component | polaris-select', function (hooks) {
   setupRenderingTest(hooks);
 
-  module('onChange()', function() {
-    test('is called with the value of the newly-selected option', async function(assert) {
+  module('onChange()', function () {
+    test('is called with the value of the newly-selected option', async function (assert) {
       this.setProperties({
         selectedValue: null,
         selectId: null,
-        onOptionSelected: function(selectedValue, selectId) {
+        onOptionSelected: function (selectedValue, selectId) {
           this.setProperties({ selectedValue, selectId });
         },
       });
@@ -32,8 +32,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('onFocus()', function() {
-    test('is called when the select is focused', async function(assert) {
+  module('onFocus()', function () {
+    test('is called when the select is focused', async function (assert) {
       this.set('receivedFocus', false);
       await render(hbs`
         {{polaris-select
@@ -48,8 +48,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('onBlur()', function() {
-    test('is called when the select is blurred', async function(assert) {
+  module('onBlur()', function () {
+    test('is called when the select is blurred', async function (assert) {
       this.set('receivedBlur', false);
       await render(hbs`
         {{polaris-select
@@ -65,8 +65,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('options', function() {
-    test('translates an array of strings into options', async function(assert) {
+  module('options', function () {
+    test('translates an array of strings into options', async function (assert) {
       let options = ['one', 'two'];
       this.set('options', options);
       await render(hbs`{{polaris-select label="Select" options=options}}`);
@@ -79,7 +79,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       });
     });
 
-    test('translates an array of option descriptions into options', async function(assert) {
+    test('translates an array of option descriptions into options', async function (assert) {
       let options = [
         { value: 'one', label: 'One' },
         { value: 'two', label: 'Two' },
@@ -96,7 +96,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       });
     });
 
-    test('sets disabled options as indicated in the option descriptor', async function(assert) {
+    test('sets disabled options as indicated in the option descriptor', async function (assert) {
       let options = [
         { value: 'one', label: 'One' },
         { value: 'two', label: 'Two', disabled: true },
@@ -118,7 +118,7 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('groups', function() {
+  module('groups', function () {
     let optionsAndGroups = [
       { title: 'Group one', options: ['one.1', 'one.2'] },
       'one',
@@ -149,7 +149,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       }
     }
 
-    test('translates grouped options into optgroup tags', async function(assert) {
+    test('translates grouped options into optgroup tags', async function (assert) {
       this.set('optionsAndGroups', optionsAndGroups);
       await render(
         hbs`{{polaris-select label="Select" options=optionsAndGroups}}`
@@ -163,8 +163,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('value', function() {
-    test('uses the passed value for the select', async function(assert) {
+  module('value', function () {
+    test('uses the passed value for the select', async function (assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
@@ -178,8 +178,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('id', function() {
-    test('sets the id on the input', async function(assert) {
+  module('id', function () {
+    test('sets the id on the input', async function (assert) {
       await render(
         hbs`{{polaris-select label="Select" id="MySelect" options=(array)}}`
       );
@@ -187,15 +187,15 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom('select').hasAttribute('id', 'MySelect');
     });
 
-    test('sets a random id on the input when none is passed', async function(assert) {
+    test('sets a random id on the input when none is passed', async function (assert) {
       await render(hbs`{{polaris-select label="Select" options=(array)}}`);
 
       assert.dom('select').hasAttribute('id');
     });
   });
 
-  module('disabled', function() {
-    test('sets the disabled attribute on the select', async function(assert) {
+  module('disabled', function () {
+    test('sets the disabled attribute on the select', async function (assert) {
       await render(
         hbs`{{polaris-select label="Select" disabled=true options=(array)}}`
       );
@@ -203,7 +203,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom('select').hasAttribute('disabled');
     });
 
-    test('is only disabled when disabled is explicitly set to true', async function(assert) {
+    test('is only disabled when disabled is explicitly set to true', async function (assert) {
       await render(
         hbs`{{polaris-select label="Select" disabled=false options=(array)}}`
       );
@@ -212,8 +212,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('helpText', function() {
-    test('connects the select to the help text', async function(assert) {
+  module('helpText', function () {
+    test('connects the select to the help text', async function (assert) {
       await render(
         hbs`{{polaris-select label="Select" options=(array) helpText="Some help"}}`
       );
@@ -223,8 +223,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('placeholder', function() {
-    test('renders the placeholder as the initially selected option', async function(assert) {
+  module('placeholder', function () {
+    test('renders the placeholder as the initially selected option', async function (assert) {
       let placeholderValue = '';
       await render(hbs`
         {{polaris-select
@@ -238,7 +238,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom('select option').hasAttribute('disabled');
     });
 
-    test('sets the placeholder value as the select value when there is an onChange handler', async function(assert) {
+    test('sets the placeholder value as the select value when there is an onChange handler', async function (assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
@@ -253,8 +253,8 @@ module('Integration | Component | polaris-select', function(hooks) {
     });
   });
 
-  module('error', function() {
-    test('marks the select as invalid', async function(assert) {
+  module('error', function () {
+    test('marks the select as invalid', async function (assert) {
       this.set('error', {
         componentName: 'polaris-text-style',
         props: { text: 'Invalid' },
@@ -276,7 +276,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom('select').hasAttribute('aria-invalid', 'true');
     });
 
-    test('connects the select to the error', async function(assert) {
+    test('connects the select to the error', async function (assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
@@ -289,7 +289,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom(`#${errorID}`).hasText('Some error');
     });
 
-    test('connects the select to an error rendered separately', async function(assert) {
+    test('connects the select to an error rendered separately', async function (assert) {
       let errorMessage = 'Some error';
       let selectID = 'collectionRuleType';
       this.setProperties({ errorMessage, selectID });
@@ -309,7 +309,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom(`#${errorID}`).hasText('Some error');
     });
 
-    test('connects the select to both an error and help text', async function(assert) {
+    test('connects the select to both an error and help text', async function (assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
@@ -327,7 +327,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom(`#${descriptions[1]}`).hasText('Some error');
     });
 
-    test('renders error markup when a non-boolean value', async function(assert) {
+    test('renders error markup when a non-boolean value', async function (assert) {
       await render(hbs`
         {{polaris-select
           label="Select"
@@ -340,7 +340,7 @@ module('Integration | Component | polaris-select', function(hooks) {
       assert.dom('.Polaris-InlineError').exists();
     });
 
-    test('does not render error markup when a boolean value', async function(assert) {
+    test('does not render error markup when a boolean value', async function (assert) {
       await render(hbs`
         {{polaris-select
           error=true

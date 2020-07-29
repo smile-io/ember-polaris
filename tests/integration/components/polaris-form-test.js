@@ -11,10 +11,10 @@ const encType = 'text/plain';
 const method = 'get';
 const target = '_blank';
 
-module('Integration | Component | polaris-form', function(hooks) {
+module('Integration | Component | polaris-form', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders correctly', async function(assert) {
+  test('it renders correctly', async function (assert) {
     this.setProperties({
       name: name,
       noValidate: noValidate,
@@ -92,14 +92,14 @@ module('Integration | Component | polaris-form', function(hooks) {
       );
   });
 
-  test('defaults to post when no method is set', async function(assert) {
+  test('defaults to post when no method is set', async function (assert) {
     await render(hbs`{{polaris-form}}`);
     assert
       .dom('[data-test-form]')
       .hasAttribute('method', 'post', 'defaults to post when no method is set');
   });
 
-  test('invokes `onSubmit` when form is submitted', async function(assert) {
+  test('invokes `onSubmit` when form is submitted', async function (assert) {
     this.set('spy', (name) => assert.step(name));
 
     this.onSubmitSpy = () => {
@@ -115,8 +115,8 @@ module('Integration | Component | polaris-form', function(hooks) {
     assert.verifySteps(['onSubmit'], 'invokes `onSubmit` preventing default');
   });
 
-  module('preventDefault', function() {
-    test('allows default handler to handle submit event when set to false', async function(assert) {
+  module('preventDefault', function () {
+    test('allows default handler to handle submit event when set to false', async function (assert) {
       this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
@@ -128,7 +128,7 @@ module('Integration | Component | polaris-form', function(hooks) {
 
       let self = this;
       await triggerEvent('[data-test-form]', 'submit', {
-        preventDefault: function() {
+        preventDefault: function () {
           self.spy('preventDefault');
         },
       });
@@ -136,7 +136,7 @@ module('Integration | Component | polaris-form', function(hooks) {
       assert.verifySteps([], "leaves default submit handler do it's thing");
     });
 
-    test('submits the form preventing default when not provided', async function(assert) {
+    test('submits the form preventing default when not provided', async function (assert) {
       this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
@@ -147,7 +147,7 @@ module('Integration | Component | polaris-form', function(hooks) {
 
       let self = this;
       await triggerEvent('[data-test-form]', 'submit', {
-        preventDefault: function() {
+        preventDefault: function () {
           self.spy('preventDefault');
         },
       });
@@ -158,7 +158,7 @@ module('Integration | Component | polaris-form', function(hooks) {
       );
     });
 
-    test('submits the form preventing default when set to true', async function(assert) {
+    test('submits the form preventing default when set to true', async function (assert) {
       this.set('spy', (name) => assert.step(name));
 
       await render(hbs`
@@ -170,7 +170,7 @@ module('Integration | Component | polaris-form', function(hooks) {
 
       let self = this;
       await triggerEvent('[data-test-form]', 'submit', {
-        preventDefault: function() {
+        preventDefault: function () {
           self.spy('preventDefault');
         },
       });

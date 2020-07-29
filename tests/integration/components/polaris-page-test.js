@@ -8,7 +8,7 @@ import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 const availableRoutes = ['home', 'home.the-beginning'];
 
-module('Integration | Component | polaris page', function(hooks) {
+module('Integration | Component | polaris page', function (hooks) {
   const pageSelector = 'div.Polaris-Page';
   const headerSelector = buildNestedSelector(
     pageSelector,
@@ -23,7 +23,7 @@ module('Integration | Component | polaris page', function(hooks) {
 
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
@@ -41,7 +41,7 @@ module('Integration | Component | polaris page', function(hooks) {
     'button.Polaris-Button'
   );
 
-  test('it renders the page correctly', async function(assert) {
+  test('it renders the page correctly', async function (assert) {
     this.setProperties({
       fullWidth: false,
       singleColumn: false,
@@ -145,7 +145,7 @@ module('Integration | Component | polaris page', function(hooks) {
     );
   });
 
-  test('it handles primary action correctly when supplied', async function(assert) {
+  test('it handles primary action correctly when supplied', async function (assert) {
     assert.expect(8);
 
     this.setProperties({
@@ -209,7 +209,7 @@ module('Integration | Component | polaris page', function(hooks) {
     await click(primaryButtonSelector);
   });
 
-  test('it handles secondary actions correctly when supplied', async function(assert) {
+  test('it handles secondary actions correctly when supplied', async function (assert) {
     let secondaryAction1Fired = false;
     this.actions.secondaryAction1 = () => {
       secondaryAction1Fired = true;
@@ -319,7 +319,7 @@ module('Integration | Component | polaris page', function(hooks) {
       );
   });
 
-  test('it renders action icons correctly', async function(assert) {
+  test('it renders action icons correctly', async function (assert) {
     await render(hbs`
       {{polaris-page
         title="This is the title"
@@ -368,7 +368,7 @@ module('Integration | Component | polaris page', function(hooks) {
     );
   });
 
-  test('it handles breadcrumbs correctly', async function(assert) {
+  test('it handles breadcrumbs correctly', async function (assert) {
     await render(
       hbs`{{polaris-page title="This is a page" breadcrumbs=breadcrumbs}}`
     );
@@ -453,7 +453,7 @@ module('Integration | Component | polaris page', function(hooks) {
       .exists({ count: 1 }, 'breadcrumb renders icon');
   });
 
-  test('it renders title metadata', async function(assert) {
+  test('it renders title metadata', async function (assert) {
     await render(hbs`
       {{polaris-page
         title="Testing title metadata"
@@ -464,7 +464,7 @@ module('Integration | Component | polaris page', function(hooks) {
     assert.dom('.Polaris-Badge').exists('renders title metadata');
   });
 
-  test('it allows the primary action to be rendered as not primary', async function(assert) {
+  test('it allows the primary action to be rendered as not primary', async function (assert) {
     this.set('shouldRenderPrimaryActionAsPrimary', false);
 
     await render(hbs`
@@ -504,7 +504,7 @@ module('Integration | Component | polaris page', function(hooks) {
     );
   });
 
-  test('backwards compatibility - allows a custom class to be applied', async function(assert) {
+  test('backwards compatibility - allows a custom class to be applied', async function (assert) {
     await render(hbs`
       {{polaris-page class="custom_class"}}
     `);

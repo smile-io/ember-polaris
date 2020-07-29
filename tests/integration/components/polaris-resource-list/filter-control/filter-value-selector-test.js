@@ -81,10 +81,10 @@ async function triggerChangeEventWithValue(
 
 module(
   'Integration | Component | polaris-resource-list/filter-control/filter-value-selector',
-  function(hooks) {
+  function (hooks) {
     setupRenderingTest(hooks);
 
-    module('filter.type', function() {
+    module('filter.type', function () {
       module(
         'FilterType.Select',
         {
@@ -92,8 +92,8 @@ module(
             this.set('filter', JSON.parse(JSON.stringify(selectFilter)));
           },
         },
-        function() {
-          test('renders a Select field', async function(assert) {
+        function () {
+          test('renders a Select field', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -103,7 +103,7 @@ module(
             assert.dom('.Polaris-Select').exists();
           });
 
-          test('renders label using operatorText when it is a string', async function(assert) {
+          test('renders label using operatorText when it is a string', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -115,7 +115,7 @@ module(
               .hasText(this.get('filter.operatorText'));
           });
 
-          test('renders a Select with options using operatorText when it is a list of operators', async function(assert) {
+          test('renders a Select with options using operatorText when it is a list of operators', async function (assert) {
             this.set('filter.operatorText', operators);
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
@@ -136,7 +136,7 @@ module(
             assert.deepEqual(operatorsSelectOptions, expectedOptions);
           });
 
-          test('renders value using the value prop', async function(assert) {
+          test('renders value using the value prop', async function (assert) {
             const value = 'beauty_value';
             this.set('value', value);
             await render(hbs`
@@ -149,7 +149,7 @@ module(
             assert.dom('.Polaris-Select select').hasValue(value);
           });
 
-          test('calls onChange when the Select was changed', async function(assert) {
+          test('calls onChange when the Select was changed', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -161,7 +161,7 @@ module(
             assert.ok(this.get('wasOnChangeCalled'));
           });
 
-          test('calls onFilterKeyChange when operator is changed', async function(assert) {
+          test('calls onFilterKeyChange when operator is changed', async function (assert) {
             const newOperator = operators[1].key;
             this.set('filter.operatorText', operators);
 
@@ -180,7 +180,7 @@ module(
             assert.ok(this.get('wasOnFilterKeyChangeCalled'));
           });
 
-          test('calls onChange with filter value when operator is changed and filter value is set', async function(assert) {
+          test('calls onChange with filter value when operator is changed and filter value is set', async function (assert) {
             const newFilterValue = 'beauty_value';
             this.set('filter.operatorText', operators);
 
@@ -213,8 +213,8 @@ module(
             this.set('filter', JSON.parse(JSON.stringify(textFieldFilter)));
           },
         },
-        function() {
-          test('renders a TextField', async function(assert) {
+        function () {
+          test('renders a TextField', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -224,7 +224,7 @@ module(
             assert.dom('.Polaris-TextField').exists();
           });
 
-          test('does not render a label if operatorText does not exist', async function(assert) {
+          test('does not render a label if operatorText does not exist', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -234,7 +234,7 @@ module(
             assert.dom('.Polaris-Label').doesNotExist();
           });
 
-          test('renders a Select with options using operatorText when it is a list of operators', async function(assert) {
+          test('renders a Select with options using operatorText when it is a list of operators', async function (assert) {
             this.set('filter.operatorText', operators);
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
@@ -255,7 +255,7 @@ module(
             assert.deepEqual(operatorsSelectOptions, expectedOptions);
           });
 
-          test('renders value using the value prop', async function(assert) {
+          test('renders value using the value prop', async function (assert) {
             const value = 'test';
             this.set('value', value);
             await render(hbs`
@@ -268,7 +268,7 @@ module(
             assert.dom('.Polaris-TextField input').hasValue(value);
           });
 
-          test('renders type using the textFieldType prop', async function(assert) {
+          test('renders type using the textFieldType prop', async function (assert) {
             const textFieldType = 'number';
             this.set('filter.textFieldType', textFieldType);
 
@@ -283,7 +283,7 @@ module(
               .hasAttribute('type', textFieldType);
           });
 
-          test('renders undefined type when the textFieldType prop is not passed', async function(assert) {
+          test('renders undefined type when the textFieldType prop is not passed', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -293,7 +293,7 @@ module(
             assert.dom('.Polaris-TextField input').doesNotHaveAttribute('type');
           });
 
-          test('calls onChange when the text field was changed', async function(assert) {
+          test('calls onChange when the text field was changed', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -305,7 +305,7 @@ module(
             assert.ok(this.get('wasOnChangeCalled'));
           });
 
-          test('calls onFilterKeyChange when operator is changed', async function(assert) {
+          test('calls onFilterKeyChange when operator is changed', async function (assert) {
             const newOperator = operators[1].key;
             this.set('filter.operatorText', operators);
 
@@ -324,7 +324,7 @@ module(
             assert.equal(this.get('newFilterKey'), newOperator);
           });
 
-          test('calls onChange with filter value when operator is changed and filter value is set', async function(assert) {
+          test('calls onChange with filter value when operator is changed and filter value is set', async function (assert) {
             const newFilterValue = 'foo';
             this.set('filter.operatorText', operators);
 
@@ -368,8 +368,8 @@ module(
             });
           },
         },
-        function() {
-          test('renders a DateSelector', async function(assert) {
+        function () {
+          test('renders a DateSelector', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -379,7 +379,7 @@ module(
             assert.dom('[data-test-select="date-selector"]').exists();
           });
 
-          test('renders filterValue using the value prop', async function(assert) {
+          test('renders filterValue using the value prop', async function (assert) {
             const value = DateFilterOption.PastMonth;
             this.set('value', value);
             await render(hbs`
@@ -392,7 +392,7 @@ module(
             assert.dom('[data-test-select="date-selector"]').hasValue(value);
           });
 
-          test('renders filterKey using the filterKey prop', async function(assert) {
+          test('renders filterKey using the filterKey prop', async function (assert) {
             this.overrideDateSelectorTemplate(hbs`
               <div id="filter-key" data-test-filter-key={{filterKey}}></div>
             `);
@@ -411,7 +411,7 @@ module(
               .hasAttribute('data-test-filter-key', filterKey);
           });
 
-          test('renders filterMinKey using the min key of filter on filter prop', async function(assert) {
+          test('renders filterMinKey using the min key of filter on filter prop', async function (assert) {
             this.overrideDateSelectorTemplate(hbs`
               <div id="filter-min-key" data-test-filter-min-key={{filterMinKey}}></div>
             `);
@@ -430,7 +430,7 @@ module(
               .hasAttribute('data-test-filter-min-key', filterMinKey);
           });
 
-          test('renders filterMaxKey using the max key of filter on filter prop', async function(assert) {
+          test('renders filterMaxKey using the max key of filter on filter prop', async function (assert) {
             this.overrideDateSelectorTemplate(hbs`
               <div id="filter-max-key" data-test-filter-max-key={{filterMaxKey}}></div>
             `);
@@ -449,7 +449,7 @@ module(
               .hasAttribute('data-test-filter-max-key', filterMaxKey);
           });
 
-          test('does not render Select with operator options', async function(assert) {
+          test('does not render Select with operator options', async function (assert) {
             this.set('filter.operatorText', operators);
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
@@ -460,7 +460,7 @@ module(
             assert.dom('[data-test-select="operator"]').doesNotExist();
           });
 
-          test('calls onChange when the filter key was changed', async function(assert) {
+          test('calls onChange when the filter key was changed', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter
@@ -473,7 +473,7 @@ module(
             assert.ok(this.get('wasOnChangeCalled'));
           });
 
-          test('calls onFilterKeyChange when the filter key was changed', async function(assert) {
+          test('calls onFilterKeyChange when the filter key was changed', async function (assert) {
             await render(hbs`
               {{polaris-resource-list/filter-control/filter-value-selector
                 filter=filter

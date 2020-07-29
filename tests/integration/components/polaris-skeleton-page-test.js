@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris skeleton page', function(hooks) {
+module('Integration | Component | polaris skeleton page', function (hooks) {
   setupRenderingTest(hooks);
 
   const pageSelector = '[data-test-skeleton-page]';
@@ -38,7 +38,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
     secondaryActionSelector
   );
 
-  test('it renders a basic skeleton page', async function(assert) {
+  test('it renders a basic skeleton page', async function (assert) {
     await render(hbs`{{polaris-skeleton-page}}`);
 
     assert.dom(pageSelector).exists('renders skeleton page');
@@ -50,7 +50,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       .exists('renders skeleton page content');
   });
 
-  test('it renders the correct page content', async function(assert) {
+  test('it renders the correct page content', async function (assert) {
     await render(
       hbs`{{polaris-skeleton-page text="Skeleton page - inline content"}}`
     );
@@ -76,7 +76,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       );
   });
 
-  test('it renders the page at the correct width', async function(assert) {
+  test('it renders the page at the correct width', async function (assert) {
     await render(
       hbs`{{polaris-skeleton-page fullWidth=fullWidth singleColumn=singleColumn}}`
     );
@@ -111,7 +111,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       );
   });
 
-  test('it renders the page title correctly', async function(assert) {
+  test('it renders the page title correctly', async function (assert) {
     await render(hbs`{{polaris-skeleton-page title=title}}`);
 
     // undefined title -> renders large skeleton display text.
@@ -146,7 +146,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       );
   });
 
-  test('it renders breadcrumbs correctly', async function(assert) {
+  test('it renders breadcrumbs correctly', async function (assert) {
     await render(hbs`{{polaris-skeleton-page breadcrumbs=breadcrumbs}}`);
 
     assert
@@ -174,7 +174,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       .exists('breadcrumbs true - renders one skeleton breadcrumb');
   });
 
-  test('it renders primary action correctly', async function(assert) {
+  test('it renders primary action correctly', async function (assert) {
     this.set('primaryAction', false);
 
     await render(hbs`{{polaris-skeleton-page primaryAction=primaryAction}}`);
@@ -191,7 +191,7 @@ module('Integration | Component | polaris skeleton page', function(hooks) {
       .exists('primaryAction true - it renders a primary action');
   });
 
-  test('it renders secondary actions correctly', async function(assert) {
+  test('it renders secondary actions correctly', async function (assert) {
     await render(
       hbs`{{polaris-skeleton-page secondaryActions=secondaryActions}}`
     );

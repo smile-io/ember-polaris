@@ -26,8 +26,8 @@ const widths = {
   extraLarge: 1024,
 };
 
-module('Integration | Component | polaris-drop-zone', function(hooks) {
-  hooks.afterEach(function() {
+module('Integration | Component | polaris-drop-zone', function (hooks) {
+  hooks.afterEach(function () {
     Element.prototype.getBoundingClientRect = origGetBoundingClientRect;
   });
 
@@ -121,7 +121,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     '.Polaris-TextStyle--variationSubdued'
   );
 
-  test('it renders in inline form', async function(assert) {
+  test('it renders in inline form', async function (assert) {
     assert.expect(8);
 
     await render(hbs`{{polaris-drop-zone}}`);
@@ -153,7 +153,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     );
   });
 
-  test('it supports `outline` property', async function(assert) {
+  test('it supports `outline` property', async function (assert) {
     assert.expect(2);
 
     this.set('outline', true);
@@ -170,7 +170,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     );
   });
 
-  test('it supports `disabled` property', async function(assert) {
+  test('it supports `disabled` property', async function (assert) {
     assert.expect(4);
 
     await render(hbs`{{polaris-drop-zone disabled=disabled}}`);
@@ -195,7 +195,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     input.isDisabled('if `disabled` is true, input is disabled');
   });
 
-  test('it supports `accept` property', async function(assert) {
+  test('it supports `accept` property', async function (assert) {
     assert.expect(2);
 
     await render(hbs`{{polaris-drop-zone accept=accept}}`);
@@ -210,7 +210,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     input.hasAttribute('accept', 'image/*', '`accept` attribute properly set');
   });
 
-  test('it supports `error` && `errorOverlayText` properties', async function(assert) {
+  test('it supports `error` && `errorOverlayText` properties', async function (assert) {
     assert.expect(3);
 
     let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -242,7 +242,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       );
   });
 
-  test('it supports `overlayText` property', async function(assert) {
+  test('it supports `overlayText` property', async function (assert) {
     assert.expect(2);
 
     this.set('overlay', true);
@@ -263,7 +263,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       .doesNotExist('dropzone overlay is not rendered when overlay is false');
   });
 
-  test('it handles sizing property based on the parent element', async function(assert) {
+  test('it handles sizing property based on the parent element', async function (assert) {
     await render(hbs`
       <div style={{style}}>
         {{polaris-drop-zone}}
@@ -296,12 +296,12 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
   });
 
-  module('rendering', function(hooks) {
-    hooks.beforeEach(function() {
+  module('rendering', function (hooks) {
+    hooks.beforeEach(function () {
       this.owner.register('component:svg-jar', MockSvgJarComponent);
     });
 
-    test('renders properly during drag events', async function(assert) {
+    test('renders properly during drag events', async function (assert) {
       assert.expect(28);
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -475,13 +475,13 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     /**
      * Testing dropzone when the `size` is `extraLarge`
      */
-    module('when size is extraLarge', function() {
+    module('when size is extraLarge', function () {
       const fileUploadTextSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         '.Polaris-TextStyle--variationSubdued'
       );
 
-      test('it renders properly with FileUpload', async function(assert) {
+      test('it renders properly with FileUpload', async function (assert) {
         assert.expect(12);
 
         await render(hbs`
@@ -555,8 +555,8 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       });
     });
 
-    module('when size is large', function() {
-      test('it renders properly with FileUpload', async function(assert) {
+    module('when size is large', function () {
+      test('it renders properly with FileUpload', async function (assert) {
         assert.expect(14);
 
         this.set('style', htmlSafe(`width: ${largeWidth}px;`));
@@ -641,7 +641,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
       });
 
-      test('renders properly during drag events', async function(assert) {
+      test('renders properly during drag events', async function (assert) {
         assert.expect(4);
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -682,7 +682,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       });
     });
 
-    module('when size is medium', function() {
+    module('when size is medium', function () {
       const fileUploadLinkSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         'button.Polaris-Link'
@@ -692,7 +692,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         '.Polaris-Caption'
       );
 
-      test('it renders properly with FileUpload', async function(assert) {
+      test('it renders properly with FileUpload', async function (assert) {
         assert.expect(8);
 
         this.set('style', htmlSafe(`width: ${mediumWidth}px;`));
@@ -746,7 +746,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
       });
 
-      test('renders properly during drag events', async function(assert) {
+      test('renders properly during drag events', async function (assert) {
         assert.expect(4);
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -787,7 +787,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       });
     });
 
-    module('when size is small', function() {
+    module('when size is small', function () {
       const fileUploadIconSelector = buildNestedSelector(
         fileUploadStackItemSelector,
         '.Polaris-Icon'
@@ -797,7 +797,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         'svg'
       );
 
-      test('it renders properly with FileUpload', async function(assert) {
+      test('it renders properly with FileUpload', async function (assert) {
         assert.expect(8);
 
         this.set('style', htmlSafe(`width: ${smallWidth}px;`));
@@ -849,7 +849,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
           );
       });
 
-      test('renders properly during drag events', async function(assert) {
+      test('renders properly during drag events', async function (assert) {
         assert.expect(4);
 
         let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -887,8 +887,8 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
   /**
    * Event handling & callbacks
    */
-  module('handles drag and drop events', function() {
-    test('it calls onDrop callback when a drop event is fired', async function(assert) {
+  module('handles drag and drop events', function () {
+    test('it calls onDrop callback when a drop event is fired', async function (assert) {
       assert.expect(6);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
@@ -927,7 +927,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'drop', event);
     });
 
-    test('calls the onDrop callback when a drop event is fired on document twice when a duplicate file is added consecutively', async function(assert) {
+    test('calls the onDrop callback when a drop event is fired on document twice when a duplicate file is added consecutively', async function (assert) {
       assert.expect(6);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
@@ -949,7 +949,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.deepEqual(this.get('rejectedFiles'), []);
     });
 
-    test('it calls onDrop callback when a drop event is fired on document', async function(assert) {
+    test('it calls onDrop callback when a drop event is fired on document', async function (assert) {
       assert.expect(9);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
@@ -999,7 +999,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(document, 'drop', event);
     });
 
-    test('calls the onDragEnter callback when a dragEnter event is fired', async function(assert) {
+    test('calls the onDragEnter callback when a dragEnter event is fired', async function (assert) {
       assert.expect(1);
 
       this.set('dragEnter', () => {
@@ -1012,7 +1012,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'dragenter', event);
     });
 
-    test('calls the onDragOver callback when a dragOver event is fired', async function(assert) {
+    test('calls the onDragOver callback when a dragOver event is fired', async function (assert) {
       assert.expect(1);
 
       this.set('dragOver', () => {
@@ -1025,7 +1025,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'dragover', event);
     });
 
-    test('calls the onDragLeave callback when a dragLeave event is fired', async function(assert) {
+    test('calls the onDragLeave callback when a dragLeave event is fired', async function (assert) {
       assert.expect(1);
 
       this.set('dragLeave', () => {
@@ -1038,7 +1038,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'dragleave', event);
     });
 
-    test('it calls onDropAccepted callback correctly when it ony accepts images', async function(assert) {
+    test('it calls onDropAccepted callback correctly when it ony accepts images', async function (assert) {
       assert.expect(1);
 
       this.set('dropAccepted', (acceptedFiles) => {
@@ -1057,7 +1057,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'drop', event);
     });
 
-    test('it calls onDropRejected callback correctly when it ony accepts images', async function(assert) {
+    test('it calls onDropRejected callback correctly when it ony accepts images', async function (assert) {
       assert.expect(1);
 
       this.set('dropRejected', (rejectedFiles) => {
@@ -1076,7 +1076,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'drop', event);
     });
 
-    test('it calls onClick callback', async function(assert) {
+    test('it calls onClick callback', async function (assert) {
       assert.expect(2);
 
       let event = new MockEvent({ dataTransfer: { files: uploadedFiles } });
@@ -1101,7 +1101,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'click', event);
     });
 
-    test('should not call any callback when the dropzone is disabled', async function(assert) {
+    test('should not call any callback when the dropzone is disabled', async function (assert) {
       assert.expect(0);
 
       [
@@ -1137,7 +1137,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'click', event);
     });
 
-    test('does not call callbacks when not allowed multiple and a file is uploaded', async function(assert) {
+    test('does not call callbacks when not allowed multiple and a file is uploaded', async function (assert) {
       let expectedAcceptedFiles = uploadedFiles.slice(0, 1);
       let expectedRejectedFiles = uploadedFiles.slice(1, 3);
 
@@ -1183,7 +1183,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.notOk(this.get('wasCallbackInvoked'));
     });
 
-    test('it supports `customValidator` property', async function(assert) {
+    test('it supports `customValidator` property', async function (assert) {
       assert.expect(3);
 
       this.set('customValidator', (file) => file.type === 'image/jpeg');
@@ -1213,7 +1213,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       await triggerEvent(dropZoneSelector, 'drop', event);
     });
 
-    test('it supports `allowMultiple` property', async function(assert) {
+    test('it supports `allowMultiple` property', async function (assert) {
       assert.expect(4);
 
       this.set('drop', (files, acceptedFiles, rejectedFiles) => {
@@ -1249,7 +1249,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
         );
     });
 
-    test('it supports custom dialog trigger', async function(assert) {
+    test('it supports custom dialog trigger', async function (assert) {
       this.set('openFileDialog', false);
 
       await render(hbs`
@@ -1262,7 +1262,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.notOk(this.get('openFileDialog'));
     });
 
-    test('it supports passing `label` attributes', async function(assert) {
+    test('it supports passing `label` attributes', async function (assert) {
       let actionFired = false;
 
       this.setProperties({
@@ -1292,10 +1292,10 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
   });
 
-  module('overlayText', function() {
+  module('overlayText', function () {
     const overlayText = 'overlay text';
 
-    test('does not render the overlayText on small screens', async function(assert) {
+    test('does not render the overlayText on small screens', async function (assert) {
       this.set('overlayText', overlayText);
       setBoundingClientRect('small');
 
@@ -1310,7 +1310,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').doesNotExist();
     });
 
-    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+    test('renders a Caption containing the overlayText on medium screens', async function (assert) {
       this.set('overlayText', overlayText);
       setBoundingClientRect('medium');
 
@@ -1324,7 +1324,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').hasText(overlayText);
     });
 
-    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+    test('renders a Caption containing the overlayText on large screens', async function (assert) {
       this.set('overlayText', overlayText);
       setBoundingClientRect('large');
 
@@ -1338,7 +1338,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').hasText(overlayText);
     });
 
-    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function (assert) {
       this.set('overlayText', overlayText);
       setBoundingClientRect('extraLarge');
 
@@ -1353,9 +1353,9 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
     });
   });
 
-  module('errorOverlayText ', function() {
+  module('errorOverlayText ', function () {
     const errorOverlayText = "can't drop this";
-    test("doesn't render the overlayText on small screens", async function(assert) {
+    test("doesn't render the overlayText on small screens", async function (assert) {
       this.set('errorOverlayText', errorOverlayText);
       setBoundingClientRect('small');
       await render(hbs`
@@ -1369,7 +1369,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').doesNotExist();
     });
 
-    test('renders a Caption containing the overlayText on medium screens', async function(assert) {
+    test('renders a Caption containing the overlayText on medium screens', async function (assert) {
       this.set('errorOverlayText', errorOverlayText);
       setBoundingClientRect('medium');
       await render(hbs`
@@ -1382,7 +1382,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').hasText(errorOverlayText);
     });
 
-    test('renders a Caption containing the overlayText on large screens', async function(assert) {
+    test('renders a Caption containing the overlayText on large screens', async function (assert) {
       this.set('errorOverlayText', errorOverlayText);
       setBoundingClientRect('large');
       await render(hbs`
@@ -1395,7 +1395,7 @@ module('Integration | Component | polaris-drop-zone', function(hooks) {
       assert.dom('[data-test-caption]').hasText(errorOverlayText);
     });
 
-    test('renders a DisplayText containing the overlayText on extra-large screens', async function(assert) {
+    test('renders a DisplayText containing the overlayText on extra-large screens', async function (assert) {
       this.set('errorOverlayText', errorOverlayText);
       setBoundingClientRect('extraLarge');
       await render(hbs`

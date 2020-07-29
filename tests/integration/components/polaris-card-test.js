@@ -4,10 +4,10 @@ import { render, findAll, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
-module('Integration | Component | polaris card', function(hooks) {
+module('Integration | Component | polaris card', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
@@ -23,7 +23,7 @@ module('Integration | Component | polaris card', function(hooks) {
     'div.Polaris-Card__Section'
   );
 
-  test('it renders the correct HTML', async function(assert) {
+  test('it renders the correct HTML', async function (assert) {
     // Basic usage.
     await render(hbs`
       {{#polaris-card title="This is the card title"}}
@@ -230,7 +230,7 @@ module('Integration | Component | polaris card', function(hooks) {
       );
   });
 
-  test('it supports card title property as a component or a string', async function(assert) {
+  test('it supports card title property as a component or a string', async function (assert) {
     await render(
       hbs` {{polaris-card title=(component "polaris-badge" text="My title")}} `
     );
@@ -251,7 +251,7 @@ module('Integration | Component | polaris card', function(hooks) {
       .hasText('My title', 'renders title as a component');
   });
 
-  test('it handles header actions correctly', async function(assert) {
+  test('it handles header actions correctly', async function (assert) {
     let action1HandlerCalled = false;
     this.actions.action1Handler = () => {
       action1HandlerCalled = true;
@@ -358,7 +358,7 @@ module('Integration | Component | polaris card', function(hooks) {
       );
   });
 
-  test('it allows section header customization', async function(assert) {
+  test('it allows section header customization', async function (assert) {
     await render(hbs`
       {{#polaris-card as |card|}}
         {{#card.section as |cardSection|}}
@@ -410,7 +410,7 @@ module('Integration | Component | polaris card', function(hooks) {
     );
   });
 
-  test('can handle primary & secondary footer actions', async function(assert) {
+  test('can handle primary & secondary footer actions', async function (assert) {
     this.setProperties({
       saveAction: {
         text: 'Save',
