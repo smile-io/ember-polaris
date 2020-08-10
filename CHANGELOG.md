@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [Unreleased](https://github.com/smile-io/ember-polaris/tree/HEAD)
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.0...master)
+
+:house: Internal
+
+- Update dependency eslint to v7 [\#647](https://github.com/smile-io/ember-polaris/pull/647) ([sivakumar-kailasam](https://github.com/sivakumar-kailasam))
+- Update linting tools [\#645](https://github.com/smile-io/ember-polaris/pull/645) ([vladucu](https://github.com/vladucu))
+- Update elliptic [\#644](https://github.com/smile-io/ember-polaris/pull/644) ([vladucu](https://github.com/vladucu))
+- Update code formatting [\#640](https://github.com/smile-io/ember-polaris/pull/640) ([andrewpye](https://github.com/andrewpye))
+
 ## [v6.0.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.0-beta.0...v6.0.0)
