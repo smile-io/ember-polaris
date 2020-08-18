@@ -1,7 +1,7 @@
 <div
   class="{{if this.collapsed "Polaris-DataTable--collapsed"}} {{@class}}"
   {{did-insert this.insertDataTable}}
-  {{did-update this.updateDataTable @footerContent @truncate}}
+  {{did-update this.updateDataTable @footerContent @truncate @rows}}
   ...attributes
 >
   <PolarisDataTable::Navigation

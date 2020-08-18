@@ -349,11 +349,11 @@ export default class PolarisDataTable extends Component.extend(
     this.addEventHandlers();
   }
 
-  // footerContent and truncate are passed in via template
+  // footerContent, truncate, and rows are passed in via template
   // in order to re-trigger the `did-update` modifier to run
   // when these attributes change.
   @action
-  updateDataTable(/**footerContent, truncate */) {
+  updateDataTable(/**footerContent, truncate, rows */) {
     if (isEqual(this.get('oldAttrs'), this.get('attrs'))) {
       return;
     }
