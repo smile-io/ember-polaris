@@ -1,3 +1,4 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -9,7 +10,6 @@ import {
   blur,
   waitUntil,
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';
 import DatePickerComponent from '@smile-io/ember-polaris/components/polaris-date-picker';
 import { setUpAttributeCaptureOnComponent } from '../../../../helpers/component-attribute-capture';

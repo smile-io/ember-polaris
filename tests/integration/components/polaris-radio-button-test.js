@@ -1,8 +1,8 @@
+import { hbs } from 'ember-cli-htmlbars';
 import Component from '@ember/component';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { focus, click, blur, render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 // Mock the polaris-choice component to simplify testing what gets rendered.

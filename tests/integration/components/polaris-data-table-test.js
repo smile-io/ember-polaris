@@ -1,7 +1,7 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll, find } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 
 const sortable = [false, true, false, false, true, false];
 const columnContentTypes = ['text', 'numeric', 'numeric', 'numeric', 'numeric'];
