@@ -9,7 +9,7 @@
     aria-label="Previous"
     type="button"
     disabled={{this.isPreviousDisabled}}
-    {{on "click" (or @onPrevious this.onPrevious)}}
+    {{on "click" @onPrevious}}
     {{on "mouseup" this.handleMouseUpByBlurring}}
   >
     <PolarisIcon @source="arrow-left" />
@@ -21,7 +21,7 @@
     aria-label="Next"
     type="button"
     disabled={{this.isNextDisabled}}
-    {{on "click" (or @onNext this.onNext)}}
+    {{on "click" @onNext}}
     {{on "mouseup" this.handleMouseUpByBlurring}}
   >
     <PolarisIcon @source="arrow-right" />
@@ -29,13 +29,13 @@
 
   {{#if this.isPreviousKeyListenerEnabled}}
     {{#each @previousKeys as |key|}}
-      <KeyEventListener @key={{key}} @onKeyUp={{fn (or @onPrevious this.onPrevious)}} />
+      {{on-key key @onPrevious event="keyup"}}
     {{/each}}
   {{/if}}
 
   {{#if this.isNextKeyListenerEnabled}}
     {{#each @nextKeys as |key|}}
-      <KeyEventListener @key={{key}} @onKeyUp={{fn (or @onNext this.onNext)}} />
+      {{on-key key @onNext event="keyup"}}
     {{/each}}
   {{/if}}
 </nav>
