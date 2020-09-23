@@ -5,21 +5,20 @@ const resolve = require('resolve');
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const BroccoliDebug = require('broccoli-debug');
-const camelCase = require('camelCase');
+const camelCase = require('camelcase');
 
 module.exports = {
   name: require('./package').name,
 
   options: {
     svgJar: {
-      viewer: { enabled: true },
+      viewer: { enabled: process.env.SMILE_DEV },
       strategy: 'inline',
 
       inline: {
         sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
         idGen: (filePath) => camelCase(filePath, { pascalCase: true }),
       },
-      // sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
     },
   },
 
@@ -95,6 +94,6 @@ module.exports = {
   },
 
   isDevelopingAddon() {
-    return true;
+    return process.env.SMILE_DEV;
   },
 };
