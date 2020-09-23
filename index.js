@@ -5,17 +5,21 @@ const resolve = require('resolve');
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const BroccoliDebug = require('broccoli-debug');
+const camelCase = require('camelCase');
 
 module.exports = {
   name: require('./package').name,
 
   options: {
     svgJar: {
-      sourceDirs: [
-        'public',
-        'tests/dummy/public/assets/images/svg',
-        'node_modules/@smile-io/ember-polaris/public',
-      ],
+      viewer: { enabled: true },
+      strategy: 'inline',
+
+      inline: {
+        sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
+        idGen: (filePath) => camelCase(filePath, { pascalCase: true }),
+      },
+      // sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
     },
   },
 
@@ -40,7 +44,7 @@ module.exports = {
 
     let packageRoot = path.dirname(
       resolve.sync('@shopify/polaris/package.json', {
-        basedir: this.app.project.root,
+        basedir: __dirname,
       })
     );
     let stylesPath = path.join.apply(path, [packageRoot, 'dist', 'styles']);
@@ -72,7 +76,7 @@ module.exports = {
 
     let packageRoot = path.dirname(
       resolve.sync('@shopify/polaris/package.json', {
-        basedir: this.app.project.root,
+        basedir: __dirname,
       })
     );
     let stylesPath = path.join.apply(path, [packageRoot, 'dist']);
@@ -91,6 +95,6 @@ module.exports = {
   },
 
   isDevelopingAddon() {
-    return process.env.SMILE_DEV;
+    return true;
   },
 };
