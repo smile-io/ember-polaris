@@ -1,3 +1,4 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -7,7 +8,6 @@ import {
   findAll,
   triggerEvent,
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import FilterValueSelectorComponent, {
   FilterType,
 } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';

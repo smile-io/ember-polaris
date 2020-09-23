@@ -1,3 +1,4 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -7,7 +8,6 @@ import {
   blur,
   triggerKeyEvent,
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 module('Integration | Component | polaris-button', function (hooks) {

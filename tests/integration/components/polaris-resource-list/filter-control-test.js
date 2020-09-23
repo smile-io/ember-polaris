@@ -1,3 +1,4 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -9,7 +10,6 @@ import {
   focus,
   blur,
 } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import FilterCreatorComponent from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-creator';
 import { FilterType } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/filter-value-selector';
 import { DateFilterOption } from '@smile-io/ember-polaris/components/polaris-resource-list/filter-control/date-selector';

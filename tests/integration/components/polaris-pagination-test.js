@@ -1,7 +1,7 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import { initialize } from 'ember-keyboard';
 import { keyUp } from 'ember-keyboard/test-support/test-helpers';
 import MockSvgJarComponent from '../../mocks/components/svg-jar';

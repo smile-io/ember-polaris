@@ -1,8 +1,8 @@
+import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, triggerEvent, fillIn } from '@ember/test-helpers';
 import Component from '@ember/component';
-import hbs from 'htmlbars-inline-precompile';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 module('Integration | Component | polaris-range-slider', function (hooks) {
