@@ -1,109 +1,122 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { classify } from '@ember/string';
-import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import layout from '../templates/components/polaris-icon';
-import SvgHandling from '../mixins/components/svg-handling';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-// TODO: look into importing icons properly.
-@deprecateClassArgument
-@tagName('')
-@templateLayout(layout)
-export default class PolarisIcon extends Component.extend(SvgHandling) {
+const COLORS_WITH_BACKDROPS = [
+  'blueDark',
+  'teal',
+  'tealDark',
+  'greenDark',
+  'redDark',
+  'yellowDark',
+  'ink',
+  'inkLighter',
+];
+
+export default class PolarisIconComponent extends Component {
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris
    * icons in the namespace specified by `sourcePath` property.
    *
    * @type {String}
-   * @default null
    * @public
    */
-  source = null;
+  source;
 
   /**
    * Sets the color for the SVG fill
    *
    * @type {String}
-   * @default null
    * @public
    */
-  color = null;
+  color;
 
   /**
    * Show a backdrop behind the icon
    *
    * @type {Boolean}
-   * @default false
    * @public
    */
-  backdrop = false;
+  backdrop;
 
   /**
    * Descriptive text to be read to screenreaders
    *
    * @type {String}
-   * @default null
    * @public
    */
-  accessibilityLabel = null;
-
-  /**
-   * Path under which `ember-svg-jar` serves the Polaris SVG icons
-   *
-   * @type {String}
-   * @default 'polaris'
-   * @public
-   */
-  sourcePath = 'polaris';
-
-  /**
-   * Whether the component should leave space for an icon
-   *
-   * @type {Boolean}
-   */
-  @equal('source', 'placeholder')
-  showPlaceholder;
+  accessibilityLabel;
 
   /**
    * Whether a color has been specified for the icon
    *
    * @type {Boolean}
    */
-  @computed('color')
   get isColored() {
-    return this.color && this.color !== 'white';
+    return Boolean(this.args.color && this.args.color !== 'white');
   }
 
-  /**
-   * Final source for the icon SVG
-   *
-   * @type {String}
-   */
-  @computed('sourcePath', 'source')
-  get iconSource() {
-    let { source } = this;
-    return source.indexOf('/') === -1 ? `${this.sourcePath}/${source}` : source;
-  }
-
-  @computed('color', 'isColored', 'backdrop', 'class')
   get cssClasses() {
     let cssClasses = ['Polaris-Icon'];
-    if (this.color) {
-      cssClasses.push(`Polaris-Icon--color${classify(this.color)}`);
+
+    if (this.args.color) {
+      cssClasses.push(`Polaris-Icon--color${classify(this.args.color)}`);
     }
     if (this.isColored) {
       cssClasses.push('Polaris-Icon--isColored');
     }
-    if (this.backdrop) {
+    if (this.args.backdrop) {
       cssClasses.push('Polaris-Icon--hasBackdrop');
     }
-    if (this.class) {
-      cssClasses.push(this.class);
-    }
+    // TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles
 
     return cssClasses.join(' ');
+  }
+
+  get sourceType() {
+    const { source } = this.args;
+    let sourceType;
+
+    if (source === 'placeholder') {
+      sourceType = 'placeholder';
+    } else if (typeof source === 'string') {
+      // When a string, we assume this is an SVG ID recognized by `ember-svg-jar`
+      sourceType = 'svg';
+    } else {
+      sourceType = 'external';
+    }
+
+    return sourceType;
+  }
+
+  @action
+  validateArgs() {
+    const { color, backdrop } = this.args;
+
+    if (color && backdrop && !COLORS_WITH_BACKDROPS.includes(color)) {
+      const colorsWithBackDrops = COLORS_WITH_BACKDROPS.join(', ');
+      console.warn(
+        `[PolarisIcon] The ${color} icon doesn’t accept backdrops. The icon colors that have backdrops are: ${colorsWithBackDrops}`
+      );
+    }
+
+    // TODO #polaris-v5-newDesignLanguage
+    // if (color && !newDesignLanguage && isNewDesignLanguageColor(color)) {
+    //   console.warn(
+    //     '[PolarisIcon] You have selected a color meant to be used in the new design language but new design language is not enabled.'
+    //   );
+    // }
+
+    // if (
+    //   color &&
+    //   this.sourceType === 'external' &&
+    //   newDesignLanguage === true &&
+    //   isNewDesignLanguageColor(color)
+    // ) {
+    //   console.warn(
+    //     '[PolarisIcon] Recoloring external SVGs is not supported with colors in the new design language. Set the intended color on your SVG instead.'
+    //   );
+    // }
   }
 }
