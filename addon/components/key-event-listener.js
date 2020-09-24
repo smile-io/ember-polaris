@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { assert } from '@ember/debug';
+import { assert, deprecate } from '@ember/debug';
 import { isPresent } from '@ember/utils';
 import {
   EKMixin,
@@ -61,6 +61,16 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
 
   init() {
     this._super(...arguments);
+
+    deprecate(
+      `[KeyEventListener] This component is deprecated! Please use ember-keyboard modifiers instead!`,
+      false,
+      {
+        id: 'ember-polaris.key-event-listener',
+        until: '7.0.0',
+      }
+    );
+
     assert(
       'ember-polaris::key-event-listener `key` should be passed',
       isPresent(this.key)

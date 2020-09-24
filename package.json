@@ -66,7 +66,7 @@
     "ember-element-helper": "^0.3.1",
     "ember-event-helpers": "^0.1.0",
     "ember-invoke-action": "^1.5.1",
-    "ember-keyboard": "^5.0.0",
+    "ember-keyboard": "^6.0.1",
     "ember-lifeline": "^4.1.5",
     "ember-render-detector": "^1.0.0",
     "ember-svg-jar": "^2.2.3",

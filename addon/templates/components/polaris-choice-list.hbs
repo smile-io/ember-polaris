@@ -15,7 +15,7 @@
   <ul data-test-choice-list-choices class="Polaris-ChoiceList__Choices">
     {{#each this.checkedChoices as |choice|}}
       <li data-test-choice-list-item>
-        {{#let this.controlComponent as |Control|}}
+        {{#let (component this.controlComponent) as |Control|}}
           <Control
             @label={{choice.label}}
             @value={{choice.value}}
