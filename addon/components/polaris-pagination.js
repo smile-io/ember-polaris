@@ -91,17 +91,19 @@ export default class PolarisPagination extends Component {
    * Callback when next button is clicked
    *
    * @type {function}
+   * @default no-op
    * @public
    */
-  onNext;
+  onNext() {}
 
   /**
    * Callback when previous button is clicked
    *
    * @type {function}
+   * @default no-op
    * @public
    */
-  onPrevious;
+  onPrevious() {}
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 

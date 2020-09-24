@@ -9,7 +9,7 @@
     aria-label="Previous"
     type="button"
     disabled={{this.isPreviousDisabled}}
-    {{on "click" @onPrevious}}
+    {{on "click" (or @onPrevious this.onPrevious)}}
     {{on "mouseup" this.handleMouseUpByBlurring}}
   >
     <PolarisIcon @source="arrow-left" />
@@ -21,7 +21,7 @@
     aria-label="Next"
     type="button"
     disabled={{this.isNextDisabled}}
-    {{on "click" @onNext}}
+    {{on "click" (or @onNext this.onNext)}}
     {{on "mouseup" this.handleMouseUpByBlurring}}
   >
     <PolarisIcon @source="arrow-right" />
