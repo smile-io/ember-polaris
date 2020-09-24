@@ -48,11 +48,6 @@ export default class PolarisIconComponent extends Component {
    */
   accessibilityLabel;
 
-  /**
-   * Whether a color has been specified for the icon
-   *
-   * @type {Boolean}
-   */
   get isColored() {
     return Boolean(this.args.color && this.args.color !== 'white');
   }
@@ -80,8 +75,8 @@ export default class PolarisIconComponent extends Component {
 
     if (source === 'placeholder') {
       sourceType = 'placeholder';
-    } else if (typeof source === 'string') {
-      // When a string, we assume this is an SVG ID recognized by `ember-svg-jar`
+    } else if (typeof source === 'string' && source.indexOf('svg') === -1) {
+      // When a string without svg tag, we assume this is an SVG ID recognized by `ember-svg-jar`
       sourceType = 'svg';
     } else {
       sourceType = 'external';
