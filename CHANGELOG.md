@@ -1,15 +1,41 @@
 # Changelog
 
+## [v6.1.0](https://github.com/smile-io/ember-polaris/tree/v6.1.0) (September 24, 2020)
 
-## [Unreleased](https://github.com/smile-io/ember-polaris/tree/HEAD)
-[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.0...master)
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.1...v6.1.0)
 
 :house: Internal
 
-- Update dependency eslint to v7 [\#647](https://github.com/smile-io/ember-polaris/pull/647) ([sivakumar-kailasam](https://github.com/sivakumar-kailasam))
-- Update linting tools [\#645](https://github.com/smile-io/ember-polaris/pull/645) ([vladucu](https://github.com/vladucu))
-- Update elliptic [\#644](https://github.com/smile-io/ember-polaris/pull/644) ([vladucu](https://github.com/vladucu))
-- Update code formatting [\#640](https://github.com/smile-io/ember-polaris/pull/640) ([andrewpye](https://github.com/andrewpye))
+- Upgrade ember-keyboard to v6 [\#655](https://github.com/smile-io/ember-polaris/pull/655) ([vladucu](https://github.com/vladucu))
+- Use ember-cli-htmlbars in tests [\#654](https://github.com/smile-io/ember-polaris/pull/654) ([vladucu](https://github.com/vladucu))
+- Update Ember dependencies [\#652](https://github.com/smile-io/ember-polaris/pull/652) ([renovate[bot]](https://github.com/apps/renovate))
+- Update Node.js to v12.18.3 [\#651](https://github.com/smile-io/ember-polaris/pull/651) ([renovate[bot]](https://github.com/apps/renovate))
+- Update linting tools [\#650](https://github.com/smile-io/ember-polaris/pull/650) ([renovate[bot]](https://github.com/apps/renovate))
+
+**Merged pull requests:**
+
+- Bump node-fetch from 2.6.0 to 2.6.1 [\#653](https://github.com/smile-io/ember-polaris/pull/653) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v6.0.1](https://github.com/smile-io/ember-polaris/tree/v6.0.1) (August 19, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.0...v6.0.1)
+
+:bug: Bug Fix
+
+- Pass rows attribute to did-update modifier in PolarisDataTable [\#649](https://github.com/smile-io/ember-polaris/pull/649) ([tomnez](https://github.com/tomnez))
+
+:house: Internal
+
+- Update Ember dependencies [\#648](https://github.com/smile-io/ember-polaris/pull/648) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency ember-source-channel-url to v3 [\#647](https://github.com/smile-io/ember-polaris/pull/647) ([renovate[bot]](https://github.com/apps/renovate))
+- Update linting tools [\#645](https://github.com/smile-io/ember-polaris/pull/645) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency eslint to v7 [\#643](https://github.com/smile-io/ember-polaris/pull/643) ([renovate[bot]](https://github.com/apps/renovate))
+- Update code formatting \(major\) [\#640](https://github.com/smile-io/ember-polaris/pull/640) ([renovate[bot]](https://github.com/apps/renovate))
+
+**Merged pull requests:**
+
+- Bump elliptic from 6.5.2 to 6.5.3 [\#644](https://github.com/smile-io/ember-polaris/pull/644) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 
 ## [v6.0.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0)
 
@@ -18,7 +44,6 @@
 :bug: Bugfixes
 
 - Fix yielded `section` on sectioned `PolarisCard` [\#642](https://github.com/smile-io/ember-polaris/pull/642) ([andrewpye](https://github.com/andrewpye))
-
 
 
 ## [v6.0.0-beta.0](https://github.com/smile-io/ember-polaris/tree/v6.0.0-beta.0)
