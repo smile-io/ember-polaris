@@ -30,3 +30,6 @@ jsconfig.json
 .vscode
 
 .eslintcache
+
+# Ignore Broccoli debug output
+/DEBUG/

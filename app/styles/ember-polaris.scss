@@ -1,3 +1,4 @@
-@import './ember-polaris/styles';
+// TODO make this optional
+@import './ember-polaris/public-api';
 
 @import 'components/polaris-popover';
