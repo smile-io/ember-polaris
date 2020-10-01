@@ -6,7 +6,7 @@
 
 <!-- TODO #polaris-v5 consider adding a codemod to migrate consuming apps -->
 Working with Polaris icons has been simplified and icons are now automatically included in the consuming app.
-There is a breaking change in that, following [polaris-react](https://github.com/Shopify/polaris-react), the icons are PascalCased.
+There is a breaking change in that, following [polaris-react](https://github.com/Shopify/polaris-react), the icon changed are now PascalCased.
 
 ```hbs
 // Old
