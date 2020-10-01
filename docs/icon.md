@@ -2,22 +2,18 @@
 
 ## Icon
 
-`polaris-icon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
-
-**NOTE:** The icon component uses [`ember-svg-jar`](https://github.com/ivanvotti/ember-svg-jar/)
-to render the SVG icons. You will have to make sure that you copy the icons into your public folder and
-configure `ember-svg-jar` to serve them from `polaris` namespace.
+`PolarisIcon` implements the [Polaris Icon component](https://polaris.shopify.com/components/images-and-icons/icon).
 
 ### Examples
 
 Basic usage:
 
 ```hbs
-{{polaris-icon source="notes"}}
+<PolarisIcon @source="Notes" />
 ```
 
 Customizing with color and backdrop:
 
 ```hbs
-{{polaris-icon source="add" color="darkTeal" backdrop=true}}
+<PolarisIcon @source="AddMinor" @color="tealDark" @backdrop={{true}} />
 ```
