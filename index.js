@@ -14,6 +14,8 @@ module.exports = {
     svgJar: {
       viewer: { enabled: process.env.SMILE_DEV },
       strategy: 'inline',
+      // All the icons are already optimized
+      optimizer: false,
 
       inline: {
         sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
