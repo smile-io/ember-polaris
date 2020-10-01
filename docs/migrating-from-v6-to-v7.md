@@ -9,10 +9,10 @@ Working with Polaris icons has been simplified and icons are now automatically i
 There are now more Polaris icons and are PascalCased to be consistent with polaris-react.
 
 ```hbs
-// Old
+<!-- Old -->
 <PolarisIcon @source="notes" />
 
-// New
+<!-- New -->
 <PolarisIcon @source="Notes" />
 ```
 
