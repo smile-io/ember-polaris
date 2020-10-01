@@ -6,7 +6,7 @@
 
 <!-- TODO #polaris-v5 consider adding a codemod to migrate consuming apps -->
 Working with Polaris icons has been simplified and icons are now automatically included in the consuming app.
-There is a breaking change in that, following [polaris-react](https://github.com/Shopify/polaris-react), the icon changed are now PascalCased.
+There are now more Polaris icons and are PascalCased to be consistent with polaris-react.
 
 ```hbs
 // Old
@@ -16,4 +16,6 @@ There is a breaking change in that, following [polaris-react](https://github.com
 <PolarisIcon @source="Notes" />
 ```
 
-**NOTE** `PolarisIcon` component leverages [ember-svg-jar](https://github.com/ivanvotti/ember-svg-jar) under the hood, which means consuming apps can add other SVG assets to svg-jar which should be usable directly with this component.
+**NOTE**
+1. `PolarisIcon` component leverages [ember-svg-jar](https://github.com/ivanvotti/ember-svg-jar) under the hood, which means consuming apps can add other SVG assets to svg-jar which should be usable directly with this component.
+2. Since consuming apps were manually setting up Polaris icons before, all icons should still render properly if they were correctly set up as documented through `ember-svg-jar`.
