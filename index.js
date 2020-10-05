@@ -5,7 +5,6 @@ const resolve = require('resolve');
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const BroccoliDebug = require('broccoli-debug');
-const camelCase = require('camelcase');
 
 module.exports = {
   name: require('./package').name,
@@ -18,8 +17,7 @@ module.exports = {
       optimizer: false,
 
       inline: {
-        sourceDirs: ['node_modules/@shopify/polaris-icons/images'],
-        idGen: (filePath) => camelCase(filePath, { pascalCase: true }),
+        sourceDirs: ['node_modules/@shopify/polaris-icons/dist/svg'],
       },
     },
   },
