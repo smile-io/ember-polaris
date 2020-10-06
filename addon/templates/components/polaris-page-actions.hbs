@@ -12,7 +12,7 @@
             @loading={{secondaryAction.loading}}
             @destructive={{secondaryAction.destructive}}
             @icon={{secondaryAction.icon}}
-            @onClick={{fn this.fireAction secondaryAction}}
+            @onClick={{secondaryAction.onAction}}
           />
         {{/each}}
       </PolarisButtonGroup>
@@ -24,7 +24,7 @@
         @disabled={{@primaryAction.disabled}}
         @loading={{@primaryAction.loading}}
         @text={{@primaryAction.text}}
-        @onClick={{fn this.fireAction @primaryAction}}
+        @onClick={{@primaryAction.onAction}}
       />
     {{/if}}
   </PolarisStack>
