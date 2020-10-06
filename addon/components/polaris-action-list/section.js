@@ -43,11 +43,7 @@ export default class PolarisActionListSection extends Component {
     event.preventDefault();
     event.stopPropagation();
 
-    if (item.onAction) {
-      item.onAction();
-    }
-    if (this.onActionAnyItem) {
-      this.onActionAnyItem();
-    }
+    item.onAction?.();
+    this.onActionAnyItem?.();
   }
 }
