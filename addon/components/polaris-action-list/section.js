@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { invokeAction } from 'ember-invoke-action';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-action-list/section';
 
@@ -40,11 +39,11 @@ export default class PolarisActionListSection extends Component {
   }
 
   @action
-  onItemAction(item, event) {
+  handleAction(item, event) {
     event.preventDefault();
     event.stopPropagation();
 
-    invokeAction(item, 'onAction');
-    invokeAction(this, 'onActionAnyItem');
+    item.onAction?.();
+    this.onActionAnyItem?.();
   }
 }

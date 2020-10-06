@@ -1,9 +1,7 @@
 import Component from '@ember/component';
-import { action } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-setting-toggle';
 
 /**
@@ -57,10 +55,5 @@ export default class PolarisSettingToggle extends Component {
         until: '7.0.0',
       }
     );
-  }
-
-  @action
-  fireAction(primaryAction) {
-    invokeAction(primaryAction, 'onAction');
   }
 }

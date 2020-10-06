@@ -6,7 +6,6 @@ import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
-import { invokeAction } from 'ember-invoke-action';
 import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
@@ -210,7 +209,7 @@ export default class PolarisBanner extends Component {
       event.stopPropagation();
     }
 
-    return invokeAction(this, actionObj.onAction);
+    return this.actionObj?.onAction();
   }
 
   @action
