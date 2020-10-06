@@ -6644,13 +6644,6 @@ ember-export-application-global@2.0.1:
   resolved "https://registry.yarnpkg.com/ember-export-application-global/-/ember-export-application-global-2.0.1.tgz#b120a70e322ab208defc9e2daebe8d0dfc2dcd46"
   integrity sha512-B7wiurPgsxsSGzJuPFkpBWnaeuCu2PGpG2BjyrfA1VcL7//o+5RSnZqiCEY326y7qmxb2GoCgo0ft03KBU0rRw==
 
-ember-invoke-action@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/ember-invoke-action/-/ember-invoke-action-1.5.1.tgz#b6cad51ee729fc227cdbdba83b2b5486f0fa5834"
-  integrity sha512-co6Yg9r5qtK4LvZTZHk+u02YLPbnM2c5ZkXvundxEj3V7qdZg7RULfjU09LmohD+rxW5ADZlwgBi/32XIEWTlw==
-  dependencies:
-    ember-cli-babel "^6.6.0"
-
 ember-keyboard@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-6.0.1.tgz#2e806c92f36ec9a8a85064ca246e23eb11245dae"
