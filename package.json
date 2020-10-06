@@ -1,6 +1,6 @@
 {
   "name": "@smile-io/ember-polaris",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "Ember components for Shopify's Polaris design system.",
   "keywords": [
     "component library",
@@ -66,7 +66,6 @@
     "ember-decorators": "^6.1.1",
     "ember-element-helper": "^0.3.1",
     "ember-event-helpers": "^0.1.0",
-    "ember-invoke-action": "^1.5.1",
     "ember-keyboard": "^6.0.1",
     "ember-lifeline": "^4.1.5",
     "ember-render-detector": "^1.0.0",
@@ -78,7 +77,6 @@
     "rsvp": "^4.8.5"
   },
   "devDependencies": {
-    "@ember/jquery": "1.1.0",
     "@ember/optional-features": "2.0.0",
     "@glimmer/component": "1.0.1",
     "@glimmer/tracking": "1.0.1",

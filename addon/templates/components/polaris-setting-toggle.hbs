@@ -15,7 +15,7 @@
           @disabled={{this.mainAction.disabled}}
           @loading={{this.mainAction.loading}}
           @primary={{@enabled}}
-          @onClick={{fn this.fireAction this.mainAction}}
+          @onClick={{this.mainAction.onAction}}
         />
       {{/if}}
     </div>

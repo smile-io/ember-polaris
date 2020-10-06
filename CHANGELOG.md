@@ -1,5 +1,14 @@
 # Changelog
 
+## [v6.1.1](https://github.com/smile-io/ember-polaris/tree/v6.1.1) (October 6, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.0...v6.1.1)
+
+:house: Internal
+
+- Drop ember-invoke-action dependency [\#659](https://github.com/smile-io/ember-polaris/pull/659) ([vladucu](https://github.com/vladucu))
+- Remove jquery dependency [\#658](https://github.com/smile-io/ember-polaris/pull/658) ([vladucu](https://github.com/vladucu))
+
 ## [v6.1.0](https://github.com/smile-io/ember-polaris/tree/v6.1.0) (September 24, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.0.1...v6.1.0)

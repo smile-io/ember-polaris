@@ -1,8 +1,7 @@
 import Component from '@ember/component';
-import { action, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { invokeAction } from 'ember-invoke-action';
 import layout from '../templates/components/polaris-page-actions';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
@@ -35,10 +34,5 @@ export default class PolarisPageActions extends Component {
   @(computed('secondaryActions').readOnly())
   get showSecondaryActions() {
     return isArray(this.secondaryActions);
-  }
-
-  @action
-  fireAction(act) {
-    invokeAction(act, 'onAction');
   }
 }
