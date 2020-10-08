@@ -49,16 +49,12 @@ module('Integration | Component | polaris action list', function (hooks) {
 
   test('it renders the correct HTML in basic usage', async function (assert) {
     await render(hbs`
-      {{polaris-action-list
-        items=(array
-          (hash
-            text="This is the first item"
-          )
-          (hash
-            text="This is item number two"
-          )
-        )
-      }}
+      <PolarisActionList
+        @items={{array
+          (hash text="This is the first item")
+          (hash text="This is item number two")
+        }}
+      />
     `);
 
     const actionLists = findAll(actionListSelector);
@@ -82,18 +78,12 @@ module('Integration | Component | polaris action list', function (hooks) {
 
   test('it renders the correct HTML when using icons', async function (assert) {
     await render(hbs`
-      {{polaris-action-list
-        items=(array
-          (hash
-            text="Import some things"
-            icon="ImportMinor"
-          )
-          (hash
-            text="Export stuff"
-            icon="ExportMinor"
-          )
-        )
-      }}
+      <PolarisActionList
+        @items={{array
+          (hash text="Import some things" icon="ImportMinor")
+          (hash text="Export stuff" icon="ExportMinor")
+        }}
+      />
     `);
 
     const actionLists = findAll(actionListSelector);
@@ -164,18 +154,12 @@ module('Integration | Component | polaris action list', function (hooks) {
     this.set('action2Fired', false);
 
     await render(hbs`
-      {{polaris-action-list
-        items=(array
-          (hash
-            text="Item 1"
-            onAction=(action action1)
-          )
-          (hash
-            text="Item 2"
-            onAction=(action (mut action2Fired) true)
-          )
-        )
+      <PolarisActionList
+        @items={{array
+          (hash text="Item 1" onAction=(action action1))
+          (hash text="Item 2" onAction=(action (mut action2Fired) true))
       }}
+      />
     `);
 
     const actionLists = findAll(actionListSelector);
@@ -206,18 +190,12 @@ module('Integration | Component | polaris action list', function (hooks) {
     await render(hbs`
       {{!-- template-lint-disable no-invalid-interactive --}}
       <div {{action (action (mut parentActionFired) true)}}>
-        {{polaris-action-list
-          items=(array
-            (hash
-              text="Item 1"
-              onAction=(action (mut action2Fired) true)
-            )
-            (hash
-              text="Item 2"
-              onAction=(action (mut action2Fired) true)
-            )
-          )
+        <PolarisActionList
+          @items={{array
+            (hash text="Item 1" onAction=(action (mut action2Fired) true))
+            (hash text="Item 2" onAction=(action (mut action2Fired) true))
         }}
+        />
       </div>
     `);
 
@@ -249,18 +227,13 @@ module('Integration | Component | polaris action list', function (hooks) {
     });
 
     await render(hbs`
-      {{polaris-action-list
-        items=(array
-          (hash
-            text="Item 1"
-          )
-          (hash
-            text="Item 2"
-            onAction=(action (mut itemActionFired) true)
-          )
-        )
-        onActionAnyItem=(action anyItem)
-      }}
+      <PolarisActionList
+        @items={{array
+          (hash text="Item 1")
+          (hash text="Item 2" onAction=(action (mut itemActionFired) true))
+        }}
+        @onActionAnyItem={{action anyItem}}
+      />
     `);
 
     const itemButtons = findAll('li button');
@@ -312,10 +285,7 @@ module('Integration | Component | polaris action list', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-action-list
-        items=items
-        sections=sections
-      }}
+      <PolarisActionList @items={{items}} @sections={{sections}} />
     `);
 
     const actionLists = findAll(sectionedActionListSelector);
@@ -437,14 +407,9 @@ module('Integration | Component | polaris action list', function (hooks) {
 
     await render(hbs`
       <form onsubmit={{action (mut formSubmitted) true}}>
-        {{polaris-action-list
-          items=(array
-            (hash
-              text="Click me"
-              onAction=(action (mut nestedActionFired) true)
-            )
-          )
-        }}
+        <PolarisActionList
+          @items={{array (hash text="Click me" onAction=(action (mut nestedActionFired) true))}}
+        />
       </form>
     `);
 
@@ -455,14 +420,7 @@ module('Integration | Component | polaris action list', function (hooks) {
 
   test('renders helpText when the helpText prop is defined', async function (assert) {
     await render(hbs`
-      {{polaris-action-list
-        items=(array
-          (hash
-            text="I'm helpful"
-            helpText="Yay I'm helping!"
-          )
-        )
-      }}
+      <PolarisActionList @items={{array (hash text="I'm helpful" helpText="Yay I'm helping!")}} />
     `);
 
     assert

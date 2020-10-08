@@ -1,8 +1,6 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action, computed } from '@ember/object';
-import { tagName } from '@ember-decorators/component';
 
-@tagName('')
 export default class PolarisActionListSection extends Component {
   /**
    * Collection of action items

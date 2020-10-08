@@ -1,9 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { tagName } from '@ember-decorators/component';
 
-@tagName('')
 export default class PolarisActionListItem extends Component {
   /**
    * @type {String}
