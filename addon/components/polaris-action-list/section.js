@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../../templates/components/polaris-action-list/section';
+import { tagName } from '@ember-decorators/component';
 
 @tagName('')
-@layout(template)
 export default class PolarisActionListSection extends Component {
   /**
    * Collection of action items

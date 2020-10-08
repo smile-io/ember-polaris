@@ -1,11 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../../templates/components/polaris-action-list/item';
+import { tagName } from '@ember-decorators/component';
 
 @tagName('')
-@layout(template)
 export default class PolarisActionListItem extends Component {
   /**
    * @type {String}

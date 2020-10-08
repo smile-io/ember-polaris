@@ -4,15 +4,13 @@ import { gt } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { isArray } from '@ember/array';
 import { assert } from '@ember/debug';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-action-list';
+import { tagName } from '@ember-decorators/component';
 
 /**
  * Polaris action list component.
  * See https://polaris.shopify.com/components/actions/action-list
  */
 @tagName('')
-@layout(template)
 export default class PolarisActionList extends Component {
   /**
    * Collection of actions for list
