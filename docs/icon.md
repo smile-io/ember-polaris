@@ -9,7 +9,7 @@
 Basic usage:
 
 ```hbs
-<PolarisIcon @source="Notes" />
+<PolarisIcon @source="NotesMajor" />
 ```
 
 Customizing with color and backdrop:

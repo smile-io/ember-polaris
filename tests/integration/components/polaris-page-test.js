@@ -4,7 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import stubRouting from '../../helpers/stub-routing';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 const availableRoutes = ['home', 'home.the-beginning'];
 
@@ -28,7 +28,6 @@ module('Integration | Component | polaris page', function (hooks) {
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
 
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
     stubRouting(this.owner, availableRoutes);
   });
 
@@ -326,12 +325,12 @@ module('Integration | Component | polaris page', function (hooks) {
         secondaryActions=(array
           (hash
             text="First secondary action"
-            icon="add"
+            icon="AddMajor"
             onAction=(action (mut dummy))
           )
           (hash
             text="Second secondary action"
-            icon="cancel"
+            icon="CancelSmallMinor"
             onAction=(action (mut dummy))
           )
         )
@@ -351,26 +350,25 @@ module('Integration | Component | polaris page', function (hooks) {
     const secondaryActionIconSelector = buildNestedSelector(
       secondaryActionsSelector,
       'span.Polaris-Header-Action__ActionIcon',
-      'span.Polaris-Icon',
-      'svg'
+      'span.Polaris-Icon'
     );
-    assert.dom(secondaryActionIconSelector).exists({
-      count: 2,
-    });
+    assert.dom(secondaryActionIconSelector).exists(
+      {
+        count: 2,
+      },
+      'renders all secondary action icons'
+    );
 
-    // TODO: target these using selectors so we can use qunit-dom assertions here.
-    // const secondaryActionIcons = findAll(secondaryActionIconSelector);
-    // TODO #polaris-v5 fix icon tests
-    // assert.equal(
-    //   secondaryActionIcons[0].dataset.iconSource,
-    //   'polaris/add',
-    //   'first secondary action icon - renders the correct icon'
-    // );
-    // assert.equal(
-    //   secondaryActionIcons[1].dataset.iconSource,
-    //   'polaris/cancel',
-    //   'second secondary action icon - renders the correct icon'
-    // );
+    const secondaryActionIcons = findAll(secondaryActionIconSelector);
+    assert.ok(
+      matchesIcon(secondaryActionIcons[0], 'AddMajor'),
+      'first secondary action icon - renders the correct icon'
+    );
+    // await this.pauseTest();
+    assert.ok(
+      matchesIcon(secondaryActionIcons[1], 'CancelSmallMinor'),
+      'second secondary action icon - renders the correct icon'
+    );
   });
 
   test('it handles breadcrumbs correctly', async function (assert) {

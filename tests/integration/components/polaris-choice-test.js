@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 // A simple component to test rendering of label components.
 const TestLabelComponent = Component.extend({
@@ -20,7 +19,6 @@ module('Integration | Component | polaris choice', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
     this.owner.register('component:test-label', TestLabelComponent);
   });
 
@@ -65,13 +63,6 @@ module('Integration | Component | polaris choice', function (hooks) {
   const errorSelector = buildNestedSelector(
     descriptionSelector,
     'div.Polaris-Choice__Error'
-  );
-  const errorIconSelector = buildNestedSelector(
-    errorSelector,
-    'div.Polaris-InlineError',
-    'div.Polaris-InlineError__Icon',
-    'span.Polaris-Icon',
-    'svg'
   );
 
   const labelComponentSelector = buildNestedSelector(
@@ -209,15 +200,6 @@ module('Integration | Component | polaris choice', function (hooks) {
       'This is an error message',
       'renders the correct error text'
     );
-
-    const errorIcons = assert.dom(errorIconSelector);
-    errorIcons.exists({ count: 1 }, 'renders one error icon');
-    // TODO #polaris-v5 fix icon tests
-    // errorIcons.hasAttribute(
-    //   'data-icon-source',
-    //   'polaris/alert',
-    //   'renders the correct error icon'
-    // );
   });
 
   test('it handles the labelHidden attribute correctly', async function (assert) {

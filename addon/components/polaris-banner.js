@@ -10,27 +10,25 @@ import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-// TODO icon-update: use new icon names here when @shopify/polaris-icons
-// is consumable by Ember apps.
 const bannerIcons = {
   success: {
-    iconName: 'circle-check-mark',
+    iconName: 'CircleTickMajor',
     color: 'greenDark',
   },
   info: {
-    iconName: 'circle-information',
+    iconName: 'CircleInformationMajor',
     color: 'tealDark',
   },
   warning: {
-    iconName: 'circle-alert',
+    iconName: 'CircleAlertMajor',
     color: 'yellowDark',
   },
   critical: {
-    iconName: 'circle-barred',
+    iconName: 'CircleDisabledMajor',
     color: 'redDark',
   },
   default: {
-    iconName: 'flag',
+    iconName: 'FlagMajor',
     color: 'inkLighter',
   },
 };

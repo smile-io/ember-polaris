@@ -13,7 +13,7 @@ There are now more Polaris icons and are PascalCased to be consistent with polar
 <PolarisIcon @source="notes" />
 
 <!-- New -->
-<PolarisIcon @source="Notes" />
+<PolarisIcon @source="NotesMajor" />
 ```
 
 **NOTE**

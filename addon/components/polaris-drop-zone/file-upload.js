@@ -6,7 +6,7 @@ import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-drop-zone/file-upload';
 import deprecateClassArgument from '../../utils/deprecate-class-argument';
 
-const iconDragDrop = 'drag-drop';
+const iconDragDrop = 'DragDropMajor';
 const fileUpload = '/@smile-io/ember-polaris/images/file-upload.svg';
 const imageUpload = '/@smile-io/ember-polaris/images/image-upload.svg';
 

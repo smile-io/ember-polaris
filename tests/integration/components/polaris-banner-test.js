@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { click, render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 const bannerSelector = 'div.Polaris-Banner';
 const iconSelector = 'div.Polaris-Banner__Ribbon > span.Polaris-Icon';
@@ -14,10 +14,6 @@ const actionsSelector = 'div.Polaris-Banner__Actions';
 
 module('Integration | Component | polaris banner', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   test('it renders correctly in basic usage', async function (assert) {
     await render(hbs`{{polaris-banner}}`);
@@ -49,14 +45,10 @@ module('Integration | Component | polaris banner', function (hooks) {
       'inline-mode - icon has backdrop'
     );
 
-    // TODO #polaris-v5 fix icon tests
-    // assert
-    //   .dom(`${iconSelector} svg`)
-    //   .hasAttribute(
-    //     'data-icon-source',
-    //     'polaris/flag',
-    //     'inline-mode - default icon is polaris/flag'
-    //   );
+    assert.ok(
+      matchesIcon(iconSelector, 'FlagMajor'),
+      'inline-mode - default icon is FlagMajor'
+    );
 
     // Template block usage:
     await render(hbs`
@@ -159,9 +151,6 @@ module('Integration | Component | polaris banner', function (hooks) {
       'banner without status - has no status class'
     );
 
-    let bannerIcon = assert.dom(`${bannerSelector} ${iconSelector}`);
-    // let iconSvg = assert.dom(`${iconSelector} svg`);
-
     this.set('status', 'success');
     banner.hasClass(
       'Polaris-Banner--statusSuccess',
@@ -173,17 +162,17 @@ module('Integration | Component | polaris banner', function (hooks) {
       'status',
       'banner with success status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorGreenDark',
-      'banner with success status - has greenDark icon color'
-    );
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorGreenDark',
+        'banner with success status - has greenDark icon color'
+      );
 
-    // TODO #polaris-v5 fix icon tests
-    // iconSvg.hasAttribute(
-    //   'data-icon-source',
-    //   'polaris/circle-check-mark',
-    //   'banner with success status - has icon polaris/circle-check-mark'
-    // );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleTickMajor'),
+      'banner with success status - has icon CircleTickMajor'
+    );
 
     this.set('status', 'info');
     banner.hasClass(
@@ -196,17 +185,16 @@ module('Integration | Component | polaris banner', function (hooks) {
       'status',
       'banner with info status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorTealDark',
-      'banner with info status - has tealDark icon color'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorTealDark',
+        'banner with info status - has tealDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleInformationMajor'),
+      'banner with info status - has icon CircleInformationMajor'
     );
-
-    // TODO #polaris-v5 fix icon tests
-    // iconSvg.hasAttribute(
-    //   'data-icon-source',
-    //   'polaris/circle-information',
-    //   'banner with info status - has icon polaris/circle-information'
-    // );
 
     this.set('status', 'warning');
     banner.hasClass(
@@ -219,17 +207,16 @@ module('Integration | Component | polaris banner', function (hooks) {
       'alert',
       'banner with warning status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorYellowDark',
-      'banner with warning status - has yellowDark icon color'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorYellowDark',
+        'banner with warning status - has yellowDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleAlertMajor'),
+      'banner with warning status - has icon CircleAlertMajor'
     );
-
-    // TODO #polaris-v5 fix icon tests
-    //  iconSvg.hasAttribute(
-    //    'data-icon-source',
-    //    'polaris/circle-alert',
-    //    'banner with warning status - has icon polaris/circle-alert'
-    //  );
 
     this.set('status', 'critical');
     banner.hasClass(
@@ -242,17 +229,16 @@ module('Integration | Component | polaris banner', function (hooks) {
       'alert',
       'banner with critical status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorRedDark',
-      'banner with critical status - has redDark icon color'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorRedDark',
+        'banner with critical status - has redDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleDisabledMajor'),
+      'banner with critical status - has icon CircleDisabledMajor'
     );
-
-    // TODO #polaris-v5 fix icon tests
-    // iconSvg.hasAttribute(
-    //   'data-icon-source',
-    //   'polaris/circle-barred',
-    //   'banner with critical status - has icon polaris/circle-barred'
-    // );
   });
 
   test('it handles dismissable banner correctly', async function (assert) {

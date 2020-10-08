@@ -3,14 +3,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris date picker', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   const DAY_SELECTED_CLASS = 'Polaris-DatePicker__Day--selected';
   const DAY_DISABLED_CLASS = 'Polaris-DatePicker__Day--disabled';
@@ -116,58 +112,40 @@ module('Integration | Component | polaris date picker', function (hooks) {
     `);
 
     assert.dom(container).exists('it renders the date picker component');
-
     assert.dom(headerSelector).exists('it renders the date picker header');
-
     assert
       .dom(headerPrevBtnSelector)
       .exists('it renders a `prev` button in the header');
-
-    // TODO #polaris-v5 fix icon tests
-    // assert
-    //   .dom(`${headerPrevBtnSelector} svg`)
-    //   .hasAttribute(
-    //     'data-icon-source',
-    //     'polaris/arrow-left',
-    //     'it renders a left arrow icon as the `prev` button'
-    //   );
-
+    assert.ok(
+      matchesIcon(`${headerPrevBtnSelector} .Polaris-Icon`, 'ArrowLeftMinor'),
+      'it renders a left arrow icon as the `prev` button'
+    );
     assert
       .dom(headerNextBtnSelector)
       .exists('it renders a `next` button in the header');
-
-    // TODO #polaris-v5 fix icon tests
-    // assert
-    //   .dom(`${headerNextBtnSelector} svg`)
-    //   .hasAttribute(
-    //     'data-icon-source',
-    //     'polaris/arrow-right',
-    //     'it renders a right arrow icon as the `next` button'
-    //   );
-
+    assert.ok(
+      matchesIcon(`${headerNextBtnSelector} .Polaris-Icon`, 'ArrowRightMinor'),
+      'it renders a right arrow icon as the `next` button'
+    );
     assert
       .dom(monthTitleSelector)
       .hasText(
         `${MONTH_NAME} ${YEAR}`,
         'it renders a title displaying the current month name and year'
       );
-
     assert.dom(monthSelector).exists('it renders a single month container');
-
     assert.dom(monthBodySelector).exists(
       {
         count: 1,
       },
       'it renders a single month body'
     );
-
     assert.dom(weekdaySelector).exists(
       {
         count: DAYS_PER_WEEK,
       },
       'it renders 7 weekday labels in the weekday header'
     );
-
     assert
       .dom(weekdaySelector)
       .hasText('Su', 'it abbreviates the weekday names in the weekday header');

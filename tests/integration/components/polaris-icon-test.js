@@ -4,6 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { classify } from '@ember/string';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 const iconSelector = 'span.Polaris-Icon';
 const svgSelector = buildNestedSelector(iconSelector, 'svg.Polaris-Icon__Svg');
@@ -57,6 +58,7 @@ module('Integration | Component | polaris icon', function (hooks) {
       await render(hbs`<PolarisIcon @source="NoteMinor" />`);
 
       assert.dom(svgSelector).exists('it renders as a SVG element');
+      assert.ok(matchesIcon(iconSelector, 'NoteMinor'), 'renders correct icon');
       assert
         .dom(svgSelector)
         .hasAttribute(

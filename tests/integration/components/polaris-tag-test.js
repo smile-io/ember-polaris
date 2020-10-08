@@ -3,14 +3,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris tag', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   const tag = 'Wholesale';
   const tagSelector = '[data-test-tag]';
@@ -125,18 +121,10 @@ module('Integration | Component | polaris tag', function (hooks) {
     assert
       .dom(buildNestedSelector(tagButtonSelector, tagButtonIconSelector))
       .exists('renders button icon');
-    // TODO #polaris-v5 fix icon tests
-    // assert
-    //   .dom(
-    //     buildNestedSelector(
-    //       tagButtonIconSelector,
-    //       'svg'
-    //     )
-    //   )
-    //   .hasAttribute(
-    //     'data-icon-source',
-    //     'polaris/cancel-small',
-    //     'it uses the correct polaris/cancel-small icon as the icon source'
-    //   );
+
+    assert.ok(
+      matchesIcon(tagButtonIconSelector, 'CancelSmallMinor'),
+      'it uses the correct CancelSmallMinor icon as the icon source'
+    );
   });
 });

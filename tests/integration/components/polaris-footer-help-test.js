@@ -3,14 +3,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris footer help', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   const footerHelpContentSelector = buildNestedSelector(
     'div.Polaris-FooterHelp',
@@ -19,8 +15,7 @@ module('Integration | Component | polaris footer help', function (hooks) {
   const footerHelpIconSelector = buildNestedSelector(
     footerHelpContentSelector,
     'div.Polaris-FooterHelp__Icon',
-    'span.Polaris-Icon',
-    'svg'
+    'span.Polaris-Icon'
   );
   const footerHelpTextSelector = buildNestedSelector(
     footerHelpContentSelector,
@@ -38,32 +33,25 @@ module('Integration | Component | polaris footer help', function (hooks) {
     );
 
     // Check the icon.
-    let footerHelpIcon = assert.dom(footerHelpIconSelector);
-    footerHelpIcon.exists(
+    assert.dom(footerHelpIconSelector).exists(
       {
         count: 1,
       },
       'renders one footer help icon'
     );
 
-    // TODO #polaris-v5 fix icon tests
-    // footerHelpIcon.hasAttribute(
-    //   'data-icon-source',
-    //   'polaris/help',
-    //   'renders the correct icon'
-    // );
-
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
-
+    assert.ok(
+      matchesIcon(footerHelpIconSelector, 'QuestionMarkMajor'),
+      'renders the correct icon'
+    );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass(
         'Polaris-Icon--colorTeal',
         'renders the icon with the correct color'
       );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass('Polaris-Icon--hasBackdrop', 'renders the icon with backdrop');
 
     // Check the text.
@@ -101,23 +89,18 @@ module('Integration | Component | polaris footer help', function (hooks) {
       'renders one footer help icon'
     );
 
-    // TODO #polaris-v5 fix icon tests
-    //  footerHelpIcons.hasAttribute(
-    //    'data-icon-source',
-    //    'polaris/help',
-    //    'renders the correct icon'
-    //  );
-
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
+    assert.ok(
+      matchesIcon(footerHelpIconSelector, 'QuestionMarkMajor'),
+      'renders the correct icon'
+    );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass(
         'Polaris-Icon--colorTeal',
         'renders the icon with the correct color'
       );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass('Polaris-Icon--hasBackdrop', 'renders the icon with backdrop');
 
     // Check the text.
