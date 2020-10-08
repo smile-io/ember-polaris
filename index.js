@@ -11,11 +11,14 @@ module.exports = {
 
   options: {
     svgJar: {
-      sourceDirs: [
-        'public',
-        'tests/dummy/public/assets/images/svg',
-        'node_modules/@smile-io/ember-polaris/public',
-      ],
+      viewer: { enabled: process.env.SMILE_DEV },
+      strategy: 'inline',
+      // All the icons are already optimized
+      optimizer: false,
+
+      inline: {
+        sourceDirs: ['node_modules/@shopify/polaris-icons/dist/svg'],
+      },
     },
   },
 
@@ -40,7 +43,7 @@ module.exports = {
 
     let packageRoot = path.dirname(
       resolve.sync('@shopify/polaris/package.json', {
-        basedir: this.app.project.root,
+        basedir: __dirname,
       })
     );
     let stylesPath = path.join.apply(path, [packageRoot, 'dist', 'styles']);
@@ -72,7 +75,7 @@ module.exports = {
 
     let packageRoot = path.dirname(
       resolve.sync('@shopify/polaris/package.json', {
-        basedir: this.app.project.root,
+        basedir: __dirname,
       })
     );
     let stylesPath = path.join.apply(path, [packageRoot, 'dist']);

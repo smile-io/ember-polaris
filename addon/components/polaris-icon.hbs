@@ -1,0 +1,25 @@
+<span
+  class={{this.cssClasses}}
+  data-test-icon
+  ...attributes
+  {{did-insert this.validateArgs}}
+  {{did-update this.validateArgs @color @backdrop}}
+  aria-label={{@accessibilityLabel}}
+>
+  {{#if (eq this.sourceType "placeholder")}}
+    <div class="Polaris-Icon__Placeholder"></div>
+  {{else if (eq this.sourceType "external")}}
+    <img
+      class="Polaris-Icon__Img"
+      src="data:image/svg+xml;utf8,{{@source}}"
+      alt=""
+      aria-hidden="true"
+    />
+  {{else if (eq this.sourceType "svg")}}
+    {{svg-jar @source
+      class="Polaris-Icon__Svg"
+      focusable="false"
+      aria-hidden="true"
+    }}
+  {{/if}}
+</span>

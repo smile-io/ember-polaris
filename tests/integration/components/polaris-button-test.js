@@ -8,14 +8,10 @@ import {
   blur,
   triggerKeyEvent,
 } from '@ember/test-helpers';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris-button', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   module('<Button />', function () {
     module('url', function () {
@@ -172,9 +168,13 @@ module('Integration | Component | polaris-button', function (hooks) {
 
     module('icon', function () {
       test('renders an icon if it’s a string', async function (assert) {
-        this.set('source', 'polaris/delete');
+        this.set('source', 'DeleteMajor');
         await render(hbs`{{polaris-button icon=source}}`);
-        assert.dom('svg').hasAttribute('data-icon-source', this.get('source'));
+
+        assert.ok(
+          matchesIcon('.Polaris-Icon', 'DeleteMajor'),
+          'renders the correct icon'
+        );
       });
 
       test('renders a component if it is one', async function (assert) {

@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { findAll, click, render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 const actionListSelector = 'div.Polaris-ActionList';
 const actionListItemButtonSelector = buildNestedSelector(
@@ -26,8 +26,7 @@ const actionListItemContentImageSelector = buildNestedSelector(
 );
 const actionListItemContentImageIconSelector = buildNestedSelector(
   actionListItemContentImageSelector,
-  'span.Polaris-Icon',
-  'svg'
+  'span.Polaris-Icon'
 );
 const actionListItemContentTextSelector = buildNestedSelector(
   actionListItemContentSelector,
@@ -42,16 +41,11 @@ const sectionedActionListSectionSelector = buildNestedSelector(
 const actionListSectionTitleSelector = 'p.Polaris-ActionList__Title';
 const itemIconSelector = buildNestedSelector(
   'div.Polaris-ActionList__Image',
-  'span.Polaris-Icon',
-  'svg'
+  'span.Polaris-Icon'
 );
 
 module('Integration | Component | polaris action list', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   test('it renders the correct HTML in basic usage', async function (assert) {
     await render(hbs`
@@ -92,11 +86,11 @@ module('Integration | Component | polaris action list', function (hooks) {
         items=(array
           (hash
             text="Import some things"
-            icon="import"
+            icon="ImportMinor"
           )
           (hash
             text="Export stuff"
-            icon="export"
+            icon="ExportMinor"
           )
         )
       }}
@@ -129,14 +123,14 @@ module('Integration | Component | polaris action list', function (hooks) {
       2,
       'renders two action list item image icons'
     );
-    assert.equal(
-      actionListItemContentImageIcons[0].dataset.iconSource,
-      'polaris/import',
+
+    assert.ok(
+      matchesIcon(actionListItemContentImageIcons[0], 'ImportMinor'),
       'first item image icon - renders the correct icon'
     );
-    assert.equal(
-      actionListItemContentImageIcons[1].dataset.iconSource,
-      'polaris/export',
+
+    assert.ok(
+      matchesIcon(actionListItemContentImageIcons[1], 'ExportMinor'),
       'second item image icon - renders the correct icon'
     );
 
@@ -210,6 +204,7 @@ module('Integration | Component | polaris action list', function (hooks) {
     });
 
     await render(hbs`
+      {{!-- template-lint-disable no-invalid-interactive --}}
       <div {{action (action (mut parentActionFired) true)}}>
         {{polaris-action-list
           items=(array
@@ -299,7 +294,7 @@ module('Integration | Component | polaris action list', function (hooks) {
         items: [
           {
             text: 'Section 2 item 1',
-            icon: 'notes',
+            icon: 'NoteMinor',
           },
           {
             text: 'Section 2 item 2',
@@ -403,9 +398,8 @@ module('Integration | Component | polaris action list', function (hooks) {
     let item = items[0];
     let itemIcon = item.querySelector(itemIconSelector);
     assert.ok(itemIcon, "second section's first item renders an icon");
-    assert.equal(
-      itemIcon.dataset.iconSource,
-      'polaris/notes',
+    assert.ok(
+      matchesIcon(itemIcon, 'NoteMinor'),
       "second section's first item renders the correct icon"
     );
 

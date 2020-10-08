@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll, click } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import Component from '@ember/component';
 
 const choiceListSelector = '[data-test-choice-list]';
@@ -26,10 +25,6 @@ const choiceErrorSelector = '[data-test-choice-list-error]';
 
 module('Integration | Component | polaris-choice-list', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function (/* assert */) {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   test('it renders the correct HTML when allowMultiple is false', async function (assert) {
     await render(hbs`

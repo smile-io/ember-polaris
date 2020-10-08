@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { click, find, findAll, render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris page actions', function (hooks) {
   setupRenderingTest(hooks);
@@ -12,10 +12,6 @@ module('Integration | Component | polaris page actions', function (hooks) {
     this.actions = {};
     this.send = (actionName, ...args) =>
       this.actions[actionName].apply(this, args);
-  });
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
   const pageActionsSelector = 'div.Polaris-PageActions';
@@ -33,7 +29,7 @@ module('Integration | Component | polaris page actions', function (hooks) {
     'div.Polaris-ButtonGroup__Item',
     'button.Polaris-Button'
   );
-  const iconSelector = buildNestedSelector('span.Polaris-Icon', 'svg');
+  const iconSelector = buildNestedSelector('span.Polaris-Icon');
 
   test('it renders the correct HTML when primary and secondary actions are supplied', async function (assert) {
     await render(hbs`
@@ -326,14 +322,19 @@ module('Integration | Component | polaris page actions', function (hooks) {
           )
           (hash
             text="Secondary action with icon"
-            icon="notes"
+            icon="NoteMajor"
           )
         )
       }}
     `);
 
     let secondaryButtons = assert.dom(secondaryButtonSelector);
-    secondaryButtons.exists({ count: 4 }, 'renders four secondary buttons');
+    secondaryButtons.exists(
+      {
+        count: 4,
+      },
+      'renders four secondary buttons'
+    );
 
     secondaryButtons = findAll(secondaryButtonSelector);
 
@@ -415,11 +416,11 @@ module('Integration | Component | polaris page actions', function (hooks) {
       'iconed secondary button does not have destructive class'
     );
 
-    const icon = assert.dom(iconSelector, secondaryButton.target);
-    icon.exists('iconed secondary button has an icon');
-    icon.hasAttribute(
-      'data-icon-source',
-      'polaris/notes',
+    assert
+      .dom(iconSelector, secondaryButton.target)
+      .exists('iconed secondary button has an icon');
+    assert.ok(
+      matchesIcon(iconSelector, 'NoteMajor'),
       'iconed secondary button has the correct icon'
     );
   });

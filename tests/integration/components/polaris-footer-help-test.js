@@ -3,14 +3,10 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 module('Integration | Component | polaris footer help', function (hooks) {
   setupRenderingTest(hooks);
-
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
 
   const footerHelpContentSelector = buildNestedSelector(
     'div.Polaris-FooterHelp',
@@ -19,8 +15,7 @@ module('Integration | Component | polaris footer help', function (hooks) {
   const footerHelpIconSelector = buildNestedSelector(
     footerHelpContentSelector,
     'div.Polaris-FooterHelp__Icon',
-    'span.Polaris-Icon',
-    'svg'
+    'span.Polaris-Icon'
   );
   const footerHelpTextSelector = buildNestedSelector(
     footerHelpContentSelector,
@@ -30,38 +25,42 @@ module('Integration | Component | polaris footer help', function (hooks) {
   test('it renders the correct HTML in inline usage', async function (assert) {
     await render(hbs`{{polaris-footer-help text="Looking for help?"}}`);
 
-    assert
-      .dom(footerHelpContentSelector)
-      .exists({ count: 1 }, 'renders one footer help component with contents');
-
-    // Check the icon.
-    let footerHelpIcon = assert.dom(footerHelpIconSelector);
-    footerHelpIcon.exists({ count: 1 }, 'renders one footer help icon');
-
-    footerHelpIcon.hasAttribute(
-      'data-icon-source',
-      'polaris/help',
-      'renders the correct icon'
+    assert.dom(footerHelpContentSelector).exists(
+      {
+        count: 1,
+      },
+      'renders one footer help component with contents'
     );
 
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
+    // Check the icon.
+    assert.dom(footerHelpIconSelector).exists(
+      {
+        count: 1,
+      },
+      'renders one footer help icon'
+    );
 
+    assert.ok(
+      matchesIcon(footerHelpIconSelector, 'QuestionMarkMajor'),
+      'renders the correct icon'
+    );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass(
         'Polaris-Icon--colorTeal',
         'renders the icon with the correct color'
       );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass('Polaris-Icon--hasBackdrop', 'renders the icon with backdrop');
 
     // Check the text.
     const footerHelpTexts = assert.dom(footerHelpTextSelector);
 
     footerHelpTexts.exists(
-      { count: 1 },
+      {
+        count: 1,
+      },
       'renders one footer help text wrapper'
     );
     footerHelpTexts.hasText('Looking for help?', 'renders the correct text');
@@ -74,37 +73,43 @@ module('Integration | Component | polaris footer help', function (hooks) {
       {{/polaris-footer-help}}
     `);
 
-    assert
-      .dom(footerHelpContentSelector)
-      .exists({ count: 1 }, 'renders one footer help component with contents');
+    assert.dom(footerHelpContentSelector).exists(
+      {
+        count: 1,
+      },
+      'renders one footer help component with contents'
+    );
 
     // Check the icon.
     const footerHelpIcons = assert.dom(footerHelpIconSelector);
-    footerHelpIcons.exists({ count: 1 }, 'renders one footer help icon');
-
-    footerHelpIcons.hasAttribute(
-      'data-icon-source',
-      'polaris/help',
-      'renders the correct icon'
+    footerHelpIcons.exists(
+      {
+        count: 1,
+      },
+      'renders one footer help icon'
     );
 
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
+    assert.ok(
+      matchesIcon(footerHelpIconSelector, 'QuestionMarkMajor'),
+      'renders the correct icon'
+    );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass(
         'Polaris-Icon--colorTeal',
         'renders the icon with the correct color'
       );
     assert
-      .dom(iconWrapper)
+      .dom(footerHelpIconSelector)
       .hasClass('Polaris-Icon--hasBackdrop', 'renders the icon with backdrop');
 
     // Check the text.
     const footerHelpTexts = assert.dom(footerHelpTextSelector);
 
     footerHelpTexts.exists(
-      { count: 1 },
+      {
+        count: 1,
+      },
       'renders one footer help text wrapper'
     );
     footerHelpTexts.hasText('Looking for help?', 'renders the correct text');
