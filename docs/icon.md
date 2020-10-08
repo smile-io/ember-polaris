@@ -22,7 +22,7 @@ Customizing with color and backdrop:
 ### Rendering custom icons
 
 By default, `PolarisIcon` will render SVG's passed directly as strings to `@source` as external images.
-If you want to render custom icons similarly as main Polaris icons are rendered, you can configure `ember-svg-jar` in your app instead.
+If you want to render custom icons in the same way that the built-in Polaris icons are rendered, you can configure `ember-svg-jar` in your app instead.
 
 ```javascript
 // ember-cli-build.js
