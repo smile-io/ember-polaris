@@ -1,35 +1,39 @@
-{{!-- TODO: add scroll support here when `polaris-scrollable` is available. --}}
-<li role={{@role}} aria-selected={{this.active}}>
-  <button
-    type="button"
-    class={{this.itemClasses}}
-    disabled={{this.disabled}}
-    {{on "click" this.onAction}}
-  >
-    <div class="Polaris-ActionList__Content">
-      {{#if @icon}}
-        <div class="Polaris-ActionList__Image">
-          <PolarisIcon @source={{@icon}} />
-        </div>
-      {{else if @image}}
-        <div
-          role="presentation"
-          class="Polaris-ActionList__Image"
-          style={{this.imageBackgroundStyle}}
-        >
-        </div>
-      {{/if}}
-
-      <div class="Polaris-ActionList__Text">
-        {{#if @helpText}}
-          <div>
-            <div>{{@text}}</div>
-            <PolarisTextStyle @variation="subdued" @text={{@helpText}} />
-          </div>
-        {{else}}
-          {{@text}}
-        {{/if}}
-      </div>
-    </div>
-  </button>
+{{!-- TODO add scroll support here when `PolarisScrollable` is available. --}}
+<li data-test-action-list-item role={{@role}} aria-selected="{{@active}}">
+  {{#let (component "polaris-action-list/item/content-element"
+      prefix=@prefix
+      icon=@icon
+      image=@image
+      imageBackgroundStyle=this.imageBackgroundStyle
+      helpText=@helpText
+      ellipsis=@ellipsis
+      text=@text
+      badge=@badge
+      suffix=@suffix
+    ) as |ContentElement|
+  }}
+    {{#if @url}}
+      <PolarisUnstyledLink
+        data-test-action-list-item-link
+        class={{this.itemClasses}}
+        @url={{@url}}
+        @external={{@external}}
+        @ariaLabel={{@accessibilityLabel}}
+        @onClick={{@onAction}}
+      >
+        <ContentElement />
+      </PolarisUnstyledLink>
+    {{else}}
+      <button
+        data-test-action-list-item-button
+        type="button"
+        class={{this.itemClasses}}
+        disabled={{@disabled}}
+        aria-label={{@accessibilityLabel}}
+        {{on "click" @onAction}}
+      >
+        <ContentElement />
+      </button>
+    {{/if}}
+  {{/let}}
 </li>

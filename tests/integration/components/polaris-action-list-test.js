@@ -1,430 +1,473 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { findAll, click, render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
+import { capitalize } from '@ember/string';
 import { matchesIcon } from '../../helpers/matches-icon';
 
-const actionListSelector = 'div.Polaris-ActionList';
-const actionListItemButtonSelector = buildNestedSelector(
-  'ul.Polaris-ActionList__Actions',
-  'li',
-  'button.Polaris-ActionList__Item'
-);
-const actionListItemSelector = buildNestedSelector(
-  actionListSelector,
-  'div',
-  actionListItemButtonSelector
-);
-const actionListItemContentSelector = buildNestedSelector(
-  actionListItemSelector,
-  'div.Polaris-ActionList__Content'
-);
-const actionListItemContentImageSelector = buildNestedSelector(
-  actionListItemContentSelector,
-  'div.Polaris-ActionList__Image'
-);
-const actionListItemContentImageIconSelector = buildNestedSelector(
-  actionListItemContentImageSelector,
-  'span.Polaris-Icon'
-);
-const actionListItemContentTextSelector = buildNestedSelector(
-  actionListItemContentSelector,
-  'div.Polaris-ActionList__Text'
-);
-const sectionedActionListSelector = 'ul.Polaris-ActionList';
-const sectionedActionListSectionSelector = buildNestedSelector(
-  sectionedActionListSelector,
-  'li.Polaris-ActionList__Section',
-  'div'
-);
-const actionListSectionTitleSelector = 'p.Polaris-ActionList__Title';
-const itemIconSelector = buildNestedSelector(
-  'div.Polaris-ActionList__Image',
-  'span.Polaris-Icon'
-);
+const actionListSelector = '[data-test-action-list]';
+const actionListSectionSelector = '[data-test-action-list-section]';
+const actionListSectionWrapperSelector =
+  '[data-test-action-list-section-wrapper]';
+const actionListSectionActionsSelector =
+  '[data-test-action-list-section-actions]';
+const actionListSectionTitleSelector = '[data-test-action-list-section-title]';
+const actionListItemSelector = '[data-test-action-list-item]';
+const actionListItemButtonSelector = '[data-test-action-list-item-button]';
+const actionListItemLinkSelector = '[data-test-action-list-item-link]';
+const actionListItemContentSelector = '[data-test-action-list-item-content]';
+const actionListItemTextSelector = '[data-test-action-list-item-text]';
+const actionListItemPrefixSelector = '[data-test-action-list-item-prefix]';
+const actionListItemSuffixSelector = '[data-test-action-list-item-suffix]';
 
 module('Integration | Component | polaris action list', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the correct HTML in basic usage', async function (assert) {
-    await render(hbs`
-      <PolarisActionList
-        @items={{array
-          (hash text="This is the first item")
-          (hash text="This is item number two")
-        }}
-      />
-    `);
-
-    const actionLists = findAll(actionListSelector);
-    assert.equal(actionLists.length, 1, 'renders one action list');
-
-    const actionListItems = findAll(actionListItemSelector);
-    assert.equal(actionListItems.length, 2, 'renders two action list items');
-    assert
-      .dom(actionListItems[0])
-      .hasText(
-        'This is the first item',
-        'first item - renders the correct content'
-      );
-    assert
-      .dom(actionListItems[1])
-      .hasText(
-        'This is item number two',
-        'second item - renders the correct content'
-      );
-  });
-
-  test('it renders the correct HTML when using icons', async function (assert) {
-    await render(hbs`
-      <PolarisActionList
-        @items={{array
-          (hash text="Import some things" icon="ImportMinor")
-          (hash text="Export stuff" icon="ExportMinor")
-        }}
-      />
-    `);
-
-    const actionLists = findAll(actionListSelector);
-    assert.equal(actionLists.length, 1, 'renders one action list');
-
-    const actionListItemContents = findAll(actionListItemContentSelector);
-    assert.equal(
-      actionListItemContents.length,
-      2,
-      'renders two action list items'
-    );
-
-    const actionListItemContentImages = findAll(
-      actionListItemContentImageSelector
-    );
-    assert.equal(
-      actionListItemContentImages.length,
-      2,
-      'renders two action list item images'
-    );
-
-    const actionListItemContentImageIcons = findAll(
-      actionListItemContentImageIconSelector
-    );
-    assert.equal(
-      actionListItemContentImageIcons.length,
-      2,
-      'renders two action list item image icons'
-    );
-
-    assert.ok(
-      matchesIcon(actionListItemContentImageIcons[0], 'ImportMinor'),
-      'first item image icon - renders the correct icon'
-    );
-
-    assert.ok(
-      matchesIcon(actionListItemContentImageIcons[1], 'ExportMinor'),
-      'second item image icon - renders the correct icon'
-    );
-
-    const actionListItemContentTexts = findAll(
-      actionListItemContentTextSelector
-    );
-    assert.equal(
-      actionListItemContentTexts.length,
-      2,
-      'renders two action list item texts'
-    );
-    assert
-      .dom(actionListItemContentTexts[0])
-      .hasText(
-        'Import some things',
-        'first item text - renders the correct content'
-      );
-    assert
-      .dom(actionListItemContentTexts[1])
-      .hasText(
-        'Export stuff',
-        'second item text - renders the correct content'
-      );
-  });
-
-  test('it handles item actions correctly', async function (assert) {
-    let action1Fired = false;
-    this.set('action1', () => {
-      action1Fired = true;
-    });
-    this.set('action2Fired', false);
-
-    await render(hbs`
-      <PolarisActionList
-        @items={{array
-          (hash text="Item 1" onAction=(action action1))
-          (hash text="Item 2" onAction=(action (mut action2Fired) true))
-      }}
-      />
-    `);
-
-    const actionLists = findAll(actionListSelector);
-    assert.equal(actionLists.length, 1, 'renders one action list');
-
-    const itemButtons = findAll('li button');
-    await click(itemButtons[0]);
-    assert.ok(action1Fired, 'after pressing first button - first action fired');
-    assert.notOk(
-      this.get('action2Fired'),
-      'after pressing first button - second action not fired'
-    );
-
-    await click(itemButtons[1]);
-    assert.ok(
-      this.get('action2Fired'),
-      'after pressing second button - second action fired'
-    );
-  });
-
-  test('it does not bubble item actions', async function (assert) {
-    this.setProperties({
-      parentActionFired: false,
-      action1Fired: false,
-      action2Fired: false,
-    });
-
-    await render(hbs`
-      {{!-- template-lint-disable no-invalid-interactive --}}
-      <div {{action (action (mut parentActionFired) true)}}>
+  module('HTML rendered', function () {
+    test('it renders correct HTML', async function (assert) {
+      await render(hbs`
         <PolarisActionList
+          @actionRole={{this.actionRole}}
           @items={{array
-            (hash text="Item 1" onAction=(action (mut action2Fired) true))
-            (hash text="Item 2" onAction=(action (mut action2Fired) true))
-        }}
+            (hash text="This is the first item")
+            (hash text="This is item number two")
+          }}
         />
-      </div>
-    `);
+      `);
 
-    const actionLists = findAll(actionListSelector);
-    assert.equal(actionLists.length, 1, 'renders one action list');
+      assert
+        .dom(actionListSelector)
+        .exists({ count: 1 }, 'renders one action list')
+        .hasTagName('div', 'action list renders as a div')
+        .hasClass('Polaris-ActionList', 'action list has correct CSS class');
+      assert
+        .dom(actionListSectionSelector)
+        .doesNotExist('does not nest items in section');
+      assert
+        .dom(actionListSectionWrapperSelector)
+        .hasClass(
+          'Polaris-ActionList__Section--withoutTitle',
+          'section wrapper has correct CSS class'
+        );
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListSelector,
+            actionListSectionWrapperSelector,
+            actionListSectionActionsSelector,
+            actionListItemSelector
+          )
+        )
+        .exists({ count: 2 }, 'renders 2 action list items');
+      assert
+        .dom(actionListSectionTitleSelector)
+        .doesNotExist('does not render a section title');
+      assert
+        .dom(actionListSectionActionsSelector)
+        .hasClass(
+          'Polaris-ActionList__Actions',
+          'section actions has correct CSS class'
+        )
+        .doesNotHaveAttribute(
+          'role',
+          'section actions does not have role attribute'
+        );
+      assert
+        .dom(actionListItemSelector)
+        .doesNotHaveAttribute(
+          'role',
+          'action list item does not have role attribute'
+        )
+        .doesNotHaveAria(
+          'aria-selected',
+          'action list item does not have aria-selected attribue'
+        );
 
-    const listItems = findAll('li');
-    await click('button', listItems[0]);
-    assert.notOk(
-      this.get('parentActionFired'),
-      'after pressing first button - parent action not fired'
-    );
-
-    await click('button', listItems[1]);
-    assert.notOk(
-      this.get('parentActionFired'),
-      'after pressing second button - parent action not fired'
-    );
-  });
-
-  test('it handles the "any item" action correctly', async function (assert) {
-    this.setProperties({
-      itemActionFired: false,
-      anyItemActionCount: 0,
+      this.set('actionRole', 'option');
+      assert
+        .dom(actionListSectionActionsSelector)
+        .hasAttribute(
+          'role',
+          'presentation',
+          'section actions has role attribute `presentation` when @actionRole is `option`'
+        );
+      assert
+        .dom(actionListItemSelector)
+        .hasAttribute(
+          'role',
+          'option',
+          'action list item has role attribute `option`'
+        );
     });
 
-    this.set('anyItem', () => {
-      this.set('anyItemActionCount', this.get('anyItemActionCount') + 1);
+    test('it renders correct HTML with sections', async function (assert) {
+      this.set('sections', [
+        {
+          title: 'Section 1',
+          items: [{ text: 'Section 1 item 1' }, { text: 'Section 1 item 2' }],
+        },
+        { items: [{ text: 'Section 2 item' }] },
+      ]);
+
+      await render(hbs`
+        <PolarisActionList @sections={{this.sections}} @items={{this.items}} />
+      `);
+
+      assert
+        .dom(actionListSelector)
+        .hasTagName('ul', 'action list renders as a ul');
+      assert
+        .dom(buildNestedSelector(actionListSelector, actionListSectionSelector))
+        .exists(
+          { count: 2 },
+          'with no items & 2 sections - renders 2 sections'
+        );
+      assert
+        .dom(
+          buildNestedSelector(
+            `${actionListSectionSelector}:nth-child(1)`,
+            actionListSectionWrapperSelector
+          )
+        )
+        .hasNoClass(
+          'Polaris-ActionList__Section--withoutTitle',
+          'section with title - has no section wrapper with `Polaris-ActionList__Section--withoutTitle` class'
+        );
+      assert
+        .dom(actionListSectionTitleSelector)
+        .exists('section with title - renders the section title')
+        .hasClass(
+          'Polaris-ActionList__Title',
+          'section with title - has `Polaris-ActionList__Title` class'
+        )
+        .hasText('Section 1', 'section with title - has correct text');
+
+      this.set('items', [{ text: 'Only item' }]);
+
+      assert
+        .dom(buildNestedSelector(actionListSelector, actionListSectionSelector))
+        .exists(
+          { count: 3 },
+          'with one item & 2 sections - renders 3 sections'
+        );
     });
 
-    await render(hbs`
-      <PolarisActionList
-        @items={{array
-          (hash text="Item 1")
-          (hash text="Item 2" onAction=(action (mut itemActionFired) true))
-        }}
-        @onActionAnyItem={{action anyItem}}
-      />
-    `);
+    test('it renders button items HTML correctly', async function (assert) {
+      this.handleBubbledActions = () =>
+        assert.notOk('click event does not bubble');
+      this.set('item', {
+        text: 'My item',
+      });
 
-    const itemButtons = findAll('li button');
-    await click(itemButtons[0]);
-    assert.equal(
-      this.get('anyItemActionCount'),
-      1,
-      'after pressing first button - any item action fired once'
-    );
-    assert.notOk(
-      this.get('itemActionFired'),
-      'after pressing first button - item action not fired'
-    );
+      await render(hbs`
+        {{!-- template-lint-disable no-invalid-interactive--}}
+        <div {{on "click" this.handleBubbledActions}}>
+          <PolarisActionList @items={{array this.item}} />
+        </div>
+      `);
 
-    await click(itemButtons[1]);
-    assert.equal(
-      this.get('anyItemActionCount'),
-      2,
-      'after pressing second button - any item action fired twice'
-    );
-    assert.ok(
-      this.get('itemActionFired'),
-      'after pressing second button - item action fired'
-    );
-  });
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemTextSelector
+          )
+        )
+        .hasText(this.item.text, 'item has correct text');
 
-  test('it renders the correct HTML when using sections', async function (assert) {
-    this.set('sections', [
-      {
-        title: 'Section 2',
-        items: [
-          {
-            text: 'Section 2 item 1',
-            icon: 'NoteMinor',
-          },
-          {
-            text: 'Section 2 item 2',
-            helpText: 'Helpful stuff',
-          },
-        ],
-      },
-      {
-        items: [
-          {
-            text: 'Section 3 item',
-          },
-        ],
-      },
-    ]);
+      this.set('item.accessibilityLabel', 'accessibility');
 
-    await render(hbs`
-      <PolarisActionList @items={{items}} @sections={{sections}} />
-    `);
+      assert
+        .dom(actionListItemButtonSelector)
+        .hasAria(
+          'label',
+          this.item.accessibilityLabel,
+          'item with accessibilityLabel - applies aria-label to button'
+        );
 
-    const actionLists = findAll(sectionedActionListSelector);
-    assert.equal(actionLists.length, 1, 'renders one sectioned action list');
+      this.set('item.active', true);
 
-    // Test sections without any additional items passed in.
-    let actionListSections = findAll(sectionedActionListSectionSelector);
-    assert.equal(
-      actionListSections.length,
-      2,
-      'with no items and two sections - renders two action list sections'
-    );
+      assert
+        .dom(actionListItemSelector)
+        .hasAria(
+          'selected',
+          'true',
+          'with active item - applies aria-selected to item'
+        );
+      assert
+        .dom(actionListItemButtonSelector)
+        .hasClass(
+          'Polaris-ActionList--active',
+          'with active item - item button has `Polaris-ActionList--active` class'
+        );
 
-    // Add some items alongside the sections.
-    this.set('items', [{ text: 'Section 1 item' }]);
+      this.set('item.badge', {
+        status: 'success',
+        content: 'Badge content',
+      });
 
-    actionListSections = findAll(sectionedActionListSectionSelector);
-    assert.equal(
-      actionListSections.length,
-      3,
-      'with items and two sections - renders three action list sections'
-    );
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemSuffixSelector
+          )
+        )
+        .hasTextContaining(
+          this.item.badge.content,
+          'item with badge - has correct badge text'
+        );
+      assert
+        .dom('[data-test-badge]')
+        .hasClass(
+          `Polaris-Badge--status${capitalize(this.item.badge.status)}`,
+          'item with badge - has correct badge status'
+        );
 
-    // First section should have no title, one item with no icon.
-    let section = actionListSections[0];
-    assert
-      .dom(section)
-      .hasClass(
-        'Polaris-ActionList__Section--withoutTitle',
-        'first section has "without title" class'
+      this.set('item.destructive', true);
+
+      assert
+        .dom(actionListItemButtonSelector)
+        .hasClass(
+          'Polaris-ActionList--destructive',
+          'with destructive item - item button has `Polaris-ActionList--destructive` class'
+        );
+
+      this.set('item.disabled', true);
+
+      assert
+        .dom(actionListItemButtonSelector)
+        .hasClass(
+          'Polaris-ActionList--disabled',
+          'with disabled item - item button has `Polaris-ActionList--disabled` class'
+        )
+        .hasAttribute(
+          'disabled',
+          '',
+          'with disabled item - item button is disabled'
+        );
+
+      this.setProperties({
+        'item.ellipsis': true,
+        'item.helpText': 'My item help text',
+      });
+
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemTextSelector,
+            'div',
+            'div'
+          )
+        )
+        .hasText(
+          `${this.item.text}...`,
+          'with helpText & ellipsis - item has correct text'
+        );
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemTextSelector,
+            'div',
+            '[data-test-text-style]'
+          )
+        )
+        .hasText(
+          this.item.helpText,
+          'with helpText & ellipsis - renders helpText'
+        )
+        .hasClass(
+          'Polaris-TextStyle--variationSubdued',
+          'with helpText & ellipsis - renders helpText with subdued class'
+        );
+
+      this.set('item.image', 'image-test');
+
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemPrefixSelector
+          )
+        )
+        .exists('item with image - renders image as prefix')
+        .hasAttribute(
+          'role',
+          'presentation',
+          'item with image - image prefix has attribute `role`'
+        )
+        .hasClass(
+          'Polaris-ActionList__Prefix',
+          'item with image - image prefix has `Polaris-ActionList__Prefix` class'
+        )
+        .hasAttribute(
+          'style',
+          `background-image: url(${this.item.image})`,
+          'item with image - image prefix has correct style attribute'
+        );
+
+      this.set('item.icon', 'ExportMinor');
+
+      assert.ok(
+        matchesIcon(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemPrefixSelector,
+            '[data-test-icon]'
+          ),
+          this.item.icon
+        ),
+        'item with image & icon - renders icon as prefix'
       );
 
-    let sectionTitle = section.querySelector(actionListSectionTitleSelector);
-    assert.notOk(sectionTitle, 'first section does not have a title');
+      this.set('item.prefix', 'My item prefix');
 
-    let items = section.querySelectorAll(actionListItemButtonSelector);
-    assert.equal(items.length, 1, 'first section has one item');
-    assert
-      .dom(items[0])
-      .hasText('Section 1 item', 'first section item renders the correct text');
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemButtonSelector,
+            actionListItemContentSelector,
+            actionListItemPrefixSelector
+          )
+        )
+        .hasText(
+          this.item.prefix,
+          'item with image & icon & prefix - renders the @prefix'
+        );
 
-    // Second section should have a title and two items, the first with an icon and the second without.
-    section = actionListSections[1];
-    assert
-      .dom(section)
-      .hasNoClass(
-        'Polaris-ActionList__Section--withoutTitle',
-        'second section does not have "without title" class'
-      );
+      this.set('item.onAction', () => {
+        assert.ok(true, "fires item's onAction");
+      });
 
-    sectionTitle = section.querySelector(actionListSectionTitleSelector);
-    assert.ok(sectionTitle, 'second section has a title');
-    assert
-      .dom(sectionTitle)
-      .hasText('Section 2', 'second section renders the correct title text');
-
-    items = section.querySelectorAll(actionListItemButtonSelector);
-    assert.equal(items.length, 2, 'second section has two items');
-    assert
-      .dom(items[0])
-      .hasText(
-        'Section 2 item 1',
-        "second section's first item renders the correct text"
-      );
-
-    assert
-      .dom('.Polaris-ActionList__Text div div', items[1])
-      .hasText(
-        'Section 2 item 2',
-        "second section's second item renders the correct text"
-      );
-
-    assert
-      .dom('.Polaris-ActionList__Text [data-test-text-style]', items[1])
-      .hasText(
-        'Helpful stuff',
-        "second section's second item renders the correct help text"
-      );
-
-    let item = items[0];
-    let itemIcon = item.querySelector(itemIconSelector);
-    assert.ok(itemIcon, "second section's first item renders an icon");
-    assert.ok(
-      matchesIcon(itemIcon, 'NoteMinor'),
-      "second section's first item renders the correct icon"
-    );
-
-    item = items[1];
-    itemIcon = item.querySelector(itemIconSelector);
-    assert.notOk(
-      itemIcon,
-      "second section's second item does not render an icon"
-    );
-
-    // Third section should have no title, one item with no icon.
-    section = actionListSections[2];
-    assert
-      .dom(section)
-      .hasClass(
-        'Polaris-ActionList__Section--withoutTitle',
-        'third section has "without title" class'
-      );
-
-    sectionTitle = section.querySelector(actionListSectionTitleSelector);
-    assert.notOk(sectionTitle, 'third section does not have a title');
-
-    items = section.querySelectorAll(actionListItemButtonSelector);
-    assert.equal(items.length, 1, 'third section has one item');
-    assert
-      .dom(items[0])
-      .hasText('Section 3 item', 'third section item renders the correct text');
-  });
-
-  test('item actions nested in a form do not trigger the form to submit', async function (assert) {
-    this.setProperties({
-      formSubmitted: false,
-      nestedActionFired: false,
+      await click(actionListItemButtonSelector);
     });
 
-    await render(hbs`
-      <form onsubmit={{action (mut formSubmitted) true}}>
-        <PolarisActionList
-          @items={{array (hash text="Click me" onAction=(action (mut nestedActionFired) true))}}
-        />
-      </form>
-    `);
+    test('it renders anchor items HTML correctly', async function (assert) {
+      this.handleBubbledActions = () =>
+        assert.notOk('click event does not bubble');
+      this.set('item', {
+        text: 'My item',
+        url: '#google.com',
+      });
 
-    await click('li button');
-    assert.ok(this.get('nestedActionFired'), 'nested action was fired');
-    assert.notOk(this.get('formSubmitted'), 'form submit action is not fired');
+      await render(hbs`
+        {{!-- template-lint-disable no-invalid-interactive--}}
+        <div {{on "click" this.handleBubbledActions}}>
+          <PolarisActionList @items={{array this.item}} />
+        </div>
+      `);
+
+      assert
+        .dom(
+          buildNestedSelector(
+            actionListItemLinkSelector,
+            actionListItemContentSelector,
+            actionListItemTextSelector
+          )
+        )
+        .hasText(this.item.text, 'item has correct text');
+      assert
+        .dom(actionListItemLinkSelector)
+        .hasAttribute('href', this.item.url, 'item has correct href');
+      assert.dom(actionListItemContentSelector).exists('renders item content');
+
+      this.set('item.accessibilityLabel', 'accessibility');
+      assert
+        .dom(actionListItemLinkSelector)
+        .hasAria(
+          'label',
+          this.item.accessibilityLabel,
+          'item with accessibilityLabel - applies aria-label to anchor'
+        );
+
+      this.set('item.active', true);
+
+      assert
+        .dom(actionListItemSelector)
+        .hasAria(
+          'selected',
+          'true',
+          'with active item - applies aria-selected to item'
+        );
+      assert
+        .dom(actionListItemLinkSelector)
+        .hasClass(
+          'Polaris-ActionList--active',
+          'with active item - item anchor has `Polaris-ActionList--active` class'
+        );
+
+      this.set('item.destructive', true);
+
+      assert
+        .dom(actionListItemLinkSelector)
+        .hasClass(
+          'Polaris-ActionList--destructive',
+          'with destructive item - item anchor has `Polaris-ActionList--destructive` class'
+        );
+
+      this.set('item.disabled', true);
+
+      assert
+        .dom(actionListItemLinkSelector)
+        .hasClass(
+          'Polaris-ActionList--disabled',
+          'with disabled item - item anchor has `Polaris-ActionList--disabled` class'
+        );
+
+      this.set('item.onAction', () => {
+        assert.ok(true, "fires item's onAction");
+      });
+
+      await click(actionListItemLinkSelector);
+    });
   });
 
-  test('renders helpText when the helpText prop is defined', async function (assert) {
-    await render(hbs`
-      <PolarisActionList @items={{array (hash text="I'm helpful" helpText="Yay I'm helping!")}} />
-    `);
+  module('onActionAnyItem', function () {
+    test('it fires onActionAnyItem on click of a button item', async function (assert) {
+      this.handleBubbledActions = () =>
+        assert.notOk('action does not bubble to parent');
+      this.handleAnyActionItem = () => {
+        assert.ok(true, 'fires @onActionAnyItem');
+      };
 
-    assert
-      .dom(`${actionListItemSelector} [data-test-text-style]`)
-      .hasText(`Yay I'm helping!`);
+      await render(hbs`
+        {{!-- template-lint-disable no-invalid-interactive--}}
+        <div {{on "click" this.handleBubbledActions}}>
+          <PolarisActionList
+            @items={{array (hash text="Add discount")}}
+            @onActionAnyItem={{this.handleAnyActionItem}}
+          />
+        </div>
+      `);
+
+      await click(actionListItemButtonSelector);
+    });
+
+    test('it fires onActionAnyItem on click of an anchor item', async function (assert) {
+      this.handleBubbledActions = () =>
+        assert.notOk('action does not bubble to parent');
+      this.handleAnyActionItem = () =>
+        assert.ok(true, 'fires @onActionAnyItem');
+
+      await render(hbs`
+        <div {{on "click" this.handleBubbledActions}}>
+          <PolarisActionList
+            @items={{array (hash text="Add discount" url="https://facebook.com" external=true)}}
+            @onActionAnyItem={{this.handleAnyActionItem}}
+          />
+        </div>
+      `);
+
+      await click(actionListItemLinkSelector);
+    });
   });
 });

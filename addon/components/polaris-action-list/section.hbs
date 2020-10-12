@@ -1,32 +1,36 @@
 {{#let (element (if @hasMultipleSections "li" "")) as |ActionListSection|}}
-  <ActionListSection
-    class={{if hasMultipleSections "Polaris-ActionList__Section" ""}}
-  >
-    <div class={{unless @section.title "Polaris-ActionList__Section--withoutTitle"}}>
+  <ActionListSection data-test-action-list-section class="Polaris-ActionList__Section">
+    <div
+      data-test-action-list-section-wrapper
+      class={{unless @section.title "Polaris-ActionList__Section--withoutTitle"}}
+    >
       {{#if @section.title}}
-        <p class="Polaris-ActionList__Title">
+        <p data-test-action-list-section-title class="Polaris-ActionList__Title">
           {{@section.title}}
         </p>
       {{/if}}
 
-      <ul
-        class="Polaris-ActionList__Actions"
-        role={{this.sectionRole}}
-      >
+      {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles --}}
+      <ul class="Polaris-ActionList__Actions" data-test-action-list-section-actions role={{this.sectionRole}}>
         {{#each @section.items as |item|}}
           <PolarisActionList::Item
+            {{!-- TODO we should be able to match React impl and use `content` here  --}}
             @text={{item.text}}
             @helpText={{item.helpText}}
-            @url={{item.url}}
-            @destructive={{item.destructive}}
-            @disabled={{item.disabled}}
-            @icon={{item.icon}}
-            @image={{item.image}}
-            @ellipsis={{item.ellipsis}}
-            @active={{item.active}}
             @role={{@actionRole}}
             @badge={{item.badge}}
-            @onAction={{fn this.handleAction item}}
+            @accessibilityLabel={{item.accessibilityLabel}}
+            @url={{item.url}}
+            @icon={{item.icon}}
+            @image={{item.image}}
+            @prefix={{item.prefix}}
+            @suffix={{item.suffix}}
+            @disabled={{item.disabled}}
+            @external={{item.external}}
+            @destructive={{item.destructive}}
+            @ellipsis={{item.ellipsis}}
+            @active={{item.active}}
+            @onAction={{fn this.handleAction item.onAction}}
           />
         {{/each}}
       </ul>

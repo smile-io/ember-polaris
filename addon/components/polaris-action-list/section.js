@@ -1,45 +1,26 @@
 import Component from '@glimmer/component';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 
 export default class PolarisActionListSection extends Component {
   /**
-   * Collection of action items
+   * Section action item
    *
    * @type {Object}
-   * @default null
-   * @public
+   * @property {Array} items  Required. Collection of action items for the list.
+   * @property {Array} title  Section title.
    */
-  section = null;
+  section;
 
-  /**
-   * Whether the parent action list has multiple sections
-   *
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  hasMultipleSections = false;
-
-  /**
-   * Defines a specific role attribute for each action in the list
-   *
-   * @type {String}
-   * @default null
-   * @public
-   */
-  actionRole = null;
-
-  @computed('actionRole')
   get sectionRole() {
-    return this.actionRole === 'option' ? 'presentation' : undefined;
+    return this.args.actionRole === 'option' ? 'presentation' : undefined;
   }
 
   @action
-  handleAction(item, event) {
-    event.preventDefault();
-    event.stopPropagation();
+  handleAction(itemOnAction, event) {
+    event?.preventDefault();
+    event?.stopPropagation();
 
-    item.onAction?.();
-    this.onActionAnyItem?.();
+    itemOnAction?.();
+    this.args.onActionAnyItem?.();
   }
 }

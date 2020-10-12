@@ -364,7 +364,7 @@ module('Integration | Component | polaris page', function (hooks) {
       matchesIcon(secondaryActionIcons[0], 'AddMajor'),
       'first secondary action icon - renders the correct icon'
     );
-    // await this.pauseTest();
+
     assert.ok(
       matchesIcon(secondaryActionIcons[1], 'CancelSmallMinor'),
       'second secondary action icon - renders the correct icon'
