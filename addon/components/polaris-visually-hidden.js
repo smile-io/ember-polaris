@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 /**
  * Polaris Visually hidden component.
  * See https://polaris.shopify.com/components/titles-and-text/visually-hidden
+ *
+ * @version 5.6.0
  */
 export default class PolarisVisuallyHidden extends Component {
   /**
