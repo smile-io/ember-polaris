@@ -1,106 +1,108 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../../templates/components/polaris-action-list/item';
 
-@tagName('')
-@layout(template)
 export default class PolarisActionListItem extends Component {
   /**
-   * @type {String}
-   * @default null
-   * @public
+   * Visually hidden text for screen readers
+   * @type: {String}
    */
-  text = null;
+  accessibilityLabel;
 
   /**
-   * @type {String}
-   * @default null
-   * @public
-   */
-  helpText = null;
-
-  /**
-   * Not currently supported
-   * @type {String}
-   * @default null
-   * @public
-   */
-  url = null;
-
-  /**
+   * Whether the action is active or not
    * @type {Boolean}
-   * @default false
-   * @public
    */
-  destructive = false;
+  active;
 
   /**
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  disabled = false;
-
-  /**
-   * @type {String}
-   * @default null
-   * @public
-   */
-  icon = null;
-
-  /**
-   * @type {String}
-   * @default null
-   * @public
-   */
-  image = null;
-
-  /**
-   * Not currently supported
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  ellipsis = false;
-
-  /**
-   * @type {Boolean}
-   * @default false
-   * @public
-   */
-  active = false;
-
-  /**
-   * @type {String}
-   * @default null
-   * @public
-   */
-  role = null;
-
-  /**
-   * Object with `status` and `content` properties
-   * Not currently supported
    * @type {Object}
-   * @default null
-   * @public
+   * @property {String} content
+   * @property {String} status
    */
-  badge = null;
+  badge;
 
   /**
-   * Callback for the item when clicked
-   *
-   * @type {Function}
-   * @default no-op
-   * @public
+   * Content the action displays
+   * @type {String}
    */
-  onAction() {}
+  text;
 
-  @computed('destructive', 'disabled', 'active')
+  /**
+   * Destructive action
+   * @type {Boolean}
+   */
+  destructive;
+
+  /**
+   * Whether or not the action is disabled
+   * @type {Boolean}
+   */
+  disabled;
+
+  /**
+   * Add an ellipsis suffix to action content
+   * @type {Boolean}
+   */
+  ellipsis;
+
+  /**
+   * Forces url to open in a new tab
+   * @type {Boolean}
+   */
+  external;
+
+  /**
+   * Additional hint text to display with item
+   * @type {String}
+   */
+  helpText;
+
+  /**
+   * Source of the icon
+   * @type {String}
+   */
+  icon;
+
+  /**
+   * Image source
+   * @type {String}
+   */
+  image;
+
+  /**
+   * Prefix source
+   * @type {String|Component}
+   */
+  prefix;
+
+  /**
+   * Defines a role for the action
+   * @type {String}
+   */
+  role;
+
+  /**
+   * Suffix source
+   * @type {String|Component}
+   */
+  suffix;
+
+  /**
+   * A destination to link to, rendered in the action
+   * @type {String}
+   */
+  url;
+
+  /**
+   * Callback when an action takes place
+   *
+   * @type {Function} () => void
+   */
+  onAction;
+
   get itemClasses() {
     let cssClasses = ['Polaris-ActionList__Item'];
-    let { destructive, disabled, active } = this;
+    let { destructive, disabled, active } = this.args;
 
     if (destructive) {
       cssClasses.push('Polaris-ActionList--destructive');
@@ -113,13 +115,12 @@ export default class PolarisActionListItem extends Component {
     if (active) {
       cssClasses.push('Polaris-ActionList--active');
     }
+    // TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles
 
     return cssClasses.join(' ');
   }
 
-  @computed('image')
   get imageBackgroundStyle() {
-    let { image: url } = this;
-    return url ? htmlSafe(`background-image: url(${url})`) : '';
+    return htmlSafe(`background-image: url(${this.args.image})`);
   }
 }

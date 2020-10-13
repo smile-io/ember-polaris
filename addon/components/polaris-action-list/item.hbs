@@ -1,0 +1,39 @@
+{{!-- TODO add scroll support here when `PolarisScrollable` is available. --}}
+<li data-test-action-list-item role={{@role}} aria-selected="{{@active}}">
+  {{#let (component "polaris-action-list/item/content-element"
+      prefix=@prefix
+      icon=@icon
+      image=@image
+      imageBackgroundStyle=this.imageBackgroundStyle
+      helpText=@helpText
+      ellipsis=@ellipsis
+      text=@text
+      badge=@badge
+      suffix=@suffix
+    ) as |ContentElement|
+  }}
+    {{#if @url}}
+      <PolarisUnstyledLink
+        data-test-action-list-item-link
+        class={{this.itemClasses}}
+        @url={{@url}}
+        @external={{@external}}
+        @ariaLabel={{@accessibilityLabel}}
+        @onClick={{@onAction}}
+      >
+        <ContentElement />
+      </PolarisUnstyledLink>
+    {{else}}
+      <button
+        data-test-action-list-item-button
+        type="button"
+        class={{this.itemClasses}}
+        disabled={{@disabled}}
+        aria-label={{@accessibilityLabel}}
+        {{on "click" @onAction}}
+      >
+        <ContentElement />
+      </button>
+    {{/if}}
+  {{/let}}
+</li>

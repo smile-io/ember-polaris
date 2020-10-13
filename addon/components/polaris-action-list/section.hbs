@@ -1,0 +1,39 @@
+{{#let (element (if @hasMultipleSections "li" "")) as |ActionListSection|}}
+  <ActionListSection data-test-action-list-section class="Polaris-ActionList__Section">
+    <div
+      data-test-action-list-section-wrapper
+      class={{unless @section.title "Polaris-ActionList__Section--withoutTitle"}}
+    >
+      {{#if @section.title}}
+        <p data-test-action-list-section-title class="Polaris-ActionList__Title">
+          {{@section.title}}
+        </p>
+      {{/if}}
+
+      {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles --}}
+      <ul class="Polaris-ActionList__Actions" data-test-action-list-section-actions role={{this.sectionRole}}>
+        {{#each @section.items as |item|}}
+          <PolarisActionList::Item
+            {{!-- TODO we should be able to match React impl and use `content` here  --}}
+            @text={{item.text}}
+            @helpText={{item.helpText}}
+            @role={{@actionRole}}
+            @badge={{item.badge}}
+            @accessibilityLabel={{item.accessibilityLabel}}
+            @url={{item.url}}
+            @icon={{item.icon}}
+            @image={{item.image}}
+            @prefix={{item.prefix}}
+            @suffix={{item.suffix}}
+            @disabled={{item.disabled}}
+            @external={{item.external}}
+            @destructive={{item.destructive}}
+            @ellipsis={{item.ellipsis}}
+            @active={{item.active}}
+            @onAction={{fn this.handleAction item.onAction}}
+          />
+        {{/each}}
+      </ul>
+    </div>
+  </ActionListSection>
+{{/let}}
