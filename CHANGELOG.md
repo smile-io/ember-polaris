@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/smile-io/ember-polaris/tree/HEAD)
+## [v6.1.2](https://github.com/smile-io/ember-polaris/tree/v6.1.2) (October 28, 2020)
 
-[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.1...HEAD)
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.1...v6.1.2)
 
 :bug: Bug Fix
 
