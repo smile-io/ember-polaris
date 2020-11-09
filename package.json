@@ -79,6 +79,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "2.0.0",
+    "@embroider/test-setup": "^0.30.0",
     "@glimmer/component": "1.0.1",
     "@glimmer/tracking": "1.0.1",
     "@smile-io/changelog-generator": "2.1.0",

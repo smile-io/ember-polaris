@@ -6,6 +6,7 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 // We're using this because Polaris uses multi-line which is not supported
 // ex: @shopify/polaris/styles/foundation/colors.scss#57
 const nodeSass = require('node-sass');
+const { maybeEmbroider } = require('@embroider/test-setup');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
@@ -26,5 +27,5 @@ module.exports = function (defaults) {
   */
   app.import('node_modules/ember-source/dist/ember-template-compiler.js');
 
-  return app.toTree();
+  return maybeEmbroider(app);
 };
