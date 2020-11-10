@@ -1,9 +1,5 @@
-import Component from '@ember/component';
-import { tagName } from '@ember-decorators/component';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
+import Component from '@glimmer/component';
 
-@deprecateClassArgument
-@tagName('')
 export default class PolarisCaption extends Component {
   /**
    * The content to use as a graph label or timestamp.
@@ -13,8 +9,7 @@ export default class PolarisCaption extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default null
    * @public
    */
-  text = null;
+  text;
 }
