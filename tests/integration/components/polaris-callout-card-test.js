@@ -37,15 +37,15 @@ module('Integration | Component | polaris callout card', function (hooks) {
 
   test('it renders the correct HTML in inline form without secondary action', async function (assert) {
     await render(hbs`
-      {{polaris-callout-card
-        title="This is an inline callout card"
-        text="Without a secondary action"
-        illustration="http://www.somewhere.com/some-image.jpg"
-        primaryAction=(hash
+      <PolarisCalloutCard
+        @title="This is an inline callout card"
+        @text="Without a secondary action"
+        @illustration="http://www.somewhere.com/some-image.jpg"
+        @primaryAction={{hash
           text="Primary action here"
           onAction=(action (mut primaryActionFired) true)
-        )
-      }}
+        }}
+      />
     `);
 
     assert
@@ -88,20 +88,20 @@ module('Integration | Component | polaris callout card', function (hooks) {
 
   test('it renders the correct HTML in block form with secondary action', async function (assert) {
     await render(hbs`
-      {{#polaris-callout-card
-        title="This is a block callout card"
-        illustration="http://www.somewhere.com/some-image.jpg"
-        primaryAction=(hash
+      <PolarisCalloutCard
+        @title="This is a block callout card"
+        @illustration="http://www.somewhere.com/some-image.jpg"
+        @primaryAction={{hash
           text="Primary action here"
           onAction=(action (mut primaryActionFired) true)
-        )
-        secondaryAction=(hash
+        }}
+        @secondaryAction={{hash
           text="Secondary action here"
           onAction=(action (mut secondaryActionFired) true)
-        )
-      }}
+        }}
+      >
         With a secondary action
-      {{/polaris-callout-card}}
+      </PolarisCalloutCard>
     `);
 
     assert
@@ -172,16 +172,16 @@ module('Integration | Component | polaris callout card', function (hooks) {
     });
 
     await render(hbs`
-      {{polaris-callout-card
-        primaryAction=(hash
+      <PolarisCalloutCard
+        @primaryAction={{hash
           text="Primary"
           onAction=(action (mut primaryActionFired) true)
-        )
-        secondaryAction=(hash
+        }}
+        @secondaryAction={{hash
           text="Secondary"
           onAction=(action (mut secondaryActionFired) true)
-        )
-      }}
+        }}
+      />
     `);
 
     // Fire the primary action.
@@ -204,13 +204,13 @@ module('Integration | Component | polaris callout card', function (hooks) {
 
   test('it is dismissed', async function (assert) {
     await render(hbs`
-      {{polaris-callout-card
-        primaryAction=(hash
+      <PolarisCalloutCard
+        @primaryAction={{hash
           text="Primary"
           onAction=(action (mut primaryActionFired) true)
-        )
-        onDismiss=(action (mut wasOnDismissCalled) true)
-      }}
+        }}
+        @onDismiss={{action (mut wasOnDismissCalled) true}}
+      />
     `);
 
     assert.dom('.Polaris-Button').exists({ count: 2 });
