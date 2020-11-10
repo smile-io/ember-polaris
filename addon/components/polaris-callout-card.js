@@ -3,6 +3,8 @@ import Component from '@glimmer/component';
 /**
  * Polaris callout card component.
  * See https://polaris.shopify.com/components/structure/callout-card
+ *
+ * @version 5.5.0
  */
 export default class PolarisCalloutCard extends Component {
   /**
