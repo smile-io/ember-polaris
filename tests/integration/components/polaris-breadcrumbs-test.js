@@ -18,7 +18,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert.dom('[data-test-breadcrumbs]').exists('component renders');
@@ -40,7 +40,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert
@@ -63,7 +63,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert
@@ -87,7 +87,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     await click('button');
@@ -105,7 +105,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
       },
     ]);
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs  class="custom-class"}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} @class="custom-class" />
     `);
 
     assert
