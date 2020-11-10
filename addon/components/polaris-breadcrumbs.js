@@ -1,11 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { computed, action } from '@ember/object';
-import { tagName, layout } from '@ember-decorators/component';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-@deprecateClassArgument
-@tagName('')
 export default class PolarisBreadcrumbs extends Component {
   /**
    * Collection of breadcrumbs
