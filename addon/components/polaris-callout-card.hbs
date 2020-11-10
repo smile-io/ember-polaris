@@ -1,10 +1,11 @@
-<div class="Polaris-Card {{@class}}" ...attributes>
+<div class="Polaris-Card" data-test-callout-card ...attributes>
   <div class="Polaris-CalloutCard__Container">
     {{#if @onDismiss}}
       <div class="Polaris-CalloutCard__Dismiss">
         <PolarisButton
+          data-test-callout-card-dismiss-button
           @plain={{true}}
-          @icon="cancel-small"
+          @icon="CancelSmallMinor"
           @accessibilityLabel="Dismiss card"
           @onClick={{@onDismiss}}
         />
@@ -41,10 +42,11 @@
               as |PrimaryButton|
             }}
               {{#if @secondaryAction}}
-                <PolarisButtonGroup>
-                  <PrimaryButton />
+                <PolarisButtonGroup data-test-callout-card-button-group >
+                  <PrimaryButton data-test-callout-card-primary-button />
 
                   <PolarisButton
+                    data-test-callout-card-secondary-button
                     @plain={{true}}
                     @text={{@secondaryAction.text}}
                     @accessibilityLabel={{@secondaryAction.accessibilityLabel}}
@@ -55,12 +57,13 @@
                   />
                 </PolarisButtonGroup>
               {{else}}
-                <PrimaryButton />
+                <PrimaryButton data-test-callout-card-primary-button />
               {{/if}}
             {{/let}}
           </div>
         </div>
 
+        {{!-- TODO use <PolarisImage> once implemented  --}}
         <img
           alt=""
           class="Polaris-CalloutCard__Image {{if @onDismiss "Polaris-CalloutCard__DismissImage"}}"

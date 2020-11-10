@@ -1,37 +1,38 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
-import { click, findAll, render } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 
 module('Integration | Component | polaris callout card', function (hooks) {
   setupRenderingTest(hooks);
 
-  const calloutCardSelector = buildNestedSelector(
-    'div.Polaris-Card',
+  const selector = buildNestedSelector('[data-test-callout-card]');
+  const cardSelector = buildNestedSelector(
+    selector,
     'div.Polaris-CalloutCard__Container',
     'div.Polaris-Card__Section',
     'div.Polaris-CalloutCard'
   );
-  const calloutCardContentSelector = buildNestedSelector(
-    calloutCardSelector,
+  const contentSelector = buildNestedSelector(
+    cardSelector,
     'div.Polaris-CalloutCard__Content'
   );
-  const calloutCardContentHeadingSelector = buildNestedSelector(
-    calloutCardContentSelector,
+  const headingSelector = buildNestedSelector(
+    contentSelector,
     'div.Polaris-CalloutCard__Title',
     'h2.Polaris-Heading'
   );
-  const calloutCardContentTextSelector = buildNestedSelector(
-    calloutCardContentSelector,
+  const textSelector = buildNestedSelector(
+    contentSelector,
     'div.Polaris-TextContainer'
   );
-  const calloutCardButtonWrapperSelector = buildNestedSelector(
-    calloutCardContentSelector,
+  const buttonsSelector = buildNestedSelector(
+    contentSelector,
     'div.Polaris-CalloutCard__Buttons'
   );
-  const calloutCardImageSelector = buildNestedSelector(
-    calloutCardSelector,
+  const imageSelector = buildNestedSelector(
+    cardSelector,
     'img.Polaris-CalloutCard__Image'
   );
 
@@ -43,47 +44,45 @@ module('Integration | Component | polaris callout card', function (hooks) {
         @illustration="http://www.somewhere.com/some-image.jpg"
         @primaryAction={{hash
           text="Primary action here"
-          onAction=(action (mut primaryActionFired) true)
+          onAction=(fn (mut primaryActionFired) true)
         }}
       />
     `);
 
-    assert
-      .dom(calloutCardSelector)
-      .exists({ count: 1 }, 'renders one callout card');
-
-    const headings = assert.dom(calloutCardContentHeadingSelector);
-    headings.exists({ count: 1 }, 'renders one heading');
-    headings.hasText(
-      'This is an inline callout card',
-      'renders the correct heading'
-    );
-
-    const texts = assert.dom(calloutCardContentTextSelector);
-    texts.exists({ count: 1 }, 'renders one text container');
-    texts.hasText('Without a secondary action', 'renders the correct text');
+    assert.dom(cardSelector).exists({ count: 1 }, 'renders one callout card');
 
     assert
-      .dom(calloutCardButtonWrapperSelector)
+      .dom(headingSelector)
+      .exists({ count: 1 }, 'renders one heading')
+      .hasText('This is an inline callout card', 'renders the correct heading');
+
+    assert
+      .dom(textSelector)
+      .exists({ count: 1 }, 'renders one text container')
+      .hasText('Without a secondary action', 'renders the correct text');
+
+    assert
+      .dom(buttonsSelector)
       .exists({ count: 1 }, 'renders one button wrapper');
 
-    const buttonSelector = buildNestedSelector(
-      calloutCardButtonWrapperSelector,
-      'button.Polaris-Button'
+    const primaryButtonSelector = buildNestedSelector(
+      buttonsSelector,
+      '[data-test-callout-card-primary-button]'
     );
-    const buttons = assert.dom(buttonSelector);
-    buttons.exists({ count: 1 }, 'renders one button');
-    buttons.hasText('Primary action here', 'renders the correct button text');
+    assert
+      .dom(primaryButtonSelector)
+      .exists({ count: 1 }, 'renders one button')
+      .hasText('Primary action here', 'renders the correct button text');
 
-    const images = assert.dom(calloutCardImageSelector);
-    images.exists({ count: 1 }, 'renders one image');
-
-    images.hasAttribute(
-      'src',
-      'http://www.somewhere.com/some-image.jpg',
-      'renders the correct image'
-    );
-    images.hasAttribute('alt', '', 'renders an empty image title');
+    assert
+      .dom(imageSelector)
+      .exists({ count: 1 }, 'renders one image')
+      .hasAttribute(
+        'src',
+        'http://www.somewhere.com/some-image.jpg',
+        'renders the correct image'
+      )
+      .hasAttribute('alt', '', 'renders an empty image title');
   });
 
   test('it renders the correct HTML in block form with secondary action', async function (assert) {
@@ -93,11 +92,11 @@ module('Integration | Component | polaris callout card', function (hooks) {
         @illustration="http://www.somewhere.com/some-image.jpg"
         @primaryAction={{hash
           text="Primary action here"
-          onAction=(action (mut primaryActionFired) true)
+          onAction=(fn (mut primaryActionFired) true)
         }}
         @secondaryAction={{hash
           text="Secondary action here"
-          onAction=(action (mut secondaryActionFired) true)
+          onAction=(fn (mut secondaryActionFired) true)
         }}
       >
         With a secondary action
@@ -105,101 +104,50 @@ module('Integration | Component | polaris callout card', function (hooks) {
     `);
 
     assert
-      .dom(calloutCardSelector)
-      .exists({ count: 1 }, 'renders one callout card');
+      .dom(textSelector)
+      .exists({ count: 1 }, 'renders one text container')
+      .hasText('With a secondary action', 'renders the correct text');
 
-    const headings = assert.dom(calloutCardContentHeadingSelector);
-    headings.exists({ count: 1 }, 'renders one heading');
-    headings.hasText(
-      'This is a block callout card',
-      'renders the correct heading'
+    const buttonGroupSelector = buildNestedSelector(
+      buttonsSelector,
+      '[data-test-callout-card-button-group]'
     );
-
-    const texts = assert.dom(calloutCardContentTextSelector);
-    texts.exists({ count: 1 }, 'renders one text container');
-    texts.hasText('With a secondary action', 'renders the correct text');
-
     assert
-      .dom(calloutCardButtonWrapperSelector)
-      .exists({ count: 1 }, 'renders one button wrapper');
-
-    const buttonSelector = buildNestedSelector(
-      calloutCardButtonWrapperSelector,
-      'div.Polaris-ButtonGroup',
-      'div.Polaris-ButtonGroup__Item',
-      'button.Polaris-Button'
-    );
-    const buttons = findAll(buttonSelector);
-    assert.equal(buttons.length, 2, 'renders two buttons');
-
-    let button = buttons[0];
-    assert
-      .dom(button)
-      .hasText(
-        'Primary action here',
-        'renders the correct primary button text'
-      );
-    assert
-      .dom(button)
+      .dom(`${buttonGroupSelector} [data-test-callout-card-primary-button]`)
+      .hasText('Primary action here', 'renders the correct primary button text')
       .hasNoClass('Polaris-Button--plain', 'renders normal primary button');
 
-    button = buttons[1];
     assert
-      .dom(button)
+      .dom(`${buttonGroupSelector} [data-test-callout-card-secondary-button]`)
       .hasText(
         'Secondary action here',
         'renders the correct secondary button text'
-      );
-    assert
-      .dom(button)
+      )
       .hasClass('Polaris-Button--plain', 'renders plain secondary button');
-
-    const images = assert.dom(calloutCardImageSelector);
-    images.exists({ count: 1 }, 'renders one image');
-
-    images.hasAttribute(
-      'src',
-      'http://www.somewhere.com/some-image.jpg',
-      'renders the correct image'
-    );
-    images.hasAttribute('alt', '', 'renders an empty image title');
   });
 
   test('it handles actions correctly', async function (assert) {
-    this.setProperties({
-      primaryActionFired: false,
-      secondaryActionFired: false,
-    });
+    this.set('cardAction', (name) => assert.step(name));
 
     await render(hbs`
       <PolarisCalloutCard
         @primaryAction={{hash
           text="Primary"
-          onAction=(action (mut primaryActionFired) true)
+          onAction=(fn cardAction "primary")
         }}
         @secondaryAction={{hash
           text="Secondary"
-          onAction=(action (mut secondaryActionFired) true)
+          onAction=(fn cardAction "secondary")
         }}
       />
     `);
 
     // Fire the primary action.
-    await click('button.Polaris-Button:first-of-type');
-    assert.ok(
-      this.get('primaryActionFired'),
-      'after firing primary action - primary action has fired'
-    );
-    assert.notOk(
-      this.get('secondaryActionFired'),
-      'after firing primary action - secondary action has not fired'
-    );
+    await click('[data-test-callout-card-primary-button]');
+    assert.verifySteps(['primary'], 'triggers primary action');
 
-    await click('button.Polaris-Button.Polaris-Button--plain');
-    assert.ok(
-      this.get('secondaryActionFired'),
-      'after firing secondary action - secondary action has been fired'
-    );
+    await click('[data-test-callout-card-secondary-button]');
+    assert.verifySteps(['secondary'], 'triggers secondary action');
   });
 
   test('it is dismissed', async function (assert) {
@@ -207,15 +155,13 @@ module('Integration | Component | polaris callout card', function (hooks) {
       <PolarisCalloutCard
         @primaryAction={{hash
           text="Primary"
-          onAction=(action (mut primaryActionFired) true)
+          onAction=(fn (mut primaryActionFired) true)
         }}
-        @onDismiss={{action (mut wasOnDismissCalled) true}}
+        @onDismiss={{fn (mut wasOnDismissCalled) true}}
       />
     `);
 
-    assert.dom('.Polaris-Button').exists({ count: 2 });
-
-    await click('.Polaris-Button');
+    await click('[data-test-callout-card-dismiss-button]');
     assert.ok(this.get('wasOnDismissCalled'));
   });
 });
