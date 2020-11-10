@@ -4,6 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 
 const content = 'Content value';
+const accessibilityLabel = 'Go to products';
 
 module('Integration | Component | polaris-breadcrumbs', function (hooks) {
   setupRenderingTest(hooks);
@@ -33,6 +34,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     this.set('breadcrumbs', [
       {
         content,
+        accessibilityLabel,
         url: '/',
       },
     ]);
@@ -43,13 +45,19 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
 
     assert
       .dom('[data-test-breadcrumbs] > a[data-polaris-unstyled]')
-      .exists('it renders an unstyled link component');
+      .exists('it renders an unstyled link component')
+      .hasAttribute(
+        'aria-label',
+        accessibilityLabel,
+        'it passes the accessibilityLabel to the link'
+      );
   });
 
   test('it renders a button when `breadcrumb.url` attribute is not present', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
+        accessibilityLabel,
         onAction() {},
       },
     ]);
@@ -60,7 +68,12 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
 
     assert
       .dom('[data-test-breadcrumbs] > button')
-      .exists('it renders a button');
+      .exists('it renders a button')
+      .hasAttribute(
+        'aria-label',
+        accessibilityLabel,
+        'it passes the accessibilityLabel to the button'
+      );
   });
 
   test('it does not append the click event to the invoked action args', async function (assert) {

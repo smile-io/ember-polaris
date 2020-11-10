@@ -8,9 +8,11 @@
     <PolarisUnstyledLink
       class="Polaris-Breadcrumbs__Breadcrumb"
       @url={{this.breadcrumb.url}}
+      @ariaLabel={{this.breadcrumb.accessibilityLabel}}
       @onMouseUp={{this.handleMouseUpByBlurring}}
     >
       <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
+        {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage icon, styles, and visually-hidden wrapper --}}
         <PolarisIcon @source="chevron-left" />
       </span>
       <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
@@ -21,6 +23,7 @@
     <button
       class="Polaris-Breadcrumbs__Breadcrumb"
       type="button"
+      aria-label={{this.breadcrumb.accessibilityLabel}}
       {{on "click" this.handleClick}}
       {{on "mouseup" this.handleMouseUpByBlurring}}
     >
