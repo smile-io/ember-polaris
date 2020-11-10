@@ -11,7 +11,7 @@ module('Integration | Component | polaris caption', function (hooks) {
 
   test('it renders the correct HTML with inline usage', async function (assert) {
     this.set('text', caption);
-    await render(hbs`{{polaris-caption text=text}}`);
+    await render(hbs`<PolarisCaption @text={{text}} />`);
 
     const captionNode = assert.dom(componentSelector);
 
@@ -22,9 +22,9 @@ module('Integration | Component | polaris caption', function (hooks) {
   test('it renders the correct HTML with block usage', async function (assert) {
     this.set('caption', caption);
     await render(hbs`
-      {{#polaris-caption}}
+      <PolarisCaption>
         {{caption}}
-      {{/polaris-caption}}
+      </PolarisCaption>
     `);
 
     const captionNode = assert.dom(componentSelector);
