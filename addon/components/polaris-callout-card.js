@@ -1,6 +1,5 @@
 import Component from '@ember/component';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-callout-card';
+import { tagName } from '@ember-decorators/component';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
@@ -9,7 +8,6 @@ import deprecateClassArgument from '../utils/deprecate-class-argument';
  */
 @deprecateClassArgument
 @tagName('')
-@layout(template)
 export default class PolarisCalloutCard extends Component {
   /**
    * The content to display inside the callout card.
