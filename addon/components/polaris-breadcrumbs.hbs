@@ -10,12 +10,14 @@
       @ariaLabel={{this.breadcrumb.accessibilityLabel}}
       @onMouseUp={{this.handleMouseUpByBlurring}}
     >
-      <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-        {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage icon, styles, and visually-hidden wrapper --}}
-        <PolarisIcon @source="chevron-left" />
-      </span>
-      <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-        {{this.breadcrumb.content}}
+      <span class="Polaris-Breadcrumbs__ContentWrapper">
+        <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
+          {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage icon, styles, and visually-hidden wrapper --}}
+          <PolarisIcon @source="chevron-left" />
+        </span>
+        <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+          {{this.breadcrumb.content}}
+        </span>
       </span>
     </PolarisUnstyledLink>
   {{else}}
@@ -26,11 +28,13 @@
       {{on "click" this.handleClick}}
       {{on "mouseup" this.handleMouseUpByBlurring}}
     >
-      <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-        <PolarisIcon @source="chevron-left" />
-      </span>
-      <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-        {{this.breadcrumb.content}}
+      <span class="Polaris-Breadcrumbs__ContentWrapper">
+        <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
+          <PolarisIcon @source="chevron-left" />
+        </span>
+        <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+          {{this.breadcrumb.content}}
+        </span>
       </span>
     </button>
   {{/if}}
