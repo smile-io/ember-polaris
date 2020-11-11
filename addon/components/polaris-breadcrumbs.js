@@ -10,7 +10,7 @@ export default class PolarisBreadcrumbs extends Component {
    * @default []
    * @public
    */
-  breadcrumbs = [];
+  breadcrumbs;
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
@@ -23,7 +23,7 @@ export default class PolarisBreadcrumbs extends Component {
    */
   @computed('breadcrumbs.[]')
   get breadcrumb() {
-    let { breadcrumbs } = this;
+    let { breadcrumbs } = this.args;
     return breadcrumbs[breadcrumbs.length - 1];
   }
 
