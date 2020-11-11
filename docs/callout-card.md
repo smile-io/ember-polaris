@@ -14,7 +14,7 @@ Inline usage without secondary action:
   @text="This new feature is awesome!"
   @primaryAction=(hash
     text="Take a look"
-    onAction=(fn this.handleAction)
+    onAction=(fn this.showNewFeature)
   )
 />
 ```
@@ -26,7 +26,7 @@ Block usage with secondary action:
   @title="New feature"
   @primaryAction={{hash
     text="Take a look"
-    onAction=(fn this.handleAction)
+    onAction=(fn this.showNewFeature)
   }}
   @secondaryAction={{hash
     text="Learn more"
