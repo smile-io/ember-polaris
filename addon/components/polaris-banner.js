@@ -207,7 +207,7 @@ export default class PolarisBanner extends Component {
       event.stopPropagation();
     }
 
-    return this.actionObj?.onAction();
+    return actionObj?.onAction();
   }
 
   @action
