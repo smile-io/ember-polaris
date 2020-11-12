@@ -1,7 +1,5 @@
-import Component from '@ember/component';
-import { computed, action } from '@ember/object';
-import { deprecate } from '@ember/application/deprecations';
-import { tagName } from '@ember-decorators/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -9,60 +7,40 @@ import { tagName } from '@ember-decorators/component';
  * component behaviour provided by the React
  * implementation at this point.
  */
-@tagName('')
 export default class PolarisUnstyledLink extends Component {
   /**
    * Content to display inside the link
    *
    * @type {String}
-   * @default null
    * @public
    */
-  text = null;
+  text;
 
   /**
    * A destination to link to
    *
    * @type {String}
-   * @default null
    * @public
    *
    */
-  url = null;
+  url;
 
   /**
    * Forces url to open in a new tab
    *
    * @type {Boolean}
-   * @default false
    * @public
    */
-  external = false;
+  external;
 
   /**
-   * Tells the browser to download the url instead of opening it. Provides a hint for the downloaded filename if it is a string value.
+   * Tells the browser to download the url instead of opening it.
+   * Provides a hint for the downloaded filename if it is a string value.
    *
    * @type {String|Boolean}
-   * @default null
    * @public
    */
-  download = null;
-
-  /**
-   * Accessibility label
-   *
-   * @type {String}
-   * @default null
-   * @public
-   */
-  ariaLabel = null;
-
-  /**
-   * @type {String}
-   * @default null
-   * @public
-   */
-  ariaDescribedBy = null;
+  download;
 
   /**
    * Callback when a link is clicked
@@ -73,78 +51,17 @@ export default class PolarisUnstyledLink extends Component {
    */
   onClick() {}
 
-  /**
-   * Callback when a link is focused
-   *
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onFocus() {}
-
-  /**
-   * Callback when a link is blured
-   *
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onBlur() {}
-
-  /**
-   * Callback for mouseup event
-   *
-   * @type {Function}
-   * @default noop
-   * @public
-   */
-  onMouseUp() {}
-
-  /** @deprecated */
-  dataTestId = null;
-
-  @computed('external')
   get target() {
-    return this.external ? '_blank' : null;
+    return this.args.external ? '_blank' : undefined;
   }
 
-  @computed('external')
   get rel() {
-    return this.external ? 'noopener noreferrer' : null;
-  }
-
-  init() {
-    super.init(...arguments);
-
-    deprecate(
-      `[PolarisUnstyledLink] Passing 'dataTestId' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.dataTestId,
-      {
-        id: 'ember-polaris.polaris-unstyled-link.dataTestId-arg',
-        until: '7.0.0',
-      }
-    );
-    deprecate(
-      `[PolarisUnstyledLink] Passing 'dataPolarisUnstyled' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.dataPolarisUnstyled,
-      {
-        id: 'ember-polaris.polaris-unstyled-link.dataPolarisUnstyled-arg',
-        until: '7.0.0',
-      }
-    );
-    deprecate(
-      `[PolarisUnstyledLink] Passing 'id' is deprecated! Switch to angle bracket invocation and pass an HTML attribute instead`,
-      !this.id,
-      {
-        id: 'ember-polaris.polaris-unstyled-link.id-arg',
-        until: '7.0.0',
-      }
-    );
+    return this.args.external ? 'noopener noreferrer' : undefined;
   }
 
   @action
   handleClick(event) {
     event.stopPropagation();
-    this.onClick();
+    this.args.onClick?.();
   }
 }

@@ -13,14 +13,15 @@
 >
   {{#let (if this.loading "-1" "0") as |tabIndex|}}
     {{#if @url}}
+      {{!-- template-lint-disable no-positive-tabindex --}}
       <PolarisUnstyledLink
         class="Polaris-ResourceList-Item__Link"
-        @ariaDescribedBy={{@itemId}}
-        @ariaLabel={{@accessibilityLabel}}
+        aria-describedby={{@itemId}}
+        aria-label={{@accessibilityLabel}}
         @url={{@url}}
-        @tabIndex={{tabIndex}}
-        @onFocus={{fn this.handleAnchorFocus}}
-        @onBlur={{fn this.handleFocusedBlur}}
+        tabindex={{tabIndex}}
+        {{on "focus" this.handleAnchorFocus}}
+        {{on "blur" this.handleFocusedBlur}}
       />
     {{else}}
       <button
