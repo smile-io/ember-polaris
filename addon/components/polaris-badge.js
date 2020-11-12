@@ -1,4 +1,3 @@
-import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
