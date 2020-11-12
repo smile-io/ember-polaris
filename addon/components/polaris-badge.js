@@ -15,6 +15,7 @@ const STATUS_LABELS = {
   info: 'Info',
   success: 'Success',
   warning: 'Warning',
+  critical: 'Critical',
   attention: 'Attention',
   new: 'New',
 };
