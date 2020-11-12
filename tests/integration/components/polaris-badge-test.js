@@ -10,7 +10,7 @@ module('Integration | Component | polaris badge', function (hooks) {
   const badgeSelector = '.Polaris-Badge';
 
   test('it renders the correct HTML in basic inline usage', async function (assert) {
-    await render(hbs`{{polaris-badge text="Inline badge"}}`);
+    await render(hbs`<PolarisBadge @text="Inline badge" />`);
 
     assert.dom(badgeSelector).exists({ count: 1 }, 'renders one badge');
     assert
@@ -20,9 +20,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML in basic block usage', async function (assert) {
     await render(hbs`
-      {{#polaris-badge}}
+      <PolarisBadge>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     assert.dom(badgeSelector).exists({ count: 1 }, 'renders one badge');
@@ -33,9 +33,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML when status is set', async function (assert) {
     await render(hbs`
-      {{#polaris-badge status=status}}
+      <PolarisBadge @status={{status}}>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     let badge = find(badgeSelector);
@@ -161,9 +161,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML when progress is set', async function (assert) {
     await render(hbs`
-      {{#polaris-badge progress=progress}}
+      <PolarisBadge @progress={{progress}}>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     let badge = find(badgeSelector);
@@ -286,7 +286,7 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('supports passing a @class argument for backwards compatibility', async function (assert) {
     await render(hbs`
-      {{polaris-badge class="custom-class"}}
+      <PolarisBadge @class="custom-class" />
     `);
 
     assert

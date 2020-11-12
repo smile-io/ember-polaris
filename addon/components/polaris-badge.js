@@ -1,11 +1,9 @@
-import Component from '@ember/component';
+import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-badge';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -32,9 +30,6 @@ const DEFAULT_SIZE = SIZES.medium;
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
  */
-@deprecateClassArgument
-@tagName('')
-@layout(template)
 export default class PolarisBadge extends Component {
   /**
    * The content to display inside the badge.
@@ -47,7 +42,7 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  text = null;
+  text;
 
   /**
    * Set the color of the badge for the given status.
@@ -56,7 +51,7 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  status = null;
+  status;
 
   /**
    * Render a pip showing the progress of a given task.
@@ -65,16 +60,16 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  progress = null;
+  progress;
 
   /**
    * Medium or small size. Use `small` only in the main navigation of an app frame..
    *
    * @type {String}
-   * @default 'medium'
+   * @default null
    * @public
    */
-  size = DEFAULT_SIZE;
+  size;
 
   @notEmpty('progress')
   hasProgress;
@@ -82,9 +77,8 @@ export default class PolarisBadge extends Component {
   @notEmpty('status')
   hasStatus;
 
-  @computed('progress')
   get progressDescription() {
-    const { progress } = this;
+    const { progress } = this.args;
     if (isBlank(progress) || progress === 'default') {
       return null;
     }
@@ -92,9 +86,8 @@ export default class PolarisBadge extends Component {
     return PROGRESS_LABELS[progress];
   }
 
-  @computed('progress')
   get progressClass() {
-    const { progress } = this;
+    const { progress } = this.args;
     if (isBlank(progress) || progress === 'default') {
       return null;
     }
@@ -102,9 +95,8 @@ export default class PolarisBadge extends Component {
     return `Polaris-Badge--progress${classify(progress)}`;
   }
 
-  @computed('size')
   get sizeClass() {
-    const { size } = this;
+    const { size } = this.args;
     if (isPresent(size) && size !== DEFAULT_SIZE) {
       return `Polaris-Badge--size${classify(size)}`;
     }
@@ -112,9 +104,8 @@ export default class PolarisBadge extends Component {
     return null;
   }
 
-  @computed('status')
   get statusDescription() {
-    const { status } = this;
+    const { status } = this.args;
     if (isBlank(status) || status === 'default') {
       return null;
     }
@@ -122,9 +113,8 @@ export default class PolarisBadge extends Component {
     return STATUS_LABELS[status];
   }
 
-  @computed('status')
   get statusClass() {
-    const { status } = this;
+    const { status } = this.args;
     if (isBlank(status) || status === 'default') {
       return null;
     }
