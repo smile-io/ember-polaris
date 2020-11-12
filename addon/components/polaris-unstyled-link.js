@@ -3,7 +3,6 @@ import { computed, action } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../templates/components/polaris-unstyled-link';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -11,7 +10,6 @@ import deprecateClassArgument from '../utils/deprecate-class-argument';
  * component behaviour provided by the React
  * implementation at this point.
  */
-@deprecateClassArgument
 @tagName('')
 @layout(template)
 export default class PolarisUnstyledLink extends Component {
