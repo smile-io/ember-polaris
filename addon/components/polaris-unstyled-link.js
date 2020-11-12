@@ -1,8 +1,7 @@
 import Component from '@ember/component';
 import { computed, action } from '@ember/object';
 import { deprecate } from '@ember/application/deprecations';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-unstyled-link';
+import { tagName } from '@ember-decorators/component';
 
 /**
  * Undocumented Polaris UnstyledLink component.
@@ -11,7 +10,6 @@ import template from '../templates/components/polaris-unstyled-link';
  * implementation at this point.
  */
 @tagName('')
-@layout(template)
 export default class PolarisUnstyledLink extends Component {
   /**
    * Content to display inside the link
