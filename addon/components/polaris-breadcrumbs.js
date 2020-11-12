@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { computed, action } from '@ember/object';
+import { action } from '@ember/object';
 import { handleMouseUpByBlurring } from '../utils/focus';
 
 export default class PolarisBreadcrumbs extends Component {
@@ -10,7 +10,7 @@ export default class PolarisBreadcrumbs extends Component {
    * @default []
    * @public
    */
-  breadcrumbs;
+  breadcrumbs; // add @tracked if we're setting a default without a getter
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
@@ -21,7 +21,6 @@ export default class PolarisBreadcrumbs extends Component {
    *
    * @type {Object}
    */
-  @computed('breadcrumbs.[]')
   get breadcrumb() {
     let { breadcrumbs } = this.args;
     return breadcrumbs[breadcrumbs.length - 1];
