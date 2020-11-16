@@ -79,21 +79,13 @@ export default class PolarisBadge extends Component {
   hasStatus;
 
   get progressDescription() {
-    const { progress } = this.args;
-    if (isBlank(progress) || progress === 'default') {
-      return null;
-    }
-
-    return PROGRESS_LABELS[progress];
+    return this.args.progress ? PROGRESS_LABELS[this.args.progress] : null;
   }
 
   get progressClass() {
-    const { progress } = this.args;
-    if (isBlank(progress)) {
-      return null;
-    }
-
-    return `Polaris-Badge--progress${classify(progress)}`;
+    return this.args.progress
+      ? `Polaris-Badge--progress${classify(this.args.progress)}`
+      : null;
   }
 
   get sizeClass() {
@@ -106,20 +98,12 @@ export default class PolarisBadge extends Component {
   }
 
   get statusDescription() {
-    const { status } = this.args;
-    if (isBlank(status)) {
-      return null;
-    }
-
-    return STATUS_LABELS[status];
+    return this.args.status ? STATUS_LABELS[this.args.status] : null;
   }
 
   get statusClass() {
-    const { status } = this.args;
-    if (isBlank(status)) {
-      return null;
-    }
-
-    return `Polaris-Badge--status${classify(status)}`;
+    return this.args.status
+      ? `Polaris-Badge--status${classify(this.args.status)}`
+      : null;
   }
 }
