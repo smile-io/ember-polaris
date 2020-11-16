@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { gt } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 /**
  * Polaris action list component.
@@ -8,6 +9,8 @@ import { gt } from '@ember/object/computed';
  * @version 5.6.0
  */
 export default class PolarisActionListComponent extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * Collection of actions for list
    * @type {Array}

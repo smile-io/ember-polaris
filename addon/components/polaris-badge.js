@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { notEmpty } from '@ember/object/computed';
-import { isBlank, isPresent } from '@ember/utils';
+import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
 import { argWithDefault } from '../utils/decorators/arg-with-default';
 
