@@ -1,7 +1,7 @@
 import { helper } from '@ember/component/helper';
 
-export function noop() {
+export function noOp() {
   return () => {};
 }
 
-export default helper(noop);
+export default helper(noOp);
