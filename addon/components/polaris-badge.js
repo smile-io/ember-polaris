@@ -72,6 +72,15 @@ export default class PolarisBadge extends Component {
   @argWithDefault(DEFAULT_SIZE)
   size;
 
+  /**
+   * Temporary workaround for not having useContext equivalents implemented yet.
+   * Pass `WithinFilterContext` true if badge is in a filter control component.
+   *
+   * TODO implement useContext or find Ember equivalent
+   */
+  @argWithDefault(false)
+  withinFilterContext;
+
   @notEmpty('progress')
   hasProgress;
 
@@ -105,5 +114,9 @@ export default class PolarisBadge extends Component {
     return this.args.status
       ? `Polaris-Badge--status${classify(this.args.status)}`
       : null;
+  }
+
+  get withinFilterClass() {
+    return this.withinFilterContext ? 'Polaris-Badge--withinFilter' : null;
   }
 }

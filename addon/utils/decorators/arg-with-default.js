@@ -9,7 +9,7 @@ export function argWithDefault(defaultValue) {
   return function (object, property) {
     return {
       get() {
-        return this.args[property] || defaultValue;
+        return this.args[property] ?? defaultValue;
       },
     };
   };
