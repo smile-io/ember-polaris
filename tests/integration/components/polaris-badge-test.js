@@ -58,21 +58,6 @@ module('Integration | Component | polaris badge', function (hooks) {
         'status not set - does not render any visually hidden components'
       );
 
-    // With status set to default:
-    //  - shouldn't apply any status classes
-    //  - should render empty visually hidden component
-    this.set('status', 'default');
-    assert.equal(
-      badge.className.indexOf('Polaris-Badge--status'),
-      -1,
-      'status set to default - does not apply status classes'
-    );
-    assert
-      .dom(visuallyHiddenSelector)
-      .doesNotExist(
-        'status set to default - does not render any visually hidden components'
-      );
-
     // With status set to success:
     //  - should apply success status class
     //  - should render visually hidden component with success text
@@ -188,24 +173,6 @@ module('Integration | Component | polaris badge', function (hooks) {
       .dom(badgePipVisuallyHiddenSelector)
       .doesNotExist(
         'progress not set - does not render a pip visually hidden component'
-      );
-
-    // With progress set to default:
-    //  - shouldn't apply any progress classes
-    //  - shouldn't render any visually hidden components
-    this.set('progress', 'default');
-    assert.equal(
-      badge.className.indexOf('Polaris-Badge--progress'),
-      -1,
-      'progress set to default - does not apply progress classes'
-    );
-    assert
-      .dom(badgePipSelector)
-      .doesNotExist('progress set to default - does not render a pip div');
-    assert
-      .dom(badgePipVisuallyHiddenSelector)
-      .doesNotExist(
-        'progress set to default - does not render a pip visually hidden component'
       );
 
     // With progress set to 'incomplete':
