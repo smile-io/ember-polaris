@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
-import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
+import { argWithDefault } from '../utils/decorators/arg-with-default';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -69,6 +69,7 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
+  @argWithDefault(DEFAULT_SIZE)
   size;
 
   @notEmpty('progress')
@@ -88,7 +89,7 @@ export default class PolarisBadge extends Component {
 
   get progressClass() {
     const { progress } = this.args;
-    if (isBlank(progress) || progress === 'default') {
+    if (isBlank(progress)) {
       return null;
     }
 
@@ -96,7 +97,7 @@ export default class PolarisBadge extends Component {
   }
 
   get sizeClass() {
-    const { size } = this.args;
+    const size = this.args.size || this.size;
     if (isPresent(size) && size !== DEFAULT_SIZE) {
       return `Polaris-Badge--size${classify(size)}`;
     }
@@ -106,7 +107,7 @@ export default class PolarisBadge extends Component {
 
   get statusDescription() {
     const { status } = this.args;
-    if (isBlank(status) || status === 'default') {
+    if (isBlank(status)) {
       return null;
     }
 
@@ -115,7 +116,7 @@ export default class PolarisBadge extends Component {
 
   get statusClass() {
     const { status } = this.args;
-    if (isBlank(status) || status === 'default') {
+    if (isBlank(status)) {
       return null;
     }
 
