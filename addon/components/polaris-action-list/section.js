@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class PolarisActionListSection extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * Section action item
    *

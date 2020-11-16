@@ -1,7 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render } from '@ember/test-helpers';
+import { click, render, settled } from '@ember/test-helpers';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import { capitalize } from '@ember/string';
 import { matchesIcon } from '../../helpers/matches-icon';
@@ -428,6 +428,61 @@ module('Integration | Component | polaris action list', function (hooks) {
       });
 
       await click(actionListItemLinkSelector);
+    });
+
+    module('newDesignLanguage', function () {
+      test('it supports newDesignLanguage', async function (assert) {
+        await render(
+          hbs`<PolarisActionList
+            @items={{array (hash text="Add discount")}}
+            @sections={{array (hash items=(array (hash text="Section")))}}
+          />`
+        );
+
+        assert
+          .dom(actionListSelector)
+          .doesNotHaveClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is false does not add --newDesignLanguage class'
+          );
+        assert
+          .dom(actionListItemButtonSelector)
+          .doesNotHaveClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is false does not add --newDesignLanguage class'
+          );
+        assert
+          .dom(actionListSectionActionsSelector)
+          .doesNotHaveClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is false does not add --newDesignLanguage class'
+          );
+
+        this.appProviderService = this.owner.lookup(
+          'service:polaris-app-provider'
+        );
+        this.appProviderService.features = { newDesignLanguage: true };
+
+        await settled();
+        assert
+          .dom(actionListSelector)
+          .hasClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is true adds --newDesignLanguage class'
+          );
+        assert
+          .dom(actionListItemButtonSelector)
+          .hasClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is true adds --newDesignLanguage class'
+          );
+        assert
+          .dom(actionListSectionActionsSelector)
+          .hasClass(
+            'Polaris-ActionList--newDesignLanguage',
+            'when newDesignLanguage is true adds --newDesignLanguage class'
+          );
+      });
     });
   });
 

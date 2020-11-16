@@ -2,37 +2,37 @@
 
 ## Callout card
 
-`polaris-callout-card` implements the [Polaris Callout card component](https://polaris.shopify.com/components/structure/callout-card).
+`PolarisCalloutCard` implements the [Polaris Callout card component](https://polaris.shopify.com/components/structure/callout-card).
 
 ### Examples
 
 Inline usage without secondary action:
 
 ```hbs
-{{polaris-callout-card
-  title="New feature"
-  text="This new feature is awesome!"
-  primaryAction=(hash
+<PolarisCalloutCard
+  @title="New feature"
+  @text="This new feature is awesome!"
+  @primaryAction=(hash
     text="Take a look"
-    onAction=(action "showNewFeature")
+    onAction=(fn this.showNewFeature)
   )
-}}
+/>
 ```
 
 Block usage with secondary action:
 
 ```hbs
-{{#polaris-callout-card
-  title="New feature"
-  primaryAction=(hash
+<PolarisCalloutCard
+  @title="New feature"
+  @primaryAction={{hash
     text="Take a look"
-    onAction=(action "showNewFeature")
-  )
-  secondaryAction=(hash
+    onAction=(fn this.showNewFeature)
+  }}
+  @secondaryAction={{hash
     text="Learn more"
-    onAction=(action "showDetails")
-  )
-}}
+    onAction=(fn showDetails)
+  }}
+>
   We've got an awesome new feature!
-{{/polaris-callout-card}}
+</PolarisCalloutCard>
 ```

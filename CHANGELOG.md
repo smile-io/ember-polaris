@@ -1,5 +1,21 @@
 # Changelog
 
+## [v6.1.2](https://github.com/smile-io/ember-polaris/tree/v6.1.2) (October 28, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.1...v6.1.2)
+
+:bug: Bug Fix
+
+- Fix banner primary action [\#669](https://github.com/smile-io/ember-polaris/pull/669) ([vladucu](https://github.com/vladucu))
+
+:house: Internal
+
+- Update linting tools \(major\) [\#668](https://github.com/smile-io/ember-polaris/pull/668) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency ember-truth-helpers to v3 [\#667](https://github.com/smile-io/ember-polaris/pull/667) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency ember-test-selectors to v5 [\#666](https://github.com/smile-io/ember-polaris/pull/666) ([renovate[bot]](https://github.com/apps/renovate))
+- Update dependency ember-cli-code-coverage to v1.0.2 [\#663](https://github.com/smile-io/ember-polaris/pull/663) ([renovate[bot]](https://github.com/apps/renovate))
+- Update Yarn to v1.22.10 [\#661](https://github.com/smile-io/ember-polaris/pull/661) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [v6.1.1](https://github.com/smile-io/ember-polaris/tree/v6.1.1) (October 6, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.0...v6.1.1)
