@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { classify } from '@ember/string';
+import { inject as service } from '@ember/service';
+import { isNewDesignLanguageColor } from '@smile-io/ember-polaris/utils/color-new-design-language';
 
 const COLORS_WITH_BACKDROPS = [
   'blueDark',
@@ -14,6 +16,8 @@ const COLORS_WITH_BACKDROPS = [
 ];
 
 export default class PolarisIconComponent extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * The SVG contents to display in the icon
    * If the source doesn't have a slash in the name, it will look for Polaris
@@ -64,7 +68,9 @@ export default class PolarisIconComponent extends Component {
     if (this.args.backdrop) {
       cssClasses.push('Polaris-Icon--hasBackdrop');
     }
-    // TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles
+    if (this.polaris.features.newDesignLanguage) {
+      cssClasses.push('Polaris-Icon--newDesignLanguage');
+    }
 
     return cssClasses.join(' ');
   }
@@ -96,22 +102,22 @@ export default class PolarisIconComponent extends Component {
       );
     }
 
-    // TODO #polaris-v5-newDesignLanguage
-    // if (color && !newDesignLanguage && isNewDesignLanguageColor(color)) {
-    //   console.warn(
-    //     '[PolarisIcon] You have selected a color meant to be used in the new design language but new design language is not enabled.'
-    //   );
-    // }
+    const { newDesignLanguage } = this.polaris.features;
+    if (color && !newDesignLanguage && isNewDesignLanguageColor(color)) {
+      console.warn(
+        '[PolarisIcon] You have selected a color meant to be used in the new design language but new design language is not enabled.'
+      );
+    }
 
-    // if (
-    //   color &&
-    //   this.sourceType === 'external' &&
-    //   newDesignLanguage === true &&
-    //   isNewDesignLanguageColor(color)
-    // ) {
-    //   console.warn(
-    //     '[PolarisIcon] Recoloring external SVGs is not supported with colors in the new design language. Set the intended color on your SVG instead.'
-    //   );
-    // }
+    if (
+      color &&
+      this.sourceType === 'external' &&
+      newDesignLanguage === true &&
+      isNewDesignLanguageColor(color)
+    ) {
+      console.warn(
+        '[PolarisIcon] Recoloring external SVGs is not supported with colors in the new design language. Set the intended color on your SVG instead.'
+      );
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, settled } from '@ember/test-helpers';
 import { classify } from '@ember/string';
 import buildNestedSelector from '../../helpers/build-nested-selector';
 import { matchesIcon } from '../../helpers/matches-icon';
@@ -27,25 +27,47 @@ module('Integration | Component | polaris icon', function (hooks) {
       <PolarisIcon @source="placeholder" />
     `);
 
-    assert.dom(iconSelector).exists('renders the icon');
     assert
       .dom(iconSelector)
+      .exists('renders the icon')
       .doesNotHaveClass(
         'Polaris-Icon--isColored',
         'without @color has no isColored class'
-      );
-    assert
-      .dom(iconSelector)
+      )
       .doesNotHaveClass(
         /Polaris-Icon--color/,
         'without @color has no color class'
-      );
-    assert
-      .dom(iconSelector)
+      )
       .doesNotHaveClass(
         'Polaris-Icon--hasBackdrop',
         'without @backdrop has no hasBackdrop class'
       );
+  });
+
+  module('newDesignLanguage', function () {
+    test('it supports newDesignLanguage', async function (assert) {
+      await render(hbs`<PolarisIcon @source="placeholder" />`);
+
+      assert
+        .dom(iconSelector)
+        .doesNotHaveClass(
+          'Polaris-Icon--newDesignLanguage',
+          'when newDesignLanguage is false does not add --newDesignLanguage class'
+        );
+
+      this.appProviderService = this.owner.lookup(
+        'service:polaris-app-provider'
+      );
+      this.appProviderService.features = { newDesignLanguage: true };
+
+      await settled();
+      assert
+        .dom(iconSelector)
+        .hasClass(
+          'Polaris-Icon--newDesignLanguage',
+          'when newDesignLanguage is true adds --newDesignLanguage class'
+        );
+    });
   });
 
   module('@source', function () {
@@ -57,45 +79,39 @@ module('Integration | Component | polaris icon', function (hooks) {
     test('when set to an svg-jar ID', async function (assert) {
       await render(hbs`<PolarisIcon @source="NoteMinor" />`);
 
-      assert.dom(svgSelector).exists('it renders as a SVG element');
-      assert.ok(matchesIcon(iconSelector, 'NoteMinor'), 'renders correct icon');
       assert
         .dom(svgSelector)
+        .exists('it renders as a SVG element')
         .hasAttribute(
           'focusable',
           'false',
           'applies focusable:false to the SVG element'
-        );
-      assert
-        .dom(svgSelector)
+        )
         .hasAttribute(
           'aria-hidden',
           'true',
           'applies aria-hidden to the SVG element'
         );
+      assert.ok(matchesIcon(iconSelector, 'NoteMinor'), 'renders correct icon');
     });
 
     test('when set to an untrusted SVG element string', async function (assert) {
       this.svg = svg;
       await render(hbs`<PolarisIcon @source={{this.svg}} />`);
 
-      assert.dom(imageSelector).exists('it renders the SVG as an image');
       assert
         .dom(imageSelector)
+        .exists('it renders the SVG as an image')
         .hasAttribute(
           'src',
           `data:image/svg+xml;utf8,${this.svg}`,
           'sets `src` correctly on the SVG image'
-        );
-      assert
-        .dom(imageSelector)
+        )
         .hasAttribute(
           'aria-hidden',
           'true',
           'sets `aria-hidden` on the SVG image'
-        );
-      assert
-        .dom(imageSelector)
+        )
         .hasAttribute('alt', '', 'sets `alt` on the SVG image');
     });
   });
@@ -110,9 +126,7 @@ module('Integration | Component | polaris icon', function (hooks) {
       .doesNotHaveClass(
         'Polaris-Icon--isColored',
         'without @color has no isColored class'
-      );
-    assert
-      .dom(iconSelector)
+      )
       .doesNotHaveClass(
         'Polaris-Icon--hasBackdrop',
         'without @backdrop has no hasBackdrop class'
@@ -121,9 +135,7 @@ module('Integration | Component | polaris icon', function (hooks) {
     this.set('color', 'blue');
     assert
       .dom(iconSelector)
-      .hasClass('Polaris-Icon--isColored', 'with @color adds isColored class');
-    assert
-      .dom(iconSelector)
+      .hasClass('Polaris-Icon--isColored', 'with @color adds isColored class')
       .hasClass(
         `Polaris-Icon--color${classify(this.color)}`,
         'with @color adds color-specific class'

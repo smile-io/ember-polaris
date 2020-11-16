@@ -1,7 +1,10 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
+import { inject as service } from '@ember/service';
 
 export default class PolarisActionListItem extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * Visually hidden text for screen readers
    * @type: {String}
@@ -115,8 +118,9 @@ export default class PolarisActionListItem extends Component {
     if (active) {
       cssClasses.push('Polaris-ActionList--active');
     }
-    // TODO #polaris-v5-newDesignLanguage add newDesignLanguage styles
-
+    if (this.polaris.features.newDesignLanguage) {
+      cssClasses.push('Polaris-ActionList--newDesignLanguage');
+    }
     return cssClasses.join(' ');
   }
 
