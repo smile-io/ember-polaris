@@ -6,6 +6,8 @@ import { action } from '@ember/object';
  * Note that we do not support the custom link
  * component behaviour provided by the React
  * implementation at this point.
+
+ @version 5.5.0
  */
 export default class PolarisUnstyledLink extends Component {
   /**
@@ -46,10 +48,9 @@ export default class PolarisUnstyledLink extends Component {
    * Callback when a link is clicked
    *
    * @type {Function}
-   * @default noop
    * @public
    */
-  onClick() {}
+  onClick;
 
   get target() {
     return this.args.external ? '_blank' : undefined;
