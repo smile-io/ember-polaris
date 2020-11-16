@@ -98,7 +98,7 @@ export default class PolarisBadge extends Component {
   }
 
   get sizeClass() {
-    const size = this.args.size || this.size;
+    const { size } = this;
     if (isPresent(size) && size !== DEFAULT_SIZE) {
       return `Polaris-Badge--size${classify(size)}`;
     }
