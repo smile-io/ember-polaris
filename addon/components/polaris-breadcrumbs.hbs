@@ -6,24 +6,30 @@
   >
     {{#if this.breadcrumb.url}}
       <PolarisUnstyledLink
-        class="Polaris-Breadcrumbs__Breadcrumb"
+        class="Polaris-Breadcrumbs__Breadcrumb {{if this.polaris.features.newDesignLanguage "Polaris-Breadcrumbs--newDesignLanguage"}}"
         @url={{this.breadcrumb.url}}
         @ariaLabel={{this.breadcrumb.accessibilityLabel}}
         @onMouseUp={{this.handleMouseUpByBlurring}}
       >
         <span class="Polaris-Breadcrumbs__ContentWrapper">
           <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-            {{!-- TODO #polaris-v5-newDesignLanguage add newDesignLanguage icon, styles, and visually-hidden wrapper --}}
-            <PolarisIcon @source="ChevronLeftMinor" />
+            <PolarisIcon @source={{if this.polaris.features.newDesignLanguage "ArrowLeftMinor" "ChevronLeftMinor"}} />
           </span>
-          <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-            {{this.breadcrumb.content}}
-          </span>
+
+          {{#if this.polaris.features.newDesignLanguage}}
+            <PolarisVisuallyHidden>
+              {{this.breadcrumb.content}}
+            </PolarisVisuallyHidden>
+          {{else}}
+            <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+              {{this.breadcrumb.content}}
+            </span>
+          {{/if}}
         </span>
       </PolarisUnstyledLink>
     {{else}}
       <button
-        class="Polaris-Breadcrumbs__Breadcrumb"
+        class="Polaris-Breadcrumbs__Breadcrumb {{if this.polaris.features.newDesignLanguage "Polaris-Breadcrumbs--newDesignLanguage"}}"
         type="button"
         aria-label={{this.breadcrumb.accessibilityLabel}}
         {{on "click" this.handleClick}}
@@ -31,11 +37,18 @@
       >
         <span class="Polaris-Breadcrumbs__ContentWrapper">
           <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
-            <PolarisIcon @source="ChevronLeftMinor" />
+            <PolarisIcon @source={{if this.polaris.features.newDesignLanguage "ArrowLeftMinor" "ChevronLeftMinor"}} />
           </span>
-          <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
-            {{this.breadcrumb.content}}
-          </span>
+
+          {{#if this.polaris.features.newDesignLanguage}}
+            <PolarisVisuallyHidden>
+              {{this.breadcrumb.content}}
+            </PolarisVisuallyHidden>
+          {{else}}
+            <span data-test-breadcrumb-content class="Polaris-Breadcrumbs__Content">
+              {{this.breadcrumb.content}}
+            </span>
+          {{/if}}
         </span>
       </button>
     {{/if}}
