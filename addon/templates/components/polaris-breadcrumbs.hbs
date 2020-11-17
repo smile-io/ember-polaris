@@ -7,8 +7,8 @@
   {{#if this.breadcrumb.url}}
     <PolarisUnstyledLink
       class="Polaris-Breadcrumbs__Breadcrumb"
+      {{on "mouseup" this.handleMouseUpByBlurring}}
       @url={{this.breadcrumb.url}}
-      @onMouseUp={{this.handleMouseUpByBlurring}}
     >
       <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
         <PolarisIcon @source="chevron-left" />

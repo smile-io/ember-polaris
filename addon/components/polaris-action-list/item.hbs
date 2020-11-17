@@ -16,9 +16,9 @@
       <PolarisUnstyledLink
         data-test-action-list-item-link
         class={{this.itemClasses}}
+        aria-label={{@accessibilityLabel}}
         @url={{@url}}
         @external={{@external}}
-        @ariaLabel={{@accessibilityLabel}}
         @onClick={{@onAction}}
       >
         <ContentElement />
