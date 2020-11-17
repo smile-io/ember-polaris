@@ -1,0 +1,16 @@
+<a
+  data-test-unstyled-link
+  data-polaris-unstyled="true"
+  ...attributes
+  href={{@url}}
+  download={{@download}}
+  target={{this.target}}
+  rel={{this.rel}}
+  {{on "click" this.handleClick}}
+>
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{@text}}
+  {{/if}}
+</a>

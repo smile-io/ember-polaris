@@ -35,15 +35,14 @@
       <PolarisUnstyledLink
         class={{this.cssClasses}}
         id={{this.id}}
-        @dataTestId={{@dataTestId}}
+        aria-label={{@accessibilityLabel}}
         @url={{@url}}
         @external={{@external}}
         @download={{@download}}
-        @ariaLabel={{@accessibilityLabel}}
         @onClick={{this.handleClick}}
-        @onFocus={{this.onFocus}}
-        @onBlur={{this.onBlur}}
-        @onMouseUp={{this.handleMouseUpByBlurring}}
+        {{on "focus" this.onFocus}}
+        {{on "blur" this.onBlur}}
+        {{on "mouseup" this.handleMouseUpByBlurring}}
         ...attributes
       >
         {{#if hasBlock}}
