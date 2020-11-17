@@ -1,14 +1,11 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action, computed } from '@ember/object';
 import { bool, or } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
 import { deprecate } from '@ember/application/deprecations';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-banner';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const bannerIcons = {
   success: {
@@ -39,9 +36,6 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * TODO @vlad get rid of `ember-truth-helpers` dependency and replace with a child
  * component `polaris-banner/content`
  */
-@deprecateClassArgument
-@tagName('')
-@layout(template)
 export default class PolarisBanner extends Component {
   /**
    * Title content for the banner.
@@ -50,7 +44,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  title = null;
+  title;
 
   /**
    * Icon to display in the banner.
@@ -59,7 +53,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  icon = null;
+  icon;
 
   /**
    * Sets the status of the banner.
@@ -68,7 +62,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  status = null;
+  status;
 
   /**
    * Action for banner.
@@ -78,7 +72,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  primaryAction = null;
+  primaryAction;
 
   /**
    * Displays a secondary action.
@@ -87,7 +81,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  secondaryAction = null;
+  secondaryAction;
 
   /**
    * Callback when banner is dismissed
@@ -96,7 +90,7 @@ export default class PolarisBanner extends Component {
    * @default null
    * @public
    */
-  onDismiss = null;
+  onDismiss;
 
   /**
    * Temporary workaround for not having appProvider/withAppProvider equivalents implemented yet.
@@ -114,7 +108,6 @@ export default class PolarisBanner extends Component {
   @or('primaryAction', 'action')
   mainAction;
 
-  @computed('status')
   get role() {
     let { status } = this;
     if (status === 'warning' || status === 'critical') {
@@ -124,7 +117,6 @@ export default class PolarisBanner extends Component {
     return 'status';
   }
 
-  @computed('icon', 'status')
   get iconName() {
     let { icon, status } = this;
     if (isPresent(icon)) {
@@ -138,7 +130,6 @@ export default class PolarisBanner extends Component {
     return bannerIcons[status].iconName;
   }
 
-  @computed('status')
   get iconColor() {
     let { status } = this;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
@@ -148,7 +139,6 @@ export default class PolarisBanner extends Component {
     return bannerIcons[status].color;
   }
 
-  @computed('title')
   get headingId() {
     if (isBlank(this.title)) {
       return null;
