@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { notEmpty } from '@ember/object/computed';
 import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
-import { argWithDefault } from '../utils/decorators/arg-with-default';
+import { arg } from '../utils/decorators/arg';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -63,23 +63,21 @@ export default class PolarisBadge extends Component {
   progress;
 
   /**
-   * Medium or small size. Use `small` only in the main navigation of an app frame..
+   * Medium or small size. Use `small` only in the main navigation of an app frame.
    *
    * @type {String}
-   * @default null
+   * @default 'medium'
    * @public
    */
-  @argWithDefault(DEFAULT_SIZE)
-  size;
+  @arg size = DEFAULT_SIZE;
 
   /**
    * Temporary workaround for not having useContext equivalents implemented yet.
-   * Pass `WithinFilterContext` true if badge is in a filter control component.
+   * Pass `withinFilterContext` true if badge is in a filter control component.
    *
    * TODO implement useContext or find Ember equivalent
    */
-  @argWithDefault(false)
-  withinFilterContext;
+  @arg withinFilterContext = false;
 
   @notEmpty('progress')
   hasProgress;
