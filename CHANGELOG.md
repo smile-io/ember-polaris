@@ -1,5 +1,110 @@
 # Changelog
 
+## [v6.1.1](https://github.com/smile-io/ember-polaris/tree/v6.1.3) (November 18, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.2...v6.1.3)
+
+- [#681](https://github.com/smile-io/ember-polaris/pull/681) [DEPENDENCIES] Update ember-basic-dropdown to latest release
+- [#680](https://github.com/smile-io/ember-polaris/pull/680) [INTERNAL] Update dependency node-sass to v5
+- [#674](https://github.com/smile-io/ember-polaris/pull/674) [INTERNAL] Update Node.js to v12.19.0
+- [#673](https://github.com/smile-io/ember-polaris/pull/673) [INTERNAL] Update linting tools
+- [#669](https://github.com/smile-io/ember-polaris/pull/669) [BUG] Fix banner primary action
+- [#668](https://github.com/smile-io/ember-polaris/pull/668) [INTERNAL] Update linting tools (major)
+- [#667](https://github.com/smile-io/ember-polaris/pull/667) [INTERNAL] Update dependency ember-truth-helpers to v3
+- [#666](https://github.com/smile-io/ember-polaris/pull/666) [INTERNAL] Update dependency ember-test-selectors to v5
+- [#663](https://github.com/smile-io/ember-polaris/pull/663) [INTERNAL] Update dependency ember-cli-code-coverage to v1.0.2
+- [#662](https://github.com/smile-io/ember-polaris/pull/662) [INTERNAL] Update code formatting
+- [#661](https://github.com/smile-io/ember-polaris/pull/661) [INTERNAL] Update Yarn to v1.22.10
+- [#660](https://github.com/smile-io/ember-polaris/pull/660) [INTERNAL] Update Ember dependencies
+- [#659](https://github.com/smile-io/ember-polaris/pull/659) [DEPENDENCIES],[INTERNAL] Drop ember-invoke-action dependency
+- [#658](https://github.com/smile-io/ember-polaris/pull/658) [DEPENDENCIES],[INTERNAL] Remove jquery dependency
+- [#655](https://github.com/smile-io/ember-polaris/pull/655) [DEPENDENCIES],[INTERNAL] Upgrade ember-keyboard to v6
+- [#654](https://github.com/smile-io/ember-polaris/pull/654) [INTERNAL] Use ember-cli-htmlbars in tests
+- [#653](https://github.com/smile-io/ember-polaris/pull/653) [DEPENDENCIES] Bump node-fetch from 2.6.0 to 2.6.1
+- [#652](https://github.com/smile-io/ember-polaris/pull/652) [INTERNAL] Update Ember dependencies
+- [#651](https://github.com/smile-io/ember-polaris/pull/651) [INTERNAL] Update Node.js to v12.18.3
+- [#650](https://github.com/smile-io/ember-polaris/pull/650) [INTERNAL] Update linting tools
+- [#649](https://github.com/smile-io/ember-polaris/pull/649) [BUG] Pass rows attribute to did-update modifier in PolarisDataTable
+- [#648](https://github.com/smile-io/ember-polaris/pull/648) [INTERNAL] Update Ember dependencies
+- [#647](https://github.com/smile-io/ember-polaris/pull/647) [INTERNAL] Update dependency ember-source-channel-url to v3
+- [#645](https://github.com/smile-io/ember-polaris/pull/645) [INTERNAL] Update linting tools
+- [#644](https://github.com/smile-io/ember-polaris/pull/644) [DEPENDENCIES] Bump elliptic from 6.5.2 to 6.5.3
+- [#643](https://github.com/smile-io/ember-polaris/pull/643) [INTERNAL] Update dependency eslint to v7
+- [#642](https://github.com/smile-io/ember-polaris/pull/642) [BUG] Fix yielded section in sectioned card
+- [#641](https://github.com/smile-io/ember-polaris/pull/641) [INTERNAL] Update dependency ember-test-selectors to v4
+- [#640](https://github.com/smile-io/ember-polaris/pull/640) [INTERNAL] Update code formatting (major)
+- [#638](https://github.com/smile-io/ember-polaris/pull/638) [DEPENDENCIES] Bump lodash from 4.17.15 to 4.17.19
+- [#637](https://github.com/smile-io/ember-polaris/pull/637) [INTERNAL] Update linting tools
+- [#636](https://github.com/smile-io/ember-polaris/pull/636) [INTERNAL] Update Node.js to v12.18.2
+- [#635](https://github.com/smile-io/ember-polaris/pull/635) [INTERNAL] Pin dependencies
+- [#632](https://github.com/smile-io/ember-polaris/pull/632) [INTERNAL] Update build tools (major)
+- [#626](https://github.com/smile-io/ember-polaris/pull/626) [INTERNAL] Update dependency ember-cli-htmlbars to v5
+- [#622](https://github.com/smile-io/ember-polaris/pull/622) [INTERNAL] Update dependency ember-cli-code-coverage to v1.0.0-beta.9
+- [#621](https://github.com/smile-io/ember-polaris/pull/621)  Update changelog
+- [#595](https://github.com/smile-io/ember-polaris/pull/595) [INTERNAL] Configure Renovate
+- [#594](https://github.com/smile-io/ember-polaris/pull/594) [INTERNAL] Migrate to GitHub actions
+- [#592](https://github.com/smile-io/ember-polaris/pull/592) [BREAKING],[INTERNAL] Upgrade to Ember 3.18
+- [#581](https://github.com/smile-io/ember-polaris/pull/581) [INTERNAL],[SECURITY] [Security] Bump websocket-extensions from 0.1.3 to 0.1.4
+- [#559](https://github.com/smile-io/ember-polaris/pull/559) [INTERNAL],[SECURITY] [Security] Bump jquery from 3.4.1 to 3.5.0
+- [#539](https://github.com/smile-io/ember-polaris/pull/539) [INTERNAL] Bump broccoli-merge-trees from 3.0.2 to 4.2.0
+- [#525](https://github.com/smile-io/ember-polaris/pull/525) [INTERNAL],[SECURITY] [Security] Bump acorn from 5.7.3 to 5.7.4
+- [#484](https://github.com/smile-io/ember-polaris/pull/484) [INTERNAL] Bump node-sass from 4.13.0 to 4.13.1
+- [#482](https://github.com/smile-io/ember-polaris/pull/482) [INTERNAL] Bump ember-cli-htmlbars from 4.0.9 to 4.2.2
+- [#471](https://github.com/smile-io/ember-polaris/pull/471) [INTERNAL] Bump ember-resolver from 6.0.0 to 7.0.0
+- [#470](https://github.com/smile-io/ember-polaris/pull/470) [INTERNAL] Bump @ember/optional-features from 1.1.0 to 1.3.0
+- [#466](https://github.com/smile-io/ember-polaris/pull/466) [INTERNAL] Bump eslint-plugin-prettier from 3.1.1 to 3.1.2
+- [#465](https://github.com/smile-io/ember-polaris/pull/465) [INTERNAL] Bump ember-cli-babel from 7.13.0 to 7.13.2
+- [#461](https://github.com/smile-io/ember-polaris/pull/461) [INTERNAL] Bump ember-try from 1.3.0 to 1.4.0
+- [#458](https://github.com/smile-io/ember-polaris/pull/458) [INTERNAL] Bump ember-template-lint from 1.8.2 to 1.10.0
+- [#457](https://github.com/smile-io/ember-polaris/pull/457) [INTERNAL] Bump ember-source from 3.14.2 to 3.14.3
+- [#456](https://github.com/smile-io/ember-polaris/pull/456) [INTERNAL] Bump ember-cli-htmlbars from 4.0.8 to 4.0.9
+- [#453](https://github.com/smile-io/ember-polaris/pull/453) [INTERNAL] Bump eslint from 6.7.1 to 6.7.2
+- [#441](https://github.com/smile-io/ember-polaris/pull/441) [INTERNAL] Bump resolve from 1.12.0 to 1.13.1
+- [#440](https://github.com/smile-io/ember-polaris/pull/440) [INTERNAL] Bump ember-resolver from 5.3.0 to 6.0.0
+- [#439](https://github.com/smile-io/ember-polaris/pull/439) [INTERNAL] Bump ember-test-selectors from 2.1.0 to 3.0.0
+- [#436](https://github.com/smile-io/ember-polaris/pull/436) [INTERNAL] Bump eslint-config-prettier from 6.5.0 to 6.7.0
+- [#435](https://github.com/smile-io/ember-polaris/pull/435) [INTERNAL] Bump ember-keyboard from 4.0.0 to 5.0.0
+- [#434](https://github.com/smile-io/ember-polaris/pull/434) [INTERNAL] Bump ember-source from 3.13.4 to 3.14.2
+- [#431](https://github.com/smile-io/ember-polaris/pull/431) [INTERNAL] Bump eslint from 6.6.0 to 6.7.1
+- [#430](https://github.com/smile-io/ember-polaris/pull/430) [INTERNAL] Bump ember-template-lint from 1.8.1 to 1.8.2
+- [#428](https://github.com/smile-io/ember-polaris/pull/428) [INTERNAL] Bump husky from 3.0.9 to 3.1.0
+- [#423](https://github.com/smile-io/ember-polaris/pull/423) [INTERNAL] Linting tweaks
+- [#422](https://github.com/smile-io/ember-polaris/pull/422) [INTERNAL] Fix linting issues
+- [#421](https://github.com/smile-io/ember-polaris/pull/421) [INTERNAL] Upgrade ember-cli to 3.13
+- [#420](https://github.com/smile-io/ember-polaris/pull/420) [INTERNAL] Bump ember-qunit from 4.5.1 to 4.6.0
+- [#419](https://github.com/smile-io/ember-polaris/pull/419) [INTERNAL] Bump prettier from 1.18.2 to 1.19.1
+- [#415](https://github.com/smile-io/ember-polaris/pull/415) [INTERNAL] Bump chalk from 2.4.2 to 3.0.0
+- [#414](https://github.com/smile-io/ember-polaris/pull/414) [INTERNAL] Bump @smile-io/ember-styleguide from 9.1.0 to 9.2.0
+- [#413](https://github.com/smile-io/ember-polaris/pull/413) [INTERNAL] Bump @ember/optional-features from 1.0.0 to 1.1.0
+- [#412](https://github.com/smile-io/ember-polaris/pull/412) [INTERNAL] Bump node-sass from 4.12.0 to 4.13.0
+- [#411](https://github.com/smile-io/ember-polaris/pull/411) [INTERNAL] Bump ember-cli-htmlbars from 4.0.5 to 4.0.8
+- [#409](https://github.com/smile-io/ember-polaris/pull/409) [INTERNAL] Bump husky from 3.0.5 to 3.0.9
+- [#408](https://github.com/smile-io/ember-polaris/pull/408) [INTERNAL] Bump ember-auto-import from 1.5.2 to 1.5.3
+- [#407](https://github.com/smile-io/ember-polaris/pull/407) [INTERNAL] Bump ember-cli-inject-live-reload from 2.0.1 to 2.0.2
+- [#404](https://github.com/smile-io/ember-polaris/pull/404) [INTERNAL] Bump ember-cli-htmlbars from 3.1.0 to 4.0.5
+- [#403](https://github.com/smile-io/ember-polaris/pull/403) [INTERNAL] Bump ember-cli-htmlbars-inline-precompile from 3.0.0 to 3.0.1
+- [#401](https://github.com/smile-io/ember-polaris/pull/401) [INTERNAL] Bump @ember/jquery from 0.6.1 to 1.1.0
+- [#397](https://github.com/smile-io/ember-polaris/pull/397) [INTERNAL] Bump ember-resolver from 5.2.1 to 5.3.0
+- [#393](https://github.com/smile-io/ember-polaris/pull/393) [INTERNAL] Bump ember-svg-jar from 1.2.2 to 2.2.3
+- [#388](https://github.com/smile-io/ember-polaris/pull/388) [INTERNAL] Bump @ember/optional-features from 0.7.0 to 1.0.0
+- [#386](https://github.com/smile-io/ember-polaris/pull/386) [INTERNAL] Bump eslint-plugin-smile-ember from 4.0.0 to 4.1.0
+- [#384](https://github.com/smile-io/ember-polaris/pull/384) [INTERNAL] Bump ember-cli-htmlbars-inline-precompile from 2.1.0 to 3.0.0
+- [#381](https://github.com/smile-io/ember-polaris/pull/381) [INTERNAL] Bump husky from 3.0.4 to 3.0.5
+- [#380](https://github.com/smile-io/ember-polaris/pull/380) [INTERNAL] Bump ember-load-initializers from 2.0.0 to 2.1.0
+- [#378](https://github.com/smile-io/ember-polaris/pull/378) [INTERNAL] Bump ember-cli-babel from 7.10.0 to 7.11.0
+- [#377](https://github.com/smile-io/ember-polaris/pull/377) [INTERNAL],[SECURITY] [Security] Bump mixin-deep from 1.3.1 to 1.3.2
+- [#376](https://github.com/smile-io/ember-polaris/pull/376) [INTERNAL],[SECURITY] [Security] Bump eslint-utils from 1.3.1 to 1.4.2
+- [#375](https://github.com/smile-io/ember-polaris/pull/375) [INTERNAL] Add dependabot config file and ignore some deps
+- [#373](https://github.com/smile-io/ember-polaris/pull/373) [INTERNAL] Update to ember cli 3.12
+- [#367](https://github.com/smile-io/ember-polaris/pull/367) [INTERNAL] Bump husky from 3.0.2 to 3.0.3
+- [#366](https://github.com/smile-io/ember-polaris/pull/366) [INTERNAL] Bump ember-resolver from 5.2.0 to 5.2.1
+- [#365](https://github.com/smile-io/ember-polaris/pull/365) [BUG] Fix component definition detection
+- [#357](https://github.com/smile-io/ember-polaris/pull/357) [INTERNAL] Bump ember-source from 3.10.2 to 3.12.0
+- [#356](https://github.com/smile-io/ember-polaris/pull/356) [INTERNAL] Bump ember-resolver from 5.1.3 to 5.2.0
+- [#354](https://github.com/smile-io/ember-polaris/pull/354) [INTERNAL] Bump husky from 3.0.1 to 3.0.2
+- [#352](https://github.com/smile-io/ember-polaris/pull/352) [INTERNAL] Bump ember-qunit from 4.4.1 to 4.5.1
+- [#350](https://github.com/smile-io/ember-polaris/pull/350) [INTERNAL] Bump husky from 3.0.0 to 3.0.1
+
 ## [v6.1.2](https://github.com/smile-io/ember-polaris/tree/v6.1.2) (October 28, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.1...v6.1.2)
