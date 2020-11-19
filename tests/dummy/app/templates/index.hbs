@@ -37,6 +37,22 @@
     {{/each}}
   </PolarisList>
 
+  <PolarisBanner
+    @status="success"
+    @icon="confetti"
+    @primaryAction={{hash
+      text="Track"
+      onAction=(action (mut primaryClicked) true)
+    }}
+    @secondaryAction={{hash
+      text="View"
+      onAction=(action (mut primaryClicked) true)
+    }}
+    @onDismiss={{action (mut primaryClicked) true}}
+  >
+    <p>This order has been shipped.</p>
+  </PolarisBanner>
+
   <PolarisLink
     @url="https://github.com/smile-io/ember-polaris"
     @external={{true}}

@@ -1,34 +1,12 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
-import { bool, or } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { bool } from '@ember/object/computed';
 import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
-import { deprecate } from '@ember/application/deprecations';
 import { handleMouseUpByBlurring } from '../utils/focus';
-
-const bannerIcons = {
-  success: {
-    iconName: 'CircleTickMajor',
-    color: 'greenDark',
-  },
-  info: {
-    iconName: 'CircleInformationMajor',
-    color: 'tealDark',
-  },
-  warning: {
-    iconName: 'CircleAlertMajor',
-    color: 'yellowDark',
-  },
-  critical: {
-    iconName: 'CircleDisabledMajor',
-    color: 'redDark',
-  },
-  default: {
-    iconName: 'FlagMajor',
-    color: 'inkLighter',
-  },
-};
 
 const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 
@@ -37,6 +15,8 @@ const supportedStatuses = ['success', 'info', 'warning', 'critical'];
  * component `polaris-banner/content`
  */
 export default class PolarisBanner extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * Title content for the banner.
    *
@@ -63,6 +43,15 @@ export default class PolarisBanner extends Component {
    * @public
    */
   status;
+
+  /**
+   * Disables screen reader announcements when changing the content of the banner.
+   *
+   * @type {Boolean}
+   * @default false
+   * @public
+   */
+  stopAnnouncements;
 
   /**
    * Action for banner.
@@ -98,27 +87,27 @@ export default class PolarisBanner extends Component {
    *
    * TODO implement appProvider/withAppProvider
    */
-  withinContentContainer = false;
+  withinContentContainer;
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   @bool('onDismiss')
   hasDismiss;
 
-  @or('primaryAction', 'action')
-  mainAction;
+  @tracked shouldShowFocus = false;
 
   get role() {
-    let { status } = this;
-    if (status === 'warning' || status === 'critical') {
-      return 'alert';
+    let { status } = this.args;
+
+    if (isBlank(status) || !supportedStatuses.includes(status)) {
+      status = 'default';
     }
 
-    return 'status';
+    return this.useBannerAttributes.ariaRoleType;
   }
 
   get iconName() {
-    let { icon, status } = this;
+    let { icon, status } = this.args;
     if (isPresent(icon)) {
       return icon;
     }
@@ -127,29 +116,28 @@ export default class PolarisBanner extends Component {
       status = 'default';
     }
 
-    return bannerIcons[status].iconName;
+    return this.useBannerAttributes.iconName;
   }
 
   get iconColor() {
-    let { status } = this;
+    let { status } = this.args;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       status = 'default';
     }
 
-    return bannerIcons[status].color;
+    return this.useBannerAttributes.color;
   }
 
   get headingId() {
-    if (isBlank(this.title)) {
+    if (isBlank(this.args.title)) {
       return null;
     }
 
-    return `${guidFor(this)}-heading`;
+    return `${guidFor(this)}Heading`;
   }
 
-  @computed('status')
   get statusClass() {
-    let { status } = this;
+    let { status } = this.args;
     if (isBlank(status) || !supportedStatuses.includes(status)) {
       return null;
     }
@@ -157,7 +145,13 @@ export default class PolarisBanner extends Component {
     return `Polaris-Banner--status${capitalize(status)}`;
   }
 
-  @computed('statusClass', 'hasDismiss', 'withinContentContainer', 'class')
+  @computed(
+    'hasDismiss',
+    'polaris.features.newDesignLanguage',
+    'shouldShowFocus',
+    'statusClass',
+    'withinContentContainer'
+  )
   get cssClasses() {
     let cssClasses = ['Polaris-Banner'];
     if (this.statusClass) {
@@ -166,29 +160,77 @@ export default class PolarisBanner extends Component {
     if (this.hasDismiss) {
       cssClasses.push('Polaris-Banner--hasDismiss');
     }
+
+    if (this.shouldShowFocus) {
+      cssClasses.push('Polaris-Banner--keyFocused');
+    }
+
     if (this.withinContentContainer) {
       cssClasses.push('Polaris-Banner--withinContentContainer');
     } else {
       cssClasses.push('Polaris-Banner--withinPage');
     }
-    if (this.class) {
-      cssClasses.push(this.class);
+
+    if (this.polaris.features.newDesignLanguage) {
+      cssClasses.push('Polaris-Banner--newDesignLanguage');
     }
 
     return cssClasses.join(' ');
   }
 
-  init() {
-    super.init(...arguments);
+  @computed('args.status', 'polaris.features.newDesignLanguage')
+  get useBannerAttributes() {
+    let { newDesignLanguage } = this.polaris.features;
 
-    deprecate(
-      `[PolarisBanner] Passing 'action' is deprecated! Please use 'primaryAction' instead`,
-      !this.action,
-      {
-        id: 'ember-polaris.polaris-banner.action-arg',
-        until: '7.0.0',
-      }
-    );
+    switch (this.args.status) {
+      case 'success':
+        return {
+          defaultIcon: 'CircleTickMajor',
+          iconColor: newDesignLanguage ? 'success' : 'greenDark',
+          ariaRoleType: 'status',
+        };
+
+      case 'info':
+        return {
+          defaultIcon: 'CircleInformationMajor',
+          iconColor: newDesignLanguage ? 'highlight' : 'tealDark',
+          ariaRoleType: 'status',
+        };
+
+      case 'warning':
+        return {
+          defaultIcon: 'CircleAlertMajor',
+          iconColor: newDesignLanguage ? 'warning' : 'yellowDark',
+          ariaRoleType: 'alert',
+        };
+
+      case 'critical':
+        return {
+          defaultIcon: 'CircleDisabledMajor',
+          iconColor: newDesignLanguage ? 'critical' : 'redDark',
+          ariaRoleType: 'alert',
+        };
+
+      default:
+        return {
+          defaultIcon: newDesignLanguage
+            ? 'CircleInformationMajor'
+            : 'FlagMajor',
+          iconColor: newDesignLanguage ? 'base' : 'inkLighter',
+          ariaRoleType: 'status',
+        };
+    }
+  }
+
+  @action
+  handleBlur(e) {
+    e.currentTarget.blur();
+    this.shouldShowFocus = false;
+  }
+
+  @action
+  handleKeyUp() {
+    this.shouldShowFocus = true;
   }
 
   @action
@@ -203,6 +245,6 @@ export default class PolarisBanner extends Component {
   @action
   setContentId(element, [value]) {
     value = typeof value === 'undefined' ? `${guidFor(this)}-content` : value;
-    this.set('contentId', value);
+    this.contentId = value;
   }
 }

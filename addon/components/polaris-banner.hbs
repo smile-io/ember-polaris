@@ -1,11 +1,13 @@
 <div
   class={{this.cssClasses}}
   tabindex="0"
-  aria-live="polite"
+  role={{this.role}}
+  aria-live={{if this.stopAnnouncements "off" "polite"}}
   aria-describedby={{this.contentId}}
   aria-labelledby={{this.headingId}}
-  role={{this.role}}
   {{on "mouseup" this.handleMouseUpByBlurring}}
+  {{on "keyup" this.handleKeyUp}}
+  {{on "blur" this.handleBlur}}
   ...attributes
 >
   {{#if this.hasDismiss}}
@@ -20,17 +22,21 @@
   {{/if}}
 
   <div class="Polaris-Banner__Ribbon">
-    <PolarisIcon @backdrop={{true}} @source={{this.iconName}} @color={{this.iconColor}} />
+    <PolarisIcon
+      @backdrop={{not this.polaris.features.newDesignLanguage}}
+      @source={{this.iconName}}
+      @color={{this.iconColor}}
+    />
   </div>
 
-  <div>
+  <div class="Polaris-Banner__ContentWrapper">
     {{#if @title}}
       <div class="Polaris-Banner__Heading" id={{this.headingId}}>
         <PolarisHeading @htmlTag="p" @text={{@title}} />
       </div>
     {{/if}}
 
-    {{#if (or hasBlock @text this.mainAction)}}
+    {{#if (or hasBlock @text @primaryAction)}}
       <div
         class="Polaris-Banner__Content"
         id={{this.contentId}}
@@ -43,17 +49,17 @@
           {{@text}}
         {{/if}}
 
-        {{#if this.mainAction}}
+        {{#if @primaryAction}}
           <div class="Polaris-Banner__Actions">
             <PolarisButtonGroup>
               <div class="Polaris-Banner__PrimaryAction">
                 <PolarisButton
                   @outline={{true}}
                   @size={{if @withinContentContainer "slim"}}
-                  @text={{this.mainAction.text}}
-                  @disabled={{this.mainAction.disabled}}
-                  @loading={{this.mainAction.loading}}
-                  @onClick={{fn this.triggerAction this.mainAction}}
+                  @text={{@primaryAction.text}}
+                  @disabled={{@primaryAction.disabled}}
+                  @loading={{@primaryAction.loading}}
+                  @onClick={{fn this.triggerAction @primaryAction}}
                 />
               </div>
 
