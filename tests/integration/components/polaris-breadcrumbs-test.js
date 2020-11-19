@@ -49,7 +49,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
       .hasAttribute(
         'aria-label',
         accessibilityLabel,
-        'it passes the accessibilityLabel to the link'
+        'it adds the accessibilityLabel as aria-label to the link'
       );
   });
 

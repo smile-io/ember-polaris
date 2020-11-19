@@ -7,9 +7,9 @@
     {{#if this.breadcrumb.url}}
       <PolarisUnstyledLink
         class="Polaris-Breadcrumbs__Breadcrumb {{if this.polaris.features.newDesignLanguage "Polaris-Breadcrumbs--newDesignLanguage"}}"
+        aria-label={{this.breadcrumb.accessibilityLabel}}
         @url={{this.breadcrumb.url}}
-        @ariaLabel={{this.breadcrumb.accessibilityLabel}}
-        @onMouseUp={{this.handleMouseUpByBlurring}}
+        {{on "mouseup" this.handleMouseUpByBlurring}}
       >
         <span class="Polaris-Breadcrumbs__ContentWrapper">
           <span data-test-breadcrumb-icon class="Polaris-Breadcrumbs__Icon">
