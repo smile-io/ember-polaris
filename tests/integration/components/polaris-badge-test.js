@@ -10,7 +10,7 @@ module('Integration | Component | polaris badge', function (hooks) {
   const badgeSelector = '.Polaris-Badge';
 
   test('it renders the correct HTML in basic inline usage', async function (assert) {
-    await render(hbs`{{polaris-badge text="Inline badge"}}`);
+    await render(hbs`<PolarisBadge @text="Inline badge" />`);
 
     assert.dom(badgeSelector).exists({ count: 1 }, 'renders one badge');
     assert
@@ -20,9 +20,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML in basic block usage', async function (assert) {
     await render(hbs`
-      {{#polaris-badge}}
+      <PolarisBadge>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     assert.dom(badgeSelector).exists({ count: 1 }, 'renders one badge');
@@ -33,9 +33,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML when status is set', async function (assert) {
     await render(hbs`
-      {{#polaris-badge status=status}}
+      <PolarisBadge @status={{status}}>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     let badge = find(badgeSelector);
@@ -56,21 +56,6 @@ module('Integration | Component | polaris badge', function (hooks) {
       .dom(visuallyHiddenSelector)
       .doesNotExist(
         'status not set - does not render any visually hidden components'
-      );
-
-    // With status set to default:
-    //  - shouldn't apply any status classes
-    //  - should render empty visually hidden component
-    this.set('status', 'default');
-    assert.equal(
-      badge.className.indexOf('Polaris-Badge--status'),
-      -1,
-      'status set to default - does not apply status classes'
-    );
-    assert
-      .dom(visuallyHiddenSelector)
-      .doesNotExist(
-        'status set to default - does not render any visually hidden components'
       );
 
     // With status set to success:
@@ -161,9 +146,9 @@ module('Integration | Component | polaris badge', function (hooks) {
 
   test('it renders the correct HTML when progress is set', async function (assert) {
     await render(hbs`
-      {{#polaris-badge progress=progress}}
+      <PolarisBadge @progress={{progress}}>
         Block badge
-      {{/polaris-badge}}
+      </PolarisBadge>
     `);
 
     let badge = find(badgeSelector);
@@ -188,24 +173,6 @@ module('Integration | Component | polaris badge', function (hooks) {
       .dom(badgePipVisuallyHiddenSelector)
       .doesNotExist(
         'progress not set - does not render a pip visually hidden component'
-      );
-
-    // With progress set to default:
-    //  - shouldn't apply any progress classes
-    //  - shouldn't render any visually hidden components
-    this.set('progress', 'default');
-    assert.equal(
-      badge.className.indexOf('Polaris-Badge--progress'),
-      -1,
-      'progress set to default - does not apply progress classes'
-    );
-    assert
-      .dom(badgePipSelector)
-      .doesNotExist('progress set to default - does not render a pip div');
-    assert
-      .dom(badgePipVisuallyHiddenSelector)
-      .doesNotExist(
-        'progress set to default - does not render a pip visually hidden component'
       );
 
     // With progress set to 'incomplete':
@@ -281,39 +248,6 @@ module('Integration | Component | polaris badge', function (hooks) {
       .hasText(
         'Complete',
         'progress set to complete - renders correct pip visually hidden content'
-      );
-  });
-
-  test('supports passing a @class argument for backwards compatibility', async function (assert) {
-    await render(hbs`
-      {{polaris-badge class="custom-class"}}
-    `);
-
-    assert
-      .dom(badgeSelector)
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in curly-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisBadge @class="custom-class" />
-    `);
-    assert
-      .dom(badgeSelector)
-      .hasClass(
-        'custom-class',
-        'applies `@class` when used in angle-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisBadge class="custom-class" />
-    `);
-    assert
-      .dom(badgeSelector)
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in angle-brackets form'
       );
   });
 });
