@@ -7,6 +7,7 @@ import { isBlank, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import { arg } from '../utils/decorators/arg';
 
 const supportedStatuses = ['success', 'info', 'warning', 'critical'];
 
@@ -51,7 +52,7 @@ export default class PolarisBanner extends Component {
    * @default false
    * @public
    */
-  stopAnnouncements;
+  @arg stopAnnouncements = false;
 
   /**
    * Action for banner.
@@ -87,7 +88,7 @@ export default class PolarisBanner extends Component {
    *
    * TODO implement appProvider/withAppProvider
    */
-  withinContentContainer;
+  @arg withinContentContainer = false;
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
