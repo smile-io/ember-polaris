@@ -4,6 +4,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 
 const content = 'Content value';
+const accessibilityLabel = 'Go to products';
 
 module('Integration | Component | polaris-breadcrumbs', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,7 +18,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert.dom('[data-test-breadcrumbs]').exists('component renders');
@@ -33,34 +34,46 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     this.set('breadcrumbs', [
       {
         content,
+        accessibilityLabel,
         url: '/',
       },
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert
       .dom('[data-test-breadcrumbs] > a[data-polaris-unstyled]')
-      .exists('it renders an unstyled link component');
+      .exists('it renders an unstyled link component')
+      .hasAttribute(
+        'aria-label',
+        accessibilityLabel,
+        'it adds the accessibilityLabel as aria-label to the link'
+      );
   });
 
   test('it renders a button when `breadcrumb.url` attribute is not present', async function (assert) {
     this.set('breadcrumbs', [
       {
         content,
+        accessibilityLabel,
         onAction() {},
       },
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     assert
       .dom('[data-test-breadcrumbs] > button')
-      .exists('it renders a button');
+      .exists('it renders a button')
+      .hasAttribute(
+        'aria-label',
+        accessibilityLabel,
+        'it passes the accessibilityLabel to the button'
+      );
   });
 
   test('it does not append the click event to the invoked action args', async function (assert) {
@@ -74,7 +87,7 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
     ]);
 
     await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs}}
+      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} />
     `);
 
     await click('button');
@@ -82,44 +95,5 @@ module('Integration | Component | polaris-breadcrumbs', function (hooks) {
       ['Action invoked with 0 args'],
       'action does not append click event to invoked action args'
     );
-  });
-
-  test('supports passing a @class argument for backwards compatibility', async function (assert) {
-    this.set('breadcrumbs', [
-      {
-        content,
-        url: '/',
-      },
-    ]);
-    await render(hbs`
-      {{polaris-breadcrumbs breadcrumbs=breadcrumbs  class="custom-class"}}
-    `);
-
-    assert
-      .dom('[data-test-breadcrumbs]')
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in curly-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} @class="custom-class" />
-    `);
-    assert
-      .dom('[data-test-breadcrumbs]')
-      .hasClass(
-        'custom-class',
-        'applies `@class` when used in angle-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisBreadcrumbs @breadcrumbs={{breadcrumbs}} class="custom-class" />
-    `);
-    assert
-      .dom('[data-test-breadcrumbs]')
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in angle-brackets form'
-      );
   });
 });

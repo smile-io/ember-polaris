@@ -1,14 +1,12 @@
-import Component from '@ember/component';
-import { computed, action } from '@ember/object';
-import { tagName, layout } from '@ember-decorators/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { handleMouseUpByBlurring } from '../utils/focus';
-import template from '../templates/components/polaris-breadcrumbs';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
+import { arg } from '../utils/decorators/arg';
 
-@deprecateClassArgument
-@tagName('')
-@layout(template)
 export default class PolarisBreadcrumbs extends Component {
+  @service('polaris-app-provider') polaris;
+
   /**
    * Collection of breadcrumbs
    *
@@ -16,7 +14,7 @@ export default class PolarisBreadcrumbs extends Component {
    * @default []
    * @public
    */
-  breadcrumbs = [];
+  @arg breadcrumbs = [];
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
@@ -27,9 +25,8 @@ export default class PolarisBreadcrumbs extends Component {
    *
    * @type {Object}
    */
-  @computed('breadcrumbs.[]')
   get breadcrumb() {
-    let { breadcrumbs } = this;
+    let { breadcrumbs } = this.args;
     return breadcrumbs[breadcrumbs.length - 1];
   }
 
