@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { handleMouseUpByBlurring } from '../utils/focus';
+import { arg } from '../utils/decorators/arg';
 
 export default class PolarisBreadcrumbs extends Component {
   @service('polaris-app-provider') polaris;
@@ -13,7 +14,7 @@ export default class PolarisBreadcrumbs extends Component {
    * @default []
    * @public
    */
-  breadcrumbs; // TODO add @arg breadcrumbs = [] when decorator is merged
+  @arg breadcrumbs = [];
 
   handleMouseUpByBlurring = handleMouseUpByBlurring;
 
