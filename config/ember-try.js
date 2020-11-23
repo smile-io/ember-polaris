@@ -40,6 +40,8 @@ module.exports = async function () {
       },
       {
         name: 'ember-canary',
+        // TODO: remove this once ember-basic-dropdown is compatible with canary again.
+        allowedToFail: true,
         npm: {
           devDependencies: {
             'ember-source': await getChannelURL('canary'),
