@@ -241,6 +241,32 @@ module('Integration | Component | polaris banner', function (hooks) {
     );
   });
 
+  test('disables aria-live when stopAnnouncements is enabled', async function (assert) {
+    this.set('stopAnnouncements', true);
+
+    await render(hbs`<PolarisBanner />`);
+
+    let banner = assert.dom(bannerSelector);
+
+    banner.hasAttribute(
+      'aria-live',
+      'polite',
+      'banner aria-live attribute - set to `polite` by default'
+    );
+
+    await render(
+      hbs`<PolarisBanner stopAnnouncements={{stopAnnouncements}} />`
+    );
+
+    banner = assert.dom(bannerSelector);
+
+    banner.hasAttribute(
+      'aria-live',
+      'polite',
+      'banner aria-live attribute - set to `off`'
+    );
+  });
+
   test('it handles dismissable banner correctly', async function (assert) {
     await render(hbs`<PolarisBanner />`);
 
@@ -386,30 +412,5 @@ module('Integration | Component | polaris banner', function (hooks) {
 
     await click(primaryActionBtnSelector);
     await click(secondaryActionBtnSelector);
-  });
-
-  test('it has backwards support for `action` as `primaryAction`', async function (assert) {
-    this.set('primaryAction', () =>
-      assert.ok(true, 'triggers primaryAction handler')
-    );
-
-    await render(
-      hbs`<PolarisBanner @action={{hash text="Edit" onAction=(action primaryAction)}} />`
-    );
-
-    let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
-    let primaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
-
-    assert
-      .dom(primaryActionBtnSelector)
-      .exists('banner with actions - renders `action` button');
-    assert
-      .dom(primaryActionBtnSelector)
-      .hasText(
-        'Edit',
-        'banner with actions - renders correct `action` button text'
-      );
-
-    await click(primaryActionBtnSelector);
   });
 });

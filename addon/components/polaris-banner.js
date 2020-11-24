@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { bool } from '@ember/object/computed';
-import { isBlank, isPresent } from '@ember/utils';
+import { isBlank } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { capitalize } from '@ember/string';
 import { handleMouseUpByBlurring } from '../utils/focus';
@@ -90,44 +89,11 @@ export default class PolarisBanner extends Component {
    */
   @arg withinContentContainer = false;
 
-  handleMouseUpByBlurring = handleMouseUpByBlurring;
-
-  @bool('onDismiss')
-  hasDismiss;
-
   @tracked shouldShowFocus = false;
 
-  get role() {
-    let { status } = this.args;
+  @tracked contentId;
 
-    if (isBlank(status) || !supportedStatuses.includes(status)) {
-      status = 'default';
-    }
-
-    return this.useBannerAttributes.ariaRoleType;
-  }
-
-  get iconName() {
-    let { icon, status } = this.args;
-    if (isPresent(icon)) {
-      return icon;
-    }
-
-    if (isBlank(status) || !supportedStatuses.includes(status)) {
-      status = 'default';
-    }
-
-    return this.useBannerAttributes.iconName;
-  }
-
-  get iconColor() {
-    let { status } = this.args;
-    if (isBlank(status) || !supportedStatuses.includes(status)) {
-      status = 'default';
-    }
-
-    return this.useBannerAttributes.color;
-  }
+  handleMouseUpByBlurring = handleMouseUpByBlurring;
 
   get headingId() {
     if (isBlank(this.args.title)) {
@@ -146,19 +112,12 @@ export default class PolarisBanner extends Component {
     return `Polaris-Banner--status${capitalize(status)}`;
   }
 
-  @computed(
-    'hasDismiss',
-    'polaris.features.newDesignLanguage',
-    'shouldShowFocus',
-    'statusClass',
-    'withinContentContainer'
-  )
   get cssClasses() {
     let cssClasses = ['Polaris-Banner'];
     if (this.statusClass) {
       cssClasses.push(this.statusClass);
     }
-    if (this.hasDismiss) {
+    if (this.args.onDismiss) {
       cssClasses.push('Polaris-Banner--hasDismiss');
     }
 
@@ -179,7 +138,6 @@ export default class PolarisBanner extends Component {
     return cssClasses.join(' ');
   }
 
-  @computed('args.status', 'polaris.features.newDesignLanguage')
   get useBannerAttributes() {
     let { newDesignLanguage } = this.polaris.features;
 

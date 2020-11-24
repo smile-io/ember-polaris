@@ -1,7 +1,7 @@
 <div
   class={{this.cssClasses}}
   tabindex="0"
-  role={{this.role}}
+  role={{this.useBannerAttributes.ariaRoleType}}
   aria-live={{if this.stopAnnouncements "off" "polite"}}
   aria-describedby={{this.contentId}}
   aria-labelledby={{this.headingId}}
@@ -10,7 +10,7 @@
   {{on "blur" this.handleBlur}}
   ...attributes
 >
-  {{#if this.hasDismiss}}
+  {{#if @onDismiss}}
     <div class="Polaris-Banner__Dismiss">
       <PolarisButton
         @icon="CancelSmallMinor"
@@ -24,8 +24,8 @@
   <div class="Polaris-Banner__Ribbon">
     <PolarisIcon
       @backdrop={{not this.polaris.features.newDesignLanguage}}
-      @source={{this.iconName}}
-      @color={{this.iconColor}}
+      @source={{or @icon this.useBannerAttributes.defaultIcon}}
+      @color={{this.useBannerAttributes.iconColor}}
     />
   </div>
 
