@@ -75,7 +75,7 @@
                   <button
                     class="Polaris-Banner__SecondaryAction"
                     type="button"
-                    onclick={{fn this.triggerAction @secondaryAction}}
+                    {{on "click" (fn this.triggerAction @secondaryAction}}
                   >
                     <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
                   </button>
