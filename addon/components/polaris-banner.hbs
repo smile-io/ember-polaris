@@ -1,0 +1,90 @@
+<div
+  class={{this.cssClasses}}
+  tabindex="0"
+  role={{this.useBannerAttributes.ariaRoleType}}
+  aria-live={{if this.stopAnnouncements "off" "polite"}}
+  aria-describedby={{this.contentId}}
+  aria-labelledby={{this.headingId}}
+  {{on "mouseup" this.handleMouseUp}}
+  {{on "keyup" this.handleKeyUp}}
+  {{on "blur" this.handleBlur}}
+  ...attributes
+>
+  {{#if @onDismiss}}
+    <div class="Polaris-Banner__Dismiss">
+      <PolarisButton
+        @icon="CancelSmallMinor"
+        @accessibilityLabel="Dismiss notification"
+        @plain={{true}}
+        @onClick={{@onDismiss}}
+      />
+    </div>
+  {{/if}}
+
+  <div class="Polaris-Banner__Ribbon">
+    <PolarisIcon
+      @backdrop={{not this.polaris.features.newDesignLanguage}}
+      @source={{or @icon this.useBannerAttributes.defaultIcon}}
+      @color={{this.useBannerAttributes.iconColor}}
+    />
+  </div>
+
+  <div class="Polaris-Banner__ContentWrapper">
+    {{#if @title}}
+      <div class="Polaris-Banner__Heading" id={{this.headingId}}>
+        <PolarisHeading @htmlTag="p" @text={{@title}} />
+      </div>
+    {{/if}}
+
+    {{#if (or hasBlock @text @primaryAction)}}
+      <div
+        class="Polaris-Banner__Content"
+        id={{this.contentId}}
+        {{did-insert this.setContentId}}
+        {{will-destroy this.setContentId null}}
+      >
+        {{#if hasBlock}}
+          {{yield}}
+        {{else}}
+          {{@text}}
+        {{/if}}
+
+        {{#if @primaryAction}}
+          <div class="Polaris-Banner__Actions">
+            <PolarisButtonGroup>
+              <div class="Polaris-Banner__PrimaryAction">
+                <PolarisButton
+                  @outline={{true}}
+                  @size={{if @withinContentContainer "slim"}}
+                  @text={{@primaryAction.text}}
+                  @disabled={{@primaryAction.disabled}}
+                  @loading={{@primaryAction.loading}}
+                  @onClick={{fn this.triggerAction @primaryAction}}
+                />
+              </div>
+
+              {{#if @secondaryAction}}
+                {{#if @secondaryAction.url}}
+                  <PolarisUnstyledLink
+                    @url={{@secondaryAction.url}}
+                    @external={{@secondaryAction.external}}
+                  >
+                    <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
+                  </PolarisUnstyledLink>
+                {{else}}
+                  <button
+                    class="Polaris-Banner__SecondaryAction"
+                    type="button"
+                    {{on "click" (fn this.triggerAction @secondaryAction)}}
+                  >
+                    <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
+                  </button>
+                {{/if}}
+              {{/if}}
+            </PolarisButtonGroup>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>
