@@ -242,29 +242,27 @@ module('Integration | Component | polaris banner', function (hooks) {
   });
 
   test('disables aria-live when stopAnnouncements is enabled', async function (assert) {
-    this.set('stopAnnouncements', true);
-
     await render(hbs`<PolarisBanner />`);
 
-    let banner = assert.dom(bannerSelector);
-
-    banner.hasAttribute(
-      'aria-live',
-      'polite',
-      'banner aria-live attribute - set to `polite` by default'
-    );
+    assert
+      .dom(bannerSelector)
+      .hasAttribute(
+        'aria-live',
+        'polite',
+        'banner aria-live attribute - set to `polite` by default'
+      );
 
     await render(
       hbs`<PolarisBanner stopAnnouncements={{stopAnnouncements}} />`
     );
 
-    banner = assert.dom(bannerSelector);
-
-    banner.hasAttribute(
-      'aria-live',
-      'polite',
-      'banner aria-live attribute - set to `off`'
-    );
+    assert
+      .dom(bannerSelector)
+      .hasAttribute(
+        'aria-live',
+        'polite',
+        'banner aria-live attribute - set to `off`'
+      );
   });
 
   test('it handles dismissable banner correctly', async function (assert) {
@@ -285,7 +283,7 @@ module('Integration | Component | polaris banner', function (hooks) {
     let dismissed = false;
     this.dismiss = () => (dismissed = true);
 
-    await render(hbs`<PolarisBanner @onDismiss={{action dismiss}} />`);
+    await render(hbs`<PolarisBanner @onDismiss={{dismiss}} />`);
 
     banner = assert.dom(bannerSelector);
     dismissWrapper = assert.dom(`${bannerSelector} ${dismissSelector}`);
@@ -334,7 +332,7 @@ module('Integration | Component | polaris banner', function (hooks) {
     );
 
     await render(
-      hbs`<PolarisBanner @secondaryAction={{hash text="View" onAction=(action secondaryAction)}} />`
+      hbs`<PolarisBanner @secondaryAction={{hash text="View" onAction=secondaryAction}} />`
     );
 
     assert
@@ -344,7 +342,7 @@ module('Integration | Component | polaris banner', function (hooks) {
       );
 
     await render(
-      hbs`<PolarisBanner @primaryAction={{hash text="Edit" onAction=(action primaryAction)}} />`
+      hbs`<PolarisBanner @primaryAction={{hash text="Edit" onAction=primaryAction}} />`
     );
 
     let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
@@ -368,15 +366,20 @@ module('Integration | Component | polaris banner', function (hooks) {
       mainActionDisabled: false,
     });
 
-    await render(hbs`<PolarisBanner @primaryAction={{hash
-        text="Edit"
-        loading=mainActionLoading
-        disabled=mainActionDisabled
-        onAction=(action primaryAction)
-      }} @secondaryAction={{hash
-        text="View"
-        onAction=(action secondaryAction)
-      }} />`);
+    await render(hbs`
+      <PolarisBanner
+        @primaryAction={{hash
+          text="Edit"
+          loading=mainActionLoading
+          disabled=mainActionDisabled
+          onAction=primaryAction
+        }}
+        @secondaryAction={{hash
+          text="View"
+          onAction=secondaryAction
+        }}
+      />
+    `);
 
     let primaryActionBtn = assert.dom(primaryActionBtnSelector);
     let secondaryActionBtn = assert.dom(secondaryActionBtnSelector);

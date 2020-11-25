@@ -21,7 +21,6 @@ export default class PolarisBanner extends Component {
    * Title content for the banner.
    *
    * @type {String}
-   * @default null
    * @public
    */
   title;
@@ -30,7 +29,6 @@ export default class PolarisBanner extends Component {
    * Icon to display in the banner.
    *
    * @type {String}
-   * @default null
    * @public
    */
   icon;
@@ -39,7 +37,6 @@ export default class PolarisBanner extends Component {
    * Sets the status of the banner.
    *
    * @type {String}
-   * @default null
    * @public
    */
   status;
@@ -48,7 +45,6 @@ export default class PolarisBanner extends Component {
    * Disables screen reader announcements when changing the content of the banner.
    *
    * @type {Boolean}
-   * @default false
    * @public
    */
   @arg stopAnnouncements = false;
@@ -58,7 +54,6 @@ export default class PolarisBanner extends Component {
    * NOTE: This is the equivalent for Shopify's `action` argument.
    *
    * @type {Object}
-   * @default null
    * @public
    */
   primaryAction;
@@ -67,7 +62,6 @@ export default class PolarisBanner extends Component {
    * Displays a secondary action.
    *
    * @type {Object}
-   * @default null
    * @public
    */
   secondaryAction;
@@ -76,7 +70,6 @@ export default class PolarisBanner extends Component {
    * Callback when banner is dismissed
    *
    * @type {Func}
-   * @default null
    * @public
    */
   onDismiss;
@@ -182,14 +175,21 @@ export default class PolarisBanner extends Component {
   }
 
   @action
-  handleBlur(e) {
-    e.currentTarget.blur();
+  handleMouseUp(e) {
+    this.handleMouseUpByBlurring(e);
     this.shouldShowFocus = false;
   }
 
   @action
-  handleKeyUp() {
-    this.shouldShowFocus = true;
+  handleBlur() {
+    this.shouldShowFocus = false;
+  }
+
+  @action
+  handleKeyUp(e) {
+    if (e.currentTarget.classList.contains('Polaris-Banner')) {
+      this.shouldShowFocus = true;
+    }
   }
 
   @action

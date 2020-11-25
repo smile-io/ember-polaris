@@ -5,7 +5,7 @@
   aria-live={{if this.stopAnnouncements "off" "polite"}}
   aria-describedby={{this.contentId}}
   aria-labelledby={{this.headingId}}
-  {{on "mouseup" this.handleMouseUpByBlurring}}
+  {{on "mouseup" this.handleMouseUp}}
   {{on "keyup" this.handleKeyUp}}
   {{on "blur" this.handleBlur}}
   ...attributes
@@ -64,13 +64,22 @@
               </div>
 
               {{#if @secondaryAction}}
-                <button
-                  class="Polaris-Banner__SecondaryAction"
-                  type="button"
-                  onclick={{fn this.triggerAction @secondaryAction}}
-                >
-                  <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
-                </button>
+                {{#if @secondaryAction.url}}
+                  <PolarisUnstyledLink
+                    @url={{@secondaryAction.url}}
+                    @external={{@secondaryAction.external}}
+                  >
+                    <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
+                  </PolarisUnstyledLink>
+                {{else}}
+                  <button
+                    class="Polaris-Banner__SecondaryAction"
+                    type="button"
+                    onclick={{fn this.triggerAction @secondaryAction}}
+                  >
+                    <span class="Polaris-Banner__Text">{{@secondaryAction.text}}</span>
+                  </button>
+                {{/if}}
               {{/if}}
             </PolarisButtonGroup>
           </div>
