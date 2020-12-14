@@ -1,5 +1,14 @@
 # Changelog
 
+## [v6.2.0](https://github.com/smile-io/ember-polaris/tree/v6.2.0) (December 14, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.3...v6.2.0)
+
+- [#688](https://github.com/smile-io/ember-polaris/pull/688)  Explicitly pass action to polaris page action
+- [#685](https://github.com/smile-io/ember-polaris/pull/685) [INTERNAL] Update dependency ember-source to v3.23.1
+- [#684](https://github.com/smile-io/ember-polaris/pull/684) [INTERNAL] Update Node.js to v12.20.0
+- [#682](https://github.com/smile-io/ember-polaris/pull/682) [INTERNAL] Update Node.js to v12.19.1
+
 ## [v6.1.1](https://github.com/smile-io/ember-polaris/tree/v6.1.3) (November 18, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.2...v6.1.3)
