@@ -11,17 +11,17 @@ const defaultProps = {
   index: 0,
 };
 
-module('Integration | Component | polaris-option-list/option', function (
-  hooks
-) {
-  setupRenderingTest(hooks);
+module(
+  'Integration | Component | polaris-option-list/option',
+  function (hooks) {
+    setupRenderingTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.set('defaultProps', defaultProps);
-  });
+    hooks.beforeEach(function () {
+      this.set('defaultProps', defaultProps);
+    });
 
-  test('renders a checkbox if allowMultiple is true', async function (assert) {
-    await render(hbs`
+    test('renders a checkbox if allowMultiple is true', async function (assert) {
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -31,11 +31,11 @@ module('Integration | Component | polaris-option-list/option', function (
         allowMultiple=true
       }}
     `);
-    assert.dom('input[type="checkbox"]').exists();
-  });
+      assert.dom('input[type="checkbox"]').exists();
+    });
 
-  test('renders a button if allowMultiple is false or undefined', async function (assert) {
-    await render(hbs`
+    test('renders a button if allowMultiple is false or undefined', async function (assert) {
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -44,19 +44,19 @@ module('Integration | Component | polaris-option-list/option', function (
         index=defaultProps.index
       }}
     `);
-    assert.dom('button').exists();
-  });
-
-  test('calls onClick with section and index if option is not disabled', async function (assert) {
-    assert.expect(2);
-
-    this.set('onOptionClicked', (optionSection, optionIndex) => {
-      const { section, index } = defaultProps;
-      assert.equal(optionSection, section);
-      assert.equal(optionIndex, index);
+      assert.dom('button').exists();
     });
 
-    await render(hbs`
+    test('calls onClick with section and index if option is not disabled', async function (assert) {
+      assert.expect(2);
+
+      this.set('onOptionClicked', (optionSection, optionIndex) => {
+        const { section, index } = defaultProps;
+        assert.equal(optionSection, section);
+        assert.equal(optionIndex, index);
+      });
+
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -67,11 +67,11 @@ module('Integration | Component | polaris-option-list/option', function (
       }}
     `);
 
-    await click('button');
-  });
+      await click('button');
+    });
 
-  test('doesn’t call onClick if option is disabled', async function (assert) {
-    await render(hbs`
+    test('doesn’t call onClick if option is disabled', async function (assert) {
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -83,21 +83,21 @@ module('Integration | Component | polaris-option-list/option', function (
       }}
     `);
 
-    await click('button');
+      await click('button');
 
-    assert.notOk(this.get('wasOnClickCalled'));
-  });
-
-  test('calls onClick with section and index if option is not disabled and multiple options are allowed', async function (assert) {
-    assert.expect(2);
-
-    this.set('onOptionClicked', (optionSection, optionIndex) => {
-      const { section, index } = defaultProps;
-      assert.equal(optionSection, section);
-      assert.equal(optionIndex, index);
+      assert.notOk(this.get('wasOnClickCalled'));
     });
 
-    await render(hbs`
+    test('calls onClick with section and index if option is not disabled and multiple options are allowed', async function (assert) {
+      assert.expect(2);
+
+      this.set('onOptionClicked', (optionSection, optionIndex) => {
+        const { section, index } = defaultProps;
+        assert.equal(optionSection, section);
+        assert.equal(optionIndex, index);
+      });
+
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -109,11 +109,11 @@ module('Integration | Component | polaris-option-list/option', function (
       }}
     `);
 
-    await triggerEvent('input', 'change');
-  });
+      await triggerEvent('input', 'change');
+    });
 
-  test('doesn’t call onClick if option is disabled and multiple options are allowed', async function (assert) {
-    await render(hbs`
+    test('doesn’t call onClick if option is disabled and multiple options are allowed', async function (assert) {
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -126,13 +126,13 @@ module('Integration | Component | polaris-option-list/option', function (
       }}
     `);
 
-    await triggerEvent('input', 'change');
+      await triggerEvent('input', 'change');
 
-    assert.notOk(this.get('wasOnClickCalled'));
-  });
+      assert.notOk(this.get('wasOnClickCalled'));
+    });
 
-  test('sets the pass through props for Checkbox if multiple items are allowed', async function (assert) {
-    await render(hbs`
+    test('sets the pass through props for Checkbox if multiple items are allowed', async function (assert) {
+      await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
         label=defaultProps.label
@@ -143,9 +143,10 @@ module('Integration | Component | polaris-option-list/option', function (
       }}
     `);
 
-    assert.dom('input[type="checkbox"]').hasAttribute('id', defaultProps.id);
-    assert
-      .dom('input[type="checkbox"]')
-      .hasAttribute('value', defaultProps.value);
-  });
-});
+      assert.dom('input[type="checkbox"]').hasAttribute('id', defaultProps.id);
+      assert
+        .dom('input[type="checkbox"]')
+        .hasAttribute('value', defaultProps.value);
+    });
+  }
+);

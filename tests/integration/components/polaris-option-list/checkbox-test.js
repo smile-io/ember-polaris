@@ -11,17 +11,17 @@ const defaultProps = {
   value: 'checkbox',
 };
 
-module('Integration | Component | polaris-option-list/checkbox', function (
-  hooks
-) {
-  setupRenderingTest(hooks);
+module(
+  'Integration | Component | polaris-option-list/checkbox',
+  function (hooks) {
+    setupRenderingTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.set('defaultProps', defaultProps);
-  });
+    hooks.beforeEach(function () {
+      this.set('defaultProps', defaultProps);
+    });
 
-  test('sets pass through props for input', async function (assert) {
-    await render(hbs`
+    test('sets pass through props for input', async function (assert) {
+      await render(hbs`
         {{polaris-option-list/checkbox
           checked=defaultProps.checked
           disabled=defaultProps.disabled
@@ -31,13 +31,13 @@ module('Integration | Component | polaris-option-list/checkbox', function (
         }}
       `);
 
-    assert.dom('input').hasAttribute('id', defaultProps.id);
-    assert.dom('input').hasAttribute('name', defaultProps.name);
-    assert.dom('input').hasValue(defaultProps.value);
-  });
+      assert.dom('input').hasAttribute('id', defaultProps.id);
+      assert.dom('input').hasAttribute('name', defaultProps.name);
+      assert.dom('input').hasValue(defaultProps.value);
+    });
 
-  test('calls onChange', async function (assert) {
-    await render(hbs`
+    test('calls onChange', async function (assert) {
+      await render(hbs`
         {{polaris-option-list/checkbox
           checked=defaultProps.checked
           disabled=defaultProps.disabled
@@ -48,8 +48,9 @@ module('Integration | Component | polaris-option-list/checkbox', function (
         }}
       `);
 
-    await triggerEvent('input', 'change');
+      await triggerEvent('input', 'change');
 
-    assert.ok(this.get('wasOnChangeCalled'));
-  });
-});
+      assert.ok(this.get('wasOnChangeCalled'));
+    });
+  }
+);
