@@ -1,5 +1,11 @@
 # Changelog
 
+## [v6.2.1](https://github.com/smile-io/ember-polaris/tree/v6.2.1) (December 16, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.2.0...v6.2.1)
+
+- [#689](https://github.com/smile-io/ember-polaris/pull/689)  Remove usage of deprecated getCode function from ember-keyboard
+
 ## [v6.2.0](https://github.com/smile-io/ember-polaris/tree/v6.2.0) (December 14, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.3...v6.2.0)
