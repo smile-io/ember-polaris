@@ -6,7 +6,6 @@ import { htmlSafe } from '@ember/string';
 import { typeOf, isPresent } from '@ember/utils';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';
-import { getCode } from 'ember-keyboard';
 import { runTask, cancelTask } from 'ember-lifeline';
 import template from '../templates/components/polaris-text-field';
 import { normalizeAutoCompleteProperty } from '../utils/normalize-auto-complete';
@@ -623,13 +622,13 @@ export default class PolarisTextField extends Component {
 
   @action
   handleKeyPress(event) {
-    let { key } = event;
+    let { key, which } = event;
     let numbersSpec = /[\d.eE+-]$/;
 
     if (
       this.type !== 'number' ||
-      getCode(event) === 'Enter' ||
-      key.match(numbersSpec)
+      which === 13 /* Enter key */ ||
+      numbersSpec.test(key)
     ) {
       return;
     }
