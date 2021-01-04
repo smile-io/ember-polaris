@@ -380,16 +380,11 @@ module('Integration | Component | polaris date picker', function (hooks) {
     const DISABLE_AFTER = new Date('Mon Feb 12 2018 00:00:00 GMT-0500 (EST)');
     const DISABLE_AFTER_SELECTOR = '[aria-label="February 13 2018"]';
 
-    this.set('onChangeActionFired', false);
-
     this.setProperties({
       month: MONTH,
       year: YEAR,
       selected: null,
       disableDatesAfter: DISABLE_AFTER,
-      onChange: () => {
-        this.set('onChangeActionFired', true);
-      },
     });
 
     await render(hbs`
@@ -398,15 +393,12 @@ module('Integration | Component | polaris date picker', function (hooks) {
         year=year
         selected=selected
         disableDatesAfter=disableDatesAfter
-        onChange=(action onChange)
       }}
     `);
 
-    await click(DISABLE_AFTER_SELECTOR);
-    assert.notOk(
-      this.get('onChangeActionFired'),
-      'clicking disabled day did not fire `onChange` action'
-    );
+    assert
+      .dom(DISABLE_AFTER_SELECTOR)
+      .isDisabled('disabled day is rendered correctly');
   });
 
   test('it applies an `inRange` class to days between the selected range', async function (assert) {
