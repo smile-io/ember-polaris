@@ -70,7 +70,7 @@ module(
       await click('button');
     });
 
-    test('doesn’t call onClick if option is disabled', async function (assert) {
+    test('supports option being disabled', async function (assert) {
       await render(hbs`
       {{polaris-option-list/option
         optionId=defaultProps.id
@@ -83,9 +83,7 @@ module(
       }}
     `);
 
-      await click('button');
-
-      assert.notOk(this.get('wasOnClickCalled'));
+      assert.dom('button').isDisabled();
     });
 
     test('calls onClick with section and index if option is not disabled and multiple options are allowed', async function (assert) {
@@ -110,25 +108,6 @@ module(
     `);
 
       await triggerEvent('input', 'change');
-    });
-
-    test('doesn’t call onClick if option is disabled and multiple options are allowed', async function (assert) {
-      await render(hbs`
-      {{polaris-option-list/option
-        optionId=defaultProps.id
-        label=defaultProps.label
-        value=defaultProps.value
-        section=defaultProps.section
-        index=defaultProps.index
-        onClick=(action (mut wasOnClickCalled) true)
-        disabled=true
-        allowMultiple=true
-      }}
-    `);
-
-      await triggerEvent('input', 'change');
-
-      assert.notOk(this.get('wasOnClickCalled'));
     });
 
     test('sets the pass through props for Checkbox if multiple items are allowed', async function (assert) {

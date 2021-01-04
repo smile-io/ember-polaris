@@ -296,7 +296,7 @@ module('Integration | Component | polaris banner', function (hooks) {
   });
 
   test('it supports `primaryAction` and `secondaryAction`', async function (assert) {
-    assert.expect(13);
+    assert.expect(14);
 
     await render(hbs`{{polaris-banner text="Some content text"}}`);
 
@@ -395,6 +395,11 @@ module('Integration | Component | polaris banner', function (hooks) {
       'View',
       'banner with actions - renders correct `secondaryAction` button text'
     );
+
+    this.setProperties({
+      mainActionLoading: false,
+      mainActionDisabled: false,
+    });
 
     await click(primaryActionBtnSelector);
     await click(secondaryActionBtnSelector);
