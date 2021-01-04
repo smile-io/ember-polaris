@@ -276,21 +276,21 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
 
     this.set('style', htmlSafe(`width: ${largeWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeLarge', 'has large class');
 
     this.set('style', htmlSafe(`width: ${mediumWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeMedium', 'has medium class');
 
     this.set('style', htmlSafe(`width: ${smallWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
