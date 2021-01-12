@@ -1,5 +1,17 @@
 # Changelog
 
+## [v6.2.2](https://github.com/smile-io/ember-polaris/tree/v6.2.1) (December 16, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.2.1...v6.2.2)
+
+- [#697](https://github.com/smile-io/ember-polaris/pull/697) [BUG] Fix broken Glimmer component detection
+- [#696](https://github.com/smile-io/ember-polaris/pull/696) [INTERNAL] Update dependency ember-cli to v3.24.0
+- [#695](https://github.com/smile-io/ember-polaris/pull/695) [INTERNAL] Update Node.js to v12.20.1
+- [#694](https://github.com/smile-io/ember-polaris/pull/694) [INTERNAL] Update dependency eslint-config-prettier to v7
+- [#693](https://github.com/smile-io/ember-polaris/pull/693) [INTERNAL] Update dependency ember-qunit to v5
+- [#692](https://github.com/smile-io/ember-polaris/pull/692) [INTERNAL] Update linting tools
+- [#691](https://github.com/smile-io/ember-polaris/pull/691) [INTERNAL] Update Ember dependencies
+
 ## [v6.2.1](https://github.com/smile-io/ember-polaris/tree/v6.2.1) (December 16, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.2.0...v6.2.1)
