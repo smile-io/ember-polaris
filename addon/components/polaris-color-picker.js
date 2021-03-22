@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { typeOf, isNone } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { clamp } from '../utils/math';
 import { hsbaToRgba } from '../utils/color';

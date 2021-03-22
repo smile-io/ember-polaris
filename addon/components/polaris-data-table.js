@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { isBlank, isNone } from '@ember/utils';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { scheduleOnce } from '@ember/runloop';
 import { assign } from '@ember/polyfills';
 import { isEqual } from '@ember/utils';

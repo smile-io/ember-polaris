@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed, action } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../../templates/components/polaris-text-field/resizer';
 import deprecateClassArgument from '../../utils/deprecate-class-argument';

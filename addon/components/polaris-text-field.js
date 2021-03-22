@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { bool } from '@ember/object/computed';
 import { guidFor } from '@ember/object/internals';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { typeOf, isPresent } from '@ember/utils';
 import { deprecate } from '@ember/application/deprecations';
 import { tagName, layout } from '@ember-decorators/component';

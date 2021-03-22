@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { classify, htmlSafe } from '@ember/string';
+import { classify } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import layout from '../templates/components/polaris-progress-bar';

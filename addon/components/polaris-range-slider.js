@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
-import { dasherize, htmlSafe } from '@ember/string';
+import { dasherize } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { assign } from '@ember/polyfills';
 import { errorId, helpTextId } from '@smile-io/ember-polaris/utils/id';

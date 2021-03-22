@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import layout from '../templates/components/polaris-sticky';

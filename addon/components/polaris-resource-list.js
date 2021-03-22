@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { gt } from '@ember/object/computed';
 import { action, get, computed } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { assert } from '@ember/debug';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';

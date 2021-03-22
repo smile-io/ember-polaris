@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { action, computed } from '@ember/object';
 import Ember from 'ember';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { warn } from '@ember/debug';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
 import { getRectForNode } from '@shopify/javascript-utilities/geometry';

@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tagName, layout } from '@ember-decorators/component';
 import template from '../../templates/components/polaris-action-list/item';
 
