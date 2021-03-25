@@ -25,7 +25,7 @@
     >
       {{#let (element (if @disclosure "span" "")) as |InnerWrapper|}}
         <InnerWrapper>
-          {{#if hasBlock}}
+          {{#if (has-block)}}
             {{yield}}
           {{else}}
             {{render-content @content}}

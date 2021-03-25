@@ -18,7 +18,7 @@
   {{on "blur" this.onBlur}}
   {{on "mouseup" this.onMouseUp}}
 >
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{yield}}
   {{else}}
     {{text}}

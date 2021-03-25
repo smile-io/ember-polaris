@@ -5,7 +5,7 @@
   {{did-insert this.setupAutoWrapper}}
   {{will-destroy this.teardownAutoWrapper}}
 >
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{yield
       (hash
         group=(component "polaris-form-layout/group")

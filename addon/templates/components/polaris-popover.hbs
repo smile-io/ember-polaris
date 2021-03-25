@@ -1,6 +1,6 @@
 <BasicDropdown
   @verticalPosition={{this.verticalPosition}}
-  @onOpen={{fn this.onOpen}}
+  @onOpen={{this.onOpen}}
   @onClose={{fn (or @onClose this.onClose)}}
   as |dd|
 >
@@ -14,9 +14,9 @@
         fullWidth=@fullWidth
         fullHeight=@fullHeight
       )
-      open=(fn dd.actions.open)
-      close=(fn dd.actions.close)
-      toggle=(fn dd.actions.toggle)
+      open=dd.actions.open
+      close=dd.actions.close
+      toggle=dd.actions.toggle
     )
   }}
 </BasicDropdown>

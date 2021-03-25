@@ -19,10 +19,10 @@
     </span>
   {{/if}}
 
-  {{#if (or @text hasBlock)}}
+  {{#if (or @text (has-block))}}
     {{!-- TODO: prevent rendering empty span here if block is empty. --}}
     <span class="Polaris-Button__Text">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         {{text}}
