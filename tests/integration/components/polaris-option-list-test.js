@@ -758,8 +758,6 @@ function totalOptions(options, sections) {
     (options == null ? 0 : options.length) +
     (sections == null
       ? 0
-      : sections.reduce((total, { options }) => {
-          return total + options.length;
-        }, 0))
+      : sections.reduce((total, { options }) => total + options.length, 0))
   );
 }

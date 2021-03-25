@@ -146,9 +146,10 @@ export default class PolarisPageHeader extends Component {
   get actionGroupsAsActionListSections() {
     let actionGroups = this.actionGroups || [];
 
-    return actionGroups.map(({ title, actions }) => {
-      return { title, items: actions };
-    });
+    return actionGroups.map(({ title, actions }) => ({
+      title,
+      items: actions,
+    }));
   }
 
   @computed(

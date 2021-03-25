@@ -261,12 +261,10 @@ export default class PolarisResourceList extends Component.extend(
     items = items || [];
     idForItem = idForItem || defaultIdForItem;
 
-    return items.map((item, index) => {
-      return {
-        item,
-        id: idForItem(item, index),
-      };
-    });
+    return items.map((item, index) => ({
+      item,
+      id: idForItem(item, index),
+    }));
   }
 
   @(computed('selectable', 'sortOptions.length', 'alternateTool').readOnly())
@@ -463,9 +461,7 @@ export default class PolarisResourceList extends Component.extend(
       selectMode,
       resourceName,
       loading,
-      onSelectionChange: (...args) => {
-        return this.handleSelectionChange(...args);
-      },
+      onSelectionChange: (...args) => this.handleSelectionChange(...args),
     };
   }
 
@@ -679,9 +675,7 @@ export default class PolarisResourceList extends Component.extend(
 }
 
 function getAllItemsOnPage(items, idForItem) {
-  return items.map((item, index) => {
-    return idForItem(item, index);
-  });
+  return items.map((item, index) => idForItem(item, index));
 }
 
 function defaultIdForItem(item, index) {

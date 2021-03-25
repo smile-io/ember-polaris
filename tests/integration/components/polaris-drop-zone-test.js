@@ -1411,14 +1411,12 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
 });
 
 function setBoundingClientRect(size) {
-  Element.prototype.getBoundingClientRect = () => {
-    return {
-      width: widths[size],
-      height: 100,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-    };
-  };
+  Element.prototype.getBoundingClientRect = () => ({
+    width: widths[size],
+    height: 100,
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  });
 }

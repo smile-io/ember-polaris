@@ -121,7 +121,8 @@ function buildOperatorOptions(operatorText) {
     return [];
   }
 
-  return operatorText.map(({ key, optionLabel }) => {
-    return { value: key, label: optionLabel };
-  });
+  return operatorText.map(({ key, optionLabel }) => ({
+    value: key,
+    label: optionLabel,
+  }));
 }
