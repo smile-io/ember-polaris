@@ -144,12 +144,12 @@ export default class PolarisChoiceList extends Component {
   get checkedChoices() {
     const { choices, selected } = this;
 
-    return choices.map((choice) => {
-      return CheckedChoice.create({
+    return choices.map((choice) =>
+      CheckedChoice.create({
         content: choice,
         selected,
-      });
-    });
+      })
+    );
   }
 
   @action

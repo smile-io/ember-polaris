@@ -250,12 +250,10 @@ module(
 
         assert.deepEqual(
           findAll('.Polaris-Select select option:not([disabled])').map(
-            (option) => {
-              return {
-                value: option.getAttribute('value'),
-                label: option.textContent.trim(),
-              };
-            }
+            (option) => ({
+              value: option.getAttribute('value'),
+              label: option.textContent.trim(),
+            })
           ),
           [
             {

@@ -30,7 +30,7 @@
         step={{@step}}
         value={{@value}}
         disabled={{@disabled}}
-        oninput={{fn this.handleChange}}
+        oninput={{this.handleChange}}
         onfocus={{fn (or @onFocus this.onFocus)}}
         onblur={{fn (or @onBlur this.onBlur)}}
         aria-valuemin={{or @min this.min}}

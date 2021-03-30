@@ -293,17 +293,13 @@ export default class PolarisResourceListBulkActions extends Component.extend(
   }
 
   instanceOfBulkActionListSectionArray(actionsCollection) {
-    let validList = actionsCollection.filter((action) => {
-      return action.items;
-    });
+    let validList = actionsCollection.filter((action) => action.items);
 
     return actionsCollection.length === validList.length;
   }
 
   instanceOfBulkActionArray(actionsCollection) {
-    let validList = actionsCollection.filter((action) => {
-      return !action.items;
-    });
+    let validList = actionsCollection.filter((action) => !action.items);
 
     return actionsCollection.length === validList.length;
   }

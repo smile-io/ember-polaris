@@ -36,11 +36,8 @@ const MathRandomStubber = EmberObject.extend({
 
     this.set('originalMathRandom', Math.random);
     let sequence = this.get('sequence');
-    Math.random = () => {
-      return sequence[
-        this.incrementProperty('lastNumberIndex') % sequence.length
-      ];
-    };
+    Math.random = () =>
+      sequence[this.incrementProperty('lastNumberIndex') % sequence.length];
   },
 
   restore() {

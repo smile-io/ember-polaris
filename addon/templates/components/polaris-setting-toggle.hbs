@@ -1,7 +1,7 @@
 <PolarisCard @sectioned={{true}} ...attributes>
   <div class="Polaris-SettingAction">
     <div class="Polaris-SettingAction__Setting">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         {{@text}}

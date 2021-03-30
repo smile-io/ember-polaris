@@ -1,7 +1,7 @@
 <div class="Polaris-Layout {{@class}}" ...attributes>
   {{#if this.sectioned}}
     <PolarisLayout::Section>
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield
           (hash
             section=(component "polaris-layout/section")
@@ -13,7 +13,7 @@
       {{/if}}
     </PolarisLayout::Section>
   {{else}}
-    {{#if hasBlock}}
+    {{#if (has-block)}}
       {{yield
         (hash
           section=(component "polaris-layout/section")

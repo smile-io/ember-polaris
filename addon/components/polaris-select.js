@@ -293,9 +293,9 @@ function normalizeOption(option) {
     let { title, options } = option;
     return {
       title,
-      options: options.map((option) => {
-        return isString(option) ? normalizeStringOption(option) : option;
-      }),
+      options: options.map((option) =>
+        isString(option) ? normalizeStringOption(option) : option
+      ),
     };
   }
 

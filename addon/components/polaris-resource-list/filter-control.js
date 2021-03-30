@@ -278,9 +278,9 @@ function findOperatorLabel(filter, appliedFilter) {
     return operatorText;
   }
 
-  let appliedOperator = operatorText.find((operator) => {
-    return get(operator, 'key') === get(appliedFilter, 'key');
-  });
+  let appliedOperator = operatorText.find(
+    (operator) => get(operator, 'key') === get(appliedFilter, 'key')
+  );
 
   if (appliedOperator) {
     return (

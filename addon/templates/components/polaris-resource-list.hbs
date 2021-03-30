@@ -57,7 +57,7 @@
                       @disabled={{@loading}}
                       @accessibilityLabel={{this.bulkActionsAccessibilityLabel}}
                       @label={{this.headerTitle}}
-                      @onToggleAll={{fn this.handleToggleAll}}
+                      @onToggleAll={{this.handleToggleAll}}
                     />
                   </div>
                 {{/if}}
@@ -102,9 +102,9 @@
                     @label={{this.bulkActionsLabel}}
                     @accessibilityLabel={{this.bulkActionsAccessibilityLabel}}
                     @selected={{this.bulkSelectState}}
-                    @onToggleAll={{fn this.handleToggleAll}}
+                    @onToggleAll={{this.handleToggleAll}}
                     @selectMode={{this.selectMode}}
-                    @onSelectModeToggle={{fn this.handleSelectMode}}
+                    @onSelectModeToggle={{this.handleSelectMode}}
                     @promotedActions={{@promotedBulkActions}}
                     @paginatedSelectAllAction={{this.paginatedSelectAllAction}}
                     @paginatedSelectAllText={{this.paginatedSelectAllText}}

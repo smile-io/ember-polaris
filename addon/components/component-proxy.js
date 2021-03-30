@@ -62,9 +62,10 @@ export default Component.extend({
    */
   propsString: computed('propNames.[]', function () {
     let propNames = this.propNames || [];
-    return propNames.reduce((propsString, propName) => {
-      return `${propsString} ${propName}=${propName}`;
-    }, '');
+    return propNames.reduce(
+      (propsString, propName) => `${propsString} ${propName}=${propName}`,
+      ''
+    );
   }).readOnly(),
 
   updateProps() {

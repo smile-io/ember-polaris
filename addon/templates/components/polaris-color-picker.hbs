@@ -8,20 +8,20 @@
     <PolarisColorPicker::Slidable
       @draggerX={{this.draggerX}}
       @draggerY={{this.draggerY}}
-      @onChange={{fn this.draggerMoved}}
+      @onChange={{this.draggerMoved}}
     />
   </div>
 
   <PolarisColorPicker::HuePicker
     @hue={{@color.hue}}
-    @onChange={{fn this.handleHueChange}}
+    @onChange={{this.handleHueChange}}
   />
 
   {{#if @allowAlpha}}
     <PolarisColorPicker::AlphaPicker
       @color={{@color}}
       @alpha={{@color.alpha}}
-      @onChange={{fn this.handleAlphaChange}}
+      @onChange={{this.handleAlphaChange}}
     />
   {{/if}}
 </div>
