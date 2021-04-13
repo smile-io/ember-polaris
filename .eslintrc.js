@@ -6,6 +6,7 @@ module.exports = {
   extends: ['plugin:smile-ember/addon'],
   rules: {
     // Temporary while upgrading to Ember Octane & Glimmer components
+    'ember/no-jquery': 'off',
     'ember/no-get': 'off',
     'ember/no-mixins': 'off',
     'ember/no-classic-components': 'off',
