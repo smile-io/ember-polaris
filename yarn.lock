@@ -8867,10 +8867,10 @@ eslint-plugin-prettier@3.3.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-smile-ember@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-9.0.0.tgz#11e3c0f743f476c69e9fb808e38a561fc58b3aa5"
-  integrity sha512-CGj33gy/Gb7Pj5mMVQn86t4vpzYX2NkAxRqBldF+Zdh8wAOfPOavBbpHjJvj4OQhkEuZmDoOqrAchuno+oHHPA==
+eslint-plugin-smile-ember@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-smile-ember/-/eslint-plugin-smile-ember-9.1.0.tgz#6559a3942824f50ea815114abfc00f6a7dba59fc"
+  integrity sha512-hVyWqk/IM388w93P1x4yyT9JPaMnoTpbdbEhHBqtGtM6MV2jceqcO+ZTmYpdZQhKhgy+xyxe/o5y4oppjMIdUA==
   dependencies:
     deep-value "^1.0.4"
     requireindex "~1.2.0"
