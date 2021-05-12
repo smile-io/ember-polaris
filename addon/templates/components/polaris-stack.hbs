@@ -5,7 +5,7 @@
   {{will-destroy this.teardownAutoWrapper}}
   ...attributes
 >
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{yield (hash item=(component "polaris-stack/item"))}}
   {{else}}
     {{text}}

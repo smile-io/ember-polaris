@@ -1,5 +1,32 @@
 # Changelog
 
+## [v6.2.2](https://github.com/smile-io/ember-polaris/tree/v6.2.1) (December 16, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.2.1...v6.2.2)
+
+- [#697](https://github.com/smile-io/ember-polaris/pull/697) [BUG] Fix broken Glimmer component detection
+- [#696](https://github.com/smile-io/ember-polaris/pull/696) [INTERNAL] Update dependency ember-cli to v3.24.0
+- [#695](https://github.com/smile-io/ember-polaris/pull/695) [INTERNAL] Update Node.js to v12.20.1
+- [#694](https://github.com/smile-io/ember-polaris/pull/694) [INTERNAL] Update dependency eslint-config-prettier to v7
+- [#693](https://github.com/smile-io/ember-polaris/pull/693) [INTERNAL] Update dependency ember-qunit to v5
+- [#692](https://github.com/smile-io/ember-polaris/pull/692) [INTERNAL] Update linting tools
+- [#691](https://github.com/smile-io/ember-polaris/pull/691) [INTERNAL] Update Ember dependencies
+
+## [v6.2.1](https://github.com/smile-io/ember-polaris/tree/v6.2.1) (December 16, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.2.0...v6.2.1)
+
+- [#689](https://github.com/smile-io/ember-polaris/pull/689)  Remove usage of deprecated getCode function from ember-keyboard
+
+## [v6.2.0](https://github.com/smile-io/ember-polaris/tree/v6.2.0) (December 14, 2020)
+
+[Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.3...v6.2.0)
+
+- [#688](https://github.com/smile-io/ember-polaris/pull/688)  Explicitly pass action to polaris page action
+- [#685](https://github.com/smile-io/ember-polaris/pull/685) [INTERNAL] Update dependency ember-source to v3.23.1
+- [#684](https://github.com/smile-io/ember-polaris/pull/684) [INTERNAL] Update Node.js to v12.20.0
+- [#682](https://github.com/smile-io/ember-polaris/pull/682) [INTERNAL] Update Node.js to v12.19.1
+
 ## [v6.1.1](https://github.com/smile-io/ember-polaris/tree/v6.1.3) (November 18, 2020)
 
 [Full Changelog](https://github.com/smile-io/ember-polaris/compare/v6.1.2...v6.1.3)

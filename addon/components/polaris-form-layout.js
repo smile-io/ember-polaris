@@ -32,12 +32,9 @@ export default class PolarisFormLayout extends Component {
       {
         'data-test-form-layout-item': '',
       },
-      (elem) => {
-        return (
-          !elem.classList.contains('Polaris-FormLayout__Item') &&
-          elem.getAttribute('role') !== 'group'
-        );
-      }
+      (elem) =>
+        !elem.classList.contains('Polaris-FormLayout__Item') &&
+        elem.getAttribute('role') !== 'group'
     );
   }
 

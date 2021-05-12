@@ -36,14 +36,14 @@
       </div>
     {{/if}}
 
-    {{#if (or hasBlock @text @primaryAction)}}
+    {{#if (or (has-block) @text @primaryAction)}}
       <div
         class="Polaris-Banner__Content"
         id={{this.contentId}}
         {{did-insert this.setContentId}}
         {{will-destroy this.setContentId null}}
       >
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           {{yield}}
         {{else}}
           {{@text}}

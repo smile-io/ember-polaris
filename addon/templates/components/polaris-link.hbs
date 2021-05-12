@@ -5,7 +5,7 @@
     @external={{@external}}
     @onClick={{this.handleClick}}
   >
-    {{#if hasBlock}}
+    {{#if (has-block)}}
       {{yield}}
     {{else}}
       {{@text}}
@@ -17,7 +17,7 @@
     class={{this.linkClass}}
     {{on "click" (stop-propagation this.handleClick)}}
   >
-    {{#if hasBlock}}
+    {{#if (has-block)}}
       {{yield}}
     {{else}}
       {{@text}}

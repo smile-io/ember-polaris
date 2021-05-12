@@ -61,7 +61,7 @@
                 @labelHidden={{true}}
                 @checked={{this.isSelected}}
                 @disabled={{this.loading}}
-                @onChange={{fn this.handleSelection}}
+                @onChange={{this.handleSelection}}
               />
             </div>
           </div>
@@ -75,9 +75,9 @@
       </div>
     {{/if}}
 
-    {{#if (or hasBlock @children)}}
+    {{#if (or (has-block) @children)}}
       <div class="Polaris-ResourceList-Item__Content">
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           {{yield}}
         {{else}}
           {{render-content @children}}
@@ -132,7 +132,7 @@
                 aria-label="Actions dropdown"
                 @plain={{true}}
                 @icon="horizontal-dots"
-                @onClick={{fn popover.toggle}}
+                @onClick={{popover.toggle}}
               />
             </popover.activator>
 

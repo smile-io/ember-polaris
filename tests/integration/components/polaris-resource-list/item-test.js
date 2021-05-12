@@ -58,32 +58,32 @@ const ariaLabel = 'View Item';
 const mediaSelector = '[data-test-id="media"]';
 const shorcutActionsSelector = '.Polaris-ResourceList-Item__Actions';
 
-module('Integration | Component | polaris-resource-list/item', function (
-  hooks
-) {
-  setupRenderingTest(hooks);
+module(
+  'Integration | Component | polaris-resource-list/item',
+  function (hooks) {
+    setupRenderingTest(hooks);
 
-  let origWindowOpen = window.open;
+    let origWindowOpen = window.open;
 
-  hooks.beforeEach(function () {
-    this.setProperties({
-      mockDefaultContext,
-      mockSelectableContext: getMockSelectableContext(this),
-      mockSelectModeContext: getMockSelectModeContext(this),
-      mockLoadingContext: getMockLoadingContext(this),
+    hooks.beforeEach(function () {
+      this.setProperties({
+        mockDefaultContext,
+        mockSelectableContext: getMockSelectableContext(this),
+        mockSelectModeContext: getMockSelectModeContext(this),
+        mockLoadingContext: getMockLoadingContext(this),
+      });
+
+      window.open = (...params) => this.set('windowOpenParams', params);
     });
 
-    window.open = (...params) => this.set('windowOpenParams', params);
-  });
+    hooks.afterEach(function () {
+      window.open = origWindowOpen;
+    });
 
-  hooks.afterEach(function () {
-    window.open = origWindowOpen;
-  });
-
-  module('accessibilityLabel', function () {
-    test('is used on the <UnstyledLink /> for the aria-label attribute', async function (assert) {
-      this.setProperties({ accessibilityLabel, itemId });
-      await render(hbs`
+    module('accessibilityLabel', function () {
+      test('is used on the <UnstyledLink /> for the aria-label attribute', async function (assert) {
+        this.setProperties({ accessibilityLabel, itemId });
+        await render(hbs`
         {{#polaris-resource-list/provider value=mockDefaultContext}}
           {{polaris-resource-list/item
             accessibilityLabel=accessibilityLabel
@@ -93,22 +93,22 @@ module('Integration | Component | polaris-resource-list/item', function (
         {{/polaris-resource-list/provider}}
       `);
 
-      assert
-        .dom('a[data-polaris-unstyled]')
-        .hasAttribute('aria-label', accessibilityLabel);
+        assert
+          .dom('a[data-polaris-unstyled]')
+          .hasAttribute('aria-label', accessibilityLabel);
+      });
     });
-  });
 
-  module(
-    'url',
-    {
-      beforeEach() {
-        this.setProperties({ url, ariaLabel });
+    module(
+      'url',
+      {
+        beforeEach() {
+          this.setProperties({ url, ariaLabel });
+        },
       },
-    },
-    function () {
-      test('does not render an <UnstyledLink /> by default', async function (assert) {
-        await render(hbs`
+      function () {
+        test('does not render an <UnstyledLink /> by default', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId="itemId"
@@ -118,11 +118,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom('a[data-polaris-unstyled]').doesNotExist();
-      });
+          assert.dom('a[data-polaris-unstyled]').doesNotExist();
+        });
 
-      test('renders an <UnstyledLink />', async function (assert) {
-        await render(hbs`
+        test('renders an <UnstyledLink />', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId="itemId"
@@ -132,11 +132,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom('a[data-polaris-unstyled]').exists();
-      });
+          assert.dom('a[data-polaris-unstyled]').exists();
+        });
 
-      test('renders an <UnstyledLink /> with url', async function (assert) {
-        await render(hbs`
+        test('renders an <UnstyledLink /> with url', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId="itemId"
@@ -146,11 +146,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom('a[data-polaris-unstyled]').hasAttribute('href', url);
-      });
+          assert.dom('a[data-polaris-unstyled]').hasAttribute('href', url);
+        });
 
-      test('renders an <UnstyledLink /> with an aria-label of ariaLabel', async function (assert) {
-        await render(hbs`
+        test('renders an <UnstyledLink /> with an aria-label of ariaLabel', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId="itemId"
@@ -160,13 +160,13 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert
-          .dom('a[data-polaris-unstyled]')
-          .hasAttribute('aria-label', ariaLabel);
-      });
+          assert
+            .dom('a[data-polaris-unstyled]')
+            .hasAttribute('aria-label', ariaLabel);
+        });
 
-      test('adds a data-href to the wrapper element', async function (assert) {
-        await render(hbs`
+        test('adds a data-href to the wrapper element', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId="itemId"
@@ -175,17 +175,17 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert
-          .dom('[data-test-id="item-wrapper"]')
-          .hasAttribute('data-href', url);
-      });
-    }
-  );
+          assert
+            .dom('[data-test-id="item-wrapper"]')
+            .hasAttribute('data-href', url);
+        });
+      }
+    );
 
-  module('itemId', function () {
-    test('is used on the content node and for the description of a link', async function (assert) {
-      this.setProperties({ itemId, ariaLabel });
-      await render(hbs`
+    module('itemId', function () {
+      test('is used on the content node and for the description of a link', async function (assert) {
+        this.setProperties({ itemId, ariaLabel });
+        await render(hbs`
         {{#polaris-resource-list/provider value=mockDefaultContext}}
           {{polaris-resource-list/item
             itemId=itemId
@@ -195,23 +195,23 @@ module('Integration | Component | polaris-resource-list/item', function (
         {{/polaris-resource-list/provider}}
       `);
 
-      assert.dom('[data-test-id="item-content"]').hasAttribute('id', itemId);
-      assert
-        .dom('a[data-polaris-unstyled]')
-        .hasAttribute('aria-describedby', itemId);
+        assert.dom('[data-test-id="item-content"]').hasAttribute('id', itemId);
+        assert
+          .dom('a[data-polaris-unstyled]')
+          .hasAttribute('aria-describedby', itemId);
+      });
     });
-  });
 
-  module(
-    'onClick()',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, ariaLabel, url });
+    module(
+      'onClick()',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, ariaLabel, url });
+        },
       },
-    },
-    function () {
-      test('calls onClick when clicking on the item when onClick exists', async function (assert) {
-        await render(hbs`
+      function () {
+        test('calls onClick when clicking on the item when onClick exists', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -221,12 +221,12 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="item-wrapper"]');
-        assert.equal(this.get('passedItemId'), itemId);
-      });
+          await click('[data-test-id="item-wrapper"]');
+          assert.equal(this.get('passedItemId'), itemId);
+        });
 
-      test('calls onClick when clicking on the item when both onClick and url exist', async function (assert) {
-        await render(hbs`
+        test('calls onClick when clicking on the item when both onClick and url exist', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -237,12 +237,12 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="item-wrapper"]');
-        assert.equal(this.get('passedItemId'), itemId);
-      });
+          await click('[data-test-id="item-wrapper"]');
+          assert.equal(this.get('passedItemId'), itemId);
+        });
 
-      test('calls window.open on metaKey + click', async function (assert) {
-        await render(hbs`
+        test('calls window.open on metaKey + click', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -252,12 +252,12 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="item-wrapper"]', { metaKey: true });
-        assert.deepEqual(this.get('windowOpenParams'), [url, '_blank']);
-      });
+          await click('[data-test-id="item-wrapper"]', { metaKey: true });
+          assert.deepEqual(this.get('windowOpenParams'), [url, '_blank']);
+        });
 
-      test('calls window.open on ctrlKey + click', async function (assert) {
-        await render(hbs`
+        test('calls window.open on ctrlKey + click', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -267,22 +267,22 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="item-wrapper"]', { ctrlKey: true });
-        assert.deepEqual(this.get('windowOpenParams'), [url, '_blank']);
-      });
-    }
-  );
+          await click('[data-test-id="item-wrapper"]', { ctrlKey: true });
+          assert.deepEqual(this.get('windowOpenParams'), [url, '_blank']);
+        });
+      }
+    );
 
-  module(
-    'Selectable',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, url });
+    module(
+      'Selectable',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, url });
+        },
       },
-    },
-    function () {
-      test("does not call the Item 'onClick' when clicking the 'LargerSelectionArea'", async function (assert) {
-        await render(hbs`
+      function () {
+        test("does not call the Item 'onClick' when clicking the 'LargerSelectionArea'", async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -291,12 +291,12 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="larger-selection-area"]');
-        assert.notOk(this.get('wasOnClickCalled'));
-      });
+          await click('[data-test-id="larger-selection-area"]');
+          assert.notOk(this.get('wasOnClickCalled'));
+        });
 
-      test('calls onSelectionChange with the id of the item when clicking the LargerSelectionArea', async function (assert) {
-        await render(hbs`
+        test('calls onSelectionChange with the id of the item when clicking the LargerSelectionArea', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -305,25 +305,25 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="larger-selection-area"]');
-        assert.deepEqual(this.get('passedOnSelectionChangeParams'), [
-          true,
-          itemId,
-        ]);
-      });
-    }
-  );
+          await click('[data-test-id="larger-selection-area"]');
+          assert.deepEqual(this.get('passedOnSelectionChangeParams'), [
+            true,
+            itemId,
+          ]);
+        });
+      }
+    );
 
-  module(
-    'SelectMode',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, selectedItemId, ariaLabel, url });
+    module(
+      'SelectMode',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, selectedItemId, ariaLabel, url });
+        },
       },
-    },
-    function () {
-      test('does not call onClick when clicking the item', async function (assert) {
-        await render(hbs`
+      function () {
+        test('does not call onClick when clicking the item', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectModeContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -333,16 +333,16 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        await click('[data-test-id="item-wrapper"]');
-        assert.notOk(this.get('wasOnClickCalled'));
-      });
+          await click('[data-test-id="item-wrapper"]');
+          assert.notOk(this.get('wasOnClickCalled'));
+        });
 
-      /**
-       * Skipping this test because the React version
-       * seems to be passing erroneously...
-       */
-      skip('calls onSelectionChange with the id of the item even if url or onClick is present', async function (assert) {
-        await render(hbs`
+        /**
+         * Skipping this test because the React version
+         * seems to be passing erroneously...
+         */
+        skip('calls onSelectionChange with the id of the item even if url or onClick is present', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -353,15 +353,15 @@ module('Integration | Component | polaris-resource-list/item', function (
            {{/polaris-resource-list/provider}}
          `);
 
-        await click('[data-test-id="item-wrapper"]');
-        assert.deepEqual(this.get('passedOnSelectionChangeParams'), [
-          true,
-          itemId,
-        ]);
-      });
+          await click('[data-test-id="item-wrapper"]');
+          assert.deepEqual(this.get('passedOnSelectionChangeParams'), [
+            true,
+            itemId,
+          ]);
+        });
 
-      test('renders a checked Checkbox if the item is in the selectedItems context', async function (assert) {
-        await render(hbs`
+        test('renders a checked Checkbox if the item is in the selectedItems context', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectableContext}}
             {{polaris-resource-list/item
               itemId=selectedItemId
@@ -369,13 +369,13 @@ module('Integration | Component | polaris-resource-list/item', function (
             }}
           {{/polaris-resource-list/provider}}
         `);
-        assert
-          .dom('[data-test-checkbox-input]')
-          .hasAttribute('data-test-checkbox-input-checked');
-      });
+          assert
+            .dom('[data-test-checkbox-input]')
+            .hasAttribute('data-test-checkbox-input-checked');
+        });
 
-      test('does not call window.open when clicking the item with metaKey', async function (assert) {
-        await render(hbs`
+        test('does not call window.open when clicking the item with metaKey', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectModeContext}}
             {{polaris-resource-list/item
               itemId=selectedItemId
@@ -383,12 +383,12 @@ module('Integration | Component | polaris-resource-list/item', function (
             }}
           {{/polaris-resource-list/provider}}
         `);
-        await click('[data-test-id="item-wrapper"]', { metaKey: true });
-        assert.notOk(this.get('windowOpenParams'));
-      });
+          await click('[data-test-id="item-wrapper"]', { metaKey: true });
+          assert.notOk(this.get('windowOpenParams'));
+        });
 
-      test('does not call window.open when clicking the item with ctrlKey', async function (assert) {
-        await render(hbs`
+        test('does not call window.open when clicking the item with ctrlKey', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockSelectModeContext}}
             {{polaris-resource-list/item
               itemId=selectedItemId
@@ -396,22 +396,22 @@ module('Integration | Component | polaris-resource-list/item', function (
             }}
           {{/polaris-resource-list/provider}}
         `);
-        await click('[data-test-id="item-wrapper"]', { ctrlKey: true });
-        assert.notOk(this.get('windowOpenParams'));
-      });
-    }
-  );
+          await click('[data-test-id="item-wrapper"]', { ctrlKey: true });
+          assert.notOk(this.get('windowOpenParams'));
+        });
+      }
+    );
 
-  module(
-    'media',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, selectedItemId, url });
+    module(
+      'media',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, selectedItemId, url });
+        },
       },
-    },
-    function () {
-      test('does not include media if not provided', async function (assert) {
-        await render(hbs`
+      function () {
+        test('does not include media if not provided', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -420,11 +420,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom('[data-test-id="media"]').doesNotExist();
-      });
+          assert.dom('[data-test-id="media"]').doesNotExist();
+        });
 
-      test('renders a disabled checked Checkbox if `loading` context is true', async function (assert) {
-        await render(hbs`
+        test('renders a disabled checked Checkbox if `loading` context is true', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockLoadingContext}}
             {{polaris-resource-list/item
               id=selectedItemId
@@ -433,11 +433,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
-      });
+          assert.dom('[data-test-checkbox-input]').hasAttribute('disabled');
+        });
 
-      test('includes an <Avatar /> if one is provided', async function (assert) {
-        await render(hbs`
+        test('includes an <Avatar /> if one is provided', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -447,11 +447,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom(`${mediaSelector} > .Polaris-Avatar`).exists();
-      });
+          assert.dom(`${mediaSelector} > .Polaris-Avatar`).exists();
+        });
 
-      test('includes a <Thumbnail /> if one is provided', async function (assert) {
-        await render(hbs`
+        test('includes a <Thumbnail /> if one is provided', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -461,21 +461,21 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom(`${mediaSelector} > .Polaris-Thumbnail`).exists();
-      });
-    }
-  );
+          assert.dom(`${mediaSelector} > .Polaris-Thumbnail`).exists();
+        });
+      }
+    );
 
-  module(
-    'shortcutActions',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, url, shortcutActions });
+    module(
+      'shortcutActions',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, url, shortcutActions });
+        },
       },
-    },
-    function () {
-      test('does not render shortcut actions if none are provided', async function (assert) {
-        await render(hbs`
+      function () {
+        test('does not render shortcut actions if none are provided', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -484,11 +484,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom(shorcutActionsSelector).doesNotExist();
-      });
+          assert.dom(shorcutActionsSelector).doesNotExist();
+        });
 
-      test('renders shortcut actions when some are provided', async function (assert) {
-        await render(hbs`
+        test('renders shortcut actions when some are provided', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -498,11 +498,11 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        assert.dom(shorcutActionsSelector).exists();
-      });
+          assert.dom(shorcutActionsSelector).exists();
+        });
 
-      test('renders persistent shortcut actions if persistActions is true', async function (assert) {
-        await render(hbs`
+        test('renders persistent shortcut actions if persistActions is true', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockDefaultContext}}
             {{polaris-resource-list/item
               persistActions=true
@@ -513,16 +513,16 @@ module('Integration | Component | polaris-resource-list/item', function (
           {{/polaris-resource-list/provider}}
         `);
 
-        // Checking the 'Disclosure' class here because the react implementation
-        // tests for ButtonGroup in this case, but our implementation has a
-        // ButtonGroup rendered either way, whereas the 'Disclosure' class only
-        // gets applied if `persistActions` is `true` so it's more accurate to
-        // check the class.
-        assert.dom('.Polaris-ResourceList-Item__Disclosure').exists();
-      });
+          // Checking the 'Disclosure' class here because the react implementation
+          // tests for ButtonGroup in this case, but our implementation has a
+          // ButtonGroup rendered either way, whereas the 'Disclosure' class only
+          // gets applied if `persistActions` is `true` so it's more accurate to
+          // check the class.
+          assert.dom('.Polaris-ResourceList-Item__Disclosure').exists();
+        });
 
-      test('does not render while loading', async function (assert) {
-        await render(hbs`
+        test('does not render while loading', async function (assert) {
+          await render(hbs`
           {{#polaris-resource-list/provider value=mockLoadingContext}}
             {{polaris-resource-list/item
               itemId=itemId
@@ -532,21 +532,21 @@ module('Integration | Component | polaris-resource-list/item', function (
             }}
           {{/polaris-resource-list/provider}}
         `);
-        assert.dom('[data-test-button-group]').doesNotExist();
-      });
-    }
-  );
+          assert.dom('[data-test-button-group]').doesNotExist();
+        });
+      }
+    );
 
-  module(
-    'accessibleMarkup',
-    {
-      beforeEach() {
-        this.setProperties({ itemId, url, shortcutActions });
+    module(
+      'accessibleMarkup',
+      {
+        beforeEach() {
+          this.setProperties({ itemId, url, shortcutActions });
+        },
       },
-    },
-    function () {
-      test('renders with a tab index of -1 when loading is true', async function (assert) {
-        await render(hbs`
+      function () {
+        test('renders with a tab index of -1 when loading is true', async function (assert) {
+          await render(hbs`
         {{#polaris-resource-list/provider value=mockLoadingContext}}
           {{polaris-resource-list/item
             itemId=itemId
@@ -557,11 +557,11 @@ module('Integration | Component | polaris-resource-list/item', function (
         {{/polaris-resource-list/provider}}
       `);
 
-        assert.dom('[data-polaris-unstyled]').hasAttribute('tabindex', '-1');
-      });
+          assert.dom('[data-polaris-unstyled]').hasAttribute('tabindex', '-1');
+        });
 
-      test('renders with a tab index of 0 when loading is false', async function (assert) {
-        await render(hbs`
+        test('renders with a tab index of 0 when loading is false', async function (assert) {
+          await render(hbs`
         {{#polaris-resource-list/provider value=mockDefaultContext}}
           {{polaris-resource-list/item
             itemId=itemId
@@ -571,8 +571,9 @@ module('Integration | Component | polaris-resource-list/item', function (
           }}
         {{/polaris-resource-list/provider}}
       `);
-        assert.dom('[data-polaris-unstyled]').hasAttribute('tabindex', '0');
-      });
-    }
-  );
-});
+          assert.dom('[data-polaris-unstyled]').hasAttribute('tabindex', '0');
+        });
+      }
+    );
+  }
+);

@@ -7,6 +7,7 @@ import { getRectForNode } from '@shopify/javascript-utilities/geometry';
 import $Ember from 'jquery';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 import deprecateClassArgument from '../../utils/deprecate-class-argument';
+import { bind } from '@ember/runloop';
 
 // Draggable marker, used to pick hue, saturation, brightness and alpha.
 @deprecateClassArgument
@@ -125,21 +126,10 @@ export default class PolarisColorPickerSlidable extends Component {
     this.handleMove(event);
 
     // Set up global event listeners to handle dragging outside the slidable area.
-    $Ember(window).on('mousemove', (...moveArgs) => {
-      this.handleMove(...moveArgs);
-    });
-    $Ember(window).on('mouseup', () => {
-      this.handleDragEnd();
-    });
-
-    $Ember(window).on('touchmove', (...moveArgs) => {
-      this.handleMove(...moveArgs);
-    });
-    $Ember(window).on('touchend', () => {
-      this.handleDragEnd();
-    });
-    $Ember(window).on('touchcancel', () => {
-      this.handleDragEnd();
-    });
+    $Ember(window).on('mousemove', bind(this, this.handleMove));
+    $Ember(window).on('mouseup', bind(this, this.handleDragEnd));
+    $Ember(window).on('touchmove', bind(this, this.handleMove));
+    $Ember(window).on('touchend', bind(this, this.handleDragEnd));
+    $Ember(window).on('touchcancel', bind(this, this.handleDragEnd));
   }
 }

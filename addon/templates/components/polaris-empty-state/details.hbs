@@ -6,7 +6,7 @@
   <PolarisTextContainer>
     <PolarisDisplayText data-test-empty-state-heading @size="medium" @text={{@heading}} />
     <div data-test-empty-state-content class="Polaris-EmptyState__Content">
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         {{@text}}

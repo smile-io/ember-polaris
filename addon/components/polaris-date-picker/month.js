@@ -138,13 +138,11 @@ export default class PolarisDatePickerMonth extends Component {
     let { current, weekStartsOn } = this;
     let day = new Date().getDay();
 
-    return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => {
-      return {
-        title: abbreviationForWeekday(weekday),
-        current: current && day === i,
-        label: weekday,
-      };
-    });
+    return getWeekdaysOrdered(weekStartsOn).map((weekday, i) => ({
+      title: abbreviationForWeekday(weekday),
+      current: current && day === i,
+      label: weekday,
+    }));
   }
 
   @action

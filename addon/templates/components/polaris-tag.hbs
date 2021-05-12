@@ -6,7 +6,7 @@
 >
   <span data-test-tag-text title={{this.tagText}} class="Polaris-Tag__TagText">
     <RenderDetector @onRender={{this.updateTagText}}>
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         {{yield}}
       {{else}}
         {{@text}}

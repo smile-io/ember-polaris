@@ -23,7 +23,7 @@
         data-test-id={{@dataTestId}}
         ...attributes
       >
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           <Content>
             {{yield}}
           </Content>
@@ -45,7 +45,7 @@
         {{on "mouseup" this.handleMouseUpByBlurring}}
         ...attributes
       >
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           <Content>
             {{yield}}
           </Content>
@@ -76,7 +76,7 @@
       {{on "mouseup" this.handleMouseUpByBlurring}}
       ...attributes
     >
-      {{#if hasBlock}}
+      {{#if (has-block)}}
         <Content>
           {{yield}}
         </Content>

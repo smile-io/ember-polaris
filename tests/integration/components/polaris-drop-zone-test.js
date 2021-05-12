@@ -272,21 +272,21 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
 
     this.set('style', htmlSafe(`width: ${largeWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeLarge', 'has large class');
 
     this.set('style', htmlSafe(`width: ${mediumWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeMedium', 'has medium class');
 
     this.set('style', htmlSafe(`width: ${smallWidth}px;`));
     await triggerEvent(window, 'resize');
-    await settled();
+
     assert
       .dom(dropZoneSelector)
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
@@ -1390,14 +1390,12 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
 });
 
 function setBoundingClientRect(size) {
-  Element.prototype.getBoundingClientRect = () => {
-    return {
-      width: widths[size],
-      height: 100,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-    };
-  };
+  Element.prototype.getBoundingClientRect = () => ({
+    width: widths[size],
+    height: 100,
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  });
 }

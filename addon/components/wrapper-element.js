@@ -24,9 +24,7 @@ export default Component.extend({
     let { attrs, blacklistedAttributeBindings } = this;
 
     let newAttributeBindings = Object.keys(attrs)
-      .filter((attr) => {
-        return blacklistedAttributeBindings.indexOf(attr) === -1;
-      })
+      .filter((attr) => blacklistedAttributeBindings.indexOf(attr) === -1)
       .map((attr) => {
         // Handle multi-word attributes (e.g. `ariaLabel`).
         let dasherizedAttr = dasherize(attr);

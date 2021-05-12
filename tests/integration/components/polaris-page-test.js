@@ -416,7 +416,7 @@ module('Integration | Component | polaris page', function (hooks) {
     // Check the breadcrumbs rendered.
     const breadcrumbLinkSelector = buildNestedSelector(
       navigationSelector,
-      'nav[role="navigation"]',
+      'nav',
       'a.Polaris-Breadcrumbs__Breadcrumb'
     );
     const breadcrumbLinks = assert.dom(breadcrumbLinkSelector);

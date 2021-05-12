@@ -53,9 +53,9 @@ function getOptionsValuesList(options) {
     return [];
   }
 
-  return options.map((option) => {
-    return typeof option === 'string' ? option : option.value;
-  });
+  return options.map((option) =>
+    typeof option === 'string' ? option : option.value
+  );
 }
 
 async function triggerChangeEventWithValue(

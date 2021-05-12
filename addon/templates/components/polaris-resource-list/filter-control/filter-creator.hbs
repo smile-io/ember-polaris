@@ -12,7 +12,7 @@
       @text="Filter"
       @disclosure={{true}}
       @disabled={{@disabled}}
-      @onFocus={{fn this.handleButtonFocus}}
+      @onFocus={{this.handleButtonFocus}}
     />
   {{/component}}
 
@@ -24,7 +24,7 @@
           @label={{this.selectLabel}}
           @options={{this.filterOptions}}
           @value={{or this.selectedFilter.key ""}}
-          @onChange={{fn this.handleFilterKeyChange}}
+          @onChange={{this.handleFilterKeyChange}}
         />
 
         {{#if this.selectedFilter}}
@@ -33,7 +33,7 @@
               @filter={{this.selectedFilter}}
               @filterKey={{this.selectedFilterKey}}
               @value={{this.selectedFilterValue}}
-              @onFilterKeyChange={{fn this.handleFilterKeyChange}}
+              @onFilterKeyChange={{this.handleFilterKeyChange}}
               @onChange={{action (mut this.selectedFilterValue)}}
             />
           </formLayout.item>

@@ -344,14 +344,11 @@ module('Integration | Component | polaris card', function (hooks) {
       'clicking second action button - invokes second action handler correctly'
     );
 
-    await click(actionButtons[2]);
-    assert.equal(
-      this.get('action3HandlerCalled'),
-      false,
-      'clicking disabled third action button - does not invoke third action handler'
-    );
     assert
       .dom(actionButtons[2])
+      .isDisabled(
+        'third action is a disabled header action - button is disabled'
+      )
       .hasClass(
         'Polaris-Button--disabled',
         'third action is a disabled header action - disabled class'

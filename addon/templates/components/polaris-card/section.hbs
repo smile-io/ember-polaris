@@ -4,7 +4,7 @@
       <Header @title={{@title}} />
     {{/if}}
 
-    {{#if hasBlock}}
+    {{#if (has-block)}}
       {{yield (hash header=Header Header=Header)}}
     {{else}}
       {{@text}}

@@ -6,5 +6,11 @@ module.exports = {
   rules: {
     'attribute-indentation': false,
     'no-inline-styles': false,
+    'no-action': false,
+    'no-implicit-this': false,
+    'no-curly-component-invocation': false,
+    'no-down-event-binding': false,
+    'no-yield-only': false,
+    'no-duplicate-id': false,
   },
 };

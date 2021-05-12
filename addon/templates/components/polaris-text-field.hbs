@@ -23,8 +23,8 @@
         </div>
       {{/if}}
 
-      {{#let (element (if @multiline "textarea" "input")) as |Input|}}
-        <Input
+      {{#let (element (if @multiline "textarea" "input")) as |InputElem|}}
+        <InputElem
           data-test-text-field-input
           type={{unless @multiline this.inputType}}
           style={{if @multiline this.heightStyle}}

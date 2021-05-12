@@ -422,9 +422,9 @@ export default class PolarisDropZone extends Component.extend(
 
     this.set(
       'dragTargets',
-      this.dragTargets.filter((el) => {
-        return el !== event.target && dropNode && dropNode.contains(el);
-      })
+      this.dragTargets.filter(
+        (el) => el !== event.target && dropNode && dropNode.contains(el)
+      )
     );
 
     if (this.dragTargets.length > 0) {

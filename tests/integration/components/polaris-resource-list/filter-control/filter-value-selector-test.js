@@ -65,9 +65,10 @@ const dateSelectorFilter = {
 };
 
 function getOptionsListForOperators(operators) {
-  return operators.map(({ key, optionLabel }) => {
-    return { value: key, label: optionLabel };
-  });
+  return operators.map(({ key, optionLabel }) => ({
+    value: key,
+    label: optionLabel,
+  }));
 }
 
 async function triggerChangeEventWithValue(
@@ -127,12 +128,10 @@ module(
 
             const operatorsSelectOptions = findAll(
               '[data-test-select="operator"] option:not([disabled])'
-            ).map((option) => {
-              return {
-                value: option.getAttribute('value'),
-                label: option.textContent.trim(),
-              };
-            });
+            ).map((option) => ({
+              value: option.getAttribute('value'),
+              label: option.textContent.trim(),
+            }));
             assert.deepEqual(operatorsSelectOptions, expectedOptions);
           });
 
@@ -246,12 +245,10 @@ module(
 
             const operatorsSelectOptions = findAll(
               '[data-test-select="operator"] option:not([disabled])'
-            ).map((option) => {
-              return {
-                value: option.getAttribute('value'),
-                label: option.textContent.trim(),
-              };
-            });
+            ).map((option) => ({
+              value: option.getAttribute('value'),
+              label: option.textContent.trim(),
+            }));
             assert.deepEqual(operatorsSelectOptions, expectedOptions);
           });
 

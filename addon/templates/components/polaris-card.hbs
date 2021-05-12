@@ -43,13 +43,13 @@
   {{#let (component "polaris-card/section") as |Section|}}
     {{#if @sectioned}}
       <Section>
-        {{#if hasBlock}}
+        {{#if (has-block)}}
           {{yield (hash section=Section Section=Section)}}
         {{else}}
           {{text}}
         {{/if}}
       </Section>
-    {{else if hasBlock}}
+    {{else if (has-block)}}
       {{yield (hash section=Section Section=Section)}}
     {{else}}
       {{text}}

@@ -4,7 +4,7 @@
     @icon="chevron-left"
     @disabled={{@isScrolledFarthestLeft}}
     @accessibilityLabel="Scroll table left one column"
-    @onClick={{fn this.navigateTableLeft}}
+    @onClick={{this.navigateTableLeft}}
   />
 
   {{#each @columnVisibilityData as |column|}}
@@ -16,6 +16,6 @@
     @icon="chevron-right"
     @disabled={{@isScrolledFarthestRight}}
     @accessibilityLabel="Scroll table right one column"
-    @onClick={{fn this.navigateTableRight}}
+    @onClick={{this.navigateTableRight}}
   />
 </div>

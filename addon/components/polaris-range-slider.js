@@ -218,11 +218,10 @@ export default class PolarisRangeSlider extends Component {
     );
 
     let styleString = Object.keys(styleProps).reduce(
-      (styleString, propName) => {
-        return `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
+      (styleString, propName) =>
+        `${styleString} --Polaris-RangeSlider-${dasherize(propName)}:${
           styleProps[propName]
-        };`;
-      },
+        };`,
       ''
     );
 
