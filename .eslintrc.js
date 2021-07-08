@@ -19,4 +19,11 @@ module.exports = {
     // These are a lil broken right now (eslint-plugin-ember also disabled these)
     'smile-ember/order-in-components': 'off',
   },
+  overrides: [
+    {
+      // Test files:
+      files: ['tests/**/*-test.{js,ts}'],
+      extends: ['plugin:qunit/recommended'],
+    },
+  ],
 };
