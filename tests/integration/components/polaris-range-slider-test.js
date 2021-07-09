@@ -169,9 +169,8 @@ module('Integration | Component | polaris-range-slider', function (hooks) {
         helpText="Some help"
       }}
     `);
-    const helpTextId = find(sliderInputSelector).getAttribute(
-      'aria-describedby'
-    );
+    const helpTextId =
+      find(sliderInputSelector).getAttribute('aria-describedby');
 
     assert.equal(typeof helpTextId, 'string');
     assert.dom(`#${helpTextId}`).hasText('Some help');
