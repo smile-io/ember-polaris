@@ -344,6 +344,7 @@ module('Integration | Component | polaris action list', function (hooks) {
           'item with image & icon & prefix - renders the @prefix'
         );
 
+      this.set('item.disabled', false);
       this.set('item.onAction', () => {
         assert.ok(true, "fires item's onAction");
       });
