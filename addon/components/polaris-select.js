@@ -177,7 +177,6 @@ export default class PolarisSelect extends Component {
    *
    * @type {String}
    */
-  // eslint disable smile-ember/order-in-components
   @computed('id')
   get _id() {
     return this.id || guidFor(this);

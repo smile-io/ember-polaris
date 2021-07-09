@@ -356,6 +356,8 @@ module('Integration | Component | polaris-text-field', function (hooks) {
 
     module('when type is number', function () {
       test('it handles incrementing/decrementing correctly', async function (assert) {
+        assert.expect(5);
+
         this.setProperties({
           value: 1,
           id: 'myId',

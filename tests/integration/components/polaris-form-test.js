@@ -100,6 +100,8 @@ module('Integration | Component | polaris-form', function (hooks) {
   });
 
   test('invokes `onSubmit` when form is submitted', async function (assert) {
+    assert.expect(1);
+
     this.set('spy', (name) => assert.step(name));
 
     this.onSubmitSpy = () => {

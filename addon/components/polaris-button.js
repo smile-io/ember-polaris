@@ -49,7 +49,6 @@ export default class PolarisButton extends Component {
    * @default null
    * @public
    */
-  // eslint-disable-next-line smile-ember/order-in-components
   id = null;
 
   /**

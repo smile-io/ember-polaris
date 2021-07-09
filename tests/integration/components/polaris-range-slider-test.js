@@ -62,6 +62,8 @@ module('Integration | Component | polaris-range-slider', function (hooks) {
   });
 
   test('it calls `onChange` with the new value when the value is changed', async function (assert) {
+    assert.expect(2);
+
     this.set('valueChanged', (newValue, inputId) => {
       assert.equal(newValue, 40);
       assert.equal(inputId, 'MyRangeSlider');
@@ -80,6 +82,8 @@ module('Integration | Component | polaris-range-slider', function (hooks) {
   });
 
   test('`onFocus` is called when the input is focused', async function (assert) {
+    assert.expect(1);
+
     this.set('inputFocused', () => {
       assert.ok(true);
     });
@@ -96,6 +100,8 @@ module('Integration | Component | polaris-range-slider', function (hooks) {
   });
 
   test('`onBlur` is called when the input is blurred', async function (assert) {
+    assert.expect(1);
+
     this.set('inputBlurred', () => {
       assert.ok(true);
     });
@@ -169,9 +175,8 @@ module('Integration | Component | polaris-range-slider', function (hooks) {
         helpText="Some help"
       }}
     `);
-    const helpTextId = find(sliderInputSelector).getAttribute(
-      'aria-describedby'
-    );
+    const helpTextId =
+      find(sliderInputSelector).getAttribute('aria-describedby');
 
     assert.equal(typeof helpTextId, 'string');
     assert.dom(`#${helpTextId}`).hasText('Some help');

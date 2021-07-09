@@ -343,9 +343,8 @@ export default class PolarisDropZone extends Component.extend(
       return;
     }
     let fileList = getDataTransferFiles(event);
-    let { files, acceptedFiles, rejectedFiles } = this.getValidatedFiles(
-      fileList
-    );
+    let { files, acceptedFiles, rejectedFiles } =
+      this.getValidatedFiles(fileList);
 
     this.set('dragTargets', []);
 

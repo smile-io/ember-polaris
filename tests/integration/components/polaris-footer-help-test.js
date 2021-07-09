@@ -44,8 +44,9 @@ module('Integration | Component | polaris footer help', function (hooks) {
       'renders the correct icon'
     );
 
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
+    const iconWrapper = this.element.querySelector(
+      footerHelpIconSelector
+    ).parentNode;
 
     assert
       .dom(iconWrapper)
@@ -88,8 +89,9 @@ module('Integration | Component | polaris footer help', function (hooks) {
       'renders the correct icon'
     );
 
-    const iconWrapper = this.element.querySelector(footerHelpIconSelector)
-      .parentNode;
+    const iconWrapper = this.element.querySelector(
+      footerHelpIconSelector
+    ).parentNode;
     assert
       .dom(iconWrapper)
       .hasClass(
