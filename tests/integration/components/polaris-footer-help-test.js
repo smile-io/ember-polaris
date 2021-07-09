@@ -93,6 +93,7 @@ module('Integration | Component | polaris footer help', function (hooks) {
       matchesIcon(footerHelpIconSelector, 'QuestionMarkMajor'),
       'renders the correct icon'
     );
+
     assert
       .dom(footerHelpIconSelector)
       .hasClass(

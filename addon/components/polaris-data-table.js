@@ -365,12 +365,8 @@ export default class PolarisDataTable extends Component.extend(
 
   @action
   navigateTable(direction) {
-    let {
-      currentColumn,
-      previousColumn,
-      fixedColumnWidth,
-      scrollContainer,
-    } = this;
+    let { currentColumn, previousColumn, fixedColumnWidth, scrollContainer } =
+      this;
 
     if (!currentColumn || !previousColumn || !fixedColumnWidth) {
       return;

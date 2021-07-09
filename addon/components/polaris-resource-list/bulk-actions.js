@@ -340,8 +340,7 @@ export default class PolarisResourceListBulkActions extends Component.extend(
       warn(
         `To provide a better user experience. There should only be a maximum of ${MAX_PROMOTED_ACTIONS} promoted actions.`,
         {
-          id:
-            'ember-polaris.polaris-resource-list.bulk-actions.max-promoted-actions',
+          id: 'ember-polaris.polaris-resource-list.bulk-actions.max-promoted-actions',
         }
       );
     }
@@ -349,8 +348,8 @@ export default class PolarisResourceListBulkActions extends Component.extend(
     this.addResizeEventListener();
 
     if (promotedActions && !actionsCollection && moreActionsNode) {
-      addedMoreActionsWidthForMeasuring = moreActionsNode.getBoundingClientRect()
-        .width;
+      addedMoreActionsWidthForMeasuring =
+        moreActionsNode.getBoundingClientRect().width;
     }
 
     let bulkActionsWidth = largeScreenButtonsNode
