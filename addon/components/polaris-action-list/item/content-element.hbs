@@ -1,0 +1,49 @@
+<div data-test-action-list-item-content class="Polaris-ActionList__Content">
+  {{#if @prefix}}
+    <div data-test-action-list-item-prefix class="Polaris-ActionList__Prefix">
+      {{render-content @prefix}}
+    </div>
+  {{else if @icon}}
+    <div data-test-action-list-item-prefix class="Polaris-ActionList__Prefix">
+      <PolarisIcon @source={{@icon}} />
+    </div>
+  {{else if @image}}
+    <div
+      data-test-action-list-item-prefix
+      role="presentation"
+      class="Polaris-ActionList__Prefix"
+      style={{@imageBackgroundStyle}}
+    >
+    </div>
+  {{/if}}
+
+  <div data-test-action-list-item-text class="Polaris-ActionList__Text">
+    {{#if @helpText}}
+      <div>
+        <div>
+          {{#if (and @ellipsis @text)}}
+            {{@text}}...
+          {{else}}
+            {{@text}}
+          {{/if}}
+        </div>
+
+        <PolarisTextStyle @variation="subdued" @text={{@helpText}} />
+      </div>
+    {{else}}
+      {{@text}}
+    {{/if}}
+  </div>
+
+  {{#if @badge}}
+    <span data-test-action-list-item-suffix class="Polaris-ActionList__Suffix">
+      <PolarisBadge @status={{@badge.status}}>{{@badge.content}}</PolarisBadge>
+    </span>
+  {{/if}}
+
+  {{#if @suffix}}
+    <span data-test-action-list-item-suffix class="Polaris-ActionList__Suffix">
+      {{render-content @suffix}}
+    </span>
+  {{/if}}
+</div>

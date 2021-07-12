@@ -1,11 +1,8 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { notEmpty } from '@ember/object/computed';
-import { isBlank, isPresent } from '@ember/utils';
+import { isPresent } from '@ember/utils';
 import { classify } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-badge';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
+import { arg } from '../utils/decorators/arg';
 
 const PROGRESS_LABELS = {
   incomplete: 'Incomplete',
@@ -17,6 +14,7 @@ const STATUS_LABELS = {
   info: 'Info',
   success: 'Success',
   warning: 'Warning',
+  critical: 'Critical',
   attention: 'Attention',
   new: 'New',
 };
@@ -32,9 +30,6 @@ const DEFAULT_SIZE = SIZES.medium;
  * Polaris badge component.
  * See https://polaris.shopify.com/components/images-and-icons/badge
  */
-@deprecateClassArgument
-@tagName('')
-@layout(template)
 export default class PolarisBadge extends Component {
   /**
    * The content to display inside the badge.
@@ -47,7 +42,7 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  text = null;
+  text;
 
   /**
    * Set the color of the badge for the given status.
@@ -56,7 +51,7 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  status = null;
+  status;
 
   /**
    * Render a pip showing the progress of a given task.
@@ -65,16 +60,24 @@ export default class PolarisBadge extends Component {
    * @default null
    * @public
    */
-  progress = null;
+  progress;
 
   /**
-   * Medium or small size. Use `small` only in the main navigation of an app frame..
+   * Medium or small size. Use `small` only in the main navigation of an app frame.
    *
    * @type {String}
    * @default 'medium'
    * @public
    */
-  size = DEFAULT_SIZE;
+  @arg size = DEFAULT_SIZE;
+
+  /**
+   * Temporary workaround for not having useContext equivalents implemented yet.
+   * Pass `withinFilterContext` true if badge is in a filter control component.
+   *
+   * TODO implement useContext or find Ember equivalent
+   */
+  @arg withinFilterContext = false;
 
   @notEmpty('progress')
   hasProgress;
@@ -82,27 +85,16 @@ export default class PolarisBadge extends Component {
   @notEmpty('status')
   hasStatus;
 
-  @computed('progress')
   get progressDescription() {
-    const { progress } = this;
-    if (isBlank(progress) || progress === 'default') {
-      return null;
-    }
-
-    return PROGRESS_LABELS[progress];
+    return this.args.progress ? PROGRESS_LABELS[this.args.progress] : null;
   }
 
-  @computed('progress')
   get progressClass() {
-    const { progress } = this;
-    if (isBlank(progress) || progress === 'default') {
-      return null;
-    }
-
-    return `Polaris-Badge--progress${classify(progress)}`;
+    return this.args.progress
+      ? `Polaris-Badge--progress${classify(this.args.progress)}`
+      : null;
   }
 
-  @computed('size')
   get sizeClass() {
     const { size } = this;
     if (isPresent(size) && size !== DEFAULT_SIZE) {
@@ -112,23 +104,17 @@ export default class PolarisBadge extends Component {
     return null;
   }
 
-  @computed('status')
   get statusDescription() {
-    const { status } = this;
-    if (isBlank(status) || status === 'default') {
-      return null;
-    }
-
-    return STATUS_LABELS[status];
+    return this.args.status ? STATUS_LABELS[this.args.status] : null;
   }
 
-  @computed('status')
   get statusClass() {
-    const { status } = this;
-    if (isBlank(status) || status === 'default') {
-      return null;
-    }
+    return this.args.status
+      ? `Polaris-Badge--status${classify(this.args.status)}`
+      : null;
+  }
 
-    return `Polaris-Badge--status${classify(status)}`;
+  get withinFilterClass() {
+    return this.withinFilterContext ? 'Polaris-Badge--withinFilter' : null;
   }
 }

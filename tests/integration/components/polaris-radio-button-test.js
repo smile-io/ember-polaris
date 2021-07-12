@@ -3,7 +3,6 @@ import Component from '@ember/component';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { focus, click, blur, render } from '@ember/test-helpers';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
 
 // Mock the polaris-choice component to simplify testing what gets rendered.
 const MockPolarisChoiceComponent = Component.extend({
@@ -27,7 +26,6 @@ module('Integration | Component | polaris radio button', function (hooks) {
 
   hooks.beforeEach(function () {
     this.owner.register('component:polaris-choice', MockPolarisChoiceComponent);
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
   });
 
   const choiceSelector = 'label.Polaris-Choice';

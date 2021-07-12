@@ -1,15 +1,11 @@
-import Component from '@ember/component';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-callout-card';
-import deprecateClassArgument from '../utils/deprecate-class-argument';
+import Component from '@glimmer/component';
 
 /**
  * Polaris callout card component.
  * See https://polaris.shopify.com/components/structure/callout-card
+ *
+ * @version 5.5.0
  */
-@deprecateClassArgument
-@tagName('')
-@layout(template)
 export default class PolarisCalloutCard extends Component {
   /**
    * The content to display inside the callout card.
@@ -19,47 +15,41 @@ export default class PolarisCalloutCard extends Component {
    * instead of `text`
    *
    * @type {String}
-   * @default null
    */
-  text = null;
+  text;
 
   /**
    * The title of the card
    *
    * @type {String}
-   * @default null
    */
-  title = null;
+  title;
 
   /**
    * URL to the card illustration
    *
    * @type {String}
-   * @default null
    */
-  illustration = null;
+  illustration;
 
   /**
    * Primary action for the card
    *
    * @type {Object}
-   * @default null
    */
-  primaryAction = null;
+  primaryAction;
 
   /**
    * Secondary action for the card
    *
    * @type {Object}
-   * @default null
    */
-  secondaryAction = null;
+  secondaryAction;
 
   /**
    * Callback when banner is dismissed
    *
    * @type {Function}
-   * @default null
    */
-  onDismiss = null;
+  onDismiss;
 }

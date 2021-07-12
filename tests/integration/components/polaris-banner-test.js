@@ -2,7 +2,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { click, render } from '@ember/test-helpers';
 import { setupRenderingTest } from 'ember-qunit';
 import { module, test } from 'qunit';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 const bannerSelector = 'div.Polaris-Banner';
 const iconSelector = 'div.Polaris-Banner__Ribbon > span.Polaris-Icon';
@@ -15,12 +15,8 @@ const actionsSelector = 'div.Polaris-Banner__Actions';
 module('Integration | Component | polaris banner', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.owner.register('component:svg-jar', MockSvgJarComponent);
-  });
-
   test('it renders correctly in basic usage', async function (assert) {
-    await render(hbs`{{polaris-banner}}`);
+    await render(hbs`<PolarisBanner />`);
 
     let banner = assert.dom(bannerSelector);
     banner.exists('inline-mode - banner exists');
@@ -49,19 +45,16 @@ module('Integration | Component | polaris banner', function (hooks) {
       'inline-mode - icon has backdrop'
     );
 
-    assert
-      .dom(`${iconSelector} svg`)
-      .hasAttribute(
-        'data-icon-source',
-        'polaris/flag',
-        'inline-mode - default icon is polaris/flag'
-      );
+    assert.ok(
+      matchesIcon(iconSelector, 'FlagMajor'),
+      'inline-mode - default icon is FlagMajor'
+    );
 
     // Template block usage:
     await render(hbs`
-      {{#polaris-banner}}
+      <PolarisBanner>
         template block text
-      {{/polaris-banner}}
+      </PolarisBanner>
     `);
 
     banner = assert.dom(bannerSelector);
@@ -73,7 +66,7 @@ module('Integration | Component | polaris banner', function (hooks) {
   });
 
   test('it renders banner heading correctly', async function (assert) {
-    await render(hbs`{{polaris-banner title=title}}`);
+    await render(hbs`<PolarisBanner @title={{title}} />`);
 
     let bannerHeadingSelector = `${bannerSelector} ${headingSelector}`;
     let banner = assert.dom(bannerSelector);
@@ -104,7 +97,7 @@ module('Integration | Component | polaris banner', function (hooks) {
     let contentText =
       'Use your finance report to get detailed information about your business.';
 
-    await render(hbs`{{polaris-banner text=contentText}}`);
+    await render(hbs`<PolarisBanner @text={{contentText}} />`);
 
     let bannerContentSelector = `${bannerSelector} ${contentSelector}`;
     let banner = assert.dom(bannerSelector);
@@ -129,9 +122,9 @@ module('Integration | Component | polaris banner', function (hooks) {
 
     // Block-mode
     await render(hbs`
-      {{#polaris-banner}}
+      <PolarisBanner>
         <p>{{contentText}}</p>
-      {{/polaris-banner}}
+      </PolarisBanner>
     `);
 
     banner = assert.dom(bannerSelector);
@@ -150,16 +143,13 @@ module('Integration | Component | polaris banner', function (hooks) {
   });
 
   test('it handles banner status correctly', async function (assert) {
-    await render(hbs`{{polaris-banner status=status}}`);
+    await render(hbs`<PolarisBanner @status={{status}} />`);
 
     let banner = assert.dom(bannerSelector);
     banner.doesNotHaveClass(
       'Polaris-Banner--status',
       'banner without status - has no status class'
     );
-
-    let bannerIcon = assert.dom(`${bannerSelector} ${iconSelector}`);
-    let iconSvg = assert.dom(`${iconSelector} svg`);
 
     this.set('status', 'success');
     banner.hasClass(
@@ -172,15 +162,16 @@ module('Integration | Component | polaris banner', function (hooks) {
       'status',
       'banner with success status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorGreenDark',
-      'banner with success status - has greenDark icon color'
-    );
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorGreenDark',
+        'banner with success status - has greenDark icon color'
+      );
 
-    iconSvg.hasAttribute(
-      'data-icon-source',
-      'polaris/circle-check-mark',
-      'banner with success status - has icon polaris/circle-check-mark'
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleTickMajor'),
+      'banner with success status - has icon CircleTickMajor'
     );
 
     this.set('status', 'info');
@@ -194,15 +185,15 @@ module('Integration | Component | polaris banner', function (hooks) {
       'status',
       'banner with info status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorTealDark',
-      'banner with info status - has tealDark icon color'
-    );
-
-    iconSvg.hasAttribute(
-      'data-icon-source',
-      'polaris/circle-information',
-      'banner with info status - has icon polaris/circle-information'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorTealDark',
+        'banner with info status - has tealDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleInformationMajor'),
+      'banner with info status - has icon CircleInformationMajor'
     );
 
     this.set('status', 'warning');
@@ -216,15 +207,15 @@ module('Integration | Component | polaris banner', function (hooks) {
       'alert',
       'banner with warning status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorYellowDark',
-      'banner with warning status - has yellowDark icon color'
-    );
-
-    iconSvg.hasAttribute(
-      'data-icon-source',
-      'polaris/circle-alert',
-      'banner with warning status - has icon polaris/circle-alert'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorYellowDark',
+        'banner with warning status - has yellowDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleAlertMajor'),
+      'banner with warning status - has icon CircleAlertMajor'
     );
 
     this.set('status', 'critical');
@@ -238,20 +229,44 @@ module('Integration | Component | polaris banner', function (hooks) {
       'alert',
       'banner with critical status - has correct role attribute'
     );
-    bannerIcon.hasClass(
-      'Polaris-Icon--colorRedDark',
-      'banner with critical status - has redDark icon color'
-    );
-
-    iconSvg.hasAttribute(
-      'data-icon-source',
-      'polaris/circle-barred',
-      'banner with critical status - has icon polaris/circle-barred'
+    assert
+      .dom(`${bannerSelector} ${iconSelector}`)
+      .hasClass(
+        'Polaris-Icon--colorRedDark',
+        'banner with critical status - has redDark icon color'
+      );
+    assert.ok(
+      matchesIcon(iconSelector, 'CircleDisabledMajor'),
+      'banner with critical status - has icon CircleDisabledMajor'
     );
   });
 
+  test('disables aria-live when stopAnnouncements is enabled', async function (assert) {
+    await render(hbs`<PolarisBanner />`);
+
+    assert
+      .dom(bannerSelector)
+      .hasAttribute(
+        'aria-live',
+        'polite',
+        'banner aria-live attribute - set to `polite` by default'
+      );
+
+    await render(
+      hbs`<PolarisBanner stopAnnouncements={{stopAnnouncements}} />`
+    );
+
+    assert
+      .dom(bannerSelector)
+      .hasAttribute(
+        'aria-live',
+        'polite',
+        'banner aria-live attribute - set to `off`'
+      );
+  });
+
   test('it handles dismissable banner correctly', async function (assert) {
-    await render(hbs`{{polaris-banner}}`);
+    await render(hbs`<PolarisBanner />`);
 
     let banner = assert.dom(bannerSelector);
     let dismissWrapper = assert.dom(`${bannerSelector} ${dismissSelector}`);
@@ -268,7 +283,7 @@ module('Integration | Component | polaris banner', function (hooks) {
     let dismissed = false;
     this.dismiss = () => (dismissed = true);
 
-    await render(hbs`{{polaris-banner onDismiss=(action dismiss)}}`);
+    await render(hbs`<PolarisBanner @onDismiss={{dismiss}} />`);
 
     banner = assert.dom(bannerSelector);
     dismissWrapper = assert.dom(`${bannerSelector} ${dismissSelector}`);
@@ -298,7 +313,7 @@ module('Integration | Component | polaris banner', function (hooks) {
   test('it supports `primaryAction` and `secondaryAction`', async function (assert) {
     assert.expect(14);
 
-    await render(hbs`{{polaris-banner text="Some content text"}}`);
+    await render(hbs`<PolarisBanner @text="Some content text" />`);
 
     let bannerContentSelector = `${bannerSelector} ${contentSelector}`;
     let bannerActionsSelector = `${bannerContentSelector} ${actionsSelector}`;
@@ -316,9 +331,9 @@ module('Integration | Component | polaris banner', function (hooks) {
       assert.ok(true, 'triggers secondaryAction handler')
     );
 
-    await render(hbs`{{polaris-banner
-      secondaryAction=(hash text="View" onAction=(action secondaryAction))
-    }}`);
+    await render(
+      hbs`<PolarisBanner @secondaryAction={{hash text="View" onAction=secondaryAction}} />`
+    );
 
     assert
       .dom(`${bannerContentSelector} ${actionsSelector}`)
@@ -326,9 +341,9 @@ module('Integration | Component | polaris banner', function (hooks) {
         'banner with `secondaryAction` only - does not render the actions container'
       );
 
-    await render(hbs`{{polaris-banner
-      primaryAction=(hash text="Edit" onAction=(action primaryAction))
-    }}`);
+    await render(
+      hbs`<PolarisBanner @primaryAction={{hash text="Edit" onAction=primaryAction}} />`
+    );
 
     let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
     let primaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
@@ -351,18 +366,20 @@ module('Integration | Component | polaris banner', function (hooks) {
       mainActionDisabled: false,
     });
 
-    await render(hbs`{{polaris-banner
-      primaryAction=(hash
-        text="Edit"
-        loading=mainActionLoading
-        disabled=mainActionDisabled
-        onAction=(action primaryAction)
-      )
-      secondaryAction=(hash
-        text="View"
-        onAction=(action secondaryAction)
-      )
-    }}`);
+    await render(hbs`
+      <PolarisBanner
+        @primaryAction={{hash
+          text="Edit"
+          loading=mainActionLoading
+          disabled=mainActionDisabled
+          onAction=primaryAction
+        }}
+        @secondaryAction={{hash
+          text="View"
+          onAction=secondaryAction
+        }}
+      />
+    `);
 
     let primaryActionBtn = assert.dom(primaryActionBtnSelector);
     let secondaryActionBtn = assert.dom(secondaryActionBtnSelector);
@@ -403,30 +420,5 @@ module('Integration | Component | polaris banner', function (hooks) {
 
     await click(primaryActionBtnSelector);
     await click(secondaryActionBtnSelector);
-  });
-
-  test('it has backwards support for `action` as `primaryAction`', async function (assert) {
-    this.set('primaryAction', () =>
-      assert.ok(true, 'triggers primaryAction handler')
-    );
-
-    await render(hbs`{{polaris-banner
-      action=(hash text="Edit" onAction=(action primaryAction))
-    }}`);
-
-    let btnGroupSelector = `${actionsSelector} div.Polaris-ButtonGroup`;
-    let primaryActionBtnSelector = `${btnGroupSelector} div.Polaris-ButtonGroup__Item > div.Polaris-Banner__PrimaryAction > button.Polaris-Button.Polaris-Button--outline`;
-
-    assert
-      .dom(primaryActionBtnSelector)
-      .exists('banner with actions - renders `action` button');
-    assert
-      .dom(primaryActionBtnSelector)
-      .hasText(
-        'Edit',
-        'banner with actions - renders correct `action` button text'
-      );
-
-    await click(primaryActionBtnSelector);
   });
 });

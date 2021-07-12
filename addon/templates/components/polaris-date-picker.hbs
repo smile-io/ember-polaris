@@ -10,14 +10,14 @@
   <div data-test-date-picker-header class="Polaris-DatePicker__Header">
     <PolarisButton
       @plain={{true}}
-      @icon="arrow-left"
+      @icon="ArrowLeftMinor"
       @accessibilityLabel={{this.previousMonthLabel}}
       @onClick={{fn this.handleMonthChangeClick this.showPreviousMonth this.showPreviousYear}}
     />
 
     <PolarisButton
       @plain={{true}}
-      @icon="arrow-right"
+      @icon="ArrowRightMinor"
       @accessibilityLabel={{this.nextMonthLabel}}
       @onClick={{fn this.handleMonthChangeClick this.showNextMonth this.showNextYear}}
     />

@@ -19,8 +19,8 @@ import {
 } from '../utils/drop-zone';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
-const iconDragDrop = 'drag-drop';
-const iconAlertCircle = 'alert-circle';
+const iconDragDrop = 'DragDropMajor';
+const iconAlertCircle = 'CircleAlertMajor';
 
 @deprecateClassArgument
 @tagName('')

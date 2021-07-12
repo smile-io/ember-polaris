@@ -31,34 +31,6 @@ $ ember install @smile-io/ember-polaris
 ### Styles
 This addon will install [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass/) in the host app. It will also set up your app's `app/styles/app.scss` to `@import "ember-polaris";`, creating the file if it does not already exist.
 
-### Icons
-For icons to work you will need to:
-* copy Polaris SVG's into a folder in `public`, ex: `public/assets/images/svg/polaris`
-* install `ember-svg-jar`
-* add the following `ember-svg-jar` options to your `ember-cli-build.js`:
-
-```javascript
-// ember-cli-build.js
-var app = new EmberApp(defaults, {
-  ...
-
-  svgJar: {
-    strategy: 'inline',
-    inline: {
-      stripPath: false,
-      optimizer: {
-        removeDimensions: true,
-      },
-      sourceDirs: [
-        'public/assets/images/svg',
-      ],
-    }
-  },
-
-  ...
-});
-```
-
 ### Template compiler
 If your app does not already import `ember-template-compiler`, you may get an error similar to this one when passing a hash of `componentName` and `props` into one of the `ember-polaris` components:
 

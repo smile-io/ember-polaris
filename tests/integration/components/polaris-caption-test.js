@@ -6,30 +6,32 @@ import { setupRenderingTest } from 'ember-qunit';
 module('Integration | Component | polaris caption', function (hooks) {
   setupRenderingTest(hooks);
 
-  const caption = 'Received April 21, 2017';
-  const componentSelector = 'p.Polaris-Caption';
+  const captionText = 'Received April 21, 2017';
+  const captionSelector = '[data-test-caption]';
 
   test('it renders the correct HTML with inline usage', async function (assert) {
-    this.set('text', caption);
-    await render(hbs`{{polaris-caption text=text}}`);
+    this.set('text', captionText);
+    await render(hbs`<PolarisCaption @text={{text}} />`);
 
-    const captionNode = assert.dom(componentSelector);
-
-    captionNode.exists('it renders the caption');
-    captionNode.hasText(caption, 'it renders the correct caption text');
+    assert
+      .dom(captionSelector)
+      .exists('it renders the caption')
+      .hasTagName('p', 'renders as a `p` tag')
+      .hasText(captionText, 'it renders the correct caption text');
   });
 
   test('it renders the correct HTML with block usage', async function (assert) {
-    this.set('caption', caption);
+    this.set('caption', captionText);
     await render(hbs`
-      {{#polaris-caption}}
+      <PolarisCaption>
         {{caption}}
-      {{/polaris-caption}}
+      </PolarisCaption>
     `);
 
-    const captionNode = assert.dom(componentSelector);
-
-    captionNode.exists('it renders the caption');
-    captionNode.hasText(caption, 'it renders the correct caption text');
+    assert
+      .dom(captionSelector)
+      .exists('it renders the caption')
+      .hasTagName('p', 'renders as a `p` tag')
+      .hasText(captionText, 'it renders the correct caption text');
   });
 });

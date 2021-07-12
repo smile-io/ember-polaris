@@ -4,13 +4,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent, settled } from '@ember/test-helpers';
 import { capitalize, htmlSafe } from '@ember/string';
 import buildNestedSelector from '../../helpers/build-nested-selector';
-import MockSvgJarComponent from '../../mocks/components/svg-jar';
 import MockEvent from '@smile-io/ember-polaris/test-support/mock-drop-zone-event';
 import {
   smallSizeWidthLimit,
   mediumSizeWidthLimit,
   largeSizeWidthLimit,
 } from '@smile-io/ember-polaris/utils/drop-zone';
+import { matchesIcon } from '../../helpers/matches-icon';
 
 // NOTE: Doubling the size because of the wrapping #ember-testing container which has a 200% width and
 // transform scale of 0.5
@@ -77,10 +77,6 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
   const dropZoneOverlayIconSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
     '[data-test-icon]'
-  );
-  const dropZoneOverlayIconSVGSelector = buildNestedSelector(
-    dropZoneOverlayIconSelector,
-    'svg'
   );
   const dropZoneOverlayTextSelector = buildNestedSelector(
     dropZoneOverlayStackItemSelector,
@@ -296,11 +292,7 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
       .hasClass('Polaris-DropZone--sizeSmall', 'has small class');
   });
 
-  module('rendering', function (hooks) {
-    hooks.beforeEach(function () {
-      this.owner.register('component:svg-jar', MockSvgJarComponent);
-    });
-
+  module('rendering', function () {
     test('renders properly during drag events', async function (assert) {
       assert.expect(28);
 
@@ -348,13 +340,10 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
           'Polaris-Icon--isColored',
           'dropzone overlay icon has isColored class'
         );
-      assert
-        .dom(dropZoneOverlayIconSVGSelector)
-        .hasAttribute(
-          'data-icon-source',
-          'polaris/drag-drop',
-          'dropzone overlay icon SVG is `drag-drop`'
-        );
+      assert.ok(
+        matchesIcon(dropZoneOverlayIconSelector, 'DragDropMajor'),
+        'dropzone overlay icon SVG is `DragDropMajor`'
+      );
       assert
         .dom(dropZoneOverlayTextSelector)
         .hasClass(
@@ -430,13 +419,10 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
           'Polaris-Icon--isColored',
           'dropzone error overlay icon has isColored class'
         );
-      assert
-        .dom(dropZoneOverlayIconSVGSelector)
-        .hasAttribute(
-          'data-icon-source',
-          'polaris/alert-circle',
-          'dropzone error overlay icon SVG is `alert-circle`'
-        );
+      assert.ok(
+        matchesIcon(dropZoneOverlayIconSelector, 'CircleAlertMajor'),
+        'dropzone error overlay icon SVG is `CircleAlertMajor`'
+      );
       assert
         .dom(dropZoneOverlayTextSelector)
         .hasClass(
@@ -792,10 +778,6 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
         fileUploadStackItemSelector,
         '.Polaris-Icon'
       );
-      const fileUploadIconSVGSelector = buildNestedSelector(
-        fileUploadIconSelector,
-        'svg'
-      );
 
       test('it renders properly with FileUpload', async function (assert) {
         assert.expect(8);
@@ -840,13 +822,10 @@ module('Integration | Component | polaris-drop-zone', function (hooks) {
             'Polaris-Icon--isColored',
             'fileUpload icon has isColored class'
           );
-        assert
-          .dom(fileUploadIconSVGSelector)
-          .hasAttribute(
-            'data-icon-source',
-            'polaris/drag-drop',
-            'fileUpload icon SVG is `drag-drop`'
-          );
+        assert.ok(
+          matchesIcon(fileUploadIconSelector, 'DragDropMajor'),
+          'fileUpload icon SVG is `DragDropMajor`'
+        );
       });
 
       test('renders properly during drag events', async function (assert) {
