@@ -102,7 +102,7 @@
     "ember-source": "3.26.1",
     "ember-source-channel-url": "3.0.0",
     "ember-template-lint": "3.5.0",
-    "ember-test-selectors": "5.3.0",
+    "ember-test-selectors": "5.5.0",
     "ember-try": "1.4.0",
     "eslint": "7.30.0",
     "eslint-config-prettier": "8.3.0",
