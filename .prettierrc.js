@@ -1,3 +1,6 @@
 'use strict';
 
-module.exports = require('@smile-io/ember-styleguide/.prettierrc');
+module.exports = {
+  singleQuote: true,
+  ...require('@smile-io/ember-styleguide/.prettierrc'),
+};

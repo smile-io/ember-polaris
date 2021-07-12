@@ -25,7 +25,7 @@ module('Integration | Component | polaris-checkbox', function (hooks) {
         {{polaris-checkbox inputId="MyCheckbox" label="Checkbox" onChange=(action handleChange)}}
       `);
       await click('input');
-      assert.equal(this.get('newChecked'), true);
+      assert.true(this.get('newChecked'));
       assert.equal(this.get('checkboxId'), 'MyCheckbox');
     });
 

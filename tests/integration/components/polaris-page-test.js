@@ -210,6 +210,8 @@ module('Integration | Component | polaris page', function (hooks) {
   });
 
   test('it handles secondary actions correctly when supplied', async function (assert) {
+    assert.expect(10);
+
     let secondaryAction1Fired = false;
     this.actions.secondaryAction1 = () => {
       secondaryAction1Fired = true;

@@ -149,6 +149,7 @@ module('Integration | Component | polaris-select', function (hooks) {
       }
     }
 
+    // eslint-disable-next-line qunit/require-expect
     test('translates grouped options into optgroup tags', async function (assert) {
       this.set('optionsAndGroups', optionsAndGroups);
       await render(

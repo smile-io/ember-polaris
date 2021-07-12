@@ -406,6 +406,8 @@ module('Integration | Component | polaris banner', function (hooks) {
   });
 
   test('it has backwards support for `action` as `primaryAction`', async function (assert) {
+    assert.expect(3);
+
     this.set('primaryAction', () =>
       assert.ok(true, 'triggers primaryAction handler')
     );

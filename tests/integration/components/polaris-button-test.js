@@ -18,7 +18,7 @@ module('Integration | Component | polaris-button', function (hooks) {
   });
 
   module('<Button />', function () {
-    module('url', function () {
+    module('url', function (hooks) {
       hooks.beforeEach(function () {
         this.set('mockUrl', 'http://google.com');
       });
@@ -234,6 +234,8 @@ module('Integration | Component | polaris-button', function (hooks) {
 
     module('onClick()', function () {
       test('is called when the button is clicked', async function (assert) {
+        assert.expect(2);
+
         this.handleWrapperClick = () => assert.ok(true, 'click event bubbles');
         this.handleClick = (event) => {
           assert.ok(true, 'triggers @onClick handler');
@@ -249,6 +251,8 @@ module('Integration | Component | polaris-button', function (hooks) {
       });
 
       test('is called when the link is clicked', async function (assert) {
+        assert.expect(1);
+
         this.handleWrapperClick = () =>
           assert.notOk("click event doesn't bubble");
         this.handleClick = (event) => {
@@ -267,6 +271,8 @@ module('Integration | Component | polaris-button', function (hooks) {
 
     module('onFocus()', function () {
       test('is called when the button is focussed', async function (assert) {
+        assert.expect(2);
+
         this.set('handleFocus', (_myArg, event) => {
           assert.ok(true, 'triggers onFocus handler');
           assert.ok(
@@ -294,6 +300,8 @@ module('Integration | Component | polaris-button', function (hooks) {
 
     module('onBlur()', function () {
       test('is called when the button is blurred', async function (assert) {
+        assert.expect(2);
+
         this.set('handleBlur', (_myArg, event) => {
           assert.ok(true, 'triggers onBlur handler');
           assert.ok(

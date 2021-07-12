@@ -98,6 +98,8 @@ module('Integration | Component | polaris tag', function (hooks) {
   });
 
   test('it handles tag removing correctly', async function (assert) {
+    assert.expect(5);
+
     this.set('remove', () => {
       assert.ok('button clicked - onRemove action is called');
     });

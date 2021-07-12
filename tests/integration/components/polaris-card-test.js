@@ -326,21 +326,18 @@ module('Integration | Component | polaris card', function (hooks) {
 
     // Check clicking the buttons.
     await click(actionButtons[0]);
-    assert.equal(
+    assert.true(
       action1HandlerCalled,
-      true,
       'clicking first action button - invokes first action handler correctly'
     );
-    assert.equal(
+    assert.false(
       this.get('action2HandlerCalled'),
-      false,
       'clicking first action button - does not invoke second action handler'
     );
 
     await click(actionButtons[1]);
-    assert.equal(
+    assert.true(
       this.get('action2HandlerCalled'),
-      true,
       'clicking second action button - invokes second action handler correctly'
     );
 

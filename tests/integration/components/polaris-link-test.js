@@ -153,6 +153,8 @@ module('Integration | Component | polaris link', function (hooks) {
   });
 
   test('it handles click events correctly', async function (assert) {
+    assert.expect(2);
+
     this.handleClick = () => assert.ok('onClick is fired correctly');
 
     await render(hbs`{{polaris-link onClick=this.handleClick}}`);
@@ -165,6 +167,8 @@ module('Integration | Component | polaris link', function (hooks) {
   });
 
   test('clicking a link navigates but does not bubble to the parent', async function (assert) {
+    assert.expect(2);
+
     // Reset the hash part of the browser URL to keep this test valid on reruns.
     window.location.hash = 'linkNotClicked';
 
@@ -199,6 +203,7 @@ module('Integration | Component | polaris link', function (hooks) {
     };
 
     await render(hbs`
+      {{!-- template-lint-disable no-invalid-interactive --}}
       <div {{on "click" this.handleParentClicked}}>
         {{polaris-link
           url="#linkClicked"
@@ -226,6 +231,7 @@ module('Integration | Component | polaris link', function (hooks) {
     };
 
     await render(hbs`
+      {{!-- template-lint-disable no-invalid-interactive --}}
       <div {{on "click" this.handleParentClicked}}>
         {{polaris-link onClick=this.handleClick}}
       </div>

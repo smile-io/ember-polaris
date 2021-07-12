@@ -24,7 +24,7 @@
             @section={{sectionIndex}}
             @index={{optionIndex}}
             @onClick={{this.handleClick}}
-            @select={{array-contains @selected option.value}}
+            @select={{includes option.value @selected}}
             @allowMultiple={{@allowMultiple}}
             @role={{@optionRole}}
           />
