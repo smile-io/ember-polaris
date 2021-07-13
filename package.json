@@ -48,8 +48,6 @@
   "dependencies": {
     "@ember-decorators/component": "^6.0.1",
     "@ember/render-modifiers": "^1.0.0",
-    "@shopify/polaris": "6.6.0",
-    "@shopify/polaris-icons": "^4.1.0",
     "@shopify/polaris-tokens": "^3.0.0",
     "broccoli-debug": "^0.6.5",
     "broccoli-funnel": "^3.0.0",
@@ -80,6 +78,8 @@
     "@ember/test-helpers": "2.2.8",
     "@glimmer/component": "1.0.4",
     "@glimmer/tracking": "1.0.4",
+    "@shopify/polaris": "6.6.0",
+    "@shopify/polaris-icons": "4.1.0",
     "@smile-io/changelog-generator": "2.1.0",
     "@smile-io/ember-styleguide": "9.2.1",
     "babel-eslint": "10.1.0",

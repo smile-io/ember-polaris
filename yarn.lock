@@ -1463,6 +1463,11 @@
   dependencies:
     "@types/node" ">= 8"
 
+"@shopify/polaris-icons@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.1.0.tgz#296ff47d22b52cb1592e2fa81a609f8f3c912eb0"
+  integrity sha512-U5ODhOJtfYHJskYUknceIjpF+EhHdMQJ54HSWsjuHAapCWbmA8ROVonAnDEM+cWeEVinpPZzQd2nE/DVJUmKkw==
+
 "@shopify/polaris-icons@^4.1.0":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-4.6.2.tgz#24f674338be4de22c38a05bc004c5e56348cd5d0"
