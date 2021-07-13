@@ -4,7 +4,7 @@ import Ember from 'ember';
 import { htmlSafe } from '@ember/string';
 import { warn } from '@ember/debug';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 import layout from '../templates/components/polaris-popover';
 
 const { ViewUtils } = Ember;

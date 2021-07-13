@@ -79,7 +79,7 @@ module('Integration | Component | polaris color picker', function (hooks) {
     hueDraggers.exists({ count: 1 }, 'renders one dragger for the hue picker');
 
     hueDraggers.hasStyle(
-      { transform: 'matrix(1, 0, 0, 1, 0, 28)' },
+      { transform: 'matrix(1, 0, 0, 1, 0, 27.3333)' },
       'renders hue dragger in the correct position'
     );
 
@@ -147,7 +147,7 @@ module('Integration | Component | polaris color picker', function (hooks) {
 
     assert.equal(
       getTransform(hueDraggers),
-      'translate3d(0px, 93.25px, 0px)',
+      'translate3d(0px, 89.6833px, 0px)',
       'renders hue dragger in the correct position'
     );
 
@@ -167,7 +167,7 @@ module('Integration | Component | polaris color picker', function (hooks) {
 
     assert.equal(
       getTransform(alphaDraggers),
-      'translate3d(0px, 33.25px, 0px)',
+      'translate3d(0px, 32.35px, 0px)',
       'renders alpha dragger in the correct position'
     );
   });

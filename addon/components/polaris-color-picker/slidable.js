@@ -3,7 +3,7 @@ import { computed, action } from '@ember/object';
 import { isNone, typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 import $Ember from 'jquery';
 import layout from '../../templates/components/polaris-color-picker/slidable';
 import deprecateClassArgument from '../../utils/deprecate-class-argument';
