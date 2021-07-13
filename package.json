@@ -48,10 +48,9 @@
   "dependencies": {
     "@ember-decorators/component": "^6.0.1",
     "@ember/render-modifiers": "^1.0.0",
-    "@shopify/javascript-utilities": "^2.4.0",
-    "@shopify/polaris": "5.5.0",
-    "@shopify/polaris-icons": "^4.0.0",
-    "@shopify/polaris-tokens": "^2.14.0",
+    "@shopify/polaris": "6.6.0",
+    "@shopify/polaris-icons": "^4.1.0",
+    "@shopify/polaris-tokens": "^3.0.0",
     "broccoli-debug": "^0.6.5",
     "broccoli-funnel": "^3.0.0",
     "broccoli-merge-trees": "^4.2.0",
