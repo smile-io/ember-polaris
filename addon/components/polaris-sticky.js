@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
 import { tagName, layout as templateLayout } from '@ember-decorators/component';
-import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 import layout from '../templates/components/polaris-sticky';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 

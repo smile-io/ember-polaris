@@ -7,7 +7,7 @@ import { isNone, isPresent } from '@ember/utils';
 import { guidFor } from '@ember/object/internals';
 import { layout, tagName } from '@ember-decorators/component';
 import ContextBoundEventListenersMixin from 'ember-lifeline/mixins/dom';
-import { getRectForNode } from '@shopify/javascript-utilities/geometry';
+import { getRectForNode } from '@smile-io/ember-polaris/utils/geometry';
 import template from '../templates/components/polaris-drop-zone';
 import DropZoneState from '../-private/drop-zone-state';
 import {
