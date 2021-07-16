@@ -75,37 +75,4 @@ module('Integration | Component | polaris-avatar', function (hooks) {
       assert.dom('span:first-child').hasAttribute('aria-label', 'Hello World');
     });
   });
-
-  test('supports passing a @class argument for backwards compatibility', async function (assert) {
-    await render(hbs`
-      {{polaris-avatar class="custom-class"}}
-    `);
-
-    assert
-      .dom('.Polaris-Avatar')
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in curly-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisAvatar @class="custom-class" />
-    `);
-    assert
-      .dom('.Polaris-Avatar')
-      .hasClass(
-        'custom-class',
-        'applies `@class` when used in angle-brackets form'
-      );
-
-    await render(hbs`
-      <PolarisAvatar class="custom-class" />
-    `);
-    assert
-      .dom('.Polaris-Avatar')
-      .hasClass(
-        'custom-class',
-        'applies `class` when used in angle-brackets form'
-      );
-  });
 });

@@ -4,7 +4,6 @@ import { or } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
 import { tagName } from '@ember-decorators/component';
-import deprecateClassArgument from '@smile-io/ember-polaris/utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
 const defaultSize = 'medium';
@@ -24,7 +23,6 @@ const avatarImages = [
 
 const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
-@deprecateClassArgument
 @tagName('')
 export default class PolarisAvatar extends Component {
   /**
