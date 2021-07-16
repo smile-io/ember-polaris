@@ -1,134 +1,103 @@
-import Component from '@ember/component';
-import { action, computed } from '@ember/object';
-import { or } from '@ember/object/computed';
-import { isEmpty } from '@ember/utils';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { classify } from '@ember/string';
-import { tagName } from '@ember-decorators/component';
+import { arg } from '@smile-io/ember-polaris/utils/decorators/arg';
 
-const allowedSizes = ['small', 'medium', 'large'];
-const defaultSize = 'medium';
+const SIZE = {
+  small: 'small',
+  medium: 'medium',
+  large: 'large',
+};
 
-// TODO currently we don't need these...recheck when icons are properly handled
-const avatarImages = [
-  'avatarOne',
-  'avatarTwo',
-  'avatarThree',
-  'avatarFour',
-  'avatarFive',
-  'avatarSix',
-  'avatarSeven',
-  'avatarEight',
-  'avatarNine',
-];
+const STATUS = {
+  pending: 'PENDING',
+  loaded: 'LOADED',
+  errored: 'ERRORED',
+};
 
-const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
+const STYLE_CLASSES = ['one', 'two', 'three', 'four', 'five'];
 
-@tagName('')
+const styleClass = (name) =>
+  name
+    ? STYLE_CLASSES[name.charCodeAt(0) % STYLE_CLASSES.length]
+    : STYLE_CLASSES[0];
+
 export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
    *
    * @type {String}
    * @default 'medium'
-   * @public
    */
-  size = defaultSize;
+  @arg
+  size = SIZE.medium;
 
   /**
    * The name of the person
    *
    * @type {String}
-   * @default null
-   * @public
    */
-  name = null;
+  name;
 
   /**
    * Initials of person to display
    *
    * @type {String}
-   * @default null
-   * @public
    */
-  initials = null;
+  initials;
 
   /**
    * Whether the avatar is for a customer
    *
    * @type {Boolean}
-   * @default false
-   * @public
    */
-  customer = false;
+  customer;
 
   /**
    * URL of the avatar image which falls back to initials if the image fails to load
    *
    * @type {String}
-   * @default null
-   * @public
    */
-  source = null;
+  source;
+
+  /**
+   * Callback fired when the image fails to load
+   * @type {Function}
+   */
+  onError;
 
   /**
    * Accessible label for the avatar image
    *
    * @type {String}
-   * @default null
-   * @public
    */
-  accessibilityLabel = null;
+  accessibilityLabel;
 
-  /**
-   * Path to the Polaris avatar images
-   * TODO: read this from config? Need a way to set this by default?
-   * @type {String}
-   */
-  avatarSourcePath = '';
-
-  /**
-   * @type {Boolean}
-   * @default false
-   */
-  hasError = false;
-
-  /**
-   * @type {Boolean}
-   * @default false
-   */
-  hasLoaded = false;
-
-  /**
-   * Image source to use (if any)
-   * @type {String}
-   */
-  @or('source', 'customerImageSource')
-  finalSource;
+  @tracked status = STATUS.pending;
 
   /**
    * Name to use (if any)
    * @type {String}
    */
-  @or('name', 'initials')
-  nameString;
+  get nameString() {
+    return this.args.name || this.args.initials;
+  }
 
   /**
    * Whether we have an image to use
    * @type {Boolean}
    */
-  @computed('source', 'customer', 'hasError')
   get hasImage() {
-    let { source, customer, hasError } = this;
-    return (source || customer) && !hasError;
+    return this.args.source && this.status !== STATUS.errored;
   }
 
   /**
    * Accessibility label to apply to avatar
    * @type {String}
    */
-  @computed('accessibilityLabel', 'name', 'initials')
   get label() {
-    let { accessibilityLabel, name, initials } = this;
+    const { accessibilityLabel, name, initials } = this.args;
 
     if (accessibilityLabel) {
       return accessibilityLabel;
@@ -139,103 +108,59 @@ export default class PolarisAvatar extends Component {
     }
 
     if (initials) {
-      return `Avatar with initials ${initials.split('').join(' ')}`;
+      const splitInitials = initials.split('').join(' ');
+      return `Avatar with initials ${splitInitials}`;
     }
 
     return 'Avatar';
   }
 
-  /**
-   * Class name to set avatar style
-   * @type {String}
-   */
-  @computed('nameString')
-  get styleClass() {
-    let { nameString } = this;
-    let styleIndex = isEmpty(nameString)
-      ? 0
-      : nameString.charCodeAt(0) % styleClasses.length;
-    let style = styleClasses[styleIndex];
+  get classNames() {
+    let classNames = ['Polaris-Avatar'];
+    const {
+      nameString,
+      hasImage,
+      status,
+      size,
+      args: { customer, initials },
+    } = this;
 
-    return `Polaris-Avatar--style${classify(style)}`;
-  }
-
-  /**
-   * Class name to set avatar size
-   * @type {String}
-   */
-  @computed('size')
-  get sizeClass() {
-    let { size } = this;
-    if (allowedSizes.indexOf(size) === -1) {
-      size = defaultSize;
+    if (size) {
+      classNames.push(`Polaris-Avatar--size${classify(size)}`);
+    }
+    if (!customer) {
+      classNames.push(
+        `Polaris-Avatar--style${classify(styleClass(nameString))}`
+      );
+    }
+    if (
+      (hasImage || (initials && initials.length === 0)) &&
+      status !== STATUS.loaded
+    ) {
+      classNames.push('Polaris-Avatar--hidden');
+    }
+    if (hasImage) {
+      classNames.push('Polaris-Avatar--hasImage');
     }
 
-    return `Polaris-Avatar--size${classify(size)}`;
-  }
-
-  /**
-   * Class name to hide avatar when loading
-   * @type {String}
-   */
-  @computed('hasImage', 'hasLoaded')
-  get hiddenClass() {
-    let { hasImage, hasLoaded } = this;
-    return hasImage && !hasLoaded ? 'Polaris-Avatar--hidden' : null;
-  }
-
-  /**
-   * Image source when displaying a customer avatar
-   * @type {String}
-   */
-  @computed('avatarSourcePath', 'customer', 'nameString')
-  get customerImageSource() {
-    if (!this.customer) {
-      return null;
-    }
-
-    let { nameString } = this;
-    let avatarIndex = isEmpty(nameString)
-      ? 0
-      : nameString.charCodeAt(0) % avatarImages.length;
-    return `${this.avatarSourcePath}/avatar-${++avatarIndex}.svg`;
-  }
-
-  /**
-   * Flag controlling whether the avatar initials should be rendered
-   * @type {Boolean}
-   */
-  @computed('initials', 'hasImage')
-  get shouldShowInitials() {
-    let { initials, hasImage } = this;
-    return initials && !hasImage;
-  }
-
-  /**
-   * Flag controlling whether the avatar image should be rendered
-   * @type {Boolean}
-   */
-  @computed('finalSource', 'hasError')
-  get shouldShowImage() {
-    let { finalSource, hasError } = this;
-    return finalSource && !hasError;
+    return classNames.join(' ');
   }
 
   @action
   handleError() {
-    this.setProperties({ hasError: true, hasLoaded: false });
+    this.status = STATUS.errored;
+    this.args.onError?.();
   }
 
   @action
   handleLoad() {
-    this.setProperties({ hasLoaded: true, hasError: false });
+    this.status = STATUS.loaded;
   }
 
   @action
-  resetImage() {
-    this.setProperties({
-      hasError: false,
-      hasLoaded: false,
-    });
+  resetStatus() {
+    console.log('triggered error');
+    // If the source changes, set the status back to pending
+    this.status = STATUS.pending;
   }
 }

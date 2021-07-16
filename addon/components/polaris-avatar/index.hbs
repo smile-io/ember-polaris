@@ -1,33 +1,36 @@
 <span
-  role="img"
+  data-test-avatar
   aria-label={{this.label}}
-  class="Polaris-Avatar
-    {{if this.hasImage "Polaris-Avatar--hasImage"}}
-    {{this.styleClass}}
-    {{this.sizeClass}}
-    {{this.hiddenClass}}"
-  {{did-update this.resetImage @source}}
+  role="img"
+  class={{this.classNames}}
   ...attributes
+  {{did-update this.resetStatus @source}}
 >
-  {{#if this.shouldShowInitials}}
-    <span class="Polaris-Avatar__Initials">
-      <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
-        <text x="50%" y="50%" dy="0.35em" fill="currentColor" font-size="26" text-anchor="middle">
-          {{@initials}}
-        </text>
+  {{#unless this.hasImage}}
+    <span data-test-avatar-initials class="Polaris-Avatar__Initials">
+      <svg data-test-avatar-svg class="Polaris-Avatar__Svg" viewBox="0 0 40 40">
+        {{#if (or @customer (not @initials))}}
+          <path
+            fill="currentColor"
+            d="M8.28 27.5A14.95 14.95 0 0120 21.8c4.76 0 8.97 2.24 11.72 5.7a14.02 14.02 0 01-8.25 5.91 14.82 14.82 0 01-6.94 0 14.02 14.02 0 01-8.25-5.9zM13.99 12.78a6.02 6.02 0 1112.03 0 6.02 6.02 0 01-12.03 0z"
+          ></path>
+        {{else}}
+          <text x="50%" y="50%" dy="0.35em" fill="currentColor" fontSize="20" textAnchor="middle">
+            {{@initials}}
+          </text>
+        {{/if}}
       </svg>
     </span>
-  {{/if}}
-
-  {{#if this.shouldShowImage}}
+  {{else}}
     {{! TODO: replace this with polaris-image when implemented. }}
     <img
       class="Polaris-Avatar__Image"
-      src={{this.finalSource}}
+      data-test-avatar-img
+      src={{@source}}
       alt=""
       role="presentation"
       onload={{this.handleLoad}}
       onerror={{this.handleError}}
     />
-  {{/if}}
+  {{/unless}}
 </span>

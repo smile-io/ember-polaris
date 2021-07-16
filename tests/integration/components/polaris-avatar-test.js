@@ -1,78 +1,118 @@
 import { hbs } from 'ember-cli-htmlbars';
 import { module, test, skip } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { render, triggerEvent, settled } from '@ember/test-helpers';
+
+const avatar = '[data-test-avatar]';
+const avatarSvg = '[data-test-avatar-svg]';
+const avatarInitials = '[data-test-avatar-initials]';
+const avatarImg = '[data-test-avatar-img]';
 
 module('Integration | Component | polaris-avatar', function (hooks) {
   setupRenderingTest(hooks);
 
   module('intials', function () {
     test('renders intials if the image is not provided', async function (assert) {
-      await render(hbs`{{polaris-avatar initials="DL"}}`);
-      assert.dom('span[role="img"] span svg').exists({ count: 1 });
+      await render(hbs`<PolarisAvatar @initials="DL" />`);
+      assert.dom(avatarSvg).exists({ count: 1 });
     });
   });
 
   module('source', function () {
-    skip('renders an Image component with the Avatar source if one is provided', async function (assert) {
-      await render(hbs`{{polaris-avatar source="image.png"}}`);
-      assert.dom('img').hasAttribute('src', 'image.png');
+    test('renders an Image component with the Avatar source if one is provided', async function (assert) {
+      this.set('src', 'image/path/');
+      await render(hbs`<PolarisAvatar @source={{this.src}} />`);
+
+      assert.dom(avatarImg).hasAttribute('src', this.src);
+
+      this.set('src', 'image/new/path/');
+      assert.ok(true, 'safely updates - no errors');
     });
   });
 
   module('customer', function () {
-    skip('renders an Image component with a customer Avatar if the customer prop is true', async function (assert) {
-      await render(hbs`{{polaris-avatar customer=true}}`);
-      assert.dom('img').hasAttribute('src', /avatar-/);
+    test('renders an inline svg', async function (assert) {
+      await render(hbs`<PolarisAvatar @customer={{true}} />`);
+      assert.dom(avatarSvg).exists({ count: 1 });
     });
 
-    skip('does not render a customer Avatar if a source is provided', async function (assert) {
-      await render(hbs`{{polaris-avatar customer=true source="image.png"}}`);
-      assert.dom('img').hasAttribute('src', /(?!avatar-)/);
+    test('does not render a customer Avatar if a source is provided', async function (assert) {
+      await render(
+        hbs`<PolarisAvatar @customer={{true}} @source="image.png" />`
+      );
+      assert.dom(avatarSvg).doesNotExist();
     });
   });
 
-  module('on Error with Initials', function () {
-    skip('renders initials if the Image onError prop is triggered and the Intials are provided', async function (assert) {
-      const src = 'image/path/';
-      this.set('src', src);
+  module('initials', function () {
+    test('renders initials if the Image onError prop is triggered and the Intials are provided', async function (assert) {
       await render(hbs`
-        {{polaris-avatar size="large" initials="DL" source=src}}
+        <PolarisAvatar @size="large" @initials="DL" @source="image/path/" />
       `);
-      assert.dom('span[role="img"] span svg').doesNotExist();
-      await triggerEvent('img', 'onerror');
-      assert.dom('span[role="img"] span svg').exists({ count: 1 });
+
+      assert.dom(avatarImg).exists();
+      assert.dom(avatarInitials).doesNotExist();
+
+      await triggerEvent(avatarImg, 'onerror');
+
+      assert.dom(avatarImg).doesNotExist();
+      assert.dom(avatarInitials).hasClass('Polaris-Avatar__Initials');
+    });
+
+    test('renders an inline svg if initials are blank', async function (assert) {
+      await render(hbs`<PolarisAvatar @initials="" />`);
+      assert.dom(avatarSvg).exists({ count: 1 });
+    });
+  });
+
+  module('consumer-specified "onError" hook', function () {
+    test('gets invoked in the event of an error', async function (assert) {
+      assert.expect(1);
+
+      this.set('handleError', () =>
+        assert.ok(true, 'invokes onError callback')
+      );
+
+      await render(hbs`
+        <PolarisAvatar @size="large" initials="DL" @source="image/path/" @onError={{this.handleError}} />
+      `);
+
+      await triggerEvent(avatarImg, 'onerror');
     });
   });
 
   module('on Error with changed props', function () {
-    skip('re-renders the image if a the source prop is changed after an error', async function (assert) {
-      const src = 'image/path/';
-      const workingSrc = 'image/goodPath/';
-      this.set('src', src);
+    test('re-renders the image if a the source prop is changed after an error', async function (assert) {
+      this.set('src', 'image/path/');
+
       await render(hbs`
-        {{polaris-avatar size="large" initials="DL" source=src}}
+        <PolarisAvatar @size="large" @initials="DL" @source={{this.src}} />
       `);
-      await triggerEvent('img', 'onerror');
-      assert.dom('img').doesNotExist();
-      this.set('src', workingSrc);
-      assert.dom('img').exists({ count: 1 });
+
+      await triggerEvent(avatarImg, 'onerror');
+
+      assert.dom(avatarImg).doesNotExist();
+
+      this.set('src', 'image/goodPath/');
+      await settled();
+
+      assert.dom(avatarImg).exists({ count: 1 });
     });
   });
 
   module('accessibilityLabel', function () {
     test('is passed to the aria-label', async function (assert) {
       await render(hbs`
-        {{polaris-avatar accessibilityLabel="Hello World"}}
+        <PolarisAvatar @accessibilityLabel="Hello World" />
       `);
-      assert.dom('span:first-child').hasAttribute('aria-label', 'Hello World');
+      assert.dom(avatar).hasAttribute('aria-label', 'Hello World');
     });
   });
 
   module('name', function () {
     test('is passed to the aria-label', async function (assert) {
-      await render(hbs`{{polaris-avatar name="Hello World"}}`);
-      assert.dom('span:first-child').hasAttribute('aria-label', 'Hello World');
+      await render(hbs`<PolarisAvatar @name="Hello World" />`);
+      assert.dom(avatar).hasAttribute('aria-label', 'Hello World');
     });
   });
 });
