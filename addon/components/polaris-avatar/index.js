@@ -3,8 +3,7 @@ import { action, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isEmpty } from '@ember/utils';
 import { classify } from '@ember/string';
-import { tagName, layout } from '@ember-decorators/component';
-import template from '../templates/components/polaris-avatar';
+import { tagName } from '@ember-decorators/component';
 import deprecateClassArgument from '../utils/deprecate-class-argument';
 
 const allowedSizes = ['small', 'medium', 'large'];
@@ -27,7 +26,6 @@ const styleClasses = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 @deprecateClassArgument
 @tagName('')
-@layout(template)
 export default class PolarisAvatar extends Component {
   /**
    * Size of avatar
