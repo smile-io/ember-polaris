@@ -27,12 +27,7 @@
           />
         {{/let}}
 
-        {{#if
-          (and
-            choice.childComponent
-            (or choice.isSelected choice.alwaysRenderChildComponent)
-          )
-        }}
+        {{#if (and choice.childComponent (or choice.isSelected choice.alwaysRenderChildComponent))}}
           <div class="Polaris-ChoiceList__ChoiceChildren">
             {{component choice.childComponent}}
           </div>

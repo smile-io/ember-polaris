@@ -1,9 +1,5 @@
-{{!-- template-lint-disable no-invalid-interactive --}}
-<div
-  class={{this.cssClasses}}
-  {{on "click" this.toggleAll}}
-  ...attributes
->
+{{! template-lint-disable no-invalid-interactive }}
+<div class={{this.cssClasses}} {{on "click" this.toggleAll}} ...attributes>
   <div class="Polaris-ResourceList-CheckableButton__Checkbox">
     <PolarisCheckbox
       @labelHidden={{true}}

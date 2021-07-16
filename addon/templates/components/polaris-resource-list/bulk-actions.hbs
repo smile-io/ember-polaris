@@ -63,14 +63,14 @@
 </div>
 
 <div
-  class="Polaris-ResourceList-BulkActions__Group
-    Polaris-ResourceList-BulkActions__Group--largeScreen
+  class="Polaris-ResourceList-BulkActions__Group Polaris-ResourceList-BulkActions__Group--largeScreen
     {{if this.measuring "Polaris-ResourceList-BulkActions__Group--measuring"}}
-    {{if @selectMode
+    {{if
+      @selectMode
       "Polaris-ResourceList-BulkActions__Group--entered"
       "Polaris-ResourceList-BulkActions__Group--exited"
     }}
-  "
+    "
 >
   <div class="Polaris-ResourceList-BulkActions__ButtonGroup">
     <PolarisResourceList::CheckableButton
@@ -94,10 +94,7 @@
     {{#if this.shouldRenderActionsPopover}}
       <div class="Polaris-ResourceList-BulkActions__Popover">
         <PolarisPopover as |popover|>
-          {{#component (if @disabled
-            (component "wrapper-element" tagName="")
-            popover.activator
-          )}}
+          {{#component (if @disabled (component "wrapper-element" tagName="") popover.activator)}}
             <PolarisResourceList::BulkActions::BulkActionButton
               @content={{this.activatorLabel}}
               @disabled={{@disabled}}
@@ -115,10 +112,7 @@
     {{/if}}
   </div>
 
-  {{#if (or
-    @paginatedSelectAllAction
-    (and @paginatedSelectAllText @paginatedSelectAllAction)
-  )}}
+  {{#if (or @paginatedSelectAllAction (and @paginatedSelectAllText @paginatedSelectAllAction))}}
     <div class="Polaris-ResourceList-BulkActions__PaginatedSelectAll">
       {{#if (and @paginatedSelectAllText @paginatedSelectAllAction)}}
         <span aria-live="polite">{{@paginatedSelectAllText}}</span>

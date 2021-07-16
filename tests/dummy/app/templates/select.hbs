@@ -1,14 +1,11 @@
-{{!--
+{{!
   Ember port of the React test at https://codesandbox.io/s/53q709kxo4
---}}
+}}
 <PolarisPage @title="Select test">
   <PolarisCard @sectioned={{true}}>
     <PolarisSelect
       @label="Select test"
-      @labelAction={{hash
-        text="Clear"
-        onAction=(action (mut value) null)
-      }}
+      @labelAction={{hash text="Clear" onAction=(action (mut value) null)}}
       @options={{array
         "Single string"
         (hash

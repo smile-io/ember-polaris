@@ -1,10 +1,7 @@
 <div class="Polaris-DropZone-FileUpload {{@class}}" ...attributes>
   {{#if (eq this.size "small")}}
     <PolarisStack @vertical={{true}} @spacing="tight">
-      <PolarisIcon
-        @color="inkLightest"
-        @source={{this.iconDragDrop}}
-      />
+      <PolarisIcon @color="inkLightest" @source={{this.iconDragDrop}} />
     </PolarisStack>
   {{else if (eq this.size "medium")}}
     <PolarisStack @vertical={{true}} @spacing="tight">
@@ -14,9 +11,9 @@
   {{else if (eq this.size "large")}}
     <PolarisStack @vertical={{true}} @spacing="tight">
       {{#if (eq this.type "file")}}
-        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
+        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="" />
       {{else if (eq this.type "image")}}
-        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
+        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="" />
       {{/if}}
 
       <PolarisButton @size="slim" @text={{this.actionTitle}} />
@@ -28,9 +25,9 @@
   {{else if (eq this.size "extraLarge")}}
     <PolarisStack @vertical={{true}}>
       {{#if (eq this.type "file")}}
-        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="">
+        <img class={{this.imageClasses}} src={{this.fileUpload}} alt="" />
       {{else if (eq this.type "image")}}
-        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="">
+        <img class={{this.imageClasses}} src={{this.imageUpload}} alt="" />
       {{/if}}
 
       <PolarisButton @text={{this.actionTitle}} />

@@ -29,7 +29,8 @@
 
           <div class="Polaris-CalloutCard__Buttons">
             {{#let
-              (component "polaris-button"
+              (component
+                "polaris-button"
                 text=@primaryAction.text
                 accessibilityLabel=@primaryAction.accessibilityLabel
                 disabled=@primaryAction.disabled
@@ -42,7 +43,7 @@
               as |PrimaryButton|
             }}
               {{#if @secondaryAction}}
-                <PolarisButtonGroup data-test-callout-card-button-group >
+                <PolarisButtonGroup data-test-callout-card-button-group>
                   <PrimaryButton data-test-callout-card-primary-button />
 
                   <PolarisButton
@@ -63,12 +64,12 @@
           </div>
         </div>
 
-        {{!-- TODO use <PolarisImage> once implemented  --}}
+        {{! TODO use <PolarisImage> once implemented  }}
         <img
           alt=""
           class="Polaris-CalloutCard__Image {{if @onDismiss "Polaris-CalloutCard__DismissImage"}}"
           src={{@illustration}}
-        >
+        />
       </div>
     </PolarisCard::Section>
   </div>

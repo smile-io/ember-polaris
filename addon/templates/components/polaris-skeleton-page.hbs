@@ -8,10 +8,7 @@
   <div
     class="Polaris-SkeletonPage__Header
       {{if @breadcrumbs "Polaris-SkeletonPage__Header--hasBreadcrumbs"}}
-      {{if
-        this.dummySecondaryActions
-        "Polaris-SkeletonPage__Header--hasSecondaryActions"
-      }}"
+      {{if this.dummySecondaryActions "Polaris-SkeletonPage__Header--hasSecondaryActions"}}"
     data-test-skeleton-page-header
   >
     {{#if @breadcrumbs}}
@@ -20,10 +17,7 @@
         style="width: 60px;"
         data-test-skeleton-page-breadcrumbs
       >
-        <PolarisSkeletonBodyText
-          @lines={{1}}
-          data-test-skeleton-page-breadcrumb
-        />
+        <PolarisSkeletonBodyText @lines={{1}} data-test-skeleton-page-breadcrumb />
       </div>
     {{/if}}
 
@@ -41,19 +35,13 @@
               @text={{or @title ""}}
             />
           {{else}}
-            <PolarisSkeletonDisplayText
-              data-test-skeleton-page-title-text
-              @size="large"
-            />
+            <PolarisSkeletonDisplayText data-test-skeleton-page-title-text @size="large" />
           {{/if}}
         {{/if}}
       </div>
 
       {{#if @primaryAction}}
-        <div
-          class="Polaris-SkeletonPage__PrimaryAction"
-          data-test-skeleton-page-primary-action
-        >
+        <div class="Polaris-SkeletonPage__PrimaryAction" data-test-skeleton-page-primary-action>
           <PolarisSkeletonDisplayText @size="large" />
         </div>
       {{/if}}

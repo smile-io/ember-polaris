@@ -1,11 +1,11 @@
-{{!--
+{{!
   N.B. the two dummy input divs in this component MUST be one-liners.
   If they are split onto multiple lines, they will be too big, and as a result
   the text area control will appear a couple of lines taller than it should do.
   This is because of the `white-space: pre-wrap` style applied by Polaris,
   which replicates the white space/wrapping behaviour of the textarea control.
---}}
-{{!-- template-lint-disable no-invalid-interactive --}}
+}}
+{{! template-lint-disable no-invalid-interactive }}
 <div
   class="Polaris-TextField__Resizer {{@class}}"
   aria-hidden="true"
@@ -15,9 +15,15 @@
   {{did-insert this.handleHeightCheck}}
   {{did-update this.handleHeightCheck @contents @currentHeight @minimumLines}}
 >
-  <div class="Polaris-TextField__DummyInput" {{did-insert this.setContentNode}}>{{this.finalContents}}</div>
+  <div
+    class="Polaris-TextField__DummyInput"
+    {{did-insert this.setContentNode}}
+  >{{this.finalContents}}</div>
 
   {{#if @minimumLines}}
-    <div class="Polaris-TextField__DummyInput" {{did-insert this.setMinimumLinesNode}}>{{this.contentsForMinimumLines}}</div>
+    <div
+      class="Polaris-TextField__DummyInput"
+      {{did-insert this.setMinimumLinesNode}}
+    >{{this.contentsForMinimumLines}}</div>
   {{/if}}
 </div>

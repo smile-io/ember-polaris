@@ -6,11 +6,7 @@
   ...attributes
 >
   {{#if (has-block)}}
-    {{yield
-      (hash
-        item=(component "polaris-button-group/item")
-      )
-    }}
+    {{yield (hash item=(component "polaris-button-group/item"))}}
   {{else}}
     {{@text}}
   {{/if}}

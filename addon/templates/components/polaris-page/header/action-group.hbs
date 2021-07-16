@@ -10,10 +10,7 @@
     </popover.activator>
 
     <popover.content>
-      <PolarisActionList
-        @items={{@groupActions}}
-        @onActionAnyItem={{action popover.close}}
-      />
+      <PolarisActionList @items={{@groupActions}} @onActionAnyItem={{action popover.close}} />
 
       {{#if @details}}
         <div class="Polaris-Header-ActionGroup__Details">

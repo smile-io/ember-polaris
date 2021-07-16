@@ -12,9 +12,11 @@
     @navigateTableRight={{fn this.navigateTable "right"}}
   />
   {{! template-lint-disable attribute-indentation }}
-  {{!-- TODO remove rule above once linter handles this correctly --}}
+  {{! TODO remove rule above once linter handles this correctly }}
   <div
-    class="Polaris-DataTable {{if this.collapsed "Polaris-DataTable--collapsed"}} {{if @footerContent "Polaris-DataTable--hasFooter"}}"
+    class="Polaris-DataTable
+      {{if this.collapsed "Polaris-DataTable--collapsed"}}
+      {{if @footerContent "Polaris-DataTable--hasFooter"}}"
   >
     <div class="Polaris-DataTable__ScrollContainer" style={{scrollContainerStyle}}>
       {{! template-lint-disable table-groups }}

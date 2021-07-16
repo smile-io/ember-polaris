@@ -12,11 +12,7 @@
     {{/if}}
   </PolarisUnstyledLink>
 {{else}}
-  <button
-    type="button"
-    class={{this.linkClass}}
-    {{on "click" (stop-propagation this.handleClick)}}
-  >
+  <button type="button" class={{this.linkClass}} {{on "click" (stop-propagation this.handleClick)}}>
     {{#if (has-block)}}
       {{yield}}
     {{else}}

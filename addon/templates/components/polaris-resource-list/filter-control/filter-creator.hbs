@@ -1,12 +1,5 @@
-<PolarisPopover
-  @sectioned={{true}}
-  @fullHeight={{true}}
-  as |popover|
->
-  {{#component (if @disabled
-    (component "wrapper-element" tagName="")
-    popover.activator
-  )}}
+<PolarisPopover @sectioned={{true}} @fullHeight={{true}} as |popover|>
+  {{#component (if @disabled (component "wrapper-element" tagName="") popover.activator)}}
     <PolarisButton
       @dataTestId="filter-activator"
       @text="Filter"

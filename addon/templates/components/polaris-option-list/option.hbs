@@ -5,15 +5,12 @@
   class="Polaris-OptionList-Option {{@class}}"
   ...attributes
 >
-  {{!-- TODO: add Scrollable.ScrollTo here when available --}}
+  {{! TODO: add Scrollable.ScrollTo here when available }}
 
   {{#if @allowMultiple}}
     <label
       htmlFor={{@optionId}}
-      class="
-        Polaris-OptionList-Option__Label
-        {{if @active "Polaris-OptionList-Option--active"}}
-      "
+      class="Polaris-OptionList-Option__Label {{if @active "Polaris-OptionList-Option--active"}} "
     >
       <div class="Polaris-OptionList-Option__Checkbox">
         <PolarisOptionList::Checkbox
@@ -37,13 +34,12 @@
     <button
       id={{@optionId}}
       type="button"
-      class="
-        Polaris-OptionList-Option__SingleSelectOption
+      class="Polaris-OptionList-Option__SingleSelectOption
         {{if this.focused "Polaris-OptionList-Option--focused"}}
         {{if @disabled "Polaris-OptionList-Option--disabled"}}
         {{if @select "Polaris-OptionList-Option--select"}}
         {{if @active "Polaris-OptionList-Option--active"}}
-      "
+        "
       disabled={{@disabled}}
       {{on "click" this.handleClick}}
       {{on "focus" this.toggleFocus}}

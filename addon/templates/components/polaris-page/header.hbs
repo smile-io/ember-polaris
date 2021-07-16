@@ -8,7 +8,8 @@
     )
     (element (if @primaryAction "div" ""))
     (element (if @primaryAction "div" ""))
-    (if @primaryAction
+    (if
+      @primaryAction
       (component
         "polaris-button"
         primary=this.shouldRenderPrimaryActionAsPrimary
@@ -37,11 +38,7 @@
         <div class="Polaris-Page-Header__TitleAndRollup">
           <div class="Polaris-Page-Header__Title">
             <div>
-              <PolarisDisplayText
-                @htmlTag="h1"
-                @size="large"
-                @text={{@title}}
-              />
+              <PolarisDisplayText @htmlTag="h1" @size="large" @text={{@title}} />
             </div>
 
             <div>

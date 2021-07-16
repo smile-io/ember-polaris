@@ -1,9 +1,6 @@
 <span {{did-insert this.insertFilterValueSelector}}>
   {{#if (eq @filter.type FilterType.Select)}}
-    <PolarisStack
-      @vertical={{true}}
-      as |stack|
-    >
+    <PolarisStack @vertical={{true}} as |stack|>
       {{#if this.showOperatorOptions}}
         <stack.item>
           {{render-content this.operatorOptionsMarkup}}
@@ -19,10 +16,7 @@
       />
     </PolarisStack>
   {{else if (eq @filter.type FilterType.TextField)}}
-    <PolarisStack
-      @vertical={{true}}
-      as |stack|
-    >
+    <PolarisStack @vertical={{true}} as |stack|>
       {{#if this.showOperatorOptions}}
         <stack.item>
           {{render-content this.operatorOptionsMarkup}}

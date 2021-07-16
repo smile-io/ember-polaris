@@ -1,10 +1,7 @@
 <PolarisPage
   @title="This is the application route"
   @breadcrumbs={{array (hash content="Test Route" url="/test")}}
-  @primaryAction={{hash
-    text="Primary"
-    onAction=(action (mut primaryClicked) true)
-  }}
+  @primaryAction={{hash text="Primary" onAction=(action (mut primaryClicked) true)}}
   @secondaryActions={{array
     (hash text="Secondary 1" onAction=(action (mut secondary1Clicked) true))
     (hash text="Secondary 2" onAction=(action (mut secondary2Clicked) true))
@@ -16,7 +13,9 @@
         (hash text="Group action 1.1" onAction=(action (mut group1Button1Clicked) true))
         (hash text="Group action 1.2" onAction=(action (mut group1Button2Clicked) true))
       )
-      details=(component "polaris-text-style" variation="positive" text="This is an action group with details")
+      details=(component
+        "polaris-text-style" variation="positive" text="This is an action group with details"
+      )
     )
     (hash
       title="Action group with actions"
