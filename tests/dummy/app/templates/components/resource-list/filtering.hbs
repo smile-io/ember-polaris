@@ -1,14 +1,12 @@
 <PolarisResourceList
-  @resourceName={{hash
-    singular="customer"
-    plural="customers"
-  }}
+  @resourceName={{hash singular="customer" plural="customers"}}
   @items={{array
     (hash id=341 url="customers/341" name="Mae Jemison" location="Decatur, USA")
     (hash id=256 url="customers/256" name="Ellen Ochoa" location="Los Angeles, USA")
   }}
   @itemComponent="resource-list/simple/item"
-  @filterControl={{component "polaris-resource-list/filter-control"
+  @filterControl={{component
+    "polaris-resource-list/filter-control"
     filters=(array
       (hash
         key="orderCountFilter"
@@ -28,9 +26,6 @@
     onFiltersChange=(action (mut appliedFilters))
     searchValue=searchValue
     onSearchChange=(action (mut searchValue))
-    additionalAction=(hash
-      text="Save"
-      onAction=(action (mut dummy))
-    )
+    additionalAction=(hash text="Save" onAction=(action (mut dummy)))
   }}
 />

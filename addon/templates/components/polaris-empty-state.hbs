@@ -6,7 +6,8 @@
   <div data-test-empty-state-section class="Polaris-EmptyState__Section">
     <div class="Polaris-EmptyState__DetailsContainer">
       {{#let
-        (component "polaris-empty-state/details"
+        (component
+          "polaris-empty-state/details"
           heading=@heading
           text=@text
           primaryAction=this.mainAction
@@ -25,14 +26,14 @@
     </div>
 
     <div class="Polaris-EmptyState__ImageContainer">
-      {{!-- TODO: replace this with polaris-image when implemented. --}}
+      {{! TODO: replace this with polaris-image when implemented. }}
       <img
         data-test-empty-state-image
         role="presentation"
         alt=""
         class="Polaris-EmptyState__Image"
         src={{@image}}
-      >
+      />
     </div>
   </div>
 </div>

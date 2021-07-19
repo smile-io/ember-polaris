@@ -8,11 +8,7 @@
       style={{this.style}}
     >
       {{#if sortable}}
-        <button
-          type="button"
-          class={{this.headerClassNames}}
-          onclick={{this.onSort}}
-        >
+        <button type="button" class={{this.headerClassNames}} onclick={{this.onSort}}>
           <span class="Polaris-DataTable__Icon">
             <PolarisIcon
               @source={{this.source}}
@@ -27,19 +23,12 @@
       {{/if}}
     </th>
   {{else}}
-    <th
-      scope="row"
-      class={{this.cellClassNames}}
-      style={{this.style}}
-    >
+    <th scope="row" class={{this.cellClassNames}} style={{this.style}}>
       {{render-content @text}}
     </th>
   {{/if}}
 {{else}}
-  <td
-    class={{this.cellClassNames}}
-    style={{this.style}}
-  >
+  <td class={{this.cellClassNames}} style={{this.style}}>
     {{render-content @text}}
   </td>
 {{/if}}

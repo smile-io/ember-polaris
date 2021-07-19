@@ -1,8 +1,10 @@
 <PolarisFormLayout>
   <PolarisTextField
     @labelHidden={{true}}
-    @connectedLeft={{if @filters
-      (component "polaris-resource-list/filter-control/filter-creator"
+    @connectedLeft={{if
+      @filters
+      (component
+        "polaris-resource-list/filter-control/filter-creator"
         resourceName=this.context.resourceName
         filters=@filters
         disabled=this.context.selectMode

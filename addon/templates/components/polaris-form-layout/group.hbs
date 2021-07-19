@@ -19,18 +19,18 @@
     {{will-destroy this.teardownAutoWrapper}}
   >
     {{#if (has-block)}}
-      {{yield
-        (hash
-          item=(component "polaris-form-layout/item")
-        )
-      }}
+      {{yield (hash item=(component "polaris-form-layout/item"))}}
     {{else}}
       {{@text}}
     {{/if}}
   </div>
 
   {{#if @helpText}}
-    <div id={{this.helpTextID}} class="Polaris-FormLayout__HelpText" data-test-form-layout-group-helpText>
+    <div
+      id={{this.helpTextID}}
+      class="Polaris-FormLayout__HelpText"
+      data-test-form-layout-group-helpText
+    >
       {{render-content @helpText}}
     </div>
   {{/if}}

@@ -1,7 +1,8 @@
 {{#let (element (if this.hasMultipleSections "ul" "div")) as |ActionList|}}
   <ActionList
     data-test-action-list
-    class="Polaris-ActionList {{if this.polaris.features.newDesignLanguage "Polaris-ActionList--newDesignLanguage"}}"
+    class="Polaris-ActionList
+      {{if this.polaris.features.newDesignLanguage "Polaris-ActionList--newDesignLanguage"}}"
     ...attributes
   >
     {{#each this.finalSections as |section|}}

@@ -1,6 +1,8 @@
-{{!-- TODO add scroll support here when `PolarisScrollable` is available. --}}
+{{! TODO add scroll support here when `PolarisScrollable` is available. }}
 <li data-test-action-list-item role={{@role}} aria-selected="{{@active}}">
-  {{#let (component "polaris-action-list/item/content-element"
+  {{#let
+    (component
+      "polaris-action-list/item/content-element"
       prefix=@prefix
       icon=@icon
       image=@image
@@ -10,7 +12,8 @@
       text=@text
       badge=@badge
       suffix=@suffix
-    ) as |ContentElement|
+    )
+    as |ContentElement|
   }}
     {{#if @url}}
       <PolarisUnstyledLink

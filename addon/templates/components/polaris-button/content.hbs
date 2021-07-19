@@ -1,11 +1,7 @@
 <span class="Polaris-Button__Content">
   {{#if @loading}}
     <span class="Polaris-Button__Spinner">
-      <PolarisSpinner
-        @size="small"
-        @accessibilityLabel="Loading"
-        @color={{this.spinnerColor}}
-      />
+      <PolarisSpinner @size="small" @accessibilityLabel="Loading" @color={{this.spinnerColor}} />
     </span>
   {{/if}}
 
@@ -20,7 +16,7 @@
   {{/if}}
 
   {{#if (or @text (has-block))}}
-    {{!-- TODO: prevent rendering empty span here if block is empty. --}}
+    {{! TODO: prevent rendering empty span here if block is empty. }}
     <span class="Polaris-Button__Text">
       {{#if (has-block)}}
         {{yield}}

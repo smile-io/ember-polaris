@@ -1,21 +1,19 @@
 <span
   role="img"
   aria-label={{this.label}}
-  class="Polaris-Avatar {{if this.hasImage "Polaris-Avatar--hasImage"}} {{this.styleClass}} {{this.sizeClass}} {{this.hiddenClass}} {{@class}}"
+  class="Polaris-Avatar
+    {{if this.hasImage "Polaris-Avatar--hasImage"}}
+    {{this.styleClass}}
+    {{this.sizeClass}}
+    {{this.hiddenClass}}
+    {{@class}}"
   {{did-update this.resetImage @source}}
   ...attributes
 >
   {{#if this.shouldShowInitials}}
     <span class="Polaris-Avatar__Initials">
       <svg class="Polaris-Avatar__Svg" viewBox="0 0 48 48">
-        <text
-          x="50%"
-          y="50%"
-          dy="0.35em"
-          fill="currentColor"
-          font-size="26"
-          text-anchor="middle"
-        >
+        <text x="50%" y="50%" dy="0.35em" fill="currentColor" font-size="26" text-anchor="middle">
           {{@initials}}
         </text>
       </svg>
@@ -23,7 +21,7 @@
   {{/if}}
 
   {{#if this.shouldShowImage}}
-    {{!-- TODO: replace this with polaris-image when implemented. --}}
+    {{! TODO: replace this with polaris-image when implemented. }}
     <img
       class="Polaris-Avatar__Image"
       src={{this.finalSource}}
@@ -31,6 +29,6 @@
       role="presentation"
       onload={{this.handleLoad}}
       onerror={{this.handleError}}
-    >
+    />
   {{/if}}
 </span>

@@ -1,9 +1,5 @@
 {{#let (element (or @htmlTag @tagName "h2")) as |Heading|}}
-  <Heading
-    class="Polaris-Heading {{@class}}"
-    data-test-polaris-heading
-    ...attributes
-  >
+  <Heading class="Polaris-Heading {{@class}}" data-test-polaris-heading ...attributes>
     {{#if (has-block)}}
       {{yield}}
     {{else}}

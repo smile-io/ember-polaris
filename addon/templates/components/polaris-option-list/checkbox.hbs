@@ -1,5 +1,7 @@
 <div
-  class="Polaris-OptionList-Checkbox {{@class}} {{if @active "Polaris-OptionList-Checkbox--active"}}"
+  class="Polaris-OptionList-Checkbox
+    {{@class}}
+    {{if @active "Polaris-OptionList-Checkbox--active"}}"
   ...attributes
 >
   <input
@@ -13,7 +15,7 @@
     aria-checked={{@checked}}
     role={{@role}}
     {{on "change" (or @onChange this.onChange)}}
-  >
+  />
   <div class="Polaris-OptionList-Checkbox__Backdrop"></div>
   <div class="Polaris-OptionList-Checkbox__Icon">
     <PolarisIcon @source="checkmark" />

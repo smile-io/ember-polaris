@@ -1,4 +1,4 @@
-{{!-- template-lint-disable no-invalid-interactive --}}
+{{! template-lint-disable no-invalid-interactive }}
 <div
   data-test-id="item-wrapper"
   data-href={{@url}}
@@ -13,7 +13,7 @@
 >
   {{#let (if this.loading "-1" "0") as |tabIndex|}}
     {{#if @url}}
-      {{!-- template-lint-disable no-positive-tabindex --}}
+      {{! template-lint-disable no-positive-tabindex }}
       <PolarisUnstyledLink
         class="Polaris-ResourceList-Item__Link"
         aria-describedby={{@itemId}}
@@ -34,15 +34,11 @@
         {{on "click" this.handleClick}}
         {{on "focusin" this.handleAnchorFocus}}
         {{on "focusout" this.handleFocusedBlur}}
-      />
+      ></button>
     {{/if}}
   {{/let}}
 
-  <div
-    data-test-id="item-content"
-    class="Polaris-ResourceList-Item__Container"
-    id={{@itemId}}
-  >
+  <div data-test-id="item-content" class="Polaris-ResourceList-Item__Container" id={{@itemId}}>
     {{#if (or @media this.selectable)}}
       <div class="Polaris-ResourceList-Item__Owned">
         {{#if this.selectable}}
@@ -86,10 +82,7 @@
     {{/if}}
 
     {{#if (and @shortcutActions (not this.loading))}}
-      <div
-        class="Polaris-ResourceList-Item__Actions"
-        {{on "click" this.stopPropagation}}
-      >
+      <div class="Polaris-ResourceList-Item__Actions" {{on "click" this.stopPropagation}}>
         <PolarisButtonGroup
           data-test-id={{unless @persistActions "shortcut-actions"}}
           @segmented={{not @persistActions}}
@@ -116,18 +109,15 @@
       </div>
 
       {{#if @persistActions}}
-        <div
-          class="Polaris-ResourceList-Item__Disclosure"
-          {{on "click" this.stopPropagation}}
-        >
+        <div class="Polaris-ResourceList-Item__Disclosure" {{on "click" this.stopPropagation}}>
           <PolarisPopover as |popover|>
             <popover.activator>
-              {{!--
+              {{!
                 Possible mistake in the Polaris source here as
                 `Button` doesn't seem to support `aria-label`.
                 Matching what they do for now, and if they fix
                 it we can update ;)
-              --}}
+              }}
               <PolarisButton
                 aria-label="Actions dropdown"
                 @plain={{true}}

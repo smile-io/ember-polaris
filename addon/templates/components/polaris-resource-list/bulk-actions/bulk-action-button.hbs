@@ -1,11 +1,14 @@
 {{#component
-  (if @url
-    (component "polaris-unstyled-link"
+  (if
+    @url
+    (component
+      "polaris-unstyled-link"
       class="Polaris-ResourceList-BulkActions__Button"
       external=@external
       url=@url
     )
-    (component "wrapper-element"
+    (component
+      "wrapper-element"
       tagName="button"
       type="button"
       disabled=@disabled
@@ -20,9 +23,7 @@
   onMouseUp=this.handleMouseUpByBlurring
 }}
   {{#let (element (if @disclosure "span" "")) as |OuterWrapper|}}
-    <OuterWrapper
-      class="Polaris-ResourceList-BulkActions__ActionContent"
-    >
+    <OuterWrapper class="Polaris-ResourceList-BulkActions__ActionContent">
       {{#let (element (if @disclosure "span" "")) as |InnerWrapper|}}
         <InnerWrapper>
           {{#if (has-block)}}

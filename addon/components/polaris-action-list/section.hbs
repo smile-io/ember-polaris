@@ -11,13 +11,14 @@
       {{/if}}
 
       <ul
-        class="Polaris-ActionList__Actions {{if this.polaris.features.newDesignLanguage "Polaris-ActionList--newDesignLanguage"}}"
+        class="Polaris-ActionList__Actions
+          {{if this.polaris.features.newDesignLanguage "Polaris-ActionList--newDesignLanguage"}}"
         data-test-action-list-section-actions
         role={{this.sectionRole}}
       >
         {{#each @section.items as |item|}}
           <PolarisActionList::Item
-            {{!-- TODO we should be able to match React impl and use `content` here  --}}
+            {{! TODO we should be able to match React impl and use `content` here  }}
             @text={{item.text}}
             @helpText={{item.helpText}}
             @role={{@actionRole}}
