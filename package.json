@@ -70,7 +70,7 @@
     "ember-svg-jar": "^2.2.3",
     "ember-truth-helpers": "^3.0.0",
     "fs-extra": "^9.0.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "resolve": "^1.11.1",
     "rsvp": "^4.8.5"
   },
