@@ -1,5 +1,6 @@
 {
   "extends": ["github>smile-io/renovate-config:ember/addon"],
+  "enabled": false,
   "packageRules": [
     {
       "groupName": "shopify polaris",
