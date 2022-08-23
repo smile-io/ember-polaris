@@ -196,6 +196,12 @@ Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
+Release preparation
+------------------------------------------------------------------------------
+
+`ember-polaris` has an automated changelog generator when preparing releases.
+Run `yarn changelog-generator` to generate changelog for the current branch.
+
 
 License
 ------------------------------------------------------------------------------
