@@ -1,9 +1,0 @@
-{{#let (element (if this.isBulletListType "ul" "ol")) as |List|}}
-  <List class={{this.listElementClass}} ...attributes>
-    {{yield
-      (hash
-        item=(component "polaris-list/item")
-      )
-    }}
-  </List>
-{{/let}}

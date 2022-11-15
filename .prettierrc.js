@@ -1,3 +1,14 @@
 'use strict';
 
-module.exports = require('@smile-io/ember-styleguide/.prettierrc');
+module.exports = {
+  plugins: ['prettier-plugin-ember-template-tag'],
+  singleQuote: true,
+  overrides: [
+    {
+      files: '*.hbs',
+      options: {
+        singleQuote: false,
+      },
+    },
+  ],
+};

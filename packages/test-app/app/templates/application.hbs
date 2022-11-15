@@ -1,0 +1,61 @@
+{{page-title "Test Ember Polaris"}}
+
+<AppProvider>
+  <h2 id="title">Welcome to Ember Polaris</h2>
+
+  {{outlet}}
+  {{!
+  <Badge>Test</Badge>
+
+  <Text @variant="heading4xl" @as="h1" id="test">
+    Online store dashboard
+  </Text> }}
+  <Grid columns={{sm: 3}}>
+    <Grid::Cell @columnSpan={{hash xs=6 sm=4 md=4 lg=8 xl=8}}>
+      <p>View a summary of your online store’s sales.</p>
+    </Grid::Cell>
+    <Grid::Cell @columnSpan={{hash xs=6 sm=2 md=2 lg=4 xl=4}}>
+      <p>View a summary of your online store’s orders.</p>
+    </Grid::Cell>
+  </Grid>
+
+  <Grid>
+    <Grid::Cell @columnSpan={{hash xs=6 sm=2 md=2 lg=4 xl=4}}>
+      <p>View a summary of your online store’s sales.</p>
+    </Grid::Cell>
+    <Grid::Cell @columnSpan={{hash xs=6 sm=2 md=2 lg=4 xl=4}}>
+      <p>View a summary of your online store’s orders.</p>
+    </Grid::Cell>
+    <Grid::Cell @columnSpan={{hash xs=6 sm=2 md=2 lg=4 xl=4}}>
+      <p>View a summary of your online store’s orders.</p>
+    </Grid::Cell>
+  </Grid>
+
+  <Grid
+    @columns={{hash xs=1 sm=4 md=4 lg=6 xl=6}}
+    @areas={{hash
+      xs=(array "product" "sales" "orders")
+      sm=(array "product product product product" "sales sales orders orders")
+      md=(array "sales product product orders")
+      lg=(array "product product product product sales orders")
+      xl=(array "product product sales sales orders orders")
+    }}
+  >
+    <Grid::Cell @area="product">
+      {{! template-lint-disable no-inline-styles }}
+      <div style="height: 60px; background: aquamarine"></div>
+    </Grid::Cell>
+    <Grid::Cell @area="sales">
+      {{! template-lint-disable no-inline-styles }}
+      <div style="height: 60px; background: aquamarine"></div>
+    </Grid::Cell>
+    <Grid::Cell @area="orders">
+      {{! template-lint-disable no-inline-styles }}
+      <div style="height: 60px; background: aquamarine;"></div>
+    </Grid::Cell>
+  </Grid>
+  {{!
+  <Icon
+    @source="<svg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path d='M10.707 17.707l5-5a.999.999 0 1 0-1.414-1.414L11 14.586V3a1 1 0 1 0-2 0v11.586l-3.293-3.293a.999.999 0 1 0-1.414 1.414l5 5a.999.999 0 0 0 1.414 0' /></svg>"
+  /> }}
+</AppProvider>
