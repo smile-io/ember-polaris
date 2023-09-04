@@ -95,15 +95,6 @@
     "tracked-built-ins": "^3.1.1",
     "webpack": "^5.88.2"
   },
-  "dependencies": {
-    "@smile-io/ember-polaris": "workspace:*",
-    "ember-template-compiler": "1.9.0-alpha"
-  },
-  "overrides": {
-    "@storybook/ember": {
-      "ember-source": "~5.2.0"
-    }
-  },
   "engines": {
     "node": "16.* || >= 18",
     "npm": "use pnpm",
