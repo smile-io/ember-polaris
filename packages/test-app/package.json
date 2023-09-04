@@ -25,10 +25,6 @@
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
-  "dependencies": {
-    "@smile-io/ember-polaris": "workspace:*",
-    "@shopify/polaris": "^11.13.0"
-  },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
@@ -40,6 +36,7 @@
     "@glint/environment-ember-loose": "^1.1.0",
     "@glint/environment-ember-template-imports": "^1.1.0",
     "@glint/template": "^1.1.0",
+    "@smile-io/ember-polaris": "workspace:*",
     "@tsconfig/ember": "^3.0.0",
     "@types/ember": "^4.0.4",
     "@types/ember-data": "^4.4.11",
