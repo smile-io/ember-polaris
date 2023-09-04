@@ -28,6 +28,9 @@
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
+  "dependencies": {
+    "@smile-io/ember-polaris": "workspace:*"
+  },
   "devDependencies": {
     "@babel/core": "^7.22.10",
     "@babel/eslint-parser": "^7.22.10",
@@ -102,7 +105,9 @@
     }
   },
   "engines": {
-    "node": "16.* || >= 18"
+    "node": "16.* || >= 18",
+    "npm": "use pnpm",
+    "yarn": "use pnpm"
   },
   "ember": {
     "edition": "octane"
