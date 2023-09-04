@@ -17,8 +17,7 @@ export default {
 // } as ComponentMeta<typeof Grid>;
 //
 export const TwoColumn = () => ({
-  template: `hbs
-<Grid>
+  template: hbs`<Grid>
   <Grid::Cell @columnSpan={{hash xs=6 sm=3 md=3 lg=6 xl=6}}>
     <h1>Sales</h1>
     <p>View a summary of your online store’s sales.< /p>
