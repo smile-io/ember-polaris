@@ -1,6 +1,6 @@
 module.exports = {
   stories: [
-    '../stories/**/*.stories.js'
+    '../../ember-polaris/**/*.stories.js'
   ],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
   features: {

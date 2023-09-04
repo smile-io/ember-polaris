@@ -121,6 +121,7 @@
     "app-js": {
       "./components/app-provider.js": "./dist/_app_/components/app-provider.js",
       "./components/grid.js": "./dist/_app_/components/grid.js",
+      "./components/grid.stories.js": "./dist/_app_/components/grid.stories.js",
       "./components/grid/cell.js": "./dist/_app_/components/grid/cell.js"
     }
   },
