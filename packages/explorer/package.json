@@ -28,9 +28,6 @@
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
-  "dependencies": {
-    "@smile-io/ember-polaris": "workspace:*"
-  },
   "devDependencies": {
     "@babel/core": "^7.22.10",
     "@babel/eslint-parser": "^7.22.10",
@@ -40,6 +37,7 @@
     "@ember/test-helpers": "^3.2.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@smile-io/ember-polaris": "workspace:*",
     "@storybook/addon-a11y": "6.5.14",
     "@storybook/addon-actions": "6.5.14",
     "@storybook/addon-controls": "6.5.14",
