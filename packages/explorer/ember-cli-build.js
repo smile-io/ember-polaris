@@ -4,8 +4,18 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
-    // Add options here
+    autoImport: {
+      watchDependencies: ['@smile-io/ember-polaris'],
+    },
   });
 
-  return app.toTree();
+  const { maybeEmbroider } = require('@embroider/test-setup');
+
+  return maybeEmbroider(app, {
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
+  });
 };

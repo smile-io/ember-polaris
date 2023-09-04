@@ -21,6 +21,10 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
+    "storybook-dev": "concurrently \"npm:start\" \"npm:storybook\"",
+    "storybook": "start-storybook -p 6006 --ci",
+    "prebuild-storybook": "ember build",
+    "build-storybook": "build-storybook",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
@@ -33,6 +37,21 @@
     "@ember/test-helpers": "^3.2.0",
     "@glimmer/component": "^1.1.2",
     "@glimmer/tracking": "^1.1.2",
+    "@storybook/addon-a11y": "6.5.14",
+    "@storybook/addon-actions": "6.5.14",
+    "@storybook/addon-controls": "6.5.14",
+    "@storybook/addon-essentials": "6.5.14",
+    "@storybook/addon-links": "6.5.14",
+    "@storybook/addon-toolbars": "6.5.14",
+    "@storybook/addon-viewport": "6.5.14",
+    "@storybook/addons": "6.5.14",
+    "@storybook/builder-webpack5": "^6.5.0",
+    "@storybook/ember": "6.5.14",
+    "@storybook/ember-cli-storybook": "^0.6.1",
+    "@storybook/manager-webpack5": "6.5.14",
+    "babel-loader": "^8.0.0",
+    "babel-plugin-ember-modules-api-polyfill": "^3.5.0",
+    "babel-plugin-htmlbars-inline-precompile": "^5.3.1",
     "broccoli-asset-rev": "^3.0.0",
     "concurrently": "^8.2.0",
     "ember-auto-import": "^2.6.3",
@@ -65,16 +84,35 @@
     "prettier": "^3.0.2",
     "qunit": "^2.19.4",
     "qunit-dom": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "stylelint": "^15.10.3",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2",
     "tracked-built-ins": "^3.1.1",
     "webpack": "^5.88.2"
   },
+  "dependencies": {
+    "@smile-io/ember-polaris": "workspace:*",
+    "ember-template-compiler": "1.9.0-alpha"
+  },
+  "overrides": {
+    "@storybook/ember": {
+      "ember-source": "~5.2.0"
+    }
+  },
   "engines": {
     "node": "16.* || >= 18"
   },
   "ember": {
     "edition": "octane"
+  },
+  "storybook": {
+    "ignoreTestFiles": true,
+    "config": {}
+  },
+  "ember-cli-storybook": {
+    "componentFilePathPatterns": [],
+    "enableAddonDocsIntegration": false
   }
 }

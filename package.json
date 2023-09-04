@@ -16,7 +16,7 @@
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm --filter @smile-io/ember-polaris start --no-watch.clearScreen",
     "start:tests": "pnpm --filter test-app start",
-    "storybook": "concurrently 'npm:start:addon' 'pnpm --filter explorer start' 'pnpm --filter explorer storybook' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "storybook": "concurrently 'pnpm --filter @smile-io/ember-polaris start:js' 'pnpm --filter explorer storybook-dev' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "test": "pnpm --filter test-app test",
     "test:ember": "pnpm --filter '*' test:ember"
   },
@@ -33,7 +33,13 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/eslint": "^7.0.0"
+      "@types/eslint": "^7.0.0",
+      "@storybook/ember>ember-source": "~5.2.0"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "ember-source": "~5.2.0"
+      }
     }
   },
   "release-it": {
