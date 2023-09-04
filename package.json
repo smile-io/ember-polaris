@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "pnpm --filter @smile-io/ember-polaris build",
+    "clean": "rm -rf node_modules && rm -rf packages/**/node_modules",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm build",
