@@ -9,6 +9,7 @@ module.exports = {
   framework: "@storybook/ember",
   core: {
     builder: "webpack5",
+    disableTelemetry: true,
   },
   staticDirs: ['../dist'],
 };
