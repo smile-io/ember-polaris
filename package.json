@@ -10,7 +10,9 @@
   ],
   "scripts": {
     "build": "pnpm --filter @smile-io/ember-polaris build",
-    "clean": "rm -rf node_modules && rm -rf packages/**/node_modules",
+    "clean": "concurrently 'npm:clean:*'",
+    "clean:dist": "find . -not \\( -path './node_modules' -type d -prune \\) -name 'dist' -type d -exec rm -rf '{}' +",
+    "clean:node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm build",
