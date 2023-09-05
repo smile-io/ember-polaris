@@ -67,7 +67,7 @@ export class Grid extends Component<GridSignature> {
     }
 
     const styles = Object.entries(sanitizedStyle).map(
-      (key, value) => `${key}: ${value}`,
+      ([key, value]) => `${key}: ${value}`
     );
 
     return htmlSafe(styles.join(';'));

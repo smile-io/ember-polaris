@@ -61,6 +61,7 @@ export class Cell extends Component<CellSignature> {
 
   get style() {
     const style = {
+      'grid-area':this.args.area,
       '--pc-column-xs': this.args.column?.xs,
       '--pc-column-sm': this.args.column?.sm,
       '--pc-column-md': this.args.column?.md,
@@ -79,7 +80,7 @@ export class Cell extends Component<CellSignature> {
     }
 
     const styles = Object.entries(sanitizedStyle).map(
-      (key, value) => `${key}: ${value}`,
+      ([key, value]) => `${key}: ${value}`
     );
 
     return htmlSafe(styles.join(';'));
