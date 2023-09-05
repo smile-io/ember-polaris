@@ -21,7 +21,6 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "storybook-dev": "concurrently \"npm:start\" \"npm:storybook\"",
     "storybook": "start-storybook -p 6006 --ci",
     "prebuild-storybook": "ember build",
     "build-storybook": "build-storybook",
