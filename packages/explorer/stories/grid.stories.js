@@ -3,153 +3,112 @@ import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Grid',
-  parameters: {
-    options: {
-      showPanel: true,
-      isToolshown: true,
-      selectedPanel: 'storybook/actions/panel',
+  argTypes: {
+    columns: {
+      description: 'Number of columns', control: 'number'
     },
+    columnSpan: {
+      description: '',
+      control: 'object', options: ['xs', 'sm', 'md', 'lg', 'xl']
+    }
   },
 };
 
-// export default {
-//   component: Grid,
-// } as ComponentMeta<typeof Grid>;
-//
-export const TwoColumn = () => ({
-  template: hbs`<Grid>
-  <Grid::Cell @columnSpan={{hash xs=6 sm=3 md=3 lg=6 xl=6}}>
-    <h1>Sales</h1>
-    <p>View a summary of your online store’s sales.< /p>
-  </Grid::Cell>
+const Template = (args) => ({
+  template: hbs`
+    <Grid @columns={{this.columns}}>
+      <Grid::Cell @columnSpan={{this.columnSpan1}}>
+        <h1>Sales</h1>
+        <p>View a summary of your online store’s sales.< /p>
+      </Grid::Cell>
 
-  <Grid::Cell @columnSpan={{hash xs=6 sm=3 md=3 lg=6 xl=6}}>
-    <h1>Orders</h1>
-    <p>View a summary of your online store’s sales.< /p>
-  </Grid::Cell>
-</Grid>
-`,
-});
+      <Grid::Cell @columnSpan={{this.columnSpan2}}>
+        <h1>Orders</h1>
+        <p>View a summary of your online store’s sales.< /p>
+      </Grid::Cell>
+    </Grid>
+  `,
+  context: args,
+})
 
-export const Button = () => ({
-  template: hbs`<button {{on "click" this.onClick}}>Click Me</button>`,
+export const TwoColumn = Template.bind({});
+TwoColumn.args = {
+  columnSpan1: {
+    xs: 6, sm: 3, md: 3, lg: 6, xl: 6,
+  },
+  columnSpan2: {
+    xs: 6, sm: 3, md: 3, lg: 6, xl: 6,
+  }
+}
+
+export const TwoThirdsAndOneThirdColumn = Template.bind({});
+TwoThirdsAndOneThirdColumn.args = {
+  columns: { sm: 3 },
+
+  columnSpan1: {
+    xs: 6, sm: 4, md: 4, lg: 8, xl: 8,
+  },
+  columnSpan2: {
+    xs: 6, sm: 4, md: 4, lg: 2, xl: 2,
+  }
+}
+
+export const ThreeOneThirdColumn = () => ({
+  template: hbs`
+    <Grid>
+      <Grid::Cell @columnSpan={{this.columnSpan}}>
+        <h1>Sales</h1>
+        <p>View a summary of your online store’s sales.< /p>
+      </Grid::Cell>
+
+      <Grid::Cell @columnSpan={{this.columnSpan}}>
+        <h1>Orders</h1>
+        <p>View a summary of your online store’s sales.< /p>
+      </Grid::Cell>
+
+      <Grid::Cell @columnSpan={{this.columnSpan}}>
+        <h1>Orders</h1>
+        <p>View a summary of your online store’s sales.< /p>
+      </Grid::Cell>
+    </Grid>
+  `,
   context: {
-    onClick: action('clicked'),
+    columnSpan: {
+      xs: 6, sm: 2, md: 2, lg: 4, xl: 4,
+    }
   },
 });
-//   return (V
-//     <Page fullWidth >
-//     <Grid>
-//     <Grid.Cell columnSpan= {{ xs: 6, sm: 3, md: 3, lg: 6, xl: 6 } }>
-//   <LegacyCard title="Sales" sectioned >
-//     <p>View a summary of your online store’s sales.< /p>
-//       < /LegacyCard>
-//       < /Grid.Cell>
-//       < Grid.Cell columnSpan = {{ xs: 6, sm: 3, md: 3, lg: 6, xl: 6 }}>
-//         <LegacyCard title="Orders" sectioned >
-//           <p>View a summary of your online store’s orders.< /p>
-//             < /LegacyCard>
-//             < /Grid.Cell>
-//             < /Grid>
-//             < /Page>
-//   );
-// }
-//
-// export function TwoThirdsAndOneThirdColumn() {
-//   return (
-//     <Page fullWidth >
-//     <Grid columns= {{ sm: 3 }
-// }>
-//   <Grid.Cell columnSpan={ { xs: 6, sm: 4, md: 4, lg: 8, xl: 8 } }>
-//     <LegacyCard title="Sales" sectioned >
-//       <p>View a summary of your online store’s sales.< /p>
-//         < /LegacyCard>
-//         < /Grid.Cell>
-//         < Grid.Cell columnSpan = {{ xs: 6, sm: 2, md: 2, lg: 4, xl: 4 }}>
-//           <LegacyCard title="Orders" sectioned >
-//             <p>View a summary of your online store’s orders.< /p>
-//               < /LegacyCard>
-//               < /Grid.Cell>
-//               < /Grid>
-//               < /Page>
-//   );
-// }
-//
-// export function ThreeOneThirdColumn() {
-//   return (
-//     <Page fullWidth >
-//     <Grid>
-//     <Grid.Cell columnSpan= {{ xs: 6, sm: 2, md: 2, lg: 4, xl: 4 }
-// }>
-//   <LegacyCard title="Sales" sectioned >
-//     <p>View a summary of your online store’s sales.< /p>
-//       < /LegacyCard>
-//       < /Grid.Cell>
-//       < Grid.Cell columnSpan = {{ xs: 6, sm: 2, md: 2, lg: 4, xl: 4 }}>
-//         <LegacyCard title="Orders" sectioned >
-//           <p>View a summary of your online store’s orders.< /p>
-//             < /LegacyCard>
-//             < /Grid.Cell>
-//             < Grid.Cell columnSpan = {{ xs: 6, sm: 2, md: 2, lg: 4, xl: 4 }}>
-//               <LegacyCard title="Orders" sectioned >
-//                 <p>View a summary of your online store’s orders.< /p>
-//                   < /LegacyCard>
-//                   < /Grid.Cell>
-//                   < /Grid>
-//                   < /Page>
-//   );
-// }
-//
-// export function CustomLayout() {
-//   return (
-//     <Page fullWidth >
-//     <LegacyCard sectioned >
-//     <Grid
-//           columns= {{ xs: 1, sm: 4, md: 4, lg: 6, xl: 6 }
-// }
-// areas = {{
-//   xs: ['product', 'sales', 'orders'],
-//     sm: [
-//       'product product product product',
-//       'sales sales orders orders',
-//     ],
-//       md: ['sales product product orders'],
-//         lg: ['product product product product sales orders'],
-//           xl: ['product product sales sales orders orders'],
-//           }}
-//         >
-//   <Grid.Cell area="product" >
-//     <div
-//               style={
-//   {
-//     height: '60px',
-//       background: 'var(--p-color-text-info)',
-//               }
-// }
-// />
-//   < /Grid.Cell>
-//   < Grid.Cell area = "sales" >
-//     <div
-//               style={
-//   {
-//     height: '60px',
-//       background: 'var(--p-color-text-info)',
-//               }
-// }
-// />
-//   < /Grid.Cell>
-//   < Grid.Cell area = "orders" >
-//     <div
-//               style={
-//   {
-//     height: '60px',
-//       background: 'var(--p-color-text-info)',
-//               }
-// }
-// />
-//   < /Grid.Cell>
-//   < /Grid>
-//   < /LegacyCard>
-//   < /Page>
-//   );
-// }
+
+export const CustomLayout = () => ({
+  template: hbs`
+    <Grid @columns={{this.columns}} @areas={{this.areas}}>
+      <Grid::Cell @area='product'>
+        <div style="height: 60px; background: var(--p-color-text-info);"/>
+      </Grid::Cell>
+
+      <Grid::Cell @area="sales">
+        <div style="height: 60px; background: var(--p-color-text-info);"/>
+      </Grid::Cell>
+
+      <Grid::Cell @area="orders">
+        <div style="height: 60px; background: var(--p-color-text-info);"/>
+      </Grid::Cell>
+    </Grid>
+  `,
+  context: {
+    columns: { xs: 1, sm: 4, md: 4, lg: 6, xl: 6 },
+    areas: {
+      xs: ['product', 'sales', 'orders'],
+      sm: [
+        'product product product product',
+        'sales sales orders orders',
+      ],
+      md: ['sales product product orders'],
+      lg: ['product product product product sales orders'],
+      xl: ['product product sales sales orders orders'],
+    },
+    columnSpan: {
+      xs: 6, sm: 2, md: 2, lg: 4, xl: 4,
+    }
+  },
+});

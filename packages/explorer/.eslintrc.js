@@ -48,6 +48,17 @@ module.exports = {
       extends: ['plugin:n/recommended'],
     },
     {
+      files: ['stories/**/*.js'],
+      parserOptions: {
+        sourceType: 'module',
+      },
+      env: {
+        browser: false,
+        node: true,
+      },
+      plugins: ['node'],
+    },
+    {
       // test files
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
