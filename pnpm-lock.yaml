@@ -272,28 +272,10 @@ importers:
       '@smile-io/ember-polaris':
         specifier: workspace:*
         version: link:../ember-polaris
-      '@storybook/addon-a11y':
-        specifier: 6.5.14
-        version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/addon-actions':
-        specifier: 6.5.14
-        version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/addon-controls':
-        specifier: 6.5.14
-        version: 6.5.14(eslint@8.47.0)(react-dom@17.0.2)(react@17.0.2)(typescript@5.1.6)
       '@storybook/addon-essentials':
         specifier: 6.5.14
         version: 6.5.14(@babel/core@7.22.11)(@storybook/builder-webpack5@6.5.0)(eslint@8.47.0)(react-dom@17.0.2)(react@17.0.2)(typescript@5.1.6)(webpack@5.88.2)
       '@storybook/addon-links':
-        specifier: 6.5.14
-        version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/addon-toolbars':
-        specifier: 6.5.14
-        version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/addon-viewport':
-        specifier: 6.5.14
-        version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/addons':
         specifier: 6.5.14
         version: 6.5.14(react-dom@17.0.2)(react@17.0.2)
       '@storybook/builder-webpack5':
@@ -4047,37 +4029,6 @@ packages:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: true
 
-  /@storybook/addon-a11y@6.5.14(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-nQf+pTcIXZr4dnrn4eDQoIeR62P6aHFFLoNBTcKFsESmHO3KYMC709j6uU1N+GNFMj9SEZYMav3iQC1Ue9BUnw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      '@storybook/addons': 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/api': 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/channels': 6.5.14
-      '@storybook/client-logger': 6.5.14
-      '@storybook/components': 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      '@storybook/core-events': 6.5.14
-      '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/theming': 6.5.14(react-dom@17.0.2)(react@17.0.2)
-      axe-core: 4.7.2
-      core-js: 3.32.1
-      global: 4.4.0
-      lodash: 4.17.21
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      react-sizeme: 3.0.2
-      regenerator-runtime: 0.13.11
-      ts-dedent: 2.2.0
-      util-deprecate: 1.0.2
-    dev: true
-
   /@storybook/addon-actions@6.5.14(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-fZt8bn+oCsVDv9yuZfKL4lq77V5EqW60khHpOxLRRK69hMsE+gaylK0O5l/pelVf3Jf3+TablUG+2xWTaJHGlQ==}
     peerDependencies:
@@ -7568,11 +7519,6 @@ packages:
     dev: true
     optional: true
 
-  /axe-core@4.7.2:
-    resolution: {integrity: sha512-zIURGIS1E1Q4pcrMjp+nnEh+16G56eG/MUllJH8yEvw7asDo7Ac9uhC9KIH5jzpITueEZolfYglnCGIuSBz39g==}
-    engines: {node: '>=4'}
-    dev: true
-
   /babel-import-util@0.2.0:
     resolution: {integrity: sha512-CtWYYHU/MgK88rxMrLfkD356dApswtR/kWZ/c6JifG1m10e7tBBrs/366dFzWMAoqYmG5/JSh+94tUSpIwh+ag==}
     engines: {node: '>= 12.*'}
@@ -7821,10 +7767,6 @@ packages:
   /basic-ftp@5.0.3:
     resolution: {integrity: sha512-QHX8HLlncOLpy54mh+k/sWIFd0ThmRqwe9ZjELybGZK+tZ8rUb9VO0saKJUROTbE+KhzDUT7xziGpGrW8Kmd+g==}
     engines: {node: '>=10.0.0'}
-    dev: true
-
-  /batch-processor@1.0.0:
-    resolution: {integrity: sha512-xoLQD8gmmR32MeuBHgH0Tzd5PuSZx71ZsbhVxOCRbgktZEPe4SQy7s9Z50uPp0F/f7iw2XmkHN2xkgbMfckMDA==}
     dev: true
 
   /before-after-hook@2.2.3:
@@ -10241,12 +10183,6 @@ packages:
 
   /electron-to-chromium@1.4.484:
     resolution: {integrity: sha512-nO3ZEomTK2PO/3TUXgEx0A97xZTpKVf4p427lABHuCpT1IQ2N+njVh29DkQkCk6Q4m2wjU+faK4xAcfFndwjvw==}
-
-  /element-resize-detector@1.2.4:
-    resolution: {integrity: sha512-Fl5Ftk6WwXE0wqCgNoseKWndjzZlDCwuPTcoVZfCP9R3EHQF8qUtr3YUPNETegRBOKqQKPW3n4kiIWngGi8tKg==}
-    dependencies:
-      batch-processor: 1.0.0
-    dev: true
 
   /ember-auto-import@2.6.1(@glint/template@1.1.0)(webpack@5.88.2):
     resolution: {integrity: sha512-3bCRi/pXp4QslmuCXGlSz9xwR7DF5oDx3zZO5OXKzNZihtkqAM1xvGuRIdQSl46pvbAXOkp8Odl5fOen1i0dRw==}
@@ -14392,12 +14328,6 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /invariant@2.2.4:
-    resolution: {integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==}
-    dependencies:
-      loose-envify: 1.4.0
-    dev: true
-
   /invert-kv@3.0.1:
     resolution: {integrity: sha512-CYdFeFexxhv/Bcny+Q0BfOV+ltRlJcd4BBZBYFX/O0u4npJrgZtIcjokegtiSMAvlMTJ+Koq0GBCc//3bueQxw==}
     engines: {node: '>=8'}
@@ -18139,15 +18069,6 @@ packages:
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  /react-sizeme@3.0.2:
-    resolution: {integrity: sha512-xOIAOqqSSmKlKFJLO3inBQBdymzDuXx4iuwkNcJmC96jeiOg5ojByvL+g3MW9LPEsojLbC6pf68zOfobK8IPlw==}
-    dependencies:
-      element-resize-detector: 1.2.4
-      invariant: 2.2.4
-      shallowequal: 1.1.0
-      throttle-debounce: 3.0.1
-    dev: true
-
   /react-syntax-highlighter@15.5.0(react@17.0.2):
     resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
     peerDependencies:
@@ -19222,10 +19143,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       kind-of: 6.0.3
-    dev: true
-
-  /shallowequal@1.1.0:
-    resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
     dev: true
 
   /shebang-command@1.2.0:
@@ -20369,11 +20286,6 @@ packages:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
     dependencies:
       any-promise: 1.3.0
-    dev: true
-
-  /throttle-debounce@3.0.1:
-    resolution: {integrity: sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==}
-    engines: {node: '>=10'}
     dev: true
 
   /through2@3.0.2:
