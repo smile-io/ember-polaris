@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 
-import '../../assets/styles.css';
+import './app-provider.scss';
+import './global.scss';
 
 export interface AppProviderSignature {
   Element: null;

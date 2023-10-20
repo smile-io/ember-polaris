@@ -1,10 +1,12 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 
-import type { CSSProperties } from '../../utilities/css';
-import { classNames, sanitizeCustomProperties } from '../../utilities/css';
 // @ts-ignore
-import styles from '@shopify/polaris/components/Grid/components/Cell/Cell.scss';
+import type { CSSProperties } from '../../../utilities/css';
+// @ts-ignore
+import { classNames, sanitizeCustomProperties } from '../../../utilities/css';
+// @ts-ignore
+import styles from './cell.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

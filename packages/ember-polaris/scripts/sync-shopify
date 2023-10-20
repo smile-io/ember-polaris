@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Determine the directory of the script file
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
+# Change to the parent directory of the script file
+pushd "$SCRIPT_DIR/.."
+
+# Extract the version from package.json
+VERSION="@shopify/polaris@$(jq -r '.peerDependencies.["@shopify/polaris"]' package.json | tr -d '^')"
+
+# Define the list of source files and destination files
+SOURCE_FILES=("config/postcss-plugins.js" "config/rollup/namespaced-classname.js" "config/rollup/plugin-styles.js")
+DEST_FILES=("/dest/path/file1.js" "/dest/path/file2.js" "/dest/path/file3.js")
+
+# Define the sync directory path
+SYNC_DIR="$SCRIPT_DIR/.sync"
+
+# Create the sync directory if it doesn't exist
+mkdir -p $SYNC_DIR
+
+# Change to the sync directory
+cd $SYNC_DIR
+
+# Check if the repository clone already exists
+if [ -d "polaris" ]; then
+  # Change to the repository directory
+  cd polaris
+
+  # Fetch the latest data from the repository
+  git fetch
+
+  # Checkout the appropriate branch
+  git checkout "$VERSION"
+else
+  # Clone the repository if it doesn't exist
+  git clone --depth 1 --branch "$VERSION" https://github.com/Shopify/polaris.git
+  cd polaris
+fi
+
+# Copy the source files to the corresponding destination paths
+for i in "${!SOURCE_FILES[@]}"; do
+  cp "polaris-react/${SOURCE_FILES[$i]}" "${DEST_FILES[$i]}"
+done
+
+popd

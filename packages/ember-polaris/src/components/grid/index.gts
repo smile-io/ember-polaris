@@ -1,13 +1,14 @@
 import Component from '@glimmer/component';
-import '../../assets/styles.css';
 // import style from 'ember-style-modifier/modifiers/style';
 import { htmlSafe } from '@ember/template';
 import type { AttrValue } from '@glint/template';
 
-import type { CSSProperties } from '../utilities/css';
-import { sanitizeCustomProperties } from '../utilities/css';
 // @ts-ignore
-import styles from '@shopify/polaris/components/Grid/Grid.scss';
+import type { CSSProperties } from '../../utilities/css';
+// @ts-ignore
+import { sanitizeCustomProperties } from '../../utilities/css';
+// @ts-ignore
+import styles from './grid.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

@@ -3,9 +3,14 @@ import copy from 'rollup-plugin-copy';
 import alias from '@rollup/plugin-alias';
 import { Addon } from '@embroider/addon-dev/rollup';
 import path from 'path';
+import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { glimmerTemplateTag } from 'rollup-plugin-glimmer-template-tag';
-import colocatePolarisStyles from './config/rollup/rollup-colocate-polaris-styles.mjs';
+import { externals } from 'rollup-plugin-node-externals';
+// import colocatePolarisStyles from './config/rollup/rollup-colocate-polaris-styles.mjs';
+import { styles } from './config/rollup/plugin-styles.js';
+import { generateScopedName } from './config/rollup/namespaced-classname.js';
+import postcssPlugins from './config/postcss-plugins.js';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -15,59 +20,29 @@ const addon = new Addon({
 // Add extensions here, such as ts, gjs, etc that you may import
 const extensions = ['.js', '.ts', '.gjs', '.gts', '.hbs'];
 
+// const pkg = JSON.parse(
+//   readFileSync(new URL('./package.json', import.meta.url).pathname),
+// );
+
 export default {
+  input: './src/index.ts',
   // This provides defaults that work well alongside `publicEntrypoints` below.
   // You can augment this if you need to.
   output: addon.output(),
 
   plugins: [
-    // Copy Polaris styles into our project.
-    // Temporarily renaming all classes from using `Polaris-` prefix -> `New-Polaris-`.
-    // TODO
-    // make this renaming optional
-    // remove following 2 lines from the main styles that conflict with existing version of the library (is there a better way to use them in parallel?!?)
-    // - html, body { font-size: var(--p-font-size-100); line-height: var(--p-font-line-height-2); font-weight: var(--p-font-weight-regular); letter-spacing: initial; font-weight: var(--p-font-weight-regular); color: var(--p-color-text); }
-    // html { position: relative; font-size: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; text-rendering: optimizeLegibility; }
-    copy({
-      targets: [
-        {
-          src: './node_modules/@shopify/polaris/build/esm/styles.css',
-          dest: './assets',
-          transform: (contents /* , filename */) => {
-            contents = contents.toString();
-            if (process.env.RENAME_POLARIS_STYLES) {
-              contents = contents.replace(/\.Polaris-/g, '.New-Polaris-');
-            }
-            if (process.env.SKIP_GLOBAL_STYLES) {
-              contents = contents
-                .replace(
-                  'html { position: relative; font-size: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; text-rendering: optimizeLegibility; }',
-                  '',
-                )
-                .replace(
-                  'html, body { font-size: var(--p-font-size-100); line-height: var(--p-font-line-height-2); font-weight: var(--p-font-weight-regular); letter-spacing: initial; font-weight: var(--p-font-weight-regular); color: var(--p-color-text); }',
-                  '',
-                );
-            }
-
-            return contents;
-          },
-        },
-      ],
-    }),
-    colocatePolarisStyles(),
-
-    alias({
-      entries: [
-        {
-          find: '@shopify/polaris',
-          replacement: path.resolve(
-            'node_modules',
-            '@shopify/polaris/build/esm',
-          ),
-        },
-      ],
-    }),
+    externals({ deps: true, packagePath: './package.json' }),
+    // alias({
+    //   entries: [
+    //     {
+    //       find: '@shopify/polaris',
+    //       replacement: path.resolve(
+    //         'node_modules',
+    //         '@shopify/polaris/build/esm',
+    //       ),
+    //     },
+    //   ],
+    // }),
 
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
@@ -104,6 +79,15 @@ export default {
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
 
+    styles({
+      mode: 'esnext',
+      modules: {
+        generateScopedName: generateScopedName({ includeHash: true }),
+        globalModulePaths: [/global\.scss$/],
+      },
+      plugins: postcssPlugins,
+    }),
+
     // Ensure that .gjs files are properly integrated as Javascript
     // addon.gjs(),
 
@@ -119,10 +103,6 @@ export default {
       targets: [
         { src: '../README.md', dest: '.' },
         { src: '../LICENSE.md', dest: '.' },
-        // {
-        //   src: './node_modules/@shopify/polaris/build/esm/styles.css',
-        //   dest: './assets',
-        // },
       ],
     }),
   ],
