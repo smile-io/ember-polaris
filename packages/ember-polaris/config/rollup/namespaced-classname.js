@@ -51,7 +51,9 @@ function isComponent(className) {
 }
 
 function polarisClassName(className) {
-  return `Polaris-${className}`;
+  // Temporarily removing Polaris while we migrate to this addon and sunset the old one.
+  // return `Polaris-${className}`;
+  return `${className}`;
 }
 
 function subcomponentClassName(component, subcomponent) {
