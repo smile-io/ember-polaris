@@ -1,21 +1,23 @@
 const { basename } = require('path');
 
-const { camelCase } = require('change-case');
+const { camelCase, pascalCase } = require('change-case');
 
 const COMPONENT_REGEX = /^[A-Z]\w+$/;
 const SUBCOMPONENT_VARIATION_SELECTOR = /^\w+-\w+$/;
-const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
+const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/(.*)\//;
 
 module.exports.generateScopedName = function generateScopedName({
   includeHash = false,
 } = {}) {
   return (name, filename) => {
-    const componentName = basename(filename, '.scss');
+    const componentName = pascalCase(basename(filename, '.scss'));
     const nestedComponentMatch = NESTED_COMPONENT_PATH_REGEX.exec(filename);
 
     const polarisComponentName =
       nestedComponentMatch && nestedComponentMatch.length > 1
-        ? `${polarisClassName(nestedComponentMatch[1])}-${componentName}`
+        ? `${polarisClassName(
+            pascalCase(nestedComponentMatch[1]),
+          )}-${componentName}`
         : polarisClassName(componentName);
 
     let className;
