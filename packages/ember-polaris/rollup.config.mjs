@@ -1,13 +1,14 @@
 import { babel } from '@rollup/plugin-babel';
 import copy from 'rollup-plugin-copy';
-import alias from '@rollup/plugin-alias';
+// import alias from '@rollup/plugin-alias';
 import { Addon } from '@embroider/addon-dev/rollup';
-import path from 'path';
+// import path from 'path';
 import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { glimmerTemplateTag } from 'rollup-plugin-glimmer-template-tag';
 import { externals } from 'rollup-plugin-node-externals';
-// import colocatePolarisStyles from './config/rollup/rollup-colocate-polaris-styles.mjs';
+import replace from '@rollup/plugin-replace';
+
 import { styles } from './config/rollup/plugin-styles.js';
 import { generateScopedName } from './config/rollup/namespaced-classname.js';
 import postcssPlugins from './config/postcss-plugins.js';
@@ -20,9 +21,9 @@ const addon = new Addon({
 // Add extensions here, such as ts, gjs, etc that you may import
 const extensions = ['.js', '.ts', '.gjs', '.gts', '.hbs'];
 
-// const pkg = JSON.parse(
-//   readFileSync(new URL('./package.json', import.meta.url).pathname),
-// );
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url).pathname),
+);
 
 export default {
   input: './src/index.ts',
@@ -78,6 +79,15 @@ export default {
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+
+    replace({
+      '{{POLARIS_VERSION}}': pkg['dependencies']['@shopify/polaris'].replace(
+        '^',
+        '',
+      ),
+      delimiters: ['', ''],
+      preventAssignment: true,
+    }),
 
     styles({
       mode: 'esnext',
