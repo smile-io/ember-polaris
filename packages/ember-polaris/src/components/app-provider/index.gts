@@ -1,7 +1,9 @@
 import Component from '@glimmer/component';
 
 import './app-provider.scss';
-import './global.scss';
+// For now, leaving this to the app to import.
+// Ex: add this to `app/routes/application.js`.
+// import './global.scss';
 
 export interface AppProviderSignature {
   Element: null;
