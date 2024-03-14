@@ -18,17 +18,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci
+          node-version: 16
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
       - name: Run Tests
-        run: npm run test
+        run: pnpm test
 
   floating:
     name: "Floating Dependencies"
@@ -36,14 +32,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm install --no-shrinkwrap
+          node-version: 16
       - name: Run Tests
-        run: npm run test
+        run: pnpm test
 
   try-scenarios:
     name: ${{ matrix.try-scenario }}
@@ -54,24 +47,19 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
-          - ember-lts-3.28
-          - ember-lts-4.4
+          - ember-lts-4.8
+          - ember-lts-4.12
           - ember-release
           - ember-beta
           - ember-canary
-          - ember-classic
           - embroider-safe
           - embroider-optimized
 
     steps:
       - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          node-version: 14.x
-          cache: npm
-      - name: Install Dependencies
-        run: npm ci
+          node-version: 16
       - name: Run Tests
-        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
-        working-directory: test-app
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }} --skip-cleanup
+        working-directory: packages/test-app

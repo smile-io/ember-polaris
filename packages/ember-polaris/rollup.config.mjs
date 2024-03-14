@@ -1,11 +1,9 @@
 import { babel } from '@rollup/plugin-babel';
+import { Addon } from '@embroider/addon-dev/rollup';
 import copy from 'rollup-plugin-copy';
 // import alias from '@rollup/plugin-alias';
-import { Addon } from '@embroider/addon-dev/rollup';
-// import path from 'path';
 import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { glimmerTemplateTag } from 'rollup-plugin-glimmer-template-tag';
 import { externals } from 'rollup-plugin-node-externals';
 import replace from '@rollup/plugin-replace';
 
@@ -27,12 +25,14 @@ const pkg = JSON.parse(
 
 export default {
   input: './src/index.ts',
+
   // This provides defaults that work well alongside `publicEntrypoints` below.
   // You can augment this if you need to.
   output: addon.output(),
 
   plugins: [
-    externals({ deps: true, packagePath: './package.json' }),
+    // externals({ deps: true, packagePath: './package.json' }),
+
     // alias({
     //   entries: [
     //     {
@@ -47,23 +47,28 @@ export default {
 
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
-    addon.publicEntrypoints([
-      'components/**/*.js',
-      'index.js',
-      'template-registry.js',
-    ]),
+    // By default all your JavaScript modules (**/*.js) will be importable.
+    // But you are encouraged to tweak this to only cover the modules that make
+    // up your addon's public API. Also make sure your package.json#exports
+    // is aligned to the config here.
+    // See https://github.com/embroider-build/embroider/blob/main/docs/v2-faq.md#how-can-i-define-the-public-exports-of-my-addon
+    addon.publicEntrypoints(['**/*.js', 'index.js', 'template-registry.js']),
 
     // These are the modules that should get reexported into the traditional
     // "app" tree. Things in here should also be in publicEntrypoints above, but
     // not everything in publicEntrypoints necessarily needs to go here.
-    addon.appReexports(['components/**/*.js']),
+    addon.appReexports([
+      'components/**/*.js',
+      'helpers/**/*.js',
+      'modifiers/**/*.js',
+      'services/**/*.js',
+    ]),
 
     // Follow the V2 Addon rules about dependencies. Your code can import from
     // `dependencies` and `peerDependencies` as well as standard Ember-provided
     // package names.
     addon.dependencies(),
 
-    glimmerTemplateTag(),
     nodeResolve({ extensions }),
 
     // This babel config should *not* apply presets or compile away ES modules.
@@ -73,12 +78,15 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
-      extensions,
-      babelHelpers: 'inline',
+      extensions: ['.js', '.gjs', '.ts', '.gts'],
+      babelHelpers: 'bundled',
     }),
 
     // Ensure that standalone .hbs files are properly integrated as Javascript.
     addon.hbs(),
+
+    // Ensure that .gjs files are properly integrated as Javascript
+    addon.gjs(),
 
     replace({
       '{{POLARIS_VERSION}}': pkg['dependencies']['@shopify/polaris'].replace(

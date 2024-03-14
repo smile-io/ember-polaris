@@ -19,7 +19,7 @@ module.exports = {
   overrides: [
     // ts files
     {
-      files: ['**/*.ts'],
+      files: ['**/*.ts', '**/*.gts'],
       extends: [
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
@@ -32,7 +32,7 @@ module.exports = {
     {
       files: [
         './.eslintrc.cjs',
-        './.prettierrc.js',
+        './.prettierrc.cjs',
         './.template-lintrc.cjs',
         './addon-main.cjs',
       ],

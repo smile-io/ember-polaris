@@ -13,7 +13,6 @@ module.exports.styles = function styles({
   include = ['**/*.css', '**/*.scss'],
   exclude = [],
 } = {}) {
-  console.log(JSON.stringify(plugins));
   if (!['standalone', 'esnext'].includes(mode)) {
     throw new Error(
       `Expected mode to be either "standalone" or "esnext", but got "${mode}"`,
@@ -53,14 +52,14 @@ module.exports.styles = function styles({
   function transformEsNext(rollup, id, postCssOutput) {
     const relativePath = `./${path.relative(
       path.dirname(id),
-      id.replace(/\.scss$/, processedExt),
+      id.replace(/(\.module)?\.scss$/, processedExt),
     )}`;
 
     rollup.emitFile({
       type: 'asset',
       fileName: id
         .replace(`${inputRoot}/`, '')
-        .replace(/\.scss$/, processedExt),
+        .replace(/(\.module)?\.scss$/, processedExt),
       source: postCssOutput.css,
     });
 
