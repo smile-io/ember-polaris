@@ -5,7 +5,7 @@ import type { AttrValue } from '@glint/template';
 
 import type { CSSProperties } from '../../utilities/css';
 import { sanitizeCustomProperties } from '../../utilities/css';
-import styles from './Grid.module.scss';
+import styles from './grid.module.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

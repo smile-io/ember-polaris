@@ -140,7 +140,8 @@
     "app-js": {
       "./components/app-provider/index.js": "./dist/_app_/components/app-provider/index.js",
       "./components/grid/cell/index.js": "./dist/_app_/components/grid/cell/index.js",
-      "./components/grid/index.js": "./dist/_app_/components/grid/index.js"
+      "./components/grid/index.js": "./dist/_app_/components/grid/index.js",
+      "./components/text/index.js": "./dist/_app_/components/text/index.js"
     }
   },
   "volta": {

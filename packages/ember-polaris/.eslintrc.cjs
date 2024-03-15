@@ -15,7 +15,9 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'no-process-env': 'off',
+  },
   overrides: [
     // ts files
     {

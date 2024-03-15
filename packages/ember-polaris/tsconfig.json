@@ -35,6 +35,7 @@
       can do the proper transformations on those files.
     */
     "allowImportingTsExtensions": true,
+
     // TODO any other way to use styles .dot notation?
     "noPropertyAccessFromIndexSignature": false
   }
