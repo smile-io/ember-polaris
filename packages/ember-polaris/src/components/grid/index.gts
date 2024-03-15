@@ -3,11 +3,8 @@ import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 import type { AttrValue } from '@glint/template';
 
-// @ts-ignore
 import type { CSSProperties } from '../../utilities/css';
-// @ts-ignore
 import { sanitizeCustomProperties } from '../../utilities/css';
-// @ts-ignore
 import styles from './grid.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

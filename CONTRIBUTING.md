@@ -1,5 +1,11 @@
 # How To Contribute
 
+## Installation
+
+- `git clone <repository-url>`
+- `cd ember-polaris`
+- `pnpm install`
+
 ## Linting
 
 - `pnpm lint`

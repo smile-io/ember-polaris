@@ -1,10 +1,11 @@
 import { babel } from '@rollup/plugin-babel';
-import { Addon } from '@embroider/addon-dev/rollup';
 import copy from 'rollup-plugin-copy';
+import { Addon } from '@embroider/addon-dev/rollup';
+
 // import alias from '@rollup/plugin-alias';
 import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { externals } from 'rollup-plugin-node-externals';
+import { nodeExternals } from 'rollup-plugin-node-externals';
 import replace from '@rollup/plugin-replace';
 
 import { styles } from './config/rollup/plugin-styles.js';
@@ -31,7 +32,7 @@ export default {
   output: addon.output(),
 
   plugins: [
-    // externals({ deps: true, packagePath: './package.json' }),
+    // nodeExternals({ deps: true, packagePath: './package.json' }),
 
     // alias({
     //   entries: [
@@ -69,7 +70,7 @@ export default {
     // package names.
     addon.dependencies(),
 
-    nodeResolve({ extensions }),
+    // nodeResolve({ extensions }),
 
     // This babel config should *not* apply presets or compile away ES modules.
     // It exists only to provide development niceties for you, like automatic
@@ -106,9 +107,6 @@ export default {
       plugins: postcssPlugins,
     }),
 
-    // Ensure that .gjs files are properly integrated as Javascript
-    // addon.gjs(),
-
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
     addon.keepAssets(['**/*.css']),
@@ -119,8 +117,8 @@ export default {
     // Copy Readme and License into published package
     copy({
       targets: [
-        { src: '../README.md', dest: '.' },
-        { src: '../LICENSE.md', dest: '.' },
+        { src: '../../README.md', dest: '.' },
+        { src: '../../LICENSE.md', dest: '.' },
       ],
     }),
   ],

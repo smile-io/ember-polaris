@@ -1,11 +1,8 @@
 import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/template';
 
-// @ts-ignore
 import type { CSSProperties } from '../../../utilities/css';
-// @ts-ignore
 import { classNames, sanitizeCustomProperties } from '../../../utilities/css';
-// @ts-ignore
 import styles from './cell.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
