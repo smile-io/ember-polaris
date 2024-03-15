@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 
 import type { CSSProperties } from '../../../utilities/css';
 import { classNames, sanitizeCustomProperties } from '../../../utilities/css';
-import styles from './cell.scss';
+import styles from './Cell.module.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

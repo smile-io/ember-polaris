@@ -64,6 +64,7 @@
     "@babel/core": "^7.23.6",
     "@babel/plugin-transform-typescript": "^7.23.6",
     "@babel/runtime": "^7.17.0",
+    "@csstools/postcss-global-data": "2.1.0",
     "@embroider/addon-dev": "^4.1.0",
     "@glint/core": "^1.2.1",
     "@glint/environment-ember-loose": "^1.2.1",
@@ -114,14 +115,16 @@
     "magic-string": "^0.30.5",
     "minimatch": "^9.0.3",
     "node-sass": "^7.0.3",
-    "postcss-modules": "^4.3.1",
+    "postcss": "^8.3.1",
+    "postcss-custom-media": "^10.0.1",
+    "postcss-loader": "^4.2.0",
+    "postcss-modules": "^4.2.2",
     "postcss-pxtorem": "^5.1.1",
     "prettier": "^3.1.1",
     "prettier-plugin-ember-template-tag": "^1.1.0",
-    "rollup": "^4.9.1",
+    "rollup": "^3.12.0",
+    "rollup-plugin-node-externals": "^5.1.0",
     "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-glimmer-template-tag": "^0.4.1",
-    "rollup-plugin-node-externals": "^7.0.1",
     "typescript": "^5.3.3"
   },
   "publishConfig": {
@@ -134,7 +137,11 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "app-js": {}
+    "app-js": {
+      "./components/app-provider/index.js": "./dist/_app_/components/app-provider/index.js",
+      "./components/grid/cell/index.js": "./dist/_app_/components/grid/cell/index.js",
+      "./components/grid/index.js": "./dist/_app_/components/grid/index.js"
+    }
   },
   "volta": {
     "extends": "../../package.json"

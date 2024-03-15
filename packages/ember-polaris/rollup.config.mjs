@@ -5,11 +5,11 @@ import { Addon } from '@embroider/addon-dev/rollup';
 // import alias from '@rollup/plugin-alias';
 import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { nodeExternals } from 'rollup-plugin-node-externals';
+import { externals } from 'rollup-plugin-node-externals';
 import replace from '@rollup/plugin-replace';
 
 import { styles } from './config/rollup/plugin-styles.js';
-import { generateScopedName } from './config/rollup/namespaced-classname.js';
+import { generateScopedName } from './config/rollup/namespaced-classname.mjs';
 import postcssPlugins from './config/postcss-plugins.js';
 
 const addon = new Addon({
@@ -32,7 +32,7 @@ export default {
   output: addon.output(),
 
   plugins: [
-    // nodeExternals({ deps: true, packagePath: './package.json' }),
+    externals({ deps: true, packagePath: './package.json' }),
 
     // alias({
     //   entries: [
@@ -70,7 +70,7 @@ export default {
     // package names.
     addon.dependencies(),
 
-    // nodeResolve({ extensions }),
+    nodeResolve({ extensions }),
 
     // This babel config should *not* apply presets or compile away ES modules.
     // It exists only to provide development niceties for you, like automatic
@@ -101,7 +101,8 @@ export default {
     styles({
       mode: 'esnext',
       modules: {
-        generateScopedName: generateScopedName({ includeHash: true }),
+        // We're not using hash in production as Shopify
+        generateScopedName: generateScopedName({ includeHash: false }),
         globalModulePaths: [/global\.scss$/],
       },
       plugins: postcssPlugins,

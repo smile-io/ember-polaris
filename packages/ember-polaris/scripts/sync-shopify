@@ -10,7 +10,7 @@ pushd "$SCRIPT_DIR/.."
 VERSION="@shopify/polaris@$(jq -r '.peerDependencies.["@shopify/polaris"]' package.json | tr -d '^')"
 
 # Define the list of source files and destination files
-SOURCE_FILES=("config/postcss-plugins.js" "config/rollup/namespaced-classname.js" "config/rollup/plugin-styles.js")
+SOURCE_FILES=("postcss.config.mjs" "config/postcss-plugins.js" "config/rollup/namespaced-classname.js" "config/rollup/plugin-styles.js")
 DEST_FILES=("/dest/path/file1.js" "/dest/path/file2.js" "/dest/path/file3.js")
 
 # Define the sync directory path

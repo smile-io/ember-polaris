@@ -35,6 +35,8 @@ module.exports = {
         './.prettierrc.cjs',
         './.template-lintrc.cjs',
         './addon-main.cjs',
+        './postcss.config.mjs',
+        './config/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',

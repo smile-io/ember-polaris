@@ -39,7 +39,7 @@
     "overrides": {
       "@types/eslint": "^7.0.0",
       "@storybook/ember>ember-source": "~5.2.0",
-      "webpack": "^5.86.0"
+      "webpack": "^5.90.3"
     },
     "peerDependencyRules": {
       "allowedVersions": {
