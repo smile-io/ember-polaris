@@ -3,11 +3,13 @@
 // See https://typed-ember.gitbook.io/glint/environments/ember/authoring-addons
 
 import type { AppProvider } from './components/app-provider';
+import type { Box } from './components/box';
 import type { Grid } from './components/grid';
 import type { Text } from './components/text';
 
 export default interface Registry {
   AppProvider: typeof AppProvider;
+  Box: typeof Box;
   Grid: typeof Grid;
   Text: typeof Text;
 }
