@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { element } from 'ember-element-helper';
+import { deprecate } from '@ember/debug';
 
 import { classNames } from '../../utilities/css';
 import styles from './text.module.scss';
@@ -82,7 +83,7 @@ export interface TextSignature {
   };
 }
 
-export default class Text extends Component<TextSignature> {
+export class Text extends Component<TextSignature> {
   get tagName() {
     return this.args.as || (this.args.visuallyHidden ? 'span' : 'p');
   }
@@ -106,22 +107,24 @@ export default class Text extends Component<TextSignature> {
   constructor(owner: unknown, args: TextSignature['Args']) {
     super(owner, args);
 
-    // TODO make this dev only
-    if (
-      // process.env.NODE_ENV === 'development' &&
-      this.args.variant &&
-      Object.prototype.hasOwnProperty.call(
-        deprecatedVariants,
-        this.args.variant,
-      )
-    ) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        `Deprecation: <Text variant="${this.args.variant}" />. The value "${
-          this.args.variant
-        }" will be removed in a future major version of Polaris. Use "${
-          deprecatedVariants[this.args.variant]
-        }" instead.`,
+    const { variant } = this.args;
+    if (variant) {
+      deprecate(
+        `<Text variant="${variant}" />. The value "${variant}" will be removed in a future major version of Polaris. Use "${deprecatedVariants[variant]}" instead.`,
+        !(
+          variant &&
+          Object.prototype.hasOwnProperty.call(deprecatedVariants, variant)
+        ),
+        {
+          id: 'text.deprecate-variant-values',
+          until: '13.0.0',
+          url: 'https://deprecations.emberjs.com/v4.x/#toc_ember-polyfills-deprecate-assign',
+          for: 'ember-polaris',
+          since: {
+            available: '12.0.0',
+            enabled: '12.0.0',
+          },
+        },
       );
     }
   }
@@ -134,3 +137,5 @@ export default class Text extends Component<TextSignature> {
     {{/let}}
   </template>
 }
+
+export default Text;
