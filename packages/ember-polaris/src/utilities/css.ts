@@ -95,3 +95,25 @@ export function getResponsiveProps<T = string>(
     ]),
   ) as unknown as ResponsiveVariables<T>;
 }
+
+export function getResponsiveValue<T = string>(
+  componentName: string,
+  componentProp: string,
+  responsiveProp?: ResponsiveValue<T>,
+): ResponsiveVariables<T> {
+  if (!responsiveProp) return {};
+
+  if (!isObject(responsiveProp)) {
+    return {
+      [`--pc-${componentName}-${componentProp}-${breakpointsAliases[0]}`]:
+        responsiveProp,
+    } as ResponsiveVariables<T>;
+  }
+
+  return Object.fromEntries(
+    Object.entries(responsiveProp).map(([breakpointAlias, responsiveValue]) => [
+      `--pc-${componentName}-${componentProp}-${breakpointAlias}`,
+      responsiveValue,
+    ]),
+  );
+}

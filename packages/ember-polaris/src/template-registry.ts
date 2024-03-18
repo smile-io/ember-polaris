@@ -5,11 +5,13 @@
 import type { AppProvider } from './components/app-provider';
 import type { Box } from './components/box';
 import type { Grid } from './components/grid';
+import type { ShadowBevel } from './components/shadow-bevel';
 import type { Text } from './components/text';
 
 export default interface Registry {
   AppProvider: typeof AppProvider;
   Box: typeof Box;
   Grid: typeof Grid;
+  ShadowBevel: typeof ShadowBevel;
   Text: typeof Text;
 }

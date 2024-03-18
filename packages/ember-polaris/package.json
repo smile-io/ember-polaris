@@ -142,6 +142,7 @@
       "./components/box/index.js": "./dist/_app_/components/box/index.js",
       "./components/grid/cell/index.js": "./dist/_app_/components/grid/cell/index.js",
       "./components/grid/index.js": "./dist/_app_/components/grid/index.js",
+      "./components/shadow-bevel/index.js": "./dist/_app_/components/shadow-bevel/index.js",
       "./components/text/index.js": "./dist/_app_/components/text/index.js"
     }
   },
