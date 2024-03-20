@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
-import { htmlSafe } from '@ember/template';
 
-import type { CSSProperties } from '../../../utilities/css';
-import { classNames, sanitizeCustomProperties } from '../../../utilities/css';
+import { htmlSafeStyle } from '../../../utilities/ember-css';
+import { classNames } from '../../../utilities/css';
 import styles from './cell.module.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -59,7 +58,7 @@ export class Cell extends Component<CellSignature> {
   }
 
   get style() {
-    const style = {
+    return htmlSafeStyle({
       'grid-area': this.args.area,
       '--pc-column-xs': this.args.column?.xs,
       '--pc-column-sm': this.args.column?.sm,
@@ -71,18 +70,7 @@ export class Cell extends Component<CellSignature> {
       '--pc-row-md': this.args.row?.md,
       '--pc-row-lg': this.args.row?.lg,
       '--pc-row-xl': this.args.row?.xl,
-    } as CSSProperties;
-
-    const sanitizedStyle = sanitizeCustomProperties(style);
-    if (!sanitizedStyle) {
-      return undefined;
-    }
-
-    const styles = Object.entries(sanitizedStyle).map(
-      ([key, value]) => `${key}: ${value}`,
-    );
-
-    return htmlSafe(styles.join(';'));
+    });
   }
 
   <template>

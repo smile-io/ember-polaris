@@ -100,6 +100,7 @@
     "@types/ember__template": "^4.0.5",
     "@types/ember__test": "^4.0.5",
     "@types/ember__utils": "^4.0.6",
+    "@types/react": "^18.2.67",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "babel-plugin-ember-template-compilation": "^2.2.1",

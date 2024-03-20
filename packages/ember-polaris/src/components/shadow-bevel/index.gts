@@ -1,25 +1,19 @@
 import Component from '@glimmer/component';
 import { element } from 'ember-element-helper';
-import type { AttrValue } from '@glint/template';
-import { htmlSafe } from '@ember/template';
 import type {
   BorderRadiusAliasOrScale,
   ShadowAliasOrScale,
 } from '@shopify/polaris-tokens';
 
-import {
-  getResponsiveValue,
-  sanitizeCustomProperties,
-} from '../../utilities/css';
-import type { CSSProperties, ResponsiveProp } from '../../utilities/css';
+import { htmlSafeStyle } from '../../utilities/ember-css';
+import { getResponsiveValue } from '../../utilities/css';
+import type { ResponsiveProp } from '../../utilities/css';
 
 import styles from './shadow-bevel.module.scss';
 
 export interface ShadowBevelSignature {
   Element: HTMLElement;
   Args: {
-    // TODO match React.ElementType
-    // as?: React.ElementType;
     as?: string;
     /** The box-shadow applied to the root element. */
     boxShadow: ShadowAliasOrScale;
@@ -48,8 +42,8 @@ export class ShadowBevel extends Component<ShadowBevelSignature> {
     return this.args.as || 'div';
   }
 
-  get style(): AttrValue {
-    const style = {
+  get style() {
+    return htmlSafeStyle({
       '--pc-shadow-bevel-z-index': this.args.zIndex ?? '0',
       ...getResponsiveValue(
         'shadow-bevel',
@@ -72,18 +66,7 @@ export class ShadowBevel extends Component<ShadowBevelSignature> {
             : 'var(--p-border-radius-0)',
         ),
       ),
-    } as CSSProperties;
-
-    const sanitizedStyle = sanitizeCustomProperties(style);
-    if (!sanitizedStyle) {
-      return undefined;
-    }
-
-    const styles = Object.entries(sanitizedStyle).map(
-      ([key, value]) => `${key}: ${value}`,
-    );
-
-    return htmlSafe(styles.join(';'));
+    });
   }
 
   <template>

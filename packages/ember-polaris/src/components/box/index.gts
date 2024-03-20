@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { element } from 'ember-element-helper';
-import { htmlSafe } from '@ember/template';
+import type { AriaRole, AllHTMLAttributes } from 'react';
 import type {
   ColorTextAlias,
   ColorBackgroundAlias,
@@ -11,12 +11,9 @@ import type {
   SpaceScale,
 } from '@shopify/polaris-tokens';
 
-import {
-  getResponsiveProps,
-  classNames,
-  sanitizeCustomProperties,
-} from '../../utilities/css';
-import type { ResponsiveProp, CSSProperties } from '../../utilities/css';
+import { getResponsiveProps, classNames } from '../../utilities/css';
+import { htmlSafeStyle } from '../../utilities/ember-css.ts';
+import type { ResponsiveProp } from '../../utilities/css';
 
 import styles from './box.module.scss';
 
@@ -118,21 +115,14 @@ export interface BoxSignature {
      */
     paddingInlineEnd?: Spacing;
     /** Aria role */
-    // TODO React provides these types, but we need to figure out where we can grab these from
-    role?: string;
-    // role?: Extract<
-    //   React.AriaRole,
-    //   'status' | 'presentation' | 'menu' | 'listbox' | 'combobox' | 'group'
-    // >;
+    role?: Extract<
+      AriaRole,
+      'status' | 'presentation' | 'menu' | 'listbox' | 'combobox' | 'group'
+    >;
     /** Shadow on box */
     shadow?: ShadowAliasOrScale;
     /** Set tab order */
-    // TODO React provides these types, but we need to figure out where we can grab these from
-    tabIndex?: number;
-    // tabIndex?: Extract<
-    //   React.AllHTMLAttributes<HTMLElement>['tabIndex'],
-    //   number
-    // >;
+    tabIndex?: Extract<AllHTMLAttributes<HTMLElement>['tabIndex'], number>;
     /** Width of container */
     width?: string;
     // These could be moved to new layout component(s) in the future
@@ -234,7 +224,7 @@ export class Box extends Component<BoxSignature> {
       zIndex,
     } = this.args;
 
-    const style = {
+    return htmlSafeStyle({
       '--pc-box-color': color ? `var(--p-color-${color})` : undefined,
       '--pc-box-background': background
         ? `var(--p-color-${background})`
@@ -329,18 +319,7 @@ export class Box extends Component<BoxSignature> {
         : undefined,
       zIndex,
       opacity,
-    } as CSSProperties;
-
-    const sanitizedStyle = sanitizeCustomProperties(style);
-    if (!sanitizedStyle) {
-      return undefined;
-    }
-
-    const styles = Object.entries(sanitizedStyle).map(
-      ([key, value]) => `${key}: ${value}`,
-    );
-
-    return htmlSafe(styles.join(';'));
+    });
   }
 
   get className() {

@@ -1,10 +1,6 @@
 import Component from '@glimmer/component';
-// import style from 'ember-style-modifier/modifiers/style';
-import { htmlSafe } from '@ember/template';
-import type { AttrValue } from '@glint/template';
 
-import type { CSSProperties } from '../../utilities/css';
-import { sanitizeCustomProperties } from '../../utilities/css';
+import { htmlSafeStyle } from '../../utilities/ember-css';
 import styles from './grid.module.scss';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -40,8 +36,8 @@ export interface GridSignature {
 }
 
 export class Grid extends Component<GridSignature> {
-  get style(): AttrValue {
-    const style = {
+  get style() {
+    return htmlSafeStyle({
       '--pc-grid-gap-xs': this.args.gap?.xs,
       '--pc-grid-gap-sm': this.args.gap?.sm,
       '--pc-grid-gap-md': this.args.gap?.md,
@@ -57,18 +53,7 @@ export class Grid extends Component<GridSignature> {
       '--pc-grid-areas-md': formatAreas(this.args.areas?.md),
       '--pc-grid-areas-lg': formatAreas(this.args.areas?.lg),
       '--pc-grid-areas-xl': formatAreas(this.args.areas?.xl),
-    } as CSSProperties;
-
-    const sanitizedStyle = sanitizeCustomProperties(style);
-    if (!sanitizedStyle) {
-      return undefined;
-    }
-
-    const styles = Object.entries(sanitizedStyle).map(
-      ([key, value]) => `${key}: ${value}`,
-    );
-
-    return htmlSafe(styles.join(';'));
+    });
   }
 
   <template>
