@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 
-import './app-provider.scss';
+// TODO disabled during WIP on this library to avoid conflicts with old Polaris which we use in parallel for now.
+// import './app-provider.scss';
 import './global.scss';
 
 export interface AppProviderSignature {
@@ -21,8 +22,8 @@ export class AppProvider extends Component<AppProviderSignature> {
   }
 
   setBodyStyles() {
-    document.body.style.backgroundColor = 'var(--p-background)';
-    document.body.style.color = 'var(--p-text)';
+    document.body.style.backgroundColor = 'var(--p-color-bg)';
+    document.body.style.color = 'var(--p-color-text)';
   }
 
   <template>
