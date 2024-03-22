@@ -1,23 +1,24 @@
 import { basename } from 'path';
 
-import { camelCase } from 'change-case';
+import { camelCase, pascalCase } from 'change-case';
 
 const COMPONENT_REGEX = /^[A-Z]\w+$/;
 const SUBCOMPONENT_VARIATION_SELECTOR = /^\w+-\w+$/;
-const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
+// const NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/components/;
+const EMBER_NESTED_COMPONENT_PATH_REGEX = /.*\/components\/(.*)\/(.*)/;
 
 export function generateScopedName({ includeHash = false } = {}) {
   return (name, filename) => {
     // Vite's esbuild appends query params to files under certain circumstances,
     // so we clean those off in order to get the actual file name.
     const cleanedFilename = filename.replace(/\?.*$/, '');
-    const componentName = basename(cleanedFilename, '.module.scss');
+    const componentName = pascalCase(basename(cleanedFilename, '.module.scss'));
     const nestedComponentMatch =
-      NESTED_COMPONENT_PATH_REGEX.exec(cleanedFilename);
+      EMBER_NESTED_COMPONENT_PATH_REGEX.exec(cleanedFilename);
 
     const polarisComponentName =
       nestedComponentMatch && nestedComponentMatch.length > 1
-        ? `${polarisClassName(nestedComponentMatch[1])}-${componentName}`
+        ? `${polarisClassName(pascalCase(nestedComponentMatch[1]))}-${componentName}`
         : polarisClassName(componentName);
 
     let className;
@@ -51,7 +52,9 @@ function isComponent(className) {
 }
 
 function polarisClassName(className) {
-  return `Polaris-${className}`;
+  // Temporarily using NewPolaris instead of Polaris as prefix while we migrate to this addon and sunset the old one.
+  return `NewPolaris-${className}`;
+  // return `Polaris-${className}`;
 }
 
 function subcomponentClassName(component, subcomponent) {
