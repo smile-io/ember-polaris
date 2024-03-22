@@ -10,11 +10,11 @@
           "name": "@embroider/addon-blueprint",
           "isBaseBlueprint": true,
           "options": [
-            "--addon-location=packages/ember-polaris",
+            "--addon-location=ember-polaris",
             "--ci-provider=github",
             "--pnpm",
             "--release-it",
-            "--test-app-location=packages/test-app",
+            "--test-app-location=test-app",
             "--typescript"
           ]
         }
