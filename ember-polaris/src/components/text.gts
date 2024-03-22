@@ -100,7 +100,7 @@ export class Text extends Component<TextSignature> {
       this.args.numeric && styles.numeric,
       this.args.truncate && styles.truncate,
       this.args.visuallyHidden && styles.visuallyHidden,
-      this.args.textDecorationLine && styles[this.args.textDecorationLine],
+      this.args.textDecorationLine && styles[this.args.textDecorationLine]
     );
   }
 
@@ -111,10 +111,7 @@ export class Text extends Component<TextSignature> {
     if (variant) {
       deprecate(
         `<Text variant="${variant}" />. The value "${variant}" will be removed in a future major version of Polaris. Use "${deprecatedVariants[variant]}" instead.`,
-        !(
-          variant &&
-          Object.prototype.hasOwnProperty.call(deprecatedVariants, variant)
-        ),
+        !(variant && Object.prototype.hasOwnProperty.call(deprecatedVariants, variant)),
         {
           id: 'text.deprecate-variant-values',
           until: '13.0.0',
@@ -124,7 +121,7 @@ export class Text extends Component<TextSignature> {
             available: '12.0.0',
             enabled: '12.0.0',
           },
-        },
+        }
       );
     }
   }

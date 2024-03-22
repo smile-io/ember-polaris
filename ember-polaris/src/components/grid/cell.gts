@@ -44,16 +44,11 @@ export class Cell extends Component<CellSignature> {
   get className() {
     return classNames(
       styles.Cell,
-      this.args.columnSpan?.xs &&
-        styles[`Cell-${this.args.columnSpan.xs}-column-xs`],
-      this.args.columnSpan?.sm &&
-        styles[`Cell-${this.args.columnSpan.sm}-column-sm`],
-      this.args.columnSpan?.md &&
-        styles[`Cell-${this.args.columnSpan.md}-column-md`],
-      this.args.columnSpan?.lg &&
-        styles[`Cell-${this.args.columnSpan.lg}-column-lg`],
-      this.args.columnSpan?.xl &&
-        styles[`Cell-${this.args.columnSpan.xl}-column-xl`],
+      this.args.columnSpan?.xs && styles[`Cell-${this.args.columnSpan.xs}-column-xs`],
+      this.args.columnSpan?.sm && styles[`Cell-${this.args.columnSpan.sm}-column-sm`],
+      this.args.columnSpan?.md && styles[`Cell-${this.args.columnSpan.md}-column-md`],
+      this.args.columnSpan?.lg && styles[`Cell-${this.args.columnSpan.lg}-column-lg`],
+      this.args.columnSpan?.xl && styles[`Cell-${this.args.columnSpan.xl}-column-xl`]
     );
   }
 

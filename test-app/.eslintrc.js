@@ -7,17 +7,12 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: ['ember', '@typescript-eslint'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
   },
   rules: {},
   overrides: [
-    // ts files
     {
       files: ['**/*.ts'],
       extends: [
@@ -25,6 +20,23 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
       ],
       rules: {},
+    },
+    {
+      files: ['**/*.gts'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember'],
+      extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:ember/recommended',
+        'plugin:ember/recommended-gts',
+      ],
+    },
+    {
+      files: ['**/*.gjs'],
+      parser: 'ember-eslint-parser',
+      plugins: ['ember'],
+      extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:ember/recommended-gjs'],
     },
     // node files
     {

@@ -26,9 +26,7 @@ export class AppProvider extends Component<AppProviderSignature> {
     document.body.style.color = 'var(--p-color-text)';
   }
 
-  <template>
-    {{yield}}
-  </template>
+  <template>{{yield}}</template>
 }
 
 export default AppProvider;

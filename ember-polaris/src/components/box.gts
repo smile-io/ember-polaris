@@ -115,10 +115,7 @@ export interface BoxSignature {
      */
     paddingInlineEnd?: Spacing;
     /** Aria role */
-    role?: Extract<
-      AriaRole,
-      'status' | 'presentation' | 'menu' | 'listbox' | 'combobox' | 'group'
-    >;
+    role?: Extract<AriaRole, 'status' | 'presentation' | 'menu' | 'listbox' | 'combobox' | 'group'>;
     /** Shadow on box */
     shadow?: ShadowAliasOrScale;
     /** Set tab order */
@@ -165,21 +162,21 @@ export class Box extends Component<BoxSignature> {
     return this.args.borderStyle
       ? this.args.borderStyle
       : this.args.borderColor ||
-        this.args.borderWidth ||
-        this.args.borderBlockStartWidth ||
-        this.args.borderBlockEndWidth ||
-        this.args.borderInlineStartWidth ||
-        this.args.borderInlineEndWidth
-      ? 'solid'
-      : undefined;
+          this.args.borderWidth ||
+          this.args.borderBlockStartWidth ||
+          this.args.borderBlockEndWidth ||
+          this.args.borderInlineStartWidth ||
+          this.args.borderInlineEndWidth
+        ? 'solid'
+        : undefined;
   }
 
   get outlineStyleValue() {
     return this.args.outlineStyle
       ? this.args.outlineStyle
       : this.args.outlineColor || this.args.outlineWidth
-      ? 'solid'
-      : undefined;
+        ? 'solid'
+        : undefined;
   }
 
   get style() {
@@ -226,9 +223,7 @@ export class Box extends Component<BoxSignature> {
 
     return htmlSafeStyle({
       '--pc-box-color': color ? `var(--p-color-${color})` : undefined,
-      '--pc-box-background': background
-        ? `var(--p-color-${background})`
-        : undefined,
+      '--pc-box-background': background ? `var(--p-color-${background})` : undefined,
       // eslint-disable-next-line no-nested-ternary
       '--pc-box-border-color': borderColor
         ? borderColor === 'transparent'
@@ -236,9 +231,7 @@ export class Box extends Component<BoxSignature> {
           : `var(--p-color-${borderColor})`
         : undefined,
       '--pc-box-border-style': this.borderStyleValue,
-      '--pc-box-border-radius': borderRadius
-        ? `var(--p-border-radius-${borderRadius})`
-        : undefined,
+      '--pc-box-border-radius': borderRadius ? `var(--p-border-radius-${borderRadius})` : undefined,
       '--pc-box-border-end-start-radius': borderEndStartRadius
         ? `var(--p-border-radius-${borderEndStartRadius})`
         : undefined,
@@ -251,9 +244,7 @@ export class Box extends Component<BoxSignature> {
       '--pc-box-border-start-end-radius': borderStartEndRadius
         ? `var(--p-border-radius-${borderStartEndRadius})`
         : undefined,
-      '--pc-box-border-width': borderWidth
-        ? `var(--p-border-width-${borderWidth})`
-        : undefined,
+      '--pc-box-border-width': borderWidth ? `var(--p-border-width-${borderWidth})` : undefined,
       '--pc-box-border-block-start-width': borderBlockStartWidth
         ? `var(--p-border-width-${borderBlockStartWidth})`
         : undefined,
@@ -269,38 +260,34 @@ export class Box extends Component<BoxSignature> {
       '--pc-box-min-height': minHeight,
       '--pc-box-min-width': minWidth,
       '--pc-box-max-width': maxWidth,
-      '--pc-box-outline-color': outlineColor
-        ? `var(--p-color-${outlineColor})`
-        : undefined,
+      '--pc-box-outline-color': outlineColor ? `var(--p-color-${outlineColor})` : undefined,
       '--pc-box-outline-style': this.outlineStyleValue,
-      '--pc-box-outline-width': outlineWidth
-        ? `var(--p-border-width-${outlineWidth})`
-        : undefined,
+      '--pc-box-outline-width': outlineWidth ? `var(--p-border-width-${outlineWidth})` : undefined,
       '--pc-box-overflow-x': overflowX,
       '--pc-box-overflow-y': overflowY,
       ...getResponsiveProps(
         'box',
         'padding-block-start',
         'space',
-        paddingBlockStart || paddingBlock || padding,
+        paddingBlockStart || paddingBlock || padding
       ),
       ...getResponsiveProps(
         'box',
         'padding-block-end',
         'space',
-        paddingBlockEnd || paddingBlock || padding,
+        paddingBlockEnd || paddingBlock || padding
       ),
       ...getResponsiveProps(
         'box',
         'padding-inline-start',
         'space',
-        paddingInlineStart || paddingInline || padding,
+        paddingInlineStart || paddingInline || padding
       ),
       ...getResponsiveProps(
         'box',
         'padding-inline-end',
         'space',
-        paddingInlineEnd || paddingInline || padding,
+        paddingInlineEnd || paddingInline || padding
       ),
       '--pc-box-shadow': shadow ? `var(--p-shadow-${shadow})` : undefined,
       '--pc-box-width': width,
@@ -308,15 +295,11 @@ export class Box extends Component<BoxSignature> {
       '--pc-box-inset-block-start': insetBlockStart
         ? `var(--p-space-${insetBlockStart})`
         : undefined,
-      '--pc-box-inset-block-end': insetBlockEnd
-        ? `var(--p-space-${insetBlockEnd})`
-        : undefined,
+      '--pc-box-inset-block-end': insetBlockEnd ? `var(--p-space-${insetBlockEnd})` : undefined,
       '--pc-box-inset-inline-start': insetInlineStart
         ? `var(--p-space-${insetInlineStart})`
         : undefined,
-      '--pc-box-inset-inline-end': insetInlineEnd
-        ? `var(--p-space-${insetInlineEnd})`
-        : undefined,
+      '--pc-box-inset-inline-end': insetInlineEnd ? `var(--p-space-${insetInlineEnd})` : undefined,
       zIndex,
       opacity,
     });
@@ -327,7 +310,7 @@ export class Box extends Component<BoxSignature> {
       styles.Box,
       this.args.visuallyHidden && styles.visuallyHidden,
       this.args.printHidden && styles.printHidden,
-      this.args.as === 'ul' && styles.listReset,
+      this.args.as === 'ul' && styles.listReset
     );
   }
 

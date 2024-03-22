@@ -1,9 +1,6 @@
 import Component from '@glimmer/component';
 import { element } from 'ember-element-helper';
-import type {
-  BorderRadiusAliasOrScale,
-  ShadowAliasOrScale,
-} from '@shopify/polaris-tokens';
+import type { BorderRadiusAliasOrScale, ShadowAliasOrScale } from '@shopify/polaris-tokens';
 
 import { htmlSafeStyle } from '../utilities/ember-css';
 import { getResponsiveValue } from '../utilities/css';
@@ -48,23 +45,21 @@ export class ShadowBevel extends Component<ShadowBevelSignature> {
       ...getResponsiveValue(
         'shadow-bevel',
         'content',
-        mapResponsiveProp(this.bevel, (bevel) => (bevel ? '""' : 'none')),
+        mapResponsiveProp(this.bevel, (bevel) => (bevel ? '""' : 'none'))
       ),
       ...getResponsiveValue(
         'shadow-bevel',
         'box-shadow',
         mapResponsiveProp(this.bevel, (bevel) =>
-          bevel ? `var(--p-shadow-${this.args.boxShadow})` : 'none',
-        ),
+          bevel ? `var(--p-shadow-${this.args.boxShadow})` : 'none'
+        )
       ),
       ...getResponsiveValue(
         'shadow-bevel',
         'border-radius',
         mapResponsiveProp(this.bevel, (bevel) =>
-          bevel
-            ? `var(--p-border-radius-${this.args.borderRadius})`
-            : 'var(--p-border-radius-0)',
-        ),
+          bevel ? `var(--p-border-radius-${this.args.borderRadius})` : 'var(--p-border-radius-0)'
+        )
       ),
     });
   }
@@ -78,7 +73,7 @@ export class ShadowBevel extends Component<ShadowBevelSignature> {
 
 function mapResponsiveProp(
   responsiveProp: ResponsiveProp<boolean>,
-  callback: (value: boolean) => string,
+  callback: (value: boolean) => string
 ): ResponsiveProp<string> {
   if (typeof responsiveProp === 'boolean') {
     return callback(responsiveProp);
@@ -88,7 +83,7 @@ function mapResponsiveProp(
     Object.entries(responsiveProp).map(([breakpointsAlias, value]) => [
       breakpointsAlias,
       callback(value),
-    ]),
+    ])
   );
 }
 

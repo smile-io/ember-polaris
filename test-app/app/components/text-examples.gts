@@ -1,7 +1,6 @@
-import {Text} from '@smile-io/ember-polaris/components/text';
+import { Text } from '@smile-io/ember-polaris/components/text';
 
 <template>
-
   <Text @as="h2" @variant="heading3xl">
     Text with Heading3xl variant
   </Text>
