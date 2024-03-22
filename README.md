@@ -1,6 +1,12 @@
 # ember-polaris
 
-[Short description of the addon.]
+[Shopify’s design system](https://polaris.shopify.com/) implemented in Ember.js.
+
+This is an [`embroider` V2 addon](https://github.com/emberjs/rfcs/blob/master/text/0507-embroider-v2-package-format.md) using:
+
+- [template imports](https://github.com/ember-template-imports/ember-template-imports) - _Ember's next-gen component authoring format._
+- typescript & [glint](https://typed-ember.gitbook.io/glint) - _a template-aware tool for performing end-to-end TypeScript typechecking on your project._
+
 
 ## Compatibility
 
