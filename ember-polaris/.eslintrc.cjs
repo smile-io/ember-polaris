@@ -38,7 +38,7 @@ module.exports = {
         './.template-lintrc.cjs',
         './addon-main.cjs',
         './postcss.config.mjs',
-        './config/**/*.js',
+        './config/**/*.{js,mjs}',
       ],
       parserOptions: {
         sourceType: 'script',
