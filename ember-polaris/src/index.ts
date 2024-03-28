@@ -11,8 +11,11 @@ export type { AppProviderSignature } from './components/app-provider.gts';
 export { Box } from './components/box';
 export type { BoxSignature } from './components/box';
 
-export { Grid } from './components/grid';
+export { Grid, formatAreas } from './components/grid';
 export type { GridSignature } from './components/grid';
+
+export { ShadowBevel } from './components/shadow-bevel';
+export type { ShadowBevelSignature } from './components/shadow-bevel';
 
 export { Text } from './components/text';
 export type { TextSignature } from './components/text';

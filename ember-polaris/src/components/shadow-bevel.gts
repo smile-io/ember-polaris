@@ -9,7 +9,7 @@ import type { ResponsiveProp } from '../utilities/css';
 import styles from '../styles/components/shadow-bevel.module.scss';
 
 export interface ShadowBevelSignature {
-  Element: HTMLElement;
+  Element: Element;
   Args: {
     as?: string;
     /** The box-shadow applied to the root element. */
@@ -66,7 +66,7 @@ export class ShadowBevel extends Component<ShadowBevelSignature> {
 
   <template>
     {{#let (element this.tagName) as |Tag|}}
-      <Tag class={{styles.ShadowBevel}} style={{this.style}}>{{yield}}</Tag>
+      <Tag class={{styles.ShadowBevel}} style={{this.style}} ...attributes>{{yield}}</Tag>
     {{/let}}
   </template>
 }

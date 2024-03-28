@@ -57,7 +57,7 @@ export class Grid extends Component<GridSignature> {
   }
 
   <template>
-    <div class={{styles.Grid}} style={{this.style}}>
+    <div class={{styles.Grid}} style={{this.style}} ...attributes>
       {{yield}}
     </div>
   </template>

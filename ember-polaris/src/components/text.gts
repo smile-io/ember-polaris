@@ -128,7 +128,7 @@ export class Text extends Component<TextSignature> {
 
   <template>
     {{#let (element this.tagName) as |Tag|}}
-      <Tag class={{this.className}} id={{@id}}>
+      <Tag class={{this.className}} id={{@id}} ...attributes>
         {{yield}}
       </Tag>
     {{/let}}
