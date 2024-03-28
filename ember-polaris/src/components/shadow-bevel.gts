@@ -6,7 +6,7 @@ import { htmlSafeStyle } from '../utilities/ember-css';
 import { getResponsiveValue } from '../utilities/css';
 import type { ResponsiveProp } from '../utilities/css';
 
-import styles from '../styles/components/shadow-bevel.module.scss';
+import styles from '../styles/components/shadow-bevel.module.css';
 
 export interface ShadowBevelSignature {
   Element: Element;

@@ -1,9 +1,6 @@
 import { babel } from '@rollup/plugin-babel';
 import copy from 'rollup-plugin-copy';
 import { Addon } from '@embroider/addon-dev/rollup';
-
-// import alias from '@rollup/plugin-alias';
-import { readFileSync } from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { externals } from 'rollup-plugin-node-externals';
 import replace from '@rollup/plugin-replace';
@@ -11,6 +8,7 @@ import replace from '@rollup/plugin-replace';
 import { styles } from './config/rollup/plugin-styles.js';
 import { generateScopedName } from './config/rollup/namespaced-classname.mjs';
 import postcssPlugins from './config/postcss-plugins.js';
+import { SHOPIFY_POLARIS_VERSION } from './config/constants.mjs';
 
 const addon = new Addon({
   srcDir: 'src',
@@ -20,9 +18,7 @@ const addon = new Addon({
 // Add extensions here, such as ts, gjs, etc that you may import
 const extensions = ['.js', '.ts', '.gjs', '.gts', '.hbs'];
 
-const pkg = JSON.parse(
-  readFileSync(new URL('./package.json', import.meta.url).pathname),
-);
+console.log(`\nSHOPIFY_POLARIS_VERSION: ${SHOPIFY_POLARIS_VERSION}\n`);
 
 export default {
   input: './src/index.ts',
@@ -30,21 +26,8 @@ export default {
   // This provides defaults that work well alongside `publicEntrypoints` below.
   // You can augment this if you need to.
   output: addon.output(),
-
   plugins: [
     externals({ deps: true, packagePath: './package.json' }),
-
-    // alias({
-    //   entries: [
-    //     {
-    //       find: '@shopify/polaris',
-    //       replacement: path.resolve(
-    //         'node_modules',
-    //         '@shopify/polaris/build/esm',
-    //       ),
-    //     },
-    //   ],
-    // }),
 
     // These are the modules that users should be able to import from your
     // addon. Anything not listed here may get optimized away.
@@ -90,10 +73,7 @@ export default {
     addon.gjs(),
 
     replace({
-      '{{POLARIS_VERSION}}': pkg['dependencies']['@shopify/polaris'].replace(
-        '^',
-        '',
-      ),
+      '{{POLARIS_VERSION}}': SHOPIFY_POLARIS_VERSION,
       delimiters: ['', ''],
       preventAssignment: true,
     }),
@@ -103,14 +83,16 @@ export default {
       modules: {
         // We're not using hash in production as Shopify
         generateScopedName: generateScopedName({ includeHash: false }),
-        globalModulePaths: [/global\.scss$/],
+        globalModulePaths: [/global\.css$/],
       },
       plugins: postcssPlugins,
     }),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
-    addon.keepAssets(['**/*.css']),
+    // NOTE we explicitly comment this out from the official embroider blueprint
+    // to ensure we process the css files as Shopify does
+    // addon.keepAssets(['**/*.css']),
 
     // Remove leftover build artifacts when starting a new build.
     addon.clean(),

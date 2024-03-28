@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 
 import { htmlSafeStyle } from '../../utilities/ember-css';
 import { classNames } from '../../utilities/css';
-import styles from '../../styles/components/grid/cell.module.scss';
+import styles from '../../styles/components/grid/cell.module.css';
 
 type Breakpoints = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

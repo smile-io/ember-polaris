@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 
-// TODO disabling this while to avoid conflicts with old Polaris which we use in parallel with this one for now.
-// import '../styles/components/app-provider.scss';
-import '../styles/components/global.scss';
+import '../styles/components/global.css';
 
 export interface AppProviderSignature {
   Element: null;

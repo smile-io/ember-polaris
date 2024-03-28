@@ -3,7 +3,7 @@ import { element } from 'ember-element-helper';
 import { deprecate } from '@ember/debug';
 
 import { classNames } from '../utilities/css';
-import styles from '../styles/components/text.module.scss';
+import styles from '../styles/components/text.module.css';
 
 type Element =
   | 'dt'

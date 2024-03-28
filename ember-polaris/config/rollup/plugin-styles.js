@@ -1,7 +1,6 @@
 const path = require('path');
 
 const { createFilter } = require('@rollup/pluginutils');
-const nodeSass = require('node-sass');
 const postcss = require('postcss');
 const cssModules = require('postcss-modules');
 
@@ -14,9 +13,7 @@ module.exports.styles = function styles({
   exclude = [],
 } = {}) {
   if (!['standalone', 'esnext'].includes(mode)) {
-    throw new Error(
-      `Expected mode to be either "standalone" or "esnext", but got "${mode}"`,
-    );
+    throw new Error(`Expected mode to be either "standalone" or "esnext", but got "${mode}"`);
   }
 
   const filter = createFilter(include, exclude);
@@ -31,8 +28,7 @@ module.exports.styles = function styles({
   ]);
 
   let inputRoot;
-
-  const processedExt = '.css';
+  const processedExt = '.out.css';
 
   const cssByFile = {};
 
@@ -52,14 +48,11 @@ module.exports.styles = function styles({
   function transformEsNext(rollup, id, postCssOutput) {
     const relativePath = `./${path.relative(
       path.dirname(id),
-      id.replace(/(\.module)?\.scss$/, processedExt),
+      id.replace(/(\.module)?\.css$/, processedExt)
     )}`;
-
     rollup.emitFile({
       type: 'asset',
-      fileName: id
-        .replace(`${inputRoot}/`, '')
-        .replace(/(\.module)?\.scss$/, processedExt),
+      fileName: id.replace(`${inputRoot}/`, '').replace(/(\.module)?\.css$/, processedExt),
       source: postCssOutput.css,
     });
 
@@ -67,7 +60,7 @@ module.exports.styles = function styles({
     // No need to specify no-treeshake here as .css files get treated as
     // external and thus their imports will not be tree shaken away anyway
     return {
-      code: `import './${relativePath}';\nexport default ${properties};`,
+      code: `import '${relativePath}';\nexport default ${properties};`,
     };
   }
 
@@ -90,21 +83,17 @@ module.exports.styles = function styles({
     // The contents of the emitted css file should use the order in which the
     // files were referenced in the compiled javascript, which can be obtained
     // by looking at the imports of each entrypoint's bundle information.
-    const entrypointBundles = Object.values(bundle).filter(
-      (bundleInfo) => bundleInfo.isEntry,
-    );
+    const entrypointBundles = Object.values(bundle).filter((bundleInfo) => bundleInfo.isEntry);
     const bundleModuleIds = flatMap(entrypointBundles, (bundleInfo) =>
-      getRecursiveImportOrder(bundleInfo.facadeModuleId, rollup.getModuleInfo),
+      getRecursiveImportOrder(bundleInfo.facadeModuleId, rollup.getModuleInfo)
     );
 
-    const missingReferences = Object.keys(cssByFile).filter(
-      (id) => !bundleModuleIds.includes(id),
-    );
+    const missingReferences = Object.keys(cssByFile).filter((id) => !bundleModuleIds.includes(id));
 
     if (missingReferences.length) {
       const formatedMissingIds = missingReferences.join('\n');
       rollup.warn(
-        `cssByFile contains ids not present in bundleModuleIds. Your output may be incomplete. Missing:\n${formatedMissingIds} `,
+        `cssByFile contains ids not present in bundleModuleIds. Your output may be incomplete. Missing:\n${formatedMissingIds} `
       );
     }
 
@@ -130,15 +119,15 @@ module.exports.styles = function styles({
       inputRoot = path.resolve(process.cwd(), path.dirname(input[0]));
     },
 
-    // Treat CSS files as external - don't try and resolve them within Rollup
-    // This only gets triggered in esnext mode when we emit imports of css files
+    // // Treat CSS files as external - don't try and resolve them within Rollup
+    // // This only gets triggered in esnext mode when we emit imports of css files
     resolveId(source, importer) {
-      if (source.endsWith(processedExt)) {
-        return {
-          id: path.resolve(path.dirname(importer), source),
-          external: true,
-        };
-      }
+      if (!source.endsWith([processedExt])) return;
+      const id = path.resolve(path.dirname(importer), source);
+      return {
+        id,
+        external: true,
+      };
     },
 
     async transform(source, id) {
@@ -146,28 +135,12 @@ module.exports.styles = function styles({
         return null;
       }
 
-      let sassOutput;
-      try {
-        sassOutput = nodeSass
-          .renderSync({
-            data: source,
-            file: id,
-            outputStyle: 'compact',
-            includePaths: [path.dirname(id)],
-          })
-          .css.toString();
-      } catch (err) {
-        throw new Error(err.formatted);
-      }
-
-      const postCssOutput = await styleProcessor
-        .process(sassOutput, { from: id })
-        .then((result) => ({
-          css: result.css,
-          tokens: result.messages.find(({ plugin, type }) => {
-            return plugin === 'postcss-modules' && type === 'export';
-          }).exportTokens,
-        }));
+      const postCssOutput = await styleProcessor.process(source, { from: id }).then((result) => ({
+        css: result.css,
+        tokens: result.messages.find(({ plugin, type }) => {
+          return plugin === 'postcss-modules' && type === 'export';
+        }).exportTokens,
+      }));
 
       if (mode === 'standalone') {
         return transformStandalone(this, id, postCssOutput);
@@ -206,13 +179,8 @@ function hoistCharsetDeclaration(css) {
     // got a problem when it comes to combining them. This shouldn't ever
     // happen though as prettier/editorconfig should force all our source
     // files to be UTF-8
-    if (
-      standaloneCssFileCharset !== '' &&
-      charsetMatch[0] === standaloneCssFileCharset
-    ) {
-      throw new Error(
-        'Found multiple conflicting @charset declarations in css content',
-      );
+    if (standaloneCssFileCharset !== '' && charsetMatch[0] === standaloneCssFileCharset) {
+      throw new Error('Found multiple conflicting @charset declarations in css content');
     }
 
     standaloneCssFileCharset = charsetMatch[0];

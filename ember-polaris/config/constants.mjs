@@ -1,0 +1,1 @@
+export const SHOPIFY_POLARIS_VERSION = '12.23.0';

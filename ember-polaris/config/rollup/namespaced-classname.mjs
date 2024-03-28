@@ -12,9 +12,8 @@ export function generateScopedName({ includeHash = false } = {}) {
     // Vite's esbuild appends query params to files under certain circumstances,
     // so we clean those off in order to get the actual file name.
     const cleanedFilename = filename.replace(/\?.*$/, '');
-    const componentName = pascalCase(basename(cleanedFilename, '.module.scss'));
-    const nestedComponentMatch =
-      EMBER_NESTED_COMPONENT_PATH_REGEX.exec(cleanedFilename);
+    const componentName = pascalCase(basename(cleanedFilename, '.module.css'));
+    const nestedComponentMatch = EMBER_NESTED_COMPONENT_PATH_REGEX.exec(cleanedFilename);
 
     const polarisComponentName =
       nestedComponentMatch && nestedComponentMatch.length > 1
@@ -30,18 +29,13 @@ export function generateScopedName({ includeHash = false } = {}) {
           : subcomponentClassName(polarisComponentName, name);
     } else if (SUBCOMPONENT_VARIATION_SELECTOR.test(name)) {
       const [subcomponent, variation] = name.split('-');
-      const subcomponentName = subcomponentClassName(
-        polarisComponentName,
-        subcomponent,
-      );
+      const subcomponentName = subcomponentClassName(polarisComponentName, subcomponent);
       className = variationClassName(subcomponentName, camelCase(variation));
     } else {
       className = variationClassName(polarisComponentName, camelCase(name));
     }
 
-    const suffix = includeHash
-      ? `_${stringHash(name).toString(36).substr(0, 5)}`
-      : '';
+    const suffix = includeHash ? `_${stringHash(name).toString(36).substr(0, 5)}` : '';
 
     return className + suffix;
   };

@@ -116,16 +116,15 @@ module('Integration | Component | text', function (hooks) {
     });
   });
 
-  // TODO @vladucu this fails, likely the styles processing rollup plugin needs to be tweaked
-  // module('textDecoration', function () {
-  //   test('adds text decoration line-through when passed', async function (assert) {
-  //     await render(
-  //       <template>
-  //         <Text data-test-text @as="p" @textDecorationLine="line-through">{{text}}</Text>
-  //       </template>
-  //     );
+  module('textDecoration', function () {
+    test('adds text decoration line-through when passed', async function (assert) {
+      await render(
+        <template>
+          <Text data-test-text @as="p" @textDecorationLine="line-through">{{text}}</Text>
+        </template>
+      );
 
-  //     // assert.dom('[data-test-text]').hasClass(/line-through/);
-  //   });
-  // });
+      assert.dom('[data-test-text]').hasClass(/line--through/);
+    });
+  });
 });

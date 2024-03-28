@@ -15,7 +15,7 @@ import { getResponsiveProps, classNames } from '../utilities/css';
 import { htmlSafeStyle } from '../utilities/ember-css.ts';
 import type { ResponsiveProp } from '../utilities/css';
 
-import styles from '../styles/components/box.module.scss';
+import styles from '../styles/components/box.module.css';
 
 export type Element = 'div' | 'span' | 'section' | 'legend' | 'ul' | 'li';
 
