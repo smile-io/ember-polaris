@@ -213,12 +213,6 @@ importers:
       eslint-plugin-prettier:
         specifier: ^5.1.3
         version: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5)
-      magic-string:
-        specifier: ^0.30.5
-        version: 0.30.5
-      minimatch:
-        specifier: ^9.0.3
-        version: 9.0.3
       postcss:
         specifier: ^8.3.1
         version: 8.3.1
@@ -272,7 +266,7 @@ importers:
     dependencies:
       '@smile-io/ember-polaris':
         specifier: workspace:*
-        version: file:ember-polaris(@babel/core@7.24.3)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(@shopify/polaris-tokens@8.9.0)(ember-source@5.7.0)
+        version: file:ember-polaris(@babel/core@7.24.3)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-source@5.7.0)
     devDependencies:
       '@babel/core':
         specifier: ^7.24.3
@@ -16595,12 +16589,11 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  file:ember-polaris(@babel/core@7.24.3)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(@shopify/polaris-tokens@8.9.0)(ember-source@5.7.0):
+  file:ember-polaris(@babel/core@7.24.3)(@glint/environment-ember-loose@1.4.0)(@glint/template@1.4.0)(ember-source@5.7.0):
     resolution: {directory: ember-polaris, type: directory}
     id: file:ember-polaris
     name: '@smile-io/ember-polaris'
     peerDependencies:
-      '@shopify/polaris-tokens': 8.9.0
       ember-source: '>= 4.12.0'
     dependencies:
       '@embroider/addon-shim': 1.8.7
