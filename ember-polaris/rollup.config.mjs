@@ -18,7 +18,8 @@ const addon = new Addon({
 // Add extensions here, such as ts, gjs, etc that you may import
 const extensions = ['.js', '.ts', '.gjs', '.gts', '.hbs'];
 
-console.log(`\nSHOPIFY_POLARIS_VERSION: ${SHOPIFY_POLARIS_VERSION}\n`);
+const delimiter = '==================================================\n';
+console.log(`\n${delimiter}SHOPIFY POLARIS VERSION: ${SHOPIFY_POLARIS_VERSION}\n${delimiter}`);
 
 export default {
   input: './src/index.ts',
