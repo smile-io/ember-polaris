@@ -44,7 +44,7 @@
     "lint:types": "glint",
     "prepack": "rollup --config",
     "start": "concurrently 'npm:start:*'",
-    "start:js": "rollup --config --watch --no-watch.clearScreen",
+    "start:js": "rollup --config --watch",
     "start:types": "glint --declaration --watch",
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
   },

@@ -10,20 +10,25 @@ module.exports = function (defaults) {
     },
   });
 
-  const { Webpack } = require('@embroider/webpack');
+  return app.toTree();
 
-  return require('@embroider/compat').compatBuild(app, Webpack, {
-    extraPublicTrees: [],
-    staticAddonTrees: true,
-    staticAddonTestSupportTrees: true,
-    staticHelpers: true,
-    staticModifiers: true,
-    staticComponents: true,
-    staticEmberSource: true,
-    packagerOptions: {
-      webpackConfig: {
-        devtool: 'source-map',
-      },
-    },
-  });
+  // NOTE: Not using Embroider right now because DX is not great. If any file is
+  // changed in the addon, the test-app needs to be rebuilt manually, so using
+  // classic ember-cli build with ember-auto-import for now.
+  // const { Webpack } = require('@embroider/webpack');
+
+  // return require('@embroider/compat').compatBuild(app, Webpack, {
+  //   extraPublicTrees: [],
+  //   staticAddonTrees: true,
+  //   staticAddonTestSupportTrees: true,
+  //   staticHelpers: true,
+  //   staticModifiers: true,
+  //   staticComponents: true,
+  //   staticEmberSource: true,
+  //   packagerOptions: {
+  //     webpackConfig: {
+  //       devtool: 'source-map',
+  //     },
+  //   },
+  // });
 };
