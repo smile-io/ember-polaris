@@ -26,7 +26,7 @@ export function variationName(name: string, value: string) {
 }
 
 export function sanitizeCustomProperties(styles: CSSProperties): CSSProperties | undefined {
-  const nonNullValues = Object.entries(styles).filter(([_, value]) => value != null);
+  const nonNullValues = Object.entries(styles).filter(([, value]) => value != null);
 
   return nonNullValues.length ? Object.fromEntries(nonNullValues) : undefined;
 }

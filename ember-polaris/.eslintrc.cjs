@@ -52,6 +52,7 @@ module.exports = {
         './addon-main.cjs',
         './postcss.config.mjs',
         './config/**/*.{js,mjs}',
+        './postcss-mixins/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',

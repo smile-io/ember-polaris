@@ -74,8 +74,6 @@ export class AppProvider extends Component<AppProviderSignature> {
     document.body.style.backgroundColor = 'var(--p-color-bg)';
     document.body.style.color = 'var(--p-color-text)';
   }
-
-  <template>{{yield}}</template>
 }
 
 export default AppProvider;
