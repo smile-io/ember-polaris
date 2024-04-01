@@ -1,9 +1,3 @@
 {
-  "recommendations": [
-    "chiragpat.vscode-glimmer",
-    "dbaeumer.vscode-eslint",
-    "EditorConfig.editorconfig",
-    "esbenp.prettier-vscode",
-    "typed-ember.glint-vscode"
-  ]
+  "recommendations": ["EmberTooling.emberjs", "typed-ember.glint-vscode"]
 }
