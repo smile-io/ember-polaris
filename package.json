@@ -16,7 +16,6 @@
     "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
     "start:addon": "pnpm --filter @smile-io/ember-polaris start --no-watch.clearScreen",
     "start:test-app": "pnpm --filter test-app start",
-    "storybook": "pnpm --filter @smile-io/ember-polaris build:js && pnpm --filter explorer prebuild-storybook && pnpm --filter explorer storybook",
     "test": "pnpm --filter '*' test",
     "test:ember": "pnpm --filter '*' test:ember"
   },
