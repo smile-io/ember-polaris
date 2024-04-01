@@ -7,11 +7,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: ['ember'],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
     browser: true,
   },
@@ -45,11 +41,7 @@ module.exports = {
       files: ['**/*.gjs'],
       parser: 'ember-eslint-parser',
       plugins: ['ember'],
-      extends: [
-        'eslint:recommended',
-        'plugin:ember/recommended',
-        'plugin:ember/recommended-gjs',
-      ],
+      extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:ember/recommended-gjs'],
     },
     // node files
     {

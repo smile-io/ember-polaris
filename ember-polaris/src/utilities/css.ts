@@ -25,12 +25,8 @@ export function variationName(name: string, value: string) {
   return `${name}${value.charAt(0).toUpperCase()}${value.slice(1)}`;
 }
 
-export function sanitizeCustomProperties(
-  styles: CSSProperties,
-): CSSProperties | undefined {
-  const nonNullValues = Object.entries(styles).filter(
-    ([_, value]) => value != null,
-  );
+export function sanitizeCustomProperties(styles: CSSProperties): CSSProperties | undefined {
+  const nonNullValues = Object.entries(styles).filter(([_, value]) => value != null);
 
   return nonNullValues.length ? Object.fromEntries(nonNullValues) : undefined;
 }
@@ -57,7 +53,7 @@ export function getResponsiveProps<T = string>(
   componentName: string,
   componentProp: string,
   tokenSubgroup: string,
-  responsiveProp?: ResponsiveProp<T>,
+  responsiveProp?: ResponsiveProp<T>
 ): ResponsiveVariables<T> {
   if (!responsiveProp) return {};
 
@@ -72,7 +68,7 @@ export function getResponsiveProps<T = string>(
       Object.entries(responsiveProp).map(([breakpointAlias, aliasOrScale]) => [
         breakpointAlias,
         `var(--p-${tokenSubgroup}-${aliasOrScale})`,
-      ]),
+      ])
     );
   }
 
@@ -81,21 +77,20 @@ export function getResponsiveProps<T = string>(
     Object.entries(result).map(([breakpointAlias, value]) => [
       `--pc-${componentName}-${componentProp}-${breakpointAlias}`,
       value,
-    ]),
+    ])
   ) as unknown as ResponsiveVariables<T>;
 }
 
 export function getResponsiveValue<T = string>(
   componentName: string,
   componentProp: string,
-  responsiveProp?: ResponsiveValue<T>,
+  responsiveProp?: ResponsiveValue<T>
 ): ResponsiveVariables<T> {
   if (!responsiveProp) return {};
 
   if (!isObject(responsiveProp)) {
     return {
-      [`--pc-${componentName}-${componentProp}-${breakpointsAliases[0]}`]:
-        responsiveProp,
+      [`--pc-${componentName}-${componentProp}-${breakpointsAliases[0]}`]: responsiveProp,
     } as ResponsiveVariables<T>;
   }
 
@@ -103,6 +98,6 @@ export function getResponsiveValue<T = string>(
     Object.entries(responsiveProp).map(([breakpointAlias, responsiveValue]) => [
       `--pc-${componentName}-${componentProp}-${breakpointAlias}`,
       responsiveValue,
-    ]),
+    ])
   );
 }

@@ -1,4 +1,4 @@
-const {nullish} = require('./utils');
+const { nullish } = require('./utils');
 
 const DEFAULT_CONTENT = '""';
 const DEFAULT_ZINDEX = 0;
@@ -11,9 +11,9 @@ const DEFAULT_ZINDEX = 0;
 // @param - Declaration passed to the pseudo-element. Used for adjusting the stacking order.
 module.exports = (_, boxShadow, borderRadius, border, content, zIndex) => ({
   position: 'relative',
-  ...(!nullish(boxShadow) && {boxShadow}),
-  ...(!nullish(borderRadius) && {borderRadius}),
-  ...(!nullish(border) && {border}),
+  ...(!nullish(boxShadow) && { boxShadow }),
+  ...(!nullish(borderRadius) && { borderRadius }),
+  ...(!nullish(border) && { border }),
   '&::before': {
     content: nullish(content) ? DEFAULT_CONTENT : content,
     position: 'absolute',

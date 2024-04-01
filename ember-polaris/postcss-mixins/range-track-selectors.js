@@ -5,9 +5,4 @@
 const duplicate = require('./duplicate');
 
 module.exports = (_) =>
-  duplicate(
-    _,
-    '&::-ms-track',
-    '&::-moz-range-track',
-    '&::-webkit-slider-runnable-track',
-  );
+  duplicate(_, '&::-ms-track', '&::-moz-range-track', '&::-webkit-slider-runnable-track');

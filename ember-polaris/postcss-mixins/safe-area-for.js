@@ -1,4 +1,4 @@
-const {nullish} = require('./utils');
+const { nullish } = require('./utils');
 
 /* Returns a safe-area-inset for iPhone X screen obtrusions.
   @param {String} - The property name i.e. padding-left.
@@ -9,8 +9,7 @@ const {nullish} = require('./utils');
   $spacing
 */
 module.exports = (_, property, spacing, area) => {
-  const spacingValue =
-    nullish(spacing) || spacing === 0 || spacing === '0' ? '0px' : spacing;
+  const spacingValue = nullish(spacing) || spacing === 0 || spacing === '0' ? '0px' : spacing;
   return {
     [property]: [
       spacingValue,

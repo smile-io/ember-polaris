@@ -18,10 +18,6 @@ function wrapInBreakpoint(breakpoints, getRules) {
 
 module.exports = () => ({
   ...cellColumnEndRules(6, 'xs'),
-  ...wrapInBreakpoint(['sm', 'md'], (breakpoint) =>
-    cellColumnEndRules(6, breakpoint),
-  ),
-  ...wrapInBreakpoint(['lg', 'xl'], (breakpoint) =>
-    cellColumnEndRules(12, breakpoint),
-  ),
+  ...wrapInBreakpoint(['sm', 'md'], (breakpoint) => cellColumnEndRules(6, breakpoint)),
+  ...wrapInBreakpoint(['lg', 'xl'], (breakpoint) => cellColumnEndRules(12, breakpoint)),
 });

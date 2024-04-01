@@ -5,9 +5,4 @@
 const duplicate = require('./duplicate');
 
 module.exports = (_) =>
-  duplicate(
-    _,
-    '&::-ms-thumb',
-    '&::-moz-range-thumb',
-    '&::-webkit-slider-thumb',
-  );
+  duplicate(_, '&::-ms-thumb', '&::-moz-range-thumb', '&::-webkit-slider-thumb');

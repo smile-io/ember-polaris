@@ -1,4 +1,4 @@
-const {nullish} = require('./utils');
+const { nullish } = require('./utils');
 
 module.exports = (_, componentName, componentProp, responsively = false) => {
   if (responsively && !nullish(responsively)) {
