@@ -5,9 +5,9 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/smile-io/ember-polaris",
   "license": "MIT",
-  "author": "",
+  "author": "Smile.io <devs@smile.io>",
   "exports": {
     ".": {
       "types": "./declarations/index.d.ts",
