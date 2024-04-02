@@ -22,7 +22,7 @@ module('Integration | Component | text', function (hooks) {
     test('it renders the specified element', async function (assert) {
       await render(
         <template>
-          <Text data-test-text @as={{tagName}} @ variant="bodySm">{{text}}</Text>
+          <Text data-test-text @as={{tagName}} @variant="bodySm">{{text}}</Text>
         </template>
       );
 
