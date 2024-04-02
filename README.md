@@ -23,6 +23,19 @@ ember install @smile-io/ember-polaris
 
 [Longer description of how to use the addon in apps.]
 
+## Editor Integrations
+
+To get syntax highlighting inside embedded templates and support for the GJS/GTS
+file extensions, you may need to configure your editor.
+
+### Visual Studio Code
+
+Check [extensions.json](./.vscode/extensions.json) for a list of recommended extensions and make sure you follow [Glint docs](https://typed-ember.gitbook.io/glint/getting-started#glint-editor-extensions) to disable the builtin *TypeScript and JavaScript Language Features* extension.
+
+### Other editors
+
+Check [ember-template-imports docs](https://github.com/ember-template-imports/ember-template-imports?tab=readme-ov-file#editor-integrations) & [Glint docs](https://typed-ember.gitbook.io/glint/getting-started#glint-editor-extensions) to add `glint-language-server`.
+
 ## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
