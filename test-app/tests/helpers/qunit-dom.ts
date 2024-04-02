@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * This is a temporary helper to work around the issue with `qunit-dom`'s `hasStyle` & `doesNotHaveStyle` assertions not supporting CSS variables.
  *
