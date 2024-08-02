@@ -8,7 +8,7 @@ ember-polaris
 
 ## Status
 
-**NOTE:** _this addon is still in development. As such, not all of the components available in the React component library have been built yet, and some features of those which have been built are currently unimplemented. Check the [component list](#components) for a list of those which are currently available._
+**NOTE:** _This addon is no longer maintained. If you currently use or depend on this library we strongly recommend creating a fork and maintaining it yourself. Not all Polaris components have been implemented or implemented completely, check the [component list](#components) for a list of those components which are currently available._
 
 
 Compatibility
